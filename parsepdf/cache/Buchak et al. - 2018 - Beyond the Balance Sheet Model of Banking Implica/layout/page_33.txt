@@ -1,0 +1,43 @@
+mortgage lending. This incomplete migration towards shadow banks illustrates that tighter capital
+regulations on the banking sector are not being completely absorbed through the shadow bank
+migration channel. Thus, the notion that shadow banks might pick up the slack in bank lending
+entirely is not correct.
+Higher capital requirements primarily hurt banks and higher consumers in higher-income zip codes
+where there is a greater demand for jumbo loans. Given the capital requirement of 9%, bank profits
+decrease by roughly $24 billion, while shadow bank profits are essentially unchanged. As capital
+requirements increase, banks lose their comparative advantage of financing loans on balance sheet.
+Total consumer surplus declines by roughly $45 billion, and a typical borrower sees her consumer
+surplus decline by roughly $1,617 under the 9% capital requirement scenario versus the baseline.
+Welfare effects differ significantly within the income distribution, with the majority of these declines
+occurring for borrowers in high-income markets that rely on jumbo lending. The top income quartile
+markets see consumer surplus decline by roughly $32 billion, while consumer surplus in the bottom
+income quartile markets declines by only $1 billion. The decline in consumer surplus occurs along
+two margins: (i) the borrowers who still borrow jumbo loans now pay higher rates and (ii) the
+borrowers who switched to conforming mortgages, or exited the market, now do not borrow the
+optimal amount. Finally, it is important to note that these losses have to be weighed against possible
+welfare gains of moving risk from bank balance sheets (e.g., Egan et al. 2017).
+Bank Stability
+There are two dimensions through which capital requirements affect bank stability: retaining
+mortgage risk on bank balance sheets, and bank profits. Even a small reduction in capital requirements
+results in a large increase in the share of loans retained on the bank balance sheets. Reducing capital
+requirements to 4.5% expands the balance sheet holdings of mortgages by 54% (~$360 billion
+annually). Conversely, the primary consequence of increasing capital requirements is a large decline
+in on-balance-sheet lending. As capital requirements increase to 9% and balance sheet financing
+becomes significantly more expensive, the share of balance-sheet financed lending drops from 37%
+to 14%, and banks’ balance sheet holdings of mortgages drop by 63%. In other words, capital
+requirements operate primarily on the balance sheet retention margin. These large adjustments starkly
+illustrate the importance of the bank balance sheet retention margin in responding to increases in
+capital requirements. This risk is instead shifted to GSEs and indirectly to taxpayers, who insure these
+mortgages. Offsetting somewhat the decrease in risk is also a decrease in expected bank profits, which
+decline with tighter capital requirements.
+V.B Secondary Market Interventions: Quantitative Easing
+Instead of targeting banks, financial intermediation policies can target secondary markets for loans.
+One set of such major policies during the last financial crisis was referred to as quantitative easing
+(QE). The Federal Reserve intervened in the securitization market by purchasing large amounts of
+GSE-guaranteed mortgages, hoping to decrease the rates at which GSEs purchased mortgages from
+originators, and, in turn, easing access to mortgages. Estimates suggest mortgage rates declined
+
+
+
+                                                  30
+

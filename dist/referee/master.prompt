@@ -1,0 +1,360 @@
+# Referee Review Master Router
+
+**Purpose:** Route referee review requests to appropriate task modules with paper type context.
+
+---
+
+## Step 0: PDF Detection & Extraction
+
+**If the user provides a PDF file, extract text first:**
+
+```bash
+# Check if input is a PDF
+if [[ "$INPUT_FILE" == *.pdf ]]; then
+    # Run parsepdf extraction
+    ../parsepdf/scripts/process_paper.sh "$INPUT_FILE"
+
+    # Use extracted text file for analysis
+    PAPER_TEXT="${INPUT_FILE%.pdf}_full_text.txt"
+fi
+```
+
+This creates:
+- `{basename}_full_text.txt` - Combined text of all pages (saved next to the PDF)
+- Cache files in `parsepdf/scripts/cache/{basename}/` for detailed processing if needed
+
+**Proceed to Step 1 using the extracted text file.**
+
+---
+
+## Workflow
+
+0. **Check input format** → If PDF, extract text via parsepdf
+1. **Interpret request** → Determine referee perspective(s) needed
+2. **Ask diagnostic questions** → Determine paper type and scope
+3. **Assess paper length** → Check word count, plan reading strategy
+4. **Load modules** → Compose prompts with paper type overlay
+5. **First-pass read** → Main text only (skip appendices)
+6. **Section evaluation** → For long papers, dispatch section subagents
+7. **Execute review** → Launch referee agents with appropriate model
+8. **Second-pass read** → Consult appendix only for flagged items
+9. **Deliver results** → Organize outputs in `notes/`
+
+---
+
+## Step 1: Interpret Request
+
+| Request Pattern | Task Module |
+|----------------|-------------|
+| "Senior referee" / "Is this contribution significant?" / "Desk reject risk?" | `tasks/senior.prompt` |
+| "Junior referee" / "Do you believe my identification?" / "Robustness checks?" | `tasks/junior.prompt` |
+| "Full referee review" / "Mock journal review" / "Both referees" | Both + `components/synthesis.prompt` |
+
+---
+
+## Step 2: Diagnostic Questions
+
+@IMPORT: ../shared/components/diagnostic_workflow.prompt
+
+**Additional referee-specific question:**
+
+```
+Question: "Which referee perspective do you need?"
+Header: "Referee type"
+MultiSelect: false
+Options:
+  - Label: "Senior referee (contribution/novelty focus)"
+    Description: "Evaluates significance, literature positioning, broad relevance"
+
+  - Label: "Junior referee (methods/robustness focus)"
+    Description: "Evaluates identification, robustness, credibility"
+
+  - Label: "Both referees (comprehensive evaluation)"
+    Description: "Full mock journal review with unified recommendations"
+```
+
+---
+
+## Step 3: Assess Paper Length and Plan Reading Strategy
+
+@IMPORT: components/reading_strategy.prompt
+
+**Before reading paper content:**
+
+```bash
+# Count words to determine strategy
+wc -w [paper_text_file]
+```
+
+> **Note:** If input was PDF, use `{basename}_full_text.txt` created by parsepdf in Step 0.
+
+| Word Count | Strategy |
+|------------|----------|
+| < 8,000 | **Short**: Single-pass, read everything |
+| 8,000 - 15,000 | **Medium**: Two-pass (main text first, appendix if needed) |
+| > 15,000 | **Long**: Two-pass + section subagents |
+
+**Identify appendix boundary:**
+```bash
+grep -n -i "\\\\appendix\|\\\\section.*{Appendix\|^Appendix\s*[A-Z:]" [paper_text_file]
+```
+
+Record:
+- Total word count: [X]
+- Paper classification: [Short/Medium/Long]
+- Appendix starts at: [line number or "no appendix"]
+
+---
+
+## Step 4: Load Modules
+
+@IMPORT: ../shared/components/module_loading.prompt
+
+**Referee-specific task modules:**
+- `tasks/senior.prompt` - If senior referee requested
+- `tasks/junior.prompt` - If junior referee requested
+- `components/editor_synthesis.prompt` - If both referees requested (for editor letter)
+- `components/senior_output.prompt` - LaTeX template for senior report
+- `components/junior_output.prompt` - LaTeX template for junior report
+
+---
+
+## Step 5: First-Pass Read (Main Text Only)
+
+**CRITICAL: Do not read appendices in first pass.**
+
+Read paper content from start through Conclusion section only. Stop at:
+- `\appendix` command
+- `\section{Appendix}` or `\section*{Appendix}`
+- "Appendix A:" heading
+- "Online Appendix" heading
+
+**During first-pass, track:**
+- [ ] Appendix references: Note when main text says "see Appendix X"
+- [ ] Missing robustness: Flag if critical checks aren't in main text
+- [ ] Proof references: Note "proof in Appendix" for key claims
+
+**First-pass produces:**
+- Initial contribution assessment
+- Identification strategy understanding
+- List of items that may require appendix consultation
+
+---
+
+## Step 6: Section Evaluation (Long Papers Only)
+
+**Skip this step if paper < 15,000 words.**
+
+@IMPORT: components/section_evaluation.prompt
+
+For long papers (>15,000 words), dispatch section subagents in parallel:
+
+| Subagent | Section | Model | Focus |
+|----------|---------|-------|-------|
+| Intro/Lit | Introduction + Literature Review | haiku | Contribution clarity, positioning |
+| Model | Theory/Model section | haiku | Assumptions, mechanisms |
+| Data/ID | Data + Identification | haiku | Credibility, threats |
+| Results | Results + Robustness | haiku | Findings validity |
+
+**After subagents complete:**
+1. Collect section assessments
+2. Synthesize cross-section concerns
+3. Create priority list for senior/junior evaluation
+
+---
+
+## Step 7: Execute Referee Review
+
+@IMPORT: ../shared/components/model_routing.prompt
+
+**Referee tasks use Extended Thinking** for deep evaluation requiring sustained reasoning.
+
+### Senior Referee Task
+
+**REQUIRED: Run Literature Search First**
+
+Before evaluating, execute `tasks/senior_search.prompt` to search for related papers using Gemini CLI:
+
+```bash
+# Search 1: Topic Literature
+gemini -p "Search economics literature for papers on [TOPIC]. List seminal papers, most cited works, recent contributions with authors, year, journal."
+
+# Search 2: Contribution Verification
+gemini -p "Search for economics papers that [PAPER'S CONTRIBUTION CLAIM]. List any overlapping papers with authors, year, findings."
+
+# Search 3: Methodology Literature
+gemini -p "Search for economics papers using [METHODOLOGY] to study [TOPIC]. List standard approaches and innovations."
+```
+
+Save search results to `notes/literature_context.md` before proceeding.
+
+**Then evaluate:**
+- Use first-pass context (main text only) + section synthesis (if long paper)
+- Cross-reference Gemini search results when assessing novelty claims
+- Evaluate contribution significance and novelty
+- Assess literature positioning accuracy
+- Perform desk rejection screening
+- Generate `notes/senior_referee_report.md`
+
+### Junior Referee Task
+- Use first-pass context (main text only) + section synthesis (if long paper)
+- Evaluate identification credibility
+- Assess robustness comprehensiveness
+- Identify missing checks and alternative explanations
+- Generate `notes/junior_referee_report.md`
+
+### Both Referees (Separate Reports)
+- Execute senior evaluation → generate `notes/senior_referee_report.md`
+- Execute junior evaluation → generate `notes/junior_referee_report.md`
+- Generate short title slug from paper title (2-3 key words, lowercase, underscores)
+- Generate timestamp using today's date in YYYYMMDD format
+- Format senior report using `components/senior_output.prompt`
+- Format junior report using `components/junior_output.prompt`
+- Synthesize editor letter using `components/editor_synthesis.prompt`
+- Generate three LaTeX files (saved to same directory as input PDF):
+  - `{short_title}_{YYYYMMDD}_claude_senior_report.tex` (contribution/novelty evaluation with Deal Breakers)
+  - `{short_title}_{YYYYMMDD}_claude_junior_report.tex` (methods/credibility evaluation with Deal Breakers)
+  - `{short_title}_{YYYYMMDD}_claude_editor_letter.tex` (1 page, synthesized recommendation)
+
+---
+
+## Step 8: Second-Pass Read (Appendix, If Needed)
+
+**Only read appendix materials that were flagged in first pass.**
+
+Trigger second-pass for:
+- Critical robustness checks referenced but not shown in main text
+- Proofs for key theoretical claims
+- Data construction details needed for credibility assessment
+- Pre-trends, first stage, or other validation in appendix
+
+**Do NOT read:**
+- Entire appendix
+- Redundant tables
+- Extended results already summarized in main text
+
+**After second-pass:**
+- Update referee assessments if appendix changes conclusions
+- Note if critical content should have been in main text (this is itself a concern)
+
+---
+
+## Step 9: Verify Citations via Gemini CLI
+
+**REQUIRED: Verify all citations before delivery.**
+
+Run citation verification scripts:
+
+```bash
+# Step 1: Extract citations from output files
+../parsepdf/scripts/extract_citations.sh -o citations.json [output_directory]
+
+# Step 2: Verify each citation using Gemini
+./scripts/verify_citations.sh -o notes/citation_verification.md citations.json
+```
+
+**Quality gate:** Do not deliver until:
+- [ ] All citations verified
+- [ ] NOT_FOUND citations removed or corrected
+- [ ] PARTIAL_MATCH citations reviewed
+
+---
+
+## Step 10: Deliver Results
+
+Report to user:
+1. Summary of tasks performed and files analyzed
+2. Key findings and priority recommendations
+3. Output files created with brief descriptions
+4. Citation verification summary (verified/partial/not found counts)
+5. Suggested next steps
+
+---
+
+## Example Workflow: "Is this ready to submit to AER?"
+
+**Interpret:** Full referee review (both referees)
+
+**Ask:** Paper type? → Files to analyze? → Confirm both perspectives?
+
+**Assess length:**
+```bash
+wc -w paper.txt  # → 18,500 words (Long paper)
+grep -n "\\appendix" paper.txt  # → Appendix starts line 1,450
+```
+
+**Load:** Base components + paper type overlay + senior + junior + synthesis
+
+**First-pass:** Read lines 1-1,450 (main text only)
+- Flag: "Pre-trends in Figure A.1", "Robustness in Table A.3"
+
+**Section evaluation (long paper):**
+1. Dispatch 4 section subagents in parallel (haiku model)
+2. Collect assessments, synthesize cross-section concerns
+
+**Execute referees:**
+1. Senior: contribution, novelty, literature (using first-pass + section synthesis)
+2. Junior: identification, robustness, credibility (using first-pass + section synthesis)
+3. Synthesize into unified report
+
+**Second-pass:** Read only Figure A.1 and Table A.3 from appendix
+
+**Verify citations:**
+```bash
+../parsepdf/scripts/extract_citations.sh -o citations.json notes/
+./scripts/verify_citations.sh citations.json  # Uses Gemini CLI
+```
+- Fix or remove any NOT_FOUND citations
+
+**Deliver:**
+- `{short_title}_{YYYYMMDD}_claude_senior_report.tex` (contribution/novelty evaluation)
+- `{short_title}_{YYYYMMDD}_claude_junior_report.tex` (methods/credibility evaluation)
+- `{short_title}_{YYYYMMDD}_claude_editor_letter.tex` (1 page with synthesized recommendation)
+- `notes/citation_verification.md` (verification report)
+- Priority action items
+
+---
+
+## Error Handling
+
+**Unclear request:** "Which referee perspective: senior (contribution), junior (methods), or both?"
+
+**Files not found:** "No .tex files found. Look in subdirectory? Different extensions? Specify files?"
+
+**Uncertain paper type:** Ask follow-up diagnostic questions.
+
+---
+
+## Quality Assurance
+
+@IMPORT: ../shared/components/qa_checklist.prompt
+
+**Referee-specific checks:**
+
+- [ ] **Senior report** (if created): Contribution assessed, Deal Breakers section with impact explanations, verdict present
+- [ ] **Junior report** (if created): Research design assessed, Deal Breakers section with impact explanations, verdict present
+- [ ] **Editor letter** (if both): 1 page max, clear recommendation, references both attached reports
+
+**Output file checks (if both referees):**
+- [ ] `{short_title}_{YYYYMMDD}_claude_senior_report.tex` exists with Deal Breakers section
+- [ ] `{short_title}_{YYYYMMDD}_claude_junior_report.tex` exists with Deal Breakers section
+- [ ] `{short_title}_{YYYYMMDD}_claude_editor_letter.tex` exists with synthesized recommendation
+- [ ] All three files use same short_title prefix and timestamp
+- [ ] Each Deal Breaker has "Why this affects publishability" explanation
+
+**Synthesis checks (if both referees):**
+- [ ] Editor letter recommendation matches decision matrix logic
+- [ ] Recommendation integrates both contribution and methods perspectives
+- [ ] Default to REJECT when either dimension has Deal Breakers
+
+---
+
+## Referee Review Standards
+
+Referee reviews **enforce high standards**:
+- Assess whether work meets top journal standards in current form
+- Default to rejection when contribution OR methods has serious issues
+- Provide clear accept/reject signal, not just improvement suggestions
+- Recommendation goes in editor letter; referee report has NO recommendation
+
+**Guiding principle:** When senior OR junior has serious concerns → Default to REJECT.

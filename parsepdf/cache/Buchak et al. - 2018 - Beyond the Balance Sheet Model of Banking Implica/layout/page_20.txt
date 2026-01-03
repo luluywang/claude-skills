@@ -1,0 +1,47 @@
+Where Β  � is the vector of mean consumer preferences and Π maps demeaned consumer demographic
+                                                            � ) to individual consumer preferences. For
+characteristics such as income and house prices (𝐷𝐷𝑖𝑖𝑖𝑖𝑖𝑖 − 𝐷𝐷
+example, higher-income borrowers can have different price sensitivities than lower-income
+borrowers, and their preferences over mortgage size can differ. Σ scales normal i.i.d. shocks
+𝜈𝜈𝑖𝑖 ~𝑁𝑁(0, 𝐼𝐼). Thus, even borrowers with the same observable characteristics, such as income, can differ
+in their price elasticity or ideal mortgage size. The demand parameters to be estimated are then 𝜃𝜃𝑑𝑑 =
+(Β�, Π, Σ). 12
+
+Consumers choose the mortgage that maximizes their utility by choosing between offered mortgages,
+subject to an LTV constraint. If they do not choose a mortgage, they choose an outside good with a
+fixed utility, 𝑢𝑢𝑖𝑖0 . In other words, given product characteristics for each mortgage offered in the market
+𝑗𝑗𝑗𝑗𝑗𝑗𝑔𝑔 (including interest rate, mortgage type, lender type, statutory size limits, and service quality),
+and demand parameters 𝜃𝜃𝑑𝑑 , the set of borrower characteristics (including product-borrower match
+utilities 𝜖𝜖𝑖𝑖𝑖𝑖𝑖𝑖 ..), such that borrowers with these characteristics in market 𝑐𝑐𝑐𝑐 choose a mortgage of type
+g from lender 𝑗𝑗 is:
+                      𝐴𝐴𝑗𝑗𝑗𝑗𝑗𝑗𝑗𝑗 (𝑟𝑟⋅𝑐𝑐𝑐𝑐. , 𝑔𝑔⋅𝑐𝑐𝑐𝑐. , 𝐹𝐹�𝑐𝑐𝑐𝑐 , 𝑞𝑞⋅𝑡𝑡 , 𝜉𝜉⋅𝑐𝑐𝑐𝑐 ; 𝜃𝜃𝑑𝑑 )                                                              (D.4)
+                                                      = ��𝐷𝐷𝑖𝑖 , 𝜖𝜖𝑖𝑖0𝑐𝑐𝑐𝑐𝑐𝑐 , … , 𝜖𝜖𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖 � | 𝑢𝑢𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖 ≥ 𝑢𝑢𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖 , ∀𝑘𝑘, 𝑙𝑙�
+𝐴𝐴𝑗𝑗𝑗𝑗𝑗𝑗𝑗𝑗 (⋅) denotes the set of demographic characteristics 𝐷𝐷𝑖𝑖 and idiosyncratic shocks 𝜖𝜖𝑖𝑖⋅𝑐𝑐𝑐𝑐𝑐𝑐 such that
+given loan characteristics (𝑟𝑟⋅𝑐𝑐𝑐𝑐. , 𝑔𝑔⋅𝑐𝑐𝑐𝑐. , 𝐹𝐹�𝑐𝑐𝑐𝑐 , 𝑞𝑞⋅𝑡𝑡 , 𝜉𝜉⋅𝑐𝑐𝑡𝑡 ) and parameters 𝜃𝜃𝑑𝑑 , consumers with those
+demographics and preference shocks obtain more utility from choosing the loan from lender 𝑗𝑗 of type
+𝑔𝑔, 𝑢𝑢𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖 , than from all other lenders and loan types, 𝑢𝑢𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖 among loans satisfying the borrower-
+specific LTV constraint. Integrating over demographics and shocks yields the market share of
+mortgage lender 𝑗𝑗 offering product 𝑔𝑔 in market 𝑐𝑐𝑐𝑐:
+
+                                                                                                       exp �𝑢𝑢𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖 (Β𝑖𝑖 )�
+                 𝑠𝑠𝑗𝑗𝑗𝑗𝑗𝑗𝑗𝑗 (𝑟𝑟⋅𝑐𝑐𝑐𝑐. , 𝑔𝑔⋅𝑐𝑐𝑐𝑐. , 𝐹𝐹�𝑐𝑐𝑐𝑐 , 𝑞𝑞⋅𝑡𝑡 , 𝜉𝜉⋅𝑐𝑐𝑐𝑐 ; 𝜃𝜃𝑑𝑑 ) = �                                                 𝑑𝑑𝑑𝑑(𝐵𝐵𝑖𝑖 )   (D.5)
+                                                                                             𝐴𝐴𝑗𝑗𝑗𝑗𝑗𝑗𝑗𝑗 ∑𝑘𝑘,𝑙𝑙 exp�𝑢𝑢𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖 (Β𝑖𝑖 )�
+
+Note that the size of mortgages a consumer chooses is implicitly captured in expression D.4. If a
+consumer prefers a jumbo-sized mortgage and chooses a jumbo mortgage, she does so at the ideal
+size or at the LTV constraint. If instead this consumer chooses a conforming mortgage, she will
+choose the largest conforming mortgage possible subject to the LTV constraint, which implies
+bunching at the conforming loan limit.
+
+IV.B Mortgage Supply
+There are 𝑁𝑁𝑏𝑏𝑏𝑏𝑏𝑏 banks, 𝑁𝑁𝑛𝑛𝑛𝑛𝑛𝑛 non-fintech shadow banks, and 𝑁𝑁𝑓𝑓𝑓𝑓𝑓𝑓 fintech shadow banks in market ct.
+Lenders choose simultaneously which mortgages to originate across all markets and how to finance
+them. A lender j who originates 𝑚𝑚𝑗𝑗𝑗𝑗𝑗𝑗𝑗𝑗 dollars of mortgage type g in market ct has to decide how many
+
+
+12
+  We directly draw log 𝐹𝐹𝑖𝑖 , log house prices and log income from normal distributions. In consequence, the distribution
+of log 𝐹𝐹𝑖𝑖 is normal, so 𝐹𝐹𝑖𝑖 is lognormal.
+
+                                                                                             17
+

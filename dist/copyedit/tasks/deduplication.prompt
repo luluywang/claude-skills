@@ -1,0 +1,86 @@
+# Task: Deduplication Pass
+
+**Model:** Haiku (fast pattern matching)
+
+**Purpose:** Final pass to catch and remove duplicate suggestions across output files.
+
+**Input:** All checklist files in `notes/` directory
+**Output:** Cleaned files with duplicates removed (overwrites originals)
+
+---
+
+## Process
+
+### Step 1: Read All Checklist Files
+
+Scan these files if they exist:
+- `notes/ai_detection.md`
+- `notes/simplifications.md`
+- `notes/word_choice_review.md`
+- `notes/sentence_analysis.md`
+
+### Step 2: Extract Items
+
+For each checklist item, extract:
+- Source file (which notes/*.md)
+- Target file path (the .tex file being reviewed)
+- Line numbers (X-Y range)
+- Issue category/description
+- Original text quoted
+
+### Step 3: Identify Duplicates
+
+Two items are duplicates if:
+- Same target .tex file AND
+- Overlapping line numbers (within 3 lines of each other) AND
+- Similar issue (same underlying problem, even if described differently)
+
+**Common duplicate patterns:**
+- "utilize → use" in both ai_detection.md and word_choice_review.md
+- Sentence rhythm issues in both ai_detection.md and sentence_analysis.md
+- Passive voice flagged in multiple files
+
+### Step 4: Merge Duplicates
+
+When duplicates found:
+1. Keep the most specific/actionable version
+2. Prefer versions with concrete replacement text
+3. Add note: `[Also flagged in: other_file.md]`
+4. Remove the duplicate from the other file
+
+**Priority order for keeping:**
+1. `word_choice_review.md` (most specific word-level suggestions)
+2. `sentence_analysis.md` (quantitative backing)
+3. `simplifications.md` (general suggestions)
+4. `ai_detection.md` (pattern identification)
+
+### Step 5: Write Cleaned Files
+
+Overwrite each notes/*.md file with deduplicated content.
+Preserve all non-duplicate items unchanged.
+
+---
+
+## Output Format
+
+After deduplication, add summary at end of each cleaned file:
+
+```markdown
+---
+## Deduplication Summary
+- Items reviewed: X
+- Duplicates removed: Y
+- Merged from: [list of source files]
+```
+
+---
+
+## Quality Control
+
+- [ ] All notes/*.md files processed
+- [ ] Duplicates identified by line number + issue similarity
+- [ ] Kept version is most actionable
+- [ ] Cross-references added where merged
+- [ ] No suggestions lost (only merged)
+- [ ] Line numbers preserved correctly
+- [ ] Summary appended to each file

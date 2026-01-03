@@ -1,0 +1,126 @@
+# LaTeX-Specific Conventions
+
+## LaTeX Syntax Rules
+
+### Correct LaTeX Patterns
+These are CORRECT and should NOT be flagged:
+
+**Em-dashes:**
+- Triple hyphens (`---`) are correct LaTeX syntax for em-dashes
+- DO NOT change `---` to single or double hyphens
+- This is standard LaTeX, not an error
+
+**Math mode:**
+- `$x$` for inline math
+- `$$...$$` or `\[...\]` for display math
+- `\(...\)` alternative for inline math
+
+**Spacing:**
+- `\,` - thin space
+- `\;` - medium space
+- `\ ` - normal space
+- These are intentional spacing controls, not errors
+
+**References:**
+- `\ref{label}` produces the number/letter
+- `\eqref{label}` adds parentheses around equation number
+- DO NOT add "Section " or "Equation " before `\ref` since it's embedded in the command
+
+### LaTeX Errors to Fix
+
+**Syntax errors that break compilation:**
+- Missing or extra braces: `{` without `}`
+- Missing or extra brackets: `[` without `]`
+- Incorrect math mode delimiters
+- Unmatched `\begin{environment}` and `\end{environment}`
+- Missing required arguments to commands
+
+**Spacing issues:**
+- Inconsistent use of `\,` vs `\;` vs `\ ` in similar contexts
+- Missing space after abbreviations (e.g., `e.g.` should be `e.g.\`)
+
+**Reference issues:**
+- `\ref{nonexistent}` pointing to undefined labels
+- Inconsistent label naming conventions
+- Labels that don't match their content (e.g., `\label{fig:table1}`)
+
+**Citation issues:**
+- `\cite{}` with no content
+- `\citep` vs `\citet` inconsistency for same purpose
+- Missing citations where clearly needed
+
+---
+
+## LaTeX-Specific Review Guidance
+
+### What to check:
+1. Compilation-breaking syntax errors
+2. Inconsistent use of spacing commands
+3. Broken or inconsistent references
+4. Citation formatting issues
+
+### What NOT to flag:
+1. Triple hyphens `---` (correct em-dash syntax)
+2. Spacing commands like `\,` or `\;` (intentional)
+3. `\ref` without "Section" prefix (already embedded)
+4. Standard LaTeX commands used correctly
+
+---
+
+## Common LaTeX Patterns in Economics Papers
+
+### Tables
+```latex
+\begin{table}[htbp]
+\centering
+\caption{Descriptive title}
+\label{tab:label}
+\begin{tabular}{lccc}
+...
+\end{tabular}
+\end{table}
+```
+
+### Figures
+```latex
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\textwidth]{filename}
+\caption{Descriptive caption}
+\label{fig:label}
+\end{figure}
+```
+
+### Equations
+```latex
+\begin{equation}
+\label{eq:label}
+y = \beta_0 + \beta_1 x + \epsilon
+\end{equation}
+```
+
+### Cross-references
+- Tables: `Table~\ref{tab:label}`
+- Figures: `Figure~\ref{fig:label}`
+- Equations: `Equation~\eqref{eq:label}` or just `\eqref{eq:label}`
+- Sections: `Section~\ref{sec:label}`
+
+Note: The `~` creates a non-breaking space to prevent line breaks between "Table" and the number.
+
+---
+
+## Mathematical Notation Consistency
+
+### What to check:
+- Variables: Consistent italicization (usually italic in math mode)
+- Vectors: Consistent notation (bold, arrow, etc.)
+- Matrices: Consistent notation (bold, caps, etc.)
+- Operators: `\max`, `\min`, `\log`, `\exp` (upright, not italic)
+- Subscripts/superscripts: Consistent meanings
+- Greek letters: Consistent meanings throughout paper
+
+### Common inconsistencies:
+- Switching between `log` and `ln`
+- Mixing `\beta` for different parameters
+- Using same symbol for different concepts
+- Inconsistent notation for expectations: `E[X]` vs `\mathbb{E}[X]`

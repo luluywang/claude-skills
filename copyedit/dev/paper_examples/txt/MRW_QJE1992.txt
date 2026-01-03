@@ -1,0 +1,2835 @@
+A CONTRIBUTION TO THE EMPIRICS OF
+ECONOMIC GROWTH*
+N. GREGORY MANKIW
+DAVID ROMER
+
+DAVID N. WEIL
+This paper examines whether the Solow growth model is consistent with the
+international variation in the standard of living. It shows that an augmented Solow
+model that includes accumulation of human as well as physical capital provides an
+excellent description of the cross-country data. The paper also examines the
+implications of the Solow model for convergence in standards of living, that is, for
+whether poor countries tend to grow faster than rich countries. The evidence
+indicates that, holding population growth and capital accumulation constant,
+countries converge at about the rate the augmented Solow model predicts.
+
+INTRODUCTION
+
+This paper takes Robert Solow seriously. In his classic 1956
+article Solow proposed that we begin the study of economic growth
+by assuming a standard neoclassical production function with
+decreasing returns to capital. Taking the rates of saving and
+population growth as exogenous, he showed that these two variables determine the steady-state level of income per capita. Because saving and population growth rates vary across countries,
+different countries reach different steady states. Solow's model
+gives simple testable predictions about how these variables influence the steady-state level of income. The higher the rate of saving,
+the richer the country. The higher the rate of population growth,
+the poorer the country.
+This paper argues that the predictions of the Solow model are,
+to a first approximation, consistent with the evidence. Examining
+recently available data for a large set of countries, we find that
+saving and population growth affect income in the directions that
+Solow predicted. Moreover, more than half of the cross-country
+variation in income per capita can be explained by these two
+variables alone.
+Yet all is not right for the Solow model. Although the model
+correctly predicts the directions of the effects of saving and
+*We are grateful to Karen Dynan for research assistance, to Laurence Ball,
+Olivier Blanchard, Anne Case, Lawrence Katz, Robert King, Paul Romer, Xavier
+Sala-i-Martin, Amy Salsbury, Robert Solow, Lawrence Summers, Peter Temin, and
+the referees for helpful comments, and to the National Science Foundation for
+financial support.
+? 1992 by the President and Fellows of HarvardCollegeand the MassachusettsInstitute of
+Technology.
+
+The Quarterly Journal of Economics, May 1992
+
+408
+
+QUARTERLY JOURNAL OF ECONOMICS
+
+population growth, it does not correctly predict the magnitudes. In
+the data the effects of saving and population growth on income are
+too large. To understand the relation between saving, population
+growth, and income, one must go beyond the textbook Solow
+model.
+We therefore augment the Solow model by including accumulation of human as well as physical capital. The exclusion of human
+capital from the textbook Solow model can potentially explain why
+the estimated influences of saving and population growth appear
+too large, for two reasons. First, for any given rate of humancapital accumulation, higher saving or lower population growth
+leads to a higher level of income and thus a higher level of human
+capital; hence, accumulation of physical capital and population
+growth have greater impacts on income when accumulation of
+human capital is taken into account. Second, human-capital accumulation may be correlated with saving rates and population
+growth rates; this would imply that omitting human-capital accumulation biases the estimated coefficients on saving and population
+growth.
+To test the augmented Solow model, we include a proxy for
+human-capital accumulation as an additional explanatory variable
+in our cross-country regressions. We find that accumulation of
+human capital is in fact correlated with saving and population
+growth. Including human-capital accumulation lowers the estimated effects of saving and population growth to roughly the
+values predicted by the augmented Solow model. Moreover, the
+augmented model accounts for about 80 percent of the crosscountry variation in income. Given the inevitable imperfections in
+this sort of cross-country data, we consider the fit of this simple
+model to be remarkable. It appears that the augmented Solow
+model provides an almost complete explanation of why some
+countries are rich and other countries are poor.
+After developing and testing the augmented Solow model, we
+examine an issue that has received much attention in recent years:
+the failure of countries to converge in per capita income. We argue
+that one should not expect convergence. Rather, the Solow model
+predicts that countries generally reach different steady states. We
+examine empirically the set of countries for which nonconvergence
+has been widely documented in past work. We find that once
+differences in saving and population growth rates are accounted
+for, there is convergence at roughly the rate that the model
+predicts.
+
+THE EMPIRICS OF ECONOMICGROWTH
+
+409
+
+Finally, we discuss the predictions of the Solow model for
+international variation in rates of return and for capital movements. The model predicts that poor countries should tend to have
+higher rates of return to physical and human capital. We discuss
+various evidence that one might use to evaluate this prediction. In
+contrast to many recent authors, we interpret the available
+evidence on rates of return as generally consistent with the Solow
+model.
+Overall, the findings reported in this paper cast doubt on the
+recent trend among economists to dismiss the Solow growth model
+in favor of endogenous-growth models that assume constant or
+increasing returns to scale in capital. One can explain much of the
+cross-country variation in income while maintaining the assumption of decreasing returns. This conclusion does not imply, however, that the Solow model is a complete theory of growth: one
+would like also to understand the determinants of saving, population growth, and worldwide technological change, all of which the
+Solow model treats as exogenous. Nor does it imply that endogenousgrowth models are not important, for they may provide the right
+explanation of worldwide technological change. Our conclusion
+does imply, however, that the Solow model gives the right answers
+to the questions it is designed to address.
+I. THE TEXTBOOKSOLOWMODEL
+
+We begin by briefly reviewing the Solow growth model. We
+focus on the model's implications for cross-country data.
+A. The Model
+Solow's model takes the rates of saving, population growth,
+and technological progress as exogenous. There are two inputs,
+capital and labor, which are paid their marginal products. We
+assume a Cobb-Douglas production function, so production at time
+t is given by
+(1)
+
+Y(t) = K(t)a(A(t)L(t))l-
+
+0 < a. < 1.
+
+The notation is standard: Y is output, K capital, L labor, and A the
+level of technology. L and A are assumed to grow exogenously at
+rates n and g:
+(2)
+
+L (t) = L ()ent
+
+(3)
+
+A (t) = A (r)ent.
+
+The number of effective units of labor, A (t)L (t), grows at rate n + g.
+
+410
+
+QUARTERLY JOURNAL OF ECONOMICS
+
+The model assumes that a constant fraction of output, s, is
+invested. Defining k as the stock of capital per effective unit of
+labor, k = KIAL, and y as the level of output per effective unit of
+labor, y = Y/AL, the evolution of k is governed by
+k(t) = sy(t) - (n + g + 8)k (t)
+
+(4)
+
+= sk(t)0 -
+
+(n + g + 8)k(t),
+
+where 8 is the rate of depreciation. Equation (4) implies that k
+convergesto a steady-statevalue k* definedby sk *a = (n + g + 8)k *,
+or
+k* = [s/(n + g + 5)]1I(1-a)
+
+(5)
+
+The steady-state capital-labor ratio is related positively to the rate
+of saving and negatively to the rate of population growth.
+The central predictions of the Solow model concern the impact
+of saving and population growth on real income. Substituting (5)
+into the production function and taking logs, we find that steadystate income per capita is
+(6)
+
+(6)tl
+
+In
+
+[Ot]ln()gt
+
+= In A (0) + gt + 1
+
+In(s) - 1
+
+ln(n + g + 8).
+
+Because the model assumes that factors are paid their marginal
+products, it predicts not only the signs but also the magnitudes of
+the coefficients on saving and population growth. Specifically,
+because capital's share in income (a) is roughly one third, the
+model implies an elasticity of income per capita with respect to the
+saving rate of approximately 0.5 and an elasticity with respect to
+n + g + 8 of approximately -0.5.
+
+B. Specification
+The natural question to consider is whether the data support
+the Solow model's predictions concerning the determinants of
+standards of living. In other words, we want to investigate whether
+real income is higher in countries with higher saving rates and
+lower in countries with higher values of n + g + 5.
+We assume that g and 8 are constant across countries. g
+reflects primarily the advancement of knowledge, which is not
+country-specific. And there is neither any strong reason to expect
+depreciation rates to vary greatly across countries, nor are there
+any data that would allow us to estimate country-specific depreciation rates. In contrast, the A(0) term reflects not just technology
+
+THE EMPIRICS OF ECONOMIC GROWTH
+
+411
+
+but resource endowments, climate, institutions, and so on; it may
+therefore differ across countries. We assume that
+lnA(O) = a + E,
+where a is a constant and E is a country-specific shock. Thus, log
+income per capita at a given time-time 0 for simplicity-is
+(7)
+
+In
+
+a+
+
+In(s)-
+
+In(n+g+8)+E.
+
+Equation (7) is our basic empirical specification in this section.
+We assume that the rates of saving and population growth are
+independent of country-specific factors shifting the production
+function. That is, we assume that s and n are independent of e. This
+assumption implies that we can estimate equation (7) with ordinary least squares (OLS).1
+There are three reasons for making this assumption of independence. First, this assumption is made not only in the Solow model,
+but also in many standard models of economic growth. In any
+model in which saving and population growth are endogenous but
+preferences are isoelastic, s and n are unaffected by E. In other
+words, under isoelastic utility, permanent differences in the level of
+technology do not affect saving rates or population growth rates.
+Second, much recent theoretical work on growth has been
+motivated by informal examinations of the relationships between
+saving, population growth, and income. Many economists have
+asserted that the Solow model cannot account for the international
+differences in income, and this alleged failure of the Solow model
+has stimulated work on endogenous-growth theory. For example,
+Romer [1987, 1989a] suggests that saving has too large an
+influence on growth and takes this to be evidence for positive
+externalities from capital accumulation. Similarly, Lucas [1988]
+asserts that variation in population growth cannot account for any
+substantial variation in real incomes along the lines predicted by
+the Solow model. By maintaining the identifying assumption that s
+and n are independent of E, we are able to determine whether
+systematic examination of the data confirms these informal judgments.
+1. If s and n are endogenous and influenced by the level of income, then
+estimates of equation (7) using ordinary least squares are potentially inconsistent.
+In this case, to obtain consistent estimates, one needs to find instrumental variables
+that are correlated with s and n, but uncorrelated with the country-specific shift in
+the production function e. Finding such instrumental variables is a formidable task,
+however.
+
+412
+
+QUARTERLYJOURNAL OF ECONOMICS
+
+Third, because the model predicts not just the signs but also
+the magnitudes of the coefficients on saving and population
+growth, we can gauge whether there are important biases in the
+estimates obtained with OLS. As described above, data on factor
+shares imply that, if the model is correct, the elasticities of Y/L
+with respect to s and n + g + 8 are approximately 0.5 and -0.5. If
+OLS yields coefficients that are substantially different from these
+values, then we can reject the joint hypothesis that the Solow
+model and our identifying assumption are correct.
+Another way to evaluate the Solow model would be to impose
+on equation (7) a value of aoderived from data on factor shares and
+then to ask how much of the cross-country variation in income the
+model can account for. That is, using an approach analogous to
+"growth accounting," we could compute the fraction of the variance in living standards that is explained by the mechanism
+identified by the Solow model.2 In practice, because we do not have
+exact estimates of factor shares, we do not emphasize this growthaccounting approach. Rather, we estimate equation (7) by OLS and
+examine the plausibility of the implied factor shares. The fit of this
+regression shows the result of a growth-accounting exercise performed with the estimated value of a. If the estimated a differs
+from the value obtained a priori from factor shares, we can
+compare the fit of the estimated regression with the fit obtained by
+imposing the a priori value.
+C. Data and Samples
+The data are from the Real National Accounts recently
+constructed by Summers and Heston [1988]. The data set includes
+real income, government and private consumption, investment,
+and population for almost all of the world other than the centrally
+planned economies. The data are annual and cover the period
+1960-1985. We measure n as the average rate of growth of the
+working-age population, where working age is defined as 15 to 64.3
+We measure s as the average share of real investment (including
+2. In standard growth accounting, factor shares are used to decompose growth
+over time in a single country into a part explained by growth in factor inputs and an
+unexplained part-the Solow residual-which is usually attributed to technological
+change. In this cross-country analogue, factor shares are used to decompose
+variation in income across countries into a part explained by variation in saving and
+population growth rates and an unexplained part, which could be attributed to
+international differences in the level of technology.
+3. Data on the fraction of the population of working age are from the World
+Bank's World Tables and the 1988 World Development Report.
+
+THE EMPIRICS OF ECONOMICGROWTH
+
+413
+
+government investment) in real GDP, and Y/L as real GDP in 1985
+divided by the working-age population in that year.
+We consider three samples of countries. The most comprehensive consists of all countries for which data are available other than
+those for which oil production is the dominant industry.4 This
+sample consists of 98 countries. We exclude the oil producers
+because the bulk of recorded GDP for these countries represents
+the extraction of existing resources, not value added; one should
+not expect standard growth models to account for measured GDP
+in these countries.5
+Our second sample excludes countries whose data receive a
+grade of "D" from Summers and Heston or whose populations in
+1960 were less than one million. Summers and Heston use the "D"
+grade to identify countries whose real income figures are based on
+extremely little primary data; measurement error is likely to be a
+greater problem for these countries. We omit the small countries
+because the determination of their real income may be dominated
+by idiosyncratic factors. This sample consists of 75 countries.
+The third sample consists of the 22 OECD countries with
+populations greater than one million. This sample has the advantages that the data appear to be uniformly of high quality and that
+the variation in omitted country-specific factors is likely to be
+small. But it has the disadvantages that it is small in size and that it
+discards much of the variation in the variables of interest.
+See the Appendix for the countries in each of the samples and
+the data.
+D. Results
+We estimate equation (7) both with and without imposing the
+constraint that the coefficients on ln(s) and ln(n + g + 8) are equal
+in magnitude and opposite in sign. We assume that g + 8 is 0.05;
+reasonable changes in this assumption have little effect on the
+estimates.6 Table I reports the results.
+4. For purposes of comparability, we restrict the sample to countries that have
+not only the data used in this section, but also the data on human capital described
+in Section II.
+5. The countries that are excluded on this basis are Bahrain, Gabon, Iran, Iraq,
+Kuwait, Oman, Saudi Arabia, and the United Arab Emirates. In addition, Lesotho is
+excluded because the sum of private and government consumption far exceeds GDP
+in every year of the sample, indicating that labor income from abroad constitutes an
+extremely large fraction of GNP.
+6. We chose this value of g + 8 to match the available data. In U. S. data the
+capital consumption allowance is about 10 percent of GNP, and the capital-output
+ratio is about three, which implies that 8 is about 0.03; Romer [1989a, p. 60]
+presents a calculation for a broader sample of countries and concludes that 8 is
+
+414
+
+QUARTERLY JOURNAL OF ECONOMICS
+TABLE I
+ESTIMATION
+OF THETEXTBOOK
+SOLOWMODEL
+Dependent variable: log GDP per working-age person in 1985
+
+Sample:
+Observations:
+CONSTANT
+ln(I/GDP)
+ln(n + g + 8)
+H2
+s.e.e.
+
+Restricted regression:
+CONSTANT
+ln(I/GDP) - ln(n + g + 8)
+1?2
+
+s.e.e.
+
+Test of restriction:
+p-value
+Implied a
+
+Non-oil
+98
+5.48
+(1.59)
+1.42
+(0.14)
+-1.97
+(0.56)
+0.59
+0.69
+
+Intermediate
+75
+5.36
+(1.55)
+1.31
+(0.17)
+-2.01
+(0.53)
+0.59
+0.61
+
+OECD
+22
+7.97
+(2.48)
+0.50
+(0.43)
+-0.76
+(0.84)
+0.01
+0.38
+
+6.87
+(0.12)
+1.48
+(0.12)
+0.59
+0.69
+
+7.10
+(0.15)
+1.43
+(0.14)
+0.59
+0.61
+
+8.62
+(0.53)
+0.56
+(0.36)
+0.06
+0.37
+
+0.38
+0.60
+(0.02)
+
+0.26
+0.59
+(0.02)
+
+0.79
+0.36
+(0.15)
+
+Note. Standard errors are in parentheses. The investment and population growth rates are averages for the
+period 1960-1985. (g + 8) is assumed to be 0.05.
+
+Three aspects of the results support the Solow model. First,
+the coefficients on saving and population growth have the predicted
+signs and, for two of the three samples, are highly significant.
+Second, the restriction that the coefficients on ln(s) and
+ln(n + g + 8) are equal in magnitude and opposite in sign is not
+rejected in any of the samples. Third, and perhaps most important,
+differences in saving and population growth account for a large
+fraction of the cross-country variation in income per capita. In the
+regression for the intermediate sample, for example, the adjusted
+R2 is 0.59. In contrast to the common claim that the Solow model
+"explains" cross-country variation in labor productivity largely by
+appealing to variations in technologies, the two readily observable
+about 0.03 or 0.04. In addition, growth in income per capita has averaged 1.7
+percent per year in the United States and 2.2 percent per year in our intermediate
+sample; this suggests that g is about 0.02.
+
+THE EMPIRICS OF ECONOMIC GROWTH
+
+415
+
+variables on which the Solow model focuses in fact account for
+most of the variation in income per capita.
+Nonetheless, the model is not completely successful. In particular, the estimated impacts of saving and labor force growth are
+much larger than the model predicts. The value of a. implied by the
+coefficients should equal capital's share in income, which is roughly
+one third. The estimates, however, imply an a that is much higher.
+For example, the a implied by the coefficient in the constrained
+regression for the intermediate sample is 0.59 (with a standard
+error of 0.02). Thus, the data strongly contradict the prediction
+that a = 1/3.
+Because the estimates imply such a high capital share, it is
+inappropriate to conclude that the Solow model is successful just
+because the regressions in Table I can explain a high fraction of the
+variation in income. For the intermediate sample, for instance,
+when we employ the "growth-accounting" approach described
+above and constrain the coefficients to be consistent with an a of
+one third, the adjusted R2 falls from 0.59 to 0.28. Although the
+excellent fit of the simple regressions in Table I is promising for the
+implies that theories based on
+theory of growth in general-it
+be
+able to account for most of the
+observable
+variables
+may
+easily
+cross-country variation in real income it is not supportive of the
+textbook Solow model in particular.
+
+II. ADDING HUMAN-CAPITALACCUMULATIONTO THE SOLOWMODEL
+Economists have long stressed the importance of human
+capital to the process of growth. One might expect that ignoring
+human capital would lead to incorrect conclusions: Kendrick
+[1976] estimates that over half of the total U. S. capital stock in
+1969 was human capital. In this section we explore the effect of
+adding human-capital accumulation to the Solow growth model.
+Including human capital can potentially alter either the
+theoretical modeling or the empirical analysis of economic growth.
+At the theoretical level, properly accounting for human capital may
+change one's view of the nature of the growth process. Lucas
+[1988], for example, assumes that although there are decreasing
+returns to physical-capital accumulation when human capital is
+held constant, the returns to all reproducible capital (human plus
+physical) are constant. We discuss this possibility in Section III.
+At the empirical level, the existence of human capital can alter
+the analysis of cross-country differences; in the regressions in
+
+416
+
+QUARTERLYJOURNAL OF ECONOMICS
+
+Table I human capital is an omitted variable. It is this empirical
+problem that we pursue in this section. We first expand the Solow
+model of Section I to include human capital. We show how leaving
+out human capital affects the coefficients on physical capital
+investment and population growth. We then run regressions
+analogous to those in Table I to see whether proxies for human
+capital can resolve the anomalies found in the first section.7
+A. The Model
+Let the production function be
+(8)
+
+Y(t) = K(t)H(t)P(A(t)L(t))1-a-,
+
+where H is the stock of human capital, and all other variables are
+defined as before. Let Sk be the fraction of income invested in
+physical capital and Sh the fraction invested in human capital. The
+evolution of the economy is determined by
+
+(9a)
+(9b)
+
+k(t) = sky(t) - (n + g + 8)k(t),
+h(t) = Shy(t) - (n + g + 8)h(t),
+
+where y = Y/AL, k = K/AL, and h = H/AL are quantities per
+effective unit of labor. We are assuming that the same production
+function applies to human capital, physical capital, and consumption. In other words, one unit of consumption can be transformed
+costlessly into either one unit of physical capital or one unit of
+human capital. In addition, we are assuming that human capital
+depreciates at the same rate as physical capital. Lucas [1988]
+models the production function for human capital as fundamentally different from that for other goods. We believe that, at least
+for an initial examination, it is natural to assume that the two
+types of production functions are similar.
+We assume that a + ,B < 1, which implies that there are
+decreasing returns to all capital. (If a + ,B= 1, then there are
+constant returns to scale in the reproducible factors. In this case,
+7. Previous authors have provided evidence of the importance of human capital
+for growth in income. Azariadis and Drazen [1990] find that no country was able to
+grow quickly during the postwar period without a highly literate labor force. They
+interpret this as evidence that there is a threshold externality associated with
+human capital accumulation. Similarly, Rauch [1988] finds that among countries
+that had achieved 95 percent adult literacy in 1960, there was a strong tendency for
+income per capita to converge over the period 1950-1985. Romer [1989b] finds that
+literacy in 1960 helps explain subsequent investment and that, if one corrects for
+measurement error, literacy has no impact on growth beyond its effect on
+investment. There is also older work stressing the role of human capital in
+development; for example, see Krueger [1968] and Easterlin [1981].
+
+THE EMPIRICS OF ECONOMIC GROWTH
+
+417
+
+there is no steady state for this model. We discuss this possibility in
+Section III.) Equations (9a) and (9b) imply that the economy
+converges to a steady state defined by
+
+\n + g +
+
+(10)
+a
+
+(*
+
+k-S
+
+,
+
+n +g+
+
+a
+
+1/(1-a-)
+
+/
+
+Substituting (10) into the production function and taking logs
+gives an equation for income per capita similar to equation (6)
+above:
+(1 1) In [L(t)|
+Y(t)]_
+
+In A(O) + gt +
+
++
+
+(I ln(n + g + a
+Iln(Sk) +
+
+In(Sh)
+
+This equation shows how income per capita depends on population
+growth and accumulation of physical and human capital.
+Like the textbook Solow model, the augmented model predicts
+coefficients in equation (11) that are functions of the factor shares.
+As before, a is physical capital's share of income, so we expect a
+value of a of about one third. Gauging a reasonable value of P,
+human capital's share, is more difficult. In the United States the
+minimum wage-roughly
+the return to labor without human
+capital-has averaged about 30 to 50 percent of the average wage
+in manufacturing. This fact suggests that 50 to 70 percent of total
+labor income represents the return to human capital, or that ,Bis
+between one third and one half.
+Equation (11) makes two predictions about the regressions
+run in Section I, in which human capital was ignored. First, even if
+In (Sh) is independent of the other right-hand side variables, the
+coefficient on ln(sk) is greater than a/(1 - a). For example, if a =
+P = 1/3, then the coefficient on ln(sk) would be 1. Because higher
+saving leads to higher income, it leads to a higher steady-state level
+of human capital, even if the percentage of income devoted to
+human-capital accumulation is unchanged. Hence, the presence of
+human-capital accumulation increases the impact of physicalcapital accumulation on income.
+Second, the coefficient on ln(n + g + 8) is larger in absolute
+
+418
+
+QUARTERLY JOURNAL OF ECONOMICS
+
+value than the coefficient on ln(sk). If a =P
+
+= 1/3, for example, the
+
+coefficient on ln(n + g + 8) would be -2. In this model high
+population growth lowers income per capita because the amounts
+of both physical and human capital must be spread more thinly
+over the population.
+There is an alternative way to express the role of human
+capital in determining income in this model. Combining (11) with
+the equation for the steady-state level of human capital given in
+(10) yields an equation for income as a function of the rate of
+investment in physical capital, the rate of population growth, and
+the level of human capital:
+
+(12) In [L(t) = InA(O) + gt + 1 _
+aLWi
+
+1 -a
+
+ln(sk)
+
+n(n + g + 8) +
+
+-
+
+ln(h*).
+
+Equation (12) is almost identical to equation (6) in Section I. In
+that model the level of human capital is a component of the error
+term. Because the saving and population growth rates influence
+h *, one should expect human capital to be positively correlated
+with the saving rate and negatively correlated with population
+growth. Therefore, omitting the human-capital term biases the
+coefficients on saving and population growth.
+The model with human capital suggests two possible ways to
+modify our previous regressions. One way is to estimate the
+augmented model's reduced form, that is, equation (11), in which
+the rate of human-capital accumulation ln(sh) is added to the
+right-hand side. The second way is to estimate equation (12), in
+which the level of human capital In (h *) is added to the right-hand
+side. Notice that these alternative regressions predict different
+coefficients on the saving and population growth terms. When
+testing the augmented Solow model, a primary question is whether
+the available data on human capital correspond more closely to the
+rate of accumulation (Sh) or to the level of human capital (h).
+B. Data
+To implement the model, we restrict our focus to humancapital investment in the form of education-thus ignoring investment in health, among other things. Despite this narrowed focus,
+measurement of human capital presents great practical difficulties.
+Most important, a large part of investment in education takes the
+
+THE EMPIRICS OF ECONOMICGROWTH
+
+419
+
+form of forgone labor earnings on the part of students.8 This
+problem is difficult to overcome because forgone earnings vary with
+the level of human-capital investment: a worker with little human
+capital forgoes a low wage in order to accumulate more human
+capital, whereas a worker with much human capital forgoes a
+higher wage. In addition, explicit spending on education takes place
+at all levels of government as well as by the family, which makes
+spending on education hard to measure. Finally, not all spending
+on education is intended to yield productive human capital:
+philosophy, religion, and literature, for example, although serving
+in part to train the mind, might also be a form of consumption.9
+We use a proxy for the rate of human-capital accumulation (Sh)
+that measures approximately the percentage of the working-age
+population that is in secondary school. We begin with data on the
+fraction of the eligible population (aged 12 to 17) enrolled in
+secondary school, which we obtained from the UNESCO yearbook.
+We then multiply this enrollment rate by the fraction of the
+working-age population that is of school age (aged 15 to 19). This
+variable, which we call SCHOOL, is clearly imperfect: the age
+ranges in the two data series are not exactly the same, the variable
+does not include the input of teachers, and it completely ignores
+primary and higher education. Yet if SCHOOL is proportional to Sh,
+then we can use it to estimate equation (11); the factor of
+proportionality will affect only the constant term.10
+This measure indicates that investment in physical capital and
+population growth may be proxying for human-capital accumulation in the regressions in Table I. The correlation between SCHOOL
+8. Kendrick [19761 calculates that for the United States in 1969 total gross
+investment in education and training was $192.3 billion, of which $92.3 billion took
+the form of imputed compensation to students (tables A-1 and B-2).
+9. An additional problem with implementing the augmented model is that
+"output" in the model is not the same as that measured in the national income
+accounts. Much of the expenditure on human capital is forgone wages, and these
+forgone wages should be included in Y. Yet measured GDP fails to include this
+component of investment spending.
+Back-of-the-envelope calculations suggest that this problem is not quantitatively important, however. If human capital accumulation is completely unmeasured, then measured GDP is (1 - Sh)y. One can show that this measurement
+problem does not affect the elasticity of GDP with respect to physical investment or
+population growth. The elasticity of measured GDP with respect to human capital
+accumulation is reduced by Shl(l - Sh) compared with the elasticity of true GDP
+with respect to human capital accumulation. Because the fraction of a nation's
+resources devoted to human capital accumulation is small, this effect is small. For
+example, if a = P = 1/3 and Sh = 0.1, then the elasticity will be 0.9 rather than 1.0.
+10. Even under the weaker assumption that ln(sh) is linear in In (SCHOOL),
+we can use the estimated coefficients on ln(sk) and In (n + g + 5) to infer values of a
+and P; in this case, the estimated coefficient on In (SCHOOL) will not have an
+interpretation.
+
+QUARTERLYJOURNAL OF ECONOMICS
+
+420
+
+and I/GDP is 0.59 for the intermediate sample, and the correlation
+between SCHOOL and the population growth rate is -0.38. Thus,
+including human-capital accumulation could alter substantially
+the estimated impact of physical-capital accumulation and population growth on income per capita.
+C. Results
+Table II presents regressions of the log of income per capita on
+the log of the investment rate, the log of n + g + 8, and the log of
+the percentage of the population in secondary school. The humancapital measure enters significantly in all three samples. It also
+
+TABLE II
+OF THEAUGMENTED
+SOLOWMODEL
+ESTIMATION
+Dependent variable: log GDP per working-age person in 1985
+Sample:
+Observations:
+CONSTANT
+ln(I/GDP)
+ln(n + g +5)
+ln(SCHOOL)
+R2
+s.e.e.
+Restricted regression:
+CONSTANT
+ln(I/GDP) - ln(n + g + 5)
+ln(SCHOOL) - ln(n + g + 5)
+R2
+s.e.e.
+Test of restriction:
+p-value
+Implied a
+Implied ,
+
+Non-oil
+98
+6.89
+(1.17)
+0.69
+(0.13)
+-1.73
+(0.41)
+0.66
+(0.07)
+0.78
+0.51
+
+Intermediate
+75
+7.81
+(1.19)
+0.70
+(0.15)
+-1.50
+(0.40)
+0.73
+(0.10)
+0.77
+0.45
+
+OECD
+22
+8.63
+(2.19)
+0.28
+(0.39)
+-1.07
+(0.75)
+0.76
+(0.29)
+0.24
+0.33
+
+7.86
+(0.14)
+0.73
+(0.12)
+0.67
+(0.07)
+0.78
+0.51
+
+7.97
+(0.15)
+0.71
+(0.14)
+0.74
+(0.09)
+0.77
+0.45
+
+8.71
+(0.47)
+0.29
+(0.33)
+0.76
+(0.28)
+0.28
+0.32
+
+0.41
+0.31
+(0.04)
+0.28
+(0.03)
+
+0.89
+0.29
+(0.05)
+0.30
+(0.04)
+
+0.97
+0.14
+(0.15)
+0.37
+(0.12)
+
+Note. Standard errors are in parentheses. The investment and population growth rates are averages for the
+period 1960-1985. (g + 8) is assumed to be 0.05. SCHOOL is the average percentage of the working-age
+population in secondary school for the period 1960-1985.
+
+THE EMPIRICS OF ECONOMICGROWTH
+
+421
+
+greatly reduces the size of the coefficient on physical capital
+investment and improves the fit of the regression compared with
+Table I. These three variables explain almost 80 percent of the
+cross-country variation in income per capita in the non-oil and
+intermediate samples.
+The results in Table II strongly support the augmented Solow
+model. Equation (11) shows that the augmented model predicts
+that the coefficients on In (IIY), In (SCHOOL), and In (n + g + 8)
+sum to zero. The bottom half of Table II shows that, for all three
+samples, this restriction is not rejected. The last lines of the table
+give the values of a and ,B implied by the coefficients in the
+restricted regression. For non-oil and intermediate samples, a and
+,Bare about one third and highly significant. The estimates for the
+OECD alone are less precise. In this sample the coefficients on
+investment and population growth are not statistically significant;
+but they are also not significantly different from the estimates
+obtained in the larger samples.'1
+We conclude that adding human capital to the Solow model
+improves its performance. Allowing for human capital eliminates
+the worrisome anomalies-the high coefficients on investment and
+on population growth in our Table I regressions-that
+arise when
+the textbook Solow model is confronted with the data. The
+parameter estimates seem reasonable. And even using an imprecise
+proxy for human capital, we are able to dispose of a fairly large part
+of the model's residual variance.
+
+III. ENDOGENOUSGROWTHAND CONVERGENCE
+Over the past few years economists studying growth have
+turned increasingly to endogenous-growth models. These models
+are characterized by the assumption of nondecreasing returns to
+the set of reproducible factors of production. For example, our
+model with physical and human capital would become an endogenous-growth model if a + ,B = 1. Among the implications of this
+assumption are that countries that save more grow faster indefinitely and that countries need not converge in income per capita,
+even if they have the same preferences and technology.
+11. As we described in the previous footnote, under the weaker assumption
+that ln(sh) is linear in In (SCHOOL), estimates of a and , can be inferred from the
+coefficients on ln(I/GDP) and ln(n + g + 5) in the unrestricted regression. When we
+do this, we obtain estimates of a and , little different from those reported in
+Table II.
+
+422
+
+QUARTERLY JOURNAL OF ECONOMICS
+
+Advocates of endogenous-growth models present them as
+alternatives to the Solow model and motivate them by an alleged
+empirical failure of the Solow model to explain cross-country
+differences. Barro [1989] presents the argument succinctly:
+In neoclassical growth models with diminishing returns, such as Solow (1956), Cass
+(1965) and Koopmans (1965), a country's per capita growth rate tends to be
+inversely related to its starting level of income per person. Therefore, in the absence
+of shocks, poor and rich countries would tend to converge in terms of levels of per
+capita income. However, this convergence hypothesis seems to be inconsistent with
+the cross-country evidence, which indicates that per capita growth rates are
+uncorrelated with the starting level of per capita product.
+
+Our first goal in this section is to reexamine this evidence on
+convergence to assess whether it contradicts the Solow model.
+Our second goal is to generalize our previous results. To
+implement the Solow model, we have been assuming that countries
+in 1985 were in their steady states (or, more generally, that the
+deviations from steady state were random). Yet this assumption is
+questionable. We therefore examine the predictions of the augmented Solow model for behavior out of the steady state.
+A. Theory
+The Solow model predicts that countries reach different steady
+states. In Section II we argued that much of the cross-country
+differences in income per capita can be traced to differing determinants of the steady state in the Solow growth model: accumulation
+of human and physical capital and population growth. Thus, the
+Solow model does not predict convergence; it predicts only that
+income per capita in a given country converges to that country's
+steady-state value. In other words, the Solow model predicts
+convergence only after controlling for the determinants of the
+steady state, a phenomenon that might be called "conditional
+convergence."
+In addition, the Solow model makes quantitative predictions
+about the speed of convergence to steady state. Let y * be the
+steady-state level of income per effective worker given by equation
+(11), and let y(t) be the actual value at time t. Approximating
+around the steady state, the speed of convergence is given by
+(13)
+
+d ln(y(t))
+dt
+=
+X[ln(y*) -ln(y(t))],
+
+where
+A = (n + g + a) (1-a
+
+-
+
+THE EMPIRICS OF ECONOMIC GROWTH
+
+423
+
+For example, if a = P = 1/3 and n + g + 8 = 0.06, then the
+convergence rate (A) would equal 0.02. This implies that the
+economy moves halfway to steady state in about 35 years. Notice
+that the textbook Solow model, which excludes human capital,
+implies much faster convergence. If IB= 0, then X becomes 0.04,
+and the economy moves halfway to steady state in about seventeen
+years.
+The model suggests a natural regression to study the rate of
+convergence. Equation (13) implies that
+ln(y(t)) = (1 - e-At) ln(y*) + e-Atln(y(0)),
+
+(14)
+
+where y(O) is income per effective worker at some initial date.
+Subtracting In (y(O)) from both sides,
+(15)
+
+ln(y(t)) - ln(y(0)) = (1 - e-t) ln(y*) - (1 - e-At) ln(y(0)).
+
+Finally, substituting for y*:
+(16)
+
+ln(y(t)) - ln(y(0)) = (1 - e-t)
++ (1 - e-t)
+
+-
+
+(1 - eAxt) _
+
+ln(sk)
+ln(sh)
+
+_ lIn(n + g + 8) - (1 - e-t) ln(y(0)).
+
+Thus, in the Solow model the growth of income is a function of the
+determinants of the ultimate steady state and the initial level of
+income.
+Endogenous-growth models make predictions very different
+from the Solow model regarding convergence among countries. In
+endogenous-growth models there is no steady-state level of income;
+differences among countries in income per capita can persist
+indefinitely, even if the countries have the same saving and
+population growth rates.12 Endogenous-growth models with a
+12. Although we do not explore the issue here, endogenous-growth models also
+make quantitative predictions about the impact of saving on growth. The models are
+typically characterized by constant returns to reproducible factors of production,
+namely physical and human capital. Our model of Section II with a + , = 1 and g =
+0 provides a simple way of analyzing the predictions of models of endogenous
+growth. With these modifications to the model of Section II, the production function
+is Y = AKaH1-a. In this form the model predicts that the ratio of physical to human
+capital, K/H, will converge to SkiSh, and that K, H, and Y will then all grow at rate
+The derivative of this "steady-state" growth rate with respect to Sk is
+A(Sk)a(Sh )'-a.
+then aA(ShlSk) 1- = atI(KIY). The impact of saving on growth depends on the
+
+424
+
+QUARTERLY JOURNAL OF ECONOMICS
+
+with the "Y = AK" production functionsingle sector-those
+predict no convergence of any sort. That is, these simple endogenous-growth models predict a coefficient of zero on y(O) in the
+regression in (16). As Barro [1989] notes, however, endogenousgrowth models with more than one sector may imply convergence if
+the initial income of a country is correlated with the degree of
+imbalance among sectors.
+Before presenting the results on convergence, we should note
+the differences between regressions based on equation (16) and
+those we presented earlier. The regressions in Tables I and II are
+valid only if countries are in their steady states or if deviations
+from steady state are random. Equation (16) has the advantage of
+explicitly taking into account out-of-steady-state dynamics. Yet,
+implementing equation (16) introduces a new problem. If countries
+have permanent differences in their production functions-that is,
+different A (O)'s-then these A(O)'s would enter as part of the error
+term and would be positively correlated with initial income. Hence,
+variation inA (0) would bias the coefficient on initial income toward
+zero (and would potentially influence the other coefficients as well).
+In other words, permanent cross-country differences in the production function would lead to differences in initial incomes uncorrelated with subsequent growth rates and, therefore, would bias the
+results against finding convergence.
+B. Results
+We now test the convergence predictions of the Solow model.
+We report regressions of the change in the log of income per capita
+over the period 1960 to 1985 on the log of income per capita in
+1960, with and without controlling for investment, growth of the
+working-age population, and school enrollment.
+In Table III the log of income per capita appears alone on the
+right-hand side. This table reproduces the results of many previous
+authors on the failure of incomes to converge [De Long 1988;
+Romer 1987]. The coefficient on the initial level of income per
+capita is slightly positive for the non-oil sample and zero for the
+intermediate sample, and for both regressions the adjusted R2 is
+exponent on capital in the production function, a, and the capital-output ratio. In
+models in which endogenous growth arises mainly from externalities from physical
+capital, a is close to one, and the derivative of the growth rate with respect to Sk is
+approximately 1 I(KI Y), or about 0.4. In models in which endogenous growth arises
+largely from human capital accumulation and there are no externalities from
+physical capital, the derivative would be about 0.31(KIY), or about 0.12.
+
+425
+
+THE EMPIRICS OF ECONOMIC GROWTH
+TABLE III
+TESTS FOR UNCONDITIONALCONVERGENCE
+
+Dependent variable: log difference GDP per working-age person 1960-1985
+Sample:
+Observations:
+CONSTANT
+ln(Y60)
+R2
+
+s.e.e.
+Implied X
+
+Non-oil
+98
+-0.266
+(0.380)
+0.0943
+(0.0496)
+0.03
+0.44
+-0.00360
+(0.00219)
+
+Intermediate
+75
+0.587
+(0.433)
+-0.00423
+(0.05484)
+-0.01
+0.41
+0.00017
+(0.00218)
+
+OECD
+22
+3.69
+(0.68)
+-0.341
+(0.079)
+0.46
+0.18
+0.0167
+(0.0023)
+
+Note. Standard errors are in parentheses. Y60 is GDP per working-age person in 1960.
+
+essentially zero. There is no tendency for poor countries to grow
+faster on average than rich countries.
+Table III does show, however, that there is a significant
+tendency toward convergence in the OECD sample. The coefficient
+on the initial level of income per capita is significantly negative, and
+the adjusted R2 of the regression is 0.46. This result confirms the
+findings of Dowrick and Nguyen [1989], among others.
+Table IV adds our measures of the rates of investment and
+population growth to the right-hand side of the regression. In all
+three samples the coefficient on the initial level of income is now
+significantly negative; that is, there is strong evidence of convergence. Moreover, the inclusion of investment and population
+growth rates improves substantially the fit of the regression. Table
+V adds our measure of human capital to the right-hand side of the
+regression in Table IV. This new variable further lowers the
+coefficient on the initial level of income, and it again improves the
+fit of the regression.
+Figure I presents a graphical demonstration of the effect of
+adding measures of population growth and accumulation of human
+and physical capital to the usual "convergence picture," first
+presented by Romer [1987]. The top panel presents a scatterplot
+for our intermediate sample of the average annual growth rate of
+income per capita from 1960 to 1985 against the log of income per
+capita in 1960. Clearly, there is no evidence that countries that
+start off poor tend to grow faster. The second panel of the figure
+
+426
+
+QUARTERLYJOURNAL OF ECONOMICS
+TABLE IV
+TESTS FOR CONDITIONALCONVERGENCE
+
+Dependent variable: log difference GDP per working-age person 1960-1985
+Sample:
+Observations:
+CONSTANT
+ln(Y60)
+ln(I/GDP)
+ln(n + g + 8)
+R72
+s.e.e.
+Implied X
+
+Non-oil
+98
+1.93
+(0.83)
+-0.141
+(0.052)
+0.647
+(0.087)
+-0.299
+(0.304)
+0.38
+0.35
+0.00606
+(0.00182)
+
+Intermediate
+75
+2.23
+(0.86)
+-0.228
+(0.057)
+0.644
+(0.104)
+-0.464
+(0.307)
+0.35
+0.33
+0.0104
+(0.0019)
+
+OECD
+22
+2.19
+(1.17)
+-0.351
+(0.066)
+0.392
+(0.176)
+-0.753
+(0.341)
+0.62
+0.15
+0.0173
+(0.0019)
+
+Note. Standard errors are in parentheses. Y60 is GDP per working-age person in 1960. The investment and
+population growth rates are averages for the period 1960-1985. (g + 8) is assumed to be 0.05.
+
+TABLE V
+TESTS FOR CONDITIONAL CONVERGENCE
+
+Dependent variable: log difference GDP per working-age person 1960-1985
+Sample:
+Observations:
+CONSTANT
+ln(Y60)
+ln(I/GDP)
+ln(n + g + 8)
+ln(SCHOOL)
+R2
+s.e.e.
+Implied X
+
+Non-oil
+98
+3.04
+(0.83)
+-0.289
+(0.062)
+0.524
+(0.087)
+-0.505
+(0.288)
+0.233
+(0.060)
+0.46
+0.33
+0.0137
+(0.0019)
+
+Intermediate
+75
+3.69
+(0.91)
+-0.366
+(0.067)
+0.538
+(0.102)
+-0.551
+(0.288)
+0.271
+(0.081)
+0.43
+0.30
+0.0182
+(0.0020)
+
+OECD
+22
+2.81
+(1.19)
+-0.398
+(0.070)
+0.335
+(0.174)
+-0.844
+(0.334)
+0.223
+(0.144)
+0.65
+0.15
+0.0203
+(0.0020)
+
+Note. Standard errors are in parentheses. Y60 is GDP per working-age person in 1960. The investment and
+population growth rates are averages for the period 1960-1985. (g + 8) is assumed to be 0.05. SCHOOL is the
+average percentage of the working-age population in secondary school for the period 1960-1985.
+
+THE EMPIRICS OF ECONOMICGROWTH
+
+A.
+
+Unconditional
+0
+
+co 66
+(0
+Q) 4
+--
+
+427
+
+~~00
+
+22
+
+-~0
+
+0 0
+
+00
+
+Oo
+0O
+
+0
+~~~~~0
+
+o
+
+0
+
+R
+
+?
+
+0
+
+o
+
+0
+
+0
+
+00 Oo0
+
+6,5
+
+7,5
+
+0
+
+0
+
+? -2
+5,5
+
+s
+
+8,5
+
+9.5
+
+10.5
+
+Log output per working age adult:1960
+B.
+
+Conditionalon saving and populationgrowth
+
+~~
+~~0 0
+0
+0
+o0c~
+O? ???0 08 8
+
+6
+
+060
+
+W, 4 _CP
+=
+
+2
+
+o
+
+020
+
+0
+
+o
+
+D
+
+0
+
+0
+
+5s,5
+
+6.5
+
+7, 5
+
+8.5
+
+9.5
+
+10,5
+
+Log output per working age adult:1960
+LO
+
+C.Conditionalon saving, populationgrowthand humancapital
+6
+0~~~~~~
+
+0
+
+?
+2 0~~~~~~
+
+?
+w
+
+?
+
+O??b 9
+
+6.5
+
+7.5
+
+0
+
+lb8
+
+-2
+5.5
+
+8.5
+
+9.5
+
+Log output per working age adult:1960
+FIGUREI
+
+Unconditional
+versusConditional
+Convergence
+
+10.5
+
+428
+
+QUARTERLYJOURNAL OF ECONOMICS
+
+partials out the logs of the investment rate and (n + g + 5) from
+both the income level and growth rate variables. This figure shows
+that if countries did not vary in their investment and population
+growth rates, there would be a strong tendency for poor countries
+to grow faster than rich ones. The third panel of Figure I partials
+out our human-capital variable in addition to investment and
+population growth rates; the tendency toward convergence is now
+even stronger.
+The results in Tables IV and V are notable not only for the
+finding of convergence, but also for the rate at which convergence
+occurs. The implied values of X, the parameter governing the speed
+of convergence, are derived from the coefficient on In (Y60). The
+values in Table IV are much smaller than the textbook Solow
+model predicts. Yet the estimates in Table V are closer to what the
+augmented Solow model predicts, for two reasons. First, the
+augmented model predicts a slower rate of convergence than the
+model without human capital. Second, the empirical results including human capital imply a faster rate of convergence than the
+empirical results without human capital. Hence, once again, the
+inclusion of human capital can help explain some results that
+appear anomalous from the vantage point of the textbook Solow
+model.
+Table VI presents estimates of equation (16) imposing the
+restriction that the coefficients on ln(sk), ln(sh), and ln(n + g + 5)
+sum to zero. We find that this restriction is not rejected and that
+imposing it has little effect on the coefficients. The last lines in
+Table VI present the implied values of a and ,. The estimates of a
+range from 0.38 to 0.48, and the estimates of ,Bare 0.23 in all three
+samples. Compared with the results in Table II, these regressions
+give a somewhat larger weight to physical capital and a somewhat
+smaller weight to human capital.
+In contrast to the results in Tables I through IV, the results for
+the OECD sample in Tables V and VI are similar to those for the
+other samples. An interpretation that reconciles the similarity
+across samples here and the dissimilarity in the earlier specifications is that departures from steady state represent a larger share
+of cross-country variation in income per capita for the OECD than
+for the broader samples. If the OECD countries are far from their
+steady states, then population growth and capital accumulation
+have not yet had their full impact on standards of living; hence, we
+obtain lower estimated coefficients and lower R 2's for the OECD in
+
+429
+
+THE EMPIRICS OF ECONOMICGROWTH
+TABLEVI
+TESTS FOR CONDITIONAL CONVERGENCE,
+
+RESTRICTED REGRESSION
+
+Dependentvariable:log differenceGDP per working-ageperson 1960-1985
+Sample:
+Observations:
+CONSTANT
+ln(Y60)
+ln(I/GDP) - ln(n + g + 5)
+
+Non-oil
+98
+2.46
+(0.48)
+-0.299
+(0.061)
+
+Intermediate
+75
+3.09
+(0.53)
+-0.372
+(0.067)
+
+OECD
+22
+3.55
+(0.63)
+-0.402
+(0.069)
+
+0.500
+
+0.506
+
+0.396
+
+(0.082)
+
+(0.095)
+
+(0.152)
+
+ln(SCHOOL) - ln(n + g + 5)
+
+0.238
+
+0.266
+
+0.236
+
+R2
+s.e.e.
+
+(0.060)
+0.46
+0.33
+
+(0.080)
+0.44
+0.30
+
+(0.141)
+0.66
+0.15
+
+0.40
+0.0142
+(0.0019)
+0.48
+(0.07)
+0.23
+(0.05)
+
+0.42
+0.0186
+(0.0019)
+0.44
+(0.07)
+0.23
+(0.06)
+
+0.47
+0.0206
+(0.0020)
+0.38
+(0.13)
+0.23
+(0.11)
+
+Test of restriction:
+p-value
+ImpliedX
+Implied(x
+Implied 13
+
+Note. Standard errors are in parentheses. Y60 is GDP per working-age person in 1960. The investment and
+population growth rates are averages for the period 1960-1985. (g + 5) is assumed to be 0.05. SCHOOL is the
+average percentage of the working-age population in secondary school for the period 1960-1985.
+
+specifications that do not consider out-of-steady-state dynamics.
+Similarly, the greater importance of departures from steady state
+for the OECD would explain the finding of greater unconditional
+convergence. We find this interpretation plausible: World War II
+surely caused large departures from the steady state, and it surely
+had larger effects on the OECD than on the rest of the world. With
+a value of X of 0.02, almost half of the departure from steady state
+in 1945 would have remained by the end of our sample in 1985.
+Overall, our interpretation of the evidence on convergence
+contrasts sharply with that of endogenous-growth advocates. In
+particular, we believe that the study of convergence does not show
+a failure of the Solow model. After controlling for those variables
+that the Solow model says determine the steady state, there is
+substantial convergence in income per capita. Moreover, convergence occurs at approximately the rate that the model predicts.
+
+430
+
+QUARTERLYJOURNAL OF ECONOMICS
+
+IV. INTEREST RATE DIFFERENTIALS AND CAPITAL MOVEMENTS
+
+Recently, several economists, including Lucas [1988], Barro
+[1989], and King and Rebelo [1989], have emphasized an objection
+to the Solow model in addition to those we have addressed so far:
+they argue that the model fails to explain either rate-of-return
+differences or international capital flows. In the models of Sections
+I and II, the steady-state marginal product of capital, net of
+depreciation, is
+(17)
+
+MPK- 8 = u(n+ g + 8Sk
+
+Thus, the marginal product of capital varies positively with the
+population growth rate and negatively with the saving rate.
+Because the cross-country differences in saving and population
+growth rates are large, the differences in rates of return should also
+be large. For example, if at = 1/3, 8 = 0.03, and g = 0.02, then the
+mean of the steady-state net marginal product is 0.12 in the
+intermediate sample, and the standard deviation is 0.08.13
+Two related facts seem inconsistent with these predictions.
+First, observed differentials in real interest rates appear smaller
+than the predicted differences in the net marginal product of
+capital. Second, as Feldstein and Horioka [1980] first documented,
+countries with high saving rates have high rates of domestic
+investment rather than large current account surpluses: capital
+does not flow from high-saving countries to low-saving countries.
+Although these two facts indeed present puzzles to be resolved,
+it is premature to view them as a basis for rejecting the Solow
+model. The Solow model predicts that the marginal product of
+capital will be high in low-saving countries, but it does not
+necessarily predict that real interest rates will also be high. One
+can infer the marginal product of capital from real interest rates on
+financial assets only if investors are optimizing and capital markets
+are perfect. Both of these assumptions are questionable. It is
+13. There is an alternative way of obtaining the marginal product of capital,
+which applies even outside of the steady state but requires an estimate of I and the
+assumption of no country-specific shifts to the production function. If one assumes
+that the returns on human and physical capital are equalized within each country,
+then one can show that the MPK is proportional toy(a+P-1)/(a+P). Therefore, for the
+textbook Solow model in which a = 1/3and I = 0, the MPK is inversely proportional
+to the square of output. As King and Rebelo [1989] and others have noted, the
+implied differences in rates of return across countries are incredibly large. Yet if a =
+0 = 1/3, then the MPK is inversely proportional to the square root of output. In this
+case, the implied cross-country differences in the MPK are much smaller and are
+similar to those obtained with equation (17).
+
+THE EMPIRICS OF ECONOMIC GROWTH
+
+431
+
+possible that some of the most productive investments in poor
+countries are in public capital, and that the behavior of the
+governments of poor countries is not socially optimal. In addition,
+it is possible that the marginal product of private capital is also
+high in poor countries, yet those economic agents who could make
+the productive investments do not do so because they face financing constraints or because they fear future expropriation.
+Some evidence for this interpretation comes from examining
+international variation in the rate of profit. If capital earns its
+marginal product, then one can measure the marginal product of
+capital as
+
+MPK=Ky
+That is, the return to capital equals capital's share in income (a)
+divided by the capital-output ratio (K/Y). The available evidence
+indicates that capital's share is roughly constant across counties.
+Sachs [1979, Table 3] presents factor shares for the G-7 countries.
+His figures show that variation in these shares across countries
+and over time is small.'4 By contrast, capital-output ratios vary
+substantially across countries: accumulating the investment data
+from Summers and Heston [1988] to produce estimates of the
+capital stock, one finds that low-saving countries have capitaloutput ratios near one and high-saving countries have capitaloutput ratios near three. Thus, direct measurement of the profit
+rate suggests that there is large international variation in the
+return to capital.
+The available evidence also indicates that expropriation risk is
+one reason that capital does not move to eliminate these differences
+in the profit rate. Williams [1975] examines the experience of
+foreign investment in developing countries from 1956 to 1972. He
+reports that, during this period, governments nationalized about
+19 percent of foreign capital, and that compensation averaged
+about 41 percent of book value. It is hard to say precisely how much
+of the observed differences in profit rates this expropriation risk
+can explain. Yet, in view of this risk, it would be surprising if the
+
+14. In particular, there is no evidence that rapid capital accumulation raises
+capital's share. Sachs [1979] reports that Japan's rapid accumulation in the 1960s
+and 1970s, for example, was associated with a rise in labor's share from 69 percent
+in 1962-1964 to 77 percent in 1975-1978. See also Atkinson [1975, p. 167].
+
+432
+
+QUARTERLY JOURNAL OF ECONOMICS
+
+profit rates were not at least somewhat higher in developing
+countries.
+Further evidence on rates of return comes from the large
+literature on international differences in the return to education.
+Psacharopoulos [1985] summarizes the results of studies for over
+60 countries that analyze the determinants of labor earnings using
+micro data. Because forgone wages are the primary cost of education, the rate of return is roughly the percentage increase in the
+wage resulting from an additional year of schooling. He reports
+that the poorer the country, the larger the return to schooling.
+Overall, the evidence on the return to capital appears consistent with the Solow model. Indeed, one might argue that it
+supports the Solow model against the alternative of endogenousgrowth models. Many endogenous-growth models assume constant
+returns to scale in the reproducible factors of production; they
+therefore imply that the rate of return should not vary with the
+level of development. Yet direct measurement of profit rates and
+returns to schooling indicates that the rate of return is much
+higher in poor countries.
+
+CONCLUSION
+
+We have suggested that international differences in income per
+capita are best understood using an augmented Solow growth
+model. In this model output is produced from physical capital,
+human capital, and labor, and is used for investment in physical
+capital, investment in human capital, and consumption. One
+production function that is consistent with our empirical results is
+Y= K1/3H1"31/3.
+This model of economic growth has several implications. First,
+the elasticity of income with respect to the stock of physical capital
+is not substantially different from capital's share in income. This
+conclusion indicates, in contrast to Romer's suggestion, that
+capital receives approximately its social return. In other words,
+there are not substantial externalities to the accumulation of
+physical capital.
+Second, despite the absence of externalities, the accumulation
+of physical capital has a larger impact on income per capita than
+the textbook Solow model implies. A higher saving rate leads to
+higher income in steady state, which in turn leads to a higher level
+of human capital, even if the rate of human-capital accumulation is
+
+THE EMPIRICS OF ECONOMIC GROWTH
+
+433
+
+unchanged. Higher saving thus raises total factor productivity as it
+is usually measured. This difference between the textbook model
+and the augmented model is quantitatively important. The textbook Solow model with a capital share of one third indicates that
+the elasticity of income with respect to the saving rate is one half.
+Our augmented Solow model indicates that this elasticity is one.
+Third, population growth also has a larger impact on income
+per capita than the textbook model indicates. In the textbook model
+higher population growth lowers income because the available
+capital must be spread more thinly over the population of workers.
+In the augmented model human capital also must be spread more
+thinly, implying that higher population growth lowers measured
+total factor productivity. Again, this effect is important quantitatively. In the textbook model with a capital share of one third, the
+elasticity of income per capita with respect to n + g + 8 is - '/2. In
+our augmented model this elasticity is -2.
+Fourth, our model has implications for the dynamics of the
+economy when the economy is not in steady state. In contrast to
+endogenous-growth models, this model predicts that countries
+with similar technologies and rates of accumulation and population
+growth should converge in income per capita. Yet this convergence
+occurs more slowly than the textbook Solow model suggests. The
+textbook Solow model implies that the economy reaches halfway to
+steady state in about 17 years, whereas our augmented Solow
+model implies that the economy reaches halfway in about 35 years.
+More generally, our results indicate that the Solow model is
+consistent with the international evidence if one acknowledges the
+importance of human as well as physical capital. The augmented
+Solow model says that differences in saving, education, and population growth should explain cross-country differences in income per
+capita. Our examination of the data indicates that these three
+variables do explain most of the international variation.
+Future research should be directed at explaining why the
+variables taken to be exogenous in the Solow model vary so much
+from country to country. We expect that differences in tax policies,
+education policies, tastes for children, and political stability will
+end up among the ultimate determinants of cross-country differences. We also expect that the Solow model will provide the best
+framework for understanding how these determinants influence a
+country's level of economic well-being.
+
+434
+
+QUARTERLY JOURNAL OF ECONOMICS
+APPENDIX
+
+Sample
+
+GDP/
+adult
+
+Growth
+1960-1985
+
+Number
+
+Country
+
+N I 0
+
+1960
+
+working
+1985 GDP age pop
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+
+Algeria
+Angola
+Benin
+Botswana
+Burkina Faso
+Burundi
+Cameroon
+CentralAfr. Rep.
+Chad
+Congo, Peop. Rep.
+Egypt
+Ethiopia
+Gabon
+Gambia, The
+Ghana
+Guinea
+Ivory Coast
+Kenya
+Lesotho
+Liberia
+Madagascar
+Malawi
+Mali
+Mauritania
+Mauritius
+Morocco
+Mozambique
+Niger
+Nigeria
+Rwanda
+Senegal
+Sierra Leone
+Somalia
+S. Africa
+Sudan
+Swaziland
+Tanzania
+Togo
+Tunisia
+Uganda
+Zaire
+Zambia
+Zimbabwe
+
+1 1 0
+1 0 0
+1 0 0
+1 1 0
+1 0 0
+1 0 0
+1 1 0
+1 0 0
+1 0 0
+1 0 0
+1 0 0
+1 1 0
+0 0 0
+0 0 0
+1 0 0
+0 0 0
+1 1 0
+1 1 0
+0 0 0
+1 0 0
+1 1 0
+1 1 0
+1 1 0
+1 0 0
+1 0 0
+1 1 0
+1 0 0
+1 0 0
+1 1 0
+1 0 0
+1 1 0
+1 0 0
+1 0 0
+1 1 0
+1 0 0
+0 0 0
+1 1 0
+1 0 0
+1 1 0
+1 0 0
+1 0 0
+1 1 0
+1 1 0
+
+2485
+1588
+1116
+959
+529
+755
+889
+838
+908
+1009
+907
+533
+1307
+799
+1009
+746
+1386
+944
+431
+863
+1194
+455
+737
+777
+1973
+1030
+1420
+539
+1055
+460
+1392
+511
+901
+4768
+1254
+817
+383
+777
+1623
+601
+594
+1410
+1187
+
+4.8
+4371
+1171
+0.8
+2.2
+1071
+3671
+8.6
+2.9
+857
+1.2
+663
+5.7
+2190
+1.5
+789
+462 -0.9
+6.2
+2624
+6.0
+2160
+2.8
+608
+5350
+7.0
+3.6
+1.0
+727
+2.2
+869
+1704
+5.1
+1329
+4.8
+1483
+6.8
+944
+3.3
+1.4
+975
+4.8
+823
+2.1
+710
+1038
+3.3
+4.2
+2967
+5.8
+2348
+1.4
+1035
+4.4
+841
+2.8
+1186
+4.5
+696
+2.5
+1450
+3.4
+805
+1.8
+657
+3.9
+7064
+1.8
+1038
+7.2
+5.3
+710
+3.4
+978
+5.6
+3661
+3.5
+667
+412
+0.9
+2.1
+1217
+5.1
+2107
+
+2.6
+2.1
+2.4
+3.2
+0.9
+1.7
+2.1
+1.7
+1.9
+2.4
+2.5
+2.3
+1.4
+2.3
+1.6
+4.3
+3.4
+1.9
+3.0
+2.2
+2.4
+2.2
+2.2
+2.6
+2.5
+2.7
+2.6
+2.4
+2.8
+2.3
+1.6
+3.1
+2.3
+2.6
+2.9
+2.5
+2.4
+3.1
+2.4
+2.7
+2.8
+
+I/Y SCHOOL
+
+24.1
+5.8
+10.8
+28.3
+12.7
+5.1
+12.8
+10.5
+6.9
+28.8
+16.3
+5.4
+22.1
+18.1
+9.1
+10.9
+12.4
+17.4
+12.6
+21.5
+7.1
+13.2
+7.3
+25.6
+17.1
+8.3
+6.1
+10.3
+12.0
+7.9
+9.6
+10.9
+13.8
+21.6
+13.2
+17.7
+18.0
+15.5
+13.8
+4.1
+6.5
+31.7
+21.1
+
+4.5
+1.8
+1.8
+2.9
+0.4
+0.4
+3.4
+1.4
+0.4
+3.8
+7.0
+1.1
+2.6
+1.5
+4.7
+2.3
+2.4
+2.0
+2.5
+2.6
+0.6
+1.0
+1.0
+7.3
+3.6
+0.7
+0.5
+2.3
+0.4
+1.7
+1.7
+1.1
+3.0
+2.0
+3.7
+0.5
+2.9
+4.3
+1.1
+3.6
+2.4
+4.4
+
+435
+
+THE EMPIRICS OF ECONOMICGROWTH
+APPENDIX
+(CONTINUED)
+
+Sample
+
+Number
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+
+Country
+
+N I 0
+
+GDP/
+adult
+
+1960
+
+Growth
+1960-1985
+
+I/Y SCHOOL
+
+working
+1985 GDP age pop
+
+0 0 0 1224
+Afghanistan
+0 0 0
+Bahrain
+1 1 0
+846 1221
+Bangladesh
+1 1 0
+Burma
+517 1031
+1 1 0 3085 13,372
+Hong Kong
+India
+1 1 0
+978 1339
+Iran
+0 0 0 3606 7400
+0 0 0 4916 5626
+Iraq
+1 1 0 4802 10,450
+Israel
+Japan
+1 1 1 3493 13,893
+1 1 0 2183 4312
+Jordan
+1 1 0 1285 4775
+Korea, Rep. of
+Kuwait
+0 0 0 77,881 25,635
+1 1 0 2154 5788
+Malaysia
+1 0 0
+833
+974
+Nepal
+Oman
+0 0 0
+15,584
+Pakistan
+1 1 0 1077 2175
+1 1 0 1668 2430
+Philippines
+Saudi Arabia
+0 0 0 6731 11,057
+1 1 0 2793 14,678
+Singapore
+Sri Lanka
+1 1 0 1794 2482
+1 1 0 2382 6042
+Syrian Arab Rep.
+Taiwan
+0 0 0
+1 1 0 1308 3220
+Thailand
+U. Arab Emirates
+0 0 0
+18,513
+Yemen
+0 0 0
+1918
+Austria
+1 1 1 5939 13,327
+1 1 1 6789 14,290
+Belgium
+0 0 0 2948
+Cyprus
+1 1 1 8551 16,491
+Denmark
+Finland
+1 1 1 6527 13,779
+France
+1 1 1 7215 15,027
+Germany, Fed. Rep. 1 1 1 7695 15,297
+1 1 1 2257 6868
+Greece
+0 0 0 8091
+Iceland
+1 1 1 4411 8675
+Ireland
+1 1 1 4913 11,082
+Italy
+0 0 0 9015
+Luxembourg
+0 0 0 2293
+Malta
+1 1 1 7689 13,177
+Netherlands
+1 1 1 7938 19,723
+Norway
+
+1.6
+4.0
+4.5
+8.9
+3.6
+6.3
+3.8
+5.9
+6.8
+5.4
+7.9
+2.4
+7.1
+2.6
+5.8
+4.5
+6.1
+9.2
+3.7
+6.7
+8.0
+6.7
+
+3.6
+3.5
+5.2
+3.2
+3.7
+3.9
+3.3
+5.1
+3.9
+3.8
+3.8
+2.8
+6.0
+3.6
+4.3
+
+2.6
+1.7
+3.0
+2.4
+3.4
+3.2
+2.8
+1.2
+2.7
+2.7
+6.8
+3.2
+2.0
+3.3
+3.0
+3.0
+4.1
+2.6
+2.4
+3.0
+3.1
+2.5
+0.4
+0.5
+0.6
+0.7
+1.0
+0.5
+0.7
+1.1
+0.6
+
+1.4
+0.7
+
+6.9
+30.0
+6.8
+11.4
+19.9
+16.8
+18.4
+16.2
+28.5
+36.0
+17.6
+22.3
+9.5
+23.2
+5.9
+15.6
+12.2
+14.9
+12.8
+32.2
+14.8
+15.9
+20.7
+18.0
+26.5
+17.2
+23.4
+23.4
+31.2
+26.6
+36.9
+26.2
+28.5
+29.3
+29.0
+25.9
+24.9
+26.9
+30.9
+25.8
+29.1
+
+0.9
+12.1
+3.2
+3.5
+7.2
+5.1
+6.5
+7.4
+9.5
+10.9
+10.8
+10.2
+9.6
+7.3
+2.3
+2.7
+3.0
+10.6
+3.1
+9.0
+8.3
+8.8
+4.4
+0.6
+8.0
+9.3
+8.2
+10.7
+11.5
+8.9
+8.4
+7.9
+10.2
+11.4
+7.1
+5.0
+7.1
+10.7
+10.0
+
+436
+
+QUARTERLY JOURNAL OF ECONOMICS
+APPENDIX
+(CONTINUED)
+
+Sample
+
+Number
+
+Country
+
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+
+Portugal
+Spain
+Sweden
+Switzerland
+Turkey
+United Kingdom
+Barbados
+Canada
+Costa Rica
+Dominican Rep.
+El Salvador
+Guatemala
+Haiti
+Honduras
+Jamaica
+Mexico
+Nicaragua
+Panama
+Trinidad & Tobago
+United States
+Argentina
+Bolivia
+Brazil
+Chile
+Colombia
+Ecuador
+Guyana
+Paraguay
+Peru
+Surinam
+Uruguay
+Venezuela
+Australia
+Fiji
+Indonesia
+New Zealand
+Papua New Guinea
+
+N I 0
+
+GDPI
+adult
+
+1960
+
+Growth
+1960-1985
+
+I/Y SCHOOL
+
+working
+1985 GDP age pop
+
+1 1 1 2272 5827
+1 1 1 3766 9903
+1 1 1 7802 15,237
+1 1 1 10,308 15,881
+1 1 1 2274 4444
+1 1 1 7634 13,331
+0 0 0 3165
+1 1 1 10,286 17,935
+1 1 0 3360 4492
+1 1 0 1939 3308
+1 1 0 2042 1997
+1 1 0 2481 3034
+1 1 0 1096 1237
+1 1 0 1430 1822
+1 1 0 2726 3080
+1 1 0 4229 7380
+1 1 0 3195 3978
+1 1 0 2423 5021
+1 1 0 9253 11,285
+1 1 1 12,362 18,988
+1 1 0 4852 5533
+1 1 0 1618 2055
+1 1 0 1842 5563
+1 1 0 5189 5533
+1 1 0 2672 4405
+1 1 0 2198 4504
+0 0 0 2761
+1 1 0 1951 3914
+1 1 0 3310 3775
+0 0 0 3226
+1 1 0 5119 5495
+1 1 0 10,367 6336
+1 1 1 8440 13,409
+0 0 0 3634
+1 1 0
+879 2159
+1 1 1 9523 12,308
+1 0 0 1781 2544
+
+4.4
+4.9
+3.1
+2.5
+5.2
+2.5
+4.8
+4.2
+4.7
+5.1
+3.3
+3.9
+1.8
+4.0
+2.1
+5.5
+4.1
+5.9
+2.7
+3.2
+2.1
+3.3
+7.3
+2.6
+5.0
+5.7
+1.1
+5.5
+3.5
+4.5
+0.9
+1.9
+3.8
+4.2
+5.5
+2.7
+3.5
+
+0.6
+1.0
+0.4
+0.8
+2.5
+0.3
+2.0
+3.5
+2.9
+3.3
+3.1
+1.3
+3.1
+1.6
+3.3
+3.3
+3.0
+1.9
+1.5
+1.5
+2.4
+2.9
+2.3
+3.0
+2.8
+2.7
+2.9
+0.6
+3.8
+2.0
+1.9
+1.7
+2.1
+
+22.5
+17.7
+24.5
+29.7
+20.2
+18.4
+19.5
+23.3
+14.7
+17.1
+8.0
+8.8
+7.1
+13.8
+20.6
+19.5
+14.5
+26.1
+20.4
+21.1
+25.3
+13.3
+23.2
+29.7
+18.0
+24.4
+32.4
+11.7
+12.0
+19.4
+11.8
+11.4
+31.5
+20.6
+13.9
+22.5
+16.2
+
+5.8
+8.0
+7.9
+4.8
+5.5
+8.9
+12.1
+10.6
+7.0
+5.8
+3.9
+2.4
+1.9
+3.7
+11.2
+6.6
+5.8
+11.6
+8.8
+11.9
+5.0
+4.9
+4.7
+7.7
+6.1
+7.2
+11.7
+4.4
+8.0
+8.1
+7.0
+7.0
+9.8
+8.1
+4.1
+11.9
+1.5
+
+Note. Growth rates are in percent per year. IIY is investment as a percentage of GDP, and SCHOOL is the
+percentage of the working-age population in secondary school, both averaged for the period 1960-1985. N, I, and
+0 denote the non-oil, intermediate, and OECD samples.
+
+THE EMPIRICS OF ECONOMICGROWTH
+
+437
+
+HARVARDUNIVERSITY
+UNIVERSITYOF CALIFORNIAAT BERKELEY
+BROWNUNIVERSITY
+
+REFERENCES
+Atkinson, Anthony, The Economics of Inequality (Oxford: Clarendon Press, 1975).
+Azariadis, Costas, and Allan Drazen, "Threshold Externalities in Economic
+Development," Quarterly Journal of Economics, CV (1990), 501-26.
+Barro, Robert J., "Economic Growth in a Cross Section of Countries," NBER
+Working Paper 3120, September 1989.
+De Long, J. Bradford, "Productivity Growth, Convergence, and Welfare: Comment,"
+American Economic Review, LXXVIII (1988), 1138-54.
+Dowrick, Steve, and Duc-Tho Nguyen, "OECD Comparative Economic Growth
+1950-85: Catch-Up and Convergence," American Economic Review, LXXIX
+(1989),1010-30.
+Easterlin, Richard, "Why Isn't the Whole World Developed?" Journal of Economic
+History, XLI (1981),1-20.
+Feldstein, Martin, and Charles Horioka, "Domestic Saving and International
+Capital Flows," Economic Journal, XC (1980), 314-29.
+Kendrick, John W., The Formation and Stocks of Total Capital (New York:
+Columbia University for NBER, 1976).
+King, Robert G., and Sergio T. Rebelo, "Transitional Dynamics and Economic
+Growth in the Neoclassical Model," NBER Working Paper 3185, November
+1989.
+Krueger, Anne O., "Factor Endowments and per Capita Income Differences Among
+Countries," Economic Journal, LXXVIII (1968), 641-59.
+Lucas, Robert E. Jr., "On the Mechanics of Economic Development," Journal of
+Monetary Economics, XXII (1988), 3-42.
+Psacharopoulos, George, "Returns to Education: A Further International Update
+and Implications," Journal of Human Resources, XX (1985), 583-604.
+Rauch, James E., "The Question of International Convergence of per Capita
+Consumption: An Euler Equation Approach," mimeo, August 1988, University
+of California at San Diego.
+Romer, Paul, "Crazy Explanations for the Productivity Slowdown," NBER MacroeconomicsAnnual, 1987,163-210.
+Capital Accumulation in the Theory of Long Run Growth," Modern
+Business Cycle Theory, Robert J. Barro, ed. (Cambridge, MA: Harvard University Press, 1989a), pp. 51-127.
+"Human Capital and Growth: Theory and Evidence," NBER Working Paper
+3173, November 1989b.
+Sachs, Jeffrey D., "Wages, Profit, and Macroeconomic Adjustment: A Comparative
+Study," Brookings Papers on Economic Activity (1979:2), 269-332.
+Solow, Robert M., "A Contribution to the Theory of Economic Growth," Quarterly
+Journal of Economics, LXX (1956), 65-94.
+Summers, Robert, and Alan Heston, "A New Set of International Comparisons of
+Real Product and Price Levels Estimates for 130 Countries, 1950-85," Review
+of Income and Wealth, XXXIV (1988),1-26.
+Williams, M. L., "The Extent and Significance of Nationalization of Foreign-owned
+Assets in Developing Countries, 1956-1972," Oxford Economic Papers, XXVII
+(1975), 260-73.
+
+

@@ -1,0 +1,45 @@
+bank migration also offsets some of the decline in originations. The cost of capital requirements is a
+decline in bank profits and consumer surplus of higher-income individuals. In other words, tightening
+capital requirements trades off bank stability with welfare of high-income consumers and bank
+profits. The effect is asymmetric. As we show below, lowering capital requirements primarily
+operates on the balance sheet retention margin: it increases the share of mortgages retained on bank
+balance sheets, but would otherwise have little effect on mortgage origination. Raising capital
+requirements, on the other hand, operates both on the balance sheet retention margin and the shadow
+bank migration margin. It decreases the share of mortgages on bank balance sheets but increases the
+number of loans originated by shadow banks.
+Mortgage Origination and Redistribution
+Increasing and decreasing capital requirements have an asymmetric impact on mortgage origination.
+Cutting capital requirements by half, to 3%, would result in a very modest increase of $16 billion in
+the total volume of mortgage origination (to $1,779 billion), driven primarily by increases in jumbo
+lending. The market structure of lending would be relatively unchanged and jumbo rates would
+decline by 15 bps. Both high-income borrowers and banks benefit from loosening capital
+requirements, but the benefits are small, with consumer surplus increasing by $3 billion 18 and lender
+profits increasing by $3 billion. These gains in consumer surplus fall primarily to high-income
+individuals, with individuals in the top income quartile gaining roughly $47 in consumer welfare,
+compared to $6 for individuals in the bottom income quartile.
+Increasing capital requirements, on the other hand, causes significant changes to mortgage
+origination. Consider increasing the capital requirement from 6% to 9%. Total mortgage originations
+decline somewhat, by $54 billion, but results in a large shift from jumbo to conforming mortgages,
+and from banks to shadow banks. Jumbo origination shrinks by $151 billion, or 40%, relative to the
+market with capital requirement of 6%. This decrease in jumbo mortgage supply results in a 44 basis
+point increase in jumbo rates relative to the baseline jumbo interest rate of 5.05%, while the
+conforming rate remains virtually unchanged at 4.88%, resulting in a large increase in the jumbo
+spread. These increases in interest rates are driven almost entirely by increases in banks’ marginal
+costs of originating jumbo loans on balance sheet rather than changes in markups, and these marginal
+costs increase by 46 basis points over the baseline markup of 1.6 pp.
+Approximately two-thirds of borrowers who would have obtained jumbo loans still obtain mortgages,
+with about one-third choosing not to borrow. $97 billion worth of mortgages shift to the conforming
+market. Banks and shadow banks each capture approximately $49 billion of these originations,
+resulting in a 4 pp increase in the share of loans originated by shadow banks. In other words, the 9.5%
+decline in bank lending substantially overestimates the consequences of increasing capital
+requirements on mortgage origination, which declines by 3% only. This migration away from jumbo
+lending at banks and towards conforming lending at shadow banks illustrates the importance of the
+shadow bank migration margin. Increased capital requirement results in a $54 billion net decrease in
+
+18
+
+We compute consumer surplus as a lifetime present-value dollar equivalent measure of expected utility (integrated over
+consumer specific shocks 𝜖𝜖𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖 ), assuming a subjective discount rate of 4.00% over a period of 10 years.
+29
+
+

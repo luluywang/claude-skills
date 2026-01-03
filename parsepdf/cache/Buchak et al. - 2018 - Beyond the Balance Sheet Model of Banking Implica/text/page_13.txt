@@ -1,0 +1,41 @@
+III.A.3 Summary of Aggregate Facts
+The aggregate facts we document are consistent with the idea that banks and shadow banks differ in
+their ability to extend jumbo and conforming mortgages, resulting in market segmentation. We argue
+that this market segmentation arises because jumbo mortgages are mainly kept on the balance sheets
+of lenders. Since shadow banks do not have much balance sheet capacity, they mainly originate to
+distribute, which is limited to the conforming market.
+Such market segmentation implies that a decline in the balance sheet capacity of the banking system
+leads to a relatively larger contraction in traditional jumbo mortgage supply through two channels.
+First, shadow banks, lacking balance sheet capacity, respond to rising bank constraints by expanding
+in the conforming market, but cannot do so in the jumbo market. Second, traditional banks, lacking
+balance sheet capacity, tilt their activity towards conforming originations and away from retaining
+loans on balance sheet. The larger contraction in the supply of jumbo mortgages leads to an increase
+in their relative price, i.e., an increase in the jumbo-conforming spread.
+III.B Micro evidence
+In this section, we provide micro-level evidence consistent with the aggregate facts, which narrows
+down the potential interpretations of the forces driving the aggregate data.
+III.B.1 Market Segmentation at the Conforming Loan Limit
+We exploit the conforming loan size limit discontinuity to reject alternative explanations of market
+segmentation between banks and shadow banks. One alternative explanation of traditional banks’
+large market share in the jumbo market is that wealthy borrowers who are more likely to take up
+jumbo mortgages also have larger demand for other banking services. In other words, the alternative
+explanation is that banks specialize in large loans, which also happen to be jumbo loans. As we
+discussed in Section II, there is a sharp loan amount cutoff to qualify as a conforming loan. Borrowers’
+demand for banking services should increase somewhat continuously with mortgage size, rather than
+jump exactly at the conforming cutoff. The ability to securitize a mortgage, on the other hand,
+discontinuously drops at the conforming loan amount. Thus, observing a discontinuous jump in the
+bank market share at the conforming limit would reject the demand alternative.
+We first confirm that the probability of a loan being retained on balance sheet indeed discretely jumps
+at the conforming loan limit. As Figure 4A shows, the fraction of loans retained on lenders’ balance
+sheets discontinuously jumps from about 25% just below the conforming loan limit to about 70% just
+above the conforming loan limit.
+To test whether banks specialize in large loans or in jumbo loans, we confirm that their market share
+discretely increases at the conforming loan limit in Figure 4B. Banks’ market share of loans just below
+the cutoff is roughly 65%, whereas bank market share above the cutoff is roughly 80%. The results
+suggest that banks have a comparative advantage in originating jumbo loans because these loans are
+difficult to sell.
+We next more formally test whether balance sheet financing share and bank market share discretely
+jump at the conforming loan limit discontinuity. We focus on mortgages within 1% of the conforming
+10
+
+

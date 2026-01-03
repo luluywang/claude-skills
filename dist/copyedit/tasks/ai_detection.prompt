@@ -1,0 +1,157 @@
+# Task: AI Detection (Punctuation, Structure & Language)
+
+**Scope:** AI-specific patterns ONLY. This task does NOT cover:
+- Wordiness/weak verbs (→ `word_choice.prompt`)
+- Sentence rhythm/monotony (→ `sentence_analysis.prompt`)
+- Passive voice issues (→ `sentence_analysis.prompt`)
+
+**Model:** Haiku (pattern recognition for both punctuation and language patterns)
+
+**Output:**
+- `notes/ai_detection.md` — Pattern identification (what was found)
+- `notes/simplifications.md` — Suggested fixes (stylistic, NOT auto-applied)
+
+**Output Mode:** APPEND — do not overwrite existing content
+
+**⚠️ These are SUGGESTIONS, not auto-fixes.** Unlike grammar errors, stylistic issues require author judgment.
+
+---
+
+## Section Format
+
+When analyzing a file, append to BOTH files:
+
+**ai_detection.md:**
+```markdown
+## [filename.tex]
+### Part A: Punctuation & Structural Tells
+[checklist items...]
+### Part B: Language Tells
+[checklist items...]
+```
+
+**simplifications.md:**
+```markdown
+## [filename.tex]
+[Proposed revisions with explanations — organized by priority]
+```
+
+---
+
+## Part A: Punctuation & Structural Tells
+
+### Patterns to Flag
+
+**Punctuation:**
+- Em-dash overuse: multiple `---` per paragraph (use rarely)
+- Excessive parentheticals
+- Artificial colons for drama
+
+**Lists & Enumeration:**
+- "One is... A second is... A third is..."
+- Artificial balance (exactly 3 items when 2 or 4 is natural)
+
+**Transitions:**
+- "Moreover," "Additionally," "Furthermore" at paragraph starts
+- "Critically, however" openers
+- "Notably," "Importantly" overuse
+
+**Template Structures:**
+- "Despite these challenges..."
+- "In conclusion / In summary / Overall" (formulaic endings)
+- "Challenges and future prospects" section endings
+- "Not only... but also..." constructions
+- Rule-of-three padding (artificial three-item lists beyond natural enumeration)
+- "From X to Y" flourishes
+
+---
+
+## Part B: Language Tells
+
+### Patterns to Flag
+
+**🚨 Smarmy Reframing (HIGH PRIORITY — very AI-typical):**
+- "It's not X, it's Y" constructions
+- "The question isn't... it's..."
+- "This isn't about... it's about..."
+- "The real issue isn't... it's..."
+- "What matters isn't... but rather..."
+
+These sound rhetorically clever but are overused by AI. Replace with direct statements.
+
+**Formulaic Openers:**
+- "This occurs because..."
+- "Put differently..."
+- "From a [X] perspective..."
+
+**Meta-Commentary & Collaboration Language:**
+- "The paper proceeds in three parts..."
+- "[Analysis] yields two main conclusions..."
+- "Let's walk through..."
+- "Below is a detailed overview..."
+- "As we can see..." / "As mentioned above..."
+- "It is important to remember..." (moralizing)
+- "It is worth noting that..." / "It bears mentioning..."
+
+**Hedging:**
+- "Our results suggest that" (when identification is credible)
+- "Is consistent with" (weak phrasing)
+- Overuse of "arguably," "potentially," "plausibly"
+
+**Over-Explanation:**
+- Explaining Econ 101 to field experts
+- Explaining the obvious
+
+**AI Vocabulary (flag when overused: 2+ occurrences or AI-typical context):**
+- align, crucial, delve, elaborate, emphasize, enhance
+- enduring, foster, garner, highlight, intricate, interplay
+- pivotal, showcase, tapestry, underscore, leverage, robust
+- nuanced, multifaceted, comprehensive, facilitate
+
+**Padding Phrases:**
+- "highlighting," "underscoring" (as sentence fillers)
+- "plays a pivotal role," "continues to captivate"
+- "serves as a testament to," "stands as a reminder"
+
+**Content Style:**
+- Exaggerating meaning, symbolism, or significance
+- Abstract platitudes instead of concrete facts/examples
+- Flowery or overly formal tone where casual fits
+- Didactic lines that moralize
+
+---
+
+## Output Format (Checklist)
+
+**CRITICAL:** Original and Proposed Revision must show COMPLETE SENTENCES — never truncate mid-sentence. This enables batch application via `apply_marked.prompt`.
+
+```markdown
+### - [ ] Lines X-Y: [Brief description]
+
+**Comment:** [Why this is AI-typical]
+
+**Original:**
+```
+[Full sentence(s) containing the issue — never fragments]
+```
+
+**Proposed Revision:**
+```
+[Complete revised sentence(s)]
+```
+
+**Why better:** [Explanation]
+```
+
+---
+
+## Quality Control
+
+- [ ] `ai_detection.md`: Pattern identification appended (not overwritten)
+- [ ] `simplifications.md`: Suggested fixes appended (not overwritten)
+- [ ] Section header `## [filename.tex]` in both files
+- [ ] Part A (punctuation/structure) comprehensive
+- [ ] Part B (language) comprehensive — especially smarmy reframing
+- [ ] Organized in reading order within each part
+- [ ] Each item has Comment/Original/Proposed/Why better
+- [ ] Fixes are SUGGESTIONS only — not auto-applied to .tex files

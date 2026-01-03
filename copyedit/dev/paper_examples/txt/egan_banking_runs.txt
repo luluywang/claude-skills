@@ -1,0 +1,3956 @@
+Chicago Booth Paper No. 15-33
+
+Deposit Competition and Financial Fragility: Evidence
+from the US Banking Sector
+Mark Egan
+University of Chicago
+
+Ali Hortaçsu
+University of Chicago Booth School of Business
+
+Gregor Matvos
+University of Chicago Booth School of Business and NBER
+
+Fama-Miller Center for Research in Finance
+The University of Chicago, Booth School of Business
+This paper also can be downloaded without charge from the
+Social Science Research Network Electronic Paper Collection
+
+Electroniccopy
+copy available
+available at:
+Electronic
+at:https://ssrn.com/abstract=2642946
+http://ssrn.com/abstract=2642946
+
+Deposit Competition and Financial Fragility: Evidence from the
+US Banking Sector
+Mark Egana , Ali Hortaçsua,c , and Gregor Matvosb,c∗
+March 11, 2015
+
+Abstract
+We develop a structural empirical model of the U.S. banking sector. Insured depositors and run-prone
+uninsured depositors choose between differentiated banks. Banks compete for deposits and endogenously
+default. The estimated demand for uninsured deposits declines with banks’ financial distress, which is not
+the case for insured deposits. We calibrate the supply side of the model. The calibrated model possesses
+multiple equilibria with bank-run features, suggesting that banks can be very fragile. We use our model
+to analyze proposed bank regulations. For example, our results suggest that a capital requirement below
+18% can lead to significant instability in the banking system.
+∗ We thank Victor Aguirregabiria, Robert Clark, Dean Corbae, Douglas Diamond, Lars Hansen, Ginger Jin, Anil Kashyap,
+Rafael Repullo, John Rust, Marc Rysman, David Scharfstein, Rob Vishny, and the seminar participants at Chicago Booth
+Microeconomics Lunch, Chicago Booth Finance Workshop, Chicago Money and Banking Seminar, Duke Univeristy, Harvard
+University, New York University, University of Tokyo, University of Utah, University of Calgary Empirical Microeconomics
+Workshop, Wharton Conference on Liquidity and Financial Crises, and the Econometric Society North America Meetings. The
+authors are from a: University of Chicago b: University of Chicago Booth School of Business, and c: NBER. All errors are our
+own.
+
+1
+
+Electroniccopy
+copy available
+available at:
+Electronic
+at:https://ssrn.com/abstract=2642946
+http://ssrn.com/abstract=2642946
+
+1
+
+Introduction
+
+The recent financial crisis has brought renewed attention to the stability of the banking sector. An extensive
+theoretical literature allows us to understand the mechanisms underlying banking (in)stability (Diamond
+Dybvig 1983, Goldstein and Pauzner 2005).1 These models, however, were not developed to assess whether
+the forces studied are in fact large enough to cause banking instability. We develop a quantitative model of
+the U.S. banking sector, which we take to a new data set covering the largest U.S. banks over the period
+2002-2013. The model features insured depositors, run-prone uninsured depositors, and endogenous default
+of differentiated banks. We first estimate demand for deposits and find that uninsured depositors leave
+distressed banks. We calibrate the supply side of the model and find that the uninsured deposit elasticity
+to bank default is large enough to introduce the possibility of multiple equilibria, suggesting that banks can
+be very fragile. We study how competition for deposits among banks affects the feedback between bank
+distress and deposits, and transmits shocks from one bank to the system. Last, we use our model to analyze
+the proposed bank regulatory changes and find that some regulations could exacerbate the instability of the
+system. Our results suggest that the capital requirement below 18% can lead to significant instability in the
+banking system, and that a requirement of 31% maximizes the welfare of the worst equilibrium.2
+Deposits represent over three quarters of funding of U.S. commercial banks (Hanson et al, 2014). Moreover, in the largest commercial banks, approximately half of deposits are uninsured. Uninsured deposits
+are frequently lost in cases of bank default,3 and are therefore potentially prone to runs. Figure 1 suggests
+that financial distress of banks affects their ability to attract uninsured deposits. We plot the relationship
+between the uninsured deposit market shares and financial distress for Citi Bank and JPMorgan Chase from
+2005 through 2010. As distress4 of Citi Bank increases relative to JPMorgan, Citi’s market share of uninsured deposits decreases and JPMorgan’s market share increases (Panel A). Note that the market shares
+of insured deposits, which should be insensitive to distress, show no such relationship (Panel B). The fact
+that uninsured deposits represent a substantial source of funding suggests that a bank in distress could be
+subject to a self-reinforcing run: a decline in uninsured deposits lowers the bank’s profitability, exacerbating
+distress and leading to a larger decline in deposits (Diamond Dybvig 1983, Goldstein and Pauzner 2005).
+Such feedback mechanisms can result in multiple equilibria.
+1 See also, Postlewaite and Vives (1987), Cooper and Ross (1998), Peck and Shell (2003), Allen and Gale (2004), Rochet and
+Vives, (2004), Fahri, Golosov and Tsyvinski (2009), Gertler and Kiyotaki (2013), and Kashyap et al. (2014)
+2 The Financial Stability Board, a group of international regulators, has proposed total loss-absorbing capacity of large banks,
+which is the equivalent of our capital requirements, of 16 − 20% of assets.
+3 The FDIC reports that only approximately 25% of transactions transfer all deposits, including the uninsured, to a new
+institution. (https://www.fdic.gov/bank/individual/failed/wamu q and a.html [Accessed on 12/28/2014]
+4 We measure distress using Credit Default Swap Spreads (CDS)
+
+2
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+Figure 1: Deposit Rates vs Financial Distress - Citi Bank and JPMorgan Chase
+
+While the current literature illustrates this mechanism, it provides little guidance on whether the elasticity
+of uninsured deposits to bank distress is large enough to result in such self-reinforcing runs or multiple
+equilibria.5 Moreover, the strength of the feedback between deposits and financial distress depends on how
+costly deposit withdrawals are for a bank, and how a bank responds to a raised probability of withdrawals
+(for example, by raising interest rates). To quantify these forces we develop a model of retail banking, which
+we calibrate using data for large U.S. banks.
+Demand for deposits in our model is driven by several forces. First, as is standard in bank run models,
+the demand for uninsured deposits depends on the financial health of the bank, because these depositors
+may lose their deposits in case of bank default. We depart from the current literature by adding product
+differentiation between banks and more realistic depositor preferences, allowing a better mapping between
+the model and the data. Banks differ in the interest rates offered on deposits as well as the quality of services
+they offer. Consumers’ preferences regarding banks also differ. For example, some consumers prefer Bank of
+America, and others Wells Fargo, all else equal. Banks, therefore, offer differentiated products whose quality
+depends on the banks’ financial condition. The properties of the demand function, especially the elasticity of
+uninsured deposit demand with respect to financial distress, provide substantial discipline on the magnitude
+of self-fulfilling runs that the model can generate.
+The second force, which determines the strength of the feedback, is the behavior of banks. Banks compete
+for insured and uninsured deposits by setting interest rates in a standard Bertrand-Nash differentiated
+products setting (Matutes and Vives 1996). Banks earn stochastic returns on deposits net of other operational
+costs. We model banks’ endogenous default decisions in a simple framework based on Leland (1994). Each
+period, equity holders decide whether to continue operations by repaying deposits and the long-term debt
+coupon. Alternatively, banks can declare bankruptcy. Depositors are fully rational, anticipate the probability
+of default, and incorporate this information when choosing deposits. Because consumers are sensitive to
+5 A notable exception is Hortaçsu et al. (2011) who evaluate the possibility of runs in the auto industry, and find that despite
+feedback effects, the elasticity is too small.
+
+3
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+financial distress, a bank in financial distress has to offer higher interest rates on its deposits, which decreases
+its profitability. We take this model to the data by first estimating demand for deposits and then calibrating
+the supply side of the model.
+We estimate demand using variation in banks’ financial distress, interest rates on deposits, and bank
+market shares using a standard model of demand (Berry 1994; Berry, Levinsohn and Pakes 1995). Estimating
+the effect of banks’ financial distress on deposit demand is challenging: if a bank’s quality of services declines,
+it becomes less attractive to depositors. Depositors withdraw their deposits, lowering bank profits and
+increasing the probability of bankruptcy. If the quality of banking services is not completely observed by
+the researcher, this force can confound the estimate of the direct effect of a bank’s distress on demand for
+its uninsured deposits. To illustrate the effect of financial distress on demand for uninsured deposits, we
+first estimate a triple-difference specification with bank and time fixed effects. We find that as a bank’s
+financial distress increases, the market share of its uninsured deposits declines relative to its share of insured
+deposits, suggesting that demand for uninsured deposits declines with a bank’s financial distress. We provide
+complementary evidence exploiting variation in banks’ financial distress resulting from changes in banks’
+portfolio holdings and performance, and find similar results. We also perform a placebo test. Contrary
+to uninsured deposits, we find no evidence that insured deposits are sensitive to banks’ financial distress.
+Jointly, several sources of variation paint the same picture that uninsured depositors are run-prone: as a
+bank’s default probability increases, the demand for uninsured deposits decreases. The effect is substantial:
+a 100 basis point increase in the risk-neutral probability of bankruptcy results in a 12% market share decline.
+One of the primary advantages of our model is that it lends itself to empirical estimation/calibration.
+To obtain supply-side parameters, which govern banks’ behavior, we calibrate the model using revealed
+preferences of banks. Banks optimally set interest rates on insured and uninsured deposits, and choose when
+to default. With the addition of demand estimates, banks’ optimality conditions allow us to calibrate the
+quantities we do not observe, the mean and variance of returns on deposits for each bank, as well as the
+additional non-interest costs of servicing insured deposits that reconcile the behavior of banks with observed
+quantities. We solve for the parameters in closed form and show that the parameters are exactly and uniquely
+identified. In other words, for any observed equilibrium of the game, there is a unique set of parameters that
+rationalizes the data.
+Even though the model is fairly simple and sparse, the calibration yields reasonable results on quantities
+which were not used to calibrate the model. For example, our estimates imply that insured accounts are
+costlier to manage, and that non-interest expenses on a $1,500 account exceed those on a large, uninsured
+account by $5-7 per month. This amount is consistent with fees banks charge on small accounts. The
+calibrated return that banks earn on deposits implies a mean overall average interest margin is approximately
+4
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+2.3% to 3.75%. This estimate is of a similar magnitude to the one estimated in Hanson et al (2014), who
+find estimates on the order of 2%, which they obtain from balance sheet data.
+At the estimated parameter values, our model has multiple equilibria across which banks’ survival probabilities and interest rates differ significantly. For example, Wachovia’s market-implied risk-neutral probability of default as of March 2008 was 3.3%. Our model indicates an additional equilibrium exists in which
+Wachovia’s risk-neutral default probability is 52%. The multiple equilibria results can be interpreted as
+follows. Consumers rationally believed that there was a 3.3% chance that Wachovia would default in March
+2008. However, the same fundamentals supported an equilibrium in which Wachovia would default with a
+risk-neutral probability of 52% in March 2008. In this equilibrium depositors would correctly believe that
+Wachovia was more likely to default and would withdraw their deposits, which would in turn lower the profitability of Wachovia and increase its probability of default. Our estimates suggest that if the equilibrium
+changes, then seemingly stable banks can quickly become unstable with no change in their fundamentals.
+Three broad facts emerge from our analysis of multiple equilibria. First, the banking system was in the
+best equilibrium for much of the period we study and close to the best in the rest of it. Substantially worse
+equilibria, in which each bank has a higher default probability, and some banks are highly unstable, also
+exist.
+Second, each bank is individually subject to instability. This instability can spill over to other banks
+even without direct linkages between banks. A bank with a high probability of default is willing to offer high
+insured deposit rates, because FDIC insurance bears their cost with a high probability. To compete for these
+deposits other banks increase rates as well, which decreases their margins and increases their distress. In
+fact, this argument was used by the FDIC when it successfully pressured Ally Bank to lower its deposit rates
+in 2009 (Lieber 2009). The negative effects are partially offset because uninsured depositors of distressed
+banks switch to less distressed banks, increasing their profitability and decreasing distress.
+Third, even in the worst equilibria several banks remain active, and provide depositor services to a large
+part of the market. Depositors value banking services, and as more banks are distressed, the demand for
+deposits shifts to relatively healthier banks. This effect is too weak to prevent spillovers across banks in
+asymmetric equilibria in which few banks default. However, it is strong enough to prevent all banks from
+failing simultaneously. These results suggest that a mechanism that could destabilize the whole banking
+system would have to involve direct linkages across banks, which would overcome the force for stability we
+describe above.
+Overall, we provide a workhorse model that allows us to evaluate the stability of the banking system in
+the presence of run-prone uninsured deposits. We use the model to show that the large amounts of uninsured
+deposits in the U.S. commercial banking system can lead to severely unstable banks, given the elasticity of
+5
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+uninsured deposits to financial distress. We then use our calibrated model to assess some recent and proposed
+bank regulatory changes. We analyze the effect of interest caps on insured deposits,6 and find that they
+limit the worst possible losses to the FDIC. We also find that increasing FDIC insurance mostly transfers
+rents to newly insured depositors without large improvements to banking stability, but that the results of
+this seemingly simple policy critically depend on the preferences of newly insured depositors. Conversely,
+we find evidence suggesting that imposing bank risk limits may be counterproductive and could actually
+decrease stability in the banking sector.
+We use our model to quantitatively study the effect of capital requirements. Capital requirements force
+equity holders to post capital, which is invested along with deposits, and is lost if the firm defaults. Increasing
+capital requirements decreases the severity of the largest possible instability in the banking sector, but also
+eliminates some equilibria in which the banking system is very stable. We find that banking stability and
+welfare do not necessarily go hand in hand. Increasing capital requirements past a certain point decreases
+welfare even if it increases banking stability. Last, we show that under a max-min welfare criterion7 the
+optimal capital requirement is approximately 31%, and that capital requirements below 18% are severely
+suboptimal. These estimates are substantially higher than the 8% requirements proposed under Basel III
+accords, and somewhat higher than the 16 − 20% total loss-absorbing capacity proposed by the Financial
+Stability Board.
+Our empirical and theoretical analysis relates to several strands in the banking and industrial organization
+literature. Our banking model builds on the automaker model from Hortaçsu et al. (2011). Our model is
+also in the spirit of the existing literature on bank runs, financial stability, and financial regulation, including
+the seminal work of Diamond Dybvig (1983), and more recently Postlewaite and Vives (1987); Cooper and
+Ross (1998); Peck and Shell (2003); Allen and Gale (2004); Rochet and Vives (2004); Goldstein and Pauzner
+(2005); Fahri, Golosov and Tsyvinski (2009); Gertler and Kiyotaki (2013); and Kashyap et al. (2014).8
+Similar to Matutes and Vives (1996), our model emphasizes the strategic interaction among banks through
+competition.
+Our paper follows the precedent of recent papers that estimate structural models of imperfect competition
+in the banking sector. Our BLP-style demand model is closely related to the work of Dick (2007), who
+estimates demand for deposits using FDIC data. Unfortunately, the FDIC branch level data does not break
+deposits down by insured vs. uninsured categories, hence we can not utilize this level of disaggregation
+in our estimation exercise. Our supply-side model focuses on the deposit rate setting and (endogenous)
+6 Such caps had been put in place under Regulation Q, which allowed the Federal Reserve to set interest rate ceilings on
+banking deposits.
+7 An uncertainty averse planer would choose such a criterion (Gilboa and Schmeidler, 1989).
+8 For purely information based models of bank runs, see Chari and Jagannathan (1988), Jacklin and Bhattacharya (1988),
+Allen and Gale (1998), and Uhlig (2010).
+
+6
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+bankruptcy decisions of banks. Aguirregabiria, Clark and Wang (2013) estimate a model in which the
+branch networks of banks are determined endogenously, and use their model to estimate banks’ revealed
+preference for geographical risk diversification. Corbae and Erasmo (2013) and (2014) provide dynamic
+equilibrium models of the banking sector with imperfect competition, and use their models to evaluate the
+counterfactual effects of banking regulations such as capital requirements. Our model and empirical analysis
+focuses on (imperfect) competition in the market for deposits, with special attention to insured vs. uninsured
+deposits, and pays particular attention to the presence of multiple equilibria and the possibility of bank-runs
+or run-type equilibria.
+The empirical results of our paper correspond to the existing literature on empirical bank runs and
+deposit insurance (for an overview, see Goldstein, 2013). Iyer and Puri (2012) use unique event study data
+to examine how depositors responded to financial distress and a subsequent bank run for a large Indian bank.
+Kelly and Ó Gráda (2000) and Ó Gráda and White (2003) examine depositor runs using depositor level data
+in a New York bank during 19th century banking panics. Our paper also relates to Gorton (1988), who
+examines the relationship between economic fundamentals and banking crises between 1863 and 1914, and
+Calomiris and Mason (2003), who study the role bank fundamentals played in bank runs occurring during
+the Great Depression. The empirical findings from our demand estimates closely relate to the findings from
+Schumacher (2000) and Martinez Peria and Schmukler (2001), who examine how depositors respond to bank
+financial distress during the banking crises that occurred in Argentina, Chile, and Mexico during the 1980s
+and 1990s. Lastly, our empirical results relate to Hortaçsu et. al (2013), who measure the cost of financial
+distress in the automaker industry.
+Our paper is also broadly linked to the literature which studies runs in other financial markets, such as
+money market funds and asset-backed commercial paper market (Jank and Wedow (2010); Acharya, Schnabl
+and Suarez (2013); Covitz, Liang and Suarez (2013); Kacperczyk and Schnabl (2013); Strahan and Tanyeri
+(2015); Schroth, Suarez and Taylor (2014); and Schmidt, Timmermann and Wermers (2014)). The run-prone
+behavior of uninsured depositors is similar to strategic complementarities in withdrawal behavior of mutual
+fund investors in Chen, Goldstein and Jiang (2010).
+The remainder of the paper is laid out as follows. Section 2 describes the data used to estimate the
+deposit demand system and calibrate our theoretical model. Section 3 develops our theoretical model of the
+banking sector. Section 4 estimates the demand system for both insured and uninsured deposits. Section 5
+calibrates the banking side of the model. Section 6 studies the structure of multiple equilibria in the banking
+sector. Section 7 assesses the stability of the banking sector and evaluates several proposed bank regulations.
+
+7
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+2
+
+Data
+
+Our data set covers sixteen of the largest US retail banks over the period 2002-2013.9 A primary objective of
+our study is to empirically measure how both uninsured and insured depositors respond to financial distress
+in the retail banking sector. We measure a bank’s level of financial distress using its credit default swap
+(CDS) spread and measure the response of depositors using insured and uninsured deposit levels, while
+conditioning on deposit rates and other bank characteristics. Table 1 summarizes our deposit and CDS
+data.
+CDS gives us a direct and daily market measure of the financial solvency of each banking institution.
+CDS is a liquid financial derivatives contract in which the seller of the CDS contract agrees to compensate
+the buyer of the contract in the event a third party defaults.10 Our CDS data comes from the Markit
+Database. We measure financial distress at the monthly level using the average daily CDS spread for the
+five year CDS contract. The average CDS spread in our data set is 0.87% which corresponds to a modest
+risk-neutral 1.43% annual probability of default.11 The advantage of measuring default risk using the CDS
+spread over other ad hoc balance sheet measures is that it is a public, tradable, market rate that directly
+measures the default risk of a bank.
+We examine the relationship between deposit levels and CDS to determine how depositors respond to
+financial distress. Our deposit level data comes from the FDIC’s Statistics on Depository Institutions. The
+FDIC provides quarterly estimates of uninsured and insured deposit levels for all FDIC insured banks. The
+level of uninsured deposits ranges from $4.10 billion to $939.0 billion in our sample. On average, uninsured
+deposits account for just over half (53.36%) of total deposits while total deposits account for 77% of liabilities
+for the banks in our sample.
+We use a new and novel deposit rate data set from RateWatch which includes daily branch level deposit
+rate data for several different types of accounts. Specifically, we measure deposit rates using one year certificate of deposit (CD) rates. We do not separately observe deposit rates for insured and uninsured deposits.
+However, certificates of deposits have different minimum deposit requirements. We use heterogeneity in the
+minimum deposit levels to help pinpoint the effect of deposit insurance on deposit rates. Since deposits in
+excess of $100k ($250k after October 2008) are not covered by FDIC insurance, we interpret CDs with min9 As of 12/31/2009, fifteen (all) of the banks studied were among the twenty (thirty) largest U.S. banks in terms of deposits.
+Our data set excludes five of the largest twenty banks. Of those five banks, four were excluded (ING, State Street Bank and
+Trust Company, Bank of New York Mellon and Fia Card Services) because they had fewer than ten domestic branch locations.
+The other excluded large bank, Capital One, was excluded due to data availability.
+10 For example, the five year CDS spread for Bank of America in March 2009 was 3.19%. The CDS buyer agrees to pay 3.19%
+to the contract seller over a five year period or until Bank of America defaults. If Bank of America defaults, the CDS seller
+compensates the buyer of the CDS contract for the losses of the underlying Bank of America, as determined by an auction.
+11 We calculate the probability of default under a risk neutral model with a constant hazard rate under the assumption that
+LIBOR is 3% and the recovery rate is 40%. See Hull (2012) for further details.
+
+8
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+imum deposits of $10k to be more likely to be fully insured than CDs with minimum deposits of $100k. We
+calculate deposit rates for each bank and account type (minimum deposit and maturity) using the median
+deposit rate offered at the monthly level.
+To assess the effect of default risk on deposit rates we decompose deposit rates into two components,
+the prevailing risk free rate and the corresponding spread/premium. We define the deposit spread as the
+difference between the certificate of deposit rate and the corresponding one year treasury rate. Table 1
+summarizes the deposit rate spread for one year CDs with minimum deposit levels of $10k and $100k. As
+expected, the average deposit rate is higher for the CDs with the $100k minimum deposit threshold than for
+CDs with a $10k minimum deposit threshold.
+
+3
+
+Model
+
+Every period, consumers choose among banks to deposit insured and uninsured deposits. Banks invest
+deposits and earn a stochastic return. At the end of the period the return on banks’ investment is realized.
+Banks have to repay deposits including the interest rates. They also have to repay a long-term debt coupon,
+which is due at the end of the period. If returns are low, and fall short of required payments, equity
+holders can choose whether they want to fund the shortfall in the spirit of Leland (1994), or let the bank
+default. An alternative institutional interpretation of default in the model is that equity holders are allowed
+to recapitalize the bank at the end of each period. Regulators then inspect whether the bank can repay all
+deposits and the debt that has come due. If not, the bank is taken into receivership.
+We proceed by first setting up the model, describing depositors preferences, banks’ technology, and
+funding. We then solve for deposit demand within a period, given interest rates set by banks and banks’
+expected default rates. Last, we characterize the equilibrium deposit rates and default decisions of a bank,
+given depositors’ rational expectations of default decisions.
+
+3.1
+
+Model Framework
+
+The model is in discrete time. The mass of M I consumers are choosing among K banks to deposit insured
+deposits, and a mass of M N consumers are choosing among the same banks to deposit uninsured deposits,
+taking interest rates and the probabilities of default as given. Banks are indexed by k and compete for
+insured and uninsured deposits from consumers indexed by j. Within the period, the timing is as follows:
+• Banks set interest rates for insured and uninsured deposits iIk,t , and iN
+k,t ;
+• Consumers choose where to deposit funds;
+
+9
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+• Banks invest deposits, and banks’ profit shock is realized;
+• Bank chooses whether to repay deposits and the coupon on long-term debt, or default.
+The model is specified under the risk neutral measure.12
+
+3.1.1
+
+Depositor Preferences
+
+Demand for deposits at bank k at time t depends on the interest rate the bank offers, the services it provides
+the depositor, and, for uninsured depositors, the probability that the bank will default. The uninsured
+N N
+N
+depositor is promised an interest rate iN
+measures
+k,t , from which she derives utility α ik,t , in which α
+
+depositors’ sensitivity to interest rates. In the event of a bankruptcy, uninsured depositors lose utility flow
+γ > 0 with a risk-neutral probability ρk,t , suffering an expected utility loss of ρk,t γ.
+N
+Depositors also derive utility from banking services: δkN + εN
+j,k,t . Bank specific fixed effects, δk , reflect
+
+bank quality differences: all else equal, some banks offer better services than others. In addition, depositors’
+preferences for banks also differ; some consumers prefer Bank of America, and others Wells Fargo, for
+example, because of the proximity of ATMs to their home. These differences are captured in the i.i.d utility
+shock εN
+j,k,t . The total indirect utility derived by an uninsured depositor j from bank k at time t is then as
+follows:
+N N
+N
+N
+uN
+j,k,t = α ik,t − ρk,t γ + δk + εj,k,t
+
+(1)
+
+The preferences of insured and uninsured depositors might differ. The indirect utility of insured depositors
+closely mirrors that of uninsured depositors, but insured depositors do not lose utility in case of bankruptcy,
+obtain potentially different banking services, and differ in interest rate sensitivity (indexed by I):
+
+uIj,k,t = αI iIk,t + δkI + εIj,k,t
+3.1.2
+
+(2)
+
+Banks
+
+Banks compete for depositors, each seeking to maximize equity value. A bank’s profit maximization problem
+involves a three-part decision process: setting its insured deposit rate, setting its uninsured deposit rate, and
+ultimately deciding to continue its operations or declare bankruptcy.
+Banks earn profits by lending out deposits. Bank k earns a period t return on deposits net of other (noninterest) costs Rk,t . These returns already account for all non-interest costs, such as costs of loan defaults, the
+12 This does not imply that either depositors or shareholders are risk neutral. Instead, the risk neutral probability is a
+transformation, which adjust the probability measure of events by giving greater weight to probability of events with higher
+marginal utility, adjusting for risk aversion. Our models is specified under the risk neutral measure because CDS spreads, which
+we use to estimate our model, reflect risk neutral default probability, rather then the objective probability of default.
+
+10
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+costs of screening loans, providing services to depositors, etc. These returns are stochastic, distributed under
+the risk-neutral measure as Rk,t ∼ N (µk , σk ), and are i.i.d across time, but can be arbitrarily correlated
+among banks.13 Note that these per-period returns can be negative if the bank invests in bad projects.
+Because we index the process with k, some banks are, on average, better at using deposits than others, and
+these differences are persistent. Differences arise because some banks invest these deposits better or because
+they have lower costs of servicing loans and deposits.
+Servicing insured depositors can be more expensive than the uninsured depositors, because of FDIC
+deposit insurance premiums and other additional costs banks incur with insured, typically smaller accounts.
+Banks therefore incur an additional cost of servicing insured depositors, ck , relative to uninsured depositors.
+A bank whose market share of insured deposits is sIk,t and the market share of uninsured deposits is sN
+k,t
+earns a gross return on deposits of M I sIk,t (1 + Rk,t − ck ) + M N sN
+k,t (1 + Rk,t ).
+Banks’ profits are reduced by interest payments on deposits. They have to repay deposits, including the
+
+
+
+
+N
+interest rate at a cost of M I sIk,t 1 + iIk,t + M N sN
+k,t 1 + ik,t . The total net period profit of a bank is then:
+
+
+N
+πk,t = M I sIk,t Rk,t − ck − iIk,t + M N sN
+k,t Rk,t − ik,t
+
+(3)
+
+If πk,t is negative, the bank is suffering operating losses in a given period.
+Banks use three different types of financing. They are financed through deposits, which have to be repaid
+at the end of each period. Banks are also financed with a consol bond, which promises an infinite stream
+of period coupons bk . The residual financiers of the firm are deep pocket equity holders (Leland, 1994).
+Each period the bank disburses profits to their equity holders after paying depositors and the bond coupon.
+
+
+
+
+N
+R̄
+−
+i
+Conversely, if there is a shortfall, M I sIk,t R̄k − ck − iIk,t + M N sN
+k
+k,t − bk < 0, equity holders
+k,t
+can decide whether to inject enough funds to repay deposits and the bond coupon, or to default. In case
+of default, equity holders are protected by limited liability. An alternative institutional interpretation of
+default in the model is that equity holders are allowed to recapitalize the bank at the end of each period.
+Regulators then inspect whether the bank can repay all deposits and the debt that has come due. If not,
+the bank is taken into receivership. Both interpretations are consistent with the setting of the model.
+At bankruptcy, the bank is sold and the proceeds are used to repay the depositors and bondholders.
+To focus on the interaction between deposit demand and the bank’s bankruptcy decision, we assume that
+bankruptcy does not affect the bank’s productivity, and that the bank retains the same form of financing it
+had before bankruptcy. This implies that unlike in Leland (1994) style models, there are no direct costs of
+bankruptcy.
+13 The correlation in returns introduces correlation in ex post bank default, but does not otherwise affect the ex ante proba-
+
+bilities of default, which are the object of interest in our model.
+
+11
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+3.2
+
+Equilibrium
+
+We study pure strategy Bayesian Nash equilibria. The equilibrium is characterized by the optimal behavior
+of banks and depositors. Banks choose to default optimally given the ex post profitability of deposits.
+Depositors are fully rational, anticipate the probability of default, and incorporate these beliefs when choosing
+deposits. Banks choose optimal interest rates, given demand for deposits.
+The equilibrium of this game is stationary. Bank returns shocks are i.i.d. and market parameters are
+constant; in the event of bankruptcy, the bank is placed under new ownership with the same capital structure.
+In the stationary equilibrium, banks compete with each other for deposits within periods, but not across
+periods.14 Stationarity has two advantages. First, it allows us to focus on the feedback between deposit
+decisions and bank’s bankruptcy, abstracting from the dynamics of interest rate setting across periods.
+Second, stationarity greatly simplifies the analysis of default, allowing the problem to be tractable: a bank’s
+decision to default ex post is independent of default decisions of other banks, even if ex ante banking decisions
+are linked. Hence, banks use the same interest rate setting and bankruptcy decision policies from period to
+period.
+
+3.2.1
+
+Demand for Deposits
+
+Consumers choose among banks, taking the offered interest rates and beliefs of default probabilities as given.
+To aggregate consumer preferences we employ a standard assumption in discrete choice demand models
+(Berry, Levinsohn and Pakes 1995), that the utility shocks εIj,k,t and εN
+j,k,t are distributed i.i.d. Type 1
+Extreme Value leading to standard logit market shares. Let iI−k,t , iN
+−k,t , and ρ−k,t denote the vectors
+of deposit rates offered by banks other than k and their expected default probabilities. Let sIk,t and sN
+k,t
+denote the share of consumers choosing to deposit insured and uninsured deposits with bank k. Given the
+distribution of εIj,k,t and εN
+j,k,t , consumers’ optimal choices result in the following demand function:
+
+exp(αI iIk,t + δkI )
+,
+sIk,t iIk,t , iI−k,t = PK
+I
+I
+l=1 exp(αil,t + δl )
+
+(4)
+
+N
+
+exp(αN iN
+N
+N
+k − ρk γ + δk )
+sN
+i
+,
+i
+,
+ρ
+,
+ρ
+=
+.
+P
+k,t
+−k,t
+k,t k,t −k,t
+K
+N
+N N
+l=1 exp(α il − ρl γ + δl )
+
+(5)
+
+Because consumers have rational expectations, their expectations of default probabilities are correct in
+equilibrium.
+14 We abstract from switching costs for deposits.
+
+12
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+3.2.2
+
+Bank’s Default Choice
+
+Default is an endogenous choice of equity holders. The bank does not default simply because it runs out
+of funds to repay depositors and bondholders following a bad profit realization. Even after a bad shock,
+equity holders can inject funds into the bank to save it if the franchise value of a continuing bank is valuable
+enough. The bank defaults when equity holders’ value of keeping the bank alive is smaller than the funds
+they have to inject in the bank.
+More formally, after the realization of the profit shock Rk,t , the bank has to repay depositors and the
+bond payment bk . If profits are lower than the required payment, the equity has to provide the funds to make
+up the shortfall. The shortfall that equity holders have to finance comprises the net profits (or losses) of the
+
+
+
+
+N
+bank after repaying depositors and bond payments M I sIk,t Rk,t − ck − iIk,t + M N sN
+k,t Rk,t − ik,t − bk .
+Because they are protected by limited liability, the equity holders can always decide not to finance the
+shortfall, and let the bank default. If the bank defaults, the equity holders lose the bank franchise and,
+therefore, the claim to cash flows of the bank from the next period onward. Let Ek 15 denote the franchise
+value of bank. Equity holders choose to finance the shortfall as long as the franchise value next period
+(evaluated today) exceeds the size of the shortfall they would have to finance:
+
+
+
+N
+M I sIk,t Rk,t − ck − iIk,t + M N sN
+k,t Rk,t − ik,t − bk +
+
+1
+Ek > 0.
+1+r
+
+This expression implies a cutoff strategy for the firm. If the return the bank earns on deposits Rk,t falls
+below some level R̄k , the equity holders will not inject funds and the bank will default. Otherwise, the equity
+holders will choose to repay the deposits and the debt coupon. R̄k is then implicitly defined as the level of
+bank profitability at which equity is indifferent between defaulting and financing the bank:
+
+
+
+N
+M I sIk,t R̄k,t − ck − iIk,t + M N sN
+k,t R̄k − ik,t − bk +
+
+1
+Ek = 0.
+1+r
+
+Note that R̄k is unique for a given interest rate choice of bank k, consumer’s deposit choices, and the
+continuation value of the bank to equity holders, Ek . On the other hand, these quantities are determined
+in equilibrium by the expectation of the bank’s expected default rule, R̄k . The optimal cutoff rule, R̄,
+
+
+R
+corresponds directly to the risk-neutral probability of default ρk,t = Φ R̄−µ
+. Solving for the optimal
+σR
+15 Because of stationarity, we do not index by t.
+
+13
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+cutoff rule as in Hortaçsu et al (2011) we obtain:
+M I sIk,t + M N sN
+k,t
+
+1
+1+r
+
+{z
+
+|
+
+
+
+N 
+bk − M I sIk,t R̄k − ck − iIk,t + M N sN
+k,t R̄k − ik,t  =
+{z
+} |
+{z
+}
+|
+π insured dep
+
+|
+
+total deposits
+
+
+
+
+
+π uninsured dep
+
+{z
+
+shortf all at threshold
+
+}
+
+
+
+ ¯
+
+Rk − µk
+1−Φ
+×
+σk
+}
+|
+{z
+}
+survival prob.
+
+
+
+
+
+ ¯
+
+
+
+Rk − µk 
+
+
+×  µk − R¯k + σk λ
+
+σk
+
+
+{z
+}
+|
+limited liability
+
+|
+
+{z
+
+expected return on deposits
+
+}
+(6)
+
+φ(·)
+is the inverse Mills ratio.
+where λ(·) ≡ 1−Φ(·)
+
+The left hand side of this expression is the amount of funds equity holders have to inject at the default
+threshold. The right hand side represents the future value of the bank in equilibrium, which depends on how
+many deposits it can raise in equilibrium, the equilibrium survival probability, and the expected return on
+deposits. The last term illustrates that a part of the value equity holders obtain from the bank arises from
+the limited liability of equity, the ability to default in the future.
+A critical result arising from the bankruptcy cutoff condition (eq. 6) is that the cutoff rule, and consequently the probability of default, need not be unique. Since consumer utility for uninsured deposits depends
+on bank survival and bank survival depends on consumer demand, the model generates potential feedback
+loops. A key consequence of such feedback loops is that the perceived default risk can be self-fulfilling:
+a decrease in demand for deposits raises the probability a bank defaults and vice versa. We analyze the
+possibility of multiple equilibria arising from the bankruptcy condition in detail in Section 6.
+
+3.2.3
+
+Setting Deposit Rates
+
+Banks compete for deposits by playing a differentiated product Bertrand-Nash interest rate setting game for
+both types of deposits. Prior to the start of each period, banks set the deposit rate for insured and uninsured
+deposits to maximize the expected return to equity holders. Because of limited liability, equity holders only
+internalize the payoffs if the profits shock Rk,t is above the optimal default boundary R̄k . The corresponding
+equity value at the beginning of the period is
+
+
+
+
+
+
+I I
+I
+I
+I
+M
+s
+i
+,
+i
+R
+−
+c
+−
+i
+k,t
+k
+k,t
+k,t −k,t
+k,t
+ˆ ∞
+
+
+ 
+
+
+
+N
+N
+N
+N
+N
+Ek = max
++M sk,t ik,t , i−k,t , ρk,t , ρ−k,t Rk,t − ik,t 
+
+ dF (Rk,t ).
+I
+N
+ik,t ,ik,t R¯k 
+
+1
+−bk + 1+r
+Ek
+Applying the normal distribution of Rk,t , we obtain:
+
+14
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+
+
+
+
+ ¯
+
+
+Rk −µk
+I
+µk + σk λ
+− ck − ik,t
+σk
+
+
+ 
+
+
+ ¯
+
+
+Rk −µk
+
+N
+N N
+N
+N
+Ek = max 
+−
+i
++M
+s
+i
+,
+i
+,
+ρ
+,
+ρ
+µ
++
+σ
+λ
+k,t
+−k,t
+k
+k
+
+
+k,t
+k,t
+k,t −k,t
+σk
+iIk,t ,iN
+
+k,t 
+1
+−bk + 1+r
+Ek
+M I sIk,t
+
+
+
+iIk,t , iI−k,t
+
+The choice of deposit rates can affect the value of equity through its influence on both current-period
+operating profits and the bankruptcy boundary R̄ in eq. (6). Because equity holders choose to default
+optimally, we can apply the envelope theorem, which implies that we can ignore the effect that changing
+dR¯k
+diIk,t
+
+¯
+
+dRk
+= di
+= 0. Deposit rates are therefore chosen to
+N
+k,t
+ ¯
+
+k
+maximize current period profits, accounting for equity holders’ limited liability σk λ Rkσ−µ
+.
+k
+
+deposit rates have on probability of default, i.e.
+
+The converse is not true; the probability of default (which is a direct function of R¯k ) directly influences
+
+
+the rate setting through its effect on consumer demand for uninsured deposits, sN iIk,t , iI−k,t ,ρk,t , ρ−k,t .
+The probability of default also has an indirect effect on the the pricing decision for insured deposits rates.
+The bank only pays the interest rate payments on deposits if it does not default, otherwise the cost is born by
+the uninsured depositors and, for insured depositors, the FDIC. Therefore, even though insured depositors
+are not subject to default risk, the bank takes it into account when setting insured rates.
+The corresponding first order condition, which characterizes the optimal rate for insured deposits iIk,t , is:
+ ¯
+
+
+Rk − µk
+1
+
+ ,
+Insured Deposits:
+µk
++ σk λ
+− ck + iIk,t = 
+|{z}
+σk
+I iI , iI
+| {z }
+(1
+−
+s
+αI
+k,t
+−k,t
+{z
+}
+|
+mean return
+mc
+|
+{z
+}
+limited liabillity
+{z
+}
+|
+mark−up
+
+(7)
+
+mb
+
+This condition resembles oligopoly Bertrand-Nash pricing conditions. For insured deposits the modification
+ ¯
+
+k
+arises in the marginal benefit of deposits, which includes the benefit of limited liability σk λ Rkσ−µ
+in
+k
+addition to the expected net return µk earned on deposits. The marginal cost of the insured loan is the
+interest payment on the loan as well as the non-interest cost of the loan. The right hand side is the standard
+mark-up from a logit demand model.
+Similarly, the optimal rate for uninsured deposits is characterized by:
+ ¯
+
+Rk − µk
+1
+
+− iN
+Uninsured Deposits: µk + σk λ
+k,t = 
+σk
+(1 − sN iI , iI , ρ
+k,t
+
+k,t
+
+−k,t
+
+k,t , ρ−k,t
+
+
+
+.
+
+(8)
+
+αN
+
+Note that the marginal benefit of insured and uninsured deposits is the same, because they are used to finance
+the same projects on the margin. The difference in pricing arises because of different marginal costs of insured
+loans ck , different price elasticities of depositors reflected in αI and αN , and differences in bank’s attractive
+
+
+
+ness across deposits, reflected in equilibrium market shares sI iIk,t , iI−k,t and sN iIk,t , iI−k,t , ρk,t , ρ−k,t .
+15
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+Moreover, the demand for uninsured deposits depends on the endogenous probability of default.
+Note, the standard conditions in a Bertrand-Nash oligopoly, suggesting that a firm should never price on
+the inelastic portion of the residual demand curve, do not apply in our model. We can rewrite the FOC for
+insured deposits as:
+ ¯
+
+Rk − µk
+µk + σk λ
+− ck = iIk,t
+σk
+
+1+
+
+1
+eIk,t
+
+!
+,
+
+where eIk is the elasticity of demand for insured deposits. The marginal benefit of deposits exceeds the
+marginal cost as long as the elasticity of demand is positive, eIk,t > 0.
+We next take the model to the data. We proceed in two stages. We first estimate demand for deposits
+using consumer maximization from eq. (4) and eq. (5), without imposing any supply side restrictions from
+the model. Armed with demand estimates, balance sheet information, and default probabilities, we calibrate
+the supply side of the model.
+
+4
+
+Demand for Deposits
+
+4.1
+
+Motivating Evidence: Uninsured Deposits and Financial Distress
+
+The generic problem with estimating the effect of financial distress on demand for goods is that a decline in
+demand for a product decreases the profits of a firm, increasing its financial distress. If the quality of the
+product is not observed by the researcher, then this introduces a bias into the relationship between financial
+distress and demand (Hortaçsu et al, 2013). Before estimating the parameters of the demand system we
+illustrate that uninsured deposits are indeed run-prone: an increase in a bank’s financial distress leads to a
+decrease in uninsured deposits.
+We approach the reverse causality problem by studying how responsive uninsured and insured deposits
+are to banks’ financial distress. The idea behind our approach is illustrated in a simple cut of the data in
+Figure 1. In Panel A we plot the relationship between the uninsured deposit market shares and financial
+distress for Citi Bank and JPMorgan Chase over the period 2005 through 2010. In Panel B we plot the same
+relationship for the market share of insured deposits. As Citi Bank’s distress increases relative to JPMorgan,
+Citi’s market share of uninsured deposits decreases and JP Morgan’s increases. Citi’s insured deposits, on
+the other hand, are not responsive to the increase in distress relative to JPMorgan. The lack of a response
+from the insured depositors suggests that the change in financial distress is driving the relationship between
+distress and uninsured deposits, rather than changes in how attractive a bank is to depositors on dimensions
+other than financial distress.
+To capture the same intuition in a regression, we estimate the following differences in differences specifi16
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+cation:
+ln sN
+k,t = γρk,t + µk + µt + ΓXk,t + εk,t
+in which µk and µt are bank and quarter effects respectively, and Xk,t measures observable bank characteristics. The main coefficient of interest is γ, measuring how responsive demand for uninsured deposits is to
+financial distress of the bank. As we can see in the figure, there is aggregate variation both in deposit levels
+and financial distress of banks. Time fixed effects absorb such aggregate variation, ensuring we identify the
+effect from relative changes of deposits and distress of banks, i.e. that we compare Citi to JPMorgan. The
+inclusion of bank fixed effects ensures that banks which offer on average worse services, and are therefore
+in financial distress, do not confound our estimates. We present the estimate in column 2 of Table 2. The
+coefficient is negative, suggesting that as a bank’s CDS increases relative to other banks, it’s relative market
+share of uninsured deposits declines, i.e. uninsured depositors leave banks in financial distress.
+An alternative explanation of this result would be that a bank’s attractiveness has declined, and this
+is not captured by the bank fixed effect µk or its observable characteristics Xk,t . Note that the R2 of the
+regression is 97%, so the vast majority of the variation in the uninsured deposit market share is explained
+by the specification above allowing little room for unobserved changes in bank’s attractiveness that would
+drive the market share directly.
+Nevertheless, we address this alternative by estimating a triple-differences specification. Insured depositors are insulated from a bank’s bankruptcy, so they should not react to an increase in its probability of
+default. So if we see a bank’s market share of insured deposits decline with a rise in financial distress, we
+should conclude that it is the decline in unobserved banking quality which is driving the relationship. A
+large decline in uninsured deposits relative to insured deposits, on the other hand, suggests that financial
+distress is driving the decision of uninsured depositors, and not a substantial decline in services, which would
+likely affect both types of depositors. We implement the idea by estimating how the difference between the
+I
+market share of uninsured and insured deposits within a bank, ln sN
+k,t − ln sk,t , responds to financial distress
+
+of a bank:
+
+I
+ln sN
+k,t − ln sk,t = γρk,t + µk + µt + ΓXk,t + εk,t
+
+Bank fixed effects again absorb time invariant differences between banks in insured and uninsured deposits.
+Quarter fixed effects control for aggregate shifts in relative preferences of insured to uninsured deposits. The
+negative coefficient in column 1 of Table 2 shows that as financial distress of a bank increases, the market
+share of its uninsured deposits declines relative to its share of insured deposits.
+Last, we present a placebo test using insured deposits. Insured depositors are insulated from a bank’s
+17
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+bankruptcy, so they should not react to an increase in its probability of default. However, if the alternative
+is driving our results, then changes in financial distress arise because the bank has become less attractive
+to uninsured depositors independent of its probability of default. Such a decline in quality should also be
+at least partially reflected in a decline of insured depositors. Instead, results in column 3 of Table 2 show
+that a bank’s market share of insured depositors, if anything, is increasing in its probability of default. This
+suggests that changes in the financial distress of a bank are not caused by unobserved changes in services
+the bank offered to depositors. Jointly, the differences in differences specification, the placebo, and the triple
+differences specification all point to the same idea: that demand for uninsured deposits declines with a bank’s
+financial distress.
+
+4.2
+
+Demand Estimation
+
+Next, using banks’ characteristics and market share data described in Section 2, we estimate the utility
+parameters from equations (4) and (5). We consider the sixteen largest banks, and designate all other banks
+outside of the sixteen in our data set as the outside good, which we index by 0. Because we estimate the
+demand system from within-bank variation, we allow for the quality of the bank to change over time. We
+N
+I
+denote the time varying component of bank quality for uninsured and insured deposits as ξk,t
+and ξk,t
+,
+N
+N
+resulting in total bank quality of δkN + ξk,t
+and δkN + ξk,t
+. We normalize the benefits consumers derive from
+N
+I
+the outside good by setting δ0N + ξ0,t
+= δ0I + ξ0,t
+= 0.
+
+The logit demand system in eq. 5 then results in the following linear regression specification:
+
+N
+N
+N
+N
+N
+ln sN
+k,t − ln s0,t = α(ik,t − i0,t ) − γ(ρk,t − ρ0,t ) + δk + ξk,t
+
+(9)
+
+Because we do not observe the characteristics and the price of the outside good, ρ0,t and iN
+0,t , we include
+quarter fixed effects ζtN , which absorb the outside good, resulting in a differences in differences specification:
+N
+N
+N
+N
+ln sN
+k,t = αik,t − γρk,t + ζt + δk + ξk,t
+
+(10)
+
+The corresponding specification for insured deposits does not depend on financial distress:
+
+I
+ln sIk,t = δkI + αiIk,t + ζtI + ξk,t
+,
+
+Even within the differences in differences setting, changes in the utility that depositors derive from a given
+N
+bank, ξj,t
+, are a potential source of bias, as we discuss in Section 4.1. To circumvent the simultaneity
+
+18
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+problem, we use an instrumental variables strategy, which we discuss in more detail in Section 4.2.1.
+In addition to the interest rate and default sensitivity parameters αI , αN , and γ, we are also able to
+N
+I
+from our regression specification estimates
+and ξj,t
+recover the unobservable bank specific utility shocks ξj,t
+
+as:
+
+
+N
+c
+c
+N −γ
+N
+N = ln s
+−
+δ
+b
+ρ
++
+α
+b
+i
+ξc
++
+ζ
+k,t
+k,t
+t
+k,t
+j,t
+k
+
+(11)
+
+
+
+bI biI + ζbI
+I
+ξc
+t
+k,t
+j,t = ln sk,t − δk + α
+I
+N
+Intuitively, we use the residuals from specification (10) and calculate ξj,t
+and ξj,t
+such that estimated market
+
+shares at each time period for each bank are equal to the observed market shares.
+4.2.1
+
+Elasticity of Deposits to Financial Distress
+
+An alternative to the triple differences approach which we present above is to obtain variation in financial
+distress of a bank, which is orthogonal to how depositors value banking services. We start with the differences
+in differences specification in eq. (10) in which we instrument the probability of default of a bank. We base
+the instruments on the idea that the performance of a bank’s loan portfolio affects the financial condition of
+a bank, but has little to do with the services depositors can obtain from this bank.
+The first instruments we use are based on the net amount of charged-off loans by a bank. Loan chargeoffs measure the net value of loans and leases that were removed from the bank’s balance sheet because of
+uncollectibility, and are one measure of the performance of a bank’s loan portfolio. We include bank fixed
+effects in the specification, so our results are not driven by the fact that banks which give bad loans also
+offer poor services that make them unattractive to depositor. Instead, our instrument is identified from
+changes in loan charge-offs within a bank over time. We use two types of charge-offs, those for all loans, and
+charge-offs for real estate secured loans. Quarter fixed effects absorb any aggregate activity, which would
+affect loan performance, and would also change depositors’ preferences. Moreover, loans that are written off
+in a given period have been made in the past, so we exploit the variation in the quality of the loans the bank
+has made in the past to generate variation in financial distress in the present. Therefore the possibility is
+small that changes in loan charge-offs within a bank over time would measure the services that depositors
+obtain from a bank.
+The second instrument we use exploits a similar source of variation, the share of collateralized mortgage
+obligations (CMOs) held by the bank as a share of its securities. The idea is that changes in the value of
+structured products held in a banks’ portfolio have little to do with the changes in the quality of deposit
+services the bank offers. We use both the share of privately issued CMOs as a share of total securities as
+well as the share of government issued CMOs as a share of total securities. The former performed poorly,
+19
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+increasing a banks’ financial distress, while the latter performed well, being government insured. Again,
+because of bank fixed effects, we exploit within-bank changes in banks’ portfolio structure over time, and
+quarter fixed effects absorb the aggregate changes in the performance of these securities and depositor
+behavior.
+Tables 3 displays the demand estimates for uninsured deposits with both choices of instruments. Consistent with the results in the previous section, we estimate that an increase in the probability of default
+for a bank decreases demand for uninsured deposits. Interestingly, we find very similar coefficients for both
+instruments, even though one is estimated with variation in within-bank changes of loan’s given in the past,
+and the other using within-bank changes in the current performance of structured securities. Moreover, as
+before, we estimate a placebo and allow the demand for insured deposits to depend on the instrumented
+values of default probabilities using the same instruments. The coefficients for insured deposits are small
+and insignificant. The instrumental variables results, jointly with the results from the previous section,
+support the hypothesis that uninsured depositors are run-prone. As a bank’s default probability increases,
+the demand for uninsured deposits decreases.
+We estimate −γ to be negative in all three specifications (Table 3, columns 1-3). The results from
+column 3 can be interpreted as a 1% increase in the risk-neutral probability of default is associated with a
+12% decrease in the market share of uninsured deposits, implying an elasticity of -0.60.16
+
+4.2.2
+
+Interest Rate Elasticity and Differentiation of Banks
+
+I
+Recall from Section 4.2 that the demand for deposits depends on the interest rates iN
+k,t , ik,t and the ac-
+
+companying parameters αN , αI , which measure depositors’ sensitivity to interest rates. Deposit rates can
+be correlated with time varying bank quality. We use the variation in input prices to instrument for the
+rates in the spirit of Villas-Boas (2007). We construct the instrument from the bank specific pass-through
+of treasury rates to insured and uninsured deposits. As expected, we estimate a positive and statistically
+significant relationship between demand for deposits and the offered interest rate in each specification for
+both insured and uninsured deposits. Both insured and uninsured deposits are quite price insensitive: with
+a demand elasticity of 0.56 for insured deposits and 0.16 for uninsured deposits.17
+To assess whether our estimates of bank fixed effects are plausible, we report the estimated bank fixed
+effects for the preferred specifications (columns 3 and 4 in Table 3) for both uninsured and insured deposits
+in Figure A1. Bank fixed effects measure how much depositors value the services of a bank, holding deposit
+rates and financial distress fixed. Figure A1 illustrates that bank fixed effects are positively correlated
+16 The marginal effect and elasticity are computed using a 5% probability of default and a 5% market share.
+17 Uninsured and insured elasticities are computed using the demand estimates from columns (3) and (4) in Table 3 and under
+the assumption that the offered deposit rate is 1% and market share is 5%.
+
+20
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+across uninsured and insured deposit markets. Intuitively, this suggests that, on average, banks which offer
+attractive services to insured depositors also offer attractive services to uninsured depositors, which one would
+expect. The largest five banks by deposit size (Bank of America, Citi Bank, JP Morgan Chase, Wachovia,
+and Wells Fargo) have the largest insured and uninsured fixed effects. Our demand specifications control for
+the number of branches, so this finding is not mechanical. Conditional on the number of branches, depositors
+value the services of the five largest banks more than the services of other banks. The heterogeneity among
+banks is substantial: the average insured depositor is indifferent between depositing at Bank of America or
+depositing at Citi Bank with a 0.46% point higher deposit rate.
+Although the value of services offered to depositors is correlated across deposit types, they are not
+perfectly correlated. For example, Santander has the lowest (16th) ranked brand effect for uninsured deposits
+while it has the 8th highest brand effect for insured deposits. This heterogeneity suggests that some banks
+have a comparative advantage in attracting one type of deposits relative to others.
+Overall, our demand deposit specifications yield three results. First, uninsured deposits are run-prone.
+As the probability of default of a bank increases, the demand for deposits from that bank decreases. Second,
+the demand for both insured and uninsured deposits is relatively inelastic. Lastly, we find that the services
+of the five major US banks are valued highest by depositors (controlling for the number of branches), and
+that there exists a fair amount of heterogeneity in the strength of these services across banks and deposit
+types.
+
+5
+
+Supply of Deposit Services
+
+5.1
+
+Calibration of Supply Parameters
+
+To estimate the demand for deposits we rely on revealed preferences of depositors, without imposing model
+restrictions resulting from banks’ behavior. To obtain supply-side parameters, which govern the behavior
+of banks, we calibrate the model using revealed preferences of banks. Banks optimally set interest rates on
+insured and uninsured deposits, and choose when to default. Given data and demand estimates, we calibrate
+the model such that bank specific parameters ck , σk , and µk are consistent with banks’ optimal pricing
+and default behavior. For every bank we have three parameters to calibrate, and three equations, which
+characterize the bank’s optimal behavior. We solve for the parameters in closed form and show that the
+solution is unique so the model is exactly identified. In other words, for any observed equilibrium of the
+game, there is a unique set of parameters that rationalizes the data.
+We obtain the inputs from the data or from balance sheet information as follows. From the data we
+
+21
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+I
+N
+directly measure deposit rates, iIk,t , iN
+k,t , market shares of deposits sk,t , sk,t , and total deposits in a market
+
+M I ,M N . We compute the debt service rate, bk , for each bank as the product of the bank’s unsecured funding
+rate and all non-deposit liabilities. We calculate a bank’s unsecured funding rate as the ten year treasury
+rate plus the CDS spread.18 The CDS spread measures the bank’s credit spread, while the treasury rate
+measures the risk free market interest rate. We calibrate the model using a discount rate r of 5% for each
+bank. Last, we obtain the utility parameters αI and αN from demand estimation corresponding to the IV
+demand estimates in columns (3) and (4) of Table 3 as discussed in Section 4.2.
+Because we calibrate the model for a given observed equilibrium, we drop the subscript t from the
+notation for ease of exposition. The first parameter we calibrate for each bank is the non-interest cost of
+insured deposits, ck , which we obtain from the pricing decisions of the bank. Inspecting the first order
+conditions between insured (eq. 7) and uninsured deposits (eq. 8), we can write the cost as the difference in
+margins the bank earns on these two types of deposits:
+
+ck = iN
+k +
+
+1
+N
+(1 − sN
+k )α
+
+
+
+
+− iIk +
+
+1
+(1 − sIk )αI
+
+
+
+Intuitively, larger marginal costs of insured deposits ck are passed-through to consumers with a mark-up.
+Because the marginal benefit of deposits is the same for insured and uninsured deposits, we can difference it
+out. Knowing demand elasticity and quantities, we can invert the marginal costs from the pricing equations.
+Next we calibrate the risk-neutral variance of bank profits σk . We derive a closed form solution for the
+variance in terms of the demand parameters, and other observable variables. To obtain the intuition for the
+mapping between observable quantities and the variance, we present the main steps in the derivation of the
+analytical solution. The main insight we use is that the limited liability benefits that equity holders earn
+can be expressed in terms of the observable probability of bankruptcy and σk . First note that, assuming
+informationally efficient CDS markets, we can observe the risk-neutral probability of bankruptcy in the data.
+Its equivalent in the model is
+ρk = Φ
+
+ ¯
+
+Rk − µk
+σk
+
+(12)
+
+We invert this expression to obtain the normalized endogenous bankruptcy cutoff:
+R¯k − µk
+= Φ−1 (ρk )
+σk
+
+(13)
+
+We start with the bankruptcy condition (6) at which the bank is indifferent between defaulting and staying
+18 We use CDS spreads as of March 31, 2008. When calculating the unsecured funding rate for different time periods we
+use the corresponding treasury rate. We calibrate the model keeping the CDS spread fixed across time periods for ease of
+comparison.
+
+22
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+in business. First, we show that the bank’s payoff from not defaulting (RHS of 6) is a function of observable
+quantities and the probability of default, by substituting for (12) and (13):
+
+
+
+
+N
+bk − M I sIk R̄k − ck − iIk − M N sN
+= σk 
+k R̄k − il
+
+1
+1+r
+
+
+M I sIk + M N sN
+k
+
+
+
+(1 − ρk ) 
+ 
+−Φ−1 (ρk ) + λ Φ−1 (ρk )
+
+
+The unobservable quantities in the LHS are the margins on deposits earned by the bank, R̄k − ck − iIk and
+
+R̄k − iN
+l . We can express margins in terms of demand parameters and the probability of bankruptcy, by
+substituting in for optimal pricing from (7) and (8), and then substituting from (12) and (13):
+
+
+R̄k − ck − iIk =
+
+
+1
+
++ σk Φ−1 (ρk ) − λ Φ−1 (ρk )
+I
+I
+1 − sk α
+
+Therefore the margin on deposits is a function of the price elasticity of demand 1−s1I αI and limited liability
+( k)
+
+benefits σk Φ−1 (ρk ) − λ Φ−1 (ρk ) .
+The financial shortfall at bankruptcy (LHS), as well as the benefit of continuing the enterprise (RHS) are
+a linear function of the variance, σk . Therefore, there is a unique value of the variance that makes the bank’s
+indifference condition consistent with the data. Substituting the margins into the bankruptcy condition, we
+obtain a closed form solution for the variance of profits of bank k:
+
+
+(1+r)
+
+σk =
+
+M I sIk +M N sN
+k
+
+
+
+
+
+
+1
+1
+1
+N
+N
++
+i
+bk + M I sIk iN + αN (1−s
++ M N sN
+i
+−
+(1
++
+r)
+N ) − αI (1−sI )
+N
+k
+k k
+α(1−s )
+k
+
+k
+
+k
+
+φ(Φ−1 (ρk )) + Φ−1 (ρk )(ρk + r) − (1 + r)λ ((Φ−1 (ρk ))
+
+Last, we compute the expected return on deposits from the optimal pricing of deposits:
+
+
+−1
+µk = iN
+(ρk ) +
+k − σk λ Φ
+
+1
+N
+(1 − sN
+k )α
+
+Intuitively, for a given level of default rates, volatility, and demand elasticity, if a firm is willing to offer
+depositors higher interest rates, it is because it expects to earn large returns on these deposits, implying a
+large µk .
+
+5.2
+
+Calibration Results
+
+5.2.1
+
+Non-interest Cost of Insured Deposits
+
+The calibration results imply that the cost of servicing insured depositors is larger than the cost of servicing
+uninsured depositors. Figure 2 displays estimated cost of servicing insured depositors across the banks in
+
+23
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+our sample. Our estimates suggest these additional costs amount to approximately 4% to 5.5%.19 Banks
+frequently charge fees for depositors with small accounts, smaller than $500-$1,500 with fees between $5
+to $10 per month.20 Our estimates imply that for a $1,500 account this implies a cost of $5-7 per month,
+suggesting these estimates are in the plausible range.
+5.2.2
+
+Returns on Deposits
+
+Figure 3 displays estimated mean return on deposits across the banks in our sample. We find that banks
+earn mean returns on deposits between 5% to 7.75%. To compute how profitable banks are, we have to
+subtract the interest banks pay on deposits, and, for insured deposits the additional non-interest cost, which
+ranges from 4%-5.5%. We find that the mean returns banks earn on deposits exceed the interest payment
+by 3.5% - 6.5%. Since insured deposits are approximately half of all deposits for the banks in our sample,
+the overall average profitability of deposits is approximately 2.3% to 3.75%. These estimates are in-line with
+the estimates from Hanson et al (2014), approximately 2%, which they obtain from balance sheet data. We
+also estimate the perceived volatility of returns banks earn on deposits, which range from 12% to 24% as
+displayed in Figure 4.
+
+6
+
+Multiple equilibria
+
+We use our model to study whether other equilibria can be supported in a market with the calibrated fundamentals. Recall that the fundamentals of the model are consumer preferences for deposits, the distribution
+of returns on deposits, and long-term debt burdens of banks. An alternative equilibrium is one in which consumers with the same preferences rationally believe that banks’ probabilities of bankruptcy differ from the
+realized probability. Given these beliefs, the banks’ optimal choices of interest rates and default decisions are
+such that the probability of bankruptcy equals depositors’ beliefs. More formally, an alternative equilibrium
+is a set of default probabilities for all banks, such that the market shares for all banks result from optimal
+depositor behavior and satisfy (4) and (5) for each bank; interest rates on insured and uninsured deposits
+are set optimally by all banks and satisfy (7) and (8) for each bank; and the optimal default condition is
+satisfied for all banks, (6) holds. For ease of exposition we limit the market to the five largest banks, rather
+than the full set in the analysis.
+A worse equilibrium can potentially exist because a decline in depositors’ beliefs about a bank’s survival
+probability decreases demand for deposits, lowering the bank’s profitability and increasing its probability
+19 Because we have a continuum of depositors, the marginal and average cost of servicing an account are the same. The
+interpretation of ck as a fixed cost per depositor is probably more sensible, so ck should be evaluated as such.
+20 http://abcnews.go.com/blogs/business/2012/09/basic-checking-account-fees-at-10-largest-banks/,
+downloaded
+on
+9/19/2014
+
+24
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+of default. If the feedback is strong enough, a new equilibrium could exist that supports such pessimistic
+beliefs. More precisely, because banks compete, an equilibrium is determined by consumer beliefs about
+default probabilities of all banks. These have to be consistent with the optimal interest setting and default
+behavior of all banks, which compete for deposits. Therefore, a shift in one bank’s level of financial distress
+can spread to other banks through equilibrium deposit competition effects.
+We first illustrate how the banking system with the same fundamentals can result in significantly worse
+equilibria. We then classify the alternative equilibria, and study how contagion of financial distress can occur
+without direct linkages across banks.
+
+6.1
+
+Results
+
+We find several equilibria consistent with the calibrated fundamentals. For example, Wachovia’s marketimplied risk-neutral probability of default as of March 2008 was 3.3%. Our model indicates an additional
+equilibrium exists in which Wachovia defaults with a risk-neutral probability of 52% (Table A1, Panel A,
+equilibrium 7). The multiple equilibria results can be interpreted as follows. Consumers rationally believed
+that there was a 3.3% chance that Wachovia would default in March 2008. However, if consumers suddenly
+believed that there was a 52% chance that Wachovia would default in March 2008, those beliefs would also be
+rational, even though the underlying fundamentals of the banking system would be the same. If depositors
+believed that Wachovia was more likely to default, they would have started to withdraw their deposits, which
+would have in turn lowered the profitability of Wachovia and increased its probability of default.
+Three broad facts emerge from the analysis of multiple equilibria. First, the banking system was in the
+best equilibrium for much of the period we study, and close to the best one in the rest of the period. Second,
+each bank individually is subject to instability, which can spill over to other banks. Last, even in the worst
+equilibria several banks remain active, and provide depositor services to a large part of the market. We next
+discuss these facts in more detail.
+
+6.1.1
+
+Banking System and the Good Equilibria
+
+For the most part, the banking system was close to the best equilibrium of our model. For 2008 and 2009 we
+can find equilibria which have slightly lower default probabilities for all banks (equilibrium 2 in Table A1 in
+Panels A and B). Conversely, in 2007 there are no equilibria that strictly dominate the observed equilibrium
+in the data. We do find an equilibrium in 2007, which is slightly worse than the realized equilibrium for
+each bank (Table 4, equilibrium 2). These close equilibria suggest that the realized market default rates
+as measured by CDS are not necessarily a monotonic transformation of underlying fundamentals, even in
+
+25
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+equilibria in which banking is stable. Rather, some banks are better off because consumers’ beliefs in their
+stability are high. On the other hand, the realized equilibrium, as well as other proximate equilibria, are
+substantially better than the bad equilibria we discuss below.
+
+6.2
+
+Asymmetric Equilibria and Contagion of Financial Distress
+
+One set of possible alternative equilibria we find are ones in which one bank’s probability of default is
+substantially higher than that of the other banks, in the range of 40% to 60%. We find such “bad” equilibria
+are possible for every bank, suggesting that each bank individually is subject to instability (Table 4, Table
+A1, Panels A and B, equilibria 3-7).
+These equilibria provide a window into the propagation of adverse shocks in the banking system without
+direct linkages between banks. To illustrate the link, consider the alternative equilibrium in March of 2007
+in which Citi’s probability of defaulting is 44% (Table 4, equilibrium 4). Citi’s market share of uninsured
+deposits in March of 2007 was 16%, but it is 3% in this “bad” equilibrium. Financial distress decreases
+demand for Citi’s uninsured deposits and increases demand for competitors, all else equal. On the other
+hand, Citi also offers higher deposit rates. To compete, Citi’s competitors raise their interest rates, on
+average by approximately 1%.
+Competition for insured deposits propagates financial distress across banks. The distressed bank suffers
+no direct decrease in demand for insured deposits. Instead, because it is likely to default, the FDIC guarantee
+becomes very valuable: in the bad equilibrium, Citi’s equity holders only pay for these deposits half the time.
+Providing high interest rates on insured deposits is therefore quite cheap. This gives the distressed bank
+a comparative advantage in attracting insured deposits, and its market share of insured deposits actually
+increases. For example, one month before Washington Mutual failed, a Wall Street Journal blog titled
+“Return on Investment” reported the following “Washington Mutual is offering a remarkable 4.9% interest
+rate on one-year CDs ... the minimum deposit is just $1,000. And unlike stockholders and bondholders,
+your money is guaranteed by the federal government.“21
+While the distressed bank attracts insured deposits, the competitor banks suffer a decline in insured
+deposits market share and pay a higher interest rate on these deposits. This lowers profits of non-distressed
+banks in the system, increasing their distress. When Citi experiences financial distress, the probability that
+each one of its competitors defaults increases by over two percentage points (Table 4, equilibrium 4). The
+example of Ally Bank illustrates such spillovers. In 2009, Ally Bank offered among the highest interest rates
+in the country while its parent company GMAC was receiving FDIC assistance. The American Bankers
+Association, in a letter to the FDIC, complained that these rates were taking advantage of government
+21 http //blogs.wsj.com/roi/2008/08/29/banks-offer-higher-cd-rates-to-offset-credit-crunch-losses [accessed on 12/17/2014]
+
+26
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+guarantees and hurting other banks in the system. Limiting interest rates that undercapitalized banks can
+offer would “protect healthy bank competitors from having to pay unsustainably high and above market rates
+for deposits to compete against an institution taking advantage of FDIC insurance in an unsafe manner.”
+The FDIC responded by tying a part of its assistance to GMAC to the deposit rates of Ally Bank. Ally
+Bank lowered its rates afterward (Yingling, 2009; Leiber 2009 ).
+The distressed bank’s comparative advantage in attracting insured deposits is particularly strong in our
+model, because we allow banks to offer arbitrarily high interest rates on insured deposits. This is reflected
+in exorbitant interest rates offered by unstable banks in bad equilibria. For example, Citi’s insured deposit
+rate is 14% (Table 4, equilibrium 4). We can interpret the high interest rate as the rate Citi would be
+willing to offer without regulatory constraints, i.e. as a shadow price of uninsured deposits for Citi in the
+equilibrium in which it is unstable. We analyze how imposing interest rates limits on insured deposits would
+affect spillovers and the possibility for multiple equilibria in Section 7.1.
+6.2.1
+
+Provision of Banking Services in the Worst Equilibrium
+
+The equilibria in which only one bank is severely unstable are not the worst equilibria we find. We find
+several equilibria in which two banks are unstable, with risk-neutral default probabilities over 50%. Equally
+interesting, however, is that we find no equilibria in which three, four, or five of the largest banks are
+unstable in 2007. Intuitively, as more banks are distressed, the demand for uninsured deposits shifts to
+relatively healthier banks. This effect is too weak to prevent spillovers across banks in asymmetric equilibria
+in which few banks default. However, it is strong enough to prevent all banks from being simultaneously
+unstable. One can see that by tracking the total market share of uninsured deposits for the banks we
+consider. For example, their market share is 48% in the observed equilibrium in 2007, and does not decline
+below 35% in any alternative equilibrium.22 Because depositors value services they obtain from banks, an
+equilibrium in which all banks are unstable is not achievable for the calibrated values of the parameters we
+obtain. These results suggest that a mechanism that could destabilize the entire banking system would have
+to involve direct linkages across banks, which would overcome the force for stability we describe above.
+
+7
+
+Policy Analysis
+
+7.1
+
+Interest Rate Limits on Insured Deposits
+
+As we show in Section 6.2, the instability of one bank can propagate to other banks through competition.
+The negative spillover is substantially stronger for insured deposits, because unstable banks value the FDIC
+22 We fix the utility of the outside good at the estimated level for the time period of the counterfactual.
+
+27
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+guarantee more. Interest rate limits, such as the one imposed on Ally Bank, might prevent banks from taking
+advantage of the guarantee and possibly limits the effect of spillovers on other banks. In fact, Regulation Q,
+which had allowed the Federal Reserve to set interest rate ceilings on banking deposits in the past, was put
+in place in 1933 partly to “prevent ‘excessive’ rate competition that...lead to bank failures” (Cook 1978).
+We analyze this intuition by imposing limits on the insured interest rates that banks are allowed to
+offer. We compute alternative equilibria in the calibrated model under this policy and present the results in
+Table 5. The policy is effective at curbing FDIC costs. For example, in 2007, the worst equilibrium without
+limits on insured rates results in expected FDIC costs of approximately $2.5 trillion (equilibrium 9). In this
+equilibrium, unstable banks take extreme advantage of FDIC insurance and attract all insured deposits–the
+market share of three unstable banks is almost 100%. We impose a very loose limit on insured deposit
+rates, at 5 percentage points above the treasury rate. The interest rate cap prevents unstable banks from
+attracting all insured deposits, limiting their market share to 92%. The policy is effective at curbing the
+expected FDIC costs, decreasing them to less than half the initial projection: $1.1 trillion (equilibrium 26).
+The costs are also lower because the expected default outcomes are less severe under the alternative policy.
+As suggested by the American Bankers Association in their letter to the FDIC, the policy also seems to
+limit spillovers between banks. The stable banks manage to hold on to some insured deposits, and because
+interest rates are lower, they are also more profitable, increasing their stability.
+The policy does have one surprising aspect. While the banking system is more stable from the perspective
+of default rates, it provides fewer services to uninsured depositors. Without insured interest rate limits, the
+lowest market share of uninsured deposits obtained by the five major banks we analyze is 35% (equilibrium
+4). Conversely, limits on insured deposit rates lead to several equilibria in which uninsured deposits leave the
+system even if banks are more stable. The lowest market share of uninsured deposits is below 5% (equilibrium
+26), or roughly 85% smaller than without limits. Therefore, while the policy can result in increased stability
+of the banking system and smaller costs to the FDIC, it can have an adverse effect on the level of uninsured
+deposit services provided by the banking system. These results caution that even simple, and seemingly
+reasonable policies, have distributional consequences which have to be considered.
+
+7.2
+
+FDIC Insurance Limit Change
+
+During the financial crisis, the FDIC raised the limit on deposit insurance, first in October 2008 and then
+as part of the Dodd-Frank Act in 2010. We use our calibrated model to estimate the effect such a policy
+would have had during the peak of the financial crisis in March 2009.
+We mirror the actual policy change by increasing insurance the total number of insured deposits available,
+
+28
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+M I , by 5.00% of uninsured deposits, and decreasing uninsured deposits, M N , by 5.00%. In our baseline
+specification the newly insured depositors have the same preferences as the uninsured depositors, but are
+insensitive to bank default. We present the results in Table 6, Panel A. Most banks’ default probabilities
+do not change significantly, so the policy does not stabilize the system since most of the rents accrue to the
+newly insured depositors. We calculate the expected FDIC insurance payout under the two policy regimes.
+The consequence of the policy is to increase the expected cost to the FDIC by roughly $3.5 billion, but
+the results differ among banks. The results have differential effects, because banks differ in the quality of
+services for insured and uninsured depositors. Therefore, a shift in the composition of demand affects them
+to a different extent. Furthermore, the cost of servicing insured depositors (ck ) differs across banks, affecting
+their pricing of deposits. Overall, our counterfactual suggests that the primary consequence of the policy is
+to transfer rents from the FDIC to the newly insured depositors.
+To illustrate the importance of modeling realistic aspects of depositors’ preferences, consider the counterfactual below. We change the preferences of newly insured depositors to coincide with those of the insured
+depositors. Under this counterfactual, the FDIC limit increase would have lowered the probability of default
+for all banks we consider (Table 6, Panel B). It would also lower the expected costs of FDIC insurance by
+over $2.6 billion. This change in depositors’ preferences radically changes the policy implications.
+Why do these two counterfactual have such different impacts on banking stability? The policy change
+transfers rents from the FDIC to banks and depositors. Broadly, if, in equilibrium, these rents go to the
+depositor, banks’ incentives to default do not change much. Conversely, if the rents accrue to the banks,
+there is an offsetting effect, which potentially lowers the probability that each bank defaults. These two
+forces help explain part of the asymmetric effect of increased FDIC insurance. Overall, our results suggest
+that a quantitative model can be useful in analyzing even seemingly simple policies. Our model is silent
+about the risk-taking decision of bank managers. The moral hazard problem will temper the conclusions of
+our counterfactual analysis, introducing additional costs of FDIC insurance.
+
+7.3
+
+Capital Requirements
+
+The last policy we consider is the introduction of capital requirements. In the Appendix, we also use our
+model to consider an additional policy that limits the risk that banks are eligible to undertake. In the
+baseline model, limited liability protects equity holders. If the bank defaults, equity holders only lose the
+franchise value of the bank, which is the expected value of the future cash flows from the bank. Capital
+requirements have been at the center of proposed policy solutions to combat banking instability.23 We
+23 For example, the Dodd-Frank act, the Financial Stability Board total loss-absorbing capacity proposal for large banks, the
+Basel III accords.
+
+29
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+implement capital requirements by requiring equity holders to post a κ share of deposits and coupon payments
+
+
+κ
+every period, κ bk + M I sIk,t + M N sN
+k,t , leading to a capital requirement of ω = 1+κ . This additional
+capital is invested along with deposits and is lost if the firm defaults. Therefore, if the bank wants to raise
+additional deposits, equity holders have to supply additional capital. The addition of capital requirements
+changes the characterization of the optimal default threshold as well as the optimal price of deposits. We
+compute equilibria in the calibrated model for different levels of capital requirements ω as of March 2009.
+Because there are multiple equilibria for each ω, we streamline the analysis by focusing on the best and
+worst equilibrium from the perspective of bank stability and welfare for each capital requirement ω. Last,
+we propose a welfare criterion that allows us to choose an optimal policy in the presence of multiple equilibria.
+Using this criterion, we solve for optimal capital requirements.
+We first analyze the consequences of increasing capital requirements for the stability of the banking sector.
+We measure bank stability as the average risk-neutral probability of default across the analyzed banks for
+each equilibrium. We rank equilibria according to this measure, and plot the best and the worst equilibrium
+for each capital requirement in Panel A of Figure 5. Increasing capital requirements increases banking
+sector stability in the worst equilibrium. The average probability of bankruptcy in the worst equilibrium
+declines precipitously as we increase ω from 0 to 23%. The decline slows as we increase capital requirements
+past ω = 23%. Intuitively, increasing capital requirements increases the stability of banks by decreasing
+the limited liability of equity holders, making them less prone to gamble. Therefore capital requirements
+decrease the severity of the largest possible instability in the banking sector.
+The intuition that capital requirements uniformly increase the stability of the banking sector does not
+hold. Capital requirements increase banking stability in the best equilibrium only for capital requirements
+larger than ω = 17%. As capital requirements increase from ω = 0 to ω = 17%, banking sector stability in
+the best equilibrium declines slightly. The driving force for this result is that in good equilibria the banking
+system is already stable: consumers believe that banks are stable so demand for deposits is high, making
+banks profitable and decreasing the probability of default. Capital requirements decrease the profitability
+of equity and decrease banking stability. Once capital requirements are high enough, ω > 17%, they make
+equity more cautious, decreasing the average probability of default for the best equilibria. Overall, capital
+requirements decrease the severity of the largest possible instability in the banking sector, but at the cost of
+eliminating some equilibria in which the banking system is very stable.
+From the perspective of policy makers, banking stability is an intermediate goal towards a broader
+objective of fostering overall welfare. Consumers earn interest rates on their deposits and obtain banking
+services, which they value.24 Equity holders earn rents from the intermediation of deposits, because they
+24 The utility function of uninsured depositors already accounts for expected utility loss due to default, and the consumer
+
+30
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+offer differentiated goods and the market is not perfectly competitive.2526 Because insured depositors and
+equity holders partially obtain surplus from the expected FDIC insurance, we have to account for expected
+FDIC costs in the welfare calculation as well. While increasing capital requirements can increase banking
+stability it may depress valuable banking activity. We therefore study how capital requirements affect the
+surplus generated by the banking system. We first describe how the set of equilibria changes as we increase
+capital requirements, and then propose the optimal capital requirement.
+Figure 5, Panel B presents the welfare in the best (highest welfare) and worst (lowest welfare) equilibria
+for different levels of ω. The welfare in the best equilibrium does not vary much, and peaks at ω = 45%.
+As capital requirements increase from 0 to approximately 19%, welfare remains relatively stable. After that
+point, the welfare in the best equilibrium fluctuates but is always above the welfare of a banking system
+with no capital requirements.
+The welfare in the worst equilibrium improves drastically as capital requirements increase from no capital
+requirements, ω = 0, towards ω = 18%, with a welfare gain of approximately $2.5 trillion. After that point
+welfare increases slowly and as we increase capital requirements further, past ω = 31%, the welfare of the
+worst equilibrium begins to decline.
+These results show that banking stability and welfare do not necessarily go hand in hand. For example,
+in the worst equilibrium banking stability increases with capital requirements, but welfare starts to decrease
+after capital requirements exceed approximately 31%. The source of this wedge between banking stability
+and welfare is consumer surplus. In Panels C, D, and E, we separately plot how different components of
+surplus change with capital requirements. Both equity value and the costs to the FDIC decline with capital
+requirements in the worst equilibrium, as one would expect. Consumer surplus in the worst equilibrium,
+on the other hand, reaches its global peak at approximately ω = 18%, and is monotonically declining from
+approximately ω = 28%.
+Our model suggests that there are multiple equilibria for each level of capital requirements and that the
+welfare consequences of policies differ based on which equilibrium is played by the agents in a model. How
+should a planner choose the optimal capital requirement in the face of multiple equilibria? This choice is
+especially difficult because it is plausible that the planner does not know which equilibrium will be chosen
+after the policy has changed. If the planner is uncertainty averse and her priors over which equilibria will
+be chosen are unrestricted, then she will maximize the welfare of the worst possible equilibrium (Gilboa and
+Schmeidler, 1989). Under this criterion the optimal capital requirement is 31%. More broadly, our results
+surplus can therefore be interpreted as the expected surplus.
+25 Depositor surplus and FDIC costs are measured as annual flows. Equity values, however, are measured as the present value
+of expected discounted cash flows to equity holders. We compute the expected flow benefits to equity holders as rEk .
+26 We do not include the surplus borrowers earn from their bank loans. Insofar as increasing capital requirements decreases
+banking activity, this surplus loss increases the cost of capital requirements further.
+
+31
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+suggest that a planner may want to err on the side of capital requirements which are too high rather than
+too low because the welfare losses from suboptimal requirements are very asymmetric. The welfare losses are
+very substantial for capital requirements below 18%, relative to any losses a planner might incur by choosing
+requirements that are too strict. These estimates are substantially higher than the 8% requirements proposed
+under Basel III accords, and somewhat higher than the 16 − 20% total loss-absorbing capacity proposed by
+the Financial Stability Board.
+
+8
+
+Conclusion
+
+Our paper develops a new empirical model of the banking sector which emphasizes the feedback relationship
+between the demand for uninsured deposits, demand for insured deposits, financial health of banks, and bank
+competition. One advantage of our model is that we are able to take it to the data and quantify the forces
+that determine the strength of the feedback between deposits and financial distress. Our central finding is
+that the large amounts of uninsured deposits in the U.S. commercial banking system can lead to unstable
+banks, given the elasticity of deposits to financial distress.
+We then use our calibrated model to assess some recent and proposed bank regulatory changes. The
+results suggest that accounting for heterogeneity in banks and in depositors’ preferences is important, because
+policies produce asymmetric effects across banks (both positive and negative). For example, limits on insured
+deposit interest rates eliminate the possibility of the worst equilibria in terms of default rates, but also allow
+for equilibria with a significantly contracted amount of banking services provisions. We evaluate bank
+stability and welfare under different capital requirements, and find that banking stability and welfare do not
+necessarily go hand in hand. Increasing capital requirements past a certain point decreases welfare even if
+it increases banking stability. Last, we show how to use the model to evaluate optimal capital requirements.
+Overall, we provide a workhorse model that allows us to evaluate the stability of the banking system in the
+presence of run-prone uninsured deposits.
+
+9
+
+References
+Acharya, V.V., P. Schnabl, and G. Suarez. 2013. “Securitization without risk transfer.” Journal
+of Financial Economics 107: 515-536.
+Aguirregabiria, V., R. Clark, and H. Wang. 2013. “Diversification of geographic risk in retail
+bank networks: Evidence from bank expansion after the Riegle-Neal Act.” Unpublished
+manuscript.
+Allen, F. and D. Gale. 2004. “Financial intermediaries and markets.” Econometrica 72(4):
+1023–1061.
+
+32
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+Berry, S. 1994. “Estimating discrete-choice models of product differentiation.” The RAND
+Journal of Economics 25(2): 242-262.
+Berry, S., J. Levinsohn, and A. Pakes. 1995. “Automobile prices in market equilibrium.” Econometrica. 63(4): 841-890.
+Calomiris, C. and J. Mason. 2003. “Fundamentals, panics, and bank distress during the Depression.” American Economic Review 93(5): 1615-1647.
+Chari, V.V. and R. Jagannathan. 1988. “Banking panics, information, and rational expectations
+equilibrium.” Journal of Finance 43(3): 749–761.
+Chen, Q., I. Goldstein, and W. Jiang. 2010. “Payoff complementarities and financial fragility:
+Evidence from mutual fund outflows.” Journal of Financial Economics 97: 239-262.
+Cook, T. 1978. “Regulation Q and the behavior of savings and small time deposits at commercial
+banks and the thrift institutions.” FRB Richmond Economic Review 64(6): 14-28.
+Cooper, R. and T.W. Ross. 1998. “Bank runs: Liquidity costs and investment distortions.”
+International Economic Review 43: 55–72.
+Corbae, D. and P. D’Erasmo. 2013. “A quantitative model of banking industry dynamics.”
+Unpublished manuscript.
+Corbae, D. and P. D’Erasmo. 2014. “Capital requirements in a quantitative model of banking
+industry dynamics.” Unpublished manuscript.
+Covitz, D., N. Liang, and G. Suarez. 2013. “The evolution of a financial crisis: Panic in the
+asset-backed commercial paper market.” Journal of Finance 68(3): 815-848.
+Diamond, D. and P. Dybvig. 1983. “Bank runs, liquidity, and deposit insurance.” Journal of
+Political Economy 91: 401-419.
+Dick, A. 2008. “Demand estimation and consumer welfare in the banking industry.” Journal of
+Banking and Finance 32: 1661-1676. Eavis, P. “Banks ordered to add capital to limit risks.”
+The New York Times, April 9, 2014.
+Fahri, E., M. Golosov and A. Tsyvinski. 2009. “A theory of liquidity and regulation of financial
+intermediation.” The Review of Economic Studies 76(3): 973–992.
+Federal Deposit Insurance Corporation. Changes in FDIC Deposit Insurance Coverage. Available
+at: http://www.fdic.gov/deposit/deposits/changes.html. Accessed: 05/04/2014.
+Freixas,X. and J.-C. Rochet. 2008. Microeconomics of Banking. 2nd ed. Cambridge, MA: The
+MIT Press.
+Gertler, M. and N. Kiyotaki. 2013. “Banking, liquidity and bank runs in an infinite-horizon
+economy.” Working Paper 19129, National Bureau of Economic Research.
+Gilboa, I. and D. Schmeidler. 1989. “Maxmin expected utility with a non-unique prior.” Journal
+of Mathematical Economics. 18: 141–153
+Goldstein, I. 2013. “Empirical literature on financial crises: Fundamentals vs. panic,” in Gerard
+Caprio, ed., The Evidence and Impact of Financial Globalization. Amsterdam: Elsevier,
+523-534.
+Goldstein, I. and A. Pauzner. 2005. “Demand-deposit contracts and the probability of bank
+runs.” The Journal of Finance. 60(3): 1293-1328.
+Gorton, G. 1988. “Banking panics and business cycles.” Oxford Economic Papers 40: 751-781.
+Hausman, J. 1996. “Valuation of new goods under perfect and imperfect competition,” in T.
+Bresnahan and R. Gordon, eds., The Economics of New Goods. Studies in Income and
+Wealth Vol. 58. Chicago: National Bureau of Economic Research, 209-248.
+Hanson, Samuel G., A. Shleifer, J.C. Stein and R.W. Vishney. 2014. “Banks as patient fixedincome investors.” Working Paper No. 20288, National Bureau of Economic Research.
+
+33
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+Hortaçsu, A., G. Matvos, C. Shin, C. Syverson, and S. Venkataraman. 2011. “Is an automaker’s
+road to bankruptcy paved with beliefs?” The American Economic Review. 101(3): 93-97.
+Hortaçsu, A., G. Matvos, C. Syverson, and S. Venkataraman. 2013. “Indirect costs of financial
+distress in durable goods industries: The case of auto manufacturers.” Review of Financial
+Studies. 26(5): 1248-1290.
+Hull, John. 2012. Options, futures and other derivatives. 8th ed. Upper Saddle River, NJ:
+Prentice Hall.
+Iyer, R. and M. Puri. 2012. “Understanding bank runs: The importance of depositor-bank
+relationships and networks.” American Economic Review. 102(4): 1414-1445.
+Jacklin, C.J. and S. Bhattacharya. 1988. “Distinguishing panics and information-based bank
+runs: Welfare and policy implications.” Journal of Political Economy 96(3): 568–592.
+Jank, S., and M. Wedow. 2010. “Sturm und Drang in MMMFs: When MMMFs cease to be
+narrow.” Working Paper, University of Cologne and ECB.
+Kashyap, A.K., D.P. Tsomocos and A.P. Vardoulakis. 2014. “Does macroproduential regulation
+change bank credit supply?” Working Paper.
+Kacperczyk, M., and P. Schnabl. 2013. “How safe are money market funds?” Quarterly Journal
+of Economics 128(3): 1073-1122.
+Kelly, M., and C. Ó Gráda. 2000. “Market contagion: Evidence from the panics of 1854 and
+1857.” American Economic Review 90(5): 1110-1124.
+Leiber, R. “F.D.I.C. is watching as a bank sets rates” The New York Times, June 13, 2009.
+Leland, H.E. 1994. “Corporate debt value, bond covenants and optimal capital structure.” Journal of Finance 49(4): 1213-1252.
+Martinez Peria, M.S. and S.L. Schmukler. 2001. “Do depositors punish banks for bad behavior?
+Market discipline, deposit insurance, and banking crises.” Journal of Finance 56(3): 10291051.
+Matutes, C. and X. Vives. 1996. “Competition for deposits, fragility and insurance.” Journal of
+Financial Intermediation 5: 184-216.
+Morris, S. and H.S. Shin. 1998. “Unique equilibrium in a model of self-fulfilling currency attacks.”
+American Economic Review 88(3): 587–597.
+Ó Gráda, C., and E. White. 2003. “The panics of 1854 and 1857: A view from the emigrant
+industrial savings bank.” Journal of Economic History 63(1): 213-240.
+Peck, J. and K. Shell. 2003. “Equilibrium bank runs.” Journal of Political Economy 111(1):
+103–123.
+Postlewaite, A. and X. Vives. 1987. “Bank runs as an equilibrium phenomenon.” Journal of
+Political Economy 95(3): 485–491.
+Rochet, J-C. and X. Vives. 2004. “Coordination failures and the lender of last resort: Was
+Bagehot right after all?” Journal of the European Economic Association 2(6): 1116–1147.
+Schmidt, L., Timmermann, A., and R. Wermers. 2014. “Runs on money market mutual funds,”
+Working Paper.
+Schroth, E., G. Suarez, and L.A. Taylor. 2014. “Dynamic debt runs and financial fragility:
+Evidence from the 2007 ABCP crisis.” Journal of Financial Economics 112(2): 164-189.
+Schumacher, L. 2000. “Bank runs and currency run in a system without a safety net: Argentina
+and the ‘tequila’ shock.” Journal of Monetary Economics 46: 257-277.
+Strahan, P. and B. Tanyeri. 2015. “Once burned, twice shy? Money market fund responses to a
+systemic liquidity shock.” Journal of Financial and Quantitative Analysis, forthcoming.
+Tirole, J. 2006. The Theory of Corporate Finance. Princeton, NJ: Princeton University Press.
+Uhlig, H. 2010. “A model of a systemic bank run.” Journal of Monetary Economics 57(1): 78–96.
+34
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+Villas-Boas, S.B. 2007. “Vertical relationships between manufacturers and retailers: Inference
+with limited data.” The Review of Economic Studies 74(2): 625-652.
+Yingling, E.L. 2009. “Open letter to Shelia Bair.” American Bankers Association, May 27, 2009.
+http://www.aba.com/Issues/Documents/f770ac95973e4a7085e69a3ad35fb68eFDIC Ally Bank 090527.pdf
+
+35
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+Figure 2: Calibrated Non-Interest Cost of Insured Deposits
+
+Notes: Figure 2 plots the calibrated non-interest cost of insured deposits as of 03/31/2009.
+
+Figure 3: Calibrated Mean Return on Deposits
+
+Notes: Figure 3 plots the calibrated mean return on deposits as of 03/31/2009.
+
+Figure 4: Calibrated Standard Deviation of Return on Deposits
+
+Notes: Figure 4 plots the calibrated standard deviation of the return on deposits as of 03/31/2009.
+
+36
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+Figure 5: Capital Requirements
+Panel A: Banking Stability and Capital Requirements
+
+Panel B: Welfare and Capital Requirements
+
+37
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+Figure 5: Capital Requirements
+Panel C: Consumer Surplus and Capital Requirements
+
+Panel D: Flow to Equity and Capital Requirements
+
+Panel E: Welfare and Capital Requirements
+
+Notes: Figure 5 plots the probability of default (averaged across banks), welfare, consumer surplus, annualized
+equity value and expected FDIC losses in the worst and best equilibria as of 03/31/2009. The best/worst equilibria
+are defined in terms of the relevant measure (probability of default, welfare,etc.). As detailed in the Appendix,
+welfare, consumer surplus, annualized equity value and expected FDIC losses are reported relative to their
+respective values in the observed equilibrium.
+38
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+Table 1: Deposit Level, Interest Rate and CDS Summary Statistics
+Variable
+
+Obs
+
+Mean
+
+Std.Dev.
+
+Min
+
+Max
+
+Ins. Deposits ($bn)
+
+566
+
+141.0
+
+162.0
+
+11.27
+
+845.6
+
+Unins. Deposits ($bn)
+
+566
+
+160.8
+
+205.2
+
+4.083
+
+939.0
+
+CDS Spread
+
+566
+
+0.83%
+
+0.88%
+
+0.05%
+
+5.47%
+
+Deposit Spread (Min. Dep.=$10k)
+
+566
+
+-0.31%
+
+0.71%
+
+-2.66%
+
+2.03%
+
+Deposit Spread (Min. Dep.=$100k)
+
+564
+
+-0.22%
+
+0.70%
+
+-3.67%
+
+2.03%
+
+Table 2: Deposits and Financial Distress
+Unins. Deposits
+
+Unins Deposits
+
+Ins. Deposits
+
+Prob of Default
+
+-1.98**
+(0.96)
+
+-2.13*
+(1.14)
+
+-0.16
+(1.04)
+
+Share Difference (Unins.-Ins.)
+Quarter Fixed Effects
+Bank Fixed Effects
+Observations
+R-squared
+
+X
+X
+X
+566
+0.949
+
+X
+X
+566
+0.970
+
+X
+X
+566
+0.948
+
+Notes: Table 2 displays the regression a bank’s logged deposit share on its probability of
+default. Each regression is estimated using an unbalanced panel of sixteen of the largest
+US banks with quarterly observations over the period 2002-2013. All specifications control
+for the number of bank branches. Robust standard errors in parentheses. *** p<0.01, **
+p<0.05, * p<0.10.
+
+39
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+Table 3: Demand Estimates
+Demand Estimates
+Unins. Deposits
+Ins. Deposits
+(1)
+(2)
+(3)
+(4)
+Deposit Rate
+Prob of Default
+
+IV-0 (Pass-Through)
+IV-1 (CMOs)
+IV-2 (Loans)
+Observations
+R-squared
+
+Placebo for Default Prob
+Ins. Deposits
+(5)
+(6)
+(7)
+
+12.62*
+(7.49)
+-18.61***
+(7.21)
+
+18.21***
+(6.08)
+-10.66*
+(5.83)
+
+16.64***
+(5.80)
+-12.60**
+(5.29)
+
+58.79***
+(8.16)
+
+59.70***
+(8.63)
+4.01
+(5.66)
+
+54.96***
+(8.14)
+-2.86
+(5.33)
+
+55.35***
+(8.18)
+-1.79
+(4.33)
+
+X
+X
+
+X
+
+X
+X
+X
+564
+0.964
+
+X
+
+X
+X
+
+X
+
+566
+0.917
+
+566
+0.915
+
+X
+X
+X
+566
+0.921
+
+564
+0.958
+
+X
+564
+0.966
+
+X
+566
+0.921
+
+Notes: Table 3 displays the demand estimates for uninsured and insured deposits. The dependent variable in each
+specification is the log of a bank’s market share. Each demand specification is estimated using an unbalanced panel of
+sixteen of the largest US banks with quarterly observations over the period 2002-2013. Each observation is weighted
+by the square root of the market size. All specifications include bank and quarter fixed effects and control for the
+number of bank branches. Robust standard errors in parentheses. *** p<0.01, ** p<0.05, * p<0.10.
+
+40
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+41
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+3.90%
+3.73%
+11.55%
+5.08%
+5.25%
+29.51%
+
+13.25%
+16.48%
+9.15%
+4.13%
+4.19%
+47.19%
+
+$11bn
+
+Insured Deposit Share:
+JPMorgan Chase
+3.44%
+Citi Bank
+2.28%
+Bank of America
+9.45%
+Wells Fargo
+3.79%
+Wachovia
+4.38%
+Cumulative Share 23.34%
+
+Uninsured Deposit Share:
+JPMorgan Chase
+13.61%
+Citi Bank
+16.24%
+Bank of America
+9.84%
+Wells Fargo
+4.18%
+Wachovia
+4.40%
+Cumulative Share 48.28%
+
+FDIC Ins. Cost
+
+$1,108bn
+
+0.19%
+18.21%
+9.68%
+4.23%
+4.29%
+36.59%
+
+77.46%
+1.83%
+3.21%
+2.39%
+1.62%
+86.50%
+
+55.70%
+4.09%
+3.20%
+4.50%
+3.61%
+
+(3)
+
+$966bn
+
+13.73%
+3.32%
+9.67%
+4.13%
+4.25%
+35.11%
+
+0.72%
+86.55%
+2.00%
+1.76%
+1.03%
+92.06%
+
+3.44%
+43.56%
+3.49%
+5.37%
+4.03%
+
+(4)
+
+$843bn
+
+13.53%
+17.68%
+0.24%
+4.17%
+4.24%
+39.86%
+
+1.47%
+2.11%
+72.61%
+2.80%
+2.04%
+81.04%
+
+2.64%
+3.53%
+45.19%
+3.80%
+3.06%
+
+(5)
+
+$894bn
+
+13.26%
+16.83%
+9.33%
+0.28%
+4.06%
+43.76%
+
+0.88%
+1.33%
+2.55%
+81.23%
+1.30%
+87.30%
+
+2.03%
+3.35%
+2.17%
+43.04%
+2.76%
+
+$951bn
+
+13.29%
+16.92%
+9.36%
+3.93%
+0.08%
+43.58%
+
+1.15%
+1.66%
+3.30%
+2.45%
+74.84%
+83.41%
+
+2.04%
+3.21%
+2.17%
+3.79%
+49.57%
+
+Other Equilibria
+(6)
+(7)
+
+$2,547bn
+
+11.06%
+17.11%
+5.26%
+3.20%
+3.98%
+40.61%
+
+53.64%
+0.00%
+46.36%
+0.00%
+0.00%
+100.00%
+
+100.00%
+4.52%
+100.00%
+8.34%
+3.76%
+
+(8)
+
+$2,547bn
+
+12.72%
+3.64%
+9.18%
+3.05%
+16.34%
+44.94%
+
+51.29%
+0.00%
+0.00%
+0.00%
+48.71%
+100.00%
+
+100.00%
+3.90%
+2.13%
+7.89%
+100.00%
+
+(9)
+
+$2,547bn
+
+13.38%
+17.17%
+4.12%
+3.21%
+2.37%
+40.25%
+
+0.00%
+0.00%
+48.36%
+0.00%
+51.64%
+100.00%
+
+2.73%
+4.57%
+100.00%
+8.38%
+100.00%
+
+(10)
+
+Notes: Column (1) displays the observed equilibrium as of 3/31/07. Column (2) displays the best potential equilibrium in
+terms of the joint probability of default. Columns (3)-(10) display potential bank run equilibria. We do not report all potential
+equilibria. We do not report equilibria in which the same set of banks experience distress (prob. of default > 20%) as in one of
+the reported equilibria. Cells highlighted in red indicate that the probability of default is greater than 20%. FDIC insurance
+cost reflects the total expected insurance payout for the five major banks. We calculate the expected insurance payout as the
+weighted sum of insured deposits weighted by the probability of default assuming a 40% recovery rate.
+
+$1bn
+
+1.10%
+1.57%
+1.63%
+1.30%
+1.37%
+
+(2)
+
+Probability of Default:
+JPMorgan Chase
+0.20%
+Citi Bank
+0.21%
+Bank of America
+0.11%
+Wells Fargo
+0.15%
+Wachovia
+0.18%
+
+Obs.
+
+Table 4: Multiple Equilibria 2007
+
+42
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+3.90%
+3.73%
+11.55%
+5.08%
+5.25%
+29.51%
+
+13.25%
+16.48%
+9.15%
+4.13%
+4.19%
+47.19%
+
+$11bn
+
+Insured Deposit Share:
+JPMorgan Chase
+3.44%
+Citi Bank
+2.28%
+Bank of America
+9.45%
+Wells Fargo
+3.79%
+Wachovia
+4.38%
+Cumulative Share 23.34%
+
+Uninsured Deposit Share:
+JPMorgan Chase
+13.61%
+Citi Bank
+16.24%
+Bank of America
+9.84%
+Wells Fargo
+4.18%
+Wachovia
+4.40%
+Cumulative Share 48.28%
+
+FDIC Ins. Cost
+
+$660bn
+
+0.35%
+18.32%
+9.75%
+4.47%
+4.42%
+37.31%
+
+53.05%
+3.17%
+6.61%
+3.79%
+3.20%
+69.82%
+
+47.83%
+3.40%
+2.94%
+3.22%
+3.04%
+
+(3)
+
+$321bn
+
+13.78%
+5.30%
+9.75%
+4.55%
+4.47%
+37.85%
+
+3.34%
+36.32%
+8.92%
+4.55%
+4.23%
+57.36%
+
+2.78%
+33.13%
+2.83%
+2.65%
+2.74%
+
+(4)
+
+$843bn
+
+13.53%
+17.68%
+0.24%
+4.17%
+4.24%
+39.86%
+
+1.47%
+2.11%
+72.61%
+2.80%
+2.04%
+81.04%
+
+2.64%
+3.53%
+45.19%
+3.80%
+3.06%
+
+(5)
+
+$432bn
+
+13.31%
+16.93%
+9.38%
+0.57%
+4.18%
+44.37%
+
+2.27%
+2.73%
+6.45%
+50.60%
+3.13%
+65.18%
+
+1.79%
+2.58%
+1.96%
+32.93%
+2.16%
+
+(6)
+
+$658bn
+
+13.32%
+16.98%
+9.39%
+4.07%
+0.13%
+43.89%
+
+1.88%
+2.40%
+5.33%
+3.31%
+59.09%
+72.02%
+
+1.92%
+2.81%
+2.05%
+2.98%
+43.19%
+
+$735bn
+
+0.37%
+5.15%
+10.33%
+5.03%
+4.76%
+25.64%
+
+42.13%
+20.41%
+6.52%
+3.80%
+3.17%
+76.03%
+
+49.13%
+37.16%
+4.27%
+4.12%
+4.26%
+
+Other Equilibria
+(7)
+(8)
+
+$1,068bn
+
+0.22%
+20.50%
+0.21%
+4.54%
+4.47%
+29.93%
+
+21.40%
+0.33%
+61.98%
+2.44%
+1.67%
+87.82%
+
+54.80%
+0.01%
+48.44%
+4.99%
+4.37%
+
+(9)
+
+$747bn
+
+0.31%
+18.81%
+9.87%
+0.66%
+4.45%
+34.10%
+
+37.41%
+2.75%
+5.12%
+30.93%
+2.52%
+78.72%
+
+49.90%
+3.98%
+3.40%
+33.28%
+3.60%
+
+(10)
+
+$866bn
+
+0.29%
+18.84%
+9.87%
+4.50%
+0.15%
+33.65%
+
+32.47%
+2.52%
+4.54%
+2.99%
+39.01%
+81.53%
+
+50.93%
+4.14%
+3.49%
+4.17%
+43.80%
+
+(11)
+
+$977bn
+
+14.21%
+3.86%
+0.22%
+4.70%
+4.56%
+27.54%
+
+1.44%
+11.53%
+68.91%
+2.67%
+1.90%
+86.46%
+
+4.37%
+42.67%
+48.11%
+4.94%
+4.53%
+
+(12)
+
+$546bn
+
+13.95%
+4.87%
+9.92%
+0.67%
+4.51%
+33.91%
+
+2.38%
+22.74%
+6.30%
+38.81%
+3.06%
+73.30%
+
+3.43%
+36.03%
+3.37%
+33.11%
+3.46%
+
+(13)
+
+Notes: Column (1) displays the observed equilibrium as of 3/31/07. Column (2) displays the best potential equilibrium in terms of the joint probability
+of default. Columns (3)-(13) display potential bank run equilibria if regulators were to impose a maximum allowable deposit rate of the one year treasury
+rate plus 5.00% on insured deposits. We do not report all potential equilibria. We do not report equilibria in which the same set of banks experience
+distress (prob. of default > 20%) as in one of the reported equilibria. Cells highlighted in red indicate that the probability of default is greater than 20%.
+FDIC insurance cost reflects the total expected insurance payout for the five major banks. We calculate the expected insurance payout as the weighted
+sum of insured deposits weighted by the probability of default assuming a 40% recovery rate.
+
+$1bn
+
+1.10%
+1.57%
+1.63%
+1.30%
+1.37%
+
+(2)
+
+Probability of Default:
+JPMorgan Chase
+0.20%
+Citi Bank
+0.21%
+Bank of America
+0.11%
+Wells Fargo
+0.15%
+Wachovia
+0.18%
+
+Obs.
+
+Table 5: Counterfactual Analysis - Interest Rate Limits on Insured Deposits
+
+43
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+1.09%
+1.72%
+64.56%
+18.43%
+1.52%
+87.32%
+
+13.67%
+18.14%
+0.19%
+0.61%
+4.27%
+36.87%
+
+$957bn
+
+Insured Deposit Share:
+JPMorgan Chase
+2.06%
+Citi Bank
+19.15%
+Bank of America
+5.46%
+Wells Fargo
+3.37%
+Wachovia
+47.48%
+Cumulative Share 77.52%
+
+Uninsured Deposit Share:
+JPMorgan Chase
+13.96%
+Citi Bank
+4.60%
+Bank of America
+9.93%
+Wells Fargo
+4.59%
+Wachovia
+0.16%
+Cumulative Share 33.24%
+
+FDIC Ins. Cost
+
+$1,016bn
+
+13.69%
+18.20%
+0.18%
+4.19%
+0.13%
+36.40%
+
+1.01%
+1.64%
+59.06%
+2.19%
+24.50%
+88.40%
+
+3.22%
+4.21%
+48.60%
+4.74%
+44.86%
+
+(16)
+
+$728bn
+
+13.46%
+17.45%
+9.50%
+0.59%
+0.14%
+41.13%
+
+1.50%
+2.11%
+4.22%
+29.34%
+42.64%
+79.81%
+
+2.43%
+3.35%
+2.50%
+33.30%
+43.65%
+
+(17)
+
+$989bn
+
+14.39%
+3.66%
+0.22%
+0.72%
+4.64%
+23.63%
+
+1.34%
+9.83%
+58.75%
+16.77%
+1.76%
+88.46%
+
+4.85%
+44.84%
+48.62%
+34.02%
+4.98%
+
+(18)
+
+$1,044bn
+
+14.41%
+3.50%
+0.22%
+4.82%
+0.16%
+23.10%
+
+1.25%
+9.06%
+54.16%
+2.42%
+22.47%
+89.36%
+
+4.93%
+45.95%
+48.91%
+5.52%
+45.12%
+
+(19)
+
+$779bn
+
+14.14%
+4.29%
+10.07%
+0.69%
+0.16%
+29.36%
+
+1.75%
+14.72%
+4.60%
+25.13%
+36.51%
+82.71%
+
+4.10%
+39.93%
+3.99%
+33.48%
+43.93%
+
+$1,019bn
+
+13.84%
+18.69%
+0.18%
+0.62%
+0.13%
+33.47%
+
+0.95%
+1.61%
+51.37%
+14.67%
+21.31%
+89.91%
+
+3.65%
+4.58%
+49.11%
+34.20%
+45.28%
+
+Other Equilibria
+(20)
+(21)
+
+$1,137bn
+
+0.21%
+3.55%
+0.24%
+5.37%
+0.18%
+9.56%
+
+15.85%
+7.68%
+45.91%
+2.49%
+19.04%
+90.98%
+
+58.49%
+49.08%
+49.57%
+6.32%
+45.66%
+
+(22)
+
+$939bn
+
+0.29%
+4.28%
+10.60%
+0.80%
+0.18%
+16.14%
+
+23.42%
+11.35%
+4.41%
+19.36%
+28.13%
+86.68%
+
+53.86%
+43.45%
+5.38%
+33.84%
+44.50%
+
+(23)
+
+$1,107bn
+
+0.17%
+20.57%
+0.20%
+0.71%
+0.15%
+21.81%
+
+15.10%
+1.95%
+43.73%
+12.48%
+18.14%
+91.41%
+
+59.16%
+5.67%
+49.79%
+34.57%
+45.84%
+
+(24)
+
+$1,052bn
+
+14.59%
+3.36%
+0.22%
+0.74%
+0.16%
+19.07%
+
+1.20%
+8.01%
+47.87%
+13.67%
+19.86%
+90.60%
+
+5.39%
+47.92%
+49.40%
+34.40%
+45.52%
+
+(25)
+
+$1,144bn
+
+0.20%
+3.44%
+0.24%
+0.85%
+0.18%
+4.92%
+
+14.33%
+6.94%
+41.50%
+11.85%
+17.22%
+91.85%
+
+59.92%
+50.90%
+50.03%
+34.78%
+46.04%
+
+(26)
+
+Notes: Columns (14)-(26) display potential bank run equilibria if regulators were to impose a maximum allowable deposit rate of the one year treasury rate plus
+5.00% on insured deposits as of 3/31/07. We do not report all potential equilibria. We do not report equilibria in which the same set of banks experience distress
+(prob. of default > 20%) as in one of the reported equilibria. Cells highlighted in red indicate that the probability of default is greater than 20%. FDIC insurance
+cost reflects the total expected insurance payout for the five major banks. We calculate the expected insurance payout as the weighted sum of insured deposits
+weighted by the probability of default assuming a 40% recovery rate.
+
+$718bn
+
+3.14%
+4.11%
+48.31%
+33.83%
+3.62%
+
+(15)
+
+Probability of Default:
+JPMorgan Chase
+3.56%
+Citi Bank
+37.38%
+Bank of America
+3.49%
+Wells Fargo
+3.88%
+Wachovia
+43.48%
+
+(14)
+
+Table 5 continued
+
+Table 6 - Panel A: Counterfactual Analysis - FDIC Insurance
+Bank
+JPMorgan Chase
+Citi Bank
+Bank of America
+Wells Fargo
+Wachovia
+
+Prob. of Default.
+
+Counterfactual
+
+∆ Ins. Cost
+
+2.14%
+6.87%
+5.11%
+2.74%
+3.80%
+
+2.17%
+7.17%
+5.27%
+2.78%
+3.88%
+
+$327m
+$1,685m
+$1,174m
+$141m
+$247m
+
+Notes: Column (1) displays the realized equilibrium probability of default
+as of 03/31/2009. Column (2) displays an equilibrium probability of default if the FDIC were to insure an additional 5% of uninsured deposits.
+The additional insured deposits are assumed to be treated as a new type of
+deposit that is valued by consumers similarly to uninsured deposits except
+that depositors are insensitive to default risk (i.e. γ = 0). We calculate
+and select the reported new equilibrium using Broyden’s method initiated
+at the observed equilibrium. Column (3) displays the change in the hypothetical equilibrium cost of the FDIC policy change relative to the old
+policy. We calculate the cost change as the difference in expected insurance payout. We calculate the expected insurance payout as the weighted
+sum of insured deposits weighted by the probability of default assuming a
+40% recovery rate. Negative values represent a surplus to the FDIC.
+
+Table 6 - Panel B: Counterfactual Analysis - FDIC Insurance
+Bank
+JPMorgan Chase
+Citi Bank
+Bank of America
+Wells Fargo
+Wachovia
+
+Prob. of Default.
+
+Counterfactual
+
+∆ Ins. Cost
+
+2.14%
+6.87%
+5.11%
+2.74%
+3.80%
+
+1.57%
+6.45%
+4.66%
+2.28%
+3.42%
+
+-$762m
+-$249m
+-$880m
+-$387m
+-$405m
+
+Notes: Column (1) displays the realized equilibrium probability of default
+as of 03/31/2009. Column (2) displays an equilibrium probability of default if the FDIC were to insure an additional 5% of uninsured deposits.
+The additional insured deposits are assumed to be treated identically to
+existing insured deposits. We calculate and select the reported new equilibrium using Broyden’s method initiated at the observed equilibrium.
+Column (3) displays the change in the hypothetical equilibrium cost of
+the FDIC policy change relative to the old policy. We calculate the cost
+change as the difference in expected insurance payout. We calculate the expected insurance payout as the weighted sum of insured deposits weighted
+by the probability of default assuming a 40% recovery rate. Negative
+values represent a surplus to the FDIC.
+
+44
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+Appendix For Online Publication
+
+Model Calibration and Multiple Equilibria
+The parameters of the model are insured/uninsured depositor preferences (α, γ, δk , ξk,t ), each bank’s
+stochastic return process (µk , σk ), and each bank’s non-interest cost of servicing insured deposits, ck . As
+described in Section 4.2, we estimate the consumer preference parameters for insured and uninsured deposits
+(Table 3, Columns 3 and 4). We solve for the remaining bank specific supply side parameters (µk, σk , ck )
+using each bank’s first order conditions for setting the optimal insured and uninsured deposit rates (eq. 7
+and 8) and optimal default decision (eq. 6) as discussed in Section 5.1.
+We search for multiple equilibria in the banking sector given our parameter estimates. In equilibrium
+depositors are fully rational and select the utility maximizing bank such that optimal depositor behavior
+results in the demand system characterized by eq. (10) and (11). Similarly, banks optimally set deposit rates
+and optimally default. Each equilibrium consists of a set of bank default probabilities and insured/uninsured
+deposit rates that satisfy each bank’s first order conditions (eq. 6, 7, and 8). Our equilibrium analysis focuses
+on the five largest banks, thus we search for multiple equilibria by finding solutions to the system of fifteen
+nonlinear equations given by each bank’s first order conditions. We search for solutions to the system of
+equations using Broyden’s method initiated at a set of 1,953,125 different starting points. Each starting
+point consists of a set of default probabilities and insured/uninsured deposit rates. Specifically, we initiate
+Broyden’s method where we set each bank’s default probability to either 0.01%, 1%, 5%, 10%, 20%, 30%,
+50%, 65%, or 90% (and all of the 59 possible combinations among banks) and set each bank’s offered
+insured/uninsured deposit rate to 1%. A limitation of our analysis is that we may not find all potential
+equilibria.
+Welfare Calculations
+We use the model to compare consumer surplus, annualized equity value and FDIC insurance costs
+across different equilibria. Each component of surplus is calculated as follows. From the logit demand
+system, consumer welfare is given by:
+
+MI
+CS = I
+α
+
+ln
+
+K
+X
+l=1
+
+!
+exp(αI iIk + δkI + ξkI ) + C
+
+MN
++ N
+α
+
+ln
+
+K
+X
+
+!
+N
+N
+exp(αN iN
+k − ρk γ + δk + ξk ) + C
+
+l=1
+
+where we have omitted the time subscripts and C is the Euler-Mascheroni constant. We compute the value
+
+45
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+of bank equity from the bank’s default condition.
+
+
+
+I I
+I
+N N
+N
+Ek = (1 + r) b − κ(M I sIk + M N sN
+k )(R̄k − rk ) − M sk (R̄k − ck − ik + κ) − M sk (R̄k − ik + κ)
+
+where κ reflects capital requirements (κ = 0 in the baseline case). The annualized equity value of all banks
+is then given by:
+AEV =
+
+K
+X
+
+rEl
+
+l=1
+
+The expected payout of the the FDIC is equal to the weighted sum of insured deposits weighted by the
+default probability assuming a 40% recovery rate:
+
+EC = 0.6
+
+K
+X
+
+ρl M I sIl
+
+l=1
+
+Last, we compute the change in welfare between counterfactual and the observed equilibrium as the change
+in consumer surplus, annualized equity value, and FDIC insurance cost.
+
+∆W = ∆CS + ∆AEV − ∆EC
+
+Counterfactual Risk Limits
+The recent financial crises prompted regulators to examine putting risk limits on financial institutions.
+We use our model to consider the effect of limiting the risk that banks are eligible to undertake. Specifically,
+we impose a counterfactual policy in which banks are forced to hold securities/investments that cap the
+standard deviation of income/returns σR at 12.00%. For simplicity we assume that all banks in excess of
+the risk limit reduce σR to 12.00% exactly. All five banks studied would be forced to reduce the volatility of
+their returns.
+Placing risk limits on banks produces two offsetting effects on the financial stability of banks. On one
+hand, risk limits lower the probability that a bank experiences an adverse income shock; negative income
+shocks are less common. On the other hand, risk limits lower the future value of the equity which makes
+default less costly.
+Table A2 illustrates the equilibrium effect of the hypothetical risk limit policy. We compute the new
+equilibrium using Broyden’s method initiated at the observed equilibrium. The risk limit increases the probability that each bank defaults. Overall, the calibration results suggest that imposing risk limits of this form
+could be counterproductive. On average, the risk limit increases the probability that each bank defaults by
+
+46
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+over 2.00% points. Although risk limits lower the volatility of bank returns they also lower the profitability
+of banks which could potentially destabilize the banking sector.
+
+Figure A1: Demand Estimates - Bank Brand/Fixed Effects
+
+Notes: Figure A1 displays the estimated bank fixed effects corresponding to column (1) and (3) in Table 3.
+
+47
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+48
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+$1,086bn
+
+1.19%
+18.79%
+10.03%
+4.43%
+4.76%
+39.19%
+
+83.89%
+0.72%
+1.75%
+1.35%
+1.38%
+89.09%
+
+48.35%
+4.63%
+3.21%
+4.81%
+5.96%
+
+(3)
+
+$979bn
+
+16.62%
+18.04%
+0.08%
+4.40%
+4.77%
+43.91%
+
+1.84%
+1.17%
+68.34%
+2.19%
+2.53%
+76.08%
+
+3.29%
+3.74%
+53.34%
+3.56%
+4.92%
+
+$1,002bn
+
+15.96%
+17.23%
+9.76%
+0.19%
+4.52%
+47.67%
+
+1.00%
+0.63%
+1.94%
+80.41%
+1.51%
+85.49%
+
+2.86%
+3.36%
+1.85%
+46.61%
+4.74%
+
+Other Equilibria
+(5)
+(6)
+
+$1,118bn
+
+17.09%
+2.51%
+10.04%
+4.39%
+4.73%
+38.77%
+
+0.91%
+86.68%
+1.42%
+1.14%
+1.14%
+91.29%
+
+4.37%
+48.20%
+3.27%
+5.06%
+6.12%
+
+(4)
+
+$1,037bn
+
+16.06%
+17.33%
+9.75%
+4.16%
+0.08%
+47.36%
+
+1.30%
+0.82%
+2.57%
+1.73%
+74.47%
+80.88%
+
+2.83%
+3.33%
+1.94%
+3.49%
+52.08%
+
+(7)
+
+$2,663bn
+
+16.69%
+18.41%
+0.73%
+3.98%
+0.61%
+40.42%
+
+0.00%
+0.00%
+43.84%
+0.00%
+56.16%
+100.00%
+
+4.41%
+4.78%
+100.00%
+6.28%
+99.99%
+
+(8)
+
+Notes: Column (1) displays the observed equilibrium as of 3/31/08. Column (2) displays the best potential
+equilibrium in terms of the joint probability of default. Columns (3)-(8) display potential bank run equilibria.
+We do not report equilibria in which the same set of banks experience distress (prob. of default > 20%) as
+in one of the reported equilibria. Cells highlighted in red indicate that the probability of default is greater
+than 20%. FDIC insurance cost reflects the total expected insurance payout for the five major banks. We
+calculate the expected insurance payout as the weighted sum of insured deposits weighted by the probability
+of default assuming a 40% recovery rate.
+
+$8bn
+
+16.06%
+16.58%
+10.32%
+4.25%
+4.70%
+51.91%
+
+Uninsured Deposit Share:
+JPMorgan Chase
+15.86%
+Citi Bank
+16.80%
+Bank of America
+9.23%
+Wells Fargo
+4.30%
+Wachovia
+4.74%
+Cumulative Share 50.93%
+
+$14bn
+
+2.26%
+2.00%
+7.39%
+3.96%
+5.89%
+21.50%
+
+Insured Deposit Share:
+JPMorgan Chase
+3.38%
+Citi Bank
+2.07%
+Bank of America
+9.26%
+Wells Fargo
+3.99%
+Wachovia
+5.81%
+Cumulative Share 24.51%
+
+FDIC Ins. Cost
+
+0.19%
+1.92%
+0.03%
+1.34%
+3.14%
+
+(2)
+
+Probability of Default:
+JPMorgan Chase
+1.50%
+Citi Bank
+2.11%
+Bank of America
+1.82%
+Wells Fargo
+1.50%
+Wachovia
+3.28%
+
+Obs.
+
+Table A1 - Panel A: Multiple Equilibria 2008
+
+49
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+17.86%
+15.47%
+0.31%
+4.34%
+3.66%
+41.64%
+
+0.78%
+76.29%
+1.40%
+2.01%
+82.87%
+
+4.42%
+8.91%
+51.19%
+4.82%
+6.22%
+
+(5)
+
+17.19%
+14.83%
+11.28%
+0.05%
+3.50%
+46.86%
+
+0.69%
+3.25%
+74.63%
+1.87%
+82.48%
+
+3.64%
+8.23%
+6.74%
+54.81%
+5.63%
+
+(6)
+
+(8)
+
+Other Equilibria
+(9)
+(10)
+(11)
+
+(12)
+
+(13)
+
+(14)
+
+(15)
+
+(16)
+
+(17)
+
+17.14%
+14.77%
+11.27%
+4.16%
+0.06%
+47.40%
+
+28.41%
+12.43%
+15.74%
+3.61%
+2.81%
+63.00%
+
+29.70%
+12.68%
+9.73%
+6.36%
+2.85%
+61.31%
+
+29.10%
+12.76%
+9.77%
+3.66%
+5.46%
+60.74%
+
+16.87%
+14.59%
+8.98%
+2.80%
+3.16%
+46.40%
+
+16.89%
+14.61%
+8.42%
+4.02%
+2.31%
+46.24%
+
+16.99%
+14.71%
+10.70%
+1.56%
+1.38%
+45.33%
+
+32.39%
+11.61%
+14.23%
+7.31%
+2.69%
+68.23%
+
+34.23%
+11.42%
+9.12%
+7.81%
+6.77%
+69.34%
+
+15.53%
+13.20%
+16.50%
+6.56%
+5.83%
+57.62%
+
+34.19%
+11.01%
+12.11%
+7.74%
+6.65%
+71.70%
+
+0.71%
+0.00%
+0.00%
+0.00%
+0.00%
+0.00%
+0.00%
+0.00%
+0.00%
+0.00%
+0.00%
+3.36% 34.94% 0.00%
+0.00% 52.85% 53.56% 0.00% 10.39% 0.00% 29.97% 3.05%
+1.32%
+0.00% 35.92% 0.00% 47.15% 0.00% 50.56% 29.67% 23.30% 35.75% 22.23%
+74.09% 0.00%
+0.00% 35.31% 0.00% 46.44% 49.44% 0.00% 20.43% 34.28% 18.95%
+81.56% 100.00% 100.00% 100.00% 100.00% 100.00% 100.00% 100.00% 100.00% 100.00% 100.00%
+
+3.53% 99.98% 99.98% 99.98% 4.20%
+4.23%
+4.38% 99.99% 99.99% 1.76% 99.99%
+8.14%
+5.67%
+6.04%
+6.16%
+8.68%
+8.71%
+8.84%
+4.37%
+4.06%
+6.79%
+3.33%
+6.63% 100.00% 4.82%
+4.95% 100.00% 100.00% 7.85% 100.00% 2.66% 100.00% 100.00%
+4.03%
+1.28% 100.00% 1.92% 100.00% 4.80% 100.00% 100.00% 100.00% 100.00% 100.00%
+53.11% 3.90%
+4.29% 100.00% 7.05% 100.00% 100.00% 2.51% 100.00% 100.00% 100.00%
+
+(7)
+
+Notes: Column (1) displays the observed equilibrium as of 3/31/09. Column (2) displays the best potential equilibrium in terms of the joint probability of default.
+Columns (3)-(17) display potential bank run equilibria. We do not report equilibria in which the same set of banks experience distress (prob. of default > 20%) as in
+one of the reported equilibria. Cells highlighted in red indicate that the probability of default is greater than 20%. FDIC insurance cost reflects the total expected
+insurance payout for the five major banks. We calculate the expected insurance payout as the weighted sum of insured deposits weighted by the probability of default
+assuming a 40% recovery rate.
+
+$31bn $27bn $1,172bn $1,442bn $1,143bn $1,199bn $1,153bn $2,899bn $2,899bn $2,899bn $2,899bn $2,899bn $2,899bn $2,899bn $2,899bn $2,899bn $2,899bn
+
+18.08%
+0.66%
+11.64%
+4.35%
+3.62%
+38.35%
+
+Uninsured Deposit Share:
+JPMorgan Chase 17.08% 18.06% 0.98%
+Citi Bank
+14.75% 14.65% 15.92%
+Bank of America 11.66% 11.60% 11.83%
+Wells Fargo
+4.24% 4.21% 4.42%
+Wachovia
+3.69% 3.66% 3.70%
+Cumulative Share 51.42% 52.17% 36.84%
+
+FDIC Ins. Cost
+
+83.61%
+2.37%
+0.92%
+1.35%
+89.91%
+
+(4)
+
+Insured Deposit Share:
+Citi Bank
+2.07% 2.07% 0.63%
+Bank of America 9.58% 9.67% 2.81%
+Wells Fargo
+4.06% 4.09% 1.10%
+Wachovia
+5.55% 5.61% 1.59%
+Cumulative Share 26.86% 24.60% 88.14%
+
+(3)
+
+5.08%
+58.97%
+8.14%
+5.46%
+7.02%
+
+0.04%
+6.75%
+4.99%
+2.62%
+3.70%
+
+(2)
+
+48.72%
+9.61%
+8.22%
+5.57%
+7.04%
+
+Probability of Default:
+JPMorgan Chase 2.14%
+Citi Bank
+6.87%
+Bank of America 5.11%
+Wells Fargo
+2.74%
+Wachovia
+3.80%
+
+Obs.
+
+Table A1 - Panel B: Multiple Equilibria 2009
+
+Table A2: Counterfactual Analysis - Risk Limits
+Bank
+JPMorgan Chase
+Citi Bank
+Bank of America
+Wells Fargo
+Wachovia
+
+Prob. of Default.
+
+Prob. of Default (12% Cap)
+
+2.14%
+6.87%
+5.11%
+2.74%
+3.80%
+
+6.25%
+11.59%
+8.12%
+5.43%
+6.63%
+
+Notes: Column (1) displays the realized equilibrium probability of default
+as of 03/31/2009. Column (2) displays an equilibrium probability of default if regulators were to impose a counterfactual policy in which banks
+are forced to hold securities/investments that cap the standard deviation
+of income/returns σR at 12.00%. We calculate and select the reported new
+equilibrium using Broyden’s method initiated at the observed equilibrium.
+
+50
+
+Electronic copy available at: https://ssrn.com/abstract=2642946
+
+

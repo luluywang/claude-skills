@@ -1,0 +1,288 @@
+# Paper Type Taxonomy & Diagnostics
+
+## Why Paper Type Matters
+
+Economics papers are heterogeneous. A Chetty paper about neighborhood effects uses concepts everyone understands (neighborhoods, kids, income). A Gentzkow paper about media bias or a Keys paper about securitization requires explaining specialized institutional details that most readers don't know.
+
+**The writing challenge depends on your paper type:**
+- **Intuitive topic + complex method** → Spend time on identification, less on motivation
+- **Specialized topic + standard method** → Spend time explaining institutions, concepts
+- **Technical innovation** → Balance explaining the innovation with showing why it matters
+- **Broad audience appeal** → Minimize jargon, maximize concrete examples
+
+---
+
+## The Four Main Paper Types
+
+### Type A: Intuitive Topic, Complex Identification
+**Examples:** Chetty's neighborhood mobility work, EITC labor supply papers, education interventions, financial advisor misconduct (Egan, Matvos, Seru 2017)
+
+**Characteristics:**
+- Outcome people care about (income, education, health)
+- Challenge is credible identification, not explaining what you're measuring
+- Can motivate quickly ("Does neighborhood matter for kids?")
+- Institutional details serve identification strategy
+
+**Writing priorities:**
+1. **Get to the research design fast** - readers understand the question, want to know how you answer it
+2. **Explain identification clearly in plain language** - this is your contribution
+3. **Minimize background** - don't over-explain what neighborhoods are
+4. **Concrete examples of variation** - "Chicago vs. Rapid City" not "geographic heterogeneity"
+5. **Translate magnitudes** - "moving from 25th to 75th percentile neighborhood increases income by 12%" not "coefficient of 0.23"
+
+**What to avoid:**
+- Long motivation about why education/health/income matters (readers know)
+- Excessive institutional background (get to the natural experiment)
+- Technical jargon for familiar concepts ("human capital accumulation" → "kids' later earnings")
+
+---
+
+### Type B: Specialized Topic, Readers Need Context
+**Examples:** Securitization papers, advertising pricing, media bias, specific financial instruments
+
+**Characteristics:**
+- Institutional details most readers don't know
+- Need to explain the context before the question makes sense
+- Market structure, regulations, or industry practices matter
+- Risk of losing readers in institutional weeds
+
+**Writing priorities:**
+1. **Lead with the economic question** - before institutional details
+2. **Explain institutions concretely** - "loans are bundled and sold to investors" not "asset-backed securitization"
+3. **One institutional detail at a time** - don't dump everything in intro
+4. **Connect institutions to economic mechanism** - explain WHY the institution matters for behavior
+5. **Use specific examples** - "$3.6 trillion in 2006" not "substantial growth"
+6. **Visual aids help** - figures showing institutional features
+
+**What to avoid:**
+- Assuming readers know specialized institutions
+- Jargon without definition ("MBS," "CDO" without explanation)
+- Institutional details that don't matter for your argument
+- Front-loading all institutional background before research question
+
+**Key principle:** Explain institutions in service of economic mechanism, not for their own sake.
+
+---
+
+### Type C: Methodological Innovation
+**Examples:** New econometric technique, novel measurement approach, new identification strategy
+
+**Characteristics:**
+- Main contribution is HOW you answer a question, not just what you find
+- Need to explain why existing methods don't work
+- Risk of getting too technical too fast
+- Must balance methodological detail with economic substance
+
+**Writing priorities:**
+1. **State economic question first** - method serves the question
+2. **Explain limitation of existing approach** - creates space for your innovation
+3. **Intuition before math** - explain the idea in words first
+4. **Simple example/special case** - show how it works in transparent setting
+5. **Economic interpretation of results** - don't let method overshadow substance
+6. **Robustness to show it's not just a trick** - method should generalize
+
+**What to avoid:**
+- Leading with technical innovation before economic question
+- Excessive generality ("consider a general shock process...then we specialize")
+- Math without intuition
+- Making the method seem more complex than it is
+- "Illustrative" empirical work (either do real work or none)
+
+---
+
+### Type D: Theory Paper Applied to Data
+**Examples:** Testing specific theoretical predictions, structural estimation, banking runs (Egan, Hortaçsu, Matvos 2015), growth empirics (Mankiw, Romer, Weil 1992)
+
+**Characteristics:**
+- Theory generates testable predictions
+- Empirics assess which theory fits
+- Challenge is keeping theory tractable while realistic enough to test
+- Need to map theory to observables clearly
+
+**Writing priorities:**
+1. **Motivate with empirical puzzle or question** - not abstract theory
+2. **Simplest model that delivers testable predictions** - not most general
+3. **Clear mapping from theory to data** - readers should see connection
+4. **Discuss alternative theories** - what predictions distinguish them?
+5. **Economic interpretation** - not just "the model fits"
+6. **Show stylized facts** - patterns in data, not just test statistics
+
+**What to avoid:**
+- General model you then specialize for empirics
+- Theory for theory's sake (if paper doesn't expand theory, minimize it)
+- Predictions that are obvious or unfalsifiable
+- Losing empirical findings in theoretical complexity
+- Tests that can't distinguish between theories
+
+---
+
+## Diagnostic Questions: What Type Is Your Paper?
+
+Ask yourself:
+
+**1. Can a smart undergrad understand your research question without specialized knowledge?**
+- YES → Type A (intuitive topic)
+- NO → Type B (specialized topic) or Type C (methodological)
+
+**2. What's your main contribution?**
+- Novel identification strategy for familiar outcome → Type A
+- Understanding of specialized institution/market → Type B
+- New method or measurement → Type C
+- Testing theoretical predictions → Type D
+
+**3. What do readers need most?**
+- Believe your identification → Type A (focus on research design)
+- Understand the institution → Type B (explain context clearly)
+- Understand your method → Type C (intuition before math)
+- See theory maps to data → Type D (clear predictions)
+
+**4. Where will readers get stuck?**
+- "How do you know it's causal?" → Type A
+- "What is this institution/market?" → Type B
+- "How does this method work?" → Type C
+- "Why this model?" → Type D
+
+---
+
+## Type-Specific Writing Guidance Summary
+
+| Paper Type | Lead With | Spend Time On | Minimize | Key Risk |
+|------------|-----------|---------------|----------|----------|
+| **Type A: Intuitive Topic** | Research question | Identification strategy | Motivation, background | Over-explaining familiar concepts |
+| **Type B: Specialized Topic** | Economic question + concrete institution | Clear institutional explanation | Jargon, unnecessary details | Losing readers in institutional weeds |
+| **Type C: Methodological** | Economic question + method limitation | Intuition for innovation | Math, generality | Method overshadowing substance |
+| **Type D: Theory + Data** | Empirical puzzle | Stylized facts, testable predictions | Abstract theory | Theory disconnected from data |
+
+---
+
+## Mixed Types
+
+Many papers combine types. In these cases, identify the **primary type** (main contribution) and **secondary type** (supporting characteristic).
+
+### Common Hybrid Patterns
+
+#### Type C+B: Methodological Innovation + Specialized Institutions
+**Example:** Shadow Banking (Buchak, Matvos, Piskorski, Seru 2018)
+- **Primary:** Methodological (structural model with dual margins of adjustment)
+- **Secondary:** Specialized topic (shadow banking vs. traditional banking institutions)
+
+**Writing challenge:**
+- Must explain BOTH the methodological innovation AND the institutional setting
+- Economic question first, institutions second, method third
+- Keep institutional explanation concrete before diving into model details
+- Show method applies to real institutional features (not toy example)
+
+**Structure:**
+1. Economic question (credit market behavior)
+2. Institutional context (shadow banks vs. traditional banks - concrete definitions)
+3. Methodological innovation (dual margins model - intuition first)
+4. Application to $10 trillion mortgage market
+
+---
+
+#### Type C+A: Methodological Innovation + Intuitive Application
+**Example:** Innovation Measurement (Kogan, Papanikolaou, Seru, Stoffman 2017)
+- **Primary:** Methodological (new measure of innovation value using stock returns)
+- **Secondary:** Intuitive application (innovation's role in growth - familiar question)
+
+**Writing challenge:**
+- Don't over-explain why innovation matters (Type A characteristic)
+- DO explain why existing measures fail (Type C requirement)
+- Balance methodological rigor with accessible application
+- Show measure works on familiar economic questions
+
+**Structure:**
+1. Economic question (measuring innovation importance for growth)
+2. Limitation of existing measures (citations don't capture economic value)
+3. Methodological innovation (stock market response - intuition clear)
+4. Application to growth and reallocation questions
+
+---
+
+#### Type B+A: Specialized Topic + Intuitive Identification
+**Example:** Advertising Pricing (Gentzkow et al. 2023)
+- **Primary:** Specialized topic (media competition and multi-homing)
+- **Secondary:** Clear empirical strategy
+
+**Writing challenge:**
+- Explain media market institutions clearly
+- But don't bury empirical strategy in institutional details
+- Multi-homing concept needs explanation (Type B)
+- Empirical test should be straightforward once institutions clear
+
+**Structure:**
+1. Economic question + theory prediction
+2. Institutional context (multi-homing behavior - defined concretely)
+3. Empirical strategy
+4. Findings
+
+---
+
+#### Type D+A: Theory + Data with Clear Identification
+**Example:** Banking Runs (Egan, Hortaçsu, Matvos 2015)
+- **Primary:** Theory + empirics (testing Diamond-Dybvig mechanisms)
+- **Secondary:** Novel identification using deposit flows
+
+**Writing challenge:**
+- Motivate with stylized facts (show Citi vs. JPMorgan deposit patterns)
+- Theory motivated by empirical puzzle, not abstraction
+- Identification strategy clear (demand estimation)
+- Show multiple equilibria exist quantitatively
+
+**Structure:**
+1. Stylized fact (Figure 1: uninsured deposits flee distressed banks)
+2. Theory (Diamond-Dybvig with deposit competition)
+3. Empirical strategy (structural demand estimation)
+4. Findings (multiple equilibria possible, capital requirements)
+
+---
+
+### Guidelines for Hybrid Papers
+
+**Determining Primary vs. Secondary Type:**
+
+Ask: "What's my main contribution?"
+- If it's the METHOD: Primary = Type C
+- If it's UNDERSTANDING AN INSTITUTION: Primary = Type B
+- If it's TESTING THEORY QUANTITATIVELY: Primary = Type D
+- If it's CREDIBLE CAUSAL ESTIMATE: Primary = Type A
+
+Ask: "What's my secondary challenge?"
+- Need to explain unfamiliar institutions? Secondary = Type B
+- Applying to familiar question? Secondary = Type A
+- Testing theoretical predictions? Secondary = Type D
+
+**Exposition Ordering for Hybrids:**
+
+General principle: **Lead with economic question, then build in order of what readers need to understand next.**
+
+**For C+B (Method + Institutions):**
+Economic question → Institutional context → Methodological innovation → Application
+
+**For C+A (Method + Intuitive application):**
+Economic question → Why existing methods fail → New method (intuition) → Application to familiar question
+
+**For B+A (Institutions + Identification):**
+Economic question → Institutional explanation → Identification strategy → Findings
+
+**For D+A (Theory + Clear ID):**
+Stylized facts → Theoretical puzzle → Model → Empirical strategy → Findings
+
+---
+
+### Examples by Hybrid Type
+
+| Paper | Authors | Hybrid Type | Primary Contribution | Secondary Feature |
+|-------|---------|-------------|---------------------|-------------------|
+| Shadow Banking | Buchak et al. 2018 | C+B | Dual margins structural model | Shadow bank institutions |
+| Innovation Measurement | Kogan et al. 2017 | C+A | Stock-return-based measure | Innovation's growth role (familiar) |
+| Advertising Pricing | Gentzkow et al. 2023 | B+A | Multi-homing behavior in media | Clear empirical test |
+| Banking Runs | Egan et al. 2015 | D+A | Quantifying run equilibria | Structural demand estimation |
+
+---
+
+## Mixed Type Summary
+
+**Key Insight:** Hybrid papers require balancing multiple exposition challenges. Identify primary type for main emphasis, secondary type for supporting context.
+
+**General principle:** Order your exposition by what readers need to understand first. Build from familiar to unfamiliar, concrete to abstract. Economic question ALWAYS comes first, regardless of type combination.

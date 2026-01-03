@@ -1,0 +1,54 @@
+# Quality Assurance Checklist
+
+**Purpose:** Universal QA checks for all task completions.
+
+---
+
+## Task Completion
+
+- [ ] All requested tasks completed
+- [ ] No tasks skipped or partially executed
+
+---
+
+## File Organization
+
+- [ ] All output files in `notes/` folder (or same directory as input PDF for referee reports)
+- [ ] Files organized appropriately (reading order where applicable)
+- [ ] No orphan files created outside expected locations
+
+### Referee Report Files (when applicable)
+- [ ] Senior report: `{short_title}_claude_senior_report.tex` with Deal Breakers section
+- [ ] Junior report: `{short_title}_claude_junior_report.tex` with Deal Breakers section
+- [ ] Editor letter: `{short_title}_claude_editor_letter.tex` with synthesized recommendation
+- [ ] All three files use same short_title prefix
+- [ ] Each Deal Breaker includes "Why this affects publishability" explanation
+- [ ] Signature image copied to output directory for editor letter compilation
+
+---
+
+## Content Quality
+
+- [ ] Paper type context applied correctly throughout analysis
+- [ ] Analysis depth meets quality standards
+- [ ] LaTeX conventions followed (if applicable)
+- [ ] Economics field conventions applied
+
+---
+
+## User Communication
+
+- [ ] User informed of key findings
+- [ ] Priority recommendations provided
+- [ ] Next steps suggested
+- [ ] Clear summary of what was done
+
+---
+
+## Validation Protocol
+
+**IF ANY CHECKLIST ITEM FAILS:**
+1. Stop immediately
+2. Fix the issue
+3. Re-run validation
+4. Do NOT proceed to delivery until ALL checks pass

@@ -1,0 +1,351 @@
+# Copyediting Review Master Router
+
+**Purpose:** Route copyediting requests to task-specific Haiku subagents at file × task granularity.
+
+---
+
+## Workflow
+
+1. **Bootstrap** → Detect state (fresh or resume)
+2. **Interpret request** → Determine which tasks are needed
+3. **Diagnostic questions** → Determine paper type and file scope
+4. **Task enumeration** → Generate (file, task) pairs
+5. **Output setup** → Initialize `notes/` directory
+6. **Execute** → Spawn Haiku subagents in parallel
+7. **Wrapup** → Deduplicate, summarize
+8. **Deliver** → Present results to user
+
+---
+
+## State Management
+
+### State Files
+
+| File | Purpose |
+|------|---------|
+| `notes/.copyedit_status` | Current phase: `pending` \| `execution` \| `complete` |
+| `notes/tasks.json` | Task manifest with status per (file, task) pair |
+
+### tasks.json Schema
+
+```json
+{
+  "created": "ISO timestamp",
+  "paper_type": "A",
+  "tasks": [
+    {"id": 1, "file": "intro.tex", "task": "grammar", "model": "haiku", "status": "pending"},
+    {"id": 2, "file": "intro.tex", "task": "ai_detection", "model": "haiku", "status": "pending"},
+    {"id": 3, "file": "intro.tex", "task": "word_choice", "model": "haiku", "status": "pending"},
+    {"id": 4, "file": "methods.tex", "task": "grammar", "model": "haiku", "status": "pending"}
+  ],
+  "paper_tasks": [
+    {"id": 100, "task": "structure", "model": "sonnet", "status": "pending"},
+    {"id": 101, "task": "flow_extraction", "model": "sonnet", "status": "pending"}
+  ]
+}
+```
+
+**Key:** Each (file, task) pair is a separate entry. Subagents read their own prompt files.
+
+### Task Status Values
+
+- `pending` - Not yet started
+- `in_progress` - Subagent spawned
+- `complete` - Task finished
+- `flagged` - Finished with issues
+
+---
+
+## Step 1: Bootstrap
+
+Spawn a lightweight bootstrap subagent:
+
+```
+Task: [copyedit:bootstrap] Detect state
+Model: haiku
+
+Instructions:
+Read copyedit/prompts/copyedit_bootstrap.md for full instructions.
+
+Return: {phase: "fresh"|"resume", details}
+```
+
+**Handle return:**
+- `fresh` → Proceed to Step 2
+- `resume` → Skip to Step 6, continue from pending tasks
+
+---
+
+## Step 2: Interpret Request
+
+| Request Pattern | Tasks |
+|----------------|-------|
+| "Fix grammar" / "Check for errors" | grammar |
+| "Check for AI tells" / "Sound less AI" | ai_detection |
+| "Improve structure" / "Paper flow" | structure |
+| "Extract flow" / "First sentences" | flow_extraction |
+| "Word choice" / "Make it punchier" | word_choice |
+| "Sentence rhythm" / "Check variation" | sentence_analysis |
+| "Comprehensive review" | grammar, ai_detection, word_choice, sentence_analysis |
+| "Full review" | All tasks |
+
+### Task Ownership (Avoid Duplicates)
+
+| Issue Type | Owner Task |
+|-----------|------------|
+| Wordiness, weak verbs, nominalization | word_choice |
+| Sentence rhythm, monotony, passive patterns | sentence_analysis |
+| AI punctuation, transitions, smarmy language | ai_detection |
+| Spelling, grammar errors | grammar |
+
+---
+
+## Step 3: Diagnostic Questions
+
+@IMPORT: ../../shared/components/diagnostic_workflow.prompt
+
+---
+
+## Step 4: Task Enumeration
+
+Generate all (file, task) pairs based on request and file scope.
+
+### File-Level Tasks
+
+| Task | Model | Output File |
+|------|-------|-------------|
+| grammar | haiku | notes/copy_edits.md |
+| ai_detection | haiku | notes/ai_detection.md, notes/simplifications.md |
+| word_choice | haiku | notes/word_choice_review.md |
+| sentence_analysis | haiku | notes/sentence_analysis.md |
+
+### Paper-Level Tasks
+
+| Task | Model | Output File |
+|------|-------|-------------|
+| structure | sonnet | notes/structure_analysis.md |
+| flow_extraction | sonnet | notes/flow_extraction.md |
+
+### Enumeration Logic
+
+```
+tasks = []
+id = 1
+
+FOR each file in scope:
+    FOR each requested file-level task:
+        tasks.append({
+            id: id++,
+            file: file,
+            task: task_name,
+            model: "haiku",
+            status: "pending"
+        })
+
+paper_tasks = []
+FOR each requested paper-level task:
+    paper_tasks.append({
+        id: id++,
+        task: task_name,
+        model: "sonnet",
+        status: "pending"
+    })
+```
+
+---
+
+## Step 5: Output Setup
+
+**Before spawning subagents, initialize output files:**
+
+1. Create `notes/` directory if needed
+2. Create output files with headers:
+
+| Output File | Header |
+|-------------|--------|
+| `notes/copy_edits.md` | `# Grammar & Mechanics Corrections` |
+| `notes/ai_detection.md` | `# AI Detection Review` |
+| `notes/simplifications.md` | `# Suggested Simplifications` |
+| `notes/word_choice_review.md` | `# Word Choice Review` |
+| `notes/sentence_analysis.md` | `# Sentence Structure Analysis` |
+
+3. Write `notes/tasks.json` with enumerated tasks
+4. Write `execution` to `notes/.copyedit_status`
+
+---
+
+## Step 6: Execute
+
+### Subagent Spawn Template
+
+Each subagent receives a minimal instruction:
+
+```
+Task: [copyedit:{task}] {file}
+Model: {model}
+
+Instructions:
+Read the task prompt: copyedit/prompts/tasks/{task}.prompt
+
+File to analyze: {absolute_file_path}
+Paper type: {paper_type}
+
+Output rules:
+- APPEND to notes/{output_file}.md
+- Start section with: ## [{filename}]
+- Follow output format from task prompt
+
+Return: {status: complete|flagged, items_found: N}
+```
+
+### Execution Loop
+
+```
+PHASE 1: File-Level Tasks (Parallel)
+
+    pending = tasks WHERE status == "pending"
+
+    IF pending exists:
+        Spawn ALL pending in parallel (one Task tool call per entry)
+        Each subagent reads its own .prompt file
+        On completion: mark status = "complete" or "flagged"
+
+PHASE 2: Paper-Level Tasks (After Phase 1)
+
+    IF all file tasks complete:
+        FOR each paper_task WHERE status == "pending":
+            Spawn subagent with full paper context
+            Model: sonnet
+            On completion: mark status
+
+PHASE 3: Wrapup
+
+    IF all tasks complete:
+        GOTO Step 7
+```
+
+### Grammar Multi-Pass
+
+Grammar task uses adversarial iteration internally:
+- Pass 1: Initial review
+- Pass 2+: Adversarial check until "no errors found"
+
+This is handled by the grammar subagent, not the orchestrator.
+
+---
+
+## Step 7: Wrapup
+
+Spawn wrapup subagent after all tasks complete:
+
+```
+Task: [copyedit:wrapup] Complete review
+Model: haiku
+
+Instructions:
+Read copyedit/prompts/copyedit_wrapup.md for full instructions.
+
+Context:
+- tasks.json: notes/tasks.json
+- Output files: notes/*.md
+
+Return: {status, summary, flagged_items}
+```
+
+---
+
+## Step 8: Deliver Results
+
+Present wrapup summary to user:
+1. Tasks performed and files analyzed
+2. Key findings and recommendations
+3. Output files created
+4. Suggested next steps
+
+---
+
+## Output Format
+
+All output files use checklist format (except copy_edits.md):
+
+```markdown
+### - [ ] Lines X-Y: [Brief description]
+
+**Comment:** [Why this is problematic]
+
+**Original:**
+```
+[Full sentence(s)]
+```
+
+**Proposed Revision:**
+```
+[Complete revision]
+```
+
+**Why better:** [Concrete improvements]
+```
+
+**Exception:** `copy_edits.md` uses log format: `File:Line → Previous → New`
+
+---
+
+## Error Handling
+
+**Unclear request:** Use AskUserQuestion:
+
+```
+Question: "Which aspect of your writing should I focus on?"
+Header: "Focus area"
+MultiSelect: true
+Options:
+  - Label: "Grammar and correctness"
+    Description: "Fix spelling, punctuation, and mechanical errors"
+  - Label: "AI detection and naturalness"
+    Description: "Flag AI-generated patterns and suggest alternatives"
+  - Label: "Word choice and clarity"
+    Description: "Improve precision and concreteness"
+  - Label: "Sentence rhythm"
+    Description: "Analyze sentence length variation"
+```
+
+**Files not found:** Ask user to specify files or subdirectory.
+
+---
+
+## Quality Assurance
+
+**Format Compliance:**
+- [ ] Each output file has section headers per source file: `## [filename.tex]`
+- [ ] Checklist items have: Comment, Original, Proposed, Why better
+- [ ] copy_edits.md uses log format
+
+**Task Completion:**
+- [ ] All tasks in tasks.json reached terminal status
+- [ ] Wrapup ran deduplication
+- [ ] Status set to complete
+
+---
+
+## Invocation Examples
+
+### Start New Review
+
+```
+Use @copyedit/prompts/master.prompt to review my paper
+Use @copyedit/prompts/master.prompt to check for AI tells
+Use @copyedit/prompts/master.prompt for comprehensive review
+```
+
+### Resume Interrupted Review
+
+```
+Use @copyedit/prompts/master.prompt to continue
+```
+
+### Reset for New Review
+
+```bash
+rm -rf notes/
+Use @copyedit/prompts/master.prompt to review my paper
+```

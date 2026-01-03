@@ -1,0 +1,54 @@
+𝑏𝑏
+to retain as portfolio loans on the balance sheet 𝑚𝑚𝑗𝑗𝑗𝑗𝑗𝑗𝑗𝑗
+, and how many to finance (the remainder)
+𝑏𝑏
+through GSE securitization 𝑚𝑚𝑗𝑗𝑗𝑗𝑗𝑗𝑗𝑗 − 𝑚𝑚𝑗𝑗𝑗𝑗𝑗𝑗𝑗𝑗
+. Jumbo mortgages cannot be securitized and are retained
+
+𝑏𝑏
+on the balance sheet 𝑚𝑚𝑗𝑗𝑗𝑗𝑗𝑗𝑗𝑗𝑗𝑗 = 𝑚𝑚𝑗𝑗𝑗𝑗𝑗𝑗𝑗𝑗𝑗𝑗
+. Each bank has only one balance sheet across markets in which
+
+𝑏𝑏
+𝑏𝑏
+it participates. Denote by 𝑚𝑚𝑗𝑗𝑗𝑗
+= ∑𝑐𝑐𝑐𝑐 𝑚𝑚𝑗𝑗𝑗𝑗𝑗𝑗𝑗𝑗
+the amount of type g mortgages that lender j chooses to
+retain on the balance sheet. In other words, suppose the bank originates conforming loans in the New
+York City and Houston MSAs, and it chooses to finance $100 million on its balance sheet. From a
+financing perspective, it does not matter which market these loans were originated in.
+
+IV.B.1 Origination
+Mortgage origination is costly, beyond the mere financing cost of a mortgage. Lenders incur nonfinancing costs such as costs of an appraisal and title check, document processing, and loan closure,
+which involve labor and equipment. We designate the per-dollar origination cost of lender j of
+mortgage type g as 𝑤𝑤𝑗𝑗𝑗𝑗 , and the total origination cost in market ct is:
+� 𝑚𝑚𝑗𝑗𝑗𝑗𝑗𝑗𝑗𝑗 𝑤𝑤𝑗𝑗𝑗𝑗
+
+(S.1)
+
+𝑔𝑔
+
+This specification allows for different origination costs across banks, non-fintech shadow banks, and
+fintech shadow banks. For example, this heterogeneity allows us to capture potential cost savings
+from technology employed by fintech shadow banks who use less labor in lending.
+IV.B.2 Financing and Regulatory Burden
+Recall that mortgages can be financed two ways. Conforming mortgages can be sold to GSEs, i.e.,
+OTD. Alternatively, conforming and jumbo mortgages can be financed by using a bank’s internal
+funds as portfolio loans. These two types of financing can have different costs.
+Originate-to-Distribute Financing
+Lenders can securitize conforming mortgages though GSEs. Since GSEs purchase mortgages at
+predetermined prices, all lenders face the same originate-to-distribute financing cost in a given
+market, which we model as an ability to obtain funding for a conforming mortgage at a rate
+𝜎𝜎𝑡𝑡𝐺𝐺𝐺𝐺𝐺𝐺 = 𝜎𝜎𝑡𝑡𝑏𝑏 + 𝜎𝜎 𝐺𝐺𝐺𝐺𝐺𝐺 . Here 𝜎𝜎𝑡𝑡𝑏𝑏 represents the underlying financing costs of funding absent any costs
+arising from intermediation and captures the current interest rate environment in the macroeconomy.
+𝜎𝜎 𝐺𝐺𝐺𝐺𝐺𝐺 captures additional costs coming from the lender using GSE financing, which can include the
+guarantee fee (g-fee) charged by the GSEs for coverage of projected credit losses from borrower
+defaults in the securitized pools. In other words, when the firm originates-to-distribute a mortgage, it
+earns the spread on the mortgage rate minus the financing and non-financing origination costs 𝑟𝑟𝑗𝑗𝑗𝑗𝑗𝑗𝑗𝑗 −
+𝜎𝜎𝑡𝑡𝐺𝐺𝐺𝐺𝐺𝐺 − 𝑤𝑤𝑗𝑗𝑗𝑗 for every dollar of the mortgage. Reflecting the post-crisis period, which we study, we
+assume that securitization is only available for conforming loans; jumbo loans must be retained on
+balance sheet. One could easily account for a jumbo securitization in the same way (see Section V.E).
+
+18
+
+

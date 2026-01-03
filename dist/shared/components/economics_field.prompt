@@ -1,0 +1,183 @@
+# Economics Field Conventions
+
+## Natural Field Shorthand
+
+Economists use natural shorthand that should NOT be flagged as errors or "expanded":
+
+### Methodology shorthand:
+- "IV diff-in-diff" (not "instrumented difference-in-differences design")
+- "RD" or "RDD" (regression discontinuity)
+- "OLS" (ordinary least squares)
+- "2SLS" or "TSLS" (two-stage least squares)
+- "FE" (fixed effects)
+- "RE" (random effects)
+- "GMM" (generalized method of moments)
+- "ML" or "MLE" (maximum likelihood estimation)
+
+### Data/specification terms:
+- "Standard errors clustered at X level"
+- "Controls for X"
+- "Sample weights"
+- "Balanced panel"
+- "Event study"
+- "Staggered rollout"
+
+### Economic concepts (when appropriate):
+- "Elasticity" (vs. "price elasticity of demand" every time)
+- "Utility" (not "utility function" repeatedly)
+- "Returns to scale"
+- "Externality"
+
+**Key principle:** Don't over-explain standard econometric terms to field experts.
+
+---
+
+## What NOT to Over-Explain
+
+### Economics 101 concepts
+DO NOT explain these to field experts:
+- Sales tax is a consumption tax
+- Supply and demand
+- Marginal effects
+- Elasticity concept
+- Basic market structures (monopoly, competition)
+- Consumer surplus, producer surplus
+- Comparative statics
+- Diminishing returns
+
+### Standard econometric concepts
+DO NOT explain these to field experts:
+- What fixed effects control for
+- What clustering does
+- Basic IV logic
+- What a standard error is
+- Difference-in-differences intuition (brief mention OK, full explanation not needed)
+
+**Exception:** If your paper type is B (specialized topic) and you're writing for broader audience, more explanation may be appropriate.
+
+---
+
+## Appropriate Passive Voice in Economics
+
+Economics appropriately uses passive voice in certain contexts. DO NOT flag these:
+
+### Appropriate passive:
+- "The model is estimated using..."
+- "Results are presented in Table X"
+- "The data are drawn from..."
+- "Standard errors are clustered at..."
+- "The sample is restricted to..."
+- "Observations are weighted by..."
+
+**Why:** These emphasize the methods/data/results over the researcher's actions, which is conventional in empirical work.
+
+### Inappropriate passive to flag:
+- "It is assumed that..." → "I assume that..."
+- "It was found that..." → "I find that..."
+- "It should be noted that..." → Just state it
+- "It is shown that..." → "I show that..." or "Table X shows that..."
+
+**Key distinction:** Passive is fine for methodological descriptions; not fine for hiding who makes assumptions or interpretations.
+
+---
+
+## Field-Appropriate Hedging
+
+### Appropriate hedging (don't remove):
+- "The results suggest..." (when causality is genuinely uncertain)
+- "This is consistent with..." (when showing consistency, not proving causation)
+- "One interpretation is..." (when multiple interpretations exist)
+- "Under the assumption that..." (explicitly stating assumptions)
+
+### Inappropriate hedging (should strengthen):
+- "Our results suggest that X causes Y" when you have credible identification → "We find that X causes Y"
+- "The results indicate that" when results clearly show → "The results show that"
+- "We find evidence suggesting that" when evidence is strong → "We find that"
+- "This pattern appears to arise because" when mechanism is clear → Direct statement
+
+**Key principle:** Hedge when genuine uncertainty exists, but don't weaken claims when evidence is strong.
+
+---
+
+## Citation Conventions
+
+### Natural citation styles:
+- "Chetty and Hendren (2018) show that..."
+- "Following Autor et al. (2013), we..."
+- "This finding echoes Card and Krueger (1994)..."
+- "See, e.g., Gentzkow and Shapiro (2010) and DellaVigna and Gentzkow (2010)."
+
+### Weak citation patterns to improve:
+- "This is consistent with findings in the literature" → Name specific papers
+- "Previous research has shown" → "X and Y find that..."
+- "Studies have found" → Cite specific studies
+- "It has been documented that" → "X documents that..."
+
+**Key principle:** Give credit specifically, not vaguely.
+
+---
+
+## Appropriate Formality Level
+
+Economics papers have a professional but not overly formal register:
+
+### Appropriate:
+- "We find that..."
+- "This suggests..."
+- "Our estimates show..."
+- "The data reveal..."
+- "Consider the case where..."
+
+### Too informal:
+- "It turns out that..."
+- "Basically, the idea is..."
+- "Obviously, this means..."
+- "Let's look at..."
+
+### Too formal (overly bureaucratic):
+- "It is incumbent upon us to note..."
+- "One is compelled to observe..."
+- "The aforementioned results..."
+- "Heretofore, the literature has..."
+
+**Key principle:** Professional but direct. Write like a confident expert, not a committee.
+
+---
+
+## Results Presentation Conventions
+
+### Standard formulations (don't flag):
+- "Column (1) shows OLS estimates; column (2) adds controls"
+- "Table X presents summary statistics"
+- "Figure Y plots the relationship between..."
+- "Panel A restricts to..."
+- "The coefficient on X is 0.23 (SE = 0.05)"
+- "The effect is significant at the 1% level"
+
+### Improvements when appropriate:
+- "Column (1) presents OLS estimates" → "Column (1) shows OLS estimates" (use simpler verb)
+- But don't flag "presents" as error - it's standard
+
+### Formulations to strengthen:
+- "The results suggest a positive effect" → "The results show a positive effect" (when identification is credible)
+- "We find evidence of" → "We find" (when evidence is strong)
+
+---
+
+## Economics-Specific Acronyms
+
+### Standard acronyms (don't spell out every time):
+- EITC (Earned Income Tax Credit) - spell out first use
+- GDP (Gross Domestic Product) - spell out first use
+- CPI (Consumer Price Index) - spell out first use
+- ACS (American Community Survey) - spell out first use
+- PSID (Panel Study of Income Dynamics) - spell out first use
+
+**Convention:** Spell out on first use with acronym in parentheses, then use acronym.
+
+### Don't create acronyms for:
+- Terms used only 2-3 times (just spell out)
+- Short phrases (3-4 words)
+- Terms readers need to understand fully each time
+
+**Key principle:** Acronyms should aid reading, not create cognitive load.

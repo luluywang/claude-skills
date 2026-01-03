@@ -1,0 +1,149 @@
+# Editor Letter Synthesis
+
+Synthesize senior and junior referee reports into a unified editor letter with recommendation.
+
+---
+
+## Input
+
+Read both referee reports to extract:
+1. **Senior verdict** (Contribution: insufficient / unclear / sufficient)
+2. **Junior verdict** (Methods: fatally flawed / needs substantial work / credible)
+3. **Deal Breakers from senior report**
+4. **Deal Breakers from junior report**
+
+---
+
+## Decision Matrix
+
+| Senior (Contribution) | Junior (Methods) | Recommendation |
+|----------------------|------------------|----------------|
+| Insufficient | Any | **Reject** |
+| Unclear | Any issues | **Reject** |
+| Sufficient | Fatally flawed | **Reject** |
+| Sufficient | Needs substantial work | **Reject** |
+| Sufficient | Credible with minor gaps | **Major Revisions** (rare) |
+| Sufficient | Credible | **Minor Revisions** or **Accept** |
+
+**Key principle:** Unless BOTH contribution AND methods are strong, recommend rejection.
+
+---
+
+## Synthesized Recommendation Logic
+
+### REJECT (Default)
+
+Use when:
+- Senior says contribution insufficient or unclear
+- Junior says methods fatally flawed or need substantial work
+- Either report has Deal Breakers
+- "Has potential with major revisions" → REJECT (not Major Revisions)
+
+**Integration approach:**
+```
+From contribution standpoint: [Senior's key concern]
+From methodological standpoint: [Junior's key concern if applicable]
+[If one dimension OK]: While [X is acceptable], [fatal flaw on other dimension] prevents publication.
+```
+
+### MAJOR REVISIONS (Rarely Used)
+
+Use ONLY when:
+- Contribution is clearly significant (Senior: sufficient)
+- Methods are credible (Junior: credible)
+- Only minor targeted gaps remain (no Deal Breakers from either report)
+
+**DO NOT use for:** Papers with potential but significant work needed.
+
+### MINOR REVISIONS / ACCEPT
+
+Use when:
+- Both referees find paper sound
+- Issues are truly minor (presentation, clarifications)
+- No Deal Breakers from either report
+
+---
+
+## Output File Naming
+
+**Output file:** `{short_title}_{YYYYMMDD}_claude_editor_letter.tex`
+
+Use same short_title and timestamp (YYYYMMDD) as the referee reports.
+
+---
+
+## Editor Letter Template
+
+```latex
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}\onehalfspacing
+\usepackage{graphicx}
+\setlength{\parindent}{0pt}\setlength{\parskip}{0.5em}
+
+\begin{document}
+
+Dear [Editor First Name],
+
+Thank you for the opportunity to review MS [number], ``[Paper Title].'' [1-2 sentences: what the paper studies, the method/data, the headline finding.]
+
+I recommend \textbf{[rejection / major revisions / minor revisions / acceptance]} because [1-2 sentences integrating both contribution and methods perspectives. Reference key Deal Breakers if rejecting.]
+
+I attach two detailed referee reports: one focused on the contribution and literature positioning, and one focused on research design and methodology. [Optional: 1 sentence highlighting the most critical issue if relevant.]
+
+I hope these comments are useful.
+
+Sincerely,
+
+\vspace{-0.5em}
+\includegraphics[width=2in]{Lulu_Wang_Signature.jpg}
+\vspace{-0.5em}
+
+Lulu Wang
+
+\end{document}
+```
+
+**Copy signature image:** Before compiling, copy `Lulu_Wang_Signature.jpg` from `referee/components/` to the output directory.
+
+---
+
+## Handling Tensions Between Reports
+
+| Scenario | Synthesis Approach |
+|----------|-------------------|
+| Senior rejects, junior says methods fine | "Good execution doesn't overcome limited novelty" → Reject |
+| Senior says strong, junior has serious methods concerns | "Fix methods first, then resubmit" → Reject |
+| Both have Deal Breakers | "Both contribution and methods need work" → Reject |
+| Neither has Deal Breakers | Consider Major Revisions or Accept |
+
+---
+
+## Letter Writing Guidelines
+
+1. **Keep it brief** - Editor letter is 1 page max
+2. **Integrate perspectives** - Don't list senior and junior separately; synthesize
+3. **Be decisive** - Clear recommendation with clear rationale
+4. **Reference attached reports** - Detail is in the two referee reports
+5. **No recommendation in referee reports** - Only editor letter contains recommendation
+
+---
+
+## Post-Synthesis Steps
+
+After generating editor letter:
+
+1. **Citation verification** - Run `components/citation_verification.prompt` on all three files
+2. **AI detection screening** - Run `copyedit/tasks/ai_detection.prompt` on all three files
+3. **Copy signature** - Ensure `Lulu_Wang_Signature.jpg` is in output directory
+
+---
+
+## Quality Checks
+
+Before delivery, verify:
+- [ ] Editor letter exists with clear recommendation
+- [ ] Recommendation matches decision matrix logic
+- [ ] Both referee reports are referenced in letter
+- [ ] Signature image will be found at compile time
+- [ ] All three files use same short_title prefix
