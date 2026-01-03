@@ -1,0 +1,4213 @@
+BENJAMIN J. KEYS
+TANMOY MUKHERJEE
+AMIT SERU
+VIKRANT VIG
+A central question surrounding the current subprime crisis is whether the securitization process reduced the incentives of financial intermediaries to carefully
+screen borrowers. We examine this issue empirically using data on securitized
+subprime mortgage loan contracts in the United States. We exploit a specific rule
+of thumb in the lending market to generate exogenous variation in the ease of
+securitization and compare the composition and performance of lenders’ portfolios
+around the ad hoc threshold. Conditional on being securitized, the portfolio with
+greater ease of securitization defaults by around 10%–25% more than a similar
+risk profile group with a lesser ease of securitization. We conduct additional analyses to rule out differential selection by market participants around the threshold
+and lenders employing an optimal screening cutoff unrelated to securitization as
+alternative explanations. The results are confined to loans where intermediaries’
+screening effort may be relevant and soft information about borrowers determines
+their creditworthiness. Our findings suggest that existing securitization practices
+did adversely affect the screening incentives of subprime lenders.
+
+I. INTRODUCTION
+Securitization, converting illiquid assets into liquid securities, has grown tremendously in recent years, with the universe
+of securitized mortgage loans reaching $3.6 trillion in 2006. The
+∗ We thank Viral Acharya, Effi Benmelech, Patrick Bolton, Daniel
+Bergstresser, Charles Calomiris, Douglas Diamond, John DiNardo, Charles Goodhart, Edward Glaeser, Dwight Jaffee, Chris James, Anil Kashyap, Jose Liberti,
+Gregor Matvos, Chris Mayer, Donald Morgan, Adair Morse, Daniel Paravisini,
+Karen Pence, Guillaume Plantin, Manju Puri, Mitch Petersen, Raghuram Rajan, Uday Rajan, Adriano Rampini, Joshua Rauh, Chester Spatt, Steve Schaefer,
+Henri Servaes, Morten Sorensen, Jeremy Stein, James Vickery, Annette VissingJorgensen, Paul Willen, three anonymous referees, and seminar participants at
+Boston College, Columbia Law, Duke, the Federal Reserve Bank of Philadelphia, the Federal Reserve Board of Governors, the London Business School, the
+London School of Economics, Michigan State, NYU Law, Northwestern, Oxford,
+Princeton, Standard and Poor’s, the University of Chicago Applied Economics
+Lunch, and the University of Chicago Finance Lunch for useful discussions. We
+also thank numerous conference participants for their comments. Seru thanks
+the Initiative on Global Markets at the University of Chicago for financial support. The opinions expressed in the paper are those of the authors and do not
+reflect the views of the Board of Governors of the Federal Reserve System or
+Sorin Capital Management. Shu Zhang provided excellent research assistance.
+All remaining errors are our responsibility. benjamin.j.keys@frb.gov, tmukherjee@
+sorincapital.com, amit.seru@chicagogsb.edu, vvig@london.edu.
+C 2010 by the President and Fellows of Harvard College and the Massachusetts Institute of
+
+Technology.
+The Quarterly Journal of Economics, February 2010
+
+307
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+DID SECURITIZATION LEAD TO LAX SCREENING?
+EVIDENCE FROM SUBPRIME LOANS∗
+
+QUARTERLY JOURNAL OF ECONOMICS
+
+option to sell loans to investors has transformed the traditional
+role of financial intermediaries in the mortgage market from “buying and holding” to “buying and selling.” The perceived benefits
+of this financial innovation, such as improving risk sharing and
+reducing banks’ cost of capital, are widely cited (e.g., Pennacchi
+[1988]). However, delinquencies in the heavily securitized subprime housing market increased by 50% from 2005 to 2007, forcing
+many mortgage lenders out of business and setting off a wave of financial crises, which spread worldwide. In light of the central role
+of the subprime mortgage market in the current crisis, critiques
+of the securitization process have gained increased prominence
+(Blinder 2007; Stiglitz 2007).
+The rationale for concern over the “originate-to-distribute”
+model during the crisis derives from theories of financial intermediation. Delegating monitoring to a single lender avoids the
+duplication, coordination failure, and free-rider problems associated with multiple lenders (Diamond 1984). However, for a lender
+to screen and monitor, it must be given appropriate incentives
+(Hölmstrom and Tirole 1997), and this is provided by the illiquid
+loans on its balance sheet (Diamond and Rajan 2003). By creating
+distance between a loan’s originator and the bearer of the loan’s
+default risk, securitization may have potentially reduced lenders’
+incentives to carefully screen and monitor borrowers (Petersen
+and Rajan 2002). On the other hand, proponents of securitization
+argue that reputation concerns, regulatory oversight, or sufficient
+balance sheet risk may have prevented moral hazard on the part
+of lenders. What the effects of existing securitization practices on
+screening were thus remains an empirical question.
+This paper investigates the relationship between securitization and screening standards in the context of subprime mortgage
+loans. The challenge in making a causal claim is the difficulty of
+isolating differences in loan outcomes independent of contract and
+borrower characteristics. First, in any cross section of loans, those
+that are securitized may differ on observable and unobservable
+risk characteristics from loans that are kept on the balance sheet
+(not securitized). Second, in a time-series framework, simply documenting a correlation between securitization rates and defaults
+may be insufficient. This inference relies on establishing the optimal level of defaults at any given point in time. Moreover, this approach ignores macroeconomic factors and policy initiatives that
+may be independent of lax screening and yet may induce compositional differences in mortgage borrowers over time. For instance,
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+308
+
+309
+
+house price appreciation and the changing role of governmentsponsored enterprises (GSEs) in the subprime market may also
+have accelerated the trend toward originating mortgages to riskier
+borrowers in exchange for higher payments.
+We overcome these challenges by exploiting a specific rule of
+thumb in the lending market that induces exogenous variation in
+the ease of securitization of a loan compared to another loan with
+similar observable characteristics. This rule of thumb is based
+on the summary measure of borrower credit quality known as
+the FICO score. Since the mid-1990s, the FICO score has become
+the credit indicator most widely used by lenders, rating agencies, and investors. Underwriting guidelines established by the
+GSEs, Fannie Mae and Freddie Mac, standardized purchases of
+lenders’ mortgage loans. These guidelines cautioned against lending to risky borrowers, the most prominent rule of thumb being
+not lending to borrowers with FICO scores below 620 (Avery et al.
+1996; Loesch 1996; Calomiris and Mason 1999; Freddie Mac 2001,
+2007; Capone 2002).1 Whereas the GSEs actively securitized loans
+when the nascent subprime market was relatively small, since
+2000 this role has shifted entirely to investment banks and hedge
+funds (the nonagency sector). We argue that persistent adherence
+to this ad hoc cutoff by investors who purchase securitized pools
+from nonagencies generates a differential increase in the ease of
+securitization for loans. That is, loans made to borrowers which
+fall just above the 620 credit cutoff have a higher unconditional
+likelihood of being securitized and are therefore more liquid than
+loans below this cutoff.
+To evaluate the effect of securitization on screening decisions,
+we examine the performance of loans originated by lenders around
+this threshold. As an example of our design, consider two borrowers, one with a FICO score of 621 (620+ ) and the other with a
+FICO score of 619 (620− ), who approach the lender for a loan.
+Screening to evaluate the quality of the loan applicant involves
+collecting both “hard” information, such as the credit score, and
+“soft” information, such as a measure of future income stability of
+the borrower. Hard information, by definition, is something that
+is easy to contract upon (and transmit), whereas the lender has
+to exert an unobservable effort to collect soft information (Stein
+2002). We argue that the lender has a weaker incentive to base
+1. We discuss the 620 rule of thumb in more detail in Section III and in
+reference to other cutoffs in the lending market in Section IV.G.
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+DID SECURITIZATION LEAD TO LAX SCREENING?
+
+QUARTERLY JOURNAL OF ECONOMICS
+
+origination decisions on both hard and soft information, less carefully screening the borrower, at 620+ , where there is an increase
+in the relative ease of securitization. In other words, because investors purchase securitized loans based on hard information, the
+cost of collecting soft information is internalized by lenders when
+screening borrowers at 620+ to a lesser extent than at 620− . Therefore, by comparing the portfolio of loans on either side of the credit
+score threshold, we can assess whether differential access to securitization led to changes in the behavior of lenders who offered
+these loans to consumers with nearly identical risk profiles.
+Using a sample of more than one million home purchase
+loans during the period 2001–2006, we empirically confirm that
+the number of loans securitized varies systematically around the
+620 FICO cutoff. For loans with a potential for significant soft
+information—low documentation loans—we find that there are
+more than twice as many loans securitized above the credit threshold at 620+ than below the threshold at 620− . Because the FICO
+score distribution in the population is smooth (constructed from
+a logistic function; see Figure I), the underlying creditworthiness
+and demand for mortgage loans (at a given price) are the same
+for prospective buyers with a credit score of either 620− or 620+ .
+Therefore, these differences in the number of loans confirm that
+the unconditional probability of securitization is higher above the
+FICO threshold; that is, it is easier to securitize 620+ loans.
+Strikingly, we find that although 620+ loans should be of
+slightly better credit quality than those at 620− , lowdocumentation loans that are originated above the credit
+threshold tend to default within two years of origination at a
+rate 10%–25% higher than the mean default rate of 5% (which
+amounts to roughly a 0.5%–1% increase in delinquencies). As this
+result is conditional on observable loan and borrower characteristics, the only remaining difference between the loans around
+the threshold is the increased ease of securitization. Therefore,
+the greater default probability of loans above the credit threshold
+must be due to a reduction in screening by lenders.
+Because our results are conditional on securitization, we conduct additional analyses to address selection on the part of borrowers, lenders, or investors as explanations for differences in
+the performance of loans around the credit threshold. First, we
+rule out borrower selection on observables, as the loan terms and
+borrower characteristics are smooth across the FICO score threshold. Next, selection of loans by investors is mitigated because the
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+310
+
+0
+
+0.001
+
+Density
+
+0.002
+
+0.003
+
+311
+
+400
+
+500
+
+600
+
+FICO
+
+700
+
+800
+
+900
+
+FIGURE I
+FICO Distribution (U.S. Population)
+The figure presents the FICO distribution in the U.S. population for 2004. The
+data are from an anonymous credit bureau, which assures us that the data exhibit
+similar patterns during the other years of our sample. The FICO distribution
+across the population is smooth, so the number of prospective borrowers in the
+local vicinity of a given credit score is similar.
+
+decisions of investors (special purpose vehicles, SPVs) are based
+on the same (smooth–through the threshold) loan and borrower
+variables as in our data (Kornfeld 2007).
+Finally, strategic adverse selection on the part of lenders may
+also be a concern. However, lenders offer the entire pool of loans
+to investors, and, conditional on observables, SPVs largely follow
+a randomized selection rule to create bundles of loans out of these
+pools, suggesting that securitized loans would look similar to those
+that remain on the balance sheet (Comptroller’s Handbook 1997;
+Gorton and Souleles 2006). Furthermore, if at all present, this
+selection will tend to be more severe below the threshold, thereby
+biasing the results against our finding any screening effect. We
+also constrain our analysis to a subset of lenders who are not susceptible to strategic securitization of loans. The results for these
+lenders are qualitatively similar to the findings using the full
+sample, highlighting that screening is the driving force behind
+our results.
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+DID SECURITIZATION LEAD TO LAX SCREENING?
+
+QUARTERLY JOURNAL OF ECONOMICS
+
+Could the 620 threshold be set by lenders as an optimal cutoff for screening that is unrelated to differential securitization?
+We investigate further using a natural experiment in the passage and subsequent repeal of antipredatory laws in New Jersey
+(2002) and Georgia (2003) that varied the ease of securitization
+around the threshold. If lenders used 620 as an optimal cutoff for
+screening unrelated to securitization, we would expect the passage of these laws to have no effect on the differential screening
+standards around the threshold. However, if these laws affected
+the differential ease of securitization around the threshold, our
+hypothesis would predict an impact on the screening standards.
+Our results confirm that the discontinuity in the number of loans
+around the threshold diminished during a period of strict enforcement of antipredatory lending laws. In addition, there was a rapid
+return of a discontinuity after the law was revoked. Importantly,
+our performance results follow the same pattern, that is, screening differentials attenuated only during the period of enforcement.
+Taken together, this evidence suggests that our results are indeed
+related to differential securitization at the credit threshold and
+that lenders did not follow the rule of thumb in all instances.
+Importantly, the natural experiment also suggests that primeinfluenced selection is not at play.
+Once we have confirmed that lenders are screening more rigorously at 620− than 620+ , we assess whether borrowers were
+aware of the differential screening around the threshold. Although
+there is no difference in contract terms around the cutoff, borrowers may have an incentive to manipulate their credit scores
+in order to take advantage of differential screening around the
+threshold (consistent with our central claim). Aside from outright fraud, it is difficult to strategically manipulate one’s FICO
+score in a targeted manner and any actions to improve one’s score
+take relatively long periods of time, on the order of three to six
+months (Fair Isaac). Nonetheless, we investigate further using
+the same natural experiment evaluating the performance effects
+over a relatively short time horizon. The results reveal a rapid
+return of a discontinuity in loan performance around the 620
+threshold, which suggests that rather than manipulation, our results are largely driven by differential screening on the part of
+lenders.
+As a test of the role of soft information in screening incentives of lenders, we investigate the full documentation loan market. These loans have potentially significant hard information
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+312
+
+313
+
+because complete background information about the borrower’s
+ability to repay is provided. In this market, we identify another
+credit cutoff, a FICO score of 600, based on the advice of the three
+credit repositories. We find that twice as many full documentation loans are securitized above the credit threshold at 600+ as
+below the threshold at 600− . Interestingly, however, we find no
+significant difference in default rates of full documentation loans
+originated around this credit threshold. This result suggests that
+despite a difference in ease of securitization across the threshold, differences in the returns to screening are attenuated due to
+the presence of more hard information. Our findings for full documentation loans suggest that the role of soft information is crucial
+to understanding what worked and what did not in the existing
+securitized subprime loan market. We discuss this issue in more
+detail in Section VI.
+This paper connects several strands of the literature. Our
+evidence sheds new light on the subprime housing crisis, as
+discussed in the contemporaneous work of Doms, Furlong, and
+Krainer (2007), Gerardi, Shapiro, and Willen (2007), Dell’Ariccia,
+Igan, and Laeven (2008), Mayer, Piskorski, and Tchistyi (2008),
+Rajan, Seru, and Vig (2008), Benmelech and Dlugosz (2009), Mian
+and Sufi (2009), and Demyanyk and Van Hemert (2010).2 This
+paper also speaks to the literature that discusses the benefits
+(Kashyap and Stein 2000; Loutskina and Strahan 2007), and the
+costs (Morrison 2005; Parlour and Plantin 2008) of securitization.
+In a related line of research, Drucker and Mayer (2008) document
+how underwriters exploit inside information to their advantage in
+secondary mortgage markets, and Gorton and Pennacchi (1995),
+Sufi (2006), and Drucker and Puri (2009) investigate how contract
+terms are structured to mitigate some of these agency conflicts.3
+The rest of the paper is organized as follows. Section II provides a brief overview of lending in the subprime market and describes the data and sample construction. Section III discusses the
+framework and empirical methodology used in the paper, whereas
+Sections IV and V present the empirical results in the paper. Section VI concludes.
+2. For thorough summaries of the subprime mortgage crisis and the research
+which has sought to explain it, see Mayer and Pence (2008) and Mayer, Pence, and
+Sherlund (2009).
+3. Our paper also sheds light on the classic liquidity/incentives trade-off that
+is at the core of the financial contracting literature (see Coffee [1991], Diamond
+and Rajan [2003], Aghion, Bolton, and Tirole [2004], and DeMarzo and Urosevic
+[2006]).
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+DID SECURITIZATION LEAD TO LAX SCREENING?
+
+QUARTERLY JOURNAL OF ECONOMICS
+
+II. LENDING IN THE SUBPRIME MORTGAGE MARKET
+II.A. Background
+Approximately 60% of outstanding U.S. mortgage debt is
+traded in mortgage-backed securities (MBS), making the U.S. secondary mortgage market the largest fixed-income market in the
+world (Chomsisengphet and Pennington-Cross 2006). The bulk of
+this securitized universe ($3.6 trillion outstanding as of January
+2006) is composed of agency pass-through pools—those issued by
+Freddie Mac, Fannie Mae, and Ginnie Mae. The remainder, approximately, $2.1 trillion as of January 2006, has been securitized
+in nonagency securities. Although the nonagency MBS market
+is relatively small as a percentage of all U.S. mortgage debt, it
+is nevertheless large on an absolute dollar basis. The two markets are separated based on the eligibility criteria of loans that
+the GSEs have established. Broadly, agency eligibility is established on the basis of loan size, credit score, and underwriting
+standards.
+Unlike the agency market, the nonagency (referred to as “subprime” in the paper) market was not always this size. This market gained momentum in the mid- to late 1990s. Inside B&C
+Lending—a publication that covers subprime mortgage lending
+extensively—reports that total subprime lending (B&C originations) grew from $65 billion in 1995 to $500 billion in 2005. Growth
+in mortgage-backed securities led to an increase in securitization
+rates (the ratio of the dollar value of loans securitized divided by
+the dollar value of loans originated) from less than 30% in 1995
+to over 80% in 2006.
+From the borrower’s perspective, the primary feature distinguishing between prime and subprime loans is that the up-front
+and continuing costs are higher for subprime loans.4 The subprime mortgage market actively prices loans based on the risk
+associated with the borrower. Specifically, the interest rate on the
+loan depends on credit scores, debt-to-income ratios, and the documentation level of the borrower. In addition, the exact pricing
+may depend on loan-to-value ratios (the amount of equity of the
+borrower), the length of the loan, the flexibility of the interest
+rate (adjustable, fixed, or hybrid), the lien position, the property
+4. Up-front costs include application fees, appraisal fees, and other fees associated with originating a mortgage. The continuing costs include mortgage insurance
+payments, principal and interest payments, late fees for delinquent payments, and
+fees levied by a locality (such as property taxes and special assessments).
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+314
+
+315
+
+type, and whether stipulations are made for any prepayment
+penalties.5
+For investors who hold the eventual mortgage-backed security, credit risk in the agency sector is mitigated by an implicit or
+explicit government guarantee, but subprime securities have no
+such guarantee. Instead, credit enhancement for nonagency deals
+is in most cases provided internally by means of a deal structure that bundles loans into “tranches,” or segments of the overall
+portfolio (Lucas, Goodman, and Fabozzi 2006).
+II.B. Data
+Our primary data set contains individual loan data leased
+from LoanPerformance. The database is the only source that provides a detailed perspective on the nonagency securities market.
+The data include information on issuers, broker dealers/deal underwriters, servicers, master servicers, bond and trust administrators, trustees, and other third parties. As of December 2006,
+more than eight thousand home equity and nonprime loan pools
+(over seven thousand active) that include 16.5 million loans (more
+than seven million active) with over $1.6 trillion in outstanding
+balances were included. LoanPerformance estimates that as of
+2006, the data cover over 90% of the subprime loans that are
+securitized.6 The data set includes all standard loan application
+variables such as the loan amount, term, LTV ratio, credit score,
+and interest rate type—all data elements that are disclosed and
+form the basis of contracts in nonagency securitized mortgage
+pools. We now describe some of these variables in more detail.
+For our purpose, the most important piece of information
+about a particular loan is the creditworthiness of the borrower.
+The borrower’s credit quality is captured by a summary measure
+called the FICO score. FICO scores are calculated using various measures of credit history, such as types of credit in use and
+5. For example, the rate and underwriting matrix of Countrywide Home Loans
+Inc., a leading lender of prime and subprime loans, shows how the credit score of
+the borrower and the loan-to-value ratio are used to determine the rates at which
+different documentation-level loans are made (www.countrywide.com).
+6. Note that only loans that are securitized are reported in the LoanPerformance database. Communication with the database provider suggests that the
+roughly 10% of loans that are not reported are for privacy concerns from lenders.
+Importantly for our purpose, the exclusion is not based on any selection criteria that the vendor follows (e.g., loan characteristics or borrower characteristics).
+Moreover, based on estimates provided by LoanPerformance, the total number of
+nonagency loans securitized relative to all loans originated has increased from
+about 65% in early 2000 to over 92% since 2004.
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+DID SECURITIZATION LEAD TO LAX SCREENING?
+
+QUARTERLY JOURNAL OF ECONOMICS
+
+amount of outstanding debt, but do not include any information
+about a borrower’s income or assets (Fishelson-Holstein 2005).
+The software used to generate the score from individual credit reports is licensed by the Fair Isaac Corporation to the three major
+credit repositories—TransUnion, Experian, and Equifax. These
+repositories, in turn, sell FICO scores and credit reports to lenders
+and consumers. FICO scores provide a ranking of potential borrowers by the probability of having some negative credit event
+in the next two years. Probabilities are rescaled into a range of
+400–900, though nearly all scores are between 500 and 800, with
+a higher score implying a lower probability of a negative event.
+The negative credit events foreshadowed by the FICO score can
+be as small as one missed payment or as large as bankruptcy. Borrowers with lower scores are proportionally more likely to have
+all types of negative credit events than are borrowers with higher
+scores.
+FICO scores have been found to be accurate even for
+low-income and minority populations (see Fair Isaac website
+www.myfico.com; also see Chomsisengphet and Pennington-Cross
+[2006]). More importantly, the applicability of scores available at
+loan origination extends reliably up to two years. By design, FICO
+measures the probability of a negative credit event over a twoyear horizon. Mortgage lenders, on the other hand, are interested
+in credit risk over a much longer period of time. The continued
+acceptance of FICO scores in automated underwriting systems
+indicates that there is a level of comfort with their value in determining lifetime default probability differences.7 Keeping this as a
+backdrop, most of our tests of borrower default will examine the
+default rates up to 24 months from the time the loan is originated.
+Borrower quality can also be gauged by the level of documentation collected by the lender when taking the loan. The documents collected provide historical and current information about
+the income and assets of the borrower. Documentation in the market (and reported in the database) is categorized as full, limited,
+or no documentation. Borrowers with full documentation provide
+verification of income as well as assets. Borrowers with limited
+documentation provide no information about their income but do
+7. An econometric study by Freddie Mac researchers showed that the predictive power of FICO scores drops by about 25% once one moves to a three to
+five–year performance window (Holloway, MacDonald, and Straka 1993). FICO
+scores are still predictive, but do not contribute as much to the default rate probability equation after the first two years.
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+316
+
+317
+
+provide some information about their assets. “No-documentation”
+borrowers provide no information about income or assets, which
+is a very rare degree of screening lenience on the part of lenders.
+In our analysis, we combine limited and no-documentation borrowers and call them low-documentation borrowers. Our results
+are unchanged if we remove the very small portion of loans that
+are no-documentation.
+Finally, there is also information about the property being financed by the borrower, and the purpose of the loan. Specifically,
+we have information on the type of mortgage loan (fixed rate, adjustable rate, balloon, or hybrid) and the loan-to-value (LTV) ratio
+of the loan, which measures the amount of the loan expressed as
+a percentage of the value of the home. Typically loans are classified as either for purchase or refinance, though for convenience
+we focus exclusively on loans for home purchases.8 Information
+about the geography where the dwelling is located (ZIP code) is
+also available in the database.9
+Most of the loans in our sample are for owner-occupied
+single-family residences, townhouses, or condominiums (singleunit loans account for more than 90% of the loans in our sample). Therefore, to ensure reasonable comparisons, we restrict the
+loans in our sample to these groups. We also drop nonconventional properties, such as those that are FHA- or VA-insured or
+pledged properties, and also exclude buy down mortgages. We
+also exclude Alt-A loans, because the coverage for these loans in
+the database is limited. Only those loans with valid FICO scores
+are used in our sample. We conduct our analysis for the period
+January 2001 to December 2006, because the securitization market in the subprime market grew to a meaningful size post-2000
+(Gramlich 2007).
+III. FRAMEWORK AND METHODOLOGY
+When a borrower approaches a lender for a mortgage loan, the
+lender asks the borrower to fill out a credit application. In addition, the lender obtains the borrower’s credit report from the three
+credit bureaus. Part of the background information on the application and report could be considered “hard” information (e.g.,
+8. We find similar rules of thumb and default outcomes in the refinance
+market.
+9. See Keys et al. (2009) for a discussion of the interaction of securitization
+and variation in regulation, driven by the geography of loans and the type of lender.
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+DID SECURITIZATION LEAD TO LAX SCREENING?
+
+QUARTERLY JOURNAL OF ECONOMICS
+
+the FICO score of the borrower), whereas the rest is “soft” (e.g.,
+a measure of future income stability of the borrower, how many
+years of documentation were provided by the borrower, joint income status) in the sense that it is less easy to summarize on a
+legal contract. The lender expends effort to process the soft and
+hard information about the borrower and, based on this assessment, offers a menu of contracts to the borrower. Subsequently,
+the borrower decides to accept or decline the loan contract offered
+by the lender.
+Once a loan contract has been accepted, the loan can be sold
+as part of a securitized pool to investors. Notably, only the hard
+information about the borrower (FICO score) and the contractual
+terms (e.g., LTV ratio, interest rate) are used by investors when
+buying these loans as part of a securitized pool.10 In fact, the
+variables about the borrowers and the loan terms in the LoanPerformance database are identical to those used by investors and
+rating agencies to rate tranches of the securitized pool. Therefore,
+although lenders are compensated for the hard information about
+the borrower, the incentive for lenders to process soft information
+critically depends on whether they have to bear the risk of loans
+they originate (Gorton and Pennacchi 1995; Parlour and Plantin
+2008; Rajan, Seru, and Vig 2008). The central claim in this paper is that lenders are less likely to expend effort to process soft
+information as the ease of securitization increases.
+We exploit a specific rule of thumb at the FICO score of
+620 that makes securitization of loans more likely if a certain
+FICO score threshold is attained. Historically, this score was established as a minimum threshold in the mid-1990s by Fannie
+Mae and Freddie Mac in their guidelines on loan eligibility (Avery
+et al. 1996; Capone 2002). Guidelines by Freddie Mac suggest that
+FICO scores below 620 are placed in the Cautious Review Category, and Freddie Mac considers a score below 620 “as a strong
+indication that the borrower’s credit reputation is not acceptable”
+(Freddie Mac 2001, 2007).11 This is also reflected in Fair Isaac’s
+statement, “. . . those agencies [Fannie Mae and Freddie Mac],
+which buy mortgages from banks and resell them to investors,
+10. See Testimony of Warren Kornfeld, Managing Director of Moodys Investors Service, before the subcommittee on Financial Institutions and Consumer
+Credit, U.S. House of Representatives, May 8, 2007.
+11. These guidelines appeared at least as far back as 1995 in a letter by
+the Executive Vice President of Freddie Mac (Michael K. Stamper) to the CEOs
+and credit officers of all Freddie Mac sellers and servicers (see Online Appendix
+Exhibit 1).
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+318
+
+319
+
+have indicated to lenders that any consumer with a FICO score
+above 620 is good, while consumers below 620 should result in further inquiry from the lender. . . . ” Although the GSEs actively securitized loans when the nascent subprime market was relatively
+small, this role shifted entirely to investment banks and hedge
+funds (the nonagency sector) in recent times (Gramlich 2007).
+We argue that adherence to this cutoff by subprime MBS investors, following the advice of GSEs, generates an increase in
+demand for securitized loans that are just above the credit cutoff
+relative to loans below this cutoff. There is widespread evidence
+that is consistent with 620 being a rule of thumb in the securitized subprime lending market. For instance, rating agencies
+(Fitch and Standard and Poor’s) used this cutoff to determine
+default probabilities of loans when rating mortgage-backed securities with subprime collateral (Loesch 1996; Temkin, Johnson,
+and Levy 2002). Similarly, Calomiris and Mason (1999) survey the
+high-risk mortgage loan market and find 620 as a rule of thumb
+for subprime loans. We also confirmed this view by conducting a
+survey of origination matrices used by several of the top fifty originators in the subprime market (a list obtained from Inside B&C
+Lending; these lenders amount to about 70% of loan volume). The
+credit threshold of 620 was used by nearly all the lenders.
+Because investors purchase securitized loans based on hard
+information, our assertion is that the cost of collecting soft information is internalized by lenders when screening borrowers
+at 620− to a greater extent than at 620+ . There is widespread
+anecdotal evidence that lenders in the subprime market review
+both soft and hard information more carefully for borrowers with
+credit scores below 620. For instance, the website of Advantage
+Mortgage, a subprime securitized loan originator, claims that
+“. . . all loans with credit scores below 620 require a second level
+review. . . . There are no exceptions, regardless of the strengths of
+the collateral or capacity components of the loan.”12 By focusing
+on the lender as a unit of observation, we attempt to learn about
+the differential impact ease of securitization had on the behavior
+of lenders around the cutoff.
+To begin with, our tests empirically identify a statistical discontinuity in the distribution of loans securitized around the
+credit threshold of 620. In order to do so, we show that the number
+12. This position for loans below 620 is reflected in lending guidelines of
+numerous other subprime lenders.
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+DID SECURITIZATION LEAD TO LAX SCREENING?
+
+QUARTERLY JOURNAL OF ECONOMICS
+
+of loans securitized dramatically increases when we move along
+the FICO distribution from 620− to 620+ . We argue that this is
+equivalent to showing that the unconditional probability of securitization increases as one moves from 620− to 620+ . To see
++
+−
+this, denote Ns620 and Ns620 as the numbers of loans securitized
++
+−
++
+−
+at 620 and 620 , respectively. Showing that Ns620 > Ns620 is
+620+
+620−
+equivalent to showing that Ns /Np > Ns /Np, where Np is
+the number of prospective borrowers at 620+ or 620− . If we assume that the numbers of prospective borrowers at 620+ and 620−
+−
++
+are similar, that is, Np620 ≈ Np620 = Np (a reasonable assumption,
+as discussed below), then the unconditional probability of securitization is higher at 620+ . We refer to the difference in these
+unconditional probabilities as the differential ease of securitization around the threshold. Notably, our assertion of differential
+screening by lenders does not rely on knowledge of the proportion
+of prospective borrowers that applied, were rejected, or were held
+on the lenders’ balance sheet. We simply require that lenders are
+aware that a prospective borrower at 620+ has a higher likelihood
+of eventual securitization.
+We measure the extent of the jump by using techniques that
+are commonly used in the literature on regression discontinuity (e.g., see DiNardo and Lee [2004]; Card, Mas, and Rothstein
+[2008]). Specifically, we collapse the data on each FICO score (500–
+800) i and estimate equations of the form
+(1)
+
+Yi = α + βTi + θ f (FICO(i)) + δTi · f (FICO(i)) + i ,
+
+where Yi is the number of loans at FICO score i, Ti is an indicator that takes a value of 1 at FICO ≥ 620 and a value of 0
+if FICO < 620 and i is a mean-zero error term. f (FICO) and
+T · f (FICO) are flexible seventh-order polynomials, with the goal
+of these functions being to fit the smoothed curves on either
+side of the cutoff as closely to the data presented in the figures
+as possible.13 f (FICO) is estimated from 620− to the left, and
+T · f (FICO) is estimated from 620+ to the right. The magnitude
+of the discontinuity, β, is estimated by the difference in these
+two smoothed functions evaluated at the cutoff. The data are
+re-centered such that FICO = 620 corresponds to “0,” thus at the
+13. We have also estimated these functions of the FICO score using third-order
+and fifth-order polynomials in FICO, as well as relaxing parametric assumptions
+and estimating using local linear regression. The estimates throughout are not
+sensitive to the specification of these functions. In Section IV, we also examine
+the size and power of the test using the seventh-order polynomial specification
+following the approach of Card, Mas, and Rothstein (2008).
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+320
+
+321
+
+cutoff the polynomials are evaluated at 0 and drop out of the calculation, which allows β to be interpreted as the magnitude of
+the discontinuity at the FICO threshold. This coefficient should
+be interpreted locally in the immediate vicinity of the credit score
+threshold.
+After documenting a large jump at the ad-hoc credit thresholds, we focus on the performance of the loans around these thresholds. We evaluate the performance of the loans by examining the
+default probability of loans—that is, whether or not the loan defaulted t months after it was originated. If lenders screen similarly
+for the loan of credit quality 620+ and the loan of 620− credit quality, there should not be any discernible differences in default rates
+of these loans. Our maintained claim is that any differences in default rates on either side of the cutoff, after controlling for hard
+information, should be only due to the impact that securitization
+has on lenders’ screening standards.
+This claim relies on several identification assumptions. First,
+as we approach the cutoff from either side, any differences in
+the characteristics of prospective borrowers are assumed to be
+random. This implies that the underlying creditworthiness and
+the demand for mortgage loans (at a given price) is the same
+for prospective buyers with a credit score of 620− or 620+ . This
+seems reasonable as it amounts to saying that the calculation Fair
+Isaac performs (using a logistic function) to generate credit scores
+has a random error component around any specific score. Figure I
+shows the FICO distribution in the U.S. population in 2004. These
+data are from an anonymous credit bureau that assures us that
+the data exhibit similar patterns during the other years of our
+sample. Note that the FICO distribution across the population
+is smooth, so the number of prospective borrowers across a given
+−
++
+credit score is similar (in the example above, Np620 ≈ Np620 = Np).
+Second, we assume that screening is costly for the lender.
+The collection of information—hard systematic data (e.g., FICO
+score) as well as soft information (e.g., joint income status) about
+the creditworthiness of the borrower—requires time and effort by
+loan officers. If lenders did not have to expend resources to collect
+information, it would be difficult to argue that the differences
+in performance we estimate are a result of ease of securitization
+around the credit threshold affecting banks incentives to screen
+and monitor. Again, this seems to be a reasonable assumption (see
+Gorton and Pennacchi [1995]).
+Note that our discussion thus far has assumed that there is no
+explicit manipulation of FICO scores by the lenders or borrowers.
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+DID SECURITIZATION LEAD TO LAX SCREENING?
+
+QUARTERLY JOURNAL OF ECONOMICS
+TABLE I
+SUMMARY STATISTICS
+Panel A: Summary statistics by year
+Low documentation
+Full documentation
+
+2001
+2002
+2003
+2004
+2005
+2006
+
+Number of
+loans
+
+Mean
+loan-to-value
+
+Mean
+FICO
+
+Number of
+loans
+
+Mean
+loan-to-value
+
+Mean
+FICO
+
+35,427
+53,275
+124,039
+249,298
+344,308
+270,751
+
+81.4
+83.9
+85.2
+86.0
+85.5
+86.3
+
+630
+646
+657
+658
+659
+655
+
+101,056
+109,226
+194,827
+361,455
+449,417
+344,069
+
+85.7
+86.4
+88.1
+87.0
+86.9
+87.5
+
+604
+613
+624
+626
+623
+621
+
+Panel B: Summary statistics of key variables
+Low documentation
+Full documentation
+
+Average loan size ($000)
+FICO score
+Loan-to-value ratio
+Initial interest rate
+ARM (%)
+Prepayment penalty (%)
+
+Mean
+
+Std. dev.
+
+Mean
+
+Std. dev.
+
+189.4
+656.0
+85.6
+8.3
+48.5
+72.1
+
+132.8
+50.0
+9.8
+1.8
+50.0
+44.8
+
+148.5
+621.5
+87.1
+8.2
+52.7
+74.7
+
+116.9
+51.9
+9.9
+1.9
+49.9
+43.4
+
+Notes. Information on subprime home purchase loans comes from LoanPerformance. Sample period is
+2001–2006. See text for sample selection.
+
+However, the borrower may have incentives to do so if loan contracts or screening differ around the threshold. Our analysis in
+Section IV.F focuses on a natural experiment and shows that the
+effects of securitization on performance are not being driven by
+strategic manipulation.
+IV. MAIN EMPIRICAL RESULTS
+IV.A. Descriptive Statistics
+As noted earlier, the nonagency market differs from the
+agency market on three dimensions: FICO scores, loan-to-value
+ratios, and the amount of documentation asked of the borrower.
+We next look at the descriptive statistics of our sample, with special emphasis on these dimensions. Our analysis uses more than
+one million loans across the period 2001 to 2006. As mentioned
+earlier, the nonagency securitization market has grown dramatically since 2000, which is apparent in Panel A of Table I, which
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+322
+
+323
+
+shows the number of subprime loans securitized across years.
+These patterns are similar to those described in Gramlich (2007)
+and Demyanyk and Van Hemert (2010). The market has witnessed
+an increase in the number of loans with reduced hard information
+in the form of limited or no documentation. Note that whereas
+limited documentation provides no information about income but
+does provide some information about assets, a no-documentation
+loan provides information about neither income nor assets. In
+our analysis we combine both types of limited-documentation
+loans and denote them as low-documentation loans. The fulldocumentation market grew by 445% from 2001 to 2005, whereas
+the number of low-documentation loans grew by 972%.
+We find similar trends for loan-to-value ratios and FICO
+scores in the two documentation groups. LTV ratios have gone
+up over time, as borrowers have put less and less equity into their
+homes when financing loans. This increase is consistent with better willingness of market participants to absorb risk. In fact, this
+is often considered the bright side of securitization—borrowers
+are able to borrow at better credit terms because risk is being
+borne by investors who can bear more risk than individual banks.
+Panel A also shows that average FICO scores of individuals who
+access the subprime market have been increasing over time. The
+mean FICO score among low-documentation borrowers increased
+from 630 in 2001 to 655 in 2006. This increase in average FICO
+scores is consistent with the rule of thumb leading to a larger expansion of the market above the 620 threshold. Average LTV ratios are lower and FICO scores higher for the low-documentation
+as compared to the full-documentation sample. This possibly reflects the additional uncertainty lenders have about the quality of
+low-documentation borrowers.
+Panel B compares the low- and full-documentation segments
+of the subprime market on a number of the explanatory variables used in the analysis. Low-documentation loans are on average larger and are given to borrowers with higher credit scores
+than loans where full information on income and assets is provided. However, the two groups of loans have similar contract
+terms such as interest rate, loan-to-value, prepayment penalties, and whether the interest rate is adjustable or not. Our
+analysis below focuses first on the low-documentation segment
+of the market; we explore the full-documentation market in
+Section V.
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+DID SECURITIZATION LEAD TO LAX SCREENING?
+
+QUARTERLY JOURNAL OF ECONOMICS
+
+IV.B. Establishing the Rule of Thumb
+We first present results that show that large differences exist
+in the number of low-documentation loans that are securitized
+around the credit threshold we described earlier. We then examine
+whether this jump in securitization has any consequences on the
+subsequent performance of the loans above and below this credit
+threshold.
+As mentioned in Section III, the rule of thumb in the lending
+market impacts the ease of securitization around a credit score
+of 620. We therefore expect to see a substantial increase in the
+number of loans just above this credit threshold as compared to
+number of loans just below this threshold. In order to examine
+this, we start by plotting the number of loans at each FICO score
+in the two documentation categories around the credit cutoff of
+620 across years starting with 2001 and ending in 2006. As can be
+seen from Figure II, there is a marked increase in number of lowdocumentation loans at 620+ relative to the number of loans at
+620− . We do not find any such jump for full-documentation loans
+at FICO of 620.14 Given this evidence, we focus on the 620 credit
+threshold for low-documentation loans.
+From Figure II, it is clear that the number of loans see roughly
+a 100% jump in 2004 for low-documentation loans across the credit
+score of 620—there are twice as many loans securitized at 620+ at
+620− . Clearly, this is consistent with the hypothesis that the ease
+of securitization is higher at 620+ than at scores just below this
+credit cutoff.
+To estimate the jumps in the number of loans, we use the
+methods described above in Section III using the specification
+provided in equation (1). As reported in Table II, we find that
+low-documentation loans see a dramatic increase above the credit
+threshold of 620. In particular, the coefficient estimate (β) is significant at the 1% level and is on average around 110% (from 73%
+to 193%) higher for 620+ as compared to 620− for loans during the
+sample period. For instance, in 2001, the estimated discontinuity
+in Panel A is 85. The mean average number of low-documentation
+loans at a FICO score for 2001 is 117. The ratio is around 73%.
+These jumps are plainly visible from the yearly graphs in Figure I.
+In addition, we conduct permutation tests (or “randomization” tests), where we vary the location of the discontinuity (Ti )
+14. We will elaborate more on full-documentation loans in Section V.
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+324
+
+2002
+
+2003
+
+500
+
+600
+
+700
+FICO
+
+800
+
+5
+0
+
+0
+
+0
+
+1
+
+2
+
+2
+
+4
+
+10
+
+3
+
+4
+
+6
+
+15
+
+2001
+
+500
+
+700
+FICO
+
+800
+
+700
+FICO
+
+800
+
+700
+FICO
+
+800
+
+30
+
+40
+
+40
+
+20
+
+30
+
+10
+0
+
+10
+0
+600
+
+600
+
+2006
+
+20
+
+20
+10
+0
+500
+
+500
+
+2005
+
+30
+
+2004
+
+600
+
+500
+
+600
+
+700
+FICO
+
+800
+
+500
+
+600
+
+700
+FICO
+
+800
+
+FIGURE II
+Number of Loans (Low-Documentation)
+The figure presents the data for number of low-documentation loans (in ’00s).
+We plot the average number of loans at each FICO score between 500 and 800.
+As can be seen from the graphs, there is a large increase in the number of loans
+around the 620 credit threshold (i.e., more loans at 620+ as compared to 620− )
+from 2001 onward. Data are for loans originated between 2001 and 2006.
+
+TABLE II
+DISCONTINUITY IN NUMBER OF LOW-DOCUMENTATION LOANS
+Year
+
+FICO ≥ 620 (β)
+
+t-stat
+
+2001
+36.83
+(2.10)
+2002
+124.41
+(6.31)
+2003
+354.75
+(8.61)
+2004
+737.01
+(7.30)
+2005
+1,721.64
+(11.78)
+2006
+1,716.49
+(6.69)
+Pooled estimate (t-stat) [permutation test p-value]
+
+Observations
+
+R2
+
+Mean
+
+299
+.96
+117
+299
+.98
+177
+299
+.98
+413
+299
+.98
+831
+299
+.99 1,148
+299
+.97
+903
+781.87 (4.14) [.003]
+
+Notes. This table reports estimates from a regression that uses the number of low-documentation loans at
+each FICO score as the dependent variable. In order to estimate the discontinuity (FICO ≥ 620) for each year,
+we collapse the number of loans at each FICO score and estimate flexible seventh-order polynomials on either
+side of the 620 cutoff, allowing for a discontinuity at 620. We report t-statistics in parentheses. Permutation
+tests, which allow for a discontinuity at every point in the FICO distribution, confirm that jumps for each
+year are significantly larger than those found elsewhere in the distribution (see Section IV.B for more details).
+For brevity, we report a permutation test estimate from pooled regressions with time fixed effects removed
+to account for vintage effects. FICO = 620 has the smallest permutation test p-value (and is thus the largest
+outlier) among all the visible discontinuities in our sample.
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+325
+
+DID SECURITIZATION LEAD TO LAX SCREENING?
+
+QUARTERLY JOURNAL OF ECONOMICS
+
+across the range of all possible FICO scores and reestimate equation (1). The test treats every value of the FICO distribution as
+a potential discontinuity, and estimates the magnitude of the
+observed discontinuity at each point, forming a counter factual
+distribution of discontinuity estimates. This is equivalent to a
+bootstrapping procedure that varies the cutoff but does not resample the order of the points in the distribution (Johnston and
+DiNardo 1996). We then compare the value of the estimated discontinuity at 620 to the counterfactual distribution and construct
+a test statistic based on the asymptotic normality of the counterfactual distribution and report the p-value from this test. The null
+hypothesis is that the estimated discontinuity at a FICO score of
+620 is the mean of the 300 possible discontinuities.15
+The precision of the permutation test is limited by the number
+of observations used at each FICO score. As a result, regressions
+that pool across years provide the greatest power for statistical
+testing. While constructing the counterfactuals, we therefore use
+pooled specifications with year fixed effects removed to account for
+differences in vintage. The result of this test is shown in Table II
+and shows that the estimate at 620 for low-documentation loans is
+a strong outlier relative to the estimated jumps at other locations
+in the distribution. The estimated discontinuity when the years
+are pooled together is 780 loans with a permutation test p-value
+of .003. In summary, if the underlying creditworthiness and the
+demand for mortgage loans are the same for potential buyers with
+a credit score of 620− or 620+ , this result confirms that it is easier
+to securitize loans above the FICO threshold.
+IV.C. Contract Terms and Borrower Demographics
+Before examining the subsequent performance of loans
+around the credit threshold, we first assess whether there are
+any differences in hard information—either in contract terms or
+in other borrower characteristics—around this threshold. The endogeneity of contractual terms based on the riskiness of borrowers
+may lead to different contracts and hence different types of borrowers obtaining loans around the threshold in a systematic way.
+15. In unreported tests, we also conduct a falsification simulation exercise
+following Card, Mas, and Rothstein (2008). In particular, we apply our specification
+to data generated by a continuous process. We reject the null hypothesis of no effect
+(using a two-sided 5% test) in 6.0% of the simulations, indicating that the size of
+our test is reasonable. A similar test with data generated by a discontinuous
+process suggests that the power of our test is also reasonable. We reject the null
+of no effect about 92% of the times (in a two-sided 5% test) in this case.
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+326
+
+2003
+
+500
+
+600
+
+700
+FICO
+
+800
+
+15
+10
+5
+
+10
+5
+
+5
+
+10
+
+15
+
+2002
+
+15
+
+2001
+
+500
+
+700
+FICO
+
+800
+
+700
+FICO
+
+800
+
+700
+FICO
+
+800
+
+15
+10
+
+15
+10
+600
+
+600
+
+2006
+
+5
+
+5
+
+10
+5
+500
+
+500
+
+2005
+
+15
+
+2004
+
+600
+
+500
+
+600
+
+700
+FICO
+
+800
+
+500
+
+600
+
+700
+FICO
+
+800
+
+FIGURE III
+Interest Rates (Low-Documentation)
+The figure presents the data for interest rate (in %) on low-documentation
+loans. We plot average interest rates on loans at each FICO score between 500 and
+800. As can be seen from the graphs, there is no change in interest rates around
+the 620 credit threshold (i.e., more loans at 620+ as compared to 620− ) from 2001
+onward. Data are for loans originated between 2001 and 2006.
+
+Though we control for the possible contract differences when we
+evaluate the performance of loans, it is a source of insight to examine whether borrower and contract terms also systematically
+differ around the credit threshold.
+We start by examining the contract terms—LTV ratio and interest rates—across the credit threshold. Figures III and IV show
+the distributions of interest rates and LTV ratios offered on lowdocumentation loans across the FICO spectrum. As is apparent,
+we find these loan terms to be very similar—that is, we find no differences in contract terms for low-documentation loans above and
+below the 620 credit score. We test this formally using an approach
+equivalent to equation (1), replacing the dependent variable Yi
+in the regression framework with contract terms (loan-to-value
+ratios and interest rates) and present the results in Appendix
+I.A. Our results suggest that there is no difference in loan terms
+across the credit threshold. For instance, for low-documentation
+loans originated in 2006, the average loan-to-value ratio across the
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+327
+
+DID SECURITIZATION LEAD TO LAX SCREENING?
+
+QUARTERLY JOURNAL OF ECONOMICS
+
+700
+FICO
+
+800
+
+100
+0
+
+600
+
+700
+FICO
+
+800
+
+50
+
+100
+
+2005
+
+500
+
+600
+
+700
+FICO
+
+800
+
+500
+
+600
+
+700
+FICO
+
+800
+
+2006
+
+0
+
+0
+
+0
+
+50
+
+100
+
+2004
+
+500
+
+50
+
+600
+
+100
+
+0
+500
+
+2003
+
+50
+
+50
+
+100
+
+2002
+
+0
+
+50
+
+100
+
+2001
+
+500
+
+600
+
+700
+FICO
+
+800
+
+500
+
+600
+
+700
+FICO
+
+800
+
+FIGURE IV
+Loan-to-Value Ratio (Low-Documentation)
+The figure presents the data for loan-to-value ratio (in %) on low-documentation
+loans. We plot average loan-to-value ratios on loans at each FICO score between
+500 and 800. As can be seen from the graphs, there is no change in loan-to-value
+around the 620 credit threshold (i.e., more loans at 620+ as compared to 620− )
+from 2001 onward. Data are for loans originated between 2001 and 2006.
+
+collapsed FICO spectrum is 85%, whereas our estimated discontinuity is only −1.05%, a 1.2% difference. Similarly for the interest
+rate, for low-documentation loans originated in 2005, the average
+interest rate is 8.2%, and the difference on either side of the credit
+score cutoff is only about −0.091%, a 1% difference. Permutation
+tests reported in Appendix I.D confirm that these differences are
+not outliers relative to the estimated jumps at other locations in
+the distribution.
+Additional contract terms, such as the presence of a prepayment penalty, or whether the loan is ARM, FRM, or interest only/balloon are also similar across the 620 threshold (results
+not shown). In addition, if loans have second liens, then a combined LTV (CLTV) ratio is calculated. We find no difference in the
+CLTV ratios around the threshold for those borrowers with more
+than one lien on the home. Finally, low-documentation loans often do not require that borrowers provide information about their
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+328
+
+2003
+
+500
+
+600
+
+700
+FICO
+
+800
+
+80
+40
+
+40
+
+40
+
+60
+
+60
+
+60
+
+80
+
+2002
+
+80
+
+2001
+
+500
+
+700
+FICO
+
+800
+
+700
+FICO
+
+800
+
+700
+FICO
+
+800
+
+80
+
+80
+
+60
+
+60
+600
+
+600
+
+2006
+
+40
+
+40
+
+60
+40
+500
+
+500
+
+2005
+
+80
+
+2004
+
+600
+
+500
+
+600
+
+700
+FICO
+
+800
+
+500
+
+600
+
+700
+FICO
+
+800
+
+FIGURE V
+Median Household Income (Low-Documentation)
+The figure presents median household income (in ’000s) of ZIP codes in which
+loans are made at each FICO score between 500 and 800. As can be seen from
+the graphs, there is no change in median household income around the 620 credit
+threshold (i.e., more loans at 620+ as compared to 620− ) from 2001 onward. We
+plotted similar distributions for average percent minorities taking loans and average house size and found no differences around the credit thresholds. Data are
+for loans originated between 2001 and 2006.
+
+income, so only a subset of our sample provides a debt-to-income
+(DTI) ratio for the borrowers. Among this subsample, there is no
+difference in DTI across the 620 threshold in low-documentation
+loans. For brevity, we report only the permutation tests for these
+contract terms in Appendix I.D.
+Next, we examine whether the characteristics of borrowers
+differ systematically across the credit threshold. In order to evaluate this, we look at the distribution of the population of borrowers
+across the FICO spectrum for low-documentation loans. The data
+on borrower demographics come from Census 2000 and are at the
+ZIP code level. As can be seen from Figure V, median household
+incomes of the ZIP codes of borrowers around the credit thresholds
+look very similar for low-documentation loans. We plotted similar
+distributions for average percent minorities residing in the ZIP
+code and average house value in the ZIP code across the FICO
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+329
+
+DID SECURITIZATION LEAD TO LAX SCREENING?
+
+QUARTERLY JOURNAL OF ECONOMICS
+
+spectrum (unreported) and again find no differences across the
+credit threshold.16
+We use the same specification as equation (1), this time with
+the borrower demographic characteristics as dependent variables
+and present the results formally in Appendix I.B. Consistent with
+the patterns in the figures, permutation tests (unreported) reveal
+no differences in borrower demographic characteristics around
+the credit score threshold. Overall, our results indicate that observable characteristics of loans and borrowers are not different
+around the credit threshold.
+IV.D. Performance of Loans
+We now focus on the performance of loans that are originated
+close to the credit score threshold. Note that our analysis in Section IV.C suggests that there is no difference in terms of observable
+hard information about contract terms or about borrower demographic characteristics across the credit score thresholds. Nevertheless, we will control for these differences when evaluating the
+subsequent performance of loans in our logit regressions. If there
+is any remaining difference in the performance of the loans above
+and below the credit threshold, it can be attributed to differences
+in unobservable soft information about the loans.
+We estimate the differences in default rates on either side of
+the cutoff using the same framework as equation (1), using the
+dollar-weighted fraction of loans defaulted within ten to fifteen
+months of origination as the dependent variable, Yi . This fraction
+is calculated as the dollar amount of unpaid loans in default divided by the total dollar amount originated in the same cohort. We
+classify a loan as under default if any of the conditions is true: (a)
+payments on the loan are 60+ days late as defined by the Office of
+Thrift Supervision; (b) the loan is in foreclosure; or (c) the loan is
+real estate owned (REO), that is, the bank has retaken possession
+of the home.17
+16. Of course, because the census data are at the ZIP code level, we are to
+some extent smoothing our distributions. We note, however, that when we conduct
+our analysis on differences in number of loans (from Section IV.B), aggregated
+at the ZIP code level, we still find jumps across the credit threshold within each
+individual ZIP code.
+17. Although two different definitions of delinquency are used in the industry
+(Mortgage Bankers Association (MBA) definition and Office of Thrift Supervision
+(OTS) definition), we have followed the more stringent OTS definition. Whereas
+MBA starts counting days a loan has been delinquent from the time a payment is
+missed, OTS counts days a loan is delinquent one month after the first payment is
+missed.
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+330
+
+331
+
+We collapse the data into one-point FICO bins and estimate
+seventh-order polynomials on either side of the threshold for each
+year. By estimating the magnitude of β in each year separately,
+we ensure that no one cohort (or vintage) of loans is driving our
+results. As shown in Figures VI.A to VI.F, the low-documentation
+loans exhibit discontinuities in default rates at the FICO score of
+620. A year-by-year estimate is presented in Panel A of Table III.
+Contrary to what one might expect, around the credit threshold,
+we find that loans with higher credit scores actually default more
+often than lower credit loans in the post-2000 period. In particular,
+for loans originated in 2005, the estimate of β is 0.023 (t-stat
+= 2.10), and the mean delinquency rate is 0.078, suggesting a
+29% increase in defaults to the right of the credit score cutoff.
+Similarly, in 2006, the estimated size of the jump is 0.044 (t-stat
+= 2.68), and the mean delinquency rate for all FICO bins is 0.155,
+which is again a 29% increase in defaults around the FICO score
+threshold.
+Panel B presents results of permutation tests, estimated on
+the residuals obtained after pooling delinquency rates across
+years and removing year effects. Besides the 60+ late delinquency
+definition used in Panel A, we also classify a loan as in default if
+it is 90+ late in payments and if it is in foreclosure or REO. Our
+approach yields similar, if not stronger, results. Compared to 620−
+loans, 620+ loans are on average 2.8% more likely to be in arrears
+of 90+ days and 2.5% more likely to be in foreclosure or REO.
+Permutation test p-values confirm that the jump in defaults at
+620 using all the definitions of default are extreme outliers to the
+rest of the delinquency distribution. For instance, with default defined as foreclosure/REO, the p-value for the discontinuity at 620
+is .004. That we find similar results using different default definitions is consistent with high levels of rollover, whereby loans that
+are delinquent continue to reach deeper levels of delinquency. As
+shown in Online Appendix Table 1, more than 80% of loans that
+are 60 days delinquent reach 90+ days delinquent within a year,
+and 66% of loans that are 90 days delinquent reach foreclosure
+twelve months after in the low documentation market.
+Although previous default definitions were dollar-weighted,
+we also use the raw number of loans in default to estimate the
+magnitude of the discontinuity in loan performance around the
+FICO threshold. The unweighted results with 60+ delinquency
+are also presented in Panel B, and continue to exhibit a pattern
+of higher credit scores leading to higher default rates across the
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+DID SECURITIZATION LEAD TO LAX SCREENING?
+
+QUARTERLY JOURNAL OF ECONOMICS
+
+2004
+
+0
+
+0
+
+0.05
+
+0.05
+
+0.1
+
+0.1
+
+0.15
+
+0.15
+
+0.2
+
+2001
+
+500
+
+550
+
+600
+
+650
+
+700
+
+500
+
+750
+
+550
+
+600
+
+700
+
+750
+
+(D)
+
+2002
+
+2005
+
+0.2
+
+(A)
+
+0
+
+0
+
+0.05
+
+0.05
+
+0.1
+
+0.1
+
+0.15
+
+0.15
+
+650
+FICO
+
+FICO
+
+500
+
+550
+
+600
+
+650
+
+700
+
+500
+
+750
+
+550
+
+600
+
+650
+
+700
+
+750
+
+650
+
+700
+
+750
+
+FICO
+
+FICO
+
+(E)
+
+(B)
+
+2006
+
+0
+
+0.05
+
+0.1
+
+0.05
+
+0.15
+
+0.2
+
+0.1
+
+0.25
+
+0.15
+
+0.3
+
+2003
+
+500
+
+550
+
+600
+
+650
+FICO
+
+(C)
+
+700
+
+750
+
+500
+
+550
+
+600
+FICO
+
+(F)
+
+FIGURE VI
+Annual Delinquencies for Low-Documentation Loans Originated in 2001–2006
+The figures present the percentage of low-documentation loans originated in
+2001(A), 2002(B), 2003(C), 2004(D), 2005(E), and 2006(F) that became delinquent.
+We plot the dollar-weighted fractions of the pools that become delinquent for onepoint FICO bins between scores of 500 and 750. The vertical lines denote the 620
+cutoff, and a seventh-order polynomial is fitted to the data on either side of the
+threshold. Delinquencies are reported between ten and fifteen months for loans
+originated in the year.
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+332
+
+TABLE III
+DELINQUENCIES IN LOW-DOCUMENTATION LOANS AROUND THE CREDIT THRESHOLD
+
+Year
+
+Panel A: Dollar-weighted fraction of loans defaulted (60+ delinquent)
+FICO ≥ 620 (β)
+t-stat
+Observations
+R2
+Mean
+
+2001
+2002
+2003
+2004
+2005
+2006
+
+0.005
+0.010
+0.022
+0.013
+0.023
+0.044
+
+(0.44)
+(2.24)
+(3.47)
+(1.86)
+(2.10)
+(2.68)
+
+254
+254
+254
+254
+254
+253
+
+.58
+.75
+.83
+.79
+.81
+.57
+
+0.053
+0.051
+0.043
+0.049
+0.078
+0.155
+
+Panel B: Permutation tests for alternative default definitions
+(pooled 2001–2006 with time fixed effects)
+Permutation
+Dependent variable
+FICO≥ 620
+test
+(default definition)
+(β)
+t-stat
+p-value
+Observations R2 Mean
+60+ (dollar-weighted)
+90+ (dollar-weighted)
+Foreclosure+
+(dollar-weighted)
+60+ (unweighted)
+
+0.019
+0.028
+0.025
+
+(3.32)
+(4.67)
+(6.25)
+
+.020
+.006
+.004
+
+1523
+1525
+1525
+
+.66 0.072
+.70 0.065
+.71 0.048
+
+0.025
+
+(5.00)
+
+.004
+
+1525
+
+.65 0.073
+
+Panel C: Delinquency status of loans
+Pr(delinquency)=1
+(1)
+FICO ≥ 620
+
+Observations
+Pseudo R2
+Other controls
+FICO ≥ 620 ∗ other controls
+Time fixed effects
+Clustering unit
+Mean delinquency (%)
+
+0.12
+[0.004]
+(3.42)
+1,393,655
+.088
+Yes
+No
+No
+Loan ID
+
+(2)
+
+(3)
+
+0.48
+0.12
+[0.011]
+[0.004]
+(2.46)
+(2.10)
+1,393,655
+1,393,655
+.116
+.088
+Yes
+Yes
+Yes
+No
+Yes
+No
+Loan ID
+Vintage
+4.45
+
+(4)
+0.48
+[0.011]
+(2.48)
+1,393,655
+.116
+Yes
+Yes
+Yes
+Vintage
+
+Notes. In Panel A, we estimate the differences in default rates using a flexible seventh-order polynomial
+on either side of the 620 cutoff, allowing for a discontinuity at 620. The 60+ dollar-weighted fraction of loans
+defaulted within 10–15 months is the dependent variable. In Panel B, we present estimates from permutation
+tests from pooled regressions with time fixed effects removed to account for vintage effects using specification
+similar to Panel A. Permutation tests confirm that the discontinuity at 620 has the smallest p-value (and is
+thus largest outlier) in our sample. We use alternative definitions of defaults as the dependent variable. In
+Panel C, we estimate differences in default rates on either side of the 620 FICO cut off using a logit regression.
+The dependent variable is the delinquency status of a loan in a given month that takes a value 1 if the loan
+is classified as under default, as defined in the text. Controls include borrower and loan terms discussed in
+Section IV. t-statistics are reported in parentheses (marginal effects are reported in square brackets).
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+333
+
+DID SECURITIZATION LEAD TO LAX SCREENING?
+
+QUARTERLY JOURNAL OF ECONOMICS
+
+14
+
+Delinquency (%)
+
+12
+
+615–619 (620-)
+620–624 (620+)
+
+10
+
+8
+
+6
+
+4
+
+2
+
+0
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
+Loan age (months)
+
+FIGURE VII
+Delinquencies for Low-Documentation Loans (2001–2006)
+The figure presents the percent of low-documentation loans (dollar-weighted)
+originated between 2001 and 2006 that subsequently became delinquent. We track
+loans in two FICO buckets—615–619 (620− ) dashed and 620–624 (620+ ) solid—
+from their origination date and plot the average loans that become delinquent each
+month after the origination date. As can be seen, the higher credit score bucket
+defaults more than the lower credit score bucket for the post-2000 period. For
+brevity, we do not report plots separately for each year of origination. The effects
+shown here in the pooled 2001–2006 plot are apparent in every year.
+
+620 threshold. In fact, the results are statistically stronger than
+the 60+ weighted results, with a permutation test p-value based
+on the pooled estimates of .004 and the discontinuity estimate
+being significant in all the years (unreported; see Online Appendix
+Figure 4).
+To show how delinquency rates evolve over the age of the
+loan, in Figure VII we plot the delinquency rates of 620+ and
+620− for low-documentation loans (dollar-weighted) by loan age.
+As discussed earlier, we restrict our analysis to about two years
+after the loan has been originated. As can be seen from the figure,
+the differences in the delinquency rates are stark. The differences
+begin around four months after the loans have been originated
+and persist up to two years. Differences in default rates also seem
+quite large in terms of magnitudes. Those with a credit score of
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+334
+
+335
+
+620− are about 20% less likely to default after a year as compared
+to loans with credit score 620+ .18
+An alternative methodology is to measure the performance
+of each unweighted loan by tracking whether or not it became
+delinquent and estimate logit regressions of the following form:
+
+
+(2)
+Yikt =  α + βTit + γ1 Xikt + δ1 Tit ∗ Xikt + μt + ikt .
+This logistic approach complements the regression discontinuity
+framework, as we restrict the sample to the ten FICO points in
+the immediate vicinity of 620 in order to maintain the same local
+interpretation of the RD results. Moreover, we are also able to
+directly control for the possibly endogenous loan terms around
+the threshold. The dependent variable is an indicator variable
+(Delinquency) for loan i originated in year t that takes a value
+of 1 if the loan is classified as under default in month k after
+origination as defined above. We drop the loan from the regression
+once it is paid out after reaching the REO state. T takes the
+value 1 if FICO is between 620 and 624, and 0 if it is between
+615 and 619 for low-documentation loans, thus restricting the
+analysis to the immediate vicinity of the cutoffs. Controls include
+FICO scores, the interest rate on the loan, loan-to-value ratio,
+and borrower demographic variables, as well as interaction of
+these variables with T . We also include a dummy variable for
+the type of loan (adjustable or fixed rate mortgage). We control
+for the possible nonlinear effect of age of the loan on defaults by
+including three dummy variables—which take a value of 1 if the
+month since origination is 0–10, 11–20, and more than 20 months,
+respectively. Year of origination fixed effects are included in the
+estimation and standard errors are clustered at the loan level to
+account for multiple loan delinquency observations in the data.
+As can be seen from the logit coefficients in Panel C of Table III, results from this regression are qualitatively similar to
+those reported in the figures. In particular, we find that β is positive when we estimate the regressions for low-documentation
+loans. The economic magnitudes are similar to those in the
+18. Note that Figure VII does not plot cumulative delinquencies. As loans
+are paid out, say after a foreclosure, the unpaid balance for these loans falls
+relative to the time when they entered into a 60+ state. This explains the dip in
+delinquencies in the figure after about twenty months. Our results are similar if
+we plot cumulative delinquencies, or delinquencies that are calculated using the
+unweighted number of loans. Also note that the fact that we find no delinquencies
+early on in the duration of the loan is not surprising, given that originators are
+required to take back loans on their books if the loans default within three months.
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+DID SECURITIZATION LEAD TO LAX SCREENING?
+
+QUARTERLY JOURNAL OF ECONOMICS
+
+figures as well. For instance, keeping all other variables at their
+mean levels, low-documentation loans with credit score 620− are
+about 10%–25% less likely to default after a year than lowdocumentation loans with credit score 620+ . These are large
+magnitudes—for instance, note that the mean delinquency rate
+for low-documentation loans is around 4.45%; the economic magnitude of the effects in column (2) suggests that the difference
+in the absolute delinquency rate between loans around the credit
+threshold is around 0.5%–1% for low documentation loans.19
+To account for the possibility that lax screening might be correlated across different loans within the same vintage, we cluster
+the loans for each vintage and report the results in columns (3)
+and (4). Note that the RD regressions (Panel A) estimated separately by year also alleviate concerns about correlated errors
+across different loans with the same vintage.
+In the mortgage market, the other way for loans to leave the
+pool is to be repaid in full through refinancing or outright purchase, known as prepayment. This prepayment risk decreases the
+return to investing in mortgage-backed securities in a manner
+similar to default risk (see, e.g., Gerardi, Shapiro, and Willen
+[2007] and Mayer, Piskorski, and Tchistyi [2008]). To assess
+whether there are any differences in actual prepayments around
+the 620 threshold, we plot the prepayment seasoning curve for all
+years 2001–2006 in Figure VIII. As can be observed, prepayments
+of 620+ and 620− borrowers in the low-documentation market are
+similar (also see permutation test in Appendix I.D). Nevertheless,
+to formally account for prepayment rates, we also estimate a competing risk model using both prepayment and default as means
+for exiting the sample. We use the Cox proportional hazard model
+based on the econometric specification following Deng, Quigley,
+and Van Order (2000). In unreported tests (Online Appendix Table 6), we find results that are similar to our logistic specification.
+Finally, the reported specification uses five-point bins of FICO
+scores around the threshold, but the results are similar (though
+less precise) if we restrict the bins to fewer FICO scores on either
+side of 620 (Online Appendix Table 2). This issue is also fully addressed by the regression discontinuity results reported in Panels
+A and B, which use individual FICO score bins as the units of
+19. Our logistic specification is equivalent to a hazard model if we drop loans
+as soon as they hit the first indicator of delinquency (sixty days in default) and
+include a full set of duration dummies. Doing so does not change the nature of our
+results.
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+336
+
+337
+
+4.00
+620–624 (620+)
+615–619 (620−)
+3.50
+
+Prepayment as a % of original balance
+
+3.00
+
+2.50
+
+2.00
+
+1.50
+
+1.00
+
+0.50
+
+0.00
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30
+Loan age (months)
+
+FIGURE VIII
+Actual Prepayments for Low-Documentation Loans (2001–2006)
+The figure presents the percentage of low-documentation loans (dollar
+weighted) originated between 2001 and 2006 that subsequently were prepaid.
+We track loans in two FICO buckets—615–619 (620− ) dashed and 620–624 (620+ )
+solid—from their origination dates and plot the average loans that prepaid each
+month after the origination date. As can be seen, there are no differences in prepayments between the higher and lower credit score buckets. For brevity, we do
+not report plots separately for each year of origination. The effects shown here in
+the pooled 2001–2006 plot are apparent in every year.
+
+observation. In sum, we find that even after controlling for all observable characteristics of the loan contracts or borrowers, loans
+made to borrowers with higher FICO scores perform worse around
+the credit threshold.
+IV.E. Selection Concerns
+Because our results are conditional on securitization, we conduct additional analyses to address selection explanations on account of borrowers, investors, and lenders for the differences in
+the performance of loans around the credit threshold. First, contract terms offered to borrowers above the credit threshold might
+differ from those below the threshold and attract a riskier pool
+of borrowers. If this were the case, it would not be surprising if
+the loans above the credit threshold performed worse than those
+below it. As shown in Section IV.C, loan terms are smooth through
+the FICO score threshold. We also investigate the loan terms in
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+DID SECURITIZATION LEAD TO LAX SCREENING?
+
+QUARTERLY JOURNAL OF ECONOMICS
+
+more detail than in Section IV.C by examining the distribution of
+interest rates and loan-to-value ratios of contracts offered around
+620 for low-documentation loans.
+Figure IX.A depicts the Epanechnikov kernel density of the
+interest rate on low documentation loans in the year 2004 for two
+FICO groups—620− (615–619) and 620+ (620–624). The distributions of interest rates observed in the two groups lie directly on
+top of one another. A Kolmogorov–Smirnov test for equality of distribution functions cannot be rejected at the 1% level. Similarly,
+Figure IX.B depicts the density of LTV ratios on low documentation loans in the year 2004 for 620− and 620+ groups. Again,
+a Kolmogorov–Smirnov test for equality of distribution functions
+cannot be rejected at the 1% level. The fact that we find that the
+borrowers characteristics are similar around the threshold (Section IV.C) also confirms that selection based on observables is
+unlikely to explain our results.20
+Second, there might be concerns about selection of loans by
+investors. In particular, our results could be explained if investors
+could potentially cherry pick better loans below the threshold.
+The loan and borrower variables in our data are identical to the
+data upon which investors base their decisions (Kornfeld 2007).
+Furthermore, as shown in Section IV.C, these variables are smooth
+through the threshold, mitigating any concerns on selection by
+investors.21
+Finally, strategic adverse selection on the part of lenders may
+also be a concern. Lenders could, for instance, keep loans of better
+quality on their balance sheet and offer only loans of worse quality to the investors. This concern is mitigated for several reasons.
+20. The equality of interest rate distributions also rules out differences in the
+expected cost of capital across the threshold as an alternative explanation. For
+instance, lenders could originate riskier loans above the threshold only because
+the expected cost of capital was lower due to easier securitization. However, in
+a competitive market, the interest rates charged for these loans should reflect
+the riskiness of the borrowers. In that case, as mean interest rates above and
+below the threshold would be the same (Section IV.C), lenders must have added
+riskier borrowers above the threshold—resulting in a more dispersed interest rate
+distribution above the threshold. Our analysis in Figure IX.A shows that this is
+not the case.
+21. An argument might also be made that banks screen similarly around
+the credit threshold but are able to sell portfolios of loans above and below the
+threshold to investors with different risk tolerance. If this were the case, it could
+potentially explain our results in Section IV.D. This does not seem likely. Because
+all the loans in our sample are securitized, our results on performance on loans
+around the credit threshold are conditional on securitization. Moreover, securitized
+loans are sold to investors in pools that contain a mix of loans from the entire credit
+score spectrum. As a result, it is difficult to argue that loans of 620− are purchased
+by different investors as compared to loans of 620+ .
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+338
+
+339
+
+FIGURE IX
+Dispersion of (A) Interest Rates and (B) Loan-to-Value (Low-Documentation)
+The figure depicts the Epanechnikov kernel density of interest rate (A) and
+loan-to-value ratio (B) for two FICO groups for low-documentation loans—620−
+(615–619) as the solid line and 620+ (620–624) as the dashed line. The bandwidth
+for the density estimation is selected using the plug-in formula of Sheather and
+Jones (1991). The figures show that the densities of interest rates on loans are
+similar for both the groups. A Kolmogorov–Smirnov test for equality of distribution
+functions cannot be rejected at the 1% level. Data for loans originated in 2004 are
+reported here. We find similar patterns for 2001–2006 originations. We do not
+report those graphs, for brevity.
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+DID SECURITIZATION LEAD TO LAX SCREENING?
+
+QUARTERLY JOURNAL OF ECONOMICS
+
+First, the securitization guidelines suggest that lenders offer the
+entire pool of loans to investors and that conditional on observables, SPVs largely follow a randomized selection rule to create
+bundles of loans. This suggests that securitized loans would look
+similar to those that remain on the balance sheet (Comptroller’s
+Handbook 1997; Gorton and Souleles 2006).22 In addition, this
+selection, if at all present, will tend to be more severe below the
+credit threshold, thereby biasing us against finding any effect of
+screening on performance.
+We conduct an additional test that also suggests that our results are not driven by selection on the part of lenders. Although
+banks may screen and then strategically hold loans on their balance sheets, independent lenders do not keep a portfolio of loans
+on their books. These lenders finance their operations entirely
+out of short-term warehouse lines of credit, have limited equity
+capital, and have no deposit base to absorb losses on loans that
+they originate (Gramlich 2007). Consequently, they have limited
+motives for strategically choosing which loans to sell to investors.
+However, because loans below the threshold are more difficult to
+securitize and thus are less liquid, these independent lenders still
+have strong incentives to differentially screen these loans to avoid
+losses. We focus on these lenders to isolate the effects of screening
+in our results on defaults (Section IV.D).
+To test this, we classify the lenders into two categories—banks
+(banks, subsidiaries, thrifts) and independents—and examine the
+performance results only for the sample of loans originated by
+independent lenders. It is difficult to identify all the lenders in
+the database because many of the lender names are abbreviated. In order to ensure that we are able to cover a majority
+of our sample, we classify the top fifty lenders (by origination volume) across the years in our sample period, based on
+a list from the publication “Inside B&C Mortgage.” In unreported results, we confirm that independent lenders also follow the rule of thumb for low-documentation loans. Moreover,
+low-documentation loans securitized by independents with credit
+scores of 620− are about 15% less likely to default after a year as
+22. We confirmed this fact by examining a subset of loans held on the lenders’
+balance sheets. The alternative data set covers the top ten servicers in the subprime market (more than 60% of the market) with details on performance and loan
+terms of loans that are securitized or held on the lenders’ balance sheet. We find
+no differences in the performance of loans that are securitized relative to those
+kept by lenders, around the 620 threshold. Results of this analysis are available
+upon request.
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+340
+
+341
+
+compared to low-documentation loans securitized by them with
+credit scores 620+ .23 Note that the results in the sample of loans
+originated by lenders without a strategic selling motive are similar in magnitude to those in the overall sample (which includes
+other lenders that screen and then may strategically sell). This
+finding highlights that screening is the driving force behind our
+results.
+IV.F. Additional Variation from a Natural Experiment
+Unrelated Optimal Rule of Thumb. So far we have worked
+under the assumption that the 620 threshold is related to securitization. One could plausibly argue, in the spirit of Baumol and
+Quandt (1964), that this rule of thumb could have been set by
+lenders as an optimal cutoff for screening that was unrelated to
+differential securitization. Ruling this alternative out requires an
+examination of the effects of the threshold when the ease of securitization varies, everything else equal. To achieve this, we exploit
+a natural experiment that involves the passage of anti–predatory
+lending laws in two states which reduced securitization in the
+subprime market drastically. Subsequent to protests by market
+participants, the laws were substantially amended and the securitization market reverted to prelaw levels. We use these laws to
+examine how the main effects vary with the time series variation
+in the ease of securitization likelihood around the threshold in the
+two states.
+In October 2002, the Georgia Fair Lending Act (GFLA) went
+into effect, imposing anti–predatory lending restrictions that at
+the time were considered the toughest in the United States. The
+law allowed unlimited punitive damages when lenders did not
+comply with the provisions, and that liability extended to holders in due course. Once GFLA was enacted, the market response
+was swift. Fitch, Moody’s, and S&P were reluctant to rate securitized pools that included Georgia loans. In effect, the demand for
+the securitization of mortgage loans from Georgia fell drastically
+during the same period. In response to these actions, the Georgia
+legislature amended the GLFA in early 2003. The amendments
+removed many of the GFLAs ambiguities and eliminated covered
+loans. Subsequent to April 2003, the market revived in Georgia.
+23. More specifically, in a specification similar to column (2) in Panel C of
+Table III, we find that the coefficient on the indicator T(FICO ≥ 620) is 0.67 (t =
+3.21).
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+DID SECURITIZATION LEAD TO LAX SCREENING?
+
+QUARTERLY JOURNAL OF ECONOMICS
+
+Similarly, New Jersey enacted its law, the New Jersey Homeownership Security Act of 2002, with many provisions similar to those
+of the Georgia law. As in Georgia, lenders and ratings agencies
+expressed concerns when the New Jersey law was passed and decided to substantially reduce the number of loans that were securitized in these markets. The Act was later amended in June 2004
+in a way that relaxed requirements and eased lenders’ concerns.
+If lenders use 620 as an optimal cutoff for screening unrelated to securitization, we expect the passage of these laws to
+have no effect on the differential screening standards around the
+threshold. However, if these laws affect the differential ease of
+securitization around the threshold, our hypothesis would predict
+an impact on the screening standards. As 620+ loans became relatively more difficult to securitize, lenders would internalize the
+cost of collecting soft information for these loans to a greater degree. Consequently, the screening differentials we observed earlier
+should attenuate during the period of enforcement. Moreover, we
+expect the results described in Section IV.D to appear only during
+the periods when the differential ease of securitization around the
+threshold was high, that is, before the law was passed and after
+the law was amended.
+Our experimental design examines the ease of securitization
+and performance of loans above and below the credit threshold in
+both Georgia and New Jersey during the period when the securitization market was affected and compares it with the period before
+the law was passed and the period after the law was amended. To
+do so, we estimate equations (1) and (2) with an additional dummy
+variable that captures whether or not the law is in effect (NoLaw).
+We also include time fixed effects to control for any macroeconomic
+factors independent of the laws.
+The results are striking. Panel A of Table IV confirms that
+the discontinuity in the number of loans around the threshold diminishes during a period of strict enforcement of anti–predatory
+lending laws. In particular, the difference in number of loans securitized around the credit thresholds fell by around 95% during the
+period when the law was passed in Georgia and New Jersey. This
+effectively nullified any meaningful difference in the ease of securitization above the FICO threshold. Another intuitive way to see
+this is to compare these jumps in the number of loans with jumps
+in states that had housing profiles similar to those of Georgia and
+New Jersey before the law was passed (e.g., Texas in 2001). For
+instance, relative to the discontinuity in Texas, the jump during
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+342
+
+TABLE IV
+NUMBER OF LOANS AND DELINQUENCIES IN LOW-DOCUMENTATION LOANS ACROSS THE
+CREDIT THRESHOLD: EVIDENCE FROM A NATURAL EXPERIMENT
+FICO ≥ 620 (β)
+
+Year
+During law
+Pre and post law
+
+Observations
+
+R2
+
+Mean
+
+Panel A: Number of low-documentation loans
+10.71
+(2.30)
+294
+211.50
+(5.29)
+299
+
+.90
+.96
+
+16
+150
+
+t-stat
+
+Panel B: Delinquency status of low-documentation loans
+Pr(delinquency)=1
+
+FICO ≥ 620
+FICO ≥ 620 ∗ NoLaw
+
+Observations
+Other controls
+FICO ≥ 620 ∗ other controls
+Time fixed effects
+Pseudo R2
+Clustering unit
+Mean delinquency (%)
+
+Entire period
+2001–2006
+
+During law and
+six months after
+
+(1)
+
+(2)
+
+(3)
+
+(4)
+
+−0.91
+[0.043]
+(1.78)
+0.88
+[0.040]
+(1.90)
+109,536
+Yes
+Yes
+Yes
+.06
+Vintage
+
+−0.91
+[0.043]
+(2.00)
+0.88
+[0.040]
+(1.94)
+109,536
+Yes
+Yes
+Yes
+.06
+Loan ID
+
+−1.02
+[0.030]
+(1.69)
+1.13
+[0.034]
+(1.79)
+14,883
+Yes
+Yes
+Yes
+.05
+Vintage
+
+−1.02
+[0.030]
+(2.12)
+1.13
+[0.034]
+(1.93)
+14,883
+Yes
+Yes
+Yes
+.05
+Loan ID
+
+6.1
+
+4.2
+
+Notes. This table reports estimates of the regressions on differences in number of loans and performance
+of loans across the credit thresholds. We use specifications similar to these Table II, Panel A, to estimate
+the number of loans regressions and Table III, Panel C, to estimate delinquency regressions. We restrict
+our analysis to loans made in Georgia and New Jersey. NoLaw is a dummy that takes a value of 1 if the
+anti–predatory lending law was not passed in a given year or was amended and a value of 0 during the time
+period when the law was passed. Permutation tests confirm that the discontinuity in number of loans at 620
+when the law is not passed has the smallest p-value (and is thus the largest outlier) in the Georgia and New
+Jersey sample. We report t-statistics in parentheses (marginal effects are reported in square brackets).
+
+the period when the law was passed is about 5%, whereas the
+jumps are of comparable size both before the law was passed and
+after the law was amended. In addition, the results also indicate
+the rapid return of a discontinuity after the law is revoked. It
+is notable that this time horizon is too brief for any meaningful
+change in the housing stock (Glaeser and Gyourko 2005) or in the
+underlying demand for home ownership.
+Importantly, our performance results follow the same pattern
+as well. Columns (1) and (2) of Panel B show that the default rates
+for 620+ loans were below that of 620− loans in both Georgia and
+New Jersey only when the law was in effect. In addition, when the
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+343
+
+DID SECURITIZATION LEAD TO LAX SCREENING?
+
+QUARTERLY JOURNAL OF ECONOMICS
+
+law was either not passed or was amended, we find that default
+rates for loans above the credit threshold are similar to those for
+loans below the credit threshold. This upward shift in the default
+curve above the 620 threshold is consistent with the results reported in Section IV.D. Taken together, these results suggest that
+our findings are indeed related to differential securitization at the
+credit threshold and that lenders were not blindly following the
+rule of thumb in all instances.
+Manipulation of Credit Scores. Having confirmed that
+lenders are screening more at 620− than at 620+ , we assess
+whether borrowers were aware of the differential screening
+around the threshold. Even though there is no difference in contract terms around the cutoff, screening is weaker above the 620
+score than below it, and this may create an incentive for borrowers
+to manipulate their credit score. If FICO scores could be manipulated, lower quality borrowers might artificially appear at higher
+credit scores. This behavior would be consistent with our central
+claim of differential screening around the threshold. Note that
+per the rating agency (Fair Isaac), it is difficult to strategically
+manipulate one’s FICO score in a targeted manner. Nevertheless,
+to examine the response of borrowers more closely, we exploit the
+variation generated from the same natural experiment.
+If FICO scores tend to be quite sticky and it takes relatively
+long periods of time (more than three to six months) to improve
+credit scores, as Fair Isaac claims, we should observe that the
+difference in performance around the threshold should take time
+to appear after the laws are reversed. Restricting our analysis to
+loans originated within six months after the laws were reversed,
+columns (3) and (4) of Panel B (Table IV) show that the reversal
+of anti–predatory lending laws has immediate effects on the performance of loans that are securitized. This result suggests that
+borrowers might not have been aware of the differential screening
+around the threshold or were unable to quickly manipulate their
+FICO scores. Overall, the evidence in this section is consistent
+with Mayer and Pence (2008), who find no evidence of manipulation of FICO scores in their survey of the subprime market.24
+24. As a further check, we obtained another data set of subprime loans that
+continues to track the FICO scores of borrowers after loan origination. Borrowers
+who manipulate their FICO scores before loan issuance should experience a decline
+in FICO score shortly after receiving a loan (because a permanent change in the
+credit score cannot be considered manipulation). Consistent with evidence for no
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+344
+
+345
+
+IV.G. Additional Confirmatory Tests
+GSE Selection. Although the subprime market is dominated
+by the nonagency sector, one might worry that the GSEs may differentially influence the selection of borrowers into the subprime
+market through their actions in the prime market. For instance,
+the very best borrowers above the 620 threshold might select out
+of the subprime market in search of better terms in the prime
+market. We establish several facts to confirm that this is not the
+case.
+First, the natural experiment we discuss in Section IV.F
+suggests that prime-influenced selection is not at play. The
+anti–predatory lending laws were targeted primarily toward the
+subprime part of the market (Bostic et al. 2008), leaving
+the prime part of the market relatively unaffected. To confirm
+the behavior of the prime market during the enforcement of anti–
+predatory lending laws, we rely on another data set of mortgages
+in the United States that covers the agency loan market. The data
+are collected from the top U.S. servicers, are primarily focused on
+the agency market, and covers the period 2001 to 2006. As reported in Panel A of Table V, during the natural experiment, it
+was no more difficult to obtain an agency loan (comparable to a
+subprime loan in our sample) than before or after the law was
+in effect. Similarly, in unreported tests we find that contractual
+terms (such as LTV ratios and interest rates) around 620 see no
+change across time periods. Furthermore, in the prime market,
+there were no differences in defaults around the 620 threshold
+across the time periods (Table V, Panel B). Because borrower quality in the prime market did not change across the 620 threshold
+across the two time periods, if there was indeed selection, the very
+best 620+ subprime borrowers should have selected out into the
+prime market even while the laws were in place. As a result, we
+should have found that 620+ borrowers in subprime market continued to default more than 620− borrowers even when the law is
+in place. As we showed earlier in Table IV, this is not the case.
+Second, the data set confirms that Freddie Mac and Fannie Mae primarily do not buy subprime loans (especially lowdocumentation loans) with credit scores around FICO of 620.
+This is consistent with anecdotal evidence that the role of active
+manipulation around the threshold, we find that both 620+ and 620− borrowers
+are as likely to experience such a reduction within a quarter of obtaining a loan.
+Results of this analysis are available upon request.
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+DID SECURITIZATION LEAD TO LAX SCREENING?
+
+QUARTERLY JOURNAL OF ECONOMICS
+
+TABLE V
+NUMBER OF LOANS AND DELINQUENCIES IN AGENCY (GSE/PRIME) LOANS ACROSS THE
+CREDIT THRESHOLD: EVIDENCE FROM A NATURAL EXPERIMENT
+Year
+
+FICO ≥ 620 (β)
+
+t-stat
+
+Observations
+
+Panel A: Number of prime loans
+4.80
+(2.70)
+249
+2.33
+(1.02)
+268
+
+During law
+Pre and post law
+
+R2
+
+Mean
+
+.88
+.92
+
+20.30
+22.80
+
+Panel B: Delinquency status of prime loans
+Pr(delinquency)=1
+
+FICO ≥ 620
+FICO ≥ 620 ∗ NoLaw
+
+Observations
+Other controls
+FICO ≥ 620 ∗ other controls
+Time fixed effects
+Clustering unit
+Pseudo R2
+Mean delinquency (%)
+
+60+ delinquent
+2001–2006
+(1)
+
+90+ delinquent
+2001–2006
+(2)
+
+−0.026
+[0.001]
+(0.19)
+−0.004
+[0.0004]
+(0.03)
+56,300
+Yes
+Yes
+Yes
+Vintage
+.01
+
+−0.029
+[0.001]
+(0.10)
+−0.003
+[0.0004]
+(0.05)
+56,300
+Yes
+Yes
+Yes
+Vintage
+.02
+
+5.2
+
+3.1
+
+Notes. This table reports estimates of the regressions on differences in number of loans and performance
+of loans across the credit thresholds. The analysis is restricted to prime loans made in Georgia and New Jersey.
+The data are for GSE loans that are first mortgages, that are either single-family or condo or a townhouse, that
+are only purchase loans, that are conventional mortgages without private insurance, and that are primary
+residents for the borrower. NoLaw is a dummy that takes a value 1 if the anti–predatory lending law was
+not passed in a given year or was amended and a value 0 during the time period when the law was passed.
+Permutation tests confirm that the discontinuity in number of loans at 620 when the law is not passed or
+passed is no different from estimated jumps at other locations in the distribution in the Georgia and New
+Jersey sample. We report t-statistics in parentheses (marginal effects are reported in square brackets).
+
+subprime securitization in recent years had shifted to the nonagency sector (Gramlich 2007). In unreported permutation tests
+(see Online Appendix Table 4, Panel A), we also find a very small
+jump in the number of loans in the agency market across the
+620 threshold. In addition, the loan terms and default rates are
+also smooth. Together these results suggest that, in general, there
+seems to be no differential selection in terms of number of loans
+or quality of loans across the 620 cutoff.
+Third, if our results in the low-documentation market around
+the 620 threshold are driven by differential GSE selection, we
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+346
+
+347
+
+should observe no differences in defaults when we combined
+the loans from agencies with low-documentation subprime loans
+around the 620 threshold. If it were purely selection, lower performance above the threshold in the low-documentation subprime
+loans would be offset by differentially higher quality loans selected
+into the agency market. Unreported results (Online Appendix Table 5) show that there are still differences in default rates across
+the 620 threshold when we examine the agency loans and lowdocumentation subprime loans together.
+Finally, we examine the set of borrowers in the subprime
+market (around 620) who are offered contractual terms similar
+to those offered in the prime market. If there is indeed selection
+into the prime market, it is likely based on contractual terms
+offered to borrowers. By examining borrowers who are offered
+similar contractual terms in the subprime market, we are able to
+isolate our analysis to borrowers of similar quality as those who
+are possibly attracted by GSEs (i.e., the good-quality borrowers).
+For this subset of subprime borrowers, we are able to show that
+620+ loans still default more than 620− loans (Online Appendix
+Table 4, Panel B). This evidence further suggests that selection
+by GSEs is unlikely to explain our results.
+Other Thresholds. In the data, we also observe smaller jumps
+in other parts of the securitized loan FICO distribution as other ad
+hoc cutoffs have appeared in the market in the past three years
+(e.g., 600 for low documentation in 2005 and 2006). We remain
+agnostic as to why or how these other cutoffs have appeared: due
+to greater willingness to lend to riskier borrowers, or to changing
+use of automated underwriting, which generally included a matrix
+of qualifications and loan terms including FICO buckets. Several
+comments about why we focus on the 620 threshold are therefore
+in order.
+First, the 620 cutoff is the only threshold that is actively
+discussed by the GSEs in their lending guidelines, where the ease
+of securitization is higher on the right side of the threshold (see
+Online Appendix Exhibit 1). This feature is essential for us to
+disentangle the effect of lax screening on defaults from what a
+change in FICO score might predict. As increasing FICO scores
+predict decreasing default rates, performing our analysis with
+any cutoff where ease of securitization is lower on the right side
+of the threshold would not allow us to use this identification. For
+instance, consider the cutoff of 660 that is also discussed in the
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+DID SECURITIZATION LEAD TO LAX SCREENING?
+
+QUARTERLY JOURNAL OF ECONOMICS
+
+GSE guidelines and where we observe a jump in securitization.
+The ease of securitization is lower on the right-hand side of this
+cutoff; that is, the unconditional probability of securitization is
+lower at 660+ relative to 660− , suggesting that 660+ loans would
+be more intensively screened and would default less frequently
+than 660− . However, it would be impossible to disentangle this
+effect from just a mechanical effect of 660+ FICO loans being more
+creditworthy and thus defaulting less often than 660− loans (by
+construction). This subtle advantage of the 620 cutoff is crucial to
+our identification strategy and rules out the use of several other
+ad hoc thresholds. In general, our methodology could extend to
+any cutoff that had greater ease of securitization on the right side
+of the threshold.
+Moreover, to identify the effects of securitization on screening by lenders, the liquidity differential for the loan portfolios
+around the threshold has to be large enough. Because 620 is the
+largest jump we observe in the loan distribution, it is a natural
+choice. This is confirmed in the permutation tests, which show
+that FICO = 620 has the smallest p-value (and is thus the largest
+outlier) among all the visible discontinuities for each year in our
+sample. Although other cutoffs may also induce slight differences
+in screening effort in some years, these differences may be too
+small to make any meaningful inferences. In results not shown,
+we analyzed some of these other thresholds and found results for
+delinquencies that are consistent with those reported for the predominant cutoff (620), but are indeed quite small in magnitude.
+Other Tests. We also conduct several falsification tests, repeating our analysis at other credit scores where there is no jump
+in securitization. In sharp contrast to the results reported in Section IV.D, the higher credit score bucket defaults less than the
+lower credit score bucket. This is consistent with the results of
+the permutation tests reported above, which estimate every false
+discontinuity and compare it to the discontinuity at 620. Moreover,
+as we will show in Section V, full-documentation loans do not see
+any jumps at this threshold. We plot the delinquency rates of 620+
+and 620− for full-documentation loans (2001–2006) in Figure X
+and find that loans made at lower credit scores are more likely to
+default.25
+25. This test can also provide insight into the issue of GSE selection discussed earlier. Because 620+ full documentation loans do not default more than
+−
+620 loans, differential selection into the agency market must account for this
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+348
+
+349
+
+8
+
+7
+
+615–619 (620−)
+620–624 (620+)
+
+6
+
+Delinquency (%)
+
+5
+
+4
+
+3
+
+2
+
+1
+
+0
+0
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
+Loan age ( months)
+
+FIGURE X
+Falsification Test—Delinquencies for Full-Documentation Loans
+around FICO of 620
+The figure presents the falsification test by examining the percentage of fulldocumentation loans (dollar-weighted) originated between 2001 and 2006 that
+became delinquent. We track loans in two FICO buckets—615–619 (620− ) dashed
+and 620–624 (620+ ) solid—from their origination date and plot the average loans
+that become delinquent each month after the origination date. As can be seen,
+the higher credit score bucket defaults less than the lower credit score bucket for
+the post-2000 period. For brevity, we do not report plots separately for each year
+of origination. The effects shown here in the pooled 2001–2006 plot show up for
+every year.
+
+As further tests of our hypothesis, we also conducted our tests
+in the refinance market, and find a similar rule of thumb and
+similar default outcomes around the 620 threshold in this market. Finally, we reestimated our specifications with state, lender,
+and pool fixed effects to account for multiple levels of potential
+variation in the housing market and find qualitatively similar
+results.26
+fact as well. One possibility is selection on the basis of debt-to-income ratios. To
+examine this, we compare DTI ratios in the full- and low-documentation markets.
+Unreported tests (Online Appendix Table 3) show that the DTI ratios are similar
+around the threshold and thus cannot entirely explain results across the two types
+of loans.
+26. For additional information on tests across types of lenders and states, see
+Keys et al. (2009).
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+DID SECURITIZATION LEAD TO LAX SCREENING?
+
+QUARTERLY JOURNAL OF ECONOMICS
+
+V. DID HARD INFORMATION MATTER?
+The results presented above are for low-documentation loans,
+which necessarily have an unobserved component of borrowers’
+creditworthiness. In the full-documentation loan market, on the
+other hand, there is no omission of hard information on the borrower’s ability to repay. In this market, we identify a credit threshold at the FICO score of 600, the score that Fair Isaac (and the
+three credit repositories) advises lenders as a bottom cutoff for
+low risk borrowers. They note that “anything below 600 is considered someone who probably has credit problems that need to be
+addressed...” (see www.myfico.com). Similarly, Fannie Mae in its
+guidelines notes that “a borrower with credit score of 600 or less
+has a high primary risk...” (see www.allregs.com/efnma/doc/). The
+Consumer Federation of America along with Fair Isaac (survey report in March 2005) suggests that “FICO credit scores range from
+300–850, and a score above 700 indicates relatively low credit
+risk, while scores below 600 indicate relatively high risk which
+could make it harder to get credit or lead to higher loan rates.”
+Einav, Jenkins and Levin (2008) make a similar observation when
+they note that “a FICO score above 600 [is] a typical cut-off for
+obtaining a standard bank loan.”
+Figure XI reveals that there is a substantial increase in the
+number of full documentation loans above the credit threshold
+of 600. This pattern is consistent with the notion that lenders
+are more willing to securitize at a lower credit threshold (600 vs.
+620) for full-documentation loans because there is less uncertainty
+about these borrowers relative to those who provide less documentation. The magnitudes are again large—around 100% higher at
+600+ than at 600− in 2004—for full-documentation loans. In Panel
+A of Table VI, we estimate regressions similar to equation (1) and
+find that the coefficient estimate is also significant at 1% and is
+on average around 100% (from 80% to 141%) higher for 600+ as
+compared to 600− for post-2000 loans. Again, if the underlying
+creditworthiness and the demand for mortgage loans (at a given
+price) are the same for potential buyers with a credit score of 600−
+or 600+ , as the credit bureaus claim, this result confirms that it is
+easier to securitize full-documentation loans above the 600 FICO
+threshold. We repeated a similar analysis for loan characteristics (LTV and interest rates) and borrower demographics and find
+no differences for full documentation loans above and below the
+credit score of 600. Appendix I.C presents the estimates from the
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+350
+
+10
+0
+
+0
+
+0
+
+5
+
+5
+
+5
+
+15
+
+20
+
+2003
+
+10
+
+2002
+
+10
+
+2001
+
+351
+
+500
+
+600
+
+700
+FICO
+
+800
+
+500
+
+700
+FICO
+
+800
+
+500
+
+2005
+
+600
+
+700
+FICO
+
+800
+
+2006
+
+500
+
+600
+
+700
+FICO
+
+800
+
+0
+
+0
+
+0
+
+10
+
+10
+
+20
+
+20
+
+20
+
+30
+
+40
+
+30
+
+40
+
+50
+
+60
+
+40
+
+2004
+
+600
+
+500
+
+600
+
+700
+FICO
+
+800
+
+500
+
+600
+
+700
+FICO
+
+800
+
+FIGURE XI
+Number of Loans (Full-Documentation)
+The figure presents the data for the number of full-documentation loans (in
+’00s). We plot the average number of loans at each FICO score between 500 and
+800. As can be seen from the graphs, there is a large increase in number of loans
+around the 600 credit threshold (i.e., more loans at 600+ as compared to 600− )
+from 2001 onward. Data are for loans originated between 2001 and 2006.
+
+regressions (Appendix I.D provides permutation test estimates
+corresponding to these loan terms).
+Interestingly, we find that full-documentation loans with
+credit scores of 600− (FICO between 595 and 599) are about
+as likely to default after a year as loans with credit scores of
+600+ (FICO between 601 and 605) for the post-2000 period.
+Both Figures XII and XIII and results in Panels B, C, and D of
+Table VI support this conjecture. Following the methodology used
+in Figures VI and VII, we show the default rates annually across
+the FICO distribution (Figure XII) and across the age of the loans
+(Figure XIII). The estimated effects of the ad hoc rule on defaults
+are negligible in all specifications.
+The absence of differences in default rates across the credit
+threshold, while the same magnitude of the jump in the number of
+loans is maintained, is consistent with the notion that the pattern
+of delinquencies around the low-documentation threshold are primarily due to the soft information of the borrower. With so much
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+DID SECURITIZATION LEAD TO LAX SCREENING?
+
+QUARTERLY JOURNAL OF ECONOMICS
+
+TABLE VI
+NUMBER OF LOANS AND DELINQUENCIES ACROSS THE CREDIT THRESHOLD FOR
+FULL-DOCUMENTATION LOANS
+Year
+
+FICO ≥ 600 (β)
+
+t-stat
+
+Observations
+
+R2
+
+Mean
+
+Panel A: Number of full-documentation loans
+2001
+306.85
+(5.70)
+299
+.99
+330
+2002
+378.49
+(9.33)
+299
+.99
+360
+2003
+780.72
+(11.73)
+299
+.99
+648
+2004
+1,629.82
+(8.91)
+299
+.99
+1,205
+2005
+1,956.69
+(4.72)
+299
+.98
+1,499
+2006
+2,399.48
+(6.97)
+299
+.98
+1,148
+Pooled estimate (t-stat) [permutation test p-value]
+1,241.75 (3.23) [.000]
+2001
+2002
+2003
+2004
+2005
+2006
+
+Panel B: Dollar weighted fraction of loans defaulted
+0.005
+(0.63)
+250
+0.018
+(1.74)
+250
+0.013
+(1.93)
+250
+0.006
+(1.01)
+254
+0.008
+(1.82)
+254
+0.010
+(0.89)
+254
+
+Panel C: Permutation tests for alternative default definitions
+(pooled 2001–2006 with time fixed effects)
+Permutation
+Dependent variable
+FICO ≥ 600
+test
+(Default definition)
+(β)
+t-stat
+p-value
+Observations
+60+ (dollar-weighted)
+90+ (dollar-weighted)
+Foreclosure+
+(dollar-weighted)
+60+ (unweighted)
+
+.87
+.87
+.94
+.94
+.96
+.86
+
+0.052
+0.041
+0.039
+0.040
+0.059
+0.116
+
+R2
+
+Mean
+
+0.010
+0.006
+0.005
+
+(1.66)
+(1.00)
+(1.25)
+
+.240
+.314
+.265
+
+1,512
+1,525
+1,525
+
+.84
+.75
+.77
+
+0.058
+0.046
+0.032
+
+0.011
+
+(1.50)
+
+.150
+
+1,525
+
+.70
+
+0.056
+
+Panel D: Delinquency status of loans
+Pr(delinquency)=1
+
+FICO ≥ 600
+
+Observations
+Pseudo R2
+Other controls
+FICO ≥ 600 ∗ other controls
+Time fixed effects
+Clustering unit
+Mean delinquency (%)
+
+(1)
+
+(2)
+
+(3)
+
+(4)
+
+−0.06
+[0.002]
+(2.30)
+3,125,818
+.073
+Yes
+No
+No
+Loan ID
+
+−0.02
+[0.0006]
+(0.15)
+3,125,818
+.084
+Yes
+Yes
+Yes
+Loan ID
+
+−0.06
+[0.002]
+(1.21)
+3,125,818
+.073
+Yes
+No
+No
+Vintage
+
+−0.02
+[0.0006]
+(0.18)
+3,125,818
+.084
+Yes
+Yes
+Yes
+Vintage
+
+4.54
+
+Notes. This table reports estimates of the regressions on differences in number of loans and performance
+of loans around the credit threshold of 600 for full-documentation loans. We use specifications similar to
+these in Table II, Panel A, to estimate the number of loan regressions and Table III, Panels A, B, and C, to
+estimate delinquency regressions. Permutation tests confirm that FICO = 600 has the smallest permutation
+test p-value (and is thus the largest outlier) among all the visible discontinuities in the full-documentation
+loan sample. We report t-statistics in parentheses (marginal effects are reported in square brackets).
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+352
+
+0.2
+
+600 650
+FICO
+
+700
+
+750
+
+0.05
+550
+
+600 650
+FICO
+
+700
+
+750
+
+0.15
+
+2005
+
+500
+
+550
+
+600 650
+FICO
+
+700
+
+750
+
+500
+
+550
+
+600 650
+FICO
+
+700
+
+750
+
+700
+
+750
+
+2006
+
+0.15
+0.1
+0.05
+
+0
+
+0
+
+0.05
+
+0.05
+
+0.1
+
+0.1
+
+0.15
+
+2004
+
+500
+
+0.25
+
+550
+
+0.2
+
+500
+
+0
+
+0
+
+0
+
+0.05
+
+0.05
+
+0.1
+
+0.1
+
+0.1
+
+0.15
+
+2003
+
+0.15
+
+2002
+
+0.15
+
+2001
+
+353
+
+500
+
+550
+
+600 650
+FICO
+
+700
+
+750
+
+500
+
+550
+
+600 650
+FICO
+
+FIGURE XII
+Annual Delinquencies for Full-Documentation Loans
+The figure presents the percentage of full-documentation loans originated between 2001 and 2006 that became delinquent. We plot the dollar-weighted fraction
+of the pool that becomes delinquent for one-point FICO bins between scores of 500
+and 750. The vertical line denotes the 600 cutoff, and a seventh-order polynomial
+is fitted to the data on either side of the threshold. Delinquencies are reported
+between 10 and 15 months for loans originated in all years.
+
+information collected by the lender for full-documentation loans,
+there is less value to collecting soft information. Consequently, for
+full-documentation loans there is no difference in how the loans
+perform subsequently after hard information has been controlled
+for. Put another way, differences in returns to screening are attenuated due to the presence of more hard information.
+VI. DISCUSSION
+In the wake of the subprime mortgage crisis, a central
+question confronting market participants and policy makers is
+whether securitization had an adverse effect on the ex ante screening effort of loan originators. Comparing characteristics of the loan
+market above and below the ad hoc credit threshold, we show
+that a doubling of securitization volume is on average associated
+with about a 10%–25% increase in defaults. Notably, our empirical
+strategy delivers only inferences on differences in the performance
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+DID SECURITIZATION LEAD TO LAX SCREENING?
+
+QUARTERLY JOURNAL OF ECONOMICS
+
+10
+9
+
+595–599 (600−)
+600–604 (600+)
+
+8
+
+Delinquency (%)
+
+7
+6
+5
+4
+3
+2
+1
+0
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
+Loan age (months)
+
+FIGURE XIII
+Delinquencies for Full-Documentation Loans (2001–2006)
+The figure presents the percentage of full-documentation loans (dollarweighted) originated between 2001 and 2006 that became delinquent. We track
+loans in two FICO buckets—595–599 (600− ) dashed and 600–604 (600+ ) solid—
+from their origination date and plot the average loans that become delinquent each
+month after the origination date. As can be seen, the higher credit score bucket
+defaults more than the lower credit score bucket for the post-2000 period. For
+brevity, we do not report plots separately for each year of origination. The effects
+shown here in the pooled 2001–2006 plot show up for every year.
+
+of loans around this threshold. Although we cannot infer what the
+optimal level of screening at each credit score ought to be, we conclude from our empirical analysis that there was a causal link
+between ease of securitization and screening. That we find any effect on default behavior in one portfolio compared to another with
+virtually identical risk profiles, demographic characteristics, and
+loan terms suggests that the ease of securitization may have had
+a direct impact on incentives elsewhere in the subprime housing
+market. Understanding whether the ease of securitization had
+a similar impact on other securitized markets requires more research.
+The results of this paper, in particular from the anti–
+predatory lending laws’ natural experiment, confirm that lender
+behavior in the subprime market did change based on the ease
+of securitization. This suggests that existing securitization practices did not ensure that a decline in screening standards would be
+counteracted by requiring originators to hold more of the loans’
+default risk. If lenders were in fact holding on to optimal risk
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+354
+
+355
+
+where it was easier to securitize, there should have been no differences in defaults around the threshold. This finding resonates
+well with concerns surrounding the subprime crisis that, in an
+environment with limited disclosure on who holds what in the
+originate-to-distribute chain, there may have been insufficient
+“skin in the game” for some lenders (Blinder 2007; Stiglitz 2007).
+At the same time, the results further suggest that the breakdown
+in the process only occurred for loans where soft information was
+particulary important. With enough hard information, as in the
+full-documentation market, there may be less value in requiring
+market participants to hold additional risk to counteract the potential moral hazard of reduced screening standards.
+In a market as competitive as the market for mortgagebacked securities, our results on interest rates are puzzling.
+Lenders’ compensation on either side of the threshold should
+reflect differences in default rates, and yet we find that the
+interest rates to borrowers are similar on either side of 620. The
+difference in defaults, despite similar compensation around the
+threshold, suggests that there may have been some efficiency
+losses. Of course, it is possible that from the lenders’ perspective,
+a higher propensity to default above the threshold could have
+exactly offset the benefits of additional liquidity—resulting in
+identical interest rates around the threshold.
+Our analysis remains agnostic about whether investors
+priced the moral hazard aspects of securitization accurately. It
+may have been the case that moral hazard existed in this market,
+though investors appropriately priced persistent differences in
+performance around the threshold (see Rajan, Seru, and Vig
+[2008]). On the other hand, developing an arbitrage strategy for
+exploiting this opportunity may have been prohibitively difficult,
+given that loans are pooled across the FICO spectrum before they
+are traded. In addition, these fine differences in performance
+around the FICO threshold could have been obscured by the
+performance of other complex loan products in the pool. Understanding these aspects of investor behavior warrants additional
+investigation.
+It is important to note that we refrain from making any welfare claims. Our conclusions should be directed at securitization
+practices, as they were during the subprime boom, rather than at
+the optimally designed originate-to-distribute model. We believe
+securitization is an important innovation and has several merits.
+It is often asserted that securitization improves the efficiency of
+credit markets. The underlying assumption behind this assertion
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+DID SECURITIZATION LEAD TO LAX SCREENING?
+
+QUARTERLY JOURNAL OF ECONOMICS
+
+is that there is no information loss in transmission, even though
+securitization increases the distance between borrowers and investors. The benefits of securitization are limited by information
+loss, and in particular the costs we document in the paper. More
+generally, what types of credit products should be securitized? We
+conjecture that the answer depends crucially on the information
+structure: loans with more hard information are likely to benefit
+from securitization relative to loans that involve soft information.
+A careful investigation of this question is a promising area for
+future research.
+More broadly, our findings caution against policy that emphasizes excessive reliance on default models. Our research suggests
+that by relying entirely on hard information variables such as
+FICO scores, these models ignore essential elements of strategic behavior on the part of lenders which are likely to be important. The formation of a rule of thumb, even if optimal (Baumol
+and Quandt 1964), has an undesirable effect on the incentives of
+lenders to collect and process soft information. As in Lucas (1976),
+this strategic behavior can alter the relationship between observable borrower characteristics and default likelihood, rather than
+moving along the previous predicted relationship. Incorporating
+these strategic elements into default models, although challenging, is another important direction for future research.
+APPENDIX I.A
+LOAN CHARACTERISTICS AROUND DISCONTINUITY IN LOW-DOCUMENTATION LOANS
+Loan to value
+Year
+2001
+2002
+2003
+2004
+2005
+2006
+
+Interest rate
+
+FICO ≥ 620
+Mean FICO ≥ 620
+Mean
+(β)
+t-stat Obs. R2 (%)
+(β)
+t-stat Obs. R2 (%)
+0.67
+1.53
+2.44
+0.30
+−0.33
+−1.06
+
+(0.93)
+(2.37)
+(4.27)
+(0.62)
+(0.96)
+(2.53)
+
+296
+299
+299
+299
+299
+299
+
+.76
+.91
+.96
+.96
+.95
+.96
+
+80.3
+82.6
+83.4
+84.5
+84.1
+84.8
+
+0.06
+0.15
+0.10
+0.03
+−0.09
+−0.21
+
+(0.59)
+(1.05)
+(1.50)
+(0.39)
+(1.74)
+(2.35)
+
+298
+299
+299
+299
+299
+299
+
+.92
+.89
+.97
+.97
+.98
+.98
+
+9.4
+8.9
+7.9
+7.8
+8.2
+9.2
+
+Notes. This table reports estimates from a regression that uses the mean interest rate and LTV ratio of
+low-documentation loans at each FICO score as the dependent variables. In order to estimate the discontinuity
+(FICO ≥ 620) for each year, we collapse the interest rate and LTV ratio at each FICO score and estimate flexible
+seventh-order polynomials on either side of the 620 cutoff, allowing for a discontinuity at 620. Because the
+measures of the interest rate and LTV are estimated means, we weight each observation by the inverse
+of the variance of the estimate. We report t-statistics in parentheses. Permutation tests, which allow for a
+discontinuity at every point in the FICO distribution, confirm that these jumps are not significantly larger
+than those found elsewhere in the distribution. For brevity, we report permutation test estimates from pooled
+regressions (with time fixed effects removed to account for vintage effects) and report them in Appendix I.D.
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+356
+
+357
+
+APPENDIX I.B
+BORROWER DEMOGRAPHICS AROUND DISCONTINUITY IN LOW-DOCUMENTATION LOANS
+Year
+
+FICO ≥ 620 (β)
+
+2001
+2002
+2003
+2004
+2005
+2006
+2001
+2002
+2003
+2004
+2005
+2006
+2001
+2002
+2003
+2004
+2005
+2006
+
+Observations
+
+R2
+
+Mean (%)
+
+1.54
+0.32
+1.70
+0.42
+−0.50
+0.25
+
+Panel A: Percent black in ZIP code
+(1.16)
+297
+(0.28)
+299
+(2.54)
+299
+(0.53)
+299
+(0.75)
+299
+(0.26)
+299
+
+.79
+.63
+.70
+.72
+.69
+.59
+
+11.2
+10.6
+11.1
+12.2
+13.1
+14.7
+
+1,963.23
+−197.21
+154.93
+699.90
+662.71
+−303.54
+
+Panel B: Median income in ZIP code
+(2.04)
+297
+(0.13)
+299
+(0.23)
+299
+(1.51)
+299
+(1.08)
+299
+(0.34)
+299
+
+.33
+.35
+.50
+.46
+.64
+.68
+
+49,873
+50,109
+49,242
+48,221
+47,390
+46,396
+
+.66
+.79
+.89
+.91
+.93
+.92
+
+163,151
+165,049
+160,592
+150,679
+143,499
+138,556
+
+t-stat
+
+Panel C: Median house value in ZIP code
+3,943.30
+(0.44)
+297
+−599.72
+(0.11)
+299
+−1,594.51
+(0.36)
+299
+−2,420.01
+(1.03)
+299
+−342.04
+(0.14)
+299
+−3,446.06
+(1.26)
+299
+
+Notes. This table reports estimates from a regression that uses the mean demographic characteristics
+of low-documentation borrowers at each FICO score as the dependent variables. In order to estimate the
+discontinuity (FICO ≥ 620) for each year, we collapse the demographic variables at each FICO score and
+estimate flexible seventh-order polynomials on either side of the 620 cutoff, allowing for a discontinuity at
+620. Because the demographic variables are estimated means, we weight each observation by the inverse of
+the variance of the estimate. We obtain the demographic variables from Census 2000, matched using the ZIP
+code of each loan. Permutation tests, which allow for a discontinuity at every point in the FICO distribution,
+confirm that these jumps are not significantly larger than those found elsewhere in the distribution. We report
+t-statistics in parentheses.
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+DID SECURITIZATION LEAD TO LAX SCREENING?
+
+QUARTERLY JOURNAL OF ECONOMICS
+
+APPENDIX I.C
+LOAN CHARACTERISTICS AND BORROWER DEMOGRAPHICS AROUND DISCONTINUITY
+IN FULL-DOCUMENTATION LOANS
+Panel A: Loan characteristics
+Loan to value
+Interest rate
+Year
+2001
+2002
+2003
+2004
+2005
+2006
+Year
+2001
+2002
+2003
+2004
+2005
+2006
+
+FICO ≥ 600
+Mean FICO ≥ 600
+Mean
+(β)
+t-stat Obs. R2 (%)
+(β)
+t-stat Obs. R2 (%)
+0.820
+−0.203
+1.012
+0.755
+0.354
+−0.454
+
+(2.09)
+(0.65)
+(3.45)
+(2.00)
+(1.82)
+(1.96)
+
+299
+299
+299
+299
+299
+299
+
+.73
+.86
+.95
+.96
+.93
+.94
+
+85.1
+85.8
+86.9
+86
+86.2
+86.7
+
+−0.097
+−0.279
+−0.189
+−0.244
+−0.308
+−0.437
+
+Panel B: Percent black in ZIP code
+FICO ≥ 600 (β)
+t-stat
+Observations
+2.32
+−0.79
+0.40
+0.54
+−0.38
+−0.86
+
+(2.03)
+(1.00)
+(0.48)
+(0.96)
+(0.85)
+(1.40)
+
+299
+299
+299
+299
+299
+299
+
+(0.87)
+(3.96)
+(3.42)
+(6.44)
+(5.72)
+(9.93)
+
+299
+299
+299
+299
+299
+299
+
+.97
+.97
+.99
+.99
+.99
+.99
+
+9.5
+8.6
+7.7
+7.3
+7.7
+8.6
+
+R2
+
+Mean (%)
+
+.86
+.82
+.87
+.92
+.86
+.81
+
+13.6
+12.5
+12.5
+12.9
+13.4
+14.3
+
+Notes. This table reports the estimates of the regressions on loan characteristics and borrower demographics around the credit threshold of 600 for full-documentation loans. We use specifications similar to
+Appendices I.A and I.B for estimation. We report t-statistics in parentheses. Permutation tests, which allow
+for a discontinuity at every point in the FICO distribution, confirm that these jumps are not significantly
+larger than those found elsewhere in the distribution. For brevity, we report permutation test estimates
+from pooled regressions (with time fixed effects removed to account for vintage effects) and report them in
+Appendix I.D.
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+358
+
+0.39
+1.63
+.20
+
+Pooled FICO ≥ 600 (β)
+t-stat
+Permutation test p-value
+
+−0.0009
+1.51
+.35
+
+Actual
+prepayments
+
+Panel B: Full-documentation loan characteristics
+−0.26
+0.68
+0.008
+1.91
+1.83
+0.73
+.07
+.11
+.45
+
+Prepayment
+penalty
+
+−0.0004
+0.44
+.84
+
+Debt-to-income
+ratio
+
+Panel A: Low-documentation loan characteristics
+0.54
+0.42
+−0.016
+1.40
+1.25
+1.23
+.46
+.32
+.55
+
+Loan-to-value
+ratio
+
+0.17
+0.39
+.62
+
+0.05
+0.73
+.96
+
+CLTV
+ratio
+
+359
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+Notes. This table reports the estimates of the regressions on loan characteristics across the credit threshold of 620 for low-documentation loans and credit threshold of 600 for
+full-documentation loans. We pool the loans across all years and remove year effects to account for vintage effects. We use specifications similar to Appendix I.A for estimation.
+Permutation tests, which allow for a discontinuity at every point in the FICO distribution, confirm that these jumps are not significantly larger than those found elsewhere in the
+distribution. We report p-values from these tests in the table.
+
+0.02
+0.32
+.90
+
+Pooled FICO ≥ 620 (β)
+t-stat
+Permutation test p-value
+
+Interest
+rate
+
+APPENDIX I.D
+PERMUTATION TEST RESULTS FOR LOAN CHARACTERISTICS IN LOW- AND FULL-DOCUMENTATION LOANS
+
+DID SECURITIZATION LEAD TO LAX SCREENING?
+
+QUARTERLY JOURNAL OF ECONOMICS
+
+FEDERAL RESERVE BOARD OF GOVERNORS
+SORIN CAPITAL MANAGEMENT
+UNIVERSITY OF CHICAGO, BOOTH SCHOOL OF BUSINESS
+LONDON BUSINESS SCHOOL
+
+REFERENCES
+Aghion, Philippe, Patrick Bolton, and Jean Tirole, “Exit Options in Corporate
+Finance: Liquidity versus Incentives,” Review of Finance, 8 (2004), 327–353.
+Avery, Robert, Raphael Bostic, Paul Calem, and Glenn Canner, “Credit Risk, Credit
+Scoring and the Performance of Home Mortgages,” Federal Reserve Bulletin,
+82 (1996), 621–648.
+Baumol, William J., and Richard E. Quandt, “Rules of Thumb and Optimally
+Imperfect Decisions,” American Economic Review, 54 (1964), 23–46.
+Benmelech, Efraim, and Jennifer Dlugosz, “The Alchemy of CDO Credit Ratings,”
+Journal of Monetary Economics, 56 (2009), 617–634.
+Blinder, Alan, “Six Fingers of Blame in the Mortgage Mess,” New York Times,
+September 30, 2007.
+Bostic, Raphael, Kathleen Engel, Patricia McCoy, Anthony Pennington-Cross, and
+Susan Wachter, “State and Local Anti-Predatory Lending Laws: The Effect
+of Legal Enforcement Mechanisms,” Journal of Economics and Business, 60
+(2008), 47–66.
+Calomiris, Charles, and Joseph Mason, High Loan-to-Value Mortgage Lending:
+Problem or Cure (Washington, DC: The AEI Press, 1999).
+Capone, Charles A., “Research into Mortgage Default and Affordable Housing:
+A Primer,” Prepared for LISC Center for Home Ownership Summit 2001,
+Congressional Budget Office, 2002.
+Card, David, Alexandre Mas, and Jesse Rothstein, “Tipping and the Dynamics of
+Segregation,” Quarterly Journal of Economics, 123 (2008), 177–218.
+Chomsisengphet, Souphala, and Anthony Pennington-Cross, “The Evolution of the
+Subprime Mortgage Market,” Federal Reserve Bank of St. Louis Review, 88
+(2006), 31–56.
+Coffee, John, “Liquidity Versus Control: The Institutional Investor as Corporate
+Monitor,” Columbia Law Review, 91 (1991), 1277–1368.
+Comptroller’s Handbook, “Asset Securitization,” November 1997.
+Dell’Ariccia, Giovanni, Deniz Igan, and Luc A. Laeven, “Credit Booms and Lending
+Standards: Evidence from the Subprime Mortgage Market,” IMF Working
+Paper No. 08/106, 2008.
+DeMarzo, Peter, and Branko Urosevic, “Optimal Trading and Asset Pricing with a
+Large Shareholder,” Journal of Political Economy, 114 (2006), 774–815.
+Demyanyk, Yuliya, and Otto Van Hemert, “Understanding the Subprime Mortgage
+Crisis,” Review of Financial Studies, forthcoming 2010.
+Deng, Yongheng, John Quigley, and Robert Van Order, “Mortgage Terminations,
+Heterogeneity and the Exercise of Mortgage Options,” Econometrica, 68
+(2000), 275–307.
+Diamond, Douglas, “Financial Intermediation and Delegated Monitoring,” Review
+of Economic Studies, 51 (1984), 393–414.
+Diamond, Douglas, and Raghuram Rajan, “Liquidity Risk, Liquidity Creation and
+Financial Fragility: A Theory of Banking,” Journal of Political Economy, 109
+(2003), 287–327.
+DiNardo, John, and David S. Lee, “Economic Impacts of New Unionization on
+Private Sector Employers: 1984–2001,” Quarterly Journal of Economics, 119
+(2004), 1383–1441.
+Doms, Mark, Fred Furlong, and John Krainer, “Subprime Mortgage Delinquency
+Rates,” FRB San Francisco Working Paper 2007-33, 2007.
+Drucker, Steven, and Christopher Mayer, “Inside Information and Market Making
+in Secondary Mortgage Markets,” Columbia Business School Working Paper,
+2008.
+Drucker, Steven, and Manju Puri, “On Loan Sales, Loan Contracting, and Lending
+Relationships,” Review of Financial Studies, 22 (2009), 2835–2872.
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+360
+
+361
+
+Einav, Liran, Mark Jenkins, and Jonathan Levin, “Contract Pricing in Consumer
+Credit Markets,” Stanford University Working Paper, 2008.
+Fishelson-Holstein, Hollis, “Credit Scoring Role in Increasing Homeownership
+for Underserved Populations,” in Building Assets, Building Credit: Creating
+Wealth in Low-Income Communities, Nicolas P. Retsinas and Eric S. Belsky,
+eds. (Washington, DC: Brookings Institution Press, 2005).
+Freddie Mac, “Single-Family Seller/Servicer Guide,” Chapter 37, Section 37.6: Using FICO Scores in Underwriting, 2001.
+——, “Automated Underwriting Report,” Chapter 6, 2007.
+Gerardi, Kristopher, Adam Hale Shapiro, and Paul S. Willen, “Subprime Outcomes:
+Risky Mortgages, Homeownership Experiences and Foreclosures,” Federal Reserve Bank of Boston Working Paper 0715, 2007.
+Glaeser, Edward L., and Joseph Gyourko, “Urban Decline and Durable Housing,”
+Journal of Political Economy, 113 (2005), 345–375.
+Gorton, Gary, and George Pennacchi, “Banks and Loan Sales: Marketing Nonmarketable Assets,” Journal of Monetary Economics, 35 (1995), 389–411.
+Gorton, Gary B., and Nicholas S. Souleles, “Special Purpose Vehicles and Securitization,” in The Risks of Financial Institutions, Mark Carey and Rene M.
+Stultz, eds. (Chicago: University of Chicago Press, 2006).
+Gramlich, Edward, Subprime Mortgages: America’s Latest Boom and Bust (Washington, DC: The Urban Institute Press, 2007).
+Holloway, Thomas, Gregor MacDonald, and John Straka, “Credit Scores, EarlyPayment Mortgage Defaults, and Mortgage Loan Performance,” Freddie Mac
+Working Paper, 1993.
+Hölmstrom, Bengt, and Jean Tirole, “Financial Intermediation, Loanable Funds,
+and the Real Sector,” Quarterly Journal of Economics, 52 (1997), 663–692.
+Johnston, Jack, and John DiNardo, Econometric Methods (New York: McGrawHill, 1996).
+Kashyap, Anil K., and Jeremy C. Stein, “What Do a Million Observations on
+Banks Have To Say about the Monetary Transmission Mechanism?” American
+Economic Review, 90 (2000), 407–428.
+Keys, Benjamin J., Tanmoy Mukherjee, Amit Seru, and Vikrant Vig, “Financial
+Regulation and Securitization: Evidence from Subprime Mortgage Loans,”
+Journal of Monetary Economics, 56 (2009), 700–720.
+Kornfeld, Warren, “Testimony before the Subcommittee on Financial Institutions
+and Consumer Credit,” U.S. House of Representatives, May 8, 2007.
+Loesch, Michele, “A New Look at Subprime Mortgages,” Fitch Research, 1996.
+Loutskina, Elena, and Philip Strahan, “Securitization and the Declining Impact
+Of Bank Finance on Loan Supply: Evidence from Mortgage Acceptance Rates,”
+Boston College Working Paper, 2007.
+Lucas, Douglas, Laurie Goodman, and Frank Fabozzi, Collateralized Debt Obligations: Structures and Analysis (Hoboken, NJ: Wiley Finance, 2006).
+Lucas, Robert E., Jr., “Econometric Policy Evaluation: A Critique,” in The Phillips
+Curve and Labor Markets, Carnegie-Rochester Conferences on Public Policy,
+K. Brunner and A.H. Meltzer, eds. (Amsterdam: North-Holland, 1976).
+Mayer, Christopher, and Karen Pence, “Subprime Mortgages: What, Where, and
+to Whom?” Board of Governors of the Federal Reserve System, Finance and
+Economics Discussion Series 2008-29, 2008.
+Mayer, Christopher, Karen Pence, and Shane Sherlund, “The Rise in Mortgage
+Defaults,” Journal of Economic Perspectives, 23 (2009), 27–50.
+Mayer, Christopher, Tomasz Piskorski, and Alexei Tchistyi, “The Inefficiency of
+Refinancing: Why Prepayment Penalties Are Good for Risky Borrowers,”
+Columbia Business School Working Paper, 2008.
+Mian, Atif, and Amir Sufi, “The Consequences of Mortgage Credit Expansion: Evidence from the U.S. Mortgage Default Crisis,” Quarterly Journal of Economics,
+124 (2009), 1449–1496.
+Morrison, Alan D., “Credit Derivatives, Disintermediation and Investment Decisions,” Journal of Business, 78 (2005), 621–647.
+Parlour, Christine, and Guillaume Plantin, “Loan Sales and Relationship Banking,” Journal of Finance, 63 (2008), 1291–1314.
+Pennacchi, George, “Loan Sales and the Cost of Bank Capital,” Journal of Finance,
+43 (1988), 375–396.
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+DID SECURITIZATION LEAD TO LAX SCREENING?
+
+QUARTERLY JOURNAL OF ECONOMICS
+
+Petersen, Mitchell A., and Raghuram G. Rajan, “Does Distance Still Matter? The
+Information Revolution in Small Business Lending,” Journal of Finance, 57
+(2002), 2533–2570.
+Rajan, Uday, Amit Seru, and Vikrant Vig, “The Failure of Models That Predict Failure: Distance, Incentives and Defaults,” University of Chicago Booth School
+of Business Working Paper No. 08-19, 2008.
+Sheather, Simon, and Chris Jones, “A Reliable Data-Based Bandwidth Selection
+Method for Kernel Density Estimation,” Journal of the Royal Statistical Society, 53 (1991), 683–690.
+Stein, Jeremy, “Information Production and Capital Allocation: Decentralized versus Hierarchical Firms,” Journal of Finance, 57 (2002), 1891–1921
+Stiglitz, Joseph, “Houses of Cards,” The Guardian, October 9, 2007.
+Sufi, Amir, “Information Asymmetry and Financing Arrangements: Evidence from
+Syndicated Loans,” Journal of Finance, 62 (2006), 629–668.
+Temkin, Kenneth, Jennifer Johnson, and Diane Levy, “Subprime Markets, The
+Role of GSEs and Risk-Based Pricing,” Prepared for U.S. Department of Housing and Urban Development Office of Policy Development and Research, 2002.
+
+Downloaded from https://academic.oup.com/qje/article/125/1/307/1880343 by Northwestern University, The Feinberg School of Medicine user on 10 November 2025
+
+362
+
+CALL FOR NOMINATIONS
+
+$300,000 Nemmers Prize in Economics
+Northwestern University invites nominations for the Erwin Plein Nemmers Prize in Economics, to be
+awarded during the 2026–27 academic year. The prize pays the recipient $300,000. Recipients of the
+Nemmers Prize present lectures, participate in department seminars, and engage with Northwestern faculty
+and students in other scholarly activities.
+Details about the prize and the nomination process can be found at nemmers.northwestern.edu. Candidacy
+for the Nemmers Prize is open to those with careers of outstanding achievement in their disciplines as
+demonstrated by major contributions to new knowledge or the development of significant new modes of
+analysis.Individuals of all nationalities and institutional affiliations are eligible except current or recent
+members of the Northwestern University faculty and past recipients of the Nemmers or Nobel Prize.
+Nominations will be accepted until January 14, 2026.
+The Nemmers prizes are made possible by a generous gift to Northwestern University by the late Erwin Esser
+Nemmers and the late Frederic Esser Nemmers.
+
+Nemmers Prizes • Office of the Provost • Northwestern University • Evanston, Illinois 60208
+
+nemmers.northwestern.edu
+
+

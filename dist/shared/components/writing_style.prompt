@@ -1,0 +1,144 @@
+# Writing Style Standards
+
+Consolidated style rules for writing tasks. Apply these when producing written output (drafting text, polishing prose, creating tables with annotations).
+
+---
+
+## Word Choice
+
+### Anglo-Saxon Over Latin
+
+| Replace | With |
+|---------|------|
+| utilize | use |
+| commence | begin |
+| demonstrate | show |
+| facilitate | help |
+| implement | use (or specific verb) |
+| prior to | before |
+| in order to | to |
+| individuals | people |
+
+**Test:** Would you say this word aloud to a friend?
+
+### Concrete Over Abstract
+
+More concrete is better:
+- "Chicago" > "large cities" > "urban areas"
+- "workers" > "labor" > "factor inputs"
+- "7%" > "significant fraction"
+
+**Singular more vivid than plural:** "A worker" vs "workers"
+
+### Cut Vague Nouns
+
+- "concept" → be specific
+- "structure" → usually empty
+- "process" → just name the action
+- "factor" → "reason" or be specific
+
+### Cut Weak Modifiers
+
+**Adjectives:** "interesting", "various", "different", "certain", "particular"
+
+**About your work:** Never "striking results", "very significant", "highly important"
+
+**Adverbs:** "very", "clearly", "obviously", "essentially", "basically"
+
+### Redundant Phrases
+
+| Replace | With |
+|---------|------|
+| due to the fact that | because |
+| in the event that | if |
+| for the purpose of | to |
+| with regard to | about |
+| it is the case that | (delete) |
+
+---
+
+## AI Tell Avoidance
+
+### Sentence Openers to Avoid
+
+- "Additionally," / "Furthermore," / "Moreover," at sentence start
+- "Critically, however" / "Notably," / "Importantly,"
+- "This [noun] [verb]s" patterns ("This finding suggests...")
+- "It is worth noting that..." / "It bears mentioning..."
+
+### Structure Patterns to Avoid
+
+- Em-dash overuse (multiple per paragraph)
+- "One is... A second is... A third is..." enumeration
+- Artificial three-item lists (padding to rule-of-three)
+- "Not only... but also..." constructions
+- "Despite these challenges..." openers
+- "In conclusion / In summary / Overall" (formulaic endings)
+
+### Language Patterns to Avoid
+
+- "Our results suggest that" (when identification is credible, say "We find")
+- "Is consistent with" (weak—be direct)
+- Overuse of: "arguably," "potentially," "plausibly"
+- "utilize" → always use "use"
+- Nominalizations: "make a calculation" → "calculate"
+
+### AI Vocabulary (flag when overused)
+
+align, crucial, delve, elaborate, emphasize, enhance, enduring, foster, garner, highlight, intricate, interplay, pivotal, showcase, tapestry, underscore, leverage, robust, nuanced, multifaceted, comprehensive, facilitate
+
+---
+
+## Sentence Structure
+
+### Vary Length
+
+- Mix short punchy sentences with longer flowing ones
+- Avoid 4+ consecutive sentences of 15-25 words
+- Break monotonous rhythm with a short sentence
+
+### Active Voice
+
+**Use:** "We find" / "We show" / "The data reveal"
+
+**Avoid:** "It is found that" / "It can be shown that" / "Results are presented"
+
+### Subject-Verb-Object
+
+Clear structure preferred. Take responsibility for claims.
+
+---
+
+## Economics Conventions
+
+### Always Quantify
+
+- "650,000 advisers" not "many advisers"
+- "$30 trillion" not "substantial assets"
+- "7% have misconduct" not "significant fraction"
+
+### Technical Terms OK When Needed
+
+- "Agents" when used technically in models (OK)
+- "Agents" when "people" is clearer (flag)
+- Standard abbreviations fine: OLS, IV, FE, DID, RD
+
+### Confidence When Warranted
+
+If identification is credible: "We find" not "Our results suggest"
+
+If estimate is precise: State the number, not "approximately"
+
+---
+
+## Pre-Commit Checklist
+
+Before committing written output:
+
+- [ ] No sentence-initial "Additionally/Furthermore/Moreover"
+- [ ] Active voice used ("We find" not "It is found")
+- [ ] Concrete numbers (not "significant" or "substantial")
+- [ ] Varied sentence lengths
+- [ ] No vague nouns (concept, structure, process)
+- [ ] No weak modifiers (very, clearly, obviously)
+- [ ] No AI vocabulary overuse

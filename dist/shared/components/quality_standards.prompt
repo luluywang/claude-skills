@@ -1,0 +1,158 @@
+# Quality Standards for Analysis
+
+## Analysis Depth Requirements
+
+Each suggestion must include ALL of the following elements:
+
+### 1. Context Quotation
+- **Minimum:** 3-8 lines of context from the original text
+- **Purpose:** Show the pattern, not just isolated sentences
+- **Format:** Use code blocks for clear quotations
+- Include enough surrounding text to see the full pattern
+
+### 2. Issue Identification
+- **Primary issue:** The main problem (most important)
+- **Secondary issues:** Additional problems that compound the main issue
+- **Category:** Clearly label the type of problem (e.g., "AI-tell: Formulaic language", "General: Wordiness")
+- **Mechanism:** Explain EXACTLY WHY this is problematic
+
+### 3. Complete Revision
+- **Requirement:** Address ALL issues identified (both primary and secondary)
+- **Not acceptable:** Partial fixes that leave some problems unresolved
+- **Show the work:** Provide the complete revised version
+- **Format:** Use code blocks for clarity
+
+### 4. Explanation of Improvement
+- **What was changed:** Specific transformations made
+- **Why it's better:** How the revision improves the writing
+- **Impact:** Effect on flow, clarity, naturalness, or expert tone
+- **Reader experience:** How it changes what the reader experiences
+
+---
+
+## Coverage Requirements
+
+### Comprehensive Analysis
+- **No sections skipped:** Analyze EVERY section of EVERY file
+- **Even "good" sections:** Look harder for subtle patterns
+- **Depth over breadth:** Better to have fewer deep suggestions than many shallow ones
+- **Systematic coverage:** Ensure all major files get attention
+
+### Target Item Distribution
+
+**For AI Punctuation & Structural Tells (ai_screen.md):**
+- Total target: 40-50 items across all files
+- Per major file: 5-8 detailed suggestions
+- Focus: Punctuation patterns, sentence rhythm, structural tells
+
+**For Comprehensive Writing Improvements (simplifications.md):**
+- Total target: 80-100 items across all files
+- Per major file: 10-15 detailed suggestions
+- Focus: AI language tells + general simplifications
+
+**Priority:** Quality over exact counts. Better to have 40 excellent suggestions than 50 mediocre ones.
+
+---
+
+## Output Organization
+
+### File Ordering
+**CRITICAL:** All output markdown files MUST organize findings in PAPER READING ORDER, not alphabetical order:
+
+1. introduction.tex
+2. institutional_setting.tex
+3. payment_costs.tex
+4. real_effects.tex
+5. redistribution.tex
+6. conclusion.tex
+7. appendix_theory.tex
+8. appendix_structural.tex
+9. appendix_data.tex (if applicable)
+
+**Rationale:** Reviewers read findings in the same sequence as the paper flows, making it easier to implement corrections while reading through the manuscript.
+
+**DO NOT** use alphabetical filename order.
+
+---
+
+## Standard Markdown Format
+
+### Quick Checklist Section
+```markdown
+## Quick Checklist
+
+Use this to track which suggestions you've reviewed:
+
+### introduction.tex
+- [ ] Lines X-Y: [Brief description of issue type]
+- [ ] Lines X-Y: [Brief description]
+[Repeat for all items]
+
+### institutional_setting.tex
+- [ ] Lines X-Y: [Brief description]
+[Continue for all files in reading order]
+```
+
+### Detailed Suggestions Section
+```markdown
+## Detailed Suggestions by File
+
+## introduction.tex
+
+### Lines X-Y (Section name/topic)
+**Original:**
+```
+[Quote 3-8 lines of context showing the pattern]
+```
+
+**Issue:** [Primary issue] + [Secondary issues]. Category: [Type]. Specific mechanism: [explain WHY this is problematic].
+
+**Suggested revision:**
+```
+[Complete revision addressing ALL issues identified]
+```
+
+**Why this sounds better:** [Detailed explanation of improvements - what was removed, what was added, how flow improved, why this sounds like a confident expert wrote it]
+
+---
+
+[Repeat for all suggestions]
+```
+
+### Summary Section
+```markdown
+## General Summary Across All Files
+
+### Most Prevalent Patterns:
+
+**[Category 1]:**
+- [Pattern with examples from text]
+- [Pattern with examples]
+
+**[Category 2]:**
+- [Pattern with examples]
+
+### Positive Notes:
+- [What's working well]
+- [Strong aspects of the writing]
+
+### Overall Assessment:
+The writing would benefit most from: [prioritized list of improvements]
+```
+
+---
+
+## Quality Checklist
+
+Before finalizing output, verify:
+
+- [ ] Every suggestion includes 3-8 lines of context
+- [ ] Every suggestion identifies both primary and secondary issues
+- [ ] Every suggestion explains WHY the issue is problematic
+- [ ] Every revision addresses ALL identified issues
+- [ ] Every suggestion explains HOW the revision improves the writing
+- [ ] Files are organized in reading order (not alphabetical)
+- [ ] Target item counts are approximately met
+- [ ] Quick checklist matches detailed suggestions
+- [ ] Summary section synthesizes patterns across files
+- [ ] Positive notes are included (not just criticism)

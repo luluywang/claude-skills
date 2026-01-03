@@ -1,0 +1,46 @@
+Costs of Portfolio Lending
+The cost of portfolio lending depends on the composition of the lender’s balance sheet and the amount
+of equity capital 𝑒𝑒𝑗𝑗𝑗𝑗 . A lender sources financing at the firm level and has one balance sheet comprising
+mortgage assets across markets. There are two types of assets held on a lender’s balance sheet:
+mortgages—the amount of which is chosen by the lender in each market—and other assets in the
+            𝑏𝑏
+amount 𝑚𝑚𝑗𝑗𝑗𝑗𝑗𝑗 . The choice of the latter is determined outside the model and represent other assets that
+the bank chooses to hold on the balance sheet such as government bonds or commercial loans which
+it did not securitize. Lenders also differ in the amount of equity capital 𝑒𝑒𝑗𝑗𝑗𝑗 . The amount of equity and
+the asset composition of the balance sheet jointly determine the cost of portfolio lending for an
+intermediary. While these quantities are fixed in the baseline model, in Section V.E we allow for
+costly equity issuance as well as liquidating of non-mortgage assets.
+A lender’s risk-adjusted capital ratio 𝜌𝜌𝑗𝑗𝑗𝑗 depends on the banks equity capital 𝑒𝑒𝑗𝑗𝑗𝑗 and banks’ risk-
+                       𝑏𝑏                       𝑏𝑏
+weighted assets 𝜉𝜉𝑜𝑜 𝑚𝑚𝑗𝑗𝑗𝑗𝑗𝑗 + ∑𝑐𝑐𝑐𝑐𝑐𝑐 𝜉𝜉𝑔𝑔 𝑚𝑚𝑗𝑗𝑗𝑗𝑗𝑗𝑗𝑗 :
+                                                                          𝑒𝑒𝑗𝑗𝑗𝑗
+                                               𝜌𝜌𝑗𝑗𝑗𝑗 =          𝑏𝑏                       𝑏𝑏            (S.2)
+                                                          𝜉𝜉𝑜𝑜 𝑚𝑚𝑗𝑗𝑗𝑗𝑗𝑗 + ∑𝑐𝑐𝑐𝑐𝑐𝑐 𝜉𝜉𝑔𝑔 𝑚𝑚𝑗𝑗𝑗𝑗𝑗𝑗𝑗𝑗
+
+Where 𝜉𝜉𝑔𝑔 represents the risk weight of mortgages of type g and 𝜉𝜉𝑜𝑜 represents the risk weight of other
+assets the bank holds. Since jumbo mortgages have higher risk weights, they use up more statutory
+capital per dollar of actual lending. A bank’s capital needs to be below its statutory capital requirement
+𝜌𝜌̅ if it wants to lend on its balance sheet.
+The per-dollar cost of financing a portfolio loan of lender j depends on its capitalization:
+                                                  𝑝𝑝                                        −𝜙𝜙         (S.3)
+                                                𝜎𝜎𝑗𝑗𝑗𝑗 = 𝜎𝜎𝑡𝑡𝑏𝑏 + 𝜎𝜎 𝑏𝑏1 �𝜌𝜌𝑗𝑗𝑗𝑗 − 𝜌𝜌̅ �
+
+As before, 𝜎𝜎𝑡𝑡𝑏𝑏 represents the underlying financing costs of funding in the macroeconomy.
+                         −𝜙𝜙
+𝜎𝜎 𝑏𝑏1 �𝜌𝜌𝑗𝑗𝑗𝑗 − 𝜌𝜌̅ �         is the shadow cost of balance-sheet funding above this base rate. The closer a bank’s
+risk-adjusted capital ratio is to the statutory requirement, i.e., the smaller �𝜌𝜌𝑗𝑗𝑗𝑗 − 𝜌𝜌̅ �, the larger the
+cost of portfolio loan financing. 𝜙𝜙 and 𝜎𝜎 𝑏𝑏1 parameterize the extent of this cost. This formulation
+captures the fact that banks choose a capital buffer above the hard capital requirement. The micro-
+foundations of such a buffer can be generated in a dynamic setting but are not the central interest in
+this paper (see Corbae and D'Erasmo (2019)). We assume that balance sheet lending by shadow banks
+is prohibitively expensive. This assumption captures in reduced form the notion that shadow banks
+do not have access to a subsidized deposit funding and must use external financing instead.
+Regulatory Burden
+Banks face regulatory pressures beyond capital requirements. These regulatory pressures constrain
+banks’ lending activity even if banks are well capitalized. Rather than changing costs of lending,
+which we model directly, regulatory burdens may also reduce traditional banks’ activity on the
+extensive margin. For example, risk constraints and fear of enforcement or lawsuits may sometimes
+
+
+                                                                         19
+

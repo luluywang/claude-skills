@@ -1,0 +1,333 @@
+# Section Evaluation Subagent Prompts
+
+**Purpose:** Templates for section-specific subagents when evaluating long papers (>15,000 words).
+
+---
+
+## Subagent Guidelines
+
+**Each subagent:**
+- Focuses on ONE section only
+- Produces a structured 300-500 word assessment
+- Identifies section-specific concerns
+- Flags issues that require cross-referencing other sections
+- Does NOT make overall paper recommendations
+
+**Subagent model:** Use `haiku` for speed; these are focused, bounded tasks.
+
+---
+
+## Section Subagent Templates
+
+### 1. Introduction & Literature Review Subagent
+
+```markdown
+# Task: Evaluate Introduction and Literature Review
+
+## Context
+Paper type: [TYPE]
+Paper topic: [BRIEF DESCRIPTION]
+Word count: [X] words (long paper)
+
+## Your Focus
+Evaluate ONLY the Introduction and Literature Review sections.
+
+## Questions to Answer
+
+1. **Contribution Clarity**
+   - What is the paper's claimed contribution? (one sentence)
+   - Is it clearly stated in the first 2 paragraphs?
+   - Would a general economist understand why this matters?
+
+2. **Literature Positioning**
+   - Does the paper demonstrate command of relevant literature?
+   - Are there obvious missing citations?
+   - Is the claimed novelty accurate, or does prior work exist?
+
+3. **Setup Quality**
+   - Does intro preview the approach and findings?
+   - Is the research question well-motivated?
+   - Does lit review engage substantively or just cite?
+
+## Output Format
+
+### Contribution Assessment
+[2-3 sentences on clarity and significance of claimed contribution]
+
+### Literature Gaps
+- [Gap 1]: [Why it matters]
+- [Gap 2]: [Why it matters]
+
+### Concerns for Synthesis
+- [Issue that other sections should address]
+
+### Section Grade: [Strong / Adequate / Weak]
+```
+
+---
+
+### 2. Model/Theory Section Subagent
+
+```markdown
+# Task: Evaluate Model/Theory Section
+
+## Context
+Paper type: [TYPE]
+Paper topic: [BRIEF DESCRIPTION]
+Claimed contribution: [FROM INTRO SUBAGENT OR FIRST PASS]
+
+## Your Focus
+Evaluate ONLY the theoretical framework / model section.
+
+## Questions to Answer
+
+1. **Assumption Clarity**
+   - Are key assumptions explicitly stated?
+   - Are assumptions economically motivated or convenient?
+   - Any knife-edge assumptions driving results?
+
+2. **Mechanism Clarity**
+   - Is the causal mechanism clearly articulated?
+   - Could alternative mechanisms generate same predictions?
+   - Are theoretical predictions testable?
+
+3. **Technical Rigor**
+   - Are proofs complete (or properly referenced)?
+   - Are results generalizable or setting-specific?
+   - Does model add insight or just formalize the obvious?
+
+## Output Format
+
+### Theoretical Framework Assessment
+[2-3 sentences on model quality and contribution]
+
+### Key Assumptions
+| Assumption | Justification Provided | Concern Level |
+|------------|----------------------|---------------|
+| [A1] | [Yes/No/Partial] | [Low/Medium/High] |
+
+### Concerns for Synthesis
+- [Issue that empirical sections should address]
+
+### Section Grade: [Strong / Adequate / Weak]
+```
+
+---
+
+### 3. Data & Identification Subagent
+
+```markdown
+# Task: Evaluate Data and Identification Strategy
+
+## Context
+Paper type: [TYPE]
+Paper topic: [BRIEF DESCRIPTION]
+Research design: [DID / IV / RD / Panel FE / Structural / Other]
+
+## Your Focus
+Evaluate ONLY the data description and identification strategy sections.
+
+## Questions to Answer
+
+1. **Data Quality**
+   - Are data sources clearly documented?
+   - Is sample construction transparent?
+   - Are key variables well-defined?
+   - Any concerns about measurement?
+
+2. **Identification Credibility**
+   - What is the identification strategy?
+   - Are identifying assumptions explicitly stated?
+   - What are the main threats to validity?
+   - Is the design appropriate for the question?
+
+3. **Critical Validation (Design-Specific)**
+
+   | Design | Must Have | Present? |
+   |--------|-----------|----------|
+   | DID | Pre-trends / event study | [Yes/No/Partial] |
+   | IV | First stage evidence | [Yes/No/Partial] |
+   | RD | RD plots | [Yes/No/Partial] |
+   | Panel FE | Leads/lags | [Yes/No/Partial] |
+   | Structural | Parameter sensitivity | [Yes/No/Partial] |
+
+## Output Format
+
+### Data Assessment
+[2-3 sentences on data quality and transparency]
+
+### Identification Assessment
+[2-3 sentences on credibility of identification strategy]
+
+### Validity Threats
+1. [Threat 1]: [Severity: High/Medium/Low]
+2. [Threat 2]: [Severity: High/Medium/Low]
+
+### Missing Validation
+- [What should be shown but isn't]
+
+### Concerns for Synthesis
+- [Issue that results section should address]
+
+### Section Grade: [Strong / Adequate / Weak]
+```
+
+---
+
+### 4. Results Section Subagent
+
+```markdown
+# Task: Evaluate Results Section
+
+## Context
+Paper type: [TYPE]
+Paper topic: [BRIEF DESCRIPTION]
+Identification concerns from Methods subagent: [LIST IF AVAILABLE]
+
+## Your Focus
+Evaluate ONLY the results and robustness sections (in main text).
+
+## Questions to Answer
+
+1. **Main Results**
+   - Are main findings clearly presented?
+   - Do results support the paper's claims?
+   - Are magnitudes economically meaningful?
+   - Any concerns about statistical significance patterns?
+
+2. **Robustness (In Main Text)**
+   - What robustness checks are shown?
+   - Do they address main identification threats?
+   - Are results stable across specifications?
+   - What's missing that should be in main text?
+
+3. **Interpretation**
+   - Is interpretation consistent with what results show?
+   - Any overclaiming?
+   - Alternative explanations considered?
+
+## Output Format
+
+### Main Results Assessment
+[2-3 sentences on quality and interpretation of main findings]
+
+### Robustness Assessment
+| Check | Present | Addresses Which Threat |
+|-------|---------|----------------------|
+| [Check 1] | [Yes/No] | [Threat] |
+| [Check 2] | [Yes/No] | [Threat] |
+
+### Missing Robustness (Should Be in Main Text)
+- [Missing check 1]
+- [Missing check 2]
+
+### Interpretation Concerns
+- [Any overclaiming or alternative explanations not addressed]
+
+### Concerns for Synthesis
+- [Issues that need appendix consultation or flag for senior/junior]
+
+### Section Grade: [Strong / Adequate / Weak]
+```
+
+---
+
+### 5. Appendix Subagent (Second Pass, If Needed)
+
+```markdown
+# Task: Evaluate Specific Appendix Materials
+
+## Context
+Paper type: [TYPE]
+Flagged items from first pass:
+- [Item 1]: [Why needed]
+- [Item 2]: [Why needed]
+
+## Your Focus
+Evaluate ONLY the flagged appendix materials. Do NOT read entire appendix.
+
+## Questions to Answer
+
+For each flagged item:
+1. Does it exist in the appendix?
+2. Does it adequately address the concern?
+3. Should this have been in the main text?
+
+## Output Format
+
+### Flagged Item Assessment
+
+**[Item 1: e.g., "Pre-trends Figure A.1"]**
+- Found: [Yes/No]
+- Adequately addresses concern: [Yes/No/Partial]
+- Verdict: [Supports paper / Raises concerns / Inconclusive]
+- Note: [Brief explanation]
+
+**[Item 2]**
+- [Same format]
+
+### Appendix Summary
+[Overall assessment of whether appendix materials resolve first-pass concerns]
+
+### Remaining Concerns
+- [Issues not resolved by appendix materials]
+```
+
+---
+
+## Synthesis Instructions
+
+After all section subagents complete, synthesize as follows:
+
+```markdown
+# Section Evaluation Synthesis
+
+## Section Grades Summary
+| Section | Grade | Key Issue |
+|---------|-------|-----------|
+| Intro/Lit | [Grade] | [One-line summary] |
+| Model/Theory | [Grade] | [One-line summary] |
+| Data/ID | [Grade] | [One-line summary] |
+| Results | [Grade] | [One-line summary] |
+| Appendix | [Grade] | [One-line summary] |
+
+## Cross-Section Issues
+- [Issue spanning multiple sections]
+- [Contradiction between sections]
+
+## Priority Concerns for Referee Evaluation
+1. [Most serious issue from section evaluations]
+2. [Second most serious]
+3. [Third most serious]
+
+## Ready for Senior/Junior Evaluation
+- Senior referee focus: [Key contribution/novelty issues from section evals]
+- Junior referee focus: [Key methods/robustness issues from section evals]
+```
+
+---
+
+## Dispatch Example
+
+For a long paper (18,000 words):
+
+```python
+# Pseudo-code for orchestration
+sections = identify_sections(paper)
+subagent_results = {}
+
+# Parallel dispatch
+for section in ['intro_lit', 'model', 'data_id', 'results']:
+    subagent_results[section] = dispatch_subagent(
+        template=SECTION_TEMPLATES[section],
+        content=sections[section],
+        model='haiku'  # Fast, focused evaluation
+    )
+
+# Wait for all to complete
+synthesis = synthesize_section_evaluations(subagent_results)
+
+# Now run senior/junior with synthesized context
+senior_report = run_senior_referee(paper, synthesis)
+junior_report = run_junior_referee(paper, synthesis)
+```

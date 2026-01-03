@@ -1,0 +1,107 @@
+# Citation Verification
+
+**Purpose:** Verify all citations in referee reports for accuracy before submission.
+
+**When to run:** After generating all three output files:
+- `{short_title}_claude_senior_report.tex`
+- `{short_title}_claude_junior_report.tex`
+- `{short_title}_claude_editor_letter.tex`
+
+---
+
+## Step 1: Extract Citations
+
+Run the extraction script on the output files:
+
+```bash
+# Extract citations from referee report
+../../parsepdf/prompts/scripts/extract_citations.sh -o citations.json notes/
+
+# Or in dist:
+# ../parsepdf/scripts/extract_citations.sh -o citations.json notes/
+```
+
+This extracts all citation patterns:
+- Parenthetical: `(Smith 2020)`, `(Smith and Jones 2019)`, `(Smith et al. 2018)`
+- Narrative: `Smith (2020) shows...`
+- LaTeX: `\cite{...}`, `\citep{...}`, `\citet{...}`
+
+Output: `citations.json` with structured citation data.
+
+---
+
+## Step 2: Verify via Gemini CLI
+
+Run the verification script (uses Gemini CLI internally):
+
+```bash
+# Verify all extracted citations
+./scripts/verify_citations.sh citations.json
+
+# Or with custom output location:
+./scripts/verify_citations.sh -o notes/citation_verification.md citations.json
+```
+
+The script calls Gemini for each citation:
+```bash
+gemini -p "Search for economics paper by [AUTHOR] published in [YEAR]. Return: VERIFIED if found with exact match, PARTIAL_MATCH if similar but different year/spelling, NOT_FOUND if no match. Include full citation if found."
+```
+
+**Classification:**
+
+| Status | Criteria | Action |
+|--------|----------|--------|
+| **✓ VERIFIED** | Paper found with matching authors + year | Record full citation + DOI/URL |
+| **? PARTIAL_MATCH** | Minor inconsistency (e.g., WP vs published year, name variant) | Note discrepancy + likely correct citation |
+| **✗ NOT_FOUND** | No matching paper after multiple searches | Note search queries + closest matches |
+
+---
+
+## Step 3: Generate Report
+
+Create `notes/citation_verification.md`:
+
+```markdown
+# Citation Verification Report
+
+**Documents checked:** senior_report.tex, junior_report.tex, editor_letter.tex
+
+## Summary
+| Status | Count |
+|--------|-------|
+| ✓ Verified | [N] |
+| ? Partial Match | [N] |
+| ✗ Not Found | [N] |
+
+## Verified Citations
+[List with full citation details]
+
+## Partial Matches Requiring Review
+[List with discrepancy explanation + recommendation]
+
+## Citations Not Found
+[List with search queries attempted + closest matches + likely issue]
+```
+
+---
+
+## Common Issues
+
+| Issue | Classification | Action |
+|-------|---------------|--------|
+| Working paper → published (different year) | PARTIAL_MATCH | Recommend updating to published version |
+| Same authors, multiple papers same year | PARTIAL_MATCH | List all, ask for disambiguation |
+| Name transliteration variants | VERIFIED | Note standard form |
+| Classic paper with fuzzy publication date | VERIFIED | Use canonical citation |
+
+---
+
+## Quality Gate
+
+**Do not deliver final referee report until:**
+- [ ] All citations searched
+- [ ] NOT_FOUND citations removed or replaced
+- [ ] PARTIAL_MATCH citations reviewed and corrected
+- [ ] verification report generated
+
+**Conservative stance:** When uncertain between VERIFIED and PARTIAL_MATCH → choose PARTIAL_MATCH.

@@ -1,0 +1,44 @@
+vice versa. Before the crisis, the aggregate data showed virtually no aggregate jumbo spread. As the
+quantity of jumbo mortgages contracted towards 2009, their relative price increased by almost 40
+basis points, and as much as 70 basis points in early 2009. As the market share of jumbo mortgages
+recovered, the jumbo spread decreased by up to 60 basis points. The positive correlation between
+aggregate price and quantity suggests that supply shocks may be partially responsible for driving the
+aggregate trends. If the contraction in jumbo quantity was solely driven by demand for jumbos (e.g.,
+due to a decline in house prices), we should also observe a decrease in the pricing of jumbo mortgages.
+We next show that changes in the capitalization of the banking sector are a candidate source of these
+supply shocks. Figure 1D illustrates that the banking sector capitalization originally declined,
+bottoming out in 2009, and then began increasing. Figure 2A and 2B show that the series are in fact
+related: there is a strong positive association between bank capitalization and quantity of jumbo
+originations. Overall, these patterns suggest that as traditional bank capitalization declines, the
+amount of on-balance sheet (jumbo) lending declines and their relative pricing increases. In other
+words, these aggregate facts are consistent with the idea that a decline in the balance sheet capacity
+of the banking sector serves as a supply shock to on-balance-sheet lending, at least relative to lending,
+which can be securitized.
+III.A.2 Shadow Bank Migration and Banks’ Business Model Adjustment
+The jumbo and conforming market segments experienced large changes in their market structure,
+which can be captured in two trends. The first trend is related to the migration of residential mortgage
+origination activity to shadow banks. Prior work shows that during this period, 25 pp of market share
+migrated to shadow banks (Buchak et al. 2018). Central to this paper, we show that the migration of
+shadow banks did not take place in balance-sheet intensive jumbo lending. Bank market share in the
+jumbo market has remained roughly constant, varying between 85% and 95%. This contrasts with the
+conforming market, in which bank market share declined by over one third, from slightly under 80%
+in 2007 to about 50% in 2016 (Figure 3A). In other words, the contraction and later expansion in the
+amount of jumbo lending is mainly driven by changes in originations by traditional banks. The
+changes in the conforming market, on the other hand, are driven by changes in both shadow and
+traditional bank originations.
+We next document that traditional banks adjusted their business models during this period. One
+possible way to interpret the facts above is that traditional banks uniformly contracted their lending
+across markets, but shadow banks chose to only expand in the conforming market. This was not the
+case. Figure 3B shows that as banks’ capitalization decreased from 2007 to 2009, the share of jumbo
+mortgages in their lending declined from 30% to 10%. As bank capitalization increased, they shifted
+their originations back to on-balance-sheet lending with jumbo mortgages comprising more than 40%
+of their originations by 2016. In other words, banks appear to adjust to capitalization and other
+regulatory shocks by switching between the classic banking model (originating and retaining loans)
+and the originate-to-distribute model (shadow bank model). We call this margin on which banks can
+adjust the “balance sheet retention margin.”
+
+
+
+
+                                                   9
+

@@ -1,0 +1,44 @@
+The origination amount weighted mean of 𝐿𝐿𝐿𝐿𝐿𝐿𝐿𝐿𝐿𝐿𝐿𝐿𝐿𝐿𝐿𝐿𝐿𝐿𝐿𝐿𝐿𝐿𝐿𝐿𝑒𝑒𝑐𝑐𝑐𝑐 is 10.2% and the median is 0. The
+specifications to test the impact of these limit increases on jumbo and bank share are as follows:
+                     %𝐽𝐽𝐽𝐽𝐽𝐽𝐽𝐽𝑜𝑜𝑐𝑐𝑐𝑐 = 𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝑒𝑒𝑐𝑐𝑐𝑐 + 𝛾𝛾𝑐𝑐 + 𝛾𝛾𝑡𝑡 + 𝜖𝜖𝑐𝑐𝑐𝑐                         (3)
+                     %𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝑓𝑓𝑐𝑐𝑐𝑐 = 𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝑒𝑒𝑐𝑐𝑐𝑐 + 𝛾𝛾𝑐𝑐 + 𝛾𝛾𝑡𝑡 + 𝜖𝜖𝑐𝑐𝑐𝑐                   (4)
+                     %𝐵𝐵𝐵𝐵𝐵𝐵𝑘𝑘𝑐𝑐𝑐𝑐 = 𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝑒𝑒𝑐𝑐𝑐𝑐 + 𝛾𝛾𝑐𝑐 + 𝛾𝛾𝑡𝑡 + 𝜖𝜖𝑐𝑐𝑐𝑐                           (5)
+Where 𝛾𝛾𝑐𝑐 and 𝛾𝛾𝑡𝑡 are county and year fixed effects, respectively.
+Specification (3) investigates whether jumbo share of originations declines along with conforming
+loan limit increases. Column 1 of Table 6 shows that increasing the conforming loan limit by 1%
+leads to an approximately 0.35% reduction in the jumbo share in the county. These estimates from
+actual data compare well with model counterfactual estimates where we simulate a similar change in
+conforming limits and assess the response. Table 11 finds a similar reduction of 0.31%. As the
+conforming loan limit increases, there is a significant shift towards conforming loans.
+Specification (4) tests the extent of declines in bunching, which is measured as the number of
+conforming originations within 0.1% of the conforming loan limit. Column 2 of Table 6 shows that
+when the conforming loan limit increases the mass of borrowers exactly at the conforming loan cutoff
+decreases, suggesting that many of these borrowers would have selected larger loans had the
+conforming loan limits not been in place, and now that the limit has been relaxed, they are able to
+select larger, now conforming loans. As Figure 8B shows, the model closely captures the market
+shares of borrowers within a 5% band both above and below the conforming loan limit.
+Specification (5) tests whether bank market share declines. Column 3 of Table 6 shows that a 1%
+increase in the conforming loan limit decreases bank market share by roughly 0.03% percentage
+points. Again, this estimate from actual data is consistent with that produced by our model (see
+counterfactual in Table 11), which finds that a 1% increase in the jumbo loan limit leads to roughly a
+0.08% decrease in bank market share around the limit. 13
+Price Sensitivity
+Our estimates of mean price sensitivity in Table 5 suggest that borrowers are quite price elastic, and
+the differences in price elasticity are small. The mean parameter 𝛼𝛼� = 1.14 from Table 5A implies a
+price elasticity of roughly 4.4. This estimate is close to DeFusco and Paciorek (2017), who estimate
+the elasticity from the conforming loan discontinuity using a different approach. The estimate of 𝜎𝜎𝛼𝛼2 =
+0.07 in Table 5C suggests moderate borrower differences in price elasticity, ranging from 4 to 5.12
+for borrowers two standard deviations above and below the mean in price sensitivity. Second, for a
+
+13
+   We also measure the change in bank market share as more jumbo loans are originated by using the following
+specification: 𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵ℎ𝑎𝑎𝑎𝑎𝑒𝑒𝑐𝑐𝑐𝑐 = 𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽𝛽ℎ𝑎𝑎𝑎𝑎𝑒𝑒𝑐𝑐𝑐𝑐 + 𝛾𝛾𝑐𝑐 + 𝛾𝛾𝑡𝑡 + 𝜖𝜖𝑐𝑐𝑐𝑐 . The results in Table 6, Column 4 find a positive and
+significant association between bank share and jumbo share. This coefficient, here estimated as roughly 0.25, is roughly
+in line with the relationship suggested in the model from Tables 9, 10, and 11, which finds that bank share increases by
+roughly 0.50 percentage points per percent increase in jumbo market share. Note that variation in jumbo share from the
+regression above obtains from all sources, such as variation in demand, supply, and policy, whereas the cross-validating
+variation in the model comes entirely from policy variation where one would expect a stronger relationship between
+jumbo share and bank share.
+
+                                                                      24
+

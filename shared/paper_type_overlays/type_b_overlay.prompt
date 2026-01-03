@@ -1,0 +1,278 @@
+# Type B Paper Overlay: Specialized Topic Needing Context
+
+**Paper Type:** Type B - Specialized topic where readers need institutional context
+
+**Examples:** Securitization papers, advertising pricing, media bias, specific financial instruments
+
+---
+
+## Key Characteristics
+
+- Institutional details most readers don't know
+- Need to explain context before question makes sense
+- Market structure, regulations, or industry practices matter
+- Risk of losing readers in institutional weeds
+
+---
+
+## Task Modifications for Type B Papers
+
+### AI Detection Task
+
+**Additional patterns to flag:**
+
+**Jargon without definition:**
+- MBS, CDO, CLO without explanation
+- Industry acronyms assumed known
+- Technical terms unexplained
+
+**Institution-dump paragraphs:**
+- Front-loading all details before research question
+- Multiple institutional features in single paragraph
+- Details not connected to economic mechanism
+
+**Over-technical explanations:**
+- Assuming reader has industry expertise
+- Legal/regulatory details without economic translation
+- Institutional mechanics without "why it matters"
+
+---
+
+### Structure Task
+
+**Type B priorities:**
+
+**Introduction structure:**
+- Lead with economic question (not institutional detail)
+- Weave in institutional context as needed
+- Don't dump all institutions upfront
+
+**Ideal flow:**
+1. Economic question
+2. Brief institutional context (what reader needs to understand question)
+3. Your approach
+4. Key finding
+5. More institutional detail as needed in body
+
+**Check for problems:**
+- All institutions explained before research question stated
+- Assuming reader knows specialized market
+- Missing concrete examples/scale ("$3.6 trillion")
+- Institutional details that don't serve argument
+
+**Section ordering:**
+- Institutional setting section: keep focused, connect to mechanism
+- Don't let institutions overwhelm empirics
+- Visual aids (figures showing market structure) very helpful
+
+---
+
+### Methodology Task
+
+**Type B-specific focus:**
+
+**Institutional explanation:**
+- Concrete language: "loans are bundled and sold to investors" not "asset-backed securitization"
+- One detail at a time (layer in gradually)
+- Connect each detail to economic behavior
+- Specific examples with scale
+
+**Check for:**
+- Is institution explained before assumed known?
+- Plain language before jargon?
+- Connection to economic mechanism clear?
+- Concrete examples provided?
+
+**Balance:**
+- Enough context that question makes sense
+- Not so much that readers drown
+- Each detail should serve the argument
+
+---
+
+### Senior Referee Task (Type B)
+
+**Contribution evaluation priorities for Type B:**
+
+**Central challenge: Does this transcend the specific institutional setting?**
+- Type B papers must extract general economic insights from specialized contexts
+- Scrutinize: Is contribution "we study market X" or "we learn Y about general phenomenon using market X"?
+- Ask: Would I care about this if I don't care about the specific industry/policy/institution?
+
+**Accessibility to general economists is critical:**
+- Can associate editor (general economist) understand contribution without industry expertise?
+- Assess introduction: Can you grasp the economic question before getting lost in institutions?
+- Common problem: Contribution requires too much institutional knowledge to appreciate
+
+**Literature positioning across fields:**
+- Type B papers often connect specialized and general literatures
+- Verify: Do authors position relative to BOTH specialized literature AND broader economic questions?
+- Example: Securitization paper should connect to finance literature AND information/screening literature
+
+**Specific evaluation questions:**
+- Can I state the economic question without mentioning the specific institution?
+- Does the institutional setting provide advantages for answering a general question (unique data, clean experiment, transparent mechanism)?
+- Is the finding specific to this setting, or generalizable?
+- Would this appear in an economics principles textbook, or just an industry manual?
+
+**Desk rejection risks for Type B:**
+- Contribution is purely descriptive of specialized setting
+- Economic insights are obvious once institutions explained
+- Paper reads like industry case study, not economics research
+- Too specialized - only industry experts would care
+- Authors assume reader familiarity with institutions
+
+**What strengthens Type B contribution:**
+- Clear statement of general economic question upfront
+- Institutional setting enables answering question not possible elsewhere
+- Findings have implications beyond the specific context
+- Mechanisms are general, even if setting is specialized
+- Paper teaches general economists something, not just specialists
+
+**Presentation assessment for Type B:**
+- Is economic question stated before institutional detail?
+- Can non-specialist understand why this setting matters?
+- Are findings framed in general terms, not just setting-specific?
+
+---
+
+### Junior Referee Task (Type B)
+
+**Methods evaluation priorities for Type B:**
+
+**Institutional features often serve identification:**
+- Type B papers frequently exploit institutional rules, regulations, or market structures
+- Scrutinize: Are institutional features accurately described? Can they be verified?
+- Watch for: Authors using specialized knowledge to handwave identification concerns
+
+**Specific identification considerations:**
+
+**Policy/regulation-based identification:**
+- Thresholds and discontinuities: Are cutoffs truly discontinuous? Manipulation concerns?
+- Regulatory changes: Anticipated or surprise? Endogenous policy risk?
+- Compliance vs. intent-to-treat: Which is estimated? Does it matter?
+
+**Market structure-based identification:**
+- Market rules: Are they enforced? Do participants comply?
+- Institutional frictions: Real or assumed for modeling convenience?
+- Selection into market: Who participates? Does this limit generalizability?
+
+**Data from specialized sources:**
+- Proprietary data: Can findings be verified? Red flag if not replicable
+- Administrative data from industry: Data quality? Sample selection?
+- Constructed measures: Are measurement choices justified or convenient?
+
+**Required robustness checks for Type B:**
+1. **Institutional details sensitivity**: Do results depend on specific institutional assumptions?
+2. **Sample selection**: Does participation in market/program select on characteristics?
+3. **Alternative explanations**: Could other institutional features explain patterns?
+4. **Generalizability tests**: Does effect vary across sub-markets in predicted way?
+5. **Measurement sensitivity**: Are results robust to alternative variable definitions?
+
+**Red flags specific to Type B:**
+- Institutional details used to justify identification without evidence
+- "Industry practice is X" asserted without verification
+- Results depend critically on unverified institutional claims
+- Specialized knowledge used to dismiss alternative explanations
+- Data sources cannot be accessed by others (replication impossible)
+
+**Communication requirement:**
+- Identification strategy must be understandable to general economist
+- Don't hide behind institutional complexity
+- Plain language explanation of why variation is exogenous
+- Institutional features supporting identification should be documented/verified
+
+**Assessment approach:**
+- Assume contribution is important if setting enables unique identification (senior's job)
+- Focus: Are institutional claims accurate? Is identification strategy sound?
+- Ask: Could someone without industry knowledge verify these claims?
+- Demand: Clear documentation of institutional features, not appeals to authority
+
+---
+
+## Type B Writing Priorities Summary
+
+### Lead With:
+- Economic question
+- Brief concrete institutional explanation
+
+### Spend Time On:
+- Clear institutional explanation in plain language
+- Connecting institutions to economic behavior
+- Concrete examples and scale
+- Visual aids
+
+### Minimize:
+- Jargon without definition
+- Institutional details that don't matter for argument
+- Assuming reader has industry knowledge
+
+### Key Risk to Avoid:
+- Losing readers in institutional weeds
+- Jargon overload
+- Institutions for their own sake (not serving mechanism)
+
+---
+
+## Specific Language Patterns for Type B
+
+### Flag these:
+
+**Unexplained jargon:**
+- "MBS and CDOs proliferated" (define first)
+- "Tranche structures affected..." (explain what tranches are)
+- Industry acronyms without definition
+
+**Institution-first ordering:**
+- Starting with "The securitization market..." before economic question
+- Paragraph 1: institutions, paragraph 3: research question
+- Institutional detail before reader knows why it matters
+
+**Missing scale/concreteness:**
+- "Substantial growth" → "$3.6 trillion in 2006"
+- "Many loans" → "75% of mortgages"
+- "Typical structure" → "Three tranches: senior (80%), mezzanine (15%), equity (5%)"
+
+### Encourage these:
+
+**Plain language first:**
+- "Securitization, converting illiquid assets into liquid securities, has grown..."
+- Define in simple terms, then use technical term
+- "Loans are bundled and sold to investors (securitization)"
+
+**Economic mechanism connection:**
+- "This transformed intermediaries' role from 'buy and hold' to 'buy and sell'"
+- Explain WHY institution matters for behavior
+- Connect structure to incentives
+
+**Concrete examples:**
+- "$3.6 trillion in 2006"
+- "Senior tranches rated AAA paid LIBOR + 20bp"
+- Real numbers, real examples
+
+---
+
+## Examples from Type B Papers
+
+### Good Type B opening:
+> "Securitization, converting illiquid assets into liquid securities, has grown tremendously in recent years, with the universe of securitized mortgage loans reaching $3.6 trillion in 2006. The option to sell loans to investors has transformed the traditional role of financial intermediaries in the mortgage market from 'buying and holding' to 'buying and selling.'"
+
+**Why it works:**
+- Defines securitization in first sentence (plain language)
+- Concrete scale ($3.6T)
+- Economic implication (incentive change)
+- Institution → mechanism flow
+
+---
+
+## Red Flags for Type B Papers
+
+- [ ] Jargon in first paragraph without definition
+- [ ] Institutional details before research question
+- [ ] Missing concrete scale/examples
+- [ ] Institutions explained but not connected to mechanism
+- [ ] Assuming reader knows specialized market
+- [ ] No figures showing institutional structure
+- [ ] Technical details that don't serve argument
+
+If these patterns appear, they should be flagged and revised.

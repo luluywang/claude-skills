@@ -1,0 +1,1122 @@
+# Output Format Templates
+
+## Location for Output Files
+
+All output markdown files should be placed in the `notes/` subfolder of the given draft directory.
+
+Example structure:
+```
+draft_folder/
+├── introduction.tex
+├── institutional_setting.tex
+├── ...
+└── notes/
+    ├── copy_edits.md
+    ├── ai_screen.md
+    └── simplifications.md
+```
+
+---
+
+## Template: copy_edits.md (Grammar Task Only)
+
+**Format:** Concise log - grammar fixes are applied directly to .tex files, not presented as checklist.
+
+```markdown
+# Copy Edits Log
+**Date:** [date]
+**Reviewer:** [name]
+
+**Note:** All corrections below have been applied directly to the .tex files.
+
+---
+
+## Summary
+
+- **Total corrections:** [number]
+- **Files modified:** [number]
+- **Most common issue:** [type]
+
+---
+
+## Changes by File (Reading Order)
+
+### introduction.tex
+
+**Line 15:** through → tough
+**Line 23:** it's → its (possessive)
+**Line 47:** Subject-verb: "data shows" → "data show"
+**Line 89:** Missing comma after introductory phrase
+
+**Total changes:** [N]
+
+---
+
+### institutional_setting.tex
+
+**Line 12:** affect → effect
+**Line 34:** Hyphenation: "short run equilibrium" → "short-run equilibrium"
+**Line 56:** Missing apostrophe: "authors argument" → "author's argument"
+
+**Total changes:** [N]
+
+---
+
+[Continue for all files]
+
+---
+
+## Changes by Type
+
+### Spelling & Homophones ([N] fixes)
+- introduction.tex:15 → through/tough
+- payment_costs.tex:23 → affect/effect
+- real_effects.tex:45 → complement/compliment
+
+### Grammar ([N] fixes)
+- introduction.tex:47 → Subject-verb agreement
+- redistribution.tex:12 → Pronoun-antecedent
+
+### Punctuation ([N] fixes)
+- institutional_setting.tex:34 → Hyphenation
+- payment_costs.tex:67 → Missing comma
+
+### LaTeX ([N] fixes)
+- appendix_theory.tex:89 → Broken reference
+- conclusion.tex:23 → Math mode delimiter
+```
+
+**Key principles:**
+- Concise: `File:Line → Previous → New` format
+- Grouped by file (reading order) AND by type
+- No checklists (corrections already applied)
+- Summary statistics at top
+
+---
+
+## Template: ai_screen.md
+
+```markdown
+# AI-Specific Punctuation & Structural Tells
+**Date:** [date]
+**Reviewer:** [name]
+
+Focus: Punctuation-based and structural patterns that flag AI-generated text.
+
+**Target:** 40-50 items total
+
+---
+
+## Quick Checklist
+
+Use this to track which suggestions you've reviewed:
+
+### introduction.tex
+- [ ] Lines X-Y: [Brief description]
+- [ ] Lines X-Y: [Brief description]
+[5-8 items]
+
+### institutional_setting.tex
+- [ ] Lines X-Y: [Brief description]
+[5-8 items]
+
+### payment_costs.tex
+[5-8 items]
+
+### real_effects.tex
+[5-8 items]
+
+### redistribution.tex
+[5-8 items]
+
+### conclusion.tex
+[3-5 items]
+
+### appendix files
+[5-8 items across appendices]
+
+---
+
+## Detailed Suggestions by File
+
+## introduction.tex
+
+### - [ ] Lines 45-52: Em-dash overuse creating monotonous rhythm
+
+**Comment:**
+Three consecutive sentences use em-dashes as crutch for weak sentence structure. Pattern "X---which is Y---suggests Z" repeated. This creates robotic uniformity and flags as AI-generated. The em-dashes are masking that these should be separate, varied sentences.
+
+**Original:**
+```
+The policy change---which occurred in 2008---had significant effects on behavior.
+The mechanism---operating through incentive channels---is straightforward.
+Our findings---robust to multiple specifications---suggest substantial impacts.
+```
+
+**Proposed Revision:**
+```
+The policy changed in 2008 and had significant effects on behavior. The mechanism
+is straightforward: it operates through incentive channels. Our findings suggest
+substantial impacts. These results are robust to multiple specifications.
+```
+
+**Why better:** Removes em-dash crutch, varies sentence length (short + medium + short), uses colon appropriately for one emphasis point, sounds more natural.
+
+---
+
+### - [ ] Lines 78-85: Formulaic list structure (First... Second... Third...)
+
+**Comment:**
+Artificial enumeration structure typical of AI. The "Our first fact... Our second fact... Our third fact" pattern is mechanical and unnatural for economics writing.
+
+**Original:**
+```
+Our first fact is that participation rates vary substantially across regions.
+Our second fact is that this variation correlates with policy knowledge. Our
+third fact is that the correlation persists after controlling for observables.
+```
+
+**Proposed Revision:**
+```
+Participation rates vary substantially across regions. This variation correlates
+with policy knowledge, even after controlling for observables.
+```
+
+**Why better:** Combines related points naturally, eliminates formulaic enumeration, flows like expert would write it.
+
+---
+
+[Repeat for all suggestions in file]
+
+---
+
+[Continue for all files in reading order]
+
+---
+
+## General Summary Across All Files
+
+### Most Prevalent Punctuation/Structural AI Patterns:
+
+**Punctuation Issues:**
+- [Pattern with examples from text]
+- [Pattern with examples]
+
+**Structural Problems:**
+- [Pattern with examples]
+- [Pattern with examples]
+
+**Sentence Rhythm:**
+- [Pattern with examples]
+- [Pattern with examples]
+
+### Recommendations:
+The writing would benefit most from: [punctuation/structural improvements prioritized]
+```
+
+---
+
+## Template: simplifications.md
+
+```markdown
+# Comprehensive Writing Improvements
+**Date:** [date]
+**Reviewer:** [name]
+
+Includes: AI-specific language tells (formulaic phrases, hedging, tone) + general simplifications (wordiness, clarity, directness).
+
+**Target:** 80-100 items total
+
+---
+
+## Quick Checklist
+
+Use this to track which suggestions you've reviewed:
+
+### introduction.tex
+- [ ] Lines X-Y: [Brief description of issue type]
+- [ ] Lines X-Y: [Brief description]
+[10-15 items]
+
+### institutional_setting.tex
+- [ ] Lines X-Y: [Brief description]
+[10-15 items]
+
+### payment_costs.tex
+[10-15 items]
+
+### real_effects.tex
+[10-15 items]
+
+### redistribution.tex
+[10-15 items]
+
+### conclusion.tex
+[5-8 items]
+
+### appendix files
+[10-15 items across appendices]
+
+---
+
+## Detailed Suggestions by File
+
+## introduction.tex
+
+### - [ ] Lines 34-41: Hedging weak claims when identification is strong
+
+**Comment:**
+"Our results suggest that" appears 3 times when identification strategy is credible enough for stronger claims. This hedging is AI-typical and weakens the contribution. With a strong natural experiment, findings should be stated directly, not tentatively.
+
+**Original:**
+```
+Our results suggest that the EITC increases labor force participation. The evidence
+indicates that effects are concentrated on the extensive margin. Our findings appear
+to show that intensive margin responses are minimal.
+```
+
+**Proposed Revision:**
+```
+The EITC increases labor force participation. Effects concentrate on the extensive
+margin; intensive margin responses are minimal.
+```
+
+**Why better:** Direct claims match identification strength, more confident tone, eliminates AI hedging pattern, reads like expert wrote it.
+
+---
+
+### - [ ] Lines 89-97: Meta-commentary scaffolding
+
+**Comment:**
+"We begin by documenting... We then... Finally..." is AI-typical roadmap language. This scaffolding is unnecessary—just present the analysis. Readers will follow the logic without explicit signposting.
+
+**Original:**
+```
+We begin by documenting the extent of geographic variation in EITC knowledge.
+We then examine how this variation correlates with labor market outcomes. Finally,
+we present our main identification strategy exploiting policy changes at childbirth.
+```
+
+**Proposed Revision:**
+```
+EITC knowledge varies substantially across ZIP codes—from 6.5% manipulation in
+Chicago to 0.6% in Rapid City. We exploit this variation, combined with policy
+changes at childbirth, to identify labor supply effects.
+```
+
+**Why better:** Eliminates scaffolding, shows concrete example immediately, gets to identification faster, no AI meta-commentary.
+
+---
+
+[Repeat for 10-15 suggestions in file]
+
+---
+
+[Continue for all files in reading order]
+
+---
+
+## General Summary Across All Files
+
+### Most Prevalent AI-Tell Patterns:
+
+**Formulaic Language:**
+- [Pattern 1 with examples from text]
+- [Pattern 2 with examples]
+
+**Hedging & Weak Claims:**
+- [Pattern with examples]
+
+**Meta-Commentary:**
+- [Pattern with examples]
+
+**Over-Explanation:**
+- [Economics 101 over-explanation examples]
+
+### General Simplification Patterns:
+
+**Wordiness Reductions:**
+- [Patterns with examples]
+
+**Passive Voice Issues:**
+- [Where passive is inappropriate with examples]
+
+**Verbose Constructions:**
+- [Examples]
+
+**Complex Structures Simplified:**
+- [Examples of split sentences or restructuring]
+
+### Economics-Specific Issues:
+- [Field-specific problems with examples]
+- [Missing natural shorthand examples]
+
+### Positive Notes:
+- [What's working well]
+- [Strong aspects of the writing]
+
+### Overall Assessment:
+The writing would benefit most from: [prioritized list of improvements]
+```
+
+---
+
+## Template: word_choice_review.md
+
+```markdown
+# Word Choice Review
+**Date:** [date]
+**Reviewer:** [name]
+
+Focus: Clear, concrete, punchy word choices based on Cochrane and McCloskey's guidance.
+
+**Target:** Line-by-line review flagging weak/vague/pretentious words
+
+---
+
+## Summary
+
+- **Total suggestions:** [N]
+- **Most common issue:** [e.g., "Latinate words with simpler Anglo-Saxon alternatives"]
+- **Files reviewed:** [list]
+
+**Quick wins:** [Simple patterns that appear multiple times and could be find-replaced]
+
+---
+
+## Quick Checklist
+
+### introduction.tex
+- [ ] Line X: [Brief description]
+- [ ] Line Y: [Brief description]
+
+### institutional_setting.tex
+- [ ] Line X: [Brief description]
+
+[Continue for all files]
+
+---
+
+## Detailed Suggestions by File
+
+## introduction.tex
+
+### - [ ] Line 23: "utilize" → "use" (Anglo-Saxon over Latin)
+
+**Comment:**
+"Utilize" is pretentious Latinism. "Use" is simpler, clearer Anglo-Saxon word that means the same thing. No technical distinction justifies the fancier word here.
+
+**Original:**
+```
+We utilize administrative data from the IRS to construct our sample.
+```
+
+**Proposed Revision:**
+```
+We use administrative data from the IRS to construct our sample.
+```
+
+**Why better:** One syllable beats three. Simpler, clearer, more direct. McCloskey's principle: Anglo-Saxon over Latin.
+
+---
+
+### - [ ] Lines 45-47: Vague nouns ("structure", "process") → be specific
+
+**Comment:**
+"Structure" and "process" are vague fillers adding no meaning. McCloskey flags these as empty words. Be specific about what structure or process, or delete entirely.
+
+**Original:**
+```
+The structure of the analysis follows a standard process for examining
+the factors that drive behavioral responses.
+```
+
+**Proposed Revision:**
+```
+We first document behavioral patterns, then test whether policy knowledge
+drives the responses.
+```
+
+**Why better:** Eliminates vague nouns, says specifically what the analysis does, active verbs ("document", "test"), concrete actions.
+
+---
+
+### - [ ] Lines 78-81: Weak verb "examine" → specific action
+
+**Comment:**
+"Examine" is overused weak verb. Say specifically what you do: test, estimate, compare, show. Cochrane: be concrete about methods.
+
+**Original:**
+```
+We examine the relationship between EITC knowledge and labor supply.
+```
+
+**Proposed Revision:**
+```
+We estimate how EITC knowledge affects labor supply.
+```
+
+**Why better:** "Estimate" is specific action (econometrics), "affects" is clearer than "relationship", more direct.
+
+---
+
+[Repeat for all suggestions]
+
+---
+
+## High-Priority Patterns
+
+### Pattern: "utilize" appears 12 times → replace all with "use"
+
+**Instances:**
+- Line 23: "We utilize administrative data..."
+- Line 67: "The model utilizes variation in..."
+- Line 102: "Our approach utilizes geographic differences..."
+[List all 12]
+
+**Action:** Find-replace "utilize" → "use" throughout (verify each makes sense).
+
+---
+
+### Pattern: Vague nouns (structure, process, concept, situation)
+
+**Instances:**
+- Line 45: "structure of the analysis"
+- Line 89: "estimation process"
+- Line 134: "the concept of elasticity"
+
+**Action:** Delete or replace with specific description.
+
+---
+
+## Word Choice Statistics
+
+**By category:**
+- Anglo-Saxon vs. Latin: [N] suggestions (e.g., utilize→use, commence→begin)
+- Concrete vs. Abstract: [N] suggestions (e.g., "poor places" vs. "economically disadvantaged regions")
+- Vague nouns: [N] instances (structure, process, concept, etc.)
+- Weak verbs: [N] instances (examine, analyze, investigate)
+- Useless adjectives: [N] instances (various, certain, particular)
+- Useless adverbs: [N] instances (very, clearly, obviously)
+
+**Most frequently flagged:**
+1. "utilize" (12 instances) → "use"
+2. "individuals" (8 instances) → "people"
+3. "examine" (7 instances) → specific verbs
+
+---
+
+## Overall Assessment
+
+**Strengths:**
+- [What's working well - e.g., "Good use of concrete examples in results section"]
+
+**Main patterns to address:**
+1. [Primary issue - e.g., "Latinate words throughout - consistent use of 'utilize', 'demonstrate', 'implement'"]
+2. [Secondary - e.g., "Vague nouns weakening precision"]
+3. [Tertiary - e.g., "Weak verbs where specific actions clearer"]
+
+**Estimated impact:**
+Addressing these word choices will make writing ~20% more concise and significantly more direct/punchy.
+```
+
+---
+
+## General Formatting Guidelines
+
+### Universal Checklist Format (All Tasks Except Grammar)
+
+**Required structure for each suggestion:**
+
+```
+### - [ ] Lines X-Y: [Brief description]
+
+**Comment:**
+[Explain the issue - why it's problematic, what pattern it represents, how it flags as AI or weakens writing]
+
+**Original:**
+```
+[Quote original text with enough context]
+```
+
+**Proposed Revision:**
+```
+[Complete revision addressing all issues]
+```
+
+**Why better:** [Explain improvements concretely]
+```
+
+**Key principles:**
+1. **Checkbox mandatory** - `- [ ]` allows user to mark implemented changes with `X`
+2. **Comment first** - Explain the issue before showing text
+3. **Original → Proposed** - Always show both for comparison
+4. **Why better** - Justify the change
+
+### Grammar Task Exception
+
+Grammar uses **concise log format** (no checklists):
+- `**Line X:** [previous] → [new]`
+- Corrections applied directly to .tex files
+- Log documents what changed, doesn't request approval
+
+**Rationale:** Grammar fixes are objective errors, not stylistic choices.
+
+### Line References
+- Use "Lines X-Y" or "Line X" format consistently
+- Include brief description in checklist item
+- Include section context in Comment if helpful
+
+### Code Blocks
+- Use triple backticks for Original and Proposed Revision
+- Preserve original formatting/indentation
+- Don't include line numbers in code blocks
+- **CRITICAL: Show COMPLETE sentences** — never truncate mid-sentence
+  - Include the full sentence(s) containing the issue
+  - If the change spans multiple sentences, show all affected sentences
+  - Add one sentence of context before/after if needed for clarity
+  - This enables batch application via `apply_marked.prompt`
+
+**Correct (full sentence):**
+```
+**Original:**
+We utilize administrative data from the IRS to construct our sample.
+
+**Proposed Revision:**
+We use administrative data from the IRS to construct our sample.
+```
+
+**Incorrect (fragment):**
+```
+**Original:**
+utilize administrative data
+
+**Proposed Revision:**
+use administrative data
+```
+
+### Comments (Issue Descriptions)
+- Start with the problem
+- Explain WHY it's problematic (mechanism)
+- Connect to broader patterns (AI tells, field conventions, McCloskey principles)
+- Be specific and actionable
+
+### Proposed Revisions
+- Must address ALL identified issues in the Comment
+- Show complete revised version, not fragments
+- Preserve technical content while improving style
+- Don't introduce new problems
+
+### "Why Better" Explanations
+- Detail WHAT changed (concrete transformations)
+- Explain WHY it's better (principles applied)
+- Show HOW it improves reader experience
+- Connect to writing authorities when relevant (Cochrane, McCloskey, field norms)
+
+---
+
+## Template: senior_referee_report.md
+
+**Format:** Professional journal review - contribution and significance focus
+
+```markdown
+# Senior Referee Report
+**Date:** [date]
+**Reviewer:** Senior Referee (Contribution Focus)
+**Paper Type:** Type [A/B/C/D]
+
+---
+
+## DESK REJECTION DECISION
+
+**[DESK REJECT / SEND TO REVIEW]**
+
+**Rationale:**
+[One paragraph explaining why paper does/doesn't meet AER bar for peer review based on contribution significance, scope, and clarity]
+
+---
+
+## CONTRIBUTION ASSESSMENT
+
+### Core Contribution (One Sentence):
+[State what the paper claims to contribute in one clear sentence]
+
+### Evaluation of Significance:
+
+**Importance of Question:**
+[Does this matter? To whom? Why should general economists care?]
+
+**Magnitude of Advance:**
+[Is this a major step forward, modest refinement, or incremental extension?]
+
+**Novelty:**
+[What specifically is new versus existing literature? Is novelty claim accurate?]
+
+**Broad Relevance:**
+[Would this interest general AER readership, or only narrow specialists?]
+
+### Contribution Verdict:
+[Does this represent a significant advance that AER should publish? Or is contribution too incremental/narrow/unclear?]
+
+---
+
+## LITERATURE POSITIONING ASSESSMENT
+
+### Accuracy of Positioning:
+[Do authors correctly characterize what's novel? Or are they overclaiming/missing related work?]
+
+### Specific Gaps or Overclaims:
+
+1. **[Issue]**: [E.g., "Paper X from JPE 2021 already shows this relationship for similar context"]
+   - Impact: [How this affects novelty claim]
+   - Recommendation: [What authors should do]
+
+2. [Additional issues if any]
+
+### Literature Command:
+[Do authors demonstrate genuine understanding of related work? Fair engagement? Recent citations?]
+
+---
+
+## PRESENTATION & ACCESSIBILITY
+
+**Can a general economist understand this contribution?**
+
+[Assessment of whether introduction clearly conveys the contribution, whether technical material is appropriately balanced, whether non-specialists can appreciate the advance]
+
+**Major presentation issues obscuring contribution:**
+[Only note if presentation problems prevent judging merit - this is not line-by-line copyediting]
+
+---
+
+## MAJOR CONCERNS
+
+**Substantive issues affecting publishability (contribution-focused):**
+
+1. **[Primary concern]**: [E.g., "Contribution claim rests on X, but existing Paper Y already establishes this"]
+   - Why this matters: [Impact on publication decision]
+   - Path forward: [What would address this - if anything]
+
+2. **[Secondary concern]**: [E.g., "Missing engagement with Z literature changes positioning"]
+   - Why this matters: [Impact on contribution significance]
+   - Path forward: [Specific recommendation]
+
+[Continue for all major concerns]
+
+---
+
+## RECOMMENDATION
+
+**[REJECT / MAJOR REVISIONS / MINOR REVISIONS / ACCEPT]**
+
+### Justification:
+[One paragraph explaining recommendation based on contribution magnitude, novelty accuracy, and scope]
+
+### What Would Strengthen Contribution (if applicable):
+1. [Specific suggestion - e.g., "Reframe contribution as methodological rather than substantive"]
+2. [E.g., "Engage seriously with Literature X which challenges novelty claim"]
+3. [E.g., "Provide clearer statement of general insight beyond specific setting"]
+
+---
+
+## PAPER TYPE-SPECIFIC NOTES
+
+**[Type A/B/C/D]-Specific Assessment:**
+[Apply paper type-specific evaluation priorities from overlay]
+
+**Key consideration for this type:**
+[E.g., for Type A: "Familiar topic requires genuinely surprising finding - is magnitude unexpected?"]
+[E.g., for Type B: "Does this transcend institutional setting to teach general economists something?"]
+
+---
+
+## SUMMARY
+
+[2-3 paragraph overall assessment synthesizing: contribution evaluation, literature positioning, presentation accessibility, and final recommendation with clear reasoning]
+```
+
+---
+
+## Template: junior_referee_report.md
+
+**Format:** Professional journal review - methods and credibility focus
+
+```markdown
+# Junior Referee Report
+**Date:** [date]
+**Reviewer:** Junior Referee (Methods Focus)
+**Paper Type:** Type [A/B/C/D]
+
+---
+
+## METHODOLOGICAL ASSESSMENT
+
+### Research Design:
+[Summarize the identification strategy or methodological approach]
+
+### Credibility Assessment:
+**Do I believe these results?**
+
+[Overall judgment: Are identification assumptions plausible? Are methods rigorous? Are results credible?]
+
+**Main threats to validity:**
+1. [Threat 1 - e.g., "Parallel trends assumption"]
+2. [Threat 2 - e.g., "Selection into treatment"]
+3. [Additional threats]
+
+---
+
+## IDENTIFICATION CONCERNS (Primary Focus)
+
+**Major identification issues:**
+
+### 1. **[Most serious concern]**: [E.g., "Parallel trends assumption seems implausible"]
+
+**Why this matters:**
+[Explain the threat to causal interpretation - what alternative explanation does this enable?]
+
+**Evidence that would address it:**
+- [Specific test - e.g., "Event study showing no pre-trends"]
+- [Alternative check - e.g., "Balance tests on observables"]
+- [Additional evidence needed]
+
+**Current status:**
+[What authors have shown vs. what's missing]
+
+---
+
+### 2. **[Second concern]**: [E.g., "Exclusion restriction requires X, but Y could violate it"]
+
+**Why this matters:**
+[Alternative channel this opens, impact on causal claims]
+
+**Evidence that would address it:**
+- [Specific evidence needed]
+- [Tests to rule out alternative channel]
+
+**Current status:**
+[Assessment of what's provided]
+
+---
+
+[Continue for all major identification concerns]
+
+---
+
+## ROBUSTNESS GAPS
+
+**Missing robustness checks:**
+
+### 1. **[Most important missing check]**: [E.g., "Event study to verify parallel trends"]
+
+**Why needed:**
+[What assumption or threat does this test?]
+
+**What should be shown:**
+[Specific expectation - e.g., "Flat pre-period coefficients, sharp break at treatment"]
+
+---
+
+### 2. **[Second missing check]**: [E.g., "Sensitivity to bandwidth in RD"]
+
+**Why needed:**
+[What would this reveal about result robustness?]
+
+**What should be shown:**
+[Expected analysis]
+
+---
+
+[Continue for important missing checks]
+
+### Fragility Concerns:
+[Are results robust across shown specifications, or do they depend on specific choices? Any evidence of specification sensitivity?]
+
+---
+
+## DATA & IMPLEMENTATION ISSUES
+
+**Data Quality:**
+[Are data adequate? Measurement concerns? Sample construction appropriate?]
+
+**Implementation:**
+[Are statistical methods appropriate? Standard errors correct? Any computational concerns?]
+
+**Transparency:**
+[Can this be replicated? Are choices well-documented?]
+
+---
+
+## MAJOR CONCERNS
+
+**Issues affecting credibility (numbered by severity):**
+
+1. **[Fatal flaw if exists]**: [E.g., "Identification assumption clearly violated by X"]
+   - Classification: **Fatal / Serious / Important gap**
+   - Required fix: [What's needed to address]
+
+2. **[Serious concern]**: [E.g., "No balance tests for quasi-experiment"]
+   - Classification: **Fatal / Serious / Important gap**
+   - Required fix: [Specific tests needed]
+
+3. [Continue]
+
+---
+
+## RECOMMENDATION
+
+**[REJECT / MAJOR REVISIONS / MINOR REVISIONS / ACCEPT]**
+
+### Justification:
+[One paragraph explaining recommendation based on identification credibility and robustness comprehensiveness]
+
+### Required to Establish Credibility:
+1. [Highest priority - e.g., "Show event study with no pre-trends"]
+2. [Second priority - e.g., "Demonstrate robustness to alternative specifications"]
+3. [Third priority - e.g., "Provide balance tests for treatment/control"]
+
+### Optional but Recommended:
+- [Additional checks that would strengthen but aren't required]
+
+---
+
+## PAPER TYPE-SPECIFIC NOTES
+
+**[Type A/B/C/D]-Specific Assessment:**
+[Apply paper type-specific methods priorities from overlay]
+
+**Key consideration for this type:**
+[E.g., for Type A: "Identification is THE central concern - demand comprehensive robustness"]
+[E.g., for Type D: "Which parameters identified vs. imposed? Sensitivity to calibration?"]
+
+---
+
+## SUMMARY
+
+[2-3 paragraph overall assessment synthesizing: identification credibility, robustness comprehensiveness, data quality, and final recommendation with specific requirements for establishing credibility]
+```
+
+---
+
+## Template: referee_report.md (Synthesized - Both Referees)
+
+**Format:** Professional journal review - unified synthesis of both perspectives
+
+```markdown
+# Referee Report
+**Date:** [date]
+**Reviewers:** Senior Referee (Contribution) + Junior Referee (Methods)
+**Paper Type:** Type [A/B/C/D]
+
+---
+
+## OVERALL ASSESSMENT
+
+[One paragraph synthesizing both perspectives]
+
+This paper [summarize contribution per senior referee] using [summarize methods per junior referee].
+
+[Senior's verdict on contribution significance]
+
+[Junior's verdict on methods credibility]
+
+[Synthesized recommendation with integrated reasoning]
+
+---
+
+## I. CONTRIBUTION & SIGNIFICANCE (Senior Referee Perspective)
+
+### Core Contribution:
+[One sentence statement of contribution]
+
+### Contribution Assessment:
+
+**Importance of Question:**
+[Senior's evaluation]
+
+**Magnitude of Advance:**
+[Senior's evaluation]
+
+**Novelty:**
+[Senior's evaluation - what's new, whether claim is accurate]
+
+**Broad Relevance:**
+[Senior's evaluation]
+
+### Literature Positioning:
+[Senior's assessment of accuracy, gaps, overclaims]
+
+### Senior Referee's Concerns:
+1. [Primary contribution concern]
+2. [Secondary concern]
+3. [Additional concerns]
+
+### Senior Referee's Assessment:
+[Contribution verdict - sufficient for AER? Incremental? Unclear?]
+
+---
+
+## II. METHODS & CREDIBILITY (Junior Referee Perspective)
+
+### Research Design:
+[Identification strategy summary]
+
+### Credibility Assessment:
+[Do I believe this? Main threats to validity?]
+
+### Junior Referee's Identification Concerns:
+
+1. **[Primary concern]**: [E.g., identification assumption issue]
+   - Why it matters: [Threat to validity]
+   - What's needed: [Evidence to address]
+
+2. **[Secondary concern]**: [E.g., robustness gap]
+   - Why it matters: [Impact on credibility]
+   - What's needed: [Specific tests]
+
+3. [Additional concerns]
+
+### Missing Robustness Checks:
+[Junior's list of essential missing checks]
+
+### Junior Referee's Assessment:
+[Methods verdict - credible? Needs strengthening? Fatally flawed?]
+
+---
+
+## III. PRIORITIZED ACTION ITEMS
+
+**Synthesized recommendations combining both perspectives:**
+
+### A. Critical Issues (Address or Paper Cannot Be Published)
+
+1. **[Issue affecting both contribution AND methods]**: [Description]
+   - **Why critical**: [Explain using both contribution and methods logic]
+   - **What's needed**: [Specific, actionable requirement]
+   - **Referees**: **[Senior / Junior / Both]**
+
+2. [Continue for all critical issues]
+
+### B. Substantive Issues (Major Revisions Required)
+
+1. **[Important issue]**: [Description]
+   - **Impact**: [How this affects contribution or credibility]
+   - **Suggested approach**: [Specific recommendation]
+   - **Referees**: **[Senior / Junior / Both]**
+
+2. [Continue]
+
+### C. Minor Issues (Would Improve Paper)
+
+1. **[Minor issue]**: [Brief description]
+   - **Referees**: **[Senior / Junior / Both]**
+
+2. [Continue]
+
+---
+
+## IV. SYNTHESIZED RECOMMENDATION
+
+**[REJECT / MAJOR REVISIONS / MINOR REVISIONS / ACCEPT]**
+
+### Rationale:
+[Synthesize both perspectives into unified justification]
+
+**Contribution assessment** [from senior]: [Verdict]
+
+**Methods assessment** [from junior]: [Verdict]
+
+**Overall**: [Integrated recommendation explaining how both dimensions lead to decision]
+
+### What's Needed for Acceptance (if applicable):
+
+**Priority 1**: [Typically most serious concern from either referee]
+**Priority 2**: [Second most serious]
+**Priority 3**: [Third]
+
+[If both have major concerns]: Both contribution framing and methodological rigor need strengthening. [Explain which to address first or whether parallel work possible]
+
+[If one strong, one weak]: The [contribution/methods] [is strong/shows promise]. Focus revisions on [the weak dimension].
+
+---
+
+## V. AREAS OF AGREEMENT & DISAGREEMENT
+
+### Both Referees Agree (Highest Priority):
+- [Issue both flagged - these are most important to address]
+- [Additional shared concerns]
+
+### Senior Emphasizes, Junior Less Concerned:
+- [E.g., "Senior questions contribution significance; junior focused on methods assuming contribution important"]
+
+### Junior Emphasizes, Senior Less Concerned:
+- [E.g., "Junior has serious identification concerns; senior finds contribution potentially significant if methods strengthened"]
+
+### No Major Disagreements:
+[If referees aligned, note this and explain implications]
+
+---
+
+## VI. PAPER TYPE-SPECIFIC NOTES
+
+**Type [A/B/C/D] Considerations:**
+
+**Senior referee priorities for this type:**
+[Type-specific contribution evaluation focus]
+
+**Junior referee priorities for this type:**
+[Type-specific methods evaluation focus]
+
+**Key takeaway:**
+[Integrated insight about what this paper type requires]
+
+---
+
+## SUMMARY
+
+[3-4 paragraph overall assessment that:]
+- Synthesizes both referee perspectives
+- Explains recommendation with integrated reasoning
+- Provides clear path forward (if revisions recommended)
+- Maintains constructive, collegial tone
+```
+
+---
+
+## Format Requirements for Referee Reports
+
+### Professional Review Format (Not Checklist)
+
+**Key differences from other output files:**
+
+1. **No checkboxes** - These are evaluative reports, not suggestion lists
+2. **Professional tone** - Write as expert colleague, not adversary
+3. **Structured sections** - Follow template hierarchy strictly
+4. **Synthesis for combined** - When both referees run, create unified narrative
+5. **Specific recommendations** - Don't just say "weak" - explain exactly what's needed
+
+### Tone Guidelines
+
+**Be:**
+- Rigorous but constructive
+- Specific (cite exact concerns, papers, evidence needed)
+- Direct about problems but respectful
+- Clear about fatal flaws vs. fixable issues
+
+**Avoid:**
+- Vague criticism ("identification is weak")
+- Adversarial language
+- Impossible demands
+- Overlooking good work
+
+### Evidence and Specificity
+
+**Good:** "Parallel trends assumption seems implausible because treatment group cities were experiencing faster growth pre-treatment (Figure 2 shows upward trend). Event study is essential."
+
+**Bad:** "Identification concerns. Need more robustness."
+
+### File Naming
+
+- Senior only: `notes/senior_referee_report.md`
+- Junior only: `notes/junior_referee_report.md`
+- Both (synthesized): `notes/referee_report.md`

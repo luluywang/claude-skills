@@ -1,0 +1,197 @@
+# Task: Interactive Edit Review
+
+**Purpose:** Walk through a checklist of suggested edits interactively, letting the user accept or reject each one.
+
+**Input:** Path to a markdown file with checklist format (e.g., `notes/simplifications.md`)
+
+**Output:**
+- Modified .tex files with accepted edits applied
+- Updated markdown file with `[x]` for accepted items
+
+---
+
+## Workflow
+
+### Step 1: Parse Edits
+
+Read the input markdown file and extract all **pending** items (`- [ ]`).
+
+For each checklist item, extract:
+- **File**: The .tex filename from section header (`## filename.tex`)
+- **Lines**: Line numbers from the item header (`Lines X-Y`)
+- **Category**: Brief description from header (e.g., "Hedging", "Meta-commentary")
+- **Full header line**: e.g., `### - [ ] Lines 23-25: Hedging`
+- **Original**: Text in the Original code block
+- **Proposed**: Text in the Proposed Revision code block
+- **Why better**: The explanation text
+
+**Expected format:**
+```markdown
+## filename.tex
+
+### - [ ] Lines X-Y: [Category/Brief description]
+
+**Comment:** [Why this is problematic]
+
+**Original:**
+```
+[Original text]
+```
+
+**Proposed Revision:**
+```
+[Proposed text]
+```
+
+**Why better:** [Explanation]
+```
+
+**Skip these items:**
+- `- [x]` — Already approved (will be processed by apply_marked)
+- `- [x] ... (applied)` — Already applied
+- `- [-]` — Already rejected
+
+---
+
+### Step 2: Group by Category
+
+Group edits by their category for "Accept All Similar" functionality.
+
+Categories are derived from the brief description in the header:
+- "Hedging" edits grouped together
+- "utilize -> use" instances grouped together
+- "Meta-commentary" edits grouped together
+- etc.
+
+Count how many remaining edits share each category.
+
+---
+
+### Step 3: Interactive Review Loop (COLLECT DECISIONS ONLY)
+
+**CRITICAL: Do NOT apply any edits during this step. Only collect user decisions. All file modifications happen in Step 4 after the entire review is complete.**
+
+For each unchecked edit, present to user via `AskUserQuestion`:
+
+**Question format:**
+```
+**[filename.tex] Lines X-Y**
+
+Original:
+"[original text - first 100 chars if long]..."
+
+Proposed:
+"[proposed text - first 100 chars if long]..."
+
+Why: [brief explanation]
+```
+
+**Header:** Category name (max 12 chars, e.g., "Hedging", "Wordiness")
+
+**Options:**
+1. **Accept** - "Apply this change"
+2. **Accept All [Category]** - "Apply all N [category] edits" (only show if N > 0 remaining of same type)
+3. **Reject** - "Keep original"
+
+**Tracking (in-memory only, no file writes):**
+- `accepted_edits`: List of edits to apply at end
+- `rejected_count`: Number of rejected edits
+- `category_status`: Track which categories have been batch-accepted
+
+**When "Accept All Similar" is chosen:**
+1. Add current edit to accepted_edits
+2. Find all remaining edits with matching category
+3. Add all matching edits to accepted_edits
+4. Mark category as fully processed
+5. Skip those edits in subsequent loop iterations
+
+**Loop continues until all edits have been presented. Do not use Edit tool during this step.**
+
+---
+
+### Step 4: Batch Apply (ALL FILE MODIFICATIONS HERE)
+
+**This step executes ONLY after the user has answered ALL questions from Step 3.**
+
+1. **Group accepted edits by file**
+
+2. **For each file, apply edits in reverse line order**
+   - Sort by line number descending
+   - This preserves line numbers as earlier edits don't shift later ones
+   - Use Edit tool to replace Original with Proposed
+   - Apply all edits for a file in a single batch when possible
+
+3. **Update the markdown file for accepted edits**
+   - Change `- [ ]` to `- [x]`
+   - Append `(applied)` to the line description
+   - Before: `### - [ ] Lines 23-25: Hedging`
+   - After: `### - [x] Lines 23-25: Hedging (applied)`
+
+4. **Update the markdown file for rejected edits**
+   - Change `- [ ]` to `- [-]`
+   - This distinguishes "not yet reviewed" from "reviewed and rejected"
+   - Before: `### - [ ] Lines 23-25: Hedging`
+   - After: `### - [-] Lines 23-25: Hedging`
+
+5. **Report summary**
+
+**Efficiency note:** Batching all edits to the end prevents repeated file reads/writes and avoids line number shifts mid-review.
+
+**Interoperability:** The `(applied)` suffix ensures apply_marked won't re-process these items. The `[-]` marker ensures neither mode will re-ask about rejected items.
+
+---
+
+## Summary Format
+
+After completing all edits, report:
+
+```
+Review complete!
+
+Accepted: X edits (applied to N files, marked with "(applied)")
+Rejected: Y edits (marked with "[-]")
+Skipped: Z edits (already [x], [-], or (applied))
+
+Files modified:
+- filename1.tex (A changes)
+- filename2.tex (B changes)
+
+Updated: notes/[input_file].md with status markers.
+```
+
+---
+
+## Edge Cases
+
+- **Empty file or no pending items**: "No pending edits found in [file]. All items are either approved [x], rejected [-], or already applied."
+- **File not found**: "Could not find [file]. Please check the path."
+- **Malformed entries**: Skip entries that don't match expected format, note in summary.
+- **Single edit in category**: Don't show "Accept All Similar" option (just Accept/Reject).
+
+---
+
+## Model Routing
+
+**Model:** Haiku (simple parsing and coordination)
+
+The interactive loop uses AskUserQuestion which handles user interaction. The actual file editing at the end uses standard Edit tool.
+
+---
+
+## Quality Control
+
+**CRITICAL - Batching requirement:**
+- [ ] **NO Edit tool calls during Step 3** - only AskUserQuestion
+- [ ] **ALL Edit tool calls happen in Step 4** - after all questions answered
+
+**Checkbox handling:**
+- [ ] Only `- [ ]` items presented to user (skip `[x]`, `[-]`, `(applied)`)
+- [ ] Accepted items: `- [ ]` → `- [x]` AND add `(applied)` suffix
+- [ ] Rejected items: `- [ ]` → `- [-]`
+
+**Other checks:**
+- [ ] All pending items extracted correctly
+- [ ] Categories grouped accurately
+- [ ] "Accept All Similar" count matches actual remaining items
+- [ ] Line numbers handled correctly (reverse order application)
+- [ ] Summary accurately reflects actions taken

@@ -1,0 +1,141 @@
+# Junior Referee Report Output
+
+Generate the LaTeX document for the junior referee report (methods focus).
+
+---
+
+## File Naming
+
+**Output file:** `{short_title}_{YYYYMMDD}_claude_junior_report.tex`
+
+**Generate short_title from paper title:**
+1. Take first 2-3 key words (skip articles: The, A, An)
+2. Convert to lowercase
+3. Replace spaces with underscores
+4. Keep only alphanumeric and underscores
+5. Limit to ~30 characters
+
+**Add timestamp:** Use today's date in YYYYMMDD format (e.g., 20251231).
+
+**Examples:**
+- "The Effect of Minimum Wage on Employment" (reviewed 2025-12-31) → `minimum_wage_employment_20251231_claude_junior_report.tex`
+- "Does Immigration Affect Wages?" (reviewed 2025-01-15) → `immigration_wages_20250115_claude_junior_report.tex`
+
+---
+
+## LaTeX Template
+
+```latex
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}\onehalfspacing
+\usepackage{amsmath,amssymb,hyperref}
+\usepackage{enumitem}
+\setlength{\parindent}{0pt}\setlength{\parskip}{0.5em}
+
+\begin{document}
+\title{Referee Report (Methods Focus)\\for ``[Paper Title]''}
+\author{MS [number]}
+\date{}
+\maketitle
+
+\section{Summary of the Paper}
+
+[1-2 paragraphs: Research question, data/method used, key findings. Neutral summary without evaluation.]
+
+\section{Research Design Assessment}
+
+[Describe the identification strategy. What assumptions are required for causal interpretation? Are these assumptions plausible given the data and context? What are the main threats to validity?]
+
+\section{Robustness Evaluation}
+
+[What robustness checks are shown? What's missing? Are results sensitive to specification choices? Assessment of overall rigor.]
+
+\section{Deal Breakers}
+
+\textit{Issues that prevent publication in current form:}
+
+% If Deal Breakers exist:
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{[Issue Title]}
+
+    [Description of the issue with specific evidence from the paper - cite page numbers, tables, figures where relevant.]
+
+    \textbf{Why this affects publishability:} [1-2 sentences explaining why this methodological issue prevents credible conclusions.]
+
+    \item \textbf{[Next Issue Title]}
+
+    [Continue for each Deal Breaker...]
+
+\end{enumerate}
+
+% If NO Deal Breakers:
+% None identified from methods perspective.
+
+\section{Other Issues}
+
+\textit{Issues that would improve the paper but are not blocking:}
+
+\begin{itemize}[leftmargin=*]
+    \item [Issue description]
+    \item [Issue description]
+\end{itemize}
+
+\end{document}
+```
+
+---
+
+## Section Guidelines
+
+### Summary of the Paper
+- Same as senior report summary
+- Focus on method description for this version
+
+### Research Design Assessment
+- Identify the research design (DID, IV, RD, panel FE, structural, etc.)
+- State the key identifying assumptions explicitly
+- Evaluate plausibility with evidence from paper
+- List main threats to validity
+
+### Robustness Evaluation
+- What checks are shown in paper?
+- Reference specific tables/figures
+- What standard checks are missing?
+- Overall assessment of rigor
+
+### Deal Breakers
+- Each must have clear title, description, and impact explanation
+- Cite specific evidence (missing tables, violated assumptions, etc.)
+- Impact explanation: why can't we believe results without this?
+- If none: Write "None identified from methods perspective."
+
+### Other Issues
+- Bullet points, concise
+- Additional robustness suggestions
+- Data documentation improvements
+- Inference refinements
+
+---
+
+## Design-Specific Checklist
+
+Reference when assessing whether critical validation is present:
+
+| Design | Must Show | Deal Breaker if Missing |
+|--------|-----------|-------------------------|
+| **DID** | Pre-trends / event study | Yes |
+| **IV** | First stage (F-stat, coefficient) | Yes |
+| **RD** | Plots of outcome vs running variable | Yes |
+| **Panel FE** | Leads/lags or event study | Usually |
+| **Structural** | Parameter sensitivity | Yes |
+
+---
+
+## Formatting Rules
+
+- Use `\section{Title}` for sections (auto-numbered)
+- Do NOT use `\section*{}` (unnumbered)
+- Do NOT manually number sections
+- Use `enumerate` for Deal Breakers, `itemize` for Other Issues
+- Keep paragraphs focused; avoid walls of text

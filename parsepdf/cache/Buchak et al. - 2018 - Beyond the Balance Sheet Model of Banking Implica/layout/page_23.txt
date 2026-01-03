@@ -1,0 +1,49 @@
+prevent a traditional bank from lending to a given borrower altogether (Buchak et al. 2018). We
+capture this type of regulatory burden through parameter 1/𝜁𝜁𝑡𝑡𝑡𝑡 .
+For banks, the probability of lending to a specific borrower of mortgage g in market ct is scaled by a
+factor 𝜁𝜁𝑡𝑡𝑡𝑡 . A higher 1/𝜁𝜁𝑡𝑡𝑡𝑡 (lower 𝜁𝜁𝑡𝑡𝑡𝑡 ) captures a relatively constrained bank; a lower 1/𝜁𝜁𝑡𝑡𝑡𝑡 (higher
+𝜁𝜁𝑡𝑡𝑡𝑡 ) captures a relatively unconstrained bank. These shocks are i.i.d. across lender-borrower pairs,
+which accounts for the uncertainty that a bank faces with respect to which loans may be subject to
+these issues ex post.
+IV.B.3 Choosing Mortgage Rates and Financing
+Taking other lenders’ actions as given, an individual lender maximizes its profits by setting interest
+rates across all markets and chooses how many mortgages to retain on its balance sheet. Denote by
+𝒓𝒓𝒋𝒋𝒋𝒋 the set of prices of all products, conforming and jumbo, across all markets for lender j at time t,
+𝒓𝒓𝒋𝒋𝒋𝒋 = {𝑟𝑟𝑗𝑗𝑗𝑗𝑗𝑗𝑗𝑗 : ∀𝑐𝑐, 𝑔𝑔}. Lender j chooses each rate. Since all jumbo mortgages are securitized, the only
+decision in addition to setting interest rates is how many, if any, conforming mortgages to retain on
+                                 𝑏𝑏                                  𝐺𝐺𝐺𝐺𝐺𝐺                       𝑏𝑏
+the balance sheet 𝑚𝑚𝑗𝑗𝑗𝑗𝑗𝑗𝑗𝑗        , and how many to securitize, 𝑚𝑚𝑗𝑗𝑗𝑗    = ∑𝑐𝑐�𝑚𝑚𝑗𝑗𝑗𝑗𝑗𝑗𝑗𝑗 − 𝑚𝑚𝑗𝑗𝑗𝑗𝑗𝑗𝑗𝑗 �. Then the lenders
+choose interest rates and the amount of conforming mortgages to retain on the balance sheet by
+maximizing profits:
+
+                                                                                          𝐺𝐺𝐺𝐺𝐺𝐺 𝐺𝐺𝐺𝐺𝐺𝐺        𝑏𝑏               𝑝𝑝
+            𝑚𝑚𝑚𝑚𝑚𝑚𝒓𝒓𝒋𝒋𝒋𝒋,𝑚𝑚𝑏𝑏         � 𝑟𝑟𝑗𝑗𝑗𝑗𝑗𝑗𝑗𝑗 𝑚𝑚𝑗𝑗𝑗𝑗𝑗𝑗𝑗𝑗 − � 𝑚𝑚𝑗𝑗𝑗𝑗𝑗𝑗𝑗𝑗 𝑤𝑤𝑗𝑗𝑗𝑗 − �𝑚𝑚𝑗𝑗𝑗𝑗   𝜎𝜎𝑡𝑡 + ��𝑚𝑚𝑗𝑗𝑗𝑗𝑗𝑗𝑗𝑗 �𝜎𝜎𝑗𝑗𝑗𝑗 �
+                           𝑗𝑗𝑗𝑗𝑗𝑗𝑗𝑗                                                                                                  (S.4)
+                                      ��
+                                      𝑐𝑐𝑐𝑐𝑐𝑐�������             ��
+                                                                𝑐𝑐𝑐𝑐𝑐𝑐�������         �������������������
+                                                                                                        𝑐𝑐𝑐𝑐𝑐𝑐
+                                        𝑟𝑟𝑟𝑟𝑟𝑟𝑟𝑟 𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖𝑖   𝑜𝑜𝑜𝑜𝑜𝑜𝑜𝑜𝑜𝑜𝑜𝑜𝑜𝑜𝑜𝑜𝑜𝑜𝑜𝑜𝑜𝑜 𝑐𝑐𝑐𝑐𝑐𝑐𝑡𝑡   𝑓𝑓𝑓𝑓𝑓𝑓𝑓𝑓𝑓𝑓𝑓𝑓𝑓𝑓𝑓𝑓𝑓𝑓 𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐
+
+The first term, labeled rate income, is the yearly income that the lender earns from the loans that it
+has made, equal to the sum of interest rates times mortgage volumes across all loan types and markets.
+The second term, labeled origination cost, is the costs the lender occurs in originating the loans, such
+as the wages of mortgage brokers, advertising, and administrative expense. The third term, labeled
+financing cost, is the financing cost of the mortgage, reflecting the costs of either GSE or balance-
+sheet financing, depending on the lender’s optimal financing cost.
+Intermediaries’ profits comprise interest rate income (either collected by themselves or through
+servicing rights), origination costs, and financing costs. Note that interest rates enter profits both
+directly and indirectly through market shares. Market shares are also affected by regulatory
+constraints. In other words, the amount of mortgages originated, 𝑚𝑚𝑗𝑗𝑗𝑗𝑗𝑗𝑗𝑗 , is implicitly a function of both
+the interest rates of the lender 𝒓𝒓𝒋𝒋𝒋𝒋 , other lenders 𝒓𝒓−𝒋𝒋𝒋𝒋 , and the regulatory burden parameter 𝜁𝜁𝑡𝑡𝑡𝑡 , which
+we omit for ease of notation.
+IV.B.4 Equilibrium
+We study symmetric equilibria. Demand is characterized by consumers’ choice of mortgages and
+market share equations. Consumers maximize utility-taking prices and lender characteristics as given.
+Supply is characterized by intermediaries’ maximization in S.4. Banks, non-fintech shadow banks,
+and fintech shadow banks set mortgage rates across all markets in which they participate. Moreover,
+
+
+
+                                                                                    20
+

@@ -1,0 +1,111 @@
+# Task: Methodology Clarity Review
+
+**Purpose:** Assess whether identification strategy and methods are explained clearly for the paper's audience and type.
+
+**Output:** `notes/methodology_review.md`
+
+---
+
+## Analysis by Paper Type
+
+### Type A (Intuitive Topic, Complex Identification)
+
+**Check:**
+- Identification explained in plain English first?
+- What variation identifies estimates?
+- Why is error term uncorrelated with X?
+- Instrument exclusion clearly justified?
+
+**Common problems:**
+- Jumps to equation without intuition
+- Doesn't explain WHAT variation identifies
+- Too many controls without justification
+
+### Type B (Specialized Topic)
+
+**Check:**
+- Institutions explained before assuming knowledge?
+- Concrete language, not just jargon?
+- One detail at a time?
+- Institutions connected to economic mechanism?
+
+**Common problems:**
+- Assumes reader knows specialized market
+- Front-loads institutional details before question
+- Jargon without definition
+
+### Type C (Methodological Innovation)
+
+**Check:**
+- Economic question stated first?
+- Why existing methods fail?
+- Intuition before math?
+- Simple example provided?
+
+**Common problems:**
+- Leads with technique before question
+- Excessive generality ("consider general process...")
+- "Illustrative" application (half-hearted empirics)
+
+### Type D (Theory + Data)
+
+**Check:**
+- Motivated by empirical puzzle?
+- Simplest model that delivers predictions?
+- Clear mapping: theory variables → observables?
+- Can distinguish between theories?
+
+**Common problems:**
+- Abstract theory motivation
+- General model then specialized (should reverse)
+- Can't distinguish between competing explanations
+
+---
+
+## Specification Clarity
+
+**Check:**
+- Variables defined before equation?
+- Standard errors method stated (clustered how?)?
+- Sample restrictions clear?
+- Fixed effects explicitly noted?
+
+---
+
+## Audience Level
+
+**Over-explaining:** Explaining what fixed effects control for, spelling out "IV diff-in-diff"
+
+**Under-explaining:** Assuming specialized institutional knowledge
+
+**Hedging:** "suggests" when identification is credible
+
+---
+
+## Output Format
+
+```markdown
+# Methodology Clarity Review
+**Paper Type:** [A/B/C/D with justification]
+
+## Executive Summary
+**Strengths:** [What's explained well]
+**Priority Clarifications:** [Top 3 issues]
+
+## Identification Clarity
+[Current explanation, assessment, recommendations]
+
+## Type-Specific Assessment
+[Based on paper type priorities]
+
+## Specification Clarity
+[Issues with undefined variables, clustering, etc.]
+
+## Audience Level
+[Over/under-explanation issues]
+
+## Priority Improvements
+1. [Highest impact]
+2. [Second]
+3. [Third]
+```

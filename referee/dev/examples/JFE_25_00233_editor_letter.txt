@@ -1,0 +1,25 @@
+Dear Toni,
+Thank you very much for sending me the paper “Risk-Based Borrowing Limits in Credit Card
+Markets,” MS 00233, to referee.
+The paper empirically studies how lenders simultaneously set credit limits and interest rates in
+the UK credit card market. The UK credit card market is interesting because there’s very little
+variation in prices across consumers but there is substantial variation in credit limits. The key
+novelty of the model is to model how lenders maximize profits by jointly maximizing prices and
+credit limits. The author finds that credit limits play an important role in controlling the amount
+lenders lose in default. The author also finds that allowing lenders in the UK to tailor prices
+would dramatically increase the dispersion of prices, increase lender profits, and transfer
+surplus from low-income consumers who are price-inelastic to high-income consumers who are
+price-elastic.
+I am somewhere between a rejection and a major revision. On one hand, the topic is important
+and novel, and the author seems to have ideal data for studying it. However, there are various
+points where the key results of the paper seem to follow from some strong model assumptions
+rather than the data. While this is sometimes necessary, the paper is not transparent with how
+these assumptions shape the results. The paper is also very long, which makes it difficult to
+identify the central modeling choices. I’m very positive on the topic and would be excited to
+read future iterations. However, as written, I believe that one round of revisions may not be
+enough for publication given the high standards of the Journal of Financial Economics.
+I hope these comments are useful.
+Sincerely,
+Lulu Wang
+
+

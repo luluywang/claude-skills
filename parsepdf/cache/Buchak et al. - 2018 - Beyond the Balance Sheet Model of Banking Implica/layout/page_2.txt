@@ -1,0 +1,47 @@
+Beyond the Balance Sheet Model of Banking: Implications for Bank Regulation and Monetary
+Policy
+Greg Buchak, Gregor Matvos, Tomasz Piskorski, and Amit Seru
+NBER Working Paper No. 25149
+October 2018, Revised January 2020
+JEL No. G2,L5
+
+                                          ABSTRACT
+
+Bank balance sheet lending is commonly viewed as the predominant form of lending. We
+document and study two margins of adjustment that are usually absent from this view using
+microdata in the$10 trillion U.S. residential mortgage market. We first document the limits of the
+shadow bank substitution margin: shadow banks substitute for traditional—deposit-taking—
+banks in loans which are easily sold, but are limited from activities requiring on-balance-sheet
+financing. We then document the balance sheet retention margin: banks switch between
+traditional balance sheet lending and selling loans based on their balance sheet strength, behaving
+more like shadow banks following negative shocks. Motivated by this evidence, we build and
+estimate a workhorse structural model of the financial intermediation sector. Banks and shadow
+banks compete for borrowers. Banks face regulatory constraints but benefit from the ability to
+engage in balance sheet lending. Critically, departing from prior literature, banks can also choose
+to access the securitization market like shadow banks. To evaluate distributional consequences,
+we model a rich demand system with income and house price differences across borrowers. The
+model is identified using spatial pricing policies of government-sponsored entities and bunching
+at the regulatory threshold. We study the quantitative consequences of several policies on lending
+volume and pricing, bank stability, and the distribution of consumer surplus across rich and poor
+households. Both margins we identify significantly shape policy responses, accounting for more
+than $500 billion in lending volume across counterfactuals. Secondary market disruptions such as
+quantitative easing have significantly larger impacts on lending and redistribution than capital
+requirement changes once we account for these margins. We conclude that a regulatory policy
+analysis of the intermediation sector must incorporate the intricate industrial organization of the
+credit market and the equilibrium interaction of banks and shadow banks.
+
+Greg Buchak                                      Tomasz Piskorski
+University of Chicago                            Columbia Business School
+5807 S Woodlawn Ave                              3022 Broadway
+Chicago, IL 60637                                Uris Hall 810
+buchak@stanford.edu                              New York, NY 10027
+                                                 and NBER
+Gregor Matvos                                    tp2252@columbia.edu
+Kellogg School of Management
+Northwestern University                          Amit Seru
+2211 Campus Drive                                Stanford Graduate School of Business
+Global Hub 4361                                  Stanford University
+Evanston IL, 60208                               655 Knight Way
+and NBER                                         and NBER
+gregor.matvos@kellogg.northwestern.edu           aseru@stanford.edu
+

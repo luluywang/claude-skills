@@ -1,0 +1,126 @@
+# Senior Referee Report Output
+
+Generate the LaTeX document for the senior referee report (contribution focus).
+
+---
+
+## File Naming
+
+**Output file:** `{short_title}_{YYYYMMDD}_claude_senior_report.tex`
+
+**Generate short_title from paper title:**
+1. Take first 2-3 key words (skip articles: The, A, An)
+2. Convert to lowercase
+3. Replace spaces with underscores
+4. Keep only alphanumeric and underscores
+5. Limit to ~30 characters
+
+**Add timestamp:** Use today's date in YYYYMMDD format (e.g., 20251231).
+
+**Examples:**
+- "The Effect of Minimum Wage on Employment" (reviewed 2025-12-31) → `minimum_wage_employment_20251231_claude_senior_report.tex`
+- "Does Immigration Affect Wages?" (reviewed 2025-01-15) → `immigration_wages_20250115_claude_senior_report.tex`
+
+---
+
+## LaTeX Template
+
+```latex
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}\onehalfspacing
+\usepackage{amsmath,amssymb,hyperref}
+\usepackage{enumitem}
+\setlength{\parindent}{0pt}\setlength{\parskip}{0.5em}
+
+\begin{document}
+\title{Referee Report (Contribution Focus)\\for ``[Paper Title]''}
+\author{MS [number]}
+\date{}
+\maketitle
+
+\section{Summary of the Paper}
+
+[1-2 paragraphs: Research question, data/method used, key findings. Neutral summary without evaluation.]
+
+\section{Contribution Assessment}
+
+[State the contribution in one sentence. Then evaluate: importance, magnitude of advance, novelty, broad relevance. Is this a significant advance or too incremental/narrow/unclear?]
+
+\section{Literature Positioning}
+
+[How well does the paper position itself in the literature? Accuracy of cited work, missing important papers, overclaims about novelty relative to existing work.]
+
+\section{Deal Breakers}
+
+\textit{Issues that prevent publication in current form:}
+
+% If Deal Breakers exist:
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{[Issue Title]}
+
+    [Description of the issue with specific evidence from the paper - cite page numbers, tables, or quotes where relevant.]
+
+    \textbf{Why this affects publishability:} [1-2 sentences explaining why this issue prevents publication at a top journal.]
+
+    \item \textbf{[Next Issue Title]}
+
+    [Continue for each Deal Breaker...]
+
+\end{enumerate}
+
+% If NO Deal Breakers:
+% None identified from contribution perspective.
+
+\section{Other Issues}
+
+\textit{Issues that would improve the paper but are not blocking:}
+
+\begin{itemize}[leftmargin=*]
+    \item [Issue description]
+    \item [Issue description]
+\end{itemize}
+
+\end{document}
+```
+
+---
+
+## Section Guidelines
+
+### Summary of the Paper
+- Objective summary only
+- No evaluation or critique here
+- Focus on: question, data, method, headline findings
+
+### Contribution Assessment
+- Start with one-sentence contribution statement
+- Be specific: "The paper's contribution is [X]"
+- Evaluate against senior referee criteria from `senior.prompt`
+- Include comparison to existing literature
+
+### Literature Positioning
+- Reference results from literature search (`notes/literature_context.md`)
+- Cite specific papers that relate to claims
+- Note missing citations or mischaracterizations
+
+### Deal Breakers
+- Each must have clear title, description, and impact explanation
+- Cite specific evidence from paper (page numbers, tables)
+- Impact explanation should be 1-2 sentences, not longer
+- If none: Write "None identified from contribution perspective."
+
+### Other Issues
+- Bullet points, concise
+- Can group related minor items
+- No impact explanation needed
+
+---
+
+## Formatting Rules
+
+- Use `\section{Title}` for sections (auto-numbered)
+- Do NOT use `\section*{}` (unnumbered)
+- Do NOT manually number sections
+- Use `enumerate` for Deal Breakers, `itemize` for Other Issues
+- Keep paragraphs focused; avoid walls of text

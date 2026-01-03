@@ -1,0 +1,39 @@
+# Task: Reflow Sentences
+
+**Model:** Haiku (simple script execution)
+
+**Purpose:** Reformat LaTeX files to place one sentence per line, improving readability for version control and editing.
+
+**Output:**
+- Modified .tex files in place
+
+---
+
+## What This Task Does
+
+Runs the `reflow_sentences.py` script on each requested .tex file. The script:
+
+- Places each sentence on its own line
+- Preserves abbreviations (U.S., e.g., Dr., et al., etc.)
+- Skips special environments (tables, equations, math blocks)
+- Handles LaTeX commands appropriately
+- Preserves blank lines between paragraphs
+
+---
+
+## Workflow
+
+1. Identify all .tex files to process (from user scope)
+2. For each file, run:
+   ```bash
+   python3 /Users/luluwang/Dropbox/Documents/Economics/Projects/Claude/reflow_sentences.py <file>
+   ```
+3. Report files processed
+
+---
+
+## Quality Control
+
+- [ ] Script executed successfully on all files
+- [ ] Files still compile (no LaTeX errors introduced)
+- [ ] Math environments and tables preserved unchanged
