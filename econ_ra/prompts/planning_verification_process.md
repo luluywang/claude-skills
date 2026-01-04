@@ -10,11 +10,12 @@ The orchestrator provides:
 3. The threshold questions that were asked
 4. The user's answers to threshold questions (e.g., "B, B, B" or "defaults")
 5. Confirmation that user approved the task list
+6. Check modifications (if any) - user-requested changes to specific task checks from the check review step
 
 ## Your Task
 
 1. Parse the approved task list → write `econ_ra/current/tasks.json`
-2. Parse threshold answers → resolve checks → write `econ_ra/current/checks.md`
+2. Parse threshold answers → resolve checks → apply any user modifications → write `econ_ra/current/checks.md`
 3. Update status to "execution"
 4. Commit both files together
 
@@ -107,6 +108,28 @@ Example threshold question:
 If user answered "B" for Q1, replace:
 - `Merge rate > [THRESHOLD: Q1]` → `Merge rate > 99%`
 
+### Applying Check Modifications
+
+If the orchestrator provided check modifications, apply them after resolving thresholds:
+
+**Modification types:**
+- **Add a check**: Insert the new check under the appropriate category (Technical or Economic Sense)
+- **Remove a check**: Delete the specified check from the task
+- **Modify threshold**: Update the threshold value in the specified check
+- **Replace entirely**: Replace all checks for that task with the user-provided checks
+
+**Example modifications input:**
+```
+Task 3 modifications:
+- Add check: "No missing wage values in merged data"
+- Modify threshold: Change merge rate from >99% to >99.5%
+
+Task 5 modifications:
+- Remove check: "Pre-period coefficients not jointly significant"
+```
+
+Apply these modifications to the resolved checks before writing checks.md.
+
 ### Output: checks.md
 
 Write `econ_ra/current/checks.md` with resolved thresholds:
@@ -180,11 +203,12 @@ Task count: [N]
 
 Checks written to: econ_ra/current/checks.md
 Thresholds resolved: [M]
+Check modifications applied: [list task IDs with modifications, or "none"]
 
 Status updated to: execution
 
 Ambiguities:
-- [list any unclear threshold answers, or "none"]
+- [list any unclear threshold answers or modifications, or "none"]
 
 Ready for execution phase.
 ```

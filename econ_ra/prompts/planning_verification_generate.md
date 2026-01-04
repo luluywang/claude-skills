@@ -71,7 +71,10 @@ Return a combined proposal in this structure:
 
 ## Verification Checks
 
+For each task, provide completion criteria grouped into Technical and Economic Sense categories. Include a brief one-line summary after each task heading (used by the orchestrator when presenting checks for approval).
+
 ### Task 1: Load QCEW data
+**Summary:** File loads, required columns present, date range correct, values positive.
 
 **Technical:**
 - [ ] File loads without error
@@ -85,6 +88,7 @@ Return a combined proposal in this structure:
 ---
 
 ### Task 2: Load minimum wage data
+**Summary:** File loads, required columns present, values in valid range.
 
 **Technical:**
 - [ ] File loads without error
@@ -96,6 +100,7 @@ Return a combined proposal in this structure:
 ---
 
 ### Task 3: Merge datasets
+**Summary:** Merge succeeds, no duplicates, merge rate meets threshold, full state coverage.
 
 **Technical:**
 - [ ] Merged dataset loads without error
@@ -108,6 +113,7 @@ Return a combined proposal in this structure:
 ---
 
 ### Task 5: Estimate event study
+**Summary:** Output exists, coefficients present, pre-trends near zero, treatment effect as expected.
 
 **Technical:**
 - [ ] Output file exists
