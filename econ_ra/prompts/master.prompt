@@ -456,6 +456,102 @@ Return format: Revised task list + checks ready for user approval.
 
 Repeat Step 2 until user approves.
 
+### Step 2c: Check review and approval
+
+After task list and threshold questions are approved, present all completion criteria for review. This ensures the user explicitly verifies "how does the agent know when it can move on from this task?" before execution begins.
+
+**Process:**
+
+1. **Display all checks** (with thresholds resolved):
+   ```
+   ## Completion Criteria by Task
+
+   ### Task 1: Load QCEW data
+   Technical:
+   - [ ] File loads without error
+   - [ ] Contains columns: county_fips, naics, quarter, employment, wages
+   Economic Sense:
+   - [ ] Employment values are positive
+   - [ ] No county has employment > 10M
+
+   ### Task 2: Load minimum wage data
+   Technical:
+   - [ ] File loads without error
+   - [ ] Contains columns: state, quarter, min_wage
+   Economic Sense:
+   - [ ] Minimum wage values between $5 and $20
+
+   [... all tasks ...]
+   ```
+
+2. **Ask which need revision**:
+
+   For projects with ≤4 tasks, use a single multi-select question:
+   ```
+   AskUserQuestion:
+     header: "Check review"
+     question: "Which tasks have completion criteria that need revision? Select all that apply."
+     multiSelect: true
+     options:
+       - {"label": "Task 1: [brief]", "description": "Technical: [summary]. Economic: [summary]."}
+       - {"label": "Task 2: [brief]", "description": "Technical: [summary]. Economic: [summary]."}
+       - {"label": "Task 3: [brief]", "description": "Technical: [summary]. Economic: [summary]."}
+       - {"label": "None - approve all", "description": "All completion criteria look correct as proposed"}
+   ```
+
+   For projects with >4 tasks, use a summary approach:
+   ```
+   AskUserQuestion:
+     header: "Check review"
+     question: "Review the completion criteria above. Do any need revision?"
+     multiSelect: false
+     options:
+       - {"label": "All look correct", "description": "Approve all completion criteria as proposed"}
+       - {"label": "Some need changes", "description": "I'll specify which task numbers need revision"}
+
+   IF user selects "Some need changes":
+       Ask: "Which task numbers need revision? (e.g., 3, 7, 12)"
+       Collect task numbers via "Other" text input
+   ```
+
+3. **For each flagged task**, collect modifications:
+   ```
+   IF user selected tasks for revision:
+       FOR each flagged_task:
+           Display current checks for flagged_task
+
+           AskUserQuestion:
+             header: "Task {id} checks"
+             question: "What would you like to change about the completion criteria for Task {id}?"
+             multiSelect: false
+             options:
+               - {"label": "Add a check", "description": "I want to add an additional completion criterion"}
+               - {"label": "Remove a check", "description": "One of these checks is unnecessary"}
+               - {"label": "Modify threshold", "description": "A threshold value needs adjustment"}
+               - {"label": "Replace entirely", "description": "I'll specify different checks"}
+
+           Collect user's specific modification (via follow-up or "Other" text input)
+           Update checks for this task
+   ```
+
+4. **Confirm final checks** (if modifications were made):
+   ```
+   IF any modifications were made:
+       Display updated checks for modified tasks
+       AskUserQuestion:
+         header: "Confirm"
+         question: "Confirm updated checks are correct?"
+         multiSelect: false
+         options:
+           - {"label": "Approve", "description": "These checks are now correct"}
+           - {"label": "Make more changes", "description": "I need to revise further"}
+
+       IF "Make more changes": loop back to step 3
+   ```
+
+5. **Pass approved checks to Step 3**:
+   Include any user modifications when spawning planning_verification_process.
+
 ### Step 3: Spawn planning_verification_process subagent (Haiku)
 
 Use `model: haiku` when spawning this subagent for faster, cheaper processing.
@@ -472,11 +568,12 @@ Context:
 - Proposed checks: [paste the checks with threshold placeholders]
 - Threshold questions: [paste the questions]
 - User threshold answers: [collected responses, e.g., "B, B, B" or "defaults"]
+- Check modifications: [if user modified any checks in Step 2c, paste the modifications here; otherwise "none"]
 
 Your job:
 1. Parse the approved task list
 2. Write econ_ra/current/tasks.json
-3. Resolve thresholds and write econ_ra/current/checks.md
+3. Resolve thresholds and apply any user check modifications, then write econ_ra/current/checks.md
 4. Write status: echo "execution" > econ_ra/current/.status
 5. Commit: [econ_ra:planning] Task list and checks created (N tasks)
 6. Return status
