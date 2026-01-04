@@ -78,6 +78,32 @@ Your job is to be honest about what you couldn't do, not to paper over gaps.
 
 ---
 
+## Common Bug Patterns from Past Projects
+
+Watch for these issues discovered in previous projects:
+
+**Type System Issues (Julia):**
+- ForwardDiff type incompatibility: update type signatures to match autodiff requirements
+- Matrix type mismatch: Matrix{Float64} vs Matrix{Int64} causes allocation failures
+- When adding parameters to structs, update type parameter counts (e.g., S10 → S11)
+
+**Refactoring Hazards:**
+- Parameter name inconsistency: after renaming, old names may remain in function signatures
+- Second choice share calculation: ensure income gradient is considered in probability calculations
+- Obsolete constants: remove deprecated constants after migration (e.g., CREDIT_CONSTRAINT_MEDIAN_ACCESS)
+
+**Solver Edge Cases:**
+- anderson_depth=0 causes division by zero; use anderson_stop=0 instead
+- Oscillation after 2000 iterations may indicate convergence issues—document residual level
+
+**Recommended Testing Patterns:**
+- Functional form verification: confirm mathematical formulas are implemented correctly
+- Monotonicity tests: verify economic properties (e.g., higher income → more credit access)
+- Round-trip tests: parameter packing → unpacking → packing should be lossless
+- Incremental testing: run tests after each logical change to catch issues early
+
+---
+
 ## Step 0: Load Task-Specific Context
 
 **For writing/table tasks** (check the task's `type` field):
