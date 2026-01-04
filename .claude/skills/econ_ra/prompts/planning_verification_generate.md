@@ -183,6 +183,18 @@ The orchestrator will use AskUserQuestion to collect threshold choices interacti
 
 ### Task Design
 
+**Proven Task Decomposition Pattern (from past projects)**
+
+For structural model changes, use this ordering which has proven effective:
+1. Function signature (simplest) — 10-15 min
+2. Data structure/struct updates (medium) — 15-20 min
+3. Constructor & backward compatibility (medium) — 15-20 min
+4. Parameter vector handling (complex) — 20-30 min
+5. Call site updates (simple but thorough) — 15-25 min
+6. Tests in reverse dependency order — 20-40 min
+
+This pattern minimizes cascading changes and allows incremental verification.
+
 **Time Estimation**
 
 Estimate execution time for each task. Use these rough guidelines:

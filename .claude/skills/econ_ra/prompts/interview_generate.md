@@ -8,6 +8,26 @@ Load these files:
 - `econ_ra/current/spec.md` - The user's project description
 - `econ_ra/preferences.md` - Past preferences (if exists)
 
+## Historical Context
+
+Past projects are archived in `econ_ra/history/`. Before generating questions, check if similar projects exist:
+
+**Check history for:**
+- Similar project types (testing, refactoring, new features)
+- Same codebase or domain (e.g., payment network model, structural estimation)
+- Lessons that apply to this project
+
+**Use history to:**
+- Skip questions already answered in similar projects
+- Reference proven approaches from successful projects
+- Warn about pitfalls encountered in past work
+
+For Julia/payment network model projects, common patterns include:
+- ForwardDiff type compatibility requirements
+- Task decomposition: signature → struct → constructor → parameters → call sites → tests
+- Comprehensive unit testing (300+ assertions for structural changes)
+- Backward compatibility with legacy constructors
+
 ## Step 1: Explore the Codebase
 
 Before generating questions, scan the project to understand what exists:
