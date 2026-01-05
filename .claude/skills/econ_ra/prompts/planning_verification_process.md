@@ -13,8 +13,8 @@ The orchestrator provides:
 
 ## Your Task
 
-1. Parse the approved task list → write `econ_ra/current/tasks.json`
-2. Parse threshold answers → resolve checks → write `econ_ra/current/checks.md`
+1. Parse the approved task list → write `current/tasks.json`
+2. Parse threshold answers → resolve checks → write `current/checks.md`
 3. Update status to "execution"
 4. Commit both files together
 
@@ -42,7 +42,7 @@ Convert to JSON:
 
 ### Output: tasks.json
 
-Write `econ_ra/current/tasks.json`:
+Write `current/tasks.json`:
 
 ```json
 {
@@ -109,7 +109,7 @@ If user answered "B" for Q1, replace:
 
 ### Output: checks.md
 
-Write `econ_ra/current/checks.md` with resolved thresholds:
+Write `current/checks.md` with resolved thresholds:
 
 ```markdown
 # Verification Checks
@@ -161,9 +161,9 @@ Notice: thresholds are now concrete values, not multiple-choice options or place
 
 ## Step 3: Phase Completion
 
-1. Write `econ_ra/current/tasks.json`
-2. Write `econ_ra/current/checks.md`
-3. Write status: `echo "execution" > econ_ra/current/.status`
+1. Write `current/tasks.json`
+2. Write `current/checks.md`
+3. Write status: `echo "execution" > current/.status`
 4. Commit: `[econ_ra:planning] Task list and checks created (N tasks)`
 
 ---
@@ -175,10 +175,10 @@ Return to orchestrator:
 ```
 Planning and verification processing complete.
 
-Tasks written to: econ_ra/current/tasks.json
+Tasks written to: current/tasks.json
 Task count: [N]
 
-Checks written to: econ_ra/current/checks.md
+Checks written to: current/checks.md
 Thresholds resolved: [M]
 
 Status updated to: execution

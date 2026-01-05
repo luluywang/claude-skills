@@ -27,7 +27,7 @@ This orchestrator manages a multi-phase workflow with context isolation between 
 
 ## How It Works
 
-1. Detect current phase from `econ_ra/current/` state
+1. Detect current phase from `current/` state
 2. For phases requiring user input: spawn generate subagent → collect answers → spawn process subagent
 3. For execution: spawn one subagent per task
 4. **Clear working memory** between phases (don't carry forward code exploration, intermediate reasoning)
@@ -85,7 +85,7 @@ Context:
 - User command: [paste user's invocation, e.g., "tackle @notes/project.md" or "continue"]
 
 Your job:
-1. Create econ_ra/current/ directory if it doesn't exist
+1. Create current/ directory if it doesn't exist
 2. Read .status file if present
 3. Check for existence of key files (full_spec.md, tasks.json, checks.md)
 4. Determine current phase
@@ -121,8 +121,8 @@ Instructions:
 Read prompts/interview_generate.md for full instructions.
 
 Context:
-- User's project spec: [paste spec content here, or reference econ_ra/current/spec.md]
-- Preferences file: econ_ra/preferences.md
+- User's project spec: [paste spec content here, or reference current/spec.md]
+- Preferences file: preferences.md
 - Interview round: [N]
 - Prior clarifications: [if round > 1, paste current full_spec.md content]
 - Prior Q&A: [if round > 1, paste questions and answers from previous rounds]
@@ -162,11 +162,11 @@ Your job:
 1. Parse user answers
 2. Merge with prior full spec (if any)
 3. Identify remaining ambiguities that could affect implementation
-4. Write/update econ_ra/current/full_spec.md
-5. Write econ_ra/current/codebase_summary.md (round 1 only)
-6. Copy spec to econ_ra/current/spec.md (round 1 only)
+4. Write/update current/full_spec.md
+5. Write current/codebase_summary.md (round 1 only)
+6. Copy spec to current/spec.md (round 1 only)
 7. IF no remaining ambiguities:
-   - Write status: echo "planning" > econ_ra/current/.status
+   - Write status: echo "planning" > current/.status
    - Commit: [econ_ra:interview] Full spec complete (N rounds)
 8. Return: { status, ambiguities: [...], preferences: [...] }
 ```
@@ -189,8 +189,8 @@ Instructions:
 Read prompts/planning_verification_generate.md for full instructions.
 
 Context:
-- Full spec: econ_ra/current/full_spec.md
-- Preferences: econ_ra/preferences.md
+- Full spec: current/full_spec.md
+- Preferences: preferences.md
 
 Your job:
 1. Analyze the spec and clarifications
@@ -221,9 +221,9 @@ Context:
 
 Your job:
 1. Parse the approved task list
-2. Write econ_ra/current/tasks.json
-3. Resolve thresholds and write econ_ra/current/checks.md
-4. Write status: echo "execution" > econ_ra/current/.status
+2. Write current/tasks.json
+3. Resolve thresholds and write current/checks.md
+4. Write status: echo "execution" > current/.status
 5. Commit: [econ_ra:planning] Task list and checks created (N tasks)
 6. Return status
 ```
@@ -284,9 +284,9 @@ Instructions:
 Read prompts/wrapup.md for full instructions.
 
 Context:
-- Tasks: econ_ra/current/tasks.json
-- Session log: econ_ra/current/session_log.md
-- Checks: econ_ra/current/checks.md
+- Tasks: current/tasks.json
+- Session log: current/session_log.md
+- Checks: current/checks.md
 
 Your job:
 1. Mark status as "complete"
@@ -301,7 +301,7 @@ Your job:
 
 When the user says "reset", "clear", "start fresh", or "new project":
 
-1. Check if econ_ra/current/ exists
+1. Check if current/ exists
 2. IF current/ exists AND has content:
    - Ask user: "Archive current project before clearing, or discard?"
 3. Archive or discard as requested, then confirm ready for new project
@@ -321,9 +321,22 @@ When the user says "reset", "clear", "start fresh", or "new project":
 
 ## Files
 
+All paths are relative to this skill directory (`.claude/skills/econ_ra/`):
+
 ```
-econ_ra/                              # Runtime data (in project root)
+./                                    # Skill directory
+├── SKILL.md                          # This orchestrator
 ├── preferences.md                    # Accumulated user preferences
+├── prompts/                          # Phase instructions
+│   ├── bootstrap.md
+│   ├── interview_generate.md
+│   ├── interview_process.md
+│   ├── planning_verification_generate.md
+│   ├── planning_verification_process.md
+│   ├── task_dispatcher.md
+│   ├── execution.md
+│   └── wrapup.md
+├── templates/                        # Project templates
 ├── current/                          # Active project
 │   ├── spec.md                       # Original user spec (preserved)
 │   ├── full_spec.md                  # Consolidated specification

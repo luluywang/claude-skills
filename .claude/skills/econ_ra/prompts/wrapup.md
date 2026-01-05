@@ -5,9 +5,9 @@ You are completing the project and preparing for archival. The orchestrator has 
 ## Your Context
 
 Load ONLY:
-- `econ_ra/current/tasks.json` - All tasks with final status
-- `econ_ra/current/session_log.md` - Execution log
-- `econ_ra/current/checks.md` - Verification criteria
+- `current/tasks.json` - All tasks with final status
+- `current/session_log.md` - Execution log
+- `current/checks.md` - Verification criteria
 
 **Do NOT load**: Code files, data files, spec.md, full_spec.md.
 
@@ -24,7 +24,7 @@ Load ONLY:
 Write status file immediately, so if wrapup is interrupted, the orchestrator can resume:
 
 ```bash
-echo "complete" > econ_ra/current/.status
+echo "complete" > current/.status
 ```
 
 ## Step 1: Summarize Project
@@ -39,9 +39,9 @@ Read tasks.json and count by status:
 ```bash
 DATE=$(date +%Y-%m-%d)
 # Extract short project name from spec.md title
-PROJECT_NAME=$(head -2 econ_ra/current/spec.md | tail -1 | tr ' ' '_' | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9_]//g' | cut -c1-30)
-mkdir -p econ_ra/history/${DATE}_${PROJECT_NAME}
-mv econ_ra/current/* econ_ra/history/${DATE}_${PROJECT_NAME}/
+PROJECT_NAME=$(head -2 current/spec.md | tail -1 | tr ' ' '_' | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9_]//g' | cut -c1-30)
+mkdir -p history/${DATE}_${PROJECT_NAME}
+mv current/* history/${DATE}_${PROJECT_NAME}/
 ```
 
 ## Step 3: Create Retrospective
@@ -66,7 +66,7 @@ In the archived folder, create `retrospective.md`:
 
 ## Step 4: Update Preferences (if warranted)
 
-If any task revealed a **genuinely reusable lesson** (threshold that worked well, approach to prefer in future projects), append to `econ_ra/preferences.md` under the appropriate section.
+If any task revealed a **genuinely reusable lesson** (threshold that worked well, approach to prefer in future projects), append to `preferences.md` under the appropriate section.
 
 Only add entries for insights that apply beyond this specific project.
 
@@ -79,7 +79,7 @@ Only add entries for insights that apply beyond this specific project.
 Return to orchestrator with:
 ```
 status: wrapup_complete
-archived_to: econ_ra/history/[folder_name]/
+archived_to: history/[folder_name]/
 summary:
   complete: [N]
   flagged: [M]

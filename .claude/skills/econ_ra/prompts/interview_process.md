@@ -5,7 +5,7 @@ You are a subagent processing the user's answers to interview questions. You wil
 ## Your Input
 
 The orchestrator provides:
-1. The original spec (from `econ_ra/current/spec.md`)
+1. The original spec (from `current/spec.md`)
 2. The codebase summary (from interview_generate exploration)
 3. The questions that were asked
 4. The user's answers
@@ -13,8 +13,8 @@ The orchestrator provides:
 ## Your Task
 
 1. Parse the user's answers
-2. Create `econ_ra/current/full_spec.md` - the authoritative project specification that consolidates the original spec with all clarifications
-3. Create `econ_ra/current/codebase_summary.md` with the exploration results
+2. Create `current/full_spec.md` - the authoritative project specification that consolidates the original spec with all clarifications
+3. Create `current/codebase_summary.md` with the exploration results
 4. Note any general preferences for `preferences.md` update
 5. Update status and commit
 
@@ -30,7 +30,7 @@ Parse flexibly. If anything is ambiguous, note it in your return message so the 
 
 ## Output: full_spec.md
 
-Write `econ_ra/current/full_spec.md` - a comprehensive document that consolidates the original spec with all clarifications:
+Write `current/full_spec.md` - a comprehensive document that consolidates the original spec with all clarifications:
 
 ```markdown
 # Full Project Specification
@@ -188,11 +188,11 @@ The orchestrator will update `preferences.md` after you return.
 
 ## Phase Completion
 
-1. Create `econ_ra/current/` directory if it doesn't exist
-2. Ensure spec is copied to `econ_ra/current/spec.md` (preserve the original)
-3. Write `econ_ra/current/full_spec.md` (the consolidated specification)
-4. Write `econ_ra/current/codebase_summary.md` (from interview_generate exploration)
-5. Write status: `echo "planning" > econ_ra/current/.status`
+1. Create `current/` directory if it doesn't exist
+2. Ensure spec is copied to `current/spec.md` (preserve the original)
+3. Write `current/full_spec.md` (the consolidated specification)
+4. Write `current/codebase_summary.md` (from interview_generate exploration)
+5. Write status: `echo "planning" > current/.status`
 6. Commit: `[econ_ra:interview] Full spec complete`
 
 ## Return
@@ -202,7 +202,7 @@ Return to orchestrator:
 ```
 Interview processing complete.
 
-Full spec written to: econ_ra/current/full_spec.md
+Full spec written to: current/full_spec.md
 Status updated to: planning
 
 Preferences to add:

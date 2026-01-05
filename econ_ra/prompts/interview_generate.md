@@ -5,8 +5,8 @@ You are a subagent generating clarification questions for a new project. You wil
 ## Your Context
 
 Load these files:
-- `econ_ra/current/spec.md` - The user's project description
-- `econ_ra/preferences.md` - Past preferences (if exists)
+- `current/spec.md` - The user's project description
+- `preferences.md` - Past preferences (if exists)
 
 ## Step 1: Explore the Codebase
 

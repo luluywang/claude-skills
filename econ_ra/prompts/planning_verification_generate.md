@@ -5,9 +5,9 @@ You are a subagent generating a task list AND verification checks for a new proj
 ## Your Context
 
 Load these files:
-- `econ_ra/current/full_spec.md` - Consolidated project specification (includes original spec + all clarifications)
-- `econ_ra/current/codebase_summary.md` - Directory structure, scripts, data files (from interview exploration)
-- `econ_ra/preferences.md` - User's general preferences
+- `current/full_spec.md` - Consolidated project specification (includes original spec + all clarifications)
+- `current/codebase_summary.md` - Directory structure, scripts, data files (from interview exploration)
+- `preferences.md` - User's general preferences
 
 Use the codebase summary to create tasks that reference actual files and scripts. You do NOT need to re-explore the codebase.
 

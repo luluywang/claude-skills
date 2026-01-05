@@ -162,7 +162,7 @@ Before proceeding to verification, assess whether you can complete the task in t
 
 ### Continuation File Format
 
-Write to `econ_ra/current/continuation_task{N}.md` (replace N with your task number):
+Write to `current/continuation_task{N}.md` (replace N with your task number):
 
 ```markdown
 # Continuation: Task N
@@ -209,7 +209,7 @@ Run ALL checks specified for this task:
 
 ## Step 3.5: Update tasks.json
 
-Edit your task entry in `econ_ra/current/tasks.json`:
+Edit your task entry in `current/tasks.json`:
 
 Using the Edit tool, find your task by id and update:
 - `"status": "pending"` → `"status": "complete"` (or flagged/blocked)
@@ -278,7 +278,7 @@ notes: "Continuation file written. Ready for next subagent."
 
 ## Session Log Entry
 
-Append to `econ_ra/current/session_log.md`:
+Append to `current/session_log.md`:
 
 ```markdown
 ---
