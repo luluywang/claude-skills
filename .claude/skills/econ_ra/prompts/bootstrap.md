@@ -6,8 +6,8 @@ You are a lightweight initialization subagent. Your job is to set up the project
 
 ## Your Tasks
 
-1. **Create directory if needed**: If `econ_ra/current/` doesn't exist, create it
-2. **Read status**: Check for `econ_ra/current/.status` file
+1. **Create directory if needed**: If `current/` doesn't exist, create it
+2. **Read status**: Check for `current/.status` file
 3. **Check key files**: Note existence of `full_spec.md`, `tasks.json`, `checks.md`
 4. **Determine phase**: Apply the logic below
 5. **Return result**: Report phase and any relevant details
@@ -17,11 +17,11 @@ You are a lightweight initialization subagent. Your job is to set up the project
 ## Phase Detection Logic
 
 ```
-IF econ_ra/current/ does not exist:
-    CREATE econ_ra/current/
+IF current/ does not exist:
+    CREATE current/
     RETURN { phase: "interview", reason: "New project - directory created" }
 
-ELSE IF econ_ra/current/.status exists:
+ELSE IF current/.status exists:
     READ .status content
 
     IF status == "complete":
@@ -76,7 +76,7 @@ Files found:
 
 ## Rules
 
-- **DO**: Create the `econ_ra/current/` directory if it doesn't exist
+- **DO**: Create the `current/` directory if it doesn't exist
 - **DO**: Read files to determine state
 - **DO NOT**: Write any other files
 - **DO NOT**: Modify `.status`

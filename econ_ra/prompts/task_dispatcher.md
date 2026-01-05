@@ -4,7 +4,7 @@ You are a lightweight subagent that reads tasks.json and returns the next task(s
 
 ## Your Job
 
-1. Read `econ_ra/current/tasks.json`
+1. Read `current/tasks.json`
 2. Find tasks that are ready to execute (pending + dependencies satisfied)
 3. Return minimal info for orchestrator
 

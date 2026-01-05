@@ -14,7 +14,7 @@ This orchestrator manages a multi-phase workflow with context isolation between 
 
 ## How It Works
 
-1. Detect current phase from `econ_ra/current/` state
+1. Detect current phase from `current/` state
 2. For phases requiring user input: spawn generate subagent → collect answers → spawn process subagent
 3. For execution: spawn one subagent per task
 4. **Clear working memory** between phases (don't carry forward code exploration, intermediate reasoning)
@@ -82,13 +82,13 @@ Task: [econ_ra:bootstrap] Initialize and detect phase
 Model: haiku
 
 Instructions:
-Read dist/econ_ra/prompts/bootstrap.md for full instructions.
+Read prompts/bootstrap.md for full instructions.
 
 Context:
 - User command: [paste user's invocation, e.g., "tackle @notes/project.md" or "continue"]
 
 Your job:
-1. Create econ_ra/current/ directory if it doesn't exist
+1. Create current/ directory if it doesn't exist
 2. Read .status file if present
 3. Check for existence of key files (full_spec.md, tasks.json, checks.md)
 4. Determine current phase
@@ -100,11 +100,11 @@ Do NOT write any files except creating the directory. Just detect and report.
 ### Phase determination logic (executed by bootstrap subagent):
 
 ```
-IF econ_ra/current/ does not exist:
-    CREATE econ_ra/current/
+IF current/ does not exist:
+    CREATE current/
     → Phase: Interview (new project)
 
-ELSE IF econ_ra/current/.status exists:
+ELSE IF current/.status exists:
     READ .status (single line)
 
     IF status == "complete":
@@ -208,11 +208,11 @@ INTERVIEW_LOOP:
 Task: [econ_ra:interview:generate] Explore codebase and generate questions (round N)
 
 Instructions:
-Read dist/econ_ra/prompts/interview_generate.md for full instructions.
+Read prompts/interview_generate.md for full instructions.
 
 Context:
-- User's project spec: [paste spec content here, or reference econ_ra/current/spec.md]
-- Preferences file: econ_ra/preferences.md
+- User's project spec: [paste spec content here, or reference current/spec.md]
+- Preferences file: preferences.md
 - Interview round: [N]
 - Prior clarifications: [if round > 1, paste current full_spec.md content]
 - Prior Q&A: [if round > 1, paste questions and answers from previous rounds]
@@ -255,7 +255,7 @@ Task: [econ_ra:interview:process] Process user answers (round N)
 Model: haiku
 
 Instructions:
-Read dist/econ_ra/prompts/interview_process.md for full instructions.
+Read prompts/interview_process.md for full instructions.
 
 Context:
 - Original spec: [content]
@@ -269,11 +269,11 @@ Your job:
 1. Parse user answers
 2. Merge with prior full spec (if any)
 3. Identify remaining ambiguities that could affect implementation
-4. Write/update econ_ra/current/full_spec.md
-5. Write econ_ra/current/codebase_summary.md (round 1 only)
-6. Copy spec to econ_ra/current/spec.md (round 1 only)
+4. Write/update current/full_spec.md
+5. Write current/codebase_summary.md (round 1 only)
+6. Copy spec to current/spec.md (round 1 only)
 7. IF no remaining ambiguities:
-   - Write status: echo "planning" > econ_ra/current/.status
+   - Write status: echo "planning" > current/.status
    - Commit: [econ_ra:interview] Full spec complete (N rounds)
 8. Return: { status, ambiguities: [...], preferences: [...] }
 
@@ -289,7 +289,7 @@ Do not proceed to planning. Return ambiguity list for orchestrator to handle.
 
 ```
 IF status.ambiguities is empty:
-    - If preferences noted → update econ_ra/preferences.md
+    - If preferences noted → update preferences.md
     - Continue to Planning phase
     - MENTAL RESET: Forget codebase exploration details
 
@@ -352,11 +352,11 @@ When the phase is Planning, use the generate → interact → process pattern to
 Task: [econ_ra:planning:generate] Generate task list and verification checks
 
 Instructions:
-Read dist/econ_ra/prompts/planning_verification_generate.md for full instructions.
+Read prompts/planning_verification_generate.md for full instructions.
 
 Context:
-- Full spec: econ_ra/current/full_spec.md
-- Preferences: econ_ra/preferences.md
+- Full spec: current/full_spec.md
+- Preferences: preferences.md
 
 Your job:
 1. Analyze the spec and clarifications
@@ -439,11 +439,11 @@ If user requests changes to tasks or checks:
 Task: [econ_ra:planning:generate] Revise proposal
 
 Instructions:
-Read dist/econ_ra/prompts/planning_verification_generate.md for full instructions.
+Read prompts/planning_verification_generate.md for full instructions.
 
 Context:
-- Full spec: econ_ra/current/full_spec.md
-- Preferences: econ_ra/preferences.md
+- Full spec: current/full_spec.md
+- Preferences: preferences.md
 - Previous proposal: [paste prior task list and checks]
 - User feedback: [paste revision requests]
 
@@ -561,7 +561,7 @@ Task: [econ_ra:planning:process] Process approved proposal
 Model: haiku
 
 Instructions:
-Read dist/econ_ra/prompts/planning_verification_process.md for full instructions.
+Read prompts/planning_verification_process.md for full instructions.
 
 Context:
 - Approved task list: [paste the approved task table]
@@ -572,9 +572,9 @@ Context:
 
 Your job:
 1. Parse the approved task list
-2. Write econ_ra/current/tasks.json
-3. Resolve thresholds and apply any user check modifications, then write econ_ra/current/checks.md
-4. Write status: echo "execution" > econ_ra/current/.status
+2. Write current/tasks.json
+3. Resolve thresholds and apply any user check modifications, then write current/checks.md
+4. Write status: echo "execution" > current/.status
 5. Commit: [econ_ra:planning] Task list and checks created (N tasks)
 6. Return status
 
@@ -601,7 +601,7 @@ EXECUTION_LOOP:
         Model: haiku
 
         Instructions:
-        Read dist/econ_ra/prompts/task_dispatcher.md for full instructions.
+        Read prompts/task_dispatcher.md for full instructions.
 
         Context:
         - Mode: parallel (default) OR sequential (if --sequential flag)
@@ -621,7 +621,7 @@ EXECUTION_LOOP:
 
     # Step 2: Check for continuation files and prepare task contexts
     FOR each task in ready_tasks:
-        continuation_file = "econ_ra/current/continuation_task{task.id}.md"
+        continuation_file = "current/continuation_task{task.id}.md"
         IF continuation_file exists:
             task.continuation = READ continuation_file
         ELSE:
@@ -633,7 +633,7 @@ EXECUTION_LOOP:
             Task: [econ_ra:task{id}] Execute task {id} - "{task.task}"
 
             Instructions:
-            Read dist/econ_ra/prompts/execution.md for full instructions.
+            Read prompts/execution.md for full instructions.
 
             Context:
             - Task: {task.task}
@@ -703,12 +703,12 @@ When all tasks have terminal status (complete/flagged/blocked), spawn the wrapup
 Task: [econ_ra:wrapup] Complete project and archive
 
 Instructions:
-Read dist/econ_ra/prompts/wrapup.md for full instructions.
+Read prompts/wrapup.md for full instructions.
 
 Context:
-- Tasks: econ_ra/current/tasks.json
-- Session log: econ_ra/current/session_log.md
-- Checks: econ_ra/current/checks.md
+- Tasks: current/tasks.json
+- Session log: current/session_log.md
+- Checks: current/checks.md
 
 Your job:
 1. Mark status as "complete"
@@ -751,7 +751,7 @@ If `.status` contains "complete" but `current/` still exists, wrapup was interru
 When the user says "reset", "clear", "start fresh", or "new project":
 
 ```
-1. Check if econ_ra/current/ exists
+1. Check if current/ exists
 2. IF current/ exists AND has content:
    - Ask user: "Archive current project before clearing, or discard?"
      - [A] Archive to history/ first, then clear
@@ -775,9 +775,9 @@ When the user says "reset", "clear", "start fresh", or "new project":
 
 **Invocation examples:**
 ```
-Use @dist/econ_ra/master.prompt to reset
-Use @dist/econ_ra/master.prompt -- clear for new project
-Use @dist/econ_ra/master.prompt -- start fresh
+Use /econ_ra to reset
+Use /econ_ra -- clear for new project
+Use /econ_ra -- start fresh
 ```
 
 ---
@@ -800,11 +800,11 @@ Users interact via clickable options in AskUserQuestion. They can always select 
 ## Phase Flow (Autonomous Mode)
 
 ```
-User: Use @dist/econ_ra/master.prompt to tackle @notes/project.md
+User: Use /econ_ra to tackle @notes/project.md
 
 [BOOTSTRAP]
 Orchestrator spawns bootstrap subagent (haiku)
-    → Subagent creates econ_ra/current/ if needed
+    → Subagent creates current/ if needed
     → Subagent checks .status and key files
     → Returns: { phase: "interview", reason: "New project" }
 --- SUBAGENT CONTEXT DISCARDED ---
@@ -956,50 +956,46 @@ When spawning a subagent, specify the model in the Task tool:
 
 **Start new project (autonomous):**
 ```
-Use @dist/econ_ra/master.prompt to tackle @notes/my_project.md
+Use /econ_ra to tackle @notes/my_project.md
 ```
 
 **Start new project (interactive, pause between phases):**
 ```
-Use @dist/econ_ra/master.prompt to tackle @notes/my_project.md --interactive
+Use /econ_ra to tackle @notes/my_project.md --interactive
 ```
 
 **Continue interrupted project:**
 ```
-Use @dist/econ_ra/master.prompt to continue
+Use /econ_ra to continue
 ```
 
 **Reset for new project:**
 ```
-Use @dist/econ_ra/master.prompt to reset
+Use /econ_ra to reset
 ```
 
 ---
 
 ## Files
 
+All paths are relative to the skill/prompt directory:
+
 ```
-econ_ra/
-├── prompts/
-│   ├── master.prompt                        # This orchestrator
-│   ├── bootstrap.md                         # Bootstrap: directory setup + phase detection
-│   ├── interview_generate.md                # Interview: generate questions
-│   ├── interview_process.md                 # Interview: process answers
-│   ├── planning_verification_generate.md    # Planning+Verification: generate tasks and checks
-│   ├── planning_verification_process.md     # Planning+Verification: process approval
-│   ├── task_dispatcher.md                   # Execution: find ready tasks (haiku)
-│   ├── execution.md                         # Execution phase instructions
-│   ├── wrapup.md                            # Wrapup phase instructions
-│   └── archive/                             # Archived/deprecated prompts
-│       ├── planning_old.md                  # Old main-context planning
-│       ├── planning_generate.md             # Old separate planning generate
-│       ├── planning_process.md              # Old separate planning process
-│       ├── verification_generate.md         # Old separate verification generate
-│       └── verification_process.md          # Old separate verification process
+./                                           # Skill/prompt directory
+├── SKILL.md or master.prompt                # This orchestrator
+├── preferences.md                           # Accumulated user preferences
+├── prompts/                                 # Phase instructions
+│   ├── bootstrap.md
+│   ├── interview_generate.md
+│   ├── interview_process.md
+│   ├── planning_verification_generate.md
+│   ├── planning_verification_process.md
+│   ├── task_dispatcher.md
+│   ├── execution.md
+│   └── wrapup.md
 ├── templates/                               # Project templates
 │   ├── did_project.md
 │   └── structural_estimation.md
-├── preferences.md                           # Accumulated user preferences
 ├── current/                                 # Active project
 │   ├── spec.md                              # Original user spec (preserved)
 │   ├── full_spec.md                         # Consolidated specification (authoritative)

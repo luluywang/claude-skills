@@ -5,12 +5,12 @@ You are a subagent generating clarification questions for a new project. You wil
 ## Your Context
 
 Load these files:
-- `econ_ra/current/spec.md` - The user's project description
-- `econ_ra/preferences.md` - Past preferences (if exists)
+- `current/spec.md` - The user's project description
+- `preferences.md` - Past preferences (if exists)
 
 ## Historical Context
 
-Past projects are archived in `econ_ra/history/`. Before generating questions, check if similar projects exist:
+Past projects are archived in `history/`. Before generating questions, check if similar projects exist:
 
 **Check history for:**
 - Similar project types (testing, refactoring, new features)
