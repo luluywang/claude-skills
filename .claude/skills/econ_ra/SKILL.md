@@ -70,29 +70,36 @@ STOP. Instead:
 
 ## Bootstrap Phase (Always First)
 
-On every invocation, spawn a lightweight bootstrap subagent to handle directory setup and phase detection.
+On every invocation, run the bootstrap script to detect the current phase. This is faster and cheaper than spawning a subagent.
 
-### Spawn bootstrap subagent (Haiku)
+### Run bootstrap script
 
+```bash
+./scripts/bootstrap.sh
 ```
-Task: [econ_ra:bootstrap] Initialize and detect phase
-Model: haiku
 
-Instructions:
-Read prompts/bootstrap.md for full instructions.
-
-Context:
-- User command: [paste user's invocation, e.g., "tackle @notes/project.md" or "continue"]
-
-Your job:
-1. Create current/ directory if it doesn't exist
-2. Read .status file if present
-3. Check for existence of key files (full_spec.md, tasks.json, checks.md)
-4. Determine current phase
-5. Return: { phase: "interview|planning|execution|wrapup|cleanup", status_details: "..." }
-
-Do NOT write any files except creating the directory. Just detect and report.
+Returns JSON:
+```json
+{
+  "phase": "interview|planning|execution|cleanup|unknown",
+  "reason": "Brief explanation",
+  "directory_created": "yes|no",
+  "files": {
+    "status": "exists|missing",
+    "status_content": "...",
+    "full_spec": "exists|missing",
+    "tasks": "exists|missing",
+    "checks": "exists|missing",
+    "session_log": "exists|missing"
+  }
+}
 ```
+
+The script handles:
+1. Creating `current/` directory if it doesn't exist
+2. Reading `.status` file if present
+3. Checking for existence of key files
+4. Determining current phase based on the detection logic in `prompts/bootstrap.md`
 
 ## Context Isolation (Critical)
 
@@ -230,21 +237,31 @@ Your job:
 
 ## Execution Phase (Parallel by Default)
 
-During execution, use a task_dispatcher (haiku) to find ready tasks, then spawn execution subagents in parallel.
+During execution, use the dispatcher script to find ready tasks, then spawn execution subagents in parallel. The script is faster and cheaper than spawning a haiku subagent.
 
-### Spawn task_dispatcher subagent (haiku)
+### Run dispatcher script
 
+```bash
+python3 ./scripts/dispatcher.py           # Parallel mode (all ready tasks)
+python3 ./scripts/dispatcher.py --sequential  # Sequential mode (first ready task only)
 ```
-Task: [econ_ra:dispatch] Find ready tasks
-Model: haiku
 
-Instructions:
-Read prompts/task_dispatcher.md for full instructions.
-
-Context:
-- Mode: parallel (default) OR sequential (if --sequential flag)
-
-Return: {ready_tasks: [...], counts: {...}}
+Returns JSON:
+```json
+{
+  "ready_tasks": [
+    {"id": 3, "task": "Description", "type": "code", "depends_on": [1, 2]},
+    {"id": 5, "task": "Description", "type": "analysis", "depends_on": []}
+  ],
+  "counts": {
+    "complete": 2,
+    "flagged": 0,
+    "blocked": 0,
+    "pending": 3,
+    "partial": 0,
+    "total": 5
+  }
+}
 ```
 
 ### Spawn execution subagents IN PARALLEL
@@ -271,30 +288,62 @@ Your job:
 7. Return status: complete/flagged/blocked/partial
 ```
 
-**CRITICAL: After all tasks complete, you MUST spawn the wrapup subagent.** Do NOT just output a summary and stop.
+**CRITICAL: After all tasks complete, you MUST run the wrapup scripts (status.sh + archive.sh).** Do NOT just output a summary and stop. Spawn a wrapup subagent only if you need a detailed retrospective or have flagged/blocked items to analyze.
 
-## Wrapup Phase (Subagent)
+## Wrapup Phase (Script + Subagent)
 
-When all tasks have terminal status (complete/flagged/blocked), spawn the wrapup subagent:
+When all tasks have terminal status (complete/flagged/blocked), use the archive script for file operations and optionally spawn a subagent for retrospective creation.
+
+### Step 1: Set status to complete
+
+```bash
+./scripts/status.sh complete
+```
+
+### Step 2: Archive to history
+
+```bash
+./scripts/archive.sh
+```
+
+Returns JSON:
+```json
+{
+  "archived": true,
+  "archive_path": "/path/to/history/2025-01-05_project_name",
+  "archive_name": "2025-01-05_project_name",
+  "project_name": "project_name",
+  "date": "2025-01-05",
+  "counts": {"complete": 10, "flagged": 1, "blocked": 0, "pending": 0, "partial": 0}
+}
+```
+
+### Step 3: Create retrospective (optional subagent)
+
+If you need a detailed retrospective with lessons learned, spawn a wrapup subagent:
 
 ```
-Task: [econ_ra:wrapup] Complete project and archive
+Task: [econ_ra:wrapup] Create retrospective and identify lessons
+Model: haiku
 
 Instructions:
 Read prompts/wrapup.md for full instructions.
 
 Context:
-- Tasks: current/tasks.json
-- Session log: current/session_log.md
-- Checks: current/checks.md
+- Archive path: [from archive.sh output]
+- Tasks: [archive_path]/tasks.json
+- Session log: [archive_path]/session_log.md
+- Checks: [archive_path]/checks.md
 
 Your job:
-1. Mark status as "complete"
-2. Archive current/ to history/
-3. Create retrospective.md
-4. Update preferences.md if lessons learned
-5. Commit: [econ_ra:complete] Project archived
-6. Return status with flagged/blocked item details
+1. Create retrospective.md in archive folder
+2. Identify lessons for preferences.md
+3. Return flagged/blocked item details with severity
+```
+
+For simple projects with no flagged/blocked items, you can skip the subagent and just commit:
+```
+[econ_ra:complete] Project archived to history/YYYY-MM-DD_project_name
 ```
 
 ## Reset (Clear for New Project)
@@ -306,18 +355,22 @@ When the user says "reset", "clear", "start fresh", or "new project":
    - Ask user: "Archive current project before clearing, or discard?"
 3. Archive or discard as requested, then confirm ready for new project
 
-## Model Selection
+## Model Selection & Scripts
 
-| Subagent Type | Model | Rationale |
-|---------------|-------|-----------|
-| **bootstrap** | **haiku** | Lightweight directory/status check only |
-| interview_generate | default | Needs domain knowledge for question design |
-| **interview_process** | **haiku** | Structured parsing only |
-| planning_verification_generate | default | Needs domain + technical expertise |
-| **planning_verification_process** | **haiku** | Structured parsing only |
-| **task_dispatcher** | **haiku** | Reads tasks.json, returns ready tasks |
-| execution tasks | default | Full code understanding required |
-| **wrapup** | **haiku** | Summarizes session log for retrospective |
+Some operations are now handled by scripts instead of LLM subagents for faster execution and lower cost:
+
+| Operation | Type | Rationale |
+|-----------|------|-----------|
+| **bootstrap** | **script** | `./scripts/bootstrap.sh` - Pure file/directory checks |
+| **task_dispatcher** | **script** | `./scripts/dispatcher.py` - JSON parsing for ready tasks |
+| **archive** | **script** | `./scripts/archive.sh` - File operations for wrapup |
+| **status** | **script** | `./scripts/status.sh` - Get/set status file |
+| interview_generate | subagent (default) | Needs domain knowledge for question design |
+| **interview_process** | **subagent (haiku)** | Structured parsing only |
+| planning_verification_generate | subagent (default) | Needs domain + technical expertise |
+| **planning_verification_process** | **subagent (haiku)** | Structured parsing only |
+| execution tasks | subagent (default) | Full code understanding required |
+| **wrapup** (retrospective) | **subagent (haiku)** | Summarizes session log, optional |
 
 ## Files
 
@@ -327,13 +380,18 @@ All paths are relative to this skill directory (`.claude/skills/econ_ra/`):
 ./                                    # Skill directory
 ├── SKILL.md                          # This orchestrator
 ├── preferences.md                    # Accumulated user preferences
-├── prompts/                          # Phase instructions
-│   ├── bootstrap.md
+├── scripts/                          # Automation scripts (faster than subagents)
+│   ├── bootstrap.sh                  # Phase detection
+│   ├── dispatcher.py                 # Find ready tasks
+│   ├── archive.sh                    # Archive to history
+│   └── status.sh                     # Get/set status
+├── prompts/                          # Phase instructions (for subagents)
+│   ├── bootstrap.md                  # (reference only, use script)
 │   ├── interview_generate.md
 │   ├── interview_process.md
 │   ├── planning_verification_generate.md
 │   ├── planning_verification_process.md
-│   ├── task_dispatcher.md
+│   ├── task_dispatcher.md            # (reference only, use script)
 │   ├── execution.md
 │   └── wrapup.md
 ├── templates/                        # Project templates
