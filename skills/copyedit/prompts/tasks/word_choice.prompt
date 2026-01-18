@@ -1,0 +1,153 @@
+# Task: Word Choice Review
+
+**Scope:** This task owns ALL word-level and vocabulary issues including:
+- Anglo-Saxon over Latin (utilize→use)
+- Wordiness and redundant phrases
+- Nominalization
+- Weak verbs
+- Voice issues (passive→active at word level)
+
+Other tasks should NOT flag these issues.
+
+**Model:** Haiku (pattern detection and concrete alternatives)
+
+**Purpose:** Line-by-line word choice review for clarity, concreteness, precision.
+
+**Output:** `notes/word_choice_review.md`
+
+**Output Mode:** APPEND — do not overwrite existing content
+
+**Section Format:** Start each file's review with `## [filename.tex]`
+
+---
+
+## 1. Anglo-Saxon Over Latin
+
+| Replace | With |
+|---------|------|
+| utilize | use |
+| commence | begin |
+| purchase | buy |
+| individuals | people |
+| demonstrate | show |
+| facilitate | help |
+| implement | use (or specific verb) |
+| prior to | before |
+| in order to | to |
+
+**Test:** Would you say this word aloud to a friend?
+
+---
+
+## 2. Concrete Over Abstract
+
+**More concrete → Less concrete:**
+- "Chicago" → "large cities" → "urban areas"
+- "bread" → "food" → "consumption goods"
+- "workers" → "labor" → "factor inputs"
+
+**Singular more vivid than plural:** "A worker" vs "workers"
+
+---
+
+## 3. Vague Nouns to Avoid
+
+- **"concept"** → be specific
+- **"structure"** → usually empty
+- **"process"** → just name the action
+- **"individuals"** → "people"
+- **"factor"** → "reason" or be specific
+
+---
+
+## 4. Weak Verbs to Replace
+
+- **"analyze"** → "examine", "study", or specific ("regress Y on X")
+- **"utilize"** → "use" (always)
+- **"investigate"** → "study", "test"
+- **"indicate"** → "show"
+
+**Nominalizations:**
+- "make a calculation" → "calculate"
+- "conduct an analysis" → "analyze"
+
+---
+
+## 5. Useless Modifiers
+
+**Adjectives to cut:** "interesting", "various", "different", "certain", "particular"
+
+**About your work:** Never "striking results", "very significant", "highly important"
+
+**Adverbs to cut:** "very", "clearly", "obviously", "essentially", "basically"
+
+---
+
+## 6. Redundant Phrases
+
+| Replace | With |
+|---------|------|
+| due to the fact that | because |
+| in the event that | if |
+| for the purpose of | to |
+| with regard to | about |
+| it is the case that | (delete) |
+
+---
+
+## 7. Economics-Specific Verbose Patterns
+
+| Replace | With |
+|---------|------|
+| We examine the extent to which | How much does X affect Y? |
+| Has important implications for | affects |
+| Our analysis focuses on | We study |
+| We find evidence suggesting | We find |
+| A key advantage is that we observe | We observe |
+
+---
+
+## Output Format (Checklist)
+
+**CRITICAL:** Original and Proposed Revision must show COMPLETE SENTENCES — never truncate mid-sentence. This enables batch application via `apply_marked.prompt`.
+
+```markdown
+### - [ ] Lines X-Y: [Brief description]
+
+**Comment:** [Category + specific problem]
+
+**Original:**
+```
+[Full sentence(s) containing the flagged words — never fragments]
+```
+
+**Proposed Revision:**
+```
+[Complete revised sentence(s) with better word choice]
+```
+
+**Why better:** [More concrete? Simpler? More precise?]
+```
+
+---
+
+## Field Convention Notes
+
+**DO NOT flag:**
+- Technical economics terms
+- "Agents" when used technically in models
+- Standard abbreviations (OLS, IV, FE)
+
+**DO flag:**
+- "Agents" when "people" is clearer
+- "Utilize" (never needed)
+- Pretentious words without technical justification
+
+---
+
+## Quality Control
+
+- [ ] Every suggestion has specific replacement
+- [ ] Categories labeled
+- [ ] Full sentences shown
+- [ ] Organized by file in reading order

@@ -1,0 +1,114 @@
+# Task: Structure Analysis
+
+**Purpose:** High-level review of paper organization and transitions. Not line-by-line editing.
+
+**Output:** `notes/structure_analysis.md`
+
+---
+
+## Analysis Framework
+
+### 1. Introduction Structure
+
+**Check for:**
+- Inverted pyramid (punchline first)?
+- RAP clear (Research question, Answer, Positioning)?
+- Literature AFTER contribution (not before)?
+- Length ≤ 3 pages?
+
+**Common problems:**
+- Throat-clearing, policy importance before contribution
+- Literature review first
+- Excessive roadmap paragraphs
+- "This paper..." openings
+
+**Paper type considerations:**
+- Type A: Gets to identification fast
+- Type B: Explains institutions before deep dive
+- Type C: Economic question before method details
+- Type D: Empirical puzzle before theory
+
+### 2. Body Section Structure
+
+**Two goals for each body section:**
+
+1. **Connect to RAP Narrative**
+   - Opening links to central question/answer using key words from intro
+   - Explains WHY this section matters for the overall argument
+   - Reader shouldn't feel lost or wonder "why are we doing this?"
+   - Good: "Having established X, we now examine the mechanism..."
+   - Bad: Jumping into details without context
+
+2. **Clearly Explain What Is Done**
+   - State what the section will show BEFORE showing it
+   - Preview findings, then present evidence
+   - Good: "We find effect is concentrated in X. Table 3 confirms..."
+   - Bad: "Table 3 shows the results" (results of what?)
+
+**Common problems:**
+- Diving into details without connecting to story
+- Section openers that describe methods without explaining purpose
+- Missing bridge between "what we're doing" and "why it matters"
+
+### 3. Section Ordering
+
+**Check for:**
+- Logical progression
+- Main results early (not Table 12)
+- Robustness in appendix (not cluttering main paper)
+
+**Common problems:**
+- Long descriptive stats before main analysis
+- General model → specialization (should reverse)
+
+### 4. Transitions
+
+**Good:** Carry forward key concept, answer provoked question
+
+**Bad:** "Moreover," "Additionally" at every paragraph start, mechanical signposts
+
+### 5. Headings
+
+**Good:** Declarative, specific ("Securitization Reduces Screening by 25%")
+
+**Bad:** Generic ("Model", "Data", "Results")
+
+### 6. Conclusion
+
+- Necessary or redundant?
+- Short (1 page max)?
+- Adds insight or just repeats?
+
+---
+
+## Output Format
+
+```markdown
+# Structure Analysis
+**Paper Type:** [A/B/C/D with justification]
+
+## Executive Summary
+**Strengths:** [What's working]
+**Priority Issues:** [Top 3 structural problems]
+**Recommended Actions:** [Highest-impact change]
+
+## Introduction Structure
+[Current structure, issues, recommendations]
+
+## Body Section Structure
+[For each major section: Does it connect to RAP? Does it clearly explain what's done?]
+
+## Section Ordering
+[Current order, issues, recommended reordering]
+
+## Transitions & Headings
+[Assessment, issues, recommendations]
+
+## Conclusion
+[Assessment, recommendation]
+
+## Priority Improvements
+1. [Highest impact]
+2. [Second]
+3. [Third]
+```

@@ -1,0 +1,108 @@
+# Task: Flow Extraction
+
+**Purpose:** Extract and display the paper's argumentative skeleton so the writer can see if the flow works. Then analyze for gaps.
+
+**Output:** `notes/flow_extraction.md`
+
+---
+
+## Step 1: Extract Section Skeleton
+
+For each section and subsection, extract:
+- The heading
+- The first paragraph (the "takeaway" that should orient readers)
+
+Display them in document order with clear hierarchy.
+
+---
+
+## Step 2: Extract Paragraph Skeleton
+
+Extract the first sentence of every paragraph in the paper, in order.
+
+Display as a numbered list so the writer can read them as a continuous narrative.
+
+---
+
+## Step 3: Analyze
+
+### Section Openers
+
+**For Introduction:**
+- Establishes RAP (Research question, Answer, Positioning)?
+- Sets up what's coming in the paper?
+- Contribution first (inverted pyramid)?
+
+**For Body Sections:**
+- **Connects to RAP** — Uses key words from intro, links to central question?
+- **States purpose** — Why this section matters for the argument?
+- **Previews content** — What the section will show?
+- **Prepares for details** — Orients reader before diving in?
+
+Flag sections that fail either the RAP connection or the purpose statement.
+
+### First Sentences
+
+For the paragraph skeleton, check:
+1. **Coherent story** — Can you follow the argument reading only first sentences?
+2. **Key word chains** — Do first sentences carry forward phrases from previous ones?
+3. **Main messages** — Does each first sentence state an idea (not just a detail)?
+4. **Forward momentum** — Does each provoke a question the paragraph answers?
+
+Identify breaks in the chain where flow is lost.
+
+---
+
+## Output Format
+
+```markdown
+# Flow Extraction
+
+## Section Skeleton
+
+### 1. Introduction
+[First paragraph of introduction]
+
+### 2. [Section Title]
+[First paragraph]
+
+#### 2.1 [Subsection Title]
+[First paragraph]
+
+[Continue for all sections/subsections...]
+
+---
+
+## Paragraph Skeleton
+
+1. [First sentence of paragraph 1]
+2. [First sentence of paragraph 2]
+3. [First sentence of paragraph 3]
+...
+[Continue for all paragraphs]
+
+---
+
+## Analysis
+
+### Section Opener Issues
+
+| Section | Issue |
+|---------|-------|
+| [Section name] | [What's missing: main message / link to story / preparation / provocation] |
+
+### Flow Breaks in Paragraph Skeleton
+
+| After sentence # | Issue |
+|------------------|-------|
+| [#] | [What breaks: topic shift without link / missing key word chain / detail instead of idea] |
+
+### Summary
+
+**Strengths:** [What's working in the flow]
+
+**Priority fixes:**
+1. [Most important flow issue]
+2. [Second]
+3. [Third]
+```

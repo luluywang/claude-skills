@@ -1,0 +1,5 @@
+# macOS
+.DS_Store
+
+# Machine-specific settings
+settings.local.json

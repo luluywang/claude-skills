@@ -1,0 +1,219 @@
+BulletBooks
+The Little Book on Research Writing
+Varanya Chaubey – 2018
+Introduction:
+
+
+
+
+
+
+
+
+
+Barbara Minto’s Pyramid Principle: analytical writing can be structured as a logical dialog between
+the reader and the writer, and the reader prefers being allowed to descend from the high level to
+the details. p. 2.
+Writing a paper should have three layers, like the foundations of a building. p. 3.
+o Planning an argument.
+o Building an outline to support the argument.
+o Drafting paragraphs. Do so in a way that allows for the reader to learn as they read.
+At a minimum writing should allow readers to comprehend as they read. p. 9.
+A descending structure is appropriate when the reader must process complex details in a limited
+amount of time. p. 24.
+Miller 1956: the human brain encodes information in lists of 7 items (±2). Group ideas into
+hierarchies to keep such a structure. p. 20.
+Descending structure allows more types of readers to learn from your writing. p. 28.
+
+Layer 1: Articulate the argument.
+
+
+
+
+
+
+
+
+
+The challenge is to take stock of all these details and distill them into a single accurate claim about
+what the paper brings to the literature. What you did, how you did it, why you did it, why it
+matters, how it compares to what others have found... p. 32.
+RAP is the paper’s main argument distilled from its key details. p. 34.
+R: the research question. Think of R as a version of the research question that the reader might be
+able to articulate, the answer to which lies in your paper. Allow the reader to recognize your paper
+as relevant to their interests. p. 35.
+o Keep a lot of versions of R from the start from the start of the project. Get feedback on
+each. Think about who the primary and secondary readers of the paper are. p. 36.
+A: The answer. While R links your argument to reader’s concerns, A anchors it to what the paper
+actually delivers. Think of the main findings and summarize them. When A is articulated, you
+should be able to see that it is the higher-level idea that takes readers down to the detail of the
+findings. The task is to extract the main message from detailed findings. p. 36.
+P: Positioning statement. Allow readers to see a space in the literature that R and A occupy. The
+literature represents our collective effort at finding out things worth knowing. p. 41.
+o Allow readers to make inferences about (1) the current state of knowledge, (2) a
+worthwhile direction in which it could be advanced, (3) how R helps to move in that
+direction.
+o Consider the expectations that you will form about R, and about the scope of A.
+o P makes space for R, while R is answered by A. As a result, P should idly lead readers to A.
+
+BulletBooks
+
+
+Try different RAPs. Different combinations will appeal to different audiences. p. 48.
+
+Layer 2: Build an outline.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Write headings with key takeaways following them. Takeaways should be less than 4 sentences for
+sections, and less than 2 sentences per section. A reader who skims section headings and their
+takeaways should know where the main questions they have after seeing the argument will be
+answered. p. 61.
+Takeaway from the introduction is a paper’s RAP. You can try different orders for the three letters.
+Most people order it with RPA. p. 65.
+We have been brought up to write headings to organize our own thoughts, but this need not be the
+most meaningful structure for readers. p. 67.
+Headings should help readers get answers to their own basic questions: what do you do in this
+paper? They should navigate any reader; only after this is secure turn to expert readers and think
+through questions they might expect to be answered. p. 71.
+Key words are not key words if they are not used consistently. Write subheadings by adding some
+specifics to key words. p. 76.
+Ask readers what order they expect their questions to be answered in; first consider any reader,
+then the experts. p. 81.
+Having reader-driven headings leads to a more efficient research process and yields a stronger final
+draft that will be better able to anticipate the types of evidence readers will expect. p. 82.
+With a good outline, uninformed readers will be able to make inferences about the paper, like (1)
+identifying the main argument, (2) being able to summarize how it is supported, (3) where they can
+find answers to their own questions. p. 85.
+Outlines made of bullet points are not RAP outlines. They suffer from the problem that readers
+and writers have different amounts of prior knowledge. p. 88.
+Takeaways should include: (1) the main message of the heading, (2) the link to the overall story the
+paper tells (use key words to link sections and develop the story), (3) prepare readers to absorb the
+details that will follow, (4) provoke follow questions that will be answered in the section. p. 89.
+RAP outline is a useful device for collecting feedback while you are still working on the research. p.
+96.
+
+Layer 3: Draft paragraphs
+
+
+
+
+The dialog sparked by the takeaways (readers’ questions and writer’s answers) should tour both all
+the way to the end of the section. At the end of a section we may find a more detailed version of an
+idea we encountered at a higher level in the takeaway. p. 102.
+Paragraphs should answer the question provoked by the takeaway or a main question sparked by the
+prior paragraph. p. 104.
+
+BulletBooks
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Introductions should have two parts. Part 1 should provoke curiosity; help the reader learn about
+the context of the paper. Part 2 should help readers get ready for the main business of the paper. In
+the transition the discussion will change from what other papers do to what your paper does. p.
+108.
+Many papers ask for much mor curiosity than is granted by the paper. For example, too often they
+include grand contextual statements that only vaguely hint at the importance of the paper. p. 110.
+Use P to write the first part of the introduction. First identify the skeleton points being made and
+decide what other information readers will need on their way to asking R. In effect, insert reader’s
+most logical questions into P. p. 113.
+Part 1 of the intro should take up as much brain space as an impatient reader will give you before
+wanting to get down to the main business of the paper. p. 116.
+Part 2 should help readers visualize what will come and provoke the right follow up questions.
+Consider a bridge paragraph between the two parts. p. 119.
+Part 2 should follow RAP. Pick up ideas from the section takeaways ad use these to write up
+paragraphs in the intro. p. 126.
+One way to check that your paragraphs form a storyline is to take the first sentence of every
+paragraph, put them in a separate document, and see if others can follow the logic. p. 128.
+One example: the first sentence of each paragraph should carry forward at least one phrase from
+the previous first sentence. Linguistic links help readers recognize logical links between paragraphs.
+p. 129.
+You have a good intro when Part 1 makes readers curious and when Part 2 tells a storyline that
+readers can recognize and prepares them for the body of the paper. p. 130.
+Paragraphs are units of the argument designed to help readers see how their argument is advanced
+by a chunk of details. p. 134.
+Working within the RAP outline, draft paragraphs by following the takeaways or other paragraphs
+that appear in Part 2 of the introduction. p. 137.
+The first sentence of each paragraph should offer the paragraph’s RAP-relevant main message while
+provoking follow-up questions that will be answered in its body. Then write the rest of the
+paragraph to offer the first sentence coherent support. p. 137.
+The first sentence of each paragraph should convey an idea, not detail. It should help readers link
+the main message with the overall argument. p. 139.
+3 properties to each first sentence: p. 141.
+o It includes the main message.
+o It can be recognized as being linked to the overall story.
+o It should provoke follow-up questions.
+If it proves difficult to hint at a key idea at the beginning which is detailed in the paragraph, perhaps
+you should consider whether the right group of details have been chunked into that single
+paragraph. p. 153.
+Remind yourself of why you are writing the paragraph: what question of the reader have you set
+out to answer? p. 153.
+
+BulletBooks
+
+
+
+
+
+Do not use interchangeable terms to refer to the same identity, this applies across a paragraph and
+across the whole paper. p. 157.
+RAP paragraphs should have 5-6 sentences. If there are more, it is likely an idea has been buried
+inside which readers will likely miss. In the end, however, structure is more important than length.
+p. 158.
+Because we tend to write to refine our thoughts, key ideas usually (and unfortunately) end up at the
+bottom of paragraphs. p. 160.
+
+Conclusion:
+
+
+
+
+
+
+
+RAP helps researchers produce drafts that allow readers with different degrees of prior knowledge
+to learn as they read: RAP should go through a paper like its spine. It is what links part into a
+whole. p. 167.
+RAP also pushes researchers to articulate ideas that would save readers a lot of time and effort if
+only they were visible in a draft. Too often when you ask researchers questions about their work,
+you often learn other things about a paper. You hear sentences that were never in the draft but that
+would have been very valuable to the reader. p. 169.
+The exercise of turning a seeming detail into a RAP-relevant point for the reader often requires the
+writer to think hard about why or how the detail matters. p. 169.
+Many people delay writing until the results are in. That is like trying to ride a bicycle one wheel at a
+time. Writing and research go together! p. 173.
+
+
