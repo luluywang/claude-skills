@@ -108,11 +108,23 @@ Watch for these issues discovered in previous projects:
 
 **For writing/table tasks** (check the task's `type` field):
 
-When your task involves producing written output (drafting text, creating tables, polishing prose):
-- Apply writing style best practices
-- Check for AI tells before committing
-- Use concrete numbers, active voice, varied sentences
-- Run a pre-commit checklist for quality
+When your task involves producing written output (drafting text, creating tables, polishing prose), read the writing guide first:
+
+```
+Read: ../references/writing_principles.md
+```
+
+Key principles to apply:
+- **Structure**: Put the punchline first. Get to results quickly. Don't bury findings.
+- **Style**: Be concrete ("coefficient is 0.03" not "results are significant"). Use active voice. Plain language over jargon.
+- **Tables**: Self-contained captions. Meaningful labels. Sensible significant digits. Every number discussed in text.
+- **Empirical writing**: Describe identification in economic terms. Show stylized facts, not just p-values. Focus on magnitude.
+
+**Before committing any prose**, check for AI tells:
+- No em-dashes for asides (use commas or parentheses)
+- No "Notably," "Importantly," "Crucially" sentence starters
+- No "This suggests," "It is worth noting" without clear antecedent
+- No mechanical parallel structure or overly smooth transitions
 
 ---
 
@@ -227,19 +239,37 @@ This ensures your status is captured even if the orchestrator is interrupted.
 
 ## Step 4: Commit
 
-One commit for this task that includes:
-- Code changes
-- tasks.json update (your entry)
-- session_log.md append
+**First, check repository status in `current/codebase_summary.md`:**
 
-```
-[econ_ra:taskN] Brief description, key results
+Look for the "Git root" field in the Project Info section.
 
-Examples:
-[econ_ra:task3] Merge complete, 1.89M obs, 99.2% match rate
-[econ_ra:task7] FLAGGED - construction coef +0.08, expected negative
-[econ_ra:task9] BLOCKED - convergence failed
-```
+**Read session ID:**
+- Load the session ID from `current/.session_id`
+- This short identifier (e.g., "bootstrap", "welfare") distinguishes this project's commits from other econ_ra runs
+
+**If Git root is a valid path:**
+1. Navigate to that git root directory
+2. Stage your code changes: `git add [changed files]`
+3. Commit with message format:
+   ```
+   [econ_ra:{session_id}:taskN] Brief description, key results
+
+   Examples:
+   [econ_ra:bootstrap:task3] Merge complete, 1.89M obs, 99.2% match rate
+   [econ_ra:welfare:task7] FLAGGED - construction coef +0.08, expected negative
+   [econ_ra:jstar:task9] BLOCKED - convergence failed
+   ```
+4. Verify commit succeeded: `git log -1 --oneline`
+
+**If Git root is "not a git repo":**
+- Skip the commit step entirely
+- Note in your return status: "No git repo - changes not committed"
+- Continue to Step 5
+
+**Important:**
+- Only commit code changes to the user's project
+- Do NOT commit internal workflow files (tasks.json, session_log.md) - these are for tracking only
+- If you can't find the git root or codebase_summary.md is missing, return blocked status with explanation
 
 ---
 
@@ -313,7 +343,7 @@ Do NOT perform wrapup or archival. The orchestrator handles project completion a
 
 - **One task only** — do not look at or work on other tasks
 - **Verify before completing** — run all checks
-- **Commit before returning** — don't leave uncommitted work
+- **Commit if git repo exists** — check codebase_summary.md for Git root; skip commits if "not a git repo"
 - **NO PLACEHOLDERS** — if you can't complete something, return blocked/flagged status
 - **Substance over surface** — every piece of text must convey real economic content
 - **Prefer partial over blocked** — if you've made real progress but can't finish, write a continuation rather than returning blocked
