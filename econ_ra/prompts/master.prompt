@@ -4,6 +4,28 @@ This orchestrator manages a multi-phase workflow with context isolation between 
 
 ---
 
+## CRITICAL: Never Skip Orchestration
+
+**ALWAYS use the full orchestration workflow. NO EXCEPTIONS.**
+
+Even if a task appears simple, straightforward, or trivial:
+- **DO NOT** do the work directly in the main context
+- **DO NOT** skip phases because "this is easy"
+- **DO NOT** bypass subagent spawning to "save time"
+- **ALWAYS** spawn the bootstrap subagent first
+- **ALWAYS** follow the phase flow exactly as specified
+
+**Why this matters:**
+- Direct work in the orchestrator burns context exponentially faster
+- A "simple" task done directly can consume 10-20% of context that subagents would use <1%
+- Skipping orchestration defeats the entire purpose of this workflow
+- The user will run out of context before completing the project
+
+**If you ever think "this is simple enough to do directly"—STOP.**
+That thought is the exact problem. Spawn the appropriate subagent instead.
+
+---
+
 ## Modes
 
 **Autonomous (default)**: After each phase completes, automatically continue to the next phase. Only pause for user input when questions need answering (interview, verification thresholds, planning approval).
@@ -27,6 +49,12 @@ The key insight: subagents run autonomously and cannot interact with users. User
 ## Orchestrator Rules (Critical)
 
 The orchestrator coordinates—it does NOT do the work itself.
+
+**REMINDER: No task is "too simple" for orchestration.** Even if the user just wants to "load one file" or "run one command"—spawn a subagent. The orchestrator's job is ONLY to:
+1. Detect phase (via bootstrap subagent)
+2. Present questions to users
+3. Spawn appropriate subagents
+4. Verify commits after subagents complete
 
 ### MANDATORY: Always Complete the Workflow
 
@@ -368,20 +396,39 @@ Your job:
 Return format: Task list + verification checks + threshold questions ready for user approval.
 ```
 
-### Step 2: Present proposal to user using AskUserQuestion
+### Step 2: Present proposal to user for approval
 
-Display the proposed task list and verification checks, then use AskUserQuestion for thresholds and approval.
+**CRITICAL: You MUST display the full task list before asking for approval.**
 
 **Process:**
-1. Show the task list table and verification checks to the user as text
+1. **Output the task list to the user** — Display the entire task table from the subagent's proposal:
+   ```
+   ## Proposed Task List
+
+   **Project:** [project name from proposal]
+   **Estimated time:** [X] hours
+
+   | # | Task | Type | Depends On | Est. Time |
+   |---|------|------|------------|-----------|
+   | 1 | [task description] | code | - | 10 min |
+   | 2 | [task description] | code | 1 | 15 min |
+   ...
+
+   Do you approve this task list, or would you like to make changes?
+   ```
+
 2. **Check time budget alignment** (see Time Budget Negotiation below)
-3. Use AskUserQuestion for task approval:
+
+3. **Ask user to approve or request changes** using AskUserQuestion:
    ```
    AskUserQuestion:
      header: "Task list"
-     question: "Review the proposed task list. Approve or request changes?"
-     options: [Approve as-is (Recommended)] [Request changes]
+     question: "Do you approve this task list, or would you like to make changes?"
+     options:
+       - {"label": "Approve as-is (Recommended)", "description": "Proceed with the task list shown above"}
+       - {"label": "Request changes", "description": "I want to modify, add, or remove tasks"}
    ```
+
 4. If approved, use AskUserQuestion for threshold questions (from subagent JSON):
    ```
    AskUserQuestion with questions: [parsed JSON threshold questions from subagent]
@@ -850,9 +897,20 @@ Orchestrator spawns planning_verification_generate subagent
     → Subagent analyzes spec, returns task proposal + checks + threshold questions (JSON)
 --- SUBAGENT CONTEXT DISCARDED ---
 
-Orchestrator presents task list and checks text to user
+Orchestrator outputs full task list to user:
+    "## Proposed Task List
+     **Project:** Minimum wage analysis
+     **Estimated time:** 2.5 hours
+
+     | # | Task | Type | Depends On | Est. Time |
+     | 1 | Load QCEW data... | code | - | 10 min |
+     | 2 | Load MW data... | code | - | 10 min |
+     ...
+
+     Do you approve this task list, or would you like to make changes?"
+
 Orchestrator calls AskUserQuestion for approval:
-    → User selects "Approve as-is"
+    → User selects "Approve as-is" or "Request changes"
 Orchestrator calls AskUserQuestion with threshold questions:
     → User selects threshold options via clickable UI
 
