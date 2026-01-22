@@ -213,10 +213,10 @@ Your job:
 4. Write/update current/full_spec.md
 5. Write current/codebase_summary.md (round 1 only)
 6. Copy spec to current/spec.md (round 1 only)
-7. IF no remaining ambiguities:
-   - Write status: echo "planning" > current/.status
-   - Commit: [econ_ra:interview] Full spec complete (N rounds)
+7. IF no remaining ambiguities: Write status: echo "planning" > current/.status
 8. Return: { status, ambiguities: [...], preferences: [...] }
+
+Note: Do NOT commit internal workflow files (they are in .claude/ which is typically gitignored).
 ```
 
 ### Key files created by Interview phase
@@ -248,9 +248,45 @@ Your job:
 5. Return proposal with tasks, checks, and threshold questions (do NOT write files)
 ```
 
-### Step 2: Present proposal to user using AskUserQuestion
+### Step 2: Present proposal to user for approval
 
-Display the proposed task list and verification checks, then use AskUserQuestion for thresholds and approval.
+**CRITICAL: You MUST output the full task list to the user BEFORE calling AskUserQuestion.**
+
+The user needs to see every task in the proposal, not just a count or summary. This is the orchestrator's responsibility—output the table directly as text in your response.
+
+**Process:**
+1. **Output the task table as text** — Copy the entire task table from the subagent's return and output it directly:
+   ```
+   ## Proposed Task List
+
+   **Project:** [project name from proposal]
+
+   | # | Task | Type | Depends On |
+   |---|------|------|------------|
+   | 1 | Load QCEW data from data/raw/qcew.dta, verify structure | code | - |
+   | 2 | Load minimum wage data from data/raw/state_mw.csv | code | - |
+   | 3 | Merge QCEW with MW data on state-quarter | code | 1, 2 |
+   ...
+
+   Total: [N] tasks
+   ```
+
+2. **Then use AskUserQuestion** for task list approval:
+   ```
+   AskUserQuestion:
+     header: "Task list"
+     question: "Do you approve this task list, or would you like to make changes?"
+     options:
+       - {"label": "Approve as-is (Recommended)", "description": "Proceed with the task list shown above"}
+       - {"label": "Request changes", "description": "I want to modify, add, or remove tasks"}
+   ```
+
+3. If approved, use AskUserQuestion for threshold questions (from subagent JSON)
+
+**DO NOT:**
+- Summarize the tasks as "15 tasks across 3 phases" without showing them
+- Skip outputting the table because it's "in the subagent's return"
+- Assume the user can see subagent output (they cannot)
 
 ### Step 3: Spawn planning_verification_process subagent (Haiku)
 
@@ -272,8 +308,9 @@ Your job:
 2. Write current/tasks.json
 3. Resolve thresholds and write current/checks.md
 4. Write status: echo "execution" > current/.status
-5. Commit: [econ_ra:planning] Task list and checks created (N tasks)
-6. Return status
+5. Return status
+
+Note: Do NOT commit internal workflow files (they are in .claude/ which is typically gitignored).
 ```
 
 ## Execution Phase (Sequential by Default)
@@ -351,8 +388,10 @@ Your job:
 3. Verify against checks
 4. Update tasks.json (your entry only)
 5. Append to session_log.md
-6. Commit: [econ_ra:task{id}] Brief description, key results
+6. Commit user's project code changes: [econ_ra:task{id}] Brief description, key results
 7. Return status: complete/flagged/blocked/partial
+
+Note: Only commit code changes to the user's project. Do NOT commit internal workflow files (tasks.json, session_log.md, etc.) - they are in .claude/ which is typically gitignored.
 ```
 
 **CRITICAL: After all tasks complete, you MUST run the wrapup scripts (status.sh + archive.sh).** Do NOT just output a summary and stop. Spawn a wrapup subagent only if you need a detailed retrospective or have flagged/blocked items to analyze.
@@ -408,10 +447,7 @@ Your job:
 3. Return flagged/blocked item details with severity
 ```
 
-For simple projects with no flagged/blocked items, you can skip the subagent and just commit:
-```
-[econ_ra:complete] Project archived to history/YYYY-MM-DD_project_name
-```
+For simple projects with no flagged/blocked items, you can skip the subagent. Do NOT commit internal workflow files (they are in .claude/ which is typically gitignored).
 
 ## Resume After Time Limit
 
