@@ -4,8 +4,8 @@ dispatcher.py - Find tasks ready for execution
 Replaces the haiku task_dispatcher subagent for faster execution
 
 Usage:
-    python3 dispatcher.py              # Sequential mode (default) - returns first ready task
-    python3 dispatcher.py --parallel   # Parallel mode - returns ALL ready tasks
+    python3 dispatcher.py              # Parallel mode (default) - returns ALL ready tasks
+    python3 dispatcher.py --sequential # Sequential mode - returns first ready task only
 
 Returns JSON with ready_tasks and counts.
 """
@@ -92,9 +92,9 @@ def main():
     skill_dir = script_dir.parent
     tasks_file = skill_dir / "current" / "tasks.json"
 
-    # Default is sequential (safer for single worktree)
-    # Use --parallel for parallel execution (requires git worktrees or independent tasks)
-    sequential = "--parallel" not in sys.argv
+    # Default is parallel execution
+    # Use --sequential for sequential execution (one task at a time)
+    sequential = "--sequential" in sys.argv
 
     result = find_ready_tasks(tasks_file, sequential)
 

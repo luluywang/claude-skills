@@ -156,9 +156,23 @@ Even in autonomous mode, **maintain mental separation between phases**:
 - Its specified input files
 - User responses from that phase
 
-## Interview Phase (Multi-Round Loop)
+## Interview Phase (Iterative Loop)
 
-When the phase is Interview, use an iterative loop that continues until ambiguities are resolved.
+When the phase is Interview, use an iterative loop that **continues until the user explicitly requests to move to planning**.
+
+### Interview Loop
+
+```
+WHILE user has not selected "Move to planning":
+    1. Spawn interview_generate subagent (generates clarifying questions)
+    2. Present questions to user via AskUserQuestion
+    3. Spawn interview_process subagent (updates full_spec.md)
+    4. Present spec summary to user
+    5. Ask user what they want to do (AskUserQuestion)
+       - IF "Move to planning" → update status, exit loop
+       - IF "Continue interview" → loop again with more questions
+       - IF "Show full spec" → display full_spec.md, loop again
+```
 
 ### Step 1: Spawn interview_generate subagent
 
@@ -213,11 +227,39 @@ Your job:
 4. Write/update current/full_spec.md
 5. Write current/codebase_summary.md (round 1 only)
 6. Copy spec to current/spec.md (round 1 only)
-7. IF no remaining ambiguities: Write status: echo "planning" > current/.status
-8. Return: { status, ambiguities: [...], preferences: [...] }
+7. Return: { status, ambiguities: [...], preferences: [...], spec_summary: "..." }
 
 Note: Do NOT commit internal workflow files (they are in .claude/ which is typically gitignored).
+Note: Do NOT update status to "planning" - the orchestrator handles this after user confirmation.
 ```
+
+### Step 4: Ask User Before Proceeding
+
+After interview_process returns the spec summary, use AskUserQuestion:
+
+```json
+{
+  "header": "Spec review",
+  "question": "I've updated the project specification based on your answers. What would you like to do?",
+  "multiSelect": false,
+  "options": [
+    {"label": "Move to planning (Recommended)", "description": "Spec is complete - generate the task list"},
+    {"label": "Continue interview", "description": "Ask more clarifying questions about the project"},
+    {"label": "Show full spec", "description": "Display the full specification for review"}
+  ]
+}
+```
+
+**If user selects "Move to planning":**
+1. Update status: `echo "planning" > current/.status`
+2. Proceed to Planning Phase
+
+**If user selects "Continue interview":**
+1. Loop back to Step 1 with round N+1
+
+**If user selects "Show full spec":**
+1. Read and display `current/full_spec.md`
+2. Ask the same question again
 
 ### Key files created by Interview phase
 - `spec.md` - Original user spec (preserved unchanged)
@@ -248,7 +290,18 @@ Your job:
 5. Return proposal with tasks, checks, and threshold questions (do NOT write files)
 ```
 
-### Step 2: Present proposal to user for approval
+### Step 2: Task List Iteration Loop
+
+**Loop until user requests execution:**
+
+```
+WHILE user has not selected "Move to execution":
+    1. Output the full task table to user
+    2. Ask user what they want to do next (AskUserQuestion)
+    3. IF "Move to execution" → proceed to Step 3
+       IF "Request changes" → collect feedback, re-spawn planning_verification_generate with revision context, loop
+       IF "Show full spec" → display full_spec.md, loop
+```
 
 **CRITICAL: You MUST output the full task list to the user BEFORE calling AskUserQuestion.**
 
@@ -271,22 +324,43 @@ The user needs to see every task in the proposal, not just a count or summary. T
    Total: [N] tasks
    ```
 
-2. **Then use AskUserQuestion** for task list approval:
-   ```
-   AskUserQuestion:
-     header: "Task list"
-     question: "Do you approve this task list, or would you like to make changes?"
-     options:
-       - {"label": "Approve as-is (Recommended)", "description": "Proceed with the task list shown above"}
-       - {"label": "Request changes", "description": "I want to modify, add, or remove tasks"}
+2. **Then use AskUserQuestion** for task list review:
+   ```json
+   {
+     "header": "Task list",
+     "question": "Review the task list above. What would you like to do?",
+     "multiSelect": false,
+     "options": [
+       {"label": "Move to execution (Recommended)", "description": "Task list is complete - start working on tasks"},
+       {"label": "Request changes", "description": "I want to modify, add, remove, or split tasks"},
+       {"label": "Show full spec", "description": "Display the full project specification for reference"}
+     ]
+   }
    ```
 
-3. If approved, use AskUserQuestion for threshold questions (from subagent JSON)
+3. **If user selects "Request changes":**
+   - Ask: "What changes would you like?" (free text via AskUserQuestion with Other)
+   - Re-spawn planning_verification_generate with revision context:
+     ```
+     Previous proposal: [paste prior task list]
+     User feedback: [their requested changes]
+     ```
+   - Present new task list, loop again
+
+4. **If user selects "Show full spec":**
+   - Read and display `current/full_spec.md`
+   - Ask the same question again
+
+5. **If user selects "Move to execution":**
+   - Use AskUserQuestion for threshold questions (from subagent JSON)
+   - Update status: `echo "execution" > current/.status`
+   - Proceed to Step 3
 
 **DO NOT:**
 - Summarize the tasks as "15 tasks across 3 phases" without showing them
 - Skip outputting the table because it's "in the subagent's return"
 - Assume the user can see subagent output (they cannot)
+- Auto-proceed to execution without user explicitly selecting "Move to execution"
 
 ### Step 3: Spawn planning_verification_process subagent (Haiku)
 
@@ -307,13 +381,13 @@ Your job:
 1. Parse the approved task list
 2. Write current/tasks.json
 3. Resolve thresholds and write current/checks.md
-4. Write status: echo "execution" > current/.status
-5. Return status
+4. Return status
 
 Note: Do NOT commit internal workflow files (they are in .claude/ which is typically gitignored).
+Note: Do NOT update status to "execution" - the orchestrator handles this after user confirms "Move to execution".
 ```
 
-## Execution Phase (Sequential by Default)
+## Execution Phase (Parallel by Default)
 
 During execution, use the dispatcher script to find ready tasks, then spawn execution subagents. The script is faster and cheaper than spawning a haiku subagent.
 
@@ -346,8 +420,8 @@ Returns JSON:
 ### Run dispatcher script
 
 ```bash
-python3 ./scripts/dispatcher.py              # Sequential mode (first ready task only) - DEFAULT
-python3 ./scripts/dispatcher.py --parallel   # Parallel mode (all ready tasks) - use with git worktrees
+python3 ./scripts/dispatcher.py              # Parallel mode (all ready tasks) - DEFAULT
+python3 ./scripts/dispatcher.py --sequential # Sequential mode (first ready task only)
 ```
 
 Returns JSON:

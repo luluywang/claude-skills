@@ -70,13 +70,9 @@ If any task revealed a **genuinely reusable lesson** (threshold that worked well
 
 Only add entries for insights that apply beyond this specific project.
 
-## Step 5: Commit and Return
+## Step 5: Return to Orchestrator
 
-Read session ID from `current/.session_id` before archiving (it will be moved with the rest of current/).
-
-```
-[econ_ra:{session_id}:complete] Project archived to history/YYYY-MM-DD_project_name
-```
+**Do NOT commit internal workflow files.** All files in `current/` and `history/` are internal tracking files and should not be committed. The `.claude/` directory is typically gitignored.
 
 Return to orchestrator with:
 ```
