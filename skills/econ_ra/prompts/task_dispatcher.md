@@ -39,9 +39,9 @@ A task is **ready** if:
 
 ### Modes
 
-**Sequential mode (default):** Return only the first ready task (lowest id). Safer for single worktree.
+**Parallel mode (default):** Return ALL ready tasks. Enables concurrent execution.
 
-**Parallel mode:** Return ALL ready tasks. Use with git worktrees.
+**Sequential mode:** Return only the first ready task (lowest id). Use when you need strict ordering.
 
 The orchestrator will tell you which mode to use. Note: This file is reference only—use `scripts/dispatcher.py` instead.
 

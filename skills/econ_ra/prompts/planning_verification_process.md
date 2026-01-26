@@ -163,10 +163,9 @@ Notice: thresholds are now concrete values, not multiple-choice options or place
 
 1. Write `current/tasks.json`
 2. Write `current/checks.md`
-3. Read session ID from `current/.session_id`
-4. Write status: `echo "execution" > current/.status`
-5. Commit: `[econ_ra:{session_id}:planning] Task list and checks created (N tasks)`
-   - Use the session ID from step 3 in the commit message
+3. Do NOT update status to "execution" — the orchestrator will do this after user confirms "Move to execution"
+
+**Do NOT commit internal workflow files.** Files in `current/` (tasks.json, checks.md, .status, etc.) are internal tracking files and should not be committed. The `.claude/` directory is typically gitignored.
 
 ---
 

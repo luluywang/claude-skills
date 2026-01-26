@@ -192,9 +192,16 @@ For structural model changes, use this ordering which has proven effective:
 This pattern minimizes cascading changes and allows incremental verification.
 
 **Granularity**
-- Each task should be 5-15 minutes of work
-- "Clean the data" is too big → split into loading, merging, filtering, etc.
-- "Print a number" is too small → combine with related work
+- Tasks should be SMALL — each task should be a single, concrete action
+- If the user asks for 8 graphs, make EACH graph its own task
+- If the user asks for a table with 4 columns, consider splitting into separate tasks
+- Target 30-50+ tasks for typical projects (NOT 10)
+- Examples:
+  - "Create all robustness tables" is too big → split into one task per table
+  - "Estimate all specifications" is too big → one task per specification
+  - "Make Figure 3" is the right size (single deliverable)
+  - "Load and clean data" is too big → separate tasks for load, filter, merge, validate
+- Think: "What is the smallest unit of work that produces a verifiable output?"
 
 **Ordering**
 - Order by dependencies

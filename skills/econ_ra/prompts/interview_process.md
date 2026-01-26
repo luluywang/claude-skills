@@ -197,9 +197,9 @@ The orchestrator will update `preferences.md` after you return.
    - Convert to lowercase slug with underscores (e.g., "bootstrap", "welfare_decomp", "minimum_wage")
    - Keep it short (max 20 chars)
    - Write to `current/.session_id`
-6. Write status: `echo "planning" > current/.status`
-7. Commit: `[econ_ra:{session_id}:interview] Full spec complete`
-   - Read session ID from `current/.session_id` for the commit message
+6. Do NOT update status to "planning" — the orchestrator will do this after user confirmation
+
+**Do NOT commit internal workflow files.** Files in `current/` (spec.md, full_spec.md, codebase_summary.md, .status, .session_id, etc.) are internal tracking files and should not be committed. The `.claude/` directory is typically gitignored.
 
 ## Return
 

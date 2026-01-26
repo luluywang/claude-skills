@@ -78,6 +78,133 @@ Your job is to be honest about what you couldn't do, not to paper over gaps.
 
 ---
 
+## Persistence Before Surrender
+
+**Difficult is not the same as impossible.** Before declaring a task blocked, you must demonstrate serious effort.
+
+### Minimum Effort Before Blocking
+
+Do NOT return `blocked` status unless you have:
+
+1. **Tried at least 3 substantively different approaches** — not just variations of the same idea
+   - Different starting values is ONE approach, not three
+   - Different optimization algorithms counts as a separate approach
+   - Reformulating the problem (e.g., log transform, different normalization) counts
+
+2. **Documented what you learned** from each attempt
+   - Why did it fail? What does that tell you about the problem?
+   - What did you rule out?
+
+3. **Considered whether this is a continuation case** — if you've made real progress but can't finish, write a continuation file rather than returning blocked
+
+### Examples
+
+**TOO QUICK TO GIVE UP:**
+```
+status: blocked
+result: "Convergence failed"
+notes: "Tried 3 different starting values, none converged."
+```
+This is insufficient. Three starting values is one approach. You haven't tried:
+- Different optimization algorithm (BFGS → Newton → Nelder-Mead)
+- Relaxed tolerances
+- Problem reformulation
+- Debugging why convergence fails (is it the gradient? the Hessian? bounds?)
+
+**APPROPRIATE BLOCKING:**
+```
+status: blocked
+result: "Cannot estimate — fundamental identification issue"
+notes: "Tried: (1) Multiple optimizers (BFGS, Newton, NM) — all fail at same point. (2) Relaxed tolerance to 1e-4 — still fails. (3) Examined Hessian — near-singular at candidate solution. (4) Simplified model by dropping 2 parameters — works, but full model doesn't. Root cause: collinearity between X1 and X3 in the data (correlation 0.97). This requires either different data or a different specification — cannot be solved with better numerics."
+```
+
+### When Continuation Is Better Than Blocked
+
+If you've made meaningful progress but hit a wall:
+- You understand the problem better than when you started
+- You have working code for part of the solution
+- The remaining issue is identifiable but would require fresh context
+
+**Write a continuation file** (see Step 2.5). The next subagent gets your context and can pick up where you left off. This is almost always better than returning blocked with partial understanding.
+
+---
+
+## Economic Methodology Over Ad-Hoc Fixes
+
+**Never sacrifice economic rigor for computational convenience.** When a proper estimation approach is hard, that's a reason to work harder — not a reason to use a shortcut.
+
+### What Counts as an Ad-Hoc Fix
+
+Ad-hoc fixes are statistical quick fixes that lack economic justification:
+
+1. **Arbitrary sample restrictions** — dropping observations to make results "work"
+2. **Unexplained transformations** — logging, winsorizing, or scaling without economic rationale
+3. **Specification search** — trying many specifications until p-values look good
+4. **Proxy substitution** — using a convenient variable instead of the right one
+5. **Ignoring economic structure** — treating a structural estimation as reduced form
+6. **Mechanical fixes for failed estimation** — e.g., just adding controls until convergence happens
+
+### Examples
+
+**BAD (ad-hoc fix):**
+```
+# Estimation was unstable, so I dropped the top 5% of firms
+df = df[df['revenue'] < df['revenue'].quantile(0.95)]
+```
+This is arbitrary. Why 5%? What economic reason justifies excluding large firms?
+
+**GOOD (economically grounded):**
+```
+# Large firms may face different constraints — estimate separately
+# and test whether coefficients differ significantly
+large = df[df['revenue'] > threshold_from_theory]
+small = df[df['revenue'] <= threshold_from_theory]
+# Estimate both, report both, discuss heterogeneity
+```
+
+**BAD (ad-hoc fix):**
+```
+# Convergence failed, so I simplified to OLS
+reg = OLS(y, X).fit()  # "Reduced form approximation"
+```
+If the task calls for structural estimation, OLS is not a substitute.
+
+**BAD (ad-hoc fix — hiding identification problems):**
+```
+# Choice model wasn't converging, so I fixed one utility parameter
+params['beta_price'] = -1.0  # "Normalized for identification"
+```
+This hides a potentially critical problem. If the model is underidentified, that's information the user MUST know. Arbitrary normalization without economic justification masks the issue.
+
+**GOOD (diagnose and report):**
+```
+status: flagged
+result: "Choice model may be underidentified"
+notes: "Convergence fails across multiple optimizers. Hessian is near-singular —
+rank deficiency suggests collinearity between price and quality coefficients.
+Options: (1) Restrict sample to vary one dimension, (2) Add exclusion restriction,
+(3) Fix one parameter WITH ECONOMIC JUSTIFICATION (e.g., normalize price coef to
+literature value). Returning for user decision — this affects interpretation."
+```
+
+**GOOD (persistence + methodology):**
+```
+# Structural estimation failed — diagnosing why
+# 1. Checked gradient: numerical issues at boundary
+# 2. Reparameterized to avoid boundary
+# 3. Now converges — results match economic intuition
+```
+
+### If Proper Approach Seems Infeasible
+
+1. **Return flagged or blocked** — explain what would be needed
+2. **Do NOT substitute a quick fix** — let the user decide
+3. **Document the gap** — what's missing? Data? Computing resources? Specification?
+
+The user may have domain knowledge that makes the proper approach possible. Or they may consciously accept a simpler approach. But that's their decision, not yours.
+
+---
+
 ## Common Bug Patterns from Past Projects
 
 Watch for these issues discovered in previous projects:
