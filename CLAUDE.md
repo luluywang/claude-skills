@@ -6,9 +6,9 @@ This directory contains modular AI prompt systems for economics research, organi
 
 | Folder | Purpose |
 |--------|---------|
-| `shared/` | Components shared between referee and copyedit |
-| `referee/` | Mock journal referee report generation |
-| `copyedit/` | Writing review and copyediting |
+| `shared/` | Components shared between skills |
+| `skills/` | Modular skills (referee, copyedit, econ_ra) |
+| `copyedit/` | Writing review and copyediting (legacy) |
 | `parsepdf/` | PDF parsing and text extraction |
 | `dist/` | Portable prompts only (no dev folders) |
 
@@ -35,16 +35,17 @@ This becomes `../copyedit/tasks/ai_detection.prompt` in dist.
 ## Projects Overview
 
 ### Referee
-**Location:** `referee/prompts/master.prompt`
+**Location:** `skills/referee/SKILL.md`
 
-Generates mock journal referee reports for academic papers. Capabilities include:
-- Detailed critical analysis of methodology, contributions, and presentation
-- Structured feedback following academic review standards
-- Customizable review tone and depth
-- Support for multiple review personas (harsh, balanced, encouraging)
+Generates mock journal referee reports for academic economics papers. Capabilities include:
+- Senior referee report (contribution/novelty focus)
+- Junior referee report (methods/robustness focus)
+- Synthesized editor letter with recommendation
+- Literature search via Gemini CLI
+- Citation verification before delivery
 
 ### Copyedit
-**Location:** `copyedit/prompts/master.prompt`
+**Location:** `skills/copyedit/SKILL.md`
 
 Comprehensive writing review and copyediting system. Features:
 - Grammar, clarity, and style improvements
@@ -77,17 +78,19 @@ PDF parsing and text extraction utilities:
 
 ### For Referee Reports
 ```
-Input: Path to PDF file
-Processing: Uses parsepdf/ to extract text from the PDF
-Output: Referee report and editor letter saved to the same directory as the input PDF
+/referee paper.pdf              # Full review: senior + junior + editor letter
+/referee senior paper.pdf       # Senior referee only (contribution/novelty)
+/referee junior paper.pdf       # Junior referee only (methods/robustness)
 ```
+Output: LaTeX files saved to the same directory as the input PDF
 
 ### For Copyediting
 ```
-Load the master prompt: copyedit/prompts/master.prompt
-Provide: Document text to review
-Output: Copyedited version with comments and suggestions
+/copyedit review paper.tex      # Comprehensive review
+/copyedit grammar paper.tex     # Grammar only
+/copyedit ai_detection *.tex    # AI tells check
 ```
+Output: `notes/` directory with analysis and suggestions
 
 ### For PDF Processing
 ```
@@ -128,9 +131,9 @@ This generates the `dist/` directory containing only production-ready prompts, s
 ### Typical Document Review Pipeline
 1. **Input** - User provides path to a PDF file
 2. **Extract text** - Use `parsepdf/` to extract content from the PDF
-3. **Generate review** - Apply `referee/prompts/master.prompt` to create peer review feedback
+3. **Generate review** - Run `/referee paper.pdf` to create peer review feedback
 4. **Save outputs** - Write `.tex` files to the **same directory as the input PDF**
-5. **AI screen** - Automatically run AI detection from `copyedit/` and apply fixes directly (no approval needed)
+5. **AI screen** - Automatically run AI detection from `skills/copyedit/` and apply fixes directly (no approval needed)
 6. **Final output** - Cleaned `.tex` files ready to compile to PDF
 
 ### Development Workflow
@@ -159,9 +162,9 @@ The `_claude` suffix indicates AI-generated content. This ensures all files rela
 
 ## Post-Processing: AI Screen
 
-After generating referee report and editor letter, **automatically** run the AI detection task on both `.tex` files:
+After generating referee report and editor letter, **automatically** run the AI detection task on all `.tex` files:
 
-- **Task**: `copyedit/prompts/tasks/ai_detection.prompt` (or `../copyedit/tasks/ai_detection.prompt` in dist)
+- **Task**: `skills/copyedit/prompts/tasks/ai_detection.prompt`
 
 1. Screen for AI tells (punctuation patterns, language patterns)
 2. **Apply fixes directly** — do not wait for user approval
@@ -179,7 +182,7 @@ This ensures outputs read naturally and don't contain obvious AI-generated patte
 
 ## Support
 
-For questions about specific projects:
-- Check the examples in `[project]/dev/`
-- Review the master prompt structure in `[project]/prompts/master.prompt`
-- Consult shared components in `shared/` for reusable patterns
+For questions about specific skills:
+- Check the SKILL.md file in `skills/[skill]/`
+- Review the master prompt in `skills/[skill]/prompts/master.prompt`
+- Consult shared components in `shared/` or `skills/[skill]/shared/` for reusable patterns
