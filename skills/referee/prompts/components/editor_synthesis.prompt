@@ -134,7 +134,7 @@ Lulu Wang
 After generating editor letter:
 
 1. **Citation verification** - Run `components/citation_verification.prompt` on all three files
-2. **AI detection screening** - Run `../copyedit/prompts/tasks/ai_detection.prompt` on all three files
+2. **AI detection screening** - Run `skills/copyedit/prompts/tasks/ai_detection.prompt` on all three files
 3. **Copy signature** - Ensure `Lulu_Wang_Signature.jpg` is in output directory
 
 ---
