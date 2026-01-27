@@ -12,7 +12,7 @@
 # Check if input is a PDF
 if [[ "$INPUT_FILE" == *.pdf ]]; then
     # Run parsepdf extraction
-    ../../parsepdf/prompts/scripts/process_paper.sh "$INPUT_FILE"
+    ../parsepdf/scripts/process_paper.sh "$INPUT_FILE"
 
     # Use extracted text file for analysis
     PAPER_TEXT="${INPUT_FILE%.pdf}_full_text.txt"
@@ -54,7 +54,7 @@ This creates:
 
 ## Step 2: Diagnostic Questions
 
-@IMPORT: ../../shared/components/diagnostic_workflow.prompt
+@IMPORT: ../shared/components/diagnostic_workflow.prompt
 
 **Additional referee-specific question:**
 
@@ -108,7 +108,7 @@ Record:
 
 ## Step 4: Load Modules
 
-@IMPORT: ../../shared/components/module_loading.prompt
+@IMPORT: ../shared/components/module_loading.prompt
 
 **Referee-specific task modules:**
 - `tasks/senior.prompt` - If senior referee requested
@@ -165,7 +165,7 @@ For long papers (>15,000 words), dispatch section subagents in parallel:
 
 ## Step 7: Execute Referee Review
 
-@IMPORT: ../../shared/components/model_routing.prompt
+@IMPORT: ../shared/components/model_routing.prompt
 
 **Referee tasks use Extended Thinking** for deep evaluation requiring sustained reasoning.
 
@@ -247,7 +247,7 @@ Run citation verification scripts:
 
 ```bash
 # Step 1: Extract citations from output files
-../../parsepdf/prompts/scripts/extract_citations.sh -o citations.json [output_directory]
+../parsepdf/scripts/extract_citations.sh -o citations.json [output_directory]
 
 # Step 2: Verify each citation using Gemini
 ./scripts/verify_citations.sh -o notes/citation_verification.md citations.json
@@ -301,7 +301,7 @@ grep -n "\\appendix" paper.txt  # → Appendix starts line 1,450
 
 **Verify citations:**
 ```bash
-../../parsepdf/prompts/scripts/extract_citations.sh -o citations.json notes/
+../parsepdf/scripts/extract_citations.sh -o citations.json notes/
 ./scripts/verify_citations.sh citations.json  # Uses Gemini CLI
 ```
 - Fix or remove any NOT_FOUND citations
@@ -327,7 +327,7 @@ grep -n "\\appendix" paper.txt  # → Appendix starts line 1,450
 
 ## Quality Assurance
 
-@IMPORT: ../../shared/components/qa_checklist.prompt
+@IMPORT: ../shared/components/qa_checklist.prompt
 
 **Referee-specific checks:**
 

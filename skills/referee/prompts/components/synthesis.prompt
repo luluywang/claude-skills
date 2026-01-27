@@ -88,7 +88,7 @@ Lulu Wang
 \end{document}
 ```
 
-**Copy signature image:** Before compiling, copy `Lulu_Wang_Signature.jpg` from `referee/prompts/components/` to the output directory.
+**Copy signature image:** Before compiling, copy `Lulu_Wang_Signature.jpg` from `prompts/components/` to the output directory.
 
 ### 2. Referee Report (`{short_title}_{YYYYMMDD}_claude_referee_report.tex`)
 
