@@ -15,7 +15,7 @@ Run the extraction script on the output files:
 
 ```bash
 # Extract citations from referee report
-../parsepdf/scripts/extract_citations.sh -o citations.json notes/
+skills/parsepdf/scripts/extract_citations.sh -o citations.json notes/
 ```
 
 This extracts all citation patterns:

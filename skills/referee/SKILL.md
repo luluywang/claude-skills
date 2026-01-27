@@ -124,8 +124,8 @@ The skill adapts review focus based on paper type:
 
 ## Dependencies
 
-- **parsepdf** - PDF text extraction (`../parsepdf/scripts/process_paper.sh`)
-- **copyedit** - AI detection post-processing (`../copyedit/prompts/tasks/ai_detection.prompt`)
+- **parsepdf** - PDF text extraction (`skills/parsepdf/scripts/process_paper.sh`)
+- **copyedit** - AI detection post-processing (`skills/copyedit/prompts/tasks/ai_detection.prompt`)
 - **Gemini CLI** - Literature search for senior referee
 
 ---

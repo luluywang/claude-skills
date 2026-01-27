@@ -12,7 +12,7 @@
 # Check if input is a PDF
 if [[ "$INPUT_FILE" == *.pdf ]]; then
     # Run parsepdf extraction
-    ../parsepdf/scripts/process_paper.sh "$INPUT_FILE"
+    skills/parsepdf/scripts/process_paper.sh "$INPUT_FILE"
 
     # Use extracted text file for analysis
     PAPER_TEXT="${INPUT_FILE%.pdf}_full_text.txt"
@@ -21,7 +21,7 @@ fi
 
 This creates:
 - `{basename}_full_text.txt` - Combined text of all pages (saved next to the PDF)
-- Cache files in `parsepdf/prompts/scripts/cache/{basename}/` for detailed processing if needed
+- Cache files in `skills/parsepdf/scripts/cache/{basename}/` for detailed processing if needed
 
 **Proceed to Step 1 using the extracted text file.**
 
@@ -247,7 +247,7 @@ Run citation verification scripts:
 
 ```bash
 # Step 1: Extract citations from output files
-../parsepdf/scripts/extract_citations.sh -o citations.json [output_directory]
+skills/parsepdf/scripts/extract_citations.sh -o citations.json [output_directory]
 
 # Step 2: Verify each citation using Gemini
 ./scripts/verify_citations.sh -o notes/citation_verification.md citations.json
@@ -301,7 +301,7 @@ grep -n "\\appendix" paper.txt  # → Appendix starts line 1,450
 
 **Verify citations:**
 ```bash
-../parsepdf/scripts/extract_citations.sh -o citations.json notes/
+skills/parsepdf/scripts/extract_citations.sh -o citations.json notes/
 ./scripts/verify_citations.sh citations.json  # Uses Gemini CLI
 ```
 - Fix or remove any NOT_FOUND citations
