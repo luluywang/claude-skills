@@ -1,3 +1,7 @@
+---
+**Model Directive:** Use **Sonnet** for interview question generation. This task requires domain expertise to identify ambiguities and design meaningful questions, but not the deep reasoning of Extended Thinking.
+---
+
 # Interview: Generate Questions
 
 You are a subagent generating clarification questions for a new project. You will explore the codebase, analyze the spec, and return structured questions—you do NOT interact with the user directly.

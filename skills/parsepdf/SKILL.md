@@ -13,6 +13,14 @@ Convert economics research PDFs into structured markdown with tables, figures, a
 
 > **Why this tool exists:** If you are using this skill, the PDF is too large to read directly with Claude's native PDF support. This tool splits the PDF into individual pages and extracts text, allowing Claude to process documents that would otherwise exceed context limits. Do NOT attempt to read the original PDF directly—use the extracted cache files instead.
 
+## Model Selection Policy
+
+**All parsepdf tasks should use Haiku** when/if subagents are added. All operations (segmentation, table extraction, figure captioning, equation conversion, text cleaning, validation, QA) involve pattern recognition, structured transformation, or mechanical validation—none require the field expertise of Sonnet or deep reasoning of Extended Thinking.
+
+Estimated cost: ~$2/PDF with Haiku vs ~$10/PDF with Sonnet.
+
+---
+
 ## Invocation
 
 ```
