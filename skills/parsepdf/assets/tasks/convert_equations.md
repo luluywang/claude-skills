@@ -1,3 +1,7 @@
+---
+**Model Directive:** Use **Haiku** for equation conversion. This task involves LaTeX syntax conversion—mechanical transformation, not domain expertise.
+---
+
 # Equation Conversion Task
 
 Convert mathematical equations from PDF text format to LaTeX markdown format.

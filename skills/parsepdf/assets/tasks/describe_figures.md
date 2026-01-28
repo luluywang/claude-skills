@@ -1,3 +1,7 @@
+---
+**Model Directive:** Use **Haiku** for figure descriptions. This task involves caption extraction and basic visual element annotation—pattern matching only.
+---
+
 # Figure Description Task
 
 Create text descriptions of figures for accessibility and reference.

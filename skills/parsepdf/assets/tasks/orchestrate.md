@@ -1,3 +1,7 @@
+---
+**Model Directive:** Use **Haiku** for orchestration. This task coordinates the PDF processing workflow—methodical task dispatching with no deep reasoning required.
+---
+
 # Master PDF Processing Orchestrator
 
 You are orchestrating the complete processing of an economics paper PDF. This prompt will guide you through the entire workflow from segmentation to final assembly and QA.
