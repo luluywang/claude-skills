@@ -17,6 +17,8 @@ FULL_SPEC_EXISTS="missing"
 TASKS_EXISTS="missing"
 CHECKS_EXISTS="missing"
 SESSION_LOG_EXISTS="missing"
+DIAGNOSTIC_STATE_EXISTS="missing"
+DIAGNOSTIC_MODE="false"
 
 # Step 1: Create directory if needed
 if [ ! -d "$CURRENT_DIR" ]; then
@@ -30,6 +32,12 @@ else
     [ -f "$CURRENT_DIR/tasks.json" ] && TASKS_EXISTS="exists"
     [ -f "$CURRENT_DIR/checks.md" ] && CHECKS_EXISTS="exists"
     [ -f "$CURRENT_DIR/session_log.md" ] && SESSION_LOG_EXISTS="exists"
+    [ -f "$CURRENT_DIR/diagnostic_state.json" ] && DIAGNOSTIC_STATE_EXISTS="exists"
+
+    # Check for diagnostic mode (takes precedence over standard workflow)
+    if [ "$DIAGNOSTIC_STATE_EXISTS" = "exists" ]; then
+        DIAGNOSTIC_MODE="true"
+    fi
 
     # Step 3: Read status file if present
     if [ -f "$CURRENT_DIR/.status" ]; then
@@ -62,6 +70,42 @@ else
                 PHASE="interview"
                 REASON="Interview in progress"
                 ;;
+            # Diagnostic mode phases
+            "diagnostic_interview")
+                PHASE="diagnostic_interview"
+                REASON="Diagnostic interview in progress"
+                DIAGNOSTIC_MODE="true"
+                ;;
+            "diagnostic_brainstorm")
+                PHASE="diagnostic_brainstorm"
+                REASON="Generating diagnostic hypotheses"
+                DIAGNOSTIC_MODE="true"
+                ;;
+            "diagnostic_select")
+                PHASE="diagnostic_select"
+                REASON="Selecting hypothesis to test"
+                DIAGNOSTIC_MODE="true"
+                ;;
+            "diagnostic_try")
+                PHASE="diagnostic_try"
+                REASON="Testing hypothesis"
+                DIAGNOSTIC_MODE="true"
+                ;;
+            "diagnostic_ingest")
+                PHASE="diagnostic_ingest"
+                REASON="Processing test results"
+                DIAGNOSTIC_MODE="true"
+                ;;
+            "diagnostic_checkpoint")
+                PHASE="diagnostic_checkpoint"
+                REASON="Checkpoint - awaiting user input"
+                DIAGNOSTIC_MODE="true"
+                ;;
+            "diagnostic_wrapup")
+                PHASE="diagnostic_wrapup"
+                REASON="Diagnostic complete - generating summary"
+                DIAGNOSTIC_MODE="true"
+                ;;
             *)
                 PHASE="unknown"
                 REASON="Unrecognized status: $STATUS_CONTENT"
@@ -88,13 +132,15 @@ cat << EOF
   "phase": "$PHASE",
   "reason": "$REASON",
   "directory_created": "$DIR_CREATED",
+  "diagnostic_mode": $DIAGNOSTIC_MODE,
   "files": {
     "status": "$STATUS_EXISTS",
     "status_content": "$STATUS_CONTENT",
     "full_spec": "$FULL_SPEC_EXISTS",
     "tasks": "$TASKS_EXISTS",
     "checks": "$CHECKS_EXISTS",
-    "session_log": "$SESSION_LOG_EXISTS"
+    "session_log": "$SESSION_LOG_EXISTS",
+    "diagnostic_state": "$DIAGNOSTIC_STATE_EXISTS"
   }
 }
 EOF

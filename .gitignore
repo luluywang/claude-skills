@@ -7,4 +7,4 @@ settings.local.json
 # Skill runtime state (should not be version controlled)
 skills/*/current/
 skills/*/history/
-econ_ra/
+/econ_ra/
