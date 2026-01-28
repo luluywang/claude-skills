@@ -442,6 +442,54 @@ Returns JSON:
 }
 ```
 
+### Model Selection for Execution Tasks
+
+Select model based on task complexity (three tiers):
+
+**Use Haiku ($0.25/task) for:**
+- Data loading and basic filtering
+- Simple merges (left/inner join on 1-2 keys)
+- Descriptive statistics (mean, SD, counts)
+- File I/O operations
+- Table formatting (given results)
+
+**Use Sonnet ($2/task) for:**
+- Standard estimation (OLS, DiD, IV, RD, panel methods)
+- Standard robustness checks
+- Event studies
+- Bootstrap or simulation (standard methods)
+- Figure generation with analysis
+- Writing tasks (draft text, interpret results)
+
+**Use Opus ($6/task) for:**
+- Novel/complex structural estimation
+- Non-standard or custom methods
+- Difficult debugging (convergence issues, numerical instability)
+- Tasks requiring deep economic reasoning
+- First-time implementations of new approaches
+
+**Implementation in orchestrator:**
+When spawning execution subagent, inspect task description:
+
+```python
+simple_keywords = ['load', 'filter', 'save', 'merge on', 'format table',
+                   'descriptive statistics', 'summary stats']
+
+complex_keywords = ['structural', 'novel', 'custom', 'debug convergence',
+                    'non-standard', 'new method', 'first-time']
+
+if any(keyword in task['task'].lower() for keyword in simple_keywords):
+    model = 'haiku'
+elif any(keyword in task['task'].lower() for keyword in complex_keywords):
+    model = 'opus'
+else:
+    model = 'sonnet'  # Default to Sonnet for standard work
+```
+
+Pass model to Task tool: `model="haiku"`, `model="sonnet"`, or `model="opus"`
+
+---
+
 ### Spawn execution subagent(s)
 
 ```
