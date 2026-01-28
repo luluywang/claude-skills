@@ -1,3 +1,7 @@
+---
+**Model Directive:** Use **Haiku** for text cleaning. This task involves text normalization and artifact removal—mechanical operations only.
+---
+
 # Text Cleaning Task
 
 Clean and format section text for the final markdown document.

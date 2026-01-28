@@ -1,3 +1,7 @@
+---
+**Model Directive:** Use **Haiku** for table extraction. This task involves parsing JSON and converting structured data to markdown—no field expertise needed.
+---
+
 # Table Extraction Task
 
 You are extracting and converting tables from an economics paper.

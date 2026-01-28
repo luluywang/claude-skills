@@ -1,3 +1,7 @@
+---
+**Model Directive:** Use **Haiku** for table validation. This task involves cross-referencing values with text—mechanical consistency checking.
+---
+
 # Table Validation Task
 
 Cross-reference table values with the main text.

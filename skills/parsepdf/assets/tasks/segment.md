@@ -1,3 +1,7 @@
+---
+**Model Directive:** Use **Haiku** for document segmentation. This task involves pattern recognition (identifying section headers, page ranges) with no requirement for field expertise or deep reasoning.
+---
+
 # Document Structure Analysis
 
 You are analyzing an economics working paper. Your task is to identify the document structure.

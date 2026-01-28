@@ -1,3 +1,7 @@
+---
+**Model Directive:** Use **Haiku** for QA checks. This task involves structure verification and mechanical validation—no domain reasoning needed.
+---
+
 # Quality Assurance Check
 
 Perform final validation of the assembled markdown document.
