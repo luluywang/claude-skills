@@ -4,7 +4,7 @@
 
 This prompt provides comprehensive guidance for writing clear, effective economics research papers. It synthesizes principles from three authoritative writing guides (McCloskey's *Economical Writing*, Cochrane's *Writing Tips for Ph.D. Students*, and Chaubey's *The Little Book on Research Writing*) and illustrates them with examples from published economics papers.
 
-**New in v2.1:** Section 0 streamlined to brief summaries. For detailed paper type guidance with exemplars, see `writing_prompts/paper_type_overlays/`.
+**New in v2.1:** Section 0 streamlined to brief summaries. For detailed paper type guidance with exemplars, see `shared/paper_type_overlays/`.
 
 ---
 
@@ -13,7 +13,7 @@ This prompt provides comprehensive guidance for writing clear, effective economi
 **For improving a draft:**
 1. Copy this entire prompt into a conversation with Claude
 2. Identify your paper type using Section 0 diagnostic questions
-3. Optionally, load the detailed type overlay from `writing_prompts/paper_type_overlays/type_X_overlay.prompt`
+3. Optionally, load the detailed type overlay from `shared/paper_type_overlays/type_X_overlay.prompt`
 4. Paste your draft text after the prompt
 5. Ask Claude to apply the principles to improve specific sections or the entire draft
 
@@ -23,8 +23,8 @@ This prompt provides comprehensive guidance for writing clear, effective economi
 - Request examples of how to apply particular techniques
 
 **For targeted review:**
-- Use `writing_prompts/master.prompt` for specific tasks (grammar, AI detection, structure, etc.)
-- See `writing_prompts/README.md` for complete documentation
+- Use `/copyedit` for specific tasks (grammar, AI detection, structure, etc.)
+- See SKILL.md for complete documentation
 
 ---
 
@@ -40,7 +40,7 @@ Economics papers are heterogeneous. A Chetty paper about neighborhood effects us
 - **Technical innovation** → Balance explaining the innovation with showing why it matters
 - **Broad audience appeal** → Minimize jargon, maximize concrete examples
 
-**Note:** This section provides brief summaries for quick diagnosis. For detailed guidance with exemplars and excellence markers, see the type-specific files in `writing_prompts/paper_type_overlays/`.
+**Note:** This section provides brief summaries for quick diagnosis. For detailed guidance with exemplars and excellence markers, see the type-specific files in `shared/paper_type_overlays/`.
 
 ## 0.2 The Four Main Paper Types
 
@@ -63,7 +63,7 @@ Economics papers are heterogeneous. A Chetty paper about neighborhood effects us
 
 **Common Trap:** Explaining the obvious. Don't waste paragraphs on "why education matters."
 
-**For detailed guidance:** See `writing_prompts/paper_type_overlays/type_a_overlay.prompt`
+**For detailed guidance:** See `shared/paper_type_overlays/type_a_overlay.prompt`
 
 ---
 
@@ -86,7 +86,7 @@ Economics papers are heterogeneous. A Chetty paper about neighborhood effects us
 
 **Common Trap:** "Institutional report syndrome." Reading like industry white paper instead of economics.
 
-**For detailed guidance:** See `writing_prompts/paper_type_overlays/type_b_overlay.prompt`
+**For detailed guidance:** See `shared/paper_type_overlays/type_b_overlay.prompt`
 
 ---
 
@@ -110,7 +110,7 @@ Economics papers are heterogeneous. A Chetty paper about neighborhood effects us
 
 **Common Trap:** "Method for method's sake." Impressive technique but unclear economic insight.
 
-**For detailed guidance:** See `writing_prompts/paper_type_overlays/type_c_overlay.prompt`
+**For detailed guidance:** See `shared/paper_type_overlays/type_c_overlay.prompt`
 
 ---
 
@@ -134,7 +134,7 @@ Economics papers are heterogeneous. A Chetty paper about neighborhood effects us
 
 **Common Trap:** "Model dump." Pages of derivations before stating empirical question.
 
-**For detailed guidance:** See `writing_prompts/paper_type_overlays/type_d_overlay.prompt`
+**For detailed guidance:** See `shared/paper_type_overlays/type_d_overlay.prompt`
 
 ---
 ## 0.3 Diagnostic Questions: What Type Is Your Paper?

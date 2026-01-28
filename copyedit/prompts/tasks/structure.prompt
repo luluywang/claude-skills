@@ -28,7 +28,29 @@
 - Type C: Economic question before method details
 - Type D: Empirical puzzle before theory
 
-### 2. Section Ordering
+### 2. Body Section Structure
+
+**Two goals for each body section:**
+
+1. **Connect to RAP Narrative**
+   - Opening links to central question/answer using key words from intro
+   - Explains WHY this section matters for the overall argument
+   - Reader shouldn't feel lost or wonder "why are we doing this?"
+   - Good: "Having established X, we now examine the mechanism..."
+   - Bad: Jumping into details without context
+
+2. **Clearly Explain What Is Done**
+   - State what the section will show BEFORE showing it
+   - Preview findings, then present evidence
+   - Good: "We find effect is concentrated in X. Table 3 confirms..."
+   - Bad: "Table 3 shows the results" (results of what?)
+
+**Common problems:**
+- Diving into details without connecting to story
+- Section openers that describe methods without explaining purpose
+- Missing bridge between "what we're doing" and "why it matters"
+
+### 3. Section Ordering
 
 **Check for:**
 - Logical progression
@@ -39,19 +61,19 @@
 - Long descriptive stats before main analysis
 - General model → specialization (should reverse)
 
-### 3. Transitions
+### 4. Transitions
 
 **Good:** Carry forward key concept, answer provoked question
 
 **Bad:** "Moreover," "Additionally" at every paragraph start, mechanical signposts
 
-### 4. Headings
+### 5. Headings
 
 **Good:** Declarative, specific ("Securitization Reduces Screening by 25%")
 
 **Bad:** Generic ("Model", "Data", "Results")
 
-### 5. Conclusion
+### 6. Conclusion
 
 - Necessary or redundant?
 - Short (1 page max)?
@@ -72,6 +94,9 @@
 
 ## Introduction Structure
 [Current structure, issues, recommendations]
+
+## Body Section Structure
+[For each major section: Does it connect to RAP? Does it clearly explain what's done?]
 
 ## Section Ordering
 [Current order, issues, recommended reordering]

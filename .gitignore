@@ -1,10 +1,9 @@
 # macOS
 .DS_Store
 
-# Machine-specific settings
-settings.local.json
+# Skill runtime state
+*/current/
+*/history/
 
-# Skill runtime state (should not be version controlled)
-skills/*/current/
-skills/*/history/
-/econ_ra/
+# Cache files
+*/cache/

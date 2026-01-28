@@ -65,7 +65,7 @@ Task: [copyedit:bootstrap] Detect state
 Model: haiku
 
 Instructions:
-Read copyedit/prompts/copyedit_bootstrap.md for full instructions.
+Read prompts/copyedit_bootstrap.md for full instructions.
 
 Return: {phase: "fresh"|"resume", details}
 ```
@@ -102,7 +102,7 @@ Return: {phase: "fresh"|"resume", details}
 
 ## Step 3: Diagnostic Questions
 
-@IMPORT: ../../shared/components/diagnostic_workflow.prompt
+@IMPORT: shared/components/diagnostic_workflow.prompt
 
 ---
 
@@ -185,7 +185,7 @@ Task: [copyedit:{task}] {file}
 Model: {model}
 
 Instructions:
-Read the task prompt: copyedit/prompts/tasks/{task}.prompt
+Read the task prompt: prompts/tasks/{task}.prompt
 
 File to analyze: {absolute_file_path}
 Paper type: {paper_type}
@@ -243,7 +243,7 @@ Task: [copyedit:wrapup] Complete review
 Model: haiku
 
 Instructions:
-Read copyedit/prompts/copyedit_wrapup.md for full instructions.
+Read prompts/copyedit_wrapup.md for full instructions.
 
 Context:
 - tasks.json: notes/tasks.json
@@ -332,20 +332,20 @@ Options:
 ### Start New Review
 
 ```
-Use @copyedit/prompts/master.prompt to review my paper
-Use @copyedit/prompts/master.prompt to check for AI tells
-Use @copyedit/prompts/master.prompt for comprehensive review
+/copyedit review paper.tex
+/copyedit ai_detection *.tex
+/copyedit full paper/
 ```
 
 ### Resume Interrupted Review
 
 ```
-Use @copyedit/prompts/master.prompt to continue
+/copyedit continue
 ```
 
 ### Reset for New Review
 
 ```bash
 rm -rf notes/
-Use @copyedit/prompts/master.prompt to review my paper
+/copyedit review paper.tex
 ```
