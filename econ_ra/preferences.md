@@ -32,6 +32,7 @@ This file accumulates your preferences from past projects. The long-running agen
 - Figures as PDF, 6 inches wide
 - Three decimal places for coefficients, two for standard errors
 - Include Table A.X showing constraint parameters and economic interpretation for structural models
+- Wrap all LLM-written LaTeX content in \begin{llm}...\end{llm} for review tracking
 
 ## Sense Check Defaults
 
