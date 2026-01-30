@@ -1018,13 +1018,25 @@ Some operations are now handled by scripts instead of LLM subagents for faster e
 
 ## Files
 
-All paths are relative to this skill directory (`.claude/skills/econ_ra/`):
+### Working Directory Configuration
+
+The working directory (where `current/` and `history/` are created) is configurable:
+
+1. **Environment variable**: Set `ECON_RA_WORKDIR` to an absolute path
+2. **Default**: `$PWD/econ_ra_work/` (project-local, visible)
+
+This allows the skill to work across different machines and projects:
+- On server: `export ECON_RA_WORKDIR=/data/projects/myproject/econ_ra_work`
+- Locally: Just run from your project directory, files go to `./econ_ra_work/`
+
+### Directory Structure
 
 ```
-./                                    # Skill directory
+# Skill directory (where SKILL.md lives)
+econ_ra/
 ├── SKILL.md                          # This orchestrator
 ├── preferences.md                    # Accumulated user preferences
-├── scripts/                          # Automation scripts (faster than subagents)
+├── scripts/                          # Automation scripts
 │   ├── bootstrap.sh                  # Phase detection
 │   ├── dispatcher.py                 # Find ready tasks
 │   ├── archive.sh                    # Archive to history
@@ -1044,6 +1056,10 @@ All paths are relative to this skill directory (`.claude/skills/econ_ra/`):
 │   ├── diagnostic_thinker.md         # Hypothesis generation (Opus)
 │   └── diagnostic_executor.md        # Hypothesis testing (Haiku)
 ├── templates/                        # Project templates
+└── references/                       # Reference materials
+
+# Working directory ($ECON_RA_WORKDIR or $PWD/econ_ra_work/)
+econ_ra_work/
 ├── current/                          # Active project
 │   ├── .status                       # Current phase status
 │   ├── .time_limit                   # Execution time tracking
@@ -1057,6 +1073,7 @@ All paths are relative to this skill directory (`.claude/skills/econ_ra/`):
 │   └── findings/                      # Diagnostic test results
 │       └── iteration_N_*.md           # Findings from each hypothesis test
 └── history/                          # Archived projects
+    └── YYYY-MM-DD_project_name/
 ```
 
 For detailed phase instructions, see the files in `prompts/`:

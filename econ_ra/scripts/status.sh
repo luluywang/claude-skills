@@ -19,7 +19,10 @@
 set -e
 
 SKILL_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-CURRENT_DIR="$SKILL_DIR/current"
+
+# Working directory: ECON_RA_WORKDIR env var, or $PWD/econ_ra_work/
+WORK_DIR="${ECON_RA_WORKDIR:-$PWD/econ_ra_work}"
+CURRENT_DIR="$WORK_DIR/current"
 STATUS_FILE="$CURRENT_DIR/.status"
 
 # Ensure current directory exists

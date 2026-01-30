@@ -12,10 +12,13 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SKILL_DIR="$(dirname "$SCRIPT_DIR")"
-TIME_FILE="$SKILL_DIR/current/.time_limit"
+
+# Working directory: ECON_RA_WORKDIR env var, or $PWD/econ_ra_work/
+WORK_DIR="${ECON_RA_WORKDIR:-$PWD/econ_ra_work}"
+TIME_FILE="$WORK_DIR/current/.time_limit"
 
 # Ensure current/ exists
-mkdir -p "$SKILL_DIR/current"
+mkdir -p "$WORK_DIR/current"
 
 command="${1:-status}"
 
