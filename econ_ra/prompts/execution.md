@@ -253,6 +253,15 @@ Key principles to apply:
 - No "This suggests," "It is worth noting" without clear antecedent
 - No mechanical parallel structure or overly smooth transitions
 
+**LaTeX content tagging:**
+- Wrap ALL LLM-written content in \begin{llm}...\end{llm} blocks
+- This applies to: prose paragraphs, table captions, figure captions, footnotes
+- Do NOT wrap: existing user content, equation labels, or structural LaTeX commands
+- Example:
+  \begin{llm}
+  The coefficient on minimum wage (-0.03, SE 0.01) indicates that...
+  \end{llm}
+
 ---
 
 ## Step 1: Find Relevant Code
