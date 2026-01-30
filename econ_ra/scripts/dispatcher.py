@@ -7,12 +7,25 @@ Usage:
     python3 dispatcher.py              # Parallel mode (default) - returns ALL ready tasks
     python3 dispatcher.py --sequential # Sequential mode - returns first ready task only
 
+Working directory is determined by:
+    1. ECON_RA_WORKDIR environment variable
+    2. Default: $PWD/econ_ra_work/
+
 Returns JSON with ready_tasks and counts.
 """
 
 import json
+import os
 import sys
 from pathlib import Path
+
+
+def get_work_dir() -> Path:
+    """Get working directory from env var or default to $PWD/econ_ra_work/"""
+    if "ECON_RA_WORKDIR" in os.environ:
+        return Path(os.environ["ECON_RA_WORKDIR"])
+    return Path.cwd() / "econ_ra_work"
+
 
 def find_ready_tasks(tasks_file: Path, sequential: bool = False) -> dict:
     """
@@ -87,10 +100,9 @@ def find_ready_tasks(tasks_file: Path, sequential: bool = False) -> dict:
 
 
 def main():
-    # Determine skill directory (script is in scripts/, current/ is sibling)
-    script_dir = Path(__file__).parent
-    skill_dir = script_dir.parent
-    tasks_file = skill_dir / "current" / "tasks.json"
+    # Get working directory from env or default
+    work_dir = get_work_dir()
+    tasks_file = work_dir / "current" / "tasks.json"
 
     # Default is parallel execution
     # Use --sequential for sequential execution (one task at a time)

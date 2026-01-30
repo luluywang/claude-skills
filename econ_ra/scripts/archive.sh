@@ -5,8 +5,11 @@
 set -e
 
 SKILL_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-CURRENT_DIR="$SKILL_DIR/current"
-HISTORY_DIR="$SKILL_DIR/history"
+
+# Working directory: ECON_RA_WORKDIR env var, or $PWD/econ_ra_work/
+WORK_DIR="${ECON_RA_WORKDIR:-$PWD/econ_ra_work}"
+CURRENT_DIR="$WORK_DIR/current"
+HISTORY_DIR="$WORK_DIR/history"
 
 # Check if current directory exists and has content
 if [ ! -d "$CURRENT_DIR" ] || [ -z "$(ls -A "$CURRENT_DIR" 2>/dev/null)" ]; then
