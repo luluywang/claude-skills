@@ -40,6 +40,18 @@ The key insight: subagents run autonomously and cannot interact with users. User
 
 The orchestrator coordinates—it does NOT do the work itself.
 
+### MANDATORY: Phase Protocol Enforcement
+
+**After bootstrap returns a phase, you MUST follow the exact protocol for that phase.**
+
+- `interview` → **IMMEDIATELY** spawn `interview_generate` subagent. Do NOT read user files first.
+- `planning` → **IMMEDIATELY** spawn `planning_verification_generate` subagent.
+- `execution` → Check time limit, then run dispatcher and spawn execution subagents.
+- `paused` → Prompt user to extend time or stop.
+- `cleanup` → Run wrapup scripts.
+
+**NEVER** attempt to understand the user's request by reading their files yourself. The interview_generate subagent does this. Even if the user provides detailed instructions, the orchestrator's job is to route to the correct phase protocol, not to start working directly.
+
 ### MANDATORY: Always Complete the Workflow
 
 **After all tasks reach terminal status (complete/flagged/blocked), you MUST spawn the wrapup subagent.**
@@ -48,20 +60,25 @@ The orchestrator coordinates—it does NOT do the work itself.
 - The wrapup subagent handles archival, retrospective creation, and cleanup
 
 ### The orchestrator CAN:
-- Read files to detect phase and state
+- Read skill files (SKILL.md, prompts/*.md, preferences.md)
+- Read state files (current/.status, current/tasks.json, current/full_spec.md)
+- Run scripts (bootstrap.sh, dispatcher.py, status.sh, etc.)
 - Spawn subagents with appropriate context
 - Present questions to users and collect answers
 - Update `.status` files
-- Update `preferences.md` (only after a subagent recommends it)
 - Verify commits via `git log`
 
 ### The orchestrator MUST NOT:
+- **Read user project files** — subagents do this (interview_generate explores the codebase)
 - **Write or modify code files** — only execution subagents do this
 - **Write full_spec.md** — interview_process subagent writes this
 - **Write checks.md** — verification_process subagent writes this
 - **Run data analysis or scripts** — execution subagents do this
-- **Explore the codebase** — execution subagents do this
 - **Make commits for code changes** — subagents commit their own work
+- **Bypass the phase protocol** — even if user's request seems clear, follow the phases
+
+### If you're tempted to read a user file directly:
+STOP. You're probably in interview phase and should spawn interview_generate instead.
 
 ### If you're tempted to make a code change directly:
 STOP. Instead:
@@ -135,13 +152,18 @@ The script handles:
 3. Checking for existence of key files
 4. Determining current phase based on the detection logic in `prompts/bootstrap.md`
 
-**Phase actions:**
-- `interview` → Run interview phase
-- `planning` → Run planning phase
-- `execution` → Check time limit, then run execution
-- `paused` → Prompt user to extend time or stop (see "Resume After Time Limit")
-- `cleanup` → Run wrapup scripts
-- `unknown` → Ask user for clarification
+**Phase actions (MANDATORY - follow exactly):**
+
+| Phase | Action | First Step |
+|-------|--------|------------|
+| `interview` | Run interview phase | Spawn `interview_generate` subagent |
+| `planning` | Run planning phase | Spawn `planning_verification_generate` subagent |
+| `execution` | Check time limit, run execution | Run `dispatcher.py`, spawn execution subagents |
+| `paused` | Prompt user to extend | Use AskUserQuestion |
+| `cleanup` | Run wrapup scripts | Run `status.sh complete` then `archive.sh` |
+| `unknown` | Ask user for clarification | Use AskUserQuestion |
+
+**CRITICAL: When phase is `interview`, your FIRST action MUST be spawning `interview_generate`. Do NOT read user files. Do NOT start working on the user's request. The interview_generate subagent handles codebase exploration.**
 
 ## Context Isolation (Critical)
 
@@ -161,11 +183,20 @@ Even in autonomous mode, **maintain mental separation between phases**:
 
 When the phase is Interview, use an iterative loop that **continues until the user explicitly requests to move to planning**.
 
+**CRITICAL: Your FIRST action in interview phase MUST be spawning `interview_generate`. Do NOT:**
+- Read user project files (referee.tex, draft.tex, data files, etc.)
+- Start analyzing the user's request yourself
+- Spawn generic Task agents to "explore" or "create tables"
+
+The interview_generate subagent handles all codebase exploration. Pass the user's request to it as context.
+
 ### Interview Loop
 
 ```
 WHILE user has not selected "Move to planning":
     1. Spawn interview_generate subagent (generates clarifying questions)
+       - Pass user's original request as context
+       - Subagent reads files, explores codebase, generates questions
     2. Present questions to user via AskUserQuestion
     3. Spawn interview_process subagent (updates full_spec.md)
     4. Present spec summary to user
