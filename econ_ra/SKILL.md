@@ -328,10 +328,11 @@ Your job:
 
 ```
 WHILE user has not selected "Move to execution":
-    1. Output the full task table to user
+    1. Output the full task list to user (table on first pass, full tasks.json after revisions)
     2. Ask user what they want to do next (AskUserQuestion)
     3. IF "Move to execution" → proceed to Step 3
-       IF "Request changes" → collect feedback, re-spawn planning_verification_generate with revision context, loop
+       IF "Request changes" → collect feedback, re-spawn planning_verification_generate,
+                              write revised tasks to tasks.json, output full tasks.json, loop
        IF "Show full spec" → display full_spec.md, loop
 ```
 
@@ -377,7 +378,26 @@ The user needs to see every task in the proposal, not just a count or summary. T
      Previous proposal: [paste prior task list]
      User feedback: [their requested changes]
      ```
-   - Present new task list, loop again
+   - **Write the revised task list to `current/tasks.json`** — Parse the subagent's revised task table and write it as JSON:
+     ```json
+     {
+       "project": "Project name",
+       "created": "2024-01-15T10:30:00Z",
+       "tasks": [
+         {"id": 1, "task": "...", "type": "code", "depends_on": [], "status": "pending", "notes": ""},
+         {"id": 2, "task": "...", "type": "code", "depends_on": [1], "status": "pending", "notes": ""}
+       ]
+     }
+     ```
+   - **Output the ENTIRE `tasks.json` contents** to the user — show the full JSON, not a summary:
+     ```
+     ## Updated tasks.json
+
+     [paste the complete JSON file contents here]
+
+     Total: N tasks
+     ```
+   - Loop again with AskUserQuestion
 
 4. **If user selects "Show full spec":**
    - Read and display `current/full_spec.md`
@@ -393,6 +413,8 @@ The user needs to see every task in the proposal, not just a count or summary. T
 - Skip outputting the table because it's "in the subagent's return"
 - Assume the user can see subagent output (they cannot)
 - Auto-proceed to execution without user explicitly selecting "Move to execution"
+- After processing user feedback, fail to write the revised tasks to `tasks.json`
+- After revisions, output only a summary instead of the full `tasks.json` contents
 
 ### Step 3: Spawn planning_verification_process subagent (Haiku)
 
