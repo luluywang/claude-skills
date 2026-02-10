@@ -80,8 +80,25 @@ This task AUTO-FIXES errors directly in .tex files. Only fix errors that are **o
 
 1. Read each file carefully
 2. Identify and fix ALL errors you can find
-3. Apply corrections with Edit tool
-4. Document in `notes/copy_edits.md` with header `## Pass 1`
+3. Check `notes/tasks.json` for the `llm_tagging` setting
+4. Apply corrections with Edit tool (see LLM Tagging section below)
+5. Document in `notes/copy_edits.md` with header `## Pass 1`
+
+### LLM Tagging (when enabled)
+
+If `llm_tagging: true` in tasks.json, wrap ALL corrections in `\begin{llm}...\end{llm}`:
+
+**Without tagging (llm_tagging: false):**
+```
+Edit: "their analysis" → "there analysis"
+```
+
+**With tagging (llm_tagging: true):**
+```
+Edit: "their analysis" → "\begin{llm}there\end{llm} analysis"
+```
+
+Only wrap the changed portion, not surrounding unchanged text. This allows reviewers to easily identify and batch-review all LLM changes.
 
 ### Pass 2+: Adversarial Review (Haiku)
 
@@ -139,6 +156,17 @@ No additional errors found. Review complete.
 ---
 **Total: X errors corrected across Y passes**
 ```
+
+**With LLM tagging enabled**, the actual edits in the .tex file will be wrapped:
+```latex
+% Before
+their analysis shows that...
+
+% After (with llm_tagging: true)
+\begin{llm}there\end{llm} analysis shows that...
+```
+
+The log format in copy_edits.md remains the same regardless of tagging.
 
 ---
 

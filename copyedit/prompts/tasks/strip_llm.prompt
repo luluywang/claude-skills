@@ -1,0 +1,116 @@
+# Task: Strip LLM Tags
+
+**Model:** Haiku
+
+**Purpose:** Remove all `\begin{llm}...\end{llm}` wrappers from .tex files after review is complete.
+
+---
+
+## When to Use
+
+Invoke this task when:
+- User says: "strip llm tags", "remove llm wrappers", "finalize for submission"
+- Review is complete and user has verified all LLM changes
+- Paper is ready for final submission without review markers
+
+---
+
+## Workflow
+
+### Step 1: Find .tex Files
+
+1. Glob all `.tex` files in scope (same files from original copyedit session)
+2. If no scope available, glob `*.tex` in working directory
+
+### Step 2: Scan for LLM Tags
+
+For each .tex file:
+1. Read file content
+2. Find all `\begin{llm}...\end{llm}` blocks using regex pattern:
+   ```
+   \\begin\{llm\}(.*?)\\end\{llm\}
+   ```
+   (Use non-greedy matching to handle multiple tags)
+3. Count number of tags found
+
+### Step 3: Strip Tags
+
+For each `\begin{llm}...\end{llm}` block found:
+1. Extract the content between the tags
+2. Use Edit tool to replace the entire tagged block with just the content
+   - `old_string`: `\begin{llm}content here\end{llm}`
+   - `new_string`: `content here`
+3. Work from bottom of file to top (reverse order) to preserve line numbers
+
+### Step 4: Report Summary
+
+Output a summary of all removals:
+
+```
+## LLM Tag Removal Summary
+
+**Files processed:** N
+**Tags removed:** M
+
+### By file:
+- intro.tex: 12 tags removed
+- methods.tex: 8 tags removed
+- results.tex: 5 tags removed
+
+All LLM tags have been stripped. Document is ready for submission.
+```
+
+---
+
+## Edge Cases
+
+### No Tags Found
+```
+No \begin{llm}...\end{llm} tags found in any .tex files.
+
+Either:
+1. LLM tagging was not enabled during copyediting
+2. Tags were already stripped
+3. No changes were made to the files
+```
+
+### Nested or Malformed Tags
+- If nested tags are found (rare), strip from innermost to outermost
+- If malformed tags are found (e.g., `\begin{llm}` without matching `\end{llm}`), report as warning and skip
+
+### Multi-line Tags
+Tags may span multiple lines. The regex should handle this:
+```latex
+\begin{llm}This is a longer
+replacement that spans
+multiple lines.\end{llm}
+```
+
+Use multiline/dotall mode for regex matching.
+
+---
+
+## Quality Control
+
+- [ ] All .tex files in scope scanned
+- [ ] All `\begin{llm}...\end{llm}` blocks found
+- [ ] Tags stripped in reverse order to preserve line numbers
+- [ ] Only the wrapper removed, content preserved exactly
+- [ ] Summary reports accurate counts
+- [ ] No malformed LaTeX left behind
+
+---
+
+## Example
+
+**Before stripping:**
+```latex
+The results show that \begin{llm}there\end{llm} is a significant effect on prices.
+We \begin{llm}use\end{llm} a difference-in-differences design to estimate the causal effect.
+```
+
+**After stripping:**
+```latex
+The results show that there is a significant effect on prices.
+We use a difference-in-differences design to estimate the causal effect.
+```

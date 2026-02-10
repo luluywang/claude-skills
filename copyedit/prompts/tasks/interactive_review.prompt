@@ -113,13 +113,30 @@ Why: [brief explanation]
 
 **This step executes ONLY after the user has answered ALL questions from Step 3.**
 
+**First:** Check `notes/tasks.json` for the `llm_tagging` setting.
+
 1. **Group accepted edits by file**
 
 2. **For each file, apply edits in reverse line order**
    - Sort by line number descending
    - This preserves line numbers as earlier edits don't shift later ones
-   - Use Edit tool to replace Original with Proposed
+   - Determine `new_string` based on LLM tagging:
+     - If `llm_tagging: true` AND file is `.tex`: `new_string` = `\begin{llm}` + Proposed + `\end{llm}`
+     - If `llm_tagging: false` OR file is not `.tex`: `new_string` = Proposed (unchanged)
+   - Use Edit tool to replace Original with the determined new_string
    - Apply all edits for a file in a single batch when possible
+
+### LLM Tagging Example
+
+**Without tagging:**
+```
+Edit: old_string = "utilize this method", new_string = "use this method"
+```
+
+**With tagging (llm_tagging: true):**
+```
+Edit: old_string = "utilize this method", new_string = "\begin{llm}use this method\end{llm}"
+```
 
 3. **Update the markdown file for accepted edits**
    - Change `- [ ]` to `- [x]`
