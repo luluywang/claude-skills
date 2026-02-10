@@ -1,0 +1,356 @@
+Referee report for “Regulating Competing Payment Networks” (resubmission)
+Overview
+The report begins by discussing the extent to which the author addressed my original
+comments. Then, it offers some new comments on the revised materials, including some ideas
+for new counterfactuals.
+To summarize my thoughts: the revised article is much improved over the original one, in large
+part because it removed some of the “reduced-form fact” analysis that I identified as flawed in
+my original report. The model exposition has also been greatly improved, and the author has
+made better note of the model’s limitations (although further work here is required; see
+comments below).
+Overall, I think that the “reduced-form fact” section is still weak: the Durbin Amendment
+difference-in-difference analysis is not entirely robust to including all debit card transactions,
+the part on merchant benefits from card acceptance features some modelling choices that
+require further justification, the claim that merchants should be fee insensitive based on
+descriptive evidence is not well argued, and the point made by the “mechanism for sales
+increase” was not conceptually clear to me. I elaborate on these points below. Although the
+data underlying the results is perhaps the best available for analysis of payment card markets,
+it is not excellent. It often felt that, in the reduced-form facts section, the author tried to squeeze
+more out of the data than is warranted (this was perhaps most clear in the indirect argument
+that merchants should be fee-insensitive, which is made without directly observing card
+acceptance choices in a representative sample of merchants, or in the analysis based on a single
+grocery store). This weakness, though, does not doom the article: the model is well motivated
+and developed in the revised draft. The model analysis, further, represents the article’s main
+contribution. Thus, I suggest that the author downplays the “reduced-form facts” in favour of
+greater emphasis on the model and counterfactual analysis. The reason that I suggest some new
+counterfactuals is that replacing some of the “reduced-form facts” with further analysis of the
+model would improve the article given my comments above.
+Comments from original submission
+Here, I list selected comments that I made on the original submission (in quotations) and
+discuss the extent to which the author has address them.
+- “Appendix Table G.1 suggests that there are 285 payment-card issuers. The author,
+however, includes only 36 issuers in the sample used in the difference-in-differences
+analysis, at least in part based on the excluded issuers having made large acquisitions.
+The rationalization for the sample-selection rule is unclear from the data section, and
+the generalizability of results that are obtained from a selected 13% of issuers is
+somewhat dubious. These problems could be readily addressed by (i) adding a
+justification for the sample selection rule and (ii) demonstrating the robustness of the
+difference-in-difference results to the sample selection rule.”
+o Fully satisfactory response: the author has demonstrated robustness in Figure
+A.2 and rationalized the sample selection rule in Appendix A.1.
+- “For information on payment method choice, the article uses the Atlanta Federal
+Reserve’s Diary of Consumer Payment Choice and the Survey of Consumer Payment
+Choice, also from the Atlanta Fed. The author combines these datasets “to build a
+
+-
+
+-
+
+-
+
+transaction-level dataset on consumers’ payment choices over three-day windows,”
+using “the data from the 2015–2020 waves of both surveys.” Several questions arise
+here. How were the data combined? Do they include the same consumers, or did the
+author pool together data from two distinct sources? Are these surveys intended to be
+representative? The Nielsen Homescan panel also provides information on payment
+method choice. It would be helpful here (i) to mention which variables are included in
+the Homescan panel, and (ii) to discuss the relative strengths of the payment diaries and
+the Homescan panel in learning about payment method choice.”
+o Mostly satisfactory response: the author says that “There is a common set of
+identifiers” between the diary and survey. I assume that this means that there is
+complete overlap between the respondents, although it is not clear from the
+author’s wording. The author has clarified that the datasets are representative
+and provided a comparison of the diary/survey to Homescan.
+“There is little said in the data section about the availability of data on merchants. It is
+unclear at this point in the article how the author can credibly estimate a model of
+merchant card acceptance and of merchant pass-through of payment card fees into
+prices without direct data on merchant acceptance and merchant prices.”
+o Somewhat satisfactory response: the author has noted that the consumer
+payment surveys include information on whether merchants accept cards. These
+data are imperfect, as merchants are selected on the basis of consumer purchases
+and the data relies on consumer recall of payment method acceptance (my guess
+is that this is probably bad), but at least the author explains the provenance of
+the merchant adoption information.
+“The article conducts difference-in-differences analysis of the effects of the Durbin
+Amendment on signature debit card and credit card payment volumes, using large
+financial institutions as the treatment group and small financial institutions as the
+control group. First, it is not explained how signature debit cards (which require the
+consumer to sign a receipt to pay) differ from standard debit cards. It is also not
+explained why the difference-in-differences analysis is conducted only for signature
+debit cards rather than all debit cards. Combined with the fact that the analysis is
+performed on data from a relatively small subset of issuers, this raises doubts about the
+generality of the results.”
+o Mostly satisfactory response: The author has rationalized the focus on
+signature debit transactions and performed the analysis using total debit
+transactions. The results for all debit transactions (Figure A.15) are mostly
+statistically insignificant (except for 3 years since implementation, which is
+marginally significant). This makes me somewhat concerned about the validity
+of the author’s finding that consumers are sensitive to rewards. The author
+should at least mention that the results become weaker when all debit
+transactions are used in the main text. As noted above, the author justified the
+subset selection in a satisfactory manner.
+“Additionally, the analysis suffers from the problem that, given the substitutability of
+debit cards issued by large and small financial institutions, small institutions were
+affected by the Durbin Amendment and are therefore not an appropriate control group.”
+
+-
+
+-
+
+-
+
+-
+
+-
+
+o Mostly satisfactory response: the author has continued to use small issuers as
+the control group but has explained that this choice is unlikely to affect the
+results in footnote 6.
+“Next, the article assesses the extent to which merchants raise their sales by accepting
+cards. The author does do by running a logistic regression on a consumer/transactionlevel panel derived from the Diary of Consumer Payment Choice.”
+o Fully satisfactory response: the quotation above is the beginning of a long
+comment detailing problems with a regression that the author has removed from
+the article.
+“As such, Figure 4 does not provide clear-cut evidence of the substitutability of debit
+cards and merchant cards among merchants.”
+o Fully satisfactory response: the author has removed the problematic analysis
+of Figure 4 from the article.
+“The model enforces several relationships that may not hold empirically. First,
+merchants in the model accept cards to increase their sales from each consumer, but the
+consumer will shop at the merchant irrespective of the merchant’s card adoption choice.
+This contrasts with a model in which consumers spend a fixed amount but choose at
+which merchants to shop in response to these merchants’ card adoption decisions.”
+o Mostly satisfactory response: the author has clarified that the budget
+constraint means that “card acceptance reallocates spending rather than
+increasing overall spending.” In reality, card acceptance likely results in some
+business stealing from rival merchants and some market expansion. It would be
+ideal for the author to estimate the extent of business stealing versus market
+expansion, although I do not view it as a requirement for publication.
+“The assumption that a merchant enjoys a fixed boost in sales 𝛾 when selling to a
+consumer who uses a card has some undesirable properties. When consumers carry both
+a credit and a debit card (as I suspect most do in practice), then the merchant has no
+incentive to accept credit cards; credit cards offer no incremental sales increase over
+debit cards.”
+o No response: I could not locate a response to this comment in the article. I
+struggle to imagine that consumers could carry two credit cards without
+carrying a debit card, which I had thought necessarily follows from having a
+bank account. If credit card consumers also have a debit card, and incremental
+consumer spending is constant across debit and credit cards, the fact that
+merchants adopt high-free credit cards seems to be an artifact of the somewhat
+arbitrary assumption that consumers may carry only up to two cards. (I may be
+missing something here.)
+“Relatedly, the modelling of rewards is unnatural. Consumers enjoy a boost to their
+income for adopting a card even if they never use the card.”
+o Unsatisfactory response: I think that the author may have tried to respond to
+this comment with the text on page 21 reading “The pecuniary utility for singlehoming agents is micro-founded in the consumer’s optimal consumption
+problem across merchants. The optimized value of log utility for a consumer
+with CES preferences that generate the demand curve in Equation 28 is
+
+-
+
+-
+
+-
+
+-
+
+approximately log(U).” This requires more explanation; the microfoundation is
+not explicitly provided and is not clear to me.
+“Another concern relates to merchant pricing. In general, markups and pass-through
+depend on the slope and curvature of demand, respectively. CES demand has one
+parameter that governs both markups and pass-through.”
+o Mostly unsatisfactory response: in Section IV.F.2, the author claims that
+“Appendix F.6 extends the model to allow for an arbitrary degree of passthrough.” This is not true. Appendix F.6 provides analysis of a case with no
+pass-through. I did not see anything in Appendix F.6 about allowing an arbitrary
+degree of pass-through; the misleading statement in the main text is the main
+reason why I have labelled the response as “mostly unsatisfactory.” With that
+said, the additions in Appendix F.6 with no pass-through are much appreciated
+and interesting. I would suggest that the author acknowledges the problems
+associated with full pass-through and explains what happens in the opposite
+case with no pass-through. Upon making these changes and removing the false
+statement from the text, I would update my assessment to “Fully satisfactory
+response.”
+“In addition, there is an inconsistency between the model and data in the specification
+of primary and secondary cards.”
+o Somewhat satisfactory response: the author has revised the procedure for
+determining first and second cards as detailed by Appendix A.3.1 in light of the
+comment. However, this appendix is missing details. Several parts are
+incomplete (the first sentence of the appendix is incomplete; the final sentence
+of the “Cash-only consumers” section is incomplete; the section describes
+various cut-offs without mentioning their numerical values). Overall, it seems
+that the author has improved the procedure for choosing primary and secondary
+cards, but errors in the appendix make it hard to definitely conclude that there
+has been an improvement. Also, it would be good to briefly describe the
+procedure in the main text.
+“The way that consumers choose primary and secondary cards may be suboptimal.”
+o Fully satisfactory response: the author has acknowledged that the consumer
+card adoption specification “rules out the possibility that Visa complements
+AmEx more when Visa is accepted at more stores that do not accept AmEx,” as
+I pointed out. The author, however, estimates an alternative model with
+acceptance complementarity and argues that it is inconsistent with the data in
+Section F.7. In my view, the author has done enough to address my comment.
+“There seems to be another model/data inconsistency in the part of estimation that
+matches the model-simulated effects of the Durbin Amendment to the difference-indifferences estimates. The goal of this exercise is to estimate consumer sensitivity to
+rewards. Two ways of simulating Durbin are: (i) by limiting interchange fees on debit
+cards and re-solving for equilibrium under each trial value of the parameter, or (ii) by
+adjusting only consumer debit rewards, reducing them by the same extent that they fell
+upon the enactment of Durbin. The article seems to use the second approach given that,
+rather than solve the full model in estimation, the author uses a discrete-choice
+
+-
+
+-
+
+representation of the model that holds only when merchant acceptance decisions are
+held fixed. This suggests that the author is not re-solving for equilibrium. If so, the
+estimation procedure suffers from the problem that the empirical and model-based
+quantities being matched are not analogous; the difference-in-difference estimates
+capture all equilibrium responses to Durbin. Furthermore, the problem that the control
+group in the difference-in-differences analysis was affected by the Durbin Amendment
+biases the author’s estimates obtain by matching the difference-in-differences
+estimates.”
+o Mostly satisfactory response: the author states “I hold fixed merchant actions
+because my difference-in-difference estimates remove any equilibrium effects
+of merchant actions.” I’ll take his word on it, but some additional explanation
+would be helpful.
+“First, it is unclear why American Express’s interchange fee is not capped in the
+counterfactual that limits credit card fees.”
+o Fully satisfactory response: AmEx’s fees are capped in the revised manuscript.
+“Also, the article should report standard errors for the counterfactuals (i.e., in Tables 6
+and 7). “
+o Fully satisfactory response: the author has reported standard errors.
+“Another concern is that the author repeals the Durbin Amendment by setting the debit
+card merchant fee cap to 1% on the basis that 1% was close to the average pre-Durbin
+debit card merchant fee rate. Why not solve for a new equilibrium without any cap?”
+o Fully satisfactory response: the author has explained the logic of increasing
+debit fees rather than lifting the cap entirely in footnote 34.
+“Last, there is a concern in the “increased competition” counterfactual that adding a
+new credit card network mechanically increases credit card usage by giving consumers
+new logit shocks for credit cards. Given that credit card usage is welfare reducing in
+the model, adding a new card is thus welfare reducing before the pro-competitive effects
+of entry (changes in prices/fees) are considered. It would be good to take note of this
+concern, even if it is not addressed via a change in the counterfactual.”
+o No response: I could not find a response to this comment in the article.
+Although the “increased competition” counterfactual has been removed in
+favour of a focus on monopolization, my original comment also applies to a
+comparison of a monopoly regime with the baseline regime.
+
+Ideas for additional counterfactuals
+- It would be interesting to decompose the channels by which the fee cap affects welfare
+by computing the counterfactual (i) holding fixed prices and merchant adoption, (ii)
+holding fixed prices, (iii) holding fixed merchant adoption, and (iv) holding fixed
+neither (which, of course, is what the author is currently doing). I suppose that
+merchants compete away most of their gains from fee caps by reducing prices following
+the fee cap. Given the multi-sided nature of the market, it would also be interesting to
+see how participation changes on the merchant side affect consumer welfare and
+whether this dynamic is relevant at all for the welfare results.
+- The results regarding the effects of competition on platform fees in Teh et al. suggest
+that multihoming plays a crucial role in determining whether competition tends to raise
+or lower merchant fees. To my understanding, there is no empirical paper that estimates
+how multihoming affects the extent to which competition shifts the relative balance of
+
+consumer fees (or rewards) and merchant fees. The author has an opening to do exactly
+this by running the monopoly counterfactual under alternative assumptions regarding
+consumer multihoming. This exercise would also suggest how monopolization would
+affect welfare in payment card (or, more generally, platform markets) with different
+levels of multihoming than the US payment card market.
+New comments
+Here, I offer some smaller comments that I believe that the author will be able to address in a
+satisfactory manner.
+- How was the large retailer in Section III.B chosen? Are there any other retailers in the
+sample period that began accepting credit cards, to provide a sense of effects beyond a
+single retailer and beyond the grocery category?
+- The article uses the number of trips as the outcome when studying merchant benefits
+from card acceptance, claiming that revenue is unsuitable for use due to its fat tails. But
+the retailer considers sales effects, not foot traffic effects, when choosing whether to
+adopt a payment card. Wouldn’t a log transform of revenue deal with the fat tails?
+- Why use a relatively exotic Poisson model as opposed to a more standard linear model
+in the analysis of merchant benefits from card acceptance? Are the results from a linear
+model qualitatively similar?
+- Why isn’t the credit card share at the large grocery equal to zero before it began
+accepting credits cards (Figure 4a)? If there is measurement error in the data, how does
+this affect the author’s estimation procedure?
+- The first sentence of Section III.B.2, that “Credit card users shop more at the grocer
+because consumers value the flexibility of paying with credit --- not because of
+rewards” is imprecise and not entirely clear to me. The author showed that consumers
+are sensitive to rewards, which are thus likely a large motivator of credit card usage.
+Thus, the flexibility of paying with credit is likely valued by consumers because credit
+card usage entails rewards. The author also states that the flexibility of paying with
+credit may be valued by consumers because consumers like to make large purchases
+with credit, but this begs the question. There must be some reason why consumers like
+to make large purchases with credit (perhaps because they dislike using credit, as the
+author argues, but the rewards accumulated on large purchases are especially high). The
+conclusion that I draw from Figure 5 is that credit cards are highly substitutable with
+each other but weakly substitutable with other payment methods.
+- The author concludes from Figure 5(a) that higher Discover rewards do not affect
+consumer choices about which stores to visit. I have two comments on this conclusion:
+o The author focuses only on grocery stores. Perhaps consumers’ food shopping
+is not impacted by rewards given that food is a necessity, but other areas of
+spending would be affected. Can the author repeat the analysis for other
+categories?
+o I am not even sure that the conclusion is correct. It looks like there are upticks
+in the black curve during the periods in which Discover offers higher rewards
+for groceries. Then again, the dashed line also seems to increase. It would be
+helpful for the author to estimate the differential impact of higher Discover
+rewards on Discover users versus non-Discover users using a fixed effects
+regression; this would allow the author to conduct inference on the impact of
+higher rewards on the number of trips.
+
+-
+
+-
+
+-
+
+-
+
+-
+
+-
+
+In Figure 6, a line labelled “OptBlue” appears, but “OptBlue” is never discussed in the
+main text (although it is summarized in a figure note). I fail to see the point of including
+this second line as it does not influence the author’s argument in Section III.C.1.
+What does the author mean “Since every Visa/MC merchant also accepts AmEx”? From
+experience, many merchants refuse AmEx but accept Visa and MC. Also, doesn’t this
+statement clash with the author’s preceding statement that merchant adoption strategies
+tend to follow a hierarchical pattern? Perhaps the author meant to say that “every AmEx
+merchant also accepts Visa/MC”? Even if so, it seems hard to believe that there is not
+a miniscule share of merchants that accept AmEx but not Visa/MC.
+Figure 6 does not directly tell us about the extent of merchant multihoming. What we
+would need to assess this extent are additional lines showing the number of merchants
+on various combinations of the networks (Visa + MC, Visa + Amex, etc.).
+It does not immediately follow that large effects of card adoption on sales mean that
+merchants should be insensitive to fees. As the author notes in Section III.B.3, whether
+the sales increase from card adoption makes adoption worthwhile to a merchant
+depends on the merchant’s margins (as well as the merchant’s fixed costs of adoption).
+If, e.g., there was a large mass of merchants with margins around 20% and no fixed
+costs of adoption, then small changes in fees would change the adoption decision of
+many merchants. The elasticity of adoption with respect to fees similarly depends on
+the distribution of fixed costs of card adoption.
+Is anything lost by assuming that card users never prefer to pay with cash? As the author
+notes, the consumer’s random selection to use either the primary or secondary card
+could arise from a model with preference shocks at the level of a transaction and
+payment method. It would seem natural for there to be some shock for using cash as
+well. Perhaps the author may overstate the benefits to consumers of payment cards by
+ruling out the possibility that sometimes consumers would prefer to use cash?
+Page 18 reads “Second, consistent with the evidence in Section III.B.1, rewards do not
+affect relative consumption choices across merchants.” But it seems that Section III.B.1
+(“The Effects of Accepting Credit Cards”) is about how credit card acceptance by a
+single large merchant affected sales at the merchant, not about rewards or a comparison
+of consumption across merchants. Perhaps the author meant to refer to Section III.B.2.
+Section V.C.1 states that “my estimated retail margin of 15.6 percent is also similar to
+the aggregate markups of 15-20% used in macro studies of misallocation.” However,
+Section III.B.3 reads “credit card acceptance is profitable as long as margins exceed
+20%. Census statistics indicate gross margins in the grocery industry were around 27%
+during this period.” The author should fix the consistency between these parts of the
+paper, as the earlier argument that merchant should be insensitive to fees seems to rely
+on margins exceeding 20% (although, as discussed, this argument is flawed). Also, the
+author should also be consistent in writing out “percent” or using the “%” sign.
+The claim that “Capping fees at the cost of cash also simulates the effects of merchants
+freely surcharging consumers for the cost of card acceptance” in Section VI.A requires
+greater explanation.
+A more appropriate name for Section VI.C would be “Reducing Competition Between
+Private Networks.”
+
+

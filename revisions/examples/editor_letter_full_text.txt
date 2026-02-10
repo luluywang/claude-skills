@@ -1,0 +1,316 @@
+Editor
+Erzo F.P. Luttmer
+
+The American Economic Review
+Published by the American Economic Association
+
+Coeditors
+John Friedman
+Yuriy Gorodnichenko
+Rema Hanna
+Andrei Levchenko
+Qingmin Liu
+Benjamin Moll
+Pietro Ortoleva
+Devin Pope
+Marzena Rostek
+Andres Santos
+Uta Schönberg
+Frank Verboven
+Ekaterina Zhuravskaya
+
+Board of Editors
+Nathaniel Baum-Snow
+Carola Binder
+Aislinn Bohren
+Yann Bramoullé
+Julia Cagé
+Davide Cantoni
+Arun Chandrasekhar
+Briana Chang
+Aimee Chin
+James Cloyne
+Mariano Massimiliano Croce
+Clément de Chaisemartin
+Mark Dean
+Manasi Deshpande
+Francesc Dilmé
+Benjamin Faber
+Ying Fan
+Lucie Gadenne
+Cecile Gaubert
+Garance Genicot
+Daniel Gottlieb
+Eric Gould
+Paul Grieco
+Pauline Grosjean
+Joshua Hausman
+Randi Hjalmarsson
+Jean-François Houde
+Nagore Iriberri
+Koichiro Ito
+Kelsey Jack
+Fuhito Kojima
+Pablo Kurlat
+Ashley Langer
+Adriana Lleras-Muney
+Yusufcan Masatlioglu
+Filip Matějka
+Isabelle Mejean
+Karel Mertens
+Conrad Miller
+Rachel Ngai
+Antonio Penta
+Eduardo Perez-Richet
+Vincent Pons
+Alex Rees-Jones
+Johanna Rickne
+James Roberts
+Florian Scheuer
+Sonja Settele
+Manisha Shah
+Moses Shayo
+Erik Snowberg
+Johannes Spinnewijn
+Kevin Stange
+Johannes Stroebel
+Juan Carlos Suárez Serrato
+Tavneet Suri
+Paolo Surico
+Olivier Tercieux
+Juuso Toikka
+Christoph Trebesch
+Shing-Yi Wang
+Kaspar Wüthrich
+
+August 21, 2025
+
+Dr. Lulu Wang
+Northwestern University Kellogg School of Management
+RE: AER-2025-0455: Regulating Competing Payment Networks
+Dear Dr. Wang,
+I write about your submission, “Regulating Competing Payment Networks.”
+With reject-and-resubmit decisions like yours, I typically ask the original
+referees for feedback but also solicit the input of a new referee for a fresh look
+at the paper. I therefore enclose four referee reports - three from the original
+referees (Referees 1 through 3 have the same labels as before) and one from a
+new referee (Referee 4).
+The repeat-referees all note that the revision responds to many of their concerns
+in detail, and they commend you on the significant effort you put towards
+adding new data to the already impressive variety of sources, improving the
+model exposition, and enriching the consumer-side of the model. They are also
+still all enthusiastic about the research question and find the general results
+credible. Of course, the model continues to make simplifying assumptions,
+especially on the merchant side, where the data appear of poorer quality and
+exhibit less useful variation. Overall, Referees 1 and 2 recommend (weak)
+Revise-and-resubmit decisions, while Referee 3 recommends an Accept
+decision.
+The new referee raises concerns with your interpretation of the difference-indifference evidence from the Durbin Amendment and finds the current
+counterfactual analyses limited. The referee recommends I reject your paper.
+My own read of the new draft left me impressed with the revision, but I share
+the referees’ reactions that you could further motivate the need for and likely
+impact of some of your modeling decisions and are not fully leveraging the
+richness of the model in the current set of counterfactuals. Since the original
+referees are uniformly more positive and Referee 4 raises points that – I believe
+– you can make progress on, I am more optimistic about the paper’s prospect
+for ultimate publication in the AER. I would therefore like to offer you the
+opportunity to submit one more revision. I also consulted with Frank Verboven,
+the new AER IO co-editor, who fully supports this decision (I will continue
+handling your paper going forward).
+
+The revision should focus on four main points:
+•
+
+Reduced-form facts. The referees make several, largely expositional
+suggestions regarding the descriptive facts that you should take on board.
+These include:
+o Results in Section III.A:
+(a) Caveat the results in Section III.A given the sensitivity to
+sample selection.
+(b) Address Referee 4 concerns that the difference-in-difference
+results are unable to isolate the role of rewards and that the
+estimated rewards sensitivity is too high. You already note that
+the control group aims to purge the results of some types of
+contemporaneous trends, such as changes in merchant
+acceptance behavior. Can you provide any evidence on potential
+strategic responses by exempt issuers to the Amendment, such
+as promotion of debit cards? Alternatively, can you - as a
+robustness check - reduce the sensitivity to rewards in model
+estimation?
+o Results in Section III.B.
+(a) Please summarize retailer credit card acceptance rates upfront –
+my sense is that this grocery store must be relatively unique in
+not accepting credit cards. This will help motivate modeling
+assumptions.
+As an aside, my understanding of the Nielsen guidelines is that
+it is not possible to display results based on data from a single
+entity. Please ensure that the paper passes review by the Kilts
+Center.
+(b) Clarify the interpretation of the results. I agree with the R1 that
+one takeaway of the grocery store analysis is that debit and
+credit cards substitute and that the Discover evidence alone is
+not sufficiently conclusive to rule out this channel fully.
+
+•
+
+Modeling assumptions. The referees raise several follow-up questions
+regarding the model setup and implications that I would like you to address:
+o At a high level, the paper needs to be more open about the fact that
+the merchant data and the current state of merchant card adoption do
+not allow you to model merchant behavior as flexibly as one may
+like. A few examples:
+(a) You rely on the single, possibly not representative merchant
+from Section III.B to pin down 𝜎 and use this single retailer to
+support the empirical result that merchants are fee-insensitive
+
+(presumably, to current levels of fees!). This is more like a
+calibration than an estimation exercise, however, that likely
+plays a role in the overall model predictions.
+(b) The fact that most merchants accept some type of credit card
+today and that you have already exploited Section-III.B grocery
+store’s adoption behavior in estimation must mean that the data
+do not allow you to identify fixed costs to card acceptance
+separately from merchant substitution and heterogeneity. Please
+correct me if this is wrong. If not, you should simply state this as
+a shortcoming of your approach and explain why you cannot be
+more flexible, rather than argue that fixed adoption costs are
+small (which R2 does not agree with). Please note that I do not
+expect you to incorporate fixed acceptance costs, but please add
+a discussion of how such costs might affect agent behavior; R2’s
+report contains nice conjectures on this point.
+(c) You say that you abstract from non-rewards characteristics
+because of Australia’s experience of regulating merchant fees
+(Section IV.F.7). I assume, however, that your data does not
+contain information on non-rewards characteristics of
+consumers’ credit cards and that modeling issuer choices in
+dimensions other than fee structures is well beyond the scope of
+the paper. As R4 notes, the counterfactuals are therefore best
+thought of as short-run predictions, with possible regulations
+inducing further strategic responses by issuers. R2’s suggestion
+of representing such concerns as an artificial quality degradation
+in the counterfactuals is nice, but I do not necessarily expect you
+to implement it.
+There are other places like this in the paper, especially in
+Section IV.F; I hope these examples clarify what I am looking
+for.
+o The referees continue to ask for improvements in your treatment of
+credit and debit cards on the consumer side.
+First, R1-R3 dislike that they do not substitute. They also make
+several suggestions for how you might introduce substitution in the
+model (see R1 and R2’s comments here) or clarify why exactly you
+make this assumption (see R3’s suggestion on this point). Since
+your consumer-side data is better, I wondered if you could make
+some progress on this point, but I would also be satisfied with a
+more detailed motivation for the need for this assumption based on
+modeling challenges or data shortcomings that this might introduce.
+
+Second, R4 notes that not all consumers are able to obtain credit
+cards. Translating this to the model means that your choice set is
+mis-specified for a segment of consumers. My conjecture was that
+with your current setup, such constraints would lead to an
+understatement of the relative value of credit cards. Please clarify
+whether this is correct. Are you able to perform a crude robustness
+check by re-estimating the model under the assumption that a
+segment of (lower income) consumers do not have access to credit
+cards?
+Third, R2 suggests clarifying the information environment for
+consumers, its interaction with the consumer merchant choice, and
+the role of card preferences in merchant choice.
+•
+
+Counterfactuals. The referees believe you can further strengthen the
+realism and usefulness of the counterfactual analyses. R1 and R2 suggest
+several modifications and additions. To me, the most relevant are the
+following:
+o
+
+o
+o
+
+o
+
+o
+
+I agree with R2 that reducing merchant fees down to the cost of
+capital is unlikely (point 2c and point 2a, even though I do not
+expect you to simulate a counterfactual where credit cards are
+eliminated from the market, which is interesting, but maybe not as
+relevant in the current environment). The referee therefore suggests
+a more nuanced reduction sequence that would also illustrate the
+key features of the model better, as requested by R4.
+In the spirit of better illustrating model behavior, I think R1’s
+suggestion of decomposing the fee cap effect into different channels
+would be very useful.
+Allowing for substitution between payment types may increase the
+role of new payment methods (R2 point 2d). Depending on your
+ability to adopt the above suggestions, you might be able to engage
+more with this or at a minimum note that demand limits the impact
+of new payment methods.
+I also like R1’s suggestion to investigate the importance of
+consumer multihoming, which would speak to the broader twosided markets literature. That said, if you find that this takes you too
+far afield from presenting a coherent story with the counterfactuals,
+I would also be fine with leaving this point for future work.
+Lastly, R4 asks about unregulated optimal behavior. My guess was
+that this serves as the baseline for the counterfactuals already, but
+please correct me if I am wrong.
+
+•
+
+Exposition. R4 and Frank Verboven ask that you further improve the
+writing and make the model section more accessible. Frank Verboven
+writes:
+“My main concern while reading the paper relates to the exposition. The
+writing is reasonably well structured and polished, but I still find it hard to
+read. I think this is partly because the author sometimes takes for granted
+that a reader knows the institutions. For example, the first page refers to
+“poorly designed price regulations” that imply distortions but is vague on
+what these regulations mean. The second page then describes the finding on
+the impact of the basis point reduction in debit rewards after the Durbin
+Amendment Act, but without much context. This Act is further referred to a
+few times in the introduction but only explained at a late stage. In general,
+the author could do a better job in presenting the paper at a higher level, for
+a broader audience that is not necessarily familiar with the regulations.”
+Please take a stab at further tightening the paper’s exposition with the
+objective of (a) clarifying what can and cannot be done with the data at
+hand, and (b) focusing the paper on the essential pieces of the setting that
+are relevant for the modeling and the interpretation of your results. I realize
+this was your job market paper, and it still essentially reads as one, with a
+lot of detail on nuances of the payments market that are unlikely to be
+material to your results. You may also want to shorten the footnotes and
+shorten the Appendix, which contains further details that – while interesting
+– are not central to the substance of the paper (for example, the detailed
+section on price coherence). To the extent that a reader would like to
+engage with the Appendix material, I would recommend that you include
+only the most important material related to the data compilation and
+collection, the empirical estimation approach, and the model derivation.
+
+The referees make several other useful, but maybe less central, suggestions that
+I recommend discussing as you go through the draft. I am leaving the extent to
+which you choose to address them in detail up to you. Lastly, Frank Verboven
+suggests connecting with Knittel and Stango’s paper “Price Ceilings as Focal
+Points for Tacit Collusion” (AER 2003) on price ceilings as focal points for
+collusion in credit card markets. Since this relates closely to price caps, it may
+be useful to discuss whether institutions have changed since their analysis and
+whether caps may create a risk of collusion in your setting (not at all to be dealt
+with, but to mention as a caveat).
+I would also like to remind you that the paper will ultimately need to follow the
+AEA data & replication policy. So, making sure your code is well documented
+
+and adheres to this policy will save you extra work down the road. It also
+minimizes the chance that your estimates change at a late stage in the review
+process, with all the resulting complications that happen due to any such
+changes.
+When you resubmit, please include a cover letter that summarizes what you
+did. The referees note that you did not fully address some of their earlier
+questions in your prior response. Please do so in this round (e.g., the “no
+response” / “(mostly) unsatisfactory response” points from R1). Please return
+the next version to me within the next 12 months. Once you re-submit, I plan to
+send the new manuscript to the referees one more time before coming to a final
+decision. I look forward to reading the next version of this work.
+Best regards,
+
+Katja Seim
+Coeditor
+American Economic Review
+
+

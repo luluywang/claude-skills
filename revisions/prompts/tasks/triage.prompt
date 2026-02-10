@@ -1,0 +1,155 @@
+# Triage Task
+
+**Purpose:** Categorize all extracted comments by type, difficulty, and priority. Identify cross-references and thematic clusters across referees.
+
+---
+
+## Input
+
+- **Comments:** `current/comments.json` — merged array of all extracted comments
+- **Config:** `current/config.json` — includes report paths and manuscript path
+
+## Task
+
+Read all comments and assign metadata to each. Then identify cross-referee relationships.
+
+### Step 1: Categorize Each Comment
+
+For each comment, assign:
+
+**Type** (what kind of response is needed):
+- `substantive` — Requires new analysis, model changes, data work, or significant argumentation
+- `clarification` — Requests explanation or motivation for existing choices
+- `minor` — Typos, wording suggestions, citation additions, formatting
+- `already_addressed` — Referee acknowledges prior response was satisfactory
+
+**Difficulty** (how hard to respond):
+- `easy` — Straightforward fix or acknowledgment (e.g., "I have fixed this typo")
+- `medium` — Requires careful explanation with manuscript references
+- `hard` — Requires new analysis, robustness checks, or model modifications
+- `escalate` — Needs user judgment; cannot be drafted autonomously (e.g., fundamental modeling choices)
+
+**Priority** (how important to address well):
+- `high` — Editor explicitly flags this; multiple referees raise it; threatens acceptance
+- `medium` — Single referee concern; important but not make-or-break
+- `low` — Minor suggestions; "nice to have"
+
+### Priority Signals
+
+Indicators of high priority:
+- Editor letter explicitly names the issue
+- Multiple referees raise the same concern
+- Referee uses strong language ("fundamental flaw", "must address", "I cannot recommend")
+- Comment relates to identification strategy or main results
+- Comment has `prior_status: "No response"` (referee flagged non-response)
+
+Indicators of low priority:
+- Single referee, minor suggestion
+- "This is a minor point but..."
+- Wording/formatting suggestions
+- "It would be nice if..." without strong insistence
+
+### Step 2: Cross-Reference Across Referees
+
+For each comment, check if other referees raise the same or related concern. Link them:
+
+```json
+"cross_refs": ["ref2_4", "ref4_1"]
+```
+
+Cross-referencing criteria:
+- Same specific concern (e.g., two referees questioning the same assumption)
+- Related but distinct concerns about the same topic area
+- One referee's suggestion addresses another's concern
+
+### Step 3: Thematic Clustering
+
+Group related comments into thematic clusters:
+
+```json
+"clusters": [
+  {
+    "name": "Durbin evidence interpretation",
+    "description": "Concerns about the reduced-form evidence from the Durbin Amendment",
+    "comment_ids": ["ed_1", "ref1_3", "ref4_2"],
+    "priority": "high"
+  }
+]
+```
+
+Clusters help the draft phase produce consistent responses that reference each other.
+
+## Output Format
+
+Write `current/triage.json`:
+
+```json
+{
+  "created": "ISO timestamp",
+  "summary": {
+    "total": 42,
+    "by_type": {"substantive": 15, "clarification": 12, "minor": 10, "already_addressed": 5},
+    "by_difficulty": {"easy": 12, "medium": 18, "hard": 8, "escalate": 4},
+    "by_priority": {"high": 10, "medium": 20, "low": 12}
+  },
+  "comments": [
+    {
+      "id": "ed_1",
+      "source": "Editor",
+      "number": 1,
+      "text": "Full comment text...",
+      "prior_status": "Not applicable",
+      "references": {"pages": [], "figures": [], "tables": [], "sections": ["III.A"], "equations": []},
+      "type": "substantive",
+      "difficulty": "hard",
+      "priority": "high",
+      "cross_refs": ["ref1_3", "ref4_2"],
+      "cluster": "Durbin evidence"
+    }
+  ],
+  "clusters": [
+    {
+      "name": "Durbin evidence interpretation",
+      "description": "Concerns about the reduced-form evidence...",
+      "comment_ids": ["ed_1", "ref1_3", "ref4_2"],
+      "priority": "high"
+    }
+  ]
+}
+```
+
+## Write Summary
+
+In addition to `current/triage.json`, write a human-readable summary to `current/triage_summary.md`:
+
+```markdown
+# Comment Triage
+
+| ID | Source | # | Type | Difficulty | Priority | Cluster |
+|----|--------|---|------|------------|----------|---------|
+| ed_1 | Editor | 1 | substantive | hard | high | Durbin evidence |
+...
+
+## Thematic Clusters
+1. **Durbin evidence** (ed_1, ref1_3, ref4_2) — HIGH
+2. **Credit-debit substitution** (ed_4, ref1_1, ref2_5) — HIGH
+...
+
+## Summary
+N total (X substantive, Y clarification, Z minor, W already addressed)
+```
+
+## Return
+
+Return **only** a brief summary — the orchestrator will read the files for details:
+
+```json
+{
+  "status": "complete",
+  "total": N,
+  "by_type": {"substantive": X, "clarification": Y, "minor": Z, "already_addressed": W},
+  "cluster_count": K
+}
+```
+
+Do NOT return the full triage table inline. The orchestrator reads `current/triage_summary.md` to display it.

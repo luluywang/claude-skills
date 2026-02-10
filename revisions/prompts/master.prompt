@@ -1,0 +1,385 @@
+# Revisions Master Router
+
+**Purpose:** Route revision requests through a multi-phase workflow: parse → triage → draft → verify → compile.
+
+---
+
+## Workflow
+
+1. **Bootstrap** → Detect state (fresh or resume)
+2. **Interpret request** → Map command to task sequence
+3. **Input collection** → Gather report files, manuscript, round number
+4. **Parse & extract** → Extract comments from reports (parallel Haiku)
+5. **Triage & cross-reference** → Categorize + cluster comments (Sonnet)
+6. **Draft responses** → Draft per-comment responses (model-routed)
+7. **Verify claims** → Cross-check against manuscript (parallel Haiku)
+8. **Compile LaTeX** → Assemble .tex output (Haiku)
+
+---
+
+## State Management
+
+### State Files
+
+| File | Purpose |
+|------|---------|
+| `current/.status` | Current phase: `fresh` \| `parse` \| `triage` \| `draft` \| `verify` \| `compile` \| `complete` |
+| `current/config.json` | Input paths, round number |
+| `current/comments_{prefix}.json` | Per-report parsed comments (written by parse subagents) |
+| `current/comments.json` | All extracted comments (merged by orchestrator) |
+| `current/triage.json` | Categorized comments + clusters |
+| `current/triage_summary.md` | Human-readable triage table (written by triage subagent) |
+| `current/responses/{id}.md` | Individual draft responses |
+| `current/verification/{id}.json` | Per-comment verification results (written by verify subagents) |
+| `current/verification/{id}.md` | Per-comment verification issues (written by verify subagents) |
+| `current/verification_summary.md` | Consolidated verification issues (written by orchestrator) |
+
+---
+
+## Step 1: Bootstrap
+
+Run the bootstrap script:
+
+```bash
+bash revisions/scripts/bootstrap.sh
+```
+
+Returns JSON with phase detection and file inventory.
+
+**Handle return:**
+- `fresh` → Proceed to Step 3 (input collection)
+- `parse` → Skip to Step 4
+- `triage` → Skip to Step 5
+- `draft` → Skip to Step 6
+- `verify` → Skip to Step 7
+- `compile` → Skip to Step 8
+- `complete` → Inform user, offer reset
+
+---
+
+## Step 2: Interpret Request
+
+| Request Pattern | Entry Point | Task Sequence |
+|----------------|-------------|---------------|
+| `parse reports/` | parse | parse only |
+| `triage` | triage | triage only |
+| `draft` | draft | draft only |
+| `draft ref1` | draft | draft referee 1 only |
+| `draft ref1:3` | draft | draft single comment |
+| `verify` | verify | verify only |
+| `compile` | compile | compile only |
+| `full reports/ paper.tex` | fresh | parse → triage → draft → verify → compile |
+| `continue` | (detected) | resume from current phase |
+| `reset` | — | clear current/ for new revision |
+
+For `full` command, extract report directory and manuscript path from arguments.
+
+---
+
+## Step 3: Input Collection
+
+When phase is `fresh` or on `full` command, gather inputs:
+
+### Required Inputs
+
+Use AskUserQuestion if not provided in command:
+
+```json
+{
+  "header": "Report files",
+  "question": "Where are the referee report files? Provide a directory or list of file paths.",
+  "multiSelect": false,
+  "options": [
+    {"label": "revisions/examples/", "description": "Use the example reports directory"},
+    {"label": "Specify path", "description": "I'll provide file paths"}
+  ]
+}
+```
+
+Then:
+
+```json
+{
+  "header": "Manuscript",
+  "question": "What is the path to the manuscript (.tex file)?",
+  "multiSelect": false,
+  "options": [
+    {"label": "Specify path", "description": "I'll provide the manuscript path"}
+  ]
+}
+```
+
+### Optional Inputs
+
+```json
+{
+  "header": "Prior response",
+  "question": "Do you have a prior response document to extract style from?",
+  "multiSelect": false,
+  "options": [
+    {"label": "No prior response", "description": "Use default style conventions"},
+    {"label": "revisions/examples/response_round2.tex", "description": "Use the example response"},
+    {"label": "Specify path", "description": "I'll provide the path"}
+  ]
+}
+```
+
+After collecting inputs:
+1. Write `current/config.json` with all paths and round number
+2. Update status: `echo "parse" > current/.status`
+
+---
+
+## Step 4: Parse & Extract (Parallel Haiku)
+
+Spawn **one Haiku subagent per report file** in parallel:
+
+```
+Task: [revisions:parse] Parse {report_filename}
+model: "haiku"
+subagent_type: "general-purpose"
+
+Instructions:
+Read revisions/prompts/tasks/parse_comments.prompt for full instructions.
+
+Context:
+- Report file: {absolute_path}
+- Source label: {referee_label}
+
+Subagent writes: current/comments_{prefix}.json
+Return: {source, file, count} (minimal — orchestrator reads files)
+```
+
+### Source Label Detection
+
+Infer referee label from filename:
+- `ref1*.txt` / `referee_1*.txt` → "Referee 1"
+- `editor*.txt` → "Editor"
+- Otherwise → ask user
+
+### After All Parse Subagents Return
+
+1. Read `current/comments_*.json` files and merge into `current/comments.json`
+2. Output summary: "Extracted N comments from M reports"
+3. Update status: `echo "triage" > current/.status`
+
+**Do NOT consume the full comment arrays from inline returns.** Subagents write their results to files; the orchestrator reads and merges those files.
+
+---
+
+## Step 5: Triage & Cross-Reference (Single Sonnet)
+
+Spawn a single **Sonnet subagent**:
+
+```
+Task: [revisions:triage] Categorize and cross-reference all comments
+model: "sonnet"
+subagent_type: "general-purpose"
+
+Instructions:
+Read revisions/prompts/tasks/triage.prompt for full instructions.
+
+Context:
+- Comments: current/comments.json
+- Config: current/config.json
+
+Subagent writes: current/triage.json AND current/triage_summary.md
+Return: {status, total, by_type, cluster_count} (minimal — orchestrator reads files)
+```
+
+### After Triage Returns
+
+1. Verify `current/triage.json` and `current/triage_summary.md` were written
+2. **Read `current/triage_summary.md` and output it to the user** — do NOT reconstruct the table from the inline return
+
+3. **Then use AskUserQuestion:**
+
+```json
+{
+  "header": "Triage review",
+  "question": "Review the comment triage above. What would you like to do?",
+  "multiSelect": false,
+  "options": [
+    {"label": "Proceed to drafting (Recommended)", "description": "Start drafting responses for all comments"},
+    {"label": "Modify triage", "description": "Change priority or categorization before drafting"},
+    {"label": "Draft subset only", "description": "Draft responses for specific referees or comments"}
+  ]
+}
+```
+
+4. Update status: `echo "draft" > current/.status`
+
+### DO NOT:
+- Summarize as "42 comments triaged" without showing the table
+- Proceed without explicit user confirmation
+- Skip outputting the cluster analysis
+
+---
+
+## Step 6: Draft Responses (Model-Routed)
+
+### Model Routing
+
+Read `current/triage.json` and route each comment:
+
+| Type + Difficulty | Model | Rationale |
+|---|---|---|
+| minor | Haiku | Simple acknowledgment ("Thank you, I have fixed this.") |
+| already_addressed | Haiku | Point to existing text |
+| clarification (easy/medium) | Sonnet | Needs domain understanding |
+| substantive (easy/medium) | Sonnet | Evidence synthesis, economic argument |
+| substantive (hard) | Opus | Deep reasoning, novel analysis |
+| substantive (escalate) | Opus | Requires user input, flag with [TODO] |
+
+### Spawn Template
+
+```
+Task: [revisions:draft:{id}] Draft response for {source} comment {number}
+model: {routed_model}
+subagent_type: "general-purpose"
+
+Instructions:
+Read revisions/prompts/tasks/draft_response.prompt for full instructions.
+Read revisions/prompts/components/response_patterns.prompt for style conventions.
+
+Context:
+- Comment: {full comment text}
+- Type: {type}, Difficulty: {difficulty}, Priority: {priority}
+- Cross-refs: {related comment IDs and texts}
+- Cluster: {cluster name and description}
+- Manuscript path: {from config.json}
+- Prior response path: {from config.json, if available}
+
+Write response to: current/responses/{id}.md
+Return: {status: complete|flagged, todo_count: N}
+```
+
+### Execution Strategy
+
+1. **Batch by referee** — spawn all comments for one referee in parallel
+2. **Or batch by difficulty** — spawn all Haiku (minor) first, then Sonnet, then Opus
+3. After all drafts complete, update status: `echo "verify" > current/.status`
+
+### Selective Drafting
+
+If user selected "Draft subset only":
+- `draft ref1` → only comments where source starts with "Referee 1"
+- `draft ref1:3` → only comment with id "ref1_3"
+
+---
+
+## Step 7: Verify Claims (Parallel Haiku)
+
+Spawn **one Haiku subagent per response** in parallel:
+
+```
+Task: [revisions:verify:{id}] Verify claims in response {id}
+model: "haiku"
+subagent_type: "general-purpose"
+
+Instructions:
+Read revisions/prompts/tasks/verify_claims.prompt for full instructions.
+
+Context:
+- Response: current/responses/{id}.md
+- Manuscript path: {from config.json}
+
+Subagent writes: current/verification/{id}.json AND current/verification/{id}.md
+Return: {comment_id, verified: true/false, issue_count: N} (minimal — orchestrator reads files)
+```
+
+### After All Verify Subagents Return
+
+1. Read `current/verification/*.md` files to build a consolidated summary
+2. Write `current/verification_summary.md` with the combined results:
+
+```markdown
+# Verification Summary
+
+| ID | Status | Issues |
+|----|--------|--------|
+| ed_1 | ✓ verified | — |
+| ref1_2 | ⚠ issues (2) | Section III.C not found; citation key missing |
+| ref2_1 | ✓ verified | — |
+
+**Issues found:** N responses have verification problems
+```
+
+3. Output the summary to the user (read from the file you just wrote)
+4. Update status: `echo "compile" > current/.status`
+
+**Do NOT consume the full verification results from inline returns.** Subagents write detailed results to `current/verification/{id}.md`; the orchestrator reads those files to build the summary.
+
+---
+
+## Step 8: Compile LaTeX (Single Haiku)
+
+Spawn a single **Haiku subagent**:
+
+```
+Task: [revisions:compile] Assemble LaTeX response document
+model: "haiku"
+subagent_type: "general-purpose"
+
+Instructions:
+Read revisions/prompts/tasks/compile_latex.prompt for full instructions.
+Read revisions/prompts/components/latex_template.prompt for document skeleton.
+
+Context:
+- Config: current/config.json
+- Triage: current/triage.json
+- Responses: current/responses/*.md
+- Verification: current/verification/*.json (per-comment verification results)
+- Template: revisions/templates/response_document.tex
+- Prior response: {from config.json, if available}
+
+Save output to: {directory of manuscript}/response_round{N}.tex
+Return: {output_path, referee_count, comment_count}
+```
+
+### After Compile Returns
+
+1. Output: "Response document saved to {path}"
+2. Report: N comments across M referees
+3. Flag any [TODO] items remaining
+4. Update status: `echo "complete" > current/.status`
+
+---
+
+## Error Handling
+
+**Files not found:** Ask user to specify correct paths.
+
+**Parse failures:** If a report can't be parsed, flag and continue with remaining reports.
+
+**Unclear request:** Use AskUserQuestion:
+
+```json
+{
+  "header": "Command",
+  "question": "What would you like to do with the referee reports?",
+  "multiSelect": false,
+  "options": [
+    {"label": "Full pipeline (Recommended)", "description": "Parse → Triage → Draft → Verify → Compile"},
+    {"label": "Parse only", "description": "Extract comments from reports"},
+    {"label": "Continue", "description": "Resume from where I left off"}
+  ]
+}
+```
+
+---
+
+## Quality Assurance
+
+**Phase Completion:**
+- [ ] All reports parsed into comments.json
+- [ ] All comments triaged with type/difficulty/priority
+- [ ] All comments have draft responses
+- [ ] All responses verified against manuscript
+- [ ] LaTeX document compiles and matches template structure
+
+**Output Verification:**
+- [ ] Every `refcommentnoclear` environment contains the original comment text
+- [ ] Every `\textbf{Reply:}` follows its corresponding comment
+- [ ] `refsection` blocks have `\printbibliography`
+- [ ] All [TODO] items flagged to user
