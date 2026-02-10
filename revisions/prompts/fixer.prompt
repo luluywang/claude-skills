@@ -1,0 +1,164 @@
+# Fixer Task
+
+**Purpose:** Make targeted edits to manuscript files to resolve gaps identified in the audit. Part of the fixer-critic iteration loop.
+
+---
+
+## Input
+
+- **Issues to fix:** Either `current/audit.json` (iteration 1) or `current/fix_iterations/iteration_N_critic.json` (subsequent iterations) — only items with `status: "missing"` or `"partial"` and `fixable: true`
+- **Claims:** `current/claims.json` — the original claims with claim text and context
+- **Config:** `current/config.json` — manuscript and appendix file paths
+- **Component references:**
+  - `revisions/prompts/components/latex_conventions.prompt` — LaTeX formatting rules
+  - `revisions/prompts/components/claim_taxonomy.prompt` — claim type context
+- **Iteration number:** Provided by orchestrator (1, 2, 3, ...)
+
+## Task
+
+For each fixable issue, make the minimum edit to the manuscript that makes the response document's claim true.
+
+### Step 1: Prioritize Issues
+
+Order fixes by:
+1. `reference_check` issues first (missing labels are compilation errors)
+2. `citation_check` issues (missing .bib entries break compilation)
+3. `content_addition` issues (most common — add promised content)
+4. `content_revision` issues (revise existing content)
+5. `structural_change` issues (moves/reorganizations — most complex)
+6. Skip `numerical_claim` with `fixable: false` (user must verify)
+
+### Step 2: Make Targeted Edits
+
+For each issue:
+
+1. **Read the claim** from `claims.json` — understand what the response promises
+2. **Locate the target** in the manuscript using `target_label` or section structure
+3. **Make the minimal edit:**
+   - For `content_addition`: Insert the promised content near the target label
+   - For `content_revision`: Modify existing text to match the claim
+   - For `citation_check`: Add `\textcite{}` or `\parencite{}` at an appropriate location, and add the .bib entry if missing
+   - For `reference_check`: If a label is missing, DO NOT create it (label creation implies structural changes that need user review) — instead mark as skipped
+   - For `structural_change`: Attempt if straightforward, skip if complex
+
+4. **Tag all edits** with `\begin{llm}...\end{llm}`:
+   ```latex
+   \begin{llm}
+   The results are weaker once we consider the full sample, with the
+   F-statistic declining from 23 to 4 in the services subsample.
+   \end{llm}
+   ```
+
+5. **Write naturally.** The edit should read as if the author wrote it. Match the surrounding prose style, tense, and level of detail. Use the claim text and response context as a guide.
+
+### Step 3: Record Fixes
+
+For each issue, record whether it was fixed or skipped:
+
+```json
+{
+  "claim_id": "ref1_2_claim_1",
+  "action": "fixed",
+  "edit_description": "Added sentence about merchant sorting after \\label{subsec:model-assumptions}",
+  "file": "paper.tex",
+  "line": 245,
+  "content_added": "We note that merchant sorting..."
+}
+```
+
+Or if skipped:
+```json
+{
+  "claim_id": "ref2_3_claim_1",
+  "action": "skipped",
+  "reason": "Structural change too complex — requires creating new appendix section",
+  "escalate": true
+}
+```
+
+### Step 4: Commit Changes
+
+After making all fixes for this iteration:
+- Commit with message: `[revisions:fix:iter{N}] Fix {M} manuscript gaps`
+- Include only manuscript .tex and .bib files in the commit
+
+## Output
+
+### Write `current/fix_iterations/iteration_N_fixes.json`
+
+```json
+{
+  "iteration": 1,
+  "timestamp": "ISO timestamp",
+  "issues_addressed": 10,
+  "fixed": 7,
+  "skipped": 3,
+  "fixes": [
+    {
+      "claim_id": "ed_1a_claim_1",
+      "action": "fixed",
+      "edit_description": "Added sentence about weaker full-sample results",
+      "file": "paper.tex",
+      "line": 342
+    }
+  ],
+  "skipped_items": [
+    {
+      "claim_id": "ref2_3_claim_1",
+      "reason": "Missing label — requires structural change",
+      "escalate": true
+    }
+  ]
+}
+```
+
+### Append to `current/changelog.md`
+
+```markdown
+## Iteration 1
+
+### Fixed
+- **ed_1a_claim_1**: Added sentence about weaker full-sample results in Section `subsec:durbin` (paper.tex:342)
+- **ref1_2_claim_1**: Added merchant sorting discussion in Section `subsec:model-assumptions` (paper.tex:245)
+...
+
+### Skipped
+- **ref2_3_claim_1**: Missing label `tab:new-robustness` — requires user to create table
+...
+```
+
+If `changelog.md` already exists (iteration > 1), append to it. Do not overwrite.
+
+### Return to Orchestrator (minimal)
+
+```json
+{
+  "status": "complete",
+  "iteration": 1,
+  "fixed": 7,
+  "skipped": 3,
+  "escalated": 1,
+  "commit": "[revisions:fix:iter1] Fix 7 manuscript gaps"
+}
+```
+
+## Rules
+
+1. **Minimum viable edits.** Add exactly what the response document promises — no more. Don't "improve" surrounding text.
+2. **Always tag with `\begin{llm}...\end{llm}`.** Every character you add or change must be inside LLM tags.
+3. **Match the manuscript's style.** Read surrounding paragraphs to match tense, voice, notation, and citation style.
+4. **Don't fabricate data.** If a claim references specific numbers you can't verify, use placeholder text: `[TODO: insert value]` inside LLM tags.
+5. **Don't create labels.** If `\label{foo}` doesn't exist, don't add it — that implies structural changes requiring user review. Skip and flag.
+6. **Preserve manuscript structure.** Don't reorganize sections, move content, or delete existing text unless the claim specifically says to.
+7. **One claim, one edit.** Don't combine fixes for different claims into a single text block.
+8. **Skip rather than guess.** If you're unsure where content should go or what it should say, skip and mark for escalation.
+
+## Escalation
+
+Mark `escalate: true` for issues that:
+- Require creating new sections, tables, or figures
+- Involve structural reorganization
+- Need domain expertise beyond what the claim text provides
+- Were not resolved after iteration 2
+
+The orchestrator may re-dispatch escalated items to an Opus-tier fixer.

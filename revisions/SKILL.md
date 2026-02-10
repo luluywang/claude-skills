@@ -1,41 +1,40 @@
 ---
 name: revisions
 description: |
-  Referee response orchestrator for drafting structured responses to referee reports.
-  Only activate when user explicitly invokes '/revisions'. Do NOT activate for general
-  questions about papers or referee reports.
+  Response-driven manuscript alignment. Reads the user's response document as
+  source of truth, extracts claims, audits the manuscript, and fixes gaps via
+  a fixer-critic loop. Only activate when user explicitly invokes '/revisions'.
+  Do NOT activate for general questions about papers or referee reports.
 ---
 
 # Revisions Workflow Orchestrator
 
-This orchestrator manages a multi-phase workflow for responding to referee comments on academic papers. It parses referee reports, triages comments, drafts responses in the user's voice, verifies manuscript claims, and compiles a LaTeX response document.
+This orchestrator ensures the manuscript matches what the user promised in their response document to referees. The response document is the **input** (source of truth) — the agent audits the manuscript against it and fixes gaps.
 
 ## Invocation
 
 ```
-/revisions parse reports/                # Parse referee reports into structured comments
-/revisions triage                        # Categorize extracted comments
-/revisions draft                         # Draft responses for all comments
-/revisions draft ref1                    # Draft for one referee only
-/revisions draft ref1:3                  # Draft for a single comment
-/revisions verify                        # Cross-check responses against manuscript
-/revisions compile                       # Assemble LaTeX response document
-/revisions full reports/ paper.tex       # Full pipeline: parse → triage → draft → verify → compile
-/revisions continue                      # Resume from last phase
-/revisions reset                         # Clear for new revision
+/revisions                        # Start new alignment (or resume)
+/revisions continue               # Resume interrupted alignment
+/revisions reset                  # Clear for new revision
 ```
 
 ## How It Works
 
 1. Detect current phase from `current/` state via `scripts/bootstrap.sh`
-2. Map user command to task sequence
-3. Collect inputs (report files, manuscript, prior response doc)
-4. Parse reports → Triage → Draft → Verify → Compile
-5. Each phase spawns subagents at appropriate model tiers
+2. Collect file paths (response doc, manuscript, appendix, .bib)
+3. Extract claims from response doc → `claims.json`
+4. Audit claims against manuscript → `audit.json`
+5. Fixer-critic loop: fix gaps, re-audit, iterate until clean
+6. Present changelog + TODOs to user
+
+```
+/revisions → [INIT] → [EXTRACT] → [AUDIT] → [FIX ↔ CRITIC loop] → [REVIEW] → [COMPLETE]
+```
 
 The key insight: subagents run autonomously and cannot interact with users. User interaction happens in the orchestrator (main context), kept lightweight by offloading analysis to subagents.
 
-**File-first communication:** Subagents write detailed results to files and return only minimal summaries (status, counts). The orchestrator reads files when it needs details — it never consumes large results from inline returns. This keeps the orchestrator's context window small and focused on coordination.
+**File-first communication:** Subagents write detailed results to files and return only minimal summaries (status, counts). The orchestrator reads files when it needs details — it never consumes large results from inline returns.
 
 ## Progress Tracking
 
@@ -44,44 +43,60 @@ Native Tasks (TaskCreate/TaskUpdate) provide **real-time UX feedback** while `cu
 **Phase-level tracking:** At bootstrap, create one native Task per remaining phase. Mark each in_progress at entry and completed at transition.
 
 ```
-# After bootstrap returns "fresh":
-TaskCreate: "Parse referee reports"          activeForm: "Parsing reports"
-TaskCreate: "Triage comments"                activeForm: "Triaging comments"
-TaskCreate: "Draft responses"                activeForm: "Drafting responses"
-TaskCreate: "Verify claims"                  activeForm: "Verifying claims"
-TaskCreate: "Compile LaTeX document"         activeForm: "Compiling document"
+# After bootstrap returns "init":
+TaskCreate: "Collect file paths"              activeForm: "Collecting file paths"
+TaskCreate: "Extract claims from response"    activeForm: "Extracting claims"
+TaskCreate: "Audit claims against manuscript" activeForm: "Auditing claims"
+TaskCreate: "Fix manuscript gaps"             activeForm: "Fixing gaps"
+TaskCreate: "Review changes"                  activeForm: "Reviewing changes"
 ```
 
-**Comment-level tracking (draft phase):** When spawning draft subagents, create a native Task per comment or per referee.
+**Fix-loop tracking:** During the fix phase, create a native Task per iteration:
+
+```
+TaskCreate: "Fix iteration 1"    activeForm: "Running fix iteration 1"
+TaskCreate: "Critic iteration 1" activeForm: "Running critic iteration 1"
+```
+
+**Rules:**
+- Native Tasks are a UX layer only — never read them back to determine workflow state
+- Always update `.status` or `fix_state.json` first, then update the corresponding native Task
 
 ## Orchestrator Rules (Critical)
 
-The orchestrator coordinates—it does NOT do the work itself.
+The orchestrator coordinates — it does NOT do the work itself.
 
 ### MANDATORY: Phase Protocol Enforcement
 
 **After bootstrap returns a phase, you MUST follow the exact protocol for that phase.**
 
-- `fresh` → Collect inputs, then parse
-- `parse` → Spawn parse subagents
-- `triage` → Spawn triage subagent
-- `draft` → Spawn draft subagents
-- `verify` → Spawn verify subagents
-- `compile` → Spawn compile subagent
+- `init` → Collect file paths via AskUserQuestion, write `config.json`
+- `extract` → **IMMEDIATELY** spawn extract subagent. Do NOT read the response doc.
+- `audit` → **IMMEDIATELY** spawn audit subagent. Do NOT read manuscript files.
+- `fix` → Run `fix_loop.sh status`, then spawn fixer/critic subagents
+- `review` → Read changelog + todos, present to user
+- `complete` → Inform user, offer reset
+
+**NEVER** read the response document or manuscript yourself. Subagents do this.
 
 ### The orchestrator CAN:
 - Read skill files (SKILL.md, prompts/*)
-- Read state files (current/.status, current/config.json, current/comments.json, current/triage.json)
-- Run scripts (bootstrap.sh)
+- Read state files (current/.status, current/config.json, current/claims.json summary, current/audit.json summary, current/fix_state.json, current/changelog.md, current/todos.md)
+- Run scripts (bootstrap.sh, status.sh, fix_loop.sh)
 - Spawn subagents with appropriate context
 - Present questions to users and collect answers
 - Update `.status` files
 
 ### The orchestrator MUST NOT:
-- **Read referee reports or manuscript directly** — subagents do this
-- **Write response drafts** — draft subagents do this
-- **Write LaTeX output** — compile subagent does this
+- **Read the response document** — extract subagent does this
+- **Read manuscript .tex files** — audit/fixer/critic subagents do this
+- **Write claims.json or audit.json** — subagents write these
+- **Edit .tex files** — fixer subagent does this
+- **Write fix iteration files** — fixer/critic subagents write these
 - **Bypass the phase protocol** — even if user's request seems clear, follow the phases
+
+### If you're tempted to read the response doc or manuscript:
+STOP. You're probably in extract/audit/fix phase and should spawn the appropriate subagent instead.
 
 ## Bootstrap Phase (Always First)
 
@@ -96,260 +111,328 @@ bash revisions/scripts/bootstrap.sh
 Returns JSON:
 ```json
 {
-  "phase": "fresh|parse|triage|draft|verify|compile|complete",
+  "phase": "init|extract|audit|fix|review|complete",
   "reason": "Brief explanation",
   "directory_created": "yes|no",
   "files": {
     "status": "exists|missing",
     "status_content": "...",
     "config": "exists|missing",
-    "comments": "exists|missing",
-    "triage": "exists|missing",
-    "responses_dir": "exists|missing",
-    "responses_count": 0,
-    "verification": "exists|missing"
+    "claims": "exists|missing",
+    "audit": "exists|missing",
+    "fix_state": "exists|missing",
+    "changelog": "exists|missing",
+    "todos": "exists|missing"
   }
 }
 ```
 
-**Phase actions (MANDATORY - follow exactly):**
+**Phase actions (MANDATORY — follow exactly):**
 
 | Phase | Action | First Step |
 |-------|--------|------------|
-| `fresh` | Collect inputs | AskUserQuestion for report files, manuscript, round |
-| `parse` | Parse reports | Spawn parse subagents |
-| `triage` | Triage comments | Spawn triage subagent |
-| `draft` | Draft responses | Spawn draft subagents |
-| `verify` | Verify claims | Spawn verify subagents |
-| `compile` | Compile LaTeX | Spawn compile subagent |
-| `complete` | Already done | Inform user, offer reset |
+| `init` | Collect file paths | AskUserQuestion for response doc, manuscript, etc. |
+| `extract` | Parse response doc | Spawn extract subagent |
+| `audit` | Cross-check claims | Spawn audit subagent |
+| `fix` | Fixer-critic loop | Run `fix_loop.sh status`, dispatch accordingly |
+| `review` | Present results | Read changelog + todos, display to user |
+| `complete` | Done | Inform user, offer reset |
 
-## Input Collection Phase
+## Context Isolation (Critical)
 
-When phase is `fresh`, gather inputs via AskUserQuestion:
+**Maintain mental separation between phases:**
 
-1. **Referee report files** (.txt/.pdf) and editor letter — REQUIRED
-2. **Manuscript path** (.tex) — REQUIRED (used for cross-referencing, claim verification, and section/table/figure references in drafts)
-3. **Prior response document** (.tex) — optional (for style extraction)
-4. **Revision round number** — default 2
+### Between phases, "forget":
+- File contents from subagent work
+- Intermediate analysis
+- Anything not in the state files
+
+### Each phase starts fresh with ONLY:
+- Its specified input files
+- State from previous phases (JSON summaries, not raw content)
+
+## Init Phase
+
+When the phase is `init`, gather file paths from the user.
+
+### Required Inputs
+
+Use AskUserQuestion:
+
+1. **Response document** (.tex) — the user's response to referees (source of truth)
+2. **Manuscript** (.tex) — main paper file
+3. **Appendix files** (.tex) — optional, supplementary material
+4. **Bibliography** (.bib) — optional, for citation checking
+
+### Write Config
 
 After collecting inputs, write `current/config.json`:
 ```json
 {
-  "reports": ["reports/ref1.txt", "reports/ref2.txt", "reports/editor.txt"],
-  "manuscript": "paper.tex",
-  "prior_response": "response_round1.tex",
-  "round": 2,
+  "response_doc": "path/to/response_round2.tex",
+  "manuscript": ["paper.tex"],
+  "appendix": ["online_appendix.tex"],
+  "bib": ["Bibliography.bib"],
   "created": "ISO timestamp"
 }
 ```
 
-Update status: `echo "parse" > current/.status`
+Note: `manuscript`, `appendix`, and `bib` are arrays to support multi-file projects.
 
-## Parse Phase (Parallel Haiku Subagents)
-
-Spawn **one Haiku subagent per report** in parallel. Each subagent writes its results to a file to keep the orchestrator's context lightweight.
-
-```
-Task: [revisions:parse] Parse {report_filename}
-model: "haiku"
-subagent_type: "general-purpose"
-
-Instructions:
-Read revisions/prompts/tasks/parse_comments.prompt for full instructions.
-
-Context:
-- Report file: {absolute_path}
-- Source label: {referee_label} (e.g., "Referee 1", "Editor")
-
-Your job:
-1. Read the report file
-2. Extract each individual comment
-3. Structure as JSON array
-4. Write to current/comments_{prefix}.json
-5. Return: {source, file, count} (minimal)
+Update status:
+```bash
+bash revisions/scripts/status.sh extract
 ```
 
-After all parse subagents return:
-1. Read `current/comments_*.json` files and merge into `current/comments.json`
-2. Output summary: "Extracted N comments from M reports"
-3. Update status: `echo "triage" > current/.status`
+## Extract Phase (Single Sonnet Subagent)
 
-## Triage Phase (Single Sonnet Subagent)
-
-Single **Sonnet subagent** reads all comments + editor letter. Writes results to files to keep the orchestrator's context lightweight.
+When the phase is `extract`, spawn the extract subagent immediately. Do NOT read the response document.
 
 ```
-Task: [revisions:triage] Categorize and cross-reference all comments
+Task: [revisions:extract] Parse response document into claims
 model: "sonnet"
 subagent_type: "general-purpose"
 
 Instructions:
-Read revisions/prompts/tasks/triage.prompt for full instructions.
+Read revisions/prompts/extract_claims.prompt for full instructions.
+Read revisions/prompts/components/response_patterns.prompt for response structure conventions.
+Read revisions/prompts/components/claim_taxonomy.prompt for claim type definitions.
+Read revisions/prompts/components/latex_conventions.prompt for LaTeX reference.
 
 Context:
-- Comments: current/comments.json
-- Config: current/config.json
+- Config: current/config.json (contains response doc path)
 
 Your job:
-1. Read all comments
-2. Assign type, difficulty, priority to each
-3. Identify cross-references across referees
-4. Group into thematic clusters
-5. Write current/triage.json
-6. Write current/triage_summary.md (human-readable table)
-7. Return: {status, total, by_type, cluster_count} (minimal)
+1. Read the response document
+2. Parse all \textbf{Reply:} blocks
+3. Extract each claim, classify by taxonomy type
+4. Write current/claims.json
+5. Return: {status, total_claims, by_type, verifiable, unverifiable}
 ```
 
-**CRITICAL: Read `current/triage_summary.md` and output it to the user BEFORE calling AskUserQuestion.**
+### After Extract Returns
 
-Present triage table, then confirm before drafting:
+1. Output summary: "Extracted N claims (X verifiable, Y unverifiable)"
+2. Update status:
+```bash
+bash revisions/scripts/status.sh audit
+```
+
+## Audit Phase (Single Sonnet Subagent)
+
+When the phase is `audit`, spawn the audit subagent immediately. Do NOT read manuscript files.
+
+```
+Task: [revisions:audit] Cross-check claims against manuscript
+model: "sonnet"
+subagent_type: "general-purpose"
+
+Instructions:
+Read revisions/prompts/audit_claims.prompt for full instructions.
+Read revisions/prompts/components/claim_taxonomy.prompt for verification rules.
+Read revisions/prompts/components/latex_conventions.prompt for LaTeX reference.
+
+Context:
+- Claims: current/claims.json
+- Config: current/config.json (contains manuscript/appendix/bib paths)
+
+Your job:
+1. Read claims.json and all manuscript files
+2. Verify each claim against the actual manuscript
+3. Write current/audit.json with results
+4. Write current/todos.md with unverifiable/unfixable items
+5. Return: {status, total_claims, found, missing, partial, todo, fixable_issues}
+```
+
+### After Audit Returns
+
+1. Output summary: "Audit complete: N found, M missing, P partial, T unverifiable"
+2. If `missing + partial == 0`: Skip fix phase, go directly to review
+   ```bash
+   bash revisions/scripts/status.sh review
+   ```
+3. Otherwise: Proceed to fix phase
+   ```bash
+   bash revisions/scripts/status.sh fix
+   ```
+
+## Fix Phase (Fixer-Critic Loop)
+
+The fix phase uses an iterative loop: fixer makes edits, critic re-audits, repeat until clean or stopping condition.
+
+```
+[AUDIT] → fix_loop.sh init → FIXER(Sonnet) → CRITIC(Sonnet) → check stopping → loop or exit
+                                    ↑                │
+                                    └── still issues ─┘
+```
+
+### Step 1: Initialize Fix Loop
+
+On first entry to fix phase (fix_state.json doesn't exist yet):
+```bash
+bash revisions/scripts/fix_loop.sh init
+```
+
+Returns: `{initialized: true, issues_initial: N, max_iterations: 5}`
+
+### Step 2: Check Loop Status
+
+At the start of each iteration:
+```bash
+bash revisions/scripts/fix_loop.sh status
+```
+
+If `should_stop: true`:
+- Present stop reason to user
+- Move to review: `bash revisions/scripts/status.sh review`
+
+If `should_stop: false`: continue to fixer.
+
+### Step 3: Spawn Fixer Subagent (Sonnet)
+
+```
+Task: [revisions:fix:iter{N}] Fix manuscript gaps (iteration {N})
+model: "sonnet"
+subagent_type: "general-purpose"
+
+Instructions:
+Read revisions/prompts/fixer.prompt for full instructions.
+Read revisions/prompts/components/latex_conventions.prompt for LaTeX reference.
+Read revisions/prompts/components/claim_taxonomy.prompt for claim type context.
+
+Context:
+- Claims: current/claims.json
+- Issues: current/audit.json (iteration 1) OR current/fix_iterations/iteration_{N-1}_critic.json (later iterations)
+- Config: current/config.json
+- Iteration: {N}
+
+Your job:
+1. Read remaining issues (missing/partial with fixable:true)
+2. Make targeted edits to manuscript files
+3. Tag all edits with \begin{llm}...\end{llm}
+4. Write current/fix_iterations/iteration_{N}_fixes.json
+5. Append to current/changelog.md
+6. Commit: [revisions:fix:iter{N}] Fix M manuscript gaps
+7. Return: {status, iteration, fixed, skipped, escalated}
+```
+
+### Step 4: Spawn Critic Subagent (Sonnet)
+
+```
+Task: [revisions:critic:iter{N}] Re-audit after fixes (iteration {N})
+model: "sonnet"
+subagent_type: "general-purpose"
+
+Instructions:
+Read revisions/prompts/critic.prompt for full instructions.
+Read revisions/prompts/components/claim_taxonomy.prompt for verification rules.
+Read revisions/prompts/components/latex_conventions.prompt for LaTeX reference.
+
+Context:
+- Claims: current/claims.json
+- Previous audit: current/audit.json (or prior critic)
+- Fixer output: current/fix_iterations/iteration_{N}_fixes.json
+- Config: current/config.json
+- Iteration: {N}
+
+Your job:
+1. Re-read manuscript files (with fixes applied)
+2. Re-verify all previously failing claims
+3. Spot-check previously passing claims for regressions
+4. Check for new problems introduced by fixes
+5. Write current/fix_iterations/iteration_{N}_critic.json
+6. Return: {status, iteration, resolved, still_missing, partial, regressions, new_issues, issues_remaining}
+```
+
+### Step 5: Update Loop State
+
+After critic returns, record the result:
+```bash
+bash revisions/scripts/fix_loop.sh next {issues_remaining}
+```
+
+### Step 6: Check Stopping or Continue
+
+Check the loop status:
+```bash
+bash revisions/scripts/fix_loop.sh status
+```
+
+**Stopping conditions:**
+1. `resolved` — `issues_remaining == 0` → proceed to review
+2. `max_iterations` — default 5 → proceed to review with remaining issues
+3. `stagnation` — 2 consecutive iterations with same count → proceed to review
+
+If stopped:
+```bash
+bash revisions/scripts/status.sh review
+```
+
+If not stopped: loop back to Step 3 (fixer).
+
+### Escalation
+
+If specific claims are structural/complex and unfixed after iteration 2, escalate to Opus:
+
+```
+Task: [revisions:fix:iter{N}:escalate] Fix complex gaps (Opus escalation)
+model: "opus"
+subagent_type: "general-purpose"
+
+[Same instructions as fixer, but only for escalated items]
+```
+
+## Review Phase
+
+When the phase is `review`:
+
+1. **Read `current/changelog.md`** and output to user
+2. **Read `current/todos.md`** and output to user
+3. **Read `current/fix_state.json`** and output summary:
+   - Initial issues, final remaining, iterations used
+4. **Ask user:**
+
 ```json
 {
-  "header": "Triage review",
-  "question": "Review the comment triage above. What would you like to do?",
+  "header": "Review",
+  "question": "Review the changes above. What would you like to do?",
   "multiSelect": false,
   "options": [
-    {"label": "Proceed to drafting (Recommended)", "description": "Start drafting responses for all comments"},
-    {"label": "Modify triage", "description": "Change priority or categorization before drafting"},
-    {"label": "Draft subset only", "description": "Draft responses for specific referees or comments"}
+    {"label": "Accept and complete (Recommended)", "description": "Mark revision alignment as complete"},
+    {"label": "Run another fix iteration", "description": "Try to resolve remaining issues"},
+    {"label": "Reset", "description": "Clear everything and start over"}
   ]
 }
 ```
 
-Update status: `echo "draft" > current/.status`
-
-## Draft Phase (Model-Routed Subagents)
-
-Spawn subagents per comment, model routed by difficulty:
-
-| Comment Type | Model | Rationale |
-|---|---|---|
-| minor, already_addressed | Haiku | Simple acknowledgments |
-| clarification | Sonnet | Needs economic understanding |
-| substantive (standard) | Sonnet | Domain expertise, evidence synthesis |
-| substantive (hard/escalate) | Opus | Deep reasoning, novel analysis design |
-
-```
-Task: [revisions:draft:{comment_id}] Draft response for {source} comment {number}
-model: {routed_model}
-subagent_type: "general-purpose"
-
-Instructions:
-Read revisions/prompts/tasks/draft_response.prompt for full instructions.
-Read revisions/prompts/components/response_patterns.prompt for style conventions.
-
-Context:
-- Comment: {comment text from triage.json}
-- Cross-refs: {related comments}
-- Manuscript path: {from config.json}
-- Triage info: {type, difficulty, priority}
-
-Your job:
-1. Read the manuscript sections relevant to this comment
-2. Draft a response in the user's voice/style
-3. Include specific \ref{}, \textcite{}, \parencite{} references
-4. Flag items needing user action with [TODO: ...]
-5. Write response to current/responses/{comment_id}.md
-6. Return: {status, model_used, todo_count}
+If user accepts:
+```bash
+bash revisions/scripts/status.sh complete
 ```
 
-After all draft subagents return, update status: `echo "verify" > current/.status`
-
-## Verify Phase (Parallel Haiku Subagents)
-
-Spawn **Haiku subagents** in parallel to cross-check each response's manuscript claims. Each subagent writes its results to files to keep the orchestrator's context lightweight.
-
+If user wants another iteration:
+```bash
+bash revisions/scripts/status.sh fix
 ```
-Task: [revisions:verify:{comment_id}] Verify claims in response {comment_id}
-model: "haiku"
-subagent_type: "general-purpose"
-
-Instructions:
-Read revisions/prompts/tasks/verify_claims.prompt for full instructions.
-
-Context:
-- Response: current/responses/{comment_id}.md
-- Manuscript path: {from config.json}
-
-Your job:
-1. Read the response draft
-2. Read referenced manuscript sections
-3. Verify each claim (section exists, content matches, figures/tables exist)
-4. Write detailed results to current/verification/{comment_id}.json
-5. Write human-readable issues to current/verification/{comment_id}.md
-6. Return: {comment_id, verified: true/false, issue_count: N} (minimal)
-```
-
-After all verify subagents return:
-1. Read `current/verification/*.md` files to build consolidated summary
-2. Write `current/verification_summary.md`
-3. Present verification summary to user
-4. Update status: `echo "compile" > current/.status`
-
-## Compile Phase (Single Haiku Subagent)
-
-Single **Haiku subagent** assembles all responses into a `.tex` file.
-
-```
-Task: [revisions:compile] Assemble LaTeX response document
-model: "haiku"
-subagent_type: "general-purpose"
-
-Instructions:
-Read revisions/prompts/tasks/compile_latex.prompt for full instructions.
-Read revisions/prompts/components/latex_template.prompt for document skeleton.
-
-Context:
-- Config: current/config.json
-- Triage: current/triage.json
-- Responses: current/responses/*.md
-- Verification: current/verification/*.json (per-comment results)
-- Template: revisions/templates/response_document.tex
-
-Your job:
-1. Read all responses
-2. Assemble into LaTeX document matching template structure
-3. Save alongside manuscript
-4. Return: {output_path, referee_count, comment_count}
-```
-
-Update status: `echo "complete" > current/.status`
-
-## State Management
-
-| File | Purpose |
-|---|---|
-| `current/.status` | Current phase |
-| `current/config.json` | Input paths, round number |
-| `current/comments_{prefix}.json` | Per-report parsed comments (subagent output) |
-| `current/comments.json` | All extracted comments (merged by orchestrator) |
-| `current/triage.json` | Categorized comments + clusters |
-| `current/triage_summary.md` | Human-readable triage table (subagent output) |
-| `current/responses/{id}.md` | Individual draft responses |
-| `current/verification/{id}.json` | Per-comment verification results (subagent output) |
-| `current/verification/{id}.md` | Per-comment issues in markdown (subagent output) |
-| `current/verification_summary.md` | Consolidated verification issues (orchestrator output) |
+Then re-enter the fix loop.
 
 ## Reset (Clear for New Revision)
 
 When the user says "reset", "clear", or "new revision":
-1. Check if current/ exists
-2. IF current/ exists AND has content: Ask user to confirm
-3. Remove current/ contents, confirm ready for new revision
+1. Check if current/ exists and has content
+2. Ask user to confirm
+3. Remove current/ contents
+4. Confirm ready for new revision
 
 ## Model Selection Summary
 
 | Operation | Model | Rationale |
 |---|---|---|
-| Parse reports | Haiku | Structured extraction |
-| Triage + cross-ref | Sonnet | Domain knowledge for categorization |
-| Draft (minor) | Haiku | Simple acknowledgments |
-| Draft (clarification) | Sonnet | Economic understanding |
-| Draft (substantive) | Sonnet | Evidence synthesis |
-| Draft (hard/escalate) | Opus | Deep reasoning |
-| Verify claims | Haiku | Mechanical cross-checking |
-| Compile LaTeX | Haiku | Template assembly |
+| Extract claims | Sonnet | Document parsing, classification |
+| Audit claims | Sonnet | Cross-referencing, search |
+| Fixer (standard) | Sonnet | Targeted edits, style matching |
+| Fixer (escalation) | Opus | Complex structural changes |
+| Critic | Sonnet | Independent verification |
 
 ## Files
 
@@ -358,32 +441,46 @@ When the user says "reset", "clear", or "new revision":
 ```
 revisions/
 ├── SKILL.md                              # This orchestrator
-├── prompts/
-│   ├── master.prompt                     # Orchestration (8-step workflow)
-│   ├── tasks/
-│   │   ├── parse_comments.prompt         # Extract comments from reports
-│   │   ├── triage.prompt                 # Categorize + cross-reference
-│   │   ├── draft_response.prompt         # Draft response per comment
-│   │   ├── verify_claims.prompt          # Cross-check against manuscript
-│   │   └── compile_latex.prompt          # Assemble .tex output
-│   └── components/
-│       ├── response_patterns.prompt      # Style conventions from examples
-│       └── latex_template.prompt         # Document skeleton + custom commands
 ├── scripts/
-│   └── bootstrap.sh                      # Phase detection (fresh/resume)
+│   ├── bootstrap.sh                      # Phase detection
+│   ├── status.sh                         # Get/set status
+│   └── fix_loop.sh                       # Fixer-critic iteration management
+├── prompts/
+│   ├── extract_claims.prompt             # Parse response doc → claims.json
+│   ├── audit_claims.prompt               # Cross-check claims vs manuscript
+│   ├── fixer.prompt                      # Make targeted edits to manuscript
+│   ├── critic.prompt                     # Re-audit after fixes
+│   └── components/
+│       ├── claim_taxonomy.prompt         # Claim type definitions + verification rules
+│       ├── latex_conventions.prompt       # LaTeX environments reference
+│       └── response_patterns.prompt      # Response document style conventions
 ├── templates/
-│   └── response_document.tex             # LaTeX template
-├── examples/                             # Example reports and response
+│   └── response_document.tex             # Reference template
+├── examples/                             # Exemplar response docs
 └── current/                              # Runtime state (gitignored)
     ├── .status
-    ├── config.json
-    ├── comments_{prefix}.json            # Per-report parse output
-    ├── comments.json                     # Merged comments
-    ├── triage.json
-    ├── triage_summary.md                 # Human-readable triage table
-    ├── responses/
-    ├── verification/                     # Per-comment verification
-    │   ├── {id}.json
-    │   └── {id}.md
-    └── verification_summary.md           # Consolidated issues
+    ├── config.json                       # File paths
+    ├── claims.json                       # Extracted claims from response doc
+    ├── audit.json                        # Claim verification results
+    ├── fix_state.json                    # Fix loop iteration state
+    ├── changelog.md                      # Human-readable edit log
+    ├── todos.md                          # Items requiring user action
+    └── fix_iterations/                   # Per-iteration results
+        ├── iteration_1_fixes.json
+        ├── iteration_1_critic.json
+        └── ...
 ```
+
+### State Files Reference
+
+| File | Purpose | Written By |
+|---|---|---|
+| `current/.status` | Current phase | Orchestrator (via status.sh) |
+| `current/config.json` | Input file paths | Orchestrator |
+| `current/claims.json` | Extracted claims | Extract subagent |
+| `current/audit.json` | Verification results | Audit subagent |
+| `current/fix_state.json` | Loop iteration state | fix_loop.sh |
+| `current/changelog.md` | Edit log | Fixer subagent (appends) |
+| `current/todos.md` | User action items | Audit subagent |
+| `current/fix_iterations/iteration_N_fixes.json` | Per-iteration fixes | Fixer subagent |
+| `current/fix_iterations/iteration_N_critic.json` | Per-iteration re-audit | Critic subagent |

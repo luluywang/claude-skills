@@ -1,0 +1,183 @@
+# Claim Taxonomy
+
+**Purpose:** Define claim types extracted from response documents and their verification rules.
+
+---
+
+## Overview
+
+Each claim is a promise the author made in their response document about changes to the manuscript. Claims are classified by type, which determines how they can be verified.
+
+## Claim Types
+
+### `reference_check`
+
+The response references a LaTeX label (`\ref{label}`) or citation (`\textcite{key}`, `\parencite{key}`).
+
+**Examples:**
+- "See Section \ref{subsec:durbin} for details."
+- "As shown in \textcite{Author2020}..."
+
+**Verification:**
+- Check `\label{...}` exists in manuscript .tex files
+- Check citation key exists in .bib file
+- **Fully machine-verifiable**
+
+**Search strategy:** Grep for `\label{<target_label>}` in .tex files; grep for citation key in .bib files.
+
+---
+
+### `content_addition`
+
+The author claims to have **added** new content (sentence, paragraph, section, table, figure, footnote, appendix).
+
+**Examples:**
+- "I have added a sentence in Section \ref{subsec:durbin} clarifying the weaker results in the full sample."
+- "I have added Appendix Table \ref{tab:robustness-debit} with additional robustness checks."
+- "I now include a footnote discussing this limitation."
+
+**Verification:**
+- Locate the target section/label
+- Search for keyword fingerprints near that location
+- **Partially verifiable** — can confirm keywords exist but not completeness
+
+**Search strategy:** Find the target label, then search nearby lines (within ~50 lines) for `search_keywords`.
+
+---
+
+### `content_revision`
+
+The author claims to have **revised, clarified, or rewritten** existing content.
+
+**Examples:**
+- "I have revised Section \ref{subsec:model-assumptions} to state these limitations directly."
+- "I have clarified the discussion of identification in Section 3."
+- "I now frame the merchant-type estimation as a calibration exercise."
+
+**Verification:**
+- Locate the target section
+- Search for keyword fingerprints indicating the revision was made
+- **Partially verifiable** — can confirm keywords but not that the revision is sufficient
+
+**Search strategy:** Same as `content_addition` — find target, search for keywords.
+
+---
+
+### `structural_change`
+
+The author claims to have **moved, reorganized, or restructured** content (e.g., moved to appendix, split a section, reordered).
+
+**Examples:**
+- "I have moved the robustness checks to Appendix \ref{sec:oa-robustness}."
+- "I have reorganized Section 4 to present the reduced-form results first."
+
+**Verification:**
+- Check that the target location (appendix label, section structure) exists
+- Check that the content is no longer in the original location (if claimed to be moved)
+- **Partially verifiable**
+
+**Search strategy:** Check both source and destination labels; search for keywords at destination.
+
+---
+
+### `numerical_claim`
+
+The response cites a specific number, statistic, or quantitative result from the manuscript.
+
+**Examples:**
+- "The F-statistic drops from 23 to 4 in the services subsample."
+- "The coefficient is -0.032 (SE = 0.015)."
+- "Column 3 of Table \ref{tab:main} shows..."
+
+**Verification:**
+- Search manuscript for the exact numbers
+- If in a table/figure, may require reading the .tex source for `\scalarinput{}` or hard-coded values
+- **Partially verifiable** — numbers may be in compiled output but not .tex source
+
+**Search strategy:** Grep for the specific numbers; also check for `\scalarinput{}` commands if the project uses dynamic inputs.
+
+---
+
+### `citation_check`
+
+The response introduces or references a bibliographic citation.
+
+**Examples:**
+- "Following \textcite{Autor2003}, I instrument..."
+- "This is consistent with findings in \parencite{Smith2020, Jones2021}."
+
+**Verification:**
+- Check citation key exists in .bib file
+- Check the citation appears in manuscript text (not just response doc)
+- **Fully machine-verifiable**
+
+**Search strategy:** Grep for citation key in .bib files and in manuscript .tex files.
+
+---
+
+### `unverifiable`
+
+The claim cannot be checked against manuscript text alone. Requires running code, inspecting data, or making a judgment call.
+
+**Examples:**
+- "I re-estimated the model using the restricted sample."
+- "I have verified that the results are robust to clustering at the state level."
+- "I believe this is the correct interpretation."
+
+**Verification:**
+- Cannot be machine-verified
+- Flag as TODO for user review
+
+**Search strategy:** None. Mark `verifiable: false` and add to `todos.md`.
+
+---
+
+## Classification Rules
+
+When classifying a claim:
+
+1. **Look for LaTeX commands first.** If the claim contains `\ref{}`, `\textcite{}`, `\parencite{}`, it's at least a `reference_check` (possibly also another type).
+2. **Look for action verbs.** "added" / "included" / "now include" → `content_addition`. "revised" / "clarified" / "rewritten" → `content_revision`. "moved" / "reorganized" → `structural_change`.
+3. **Look for numbers.** Specific statistics, coefficients, p-values → `numerical_claim`.
+4. **If only a citation is referenced** (no content claim about the manuscript), classify as `citation_check`.
+5. **If none of the above apply**, or the claim is about process (re-estimation, verification), classify as `unverifiable`.
+6. **A single sentence may produce multiple claims.** "I have added a discussion of \textcite{Autor2003} in Section \ref{subsec:lit-review}" produces both a `content_addition` (discussion was added) and a `citation_check` (Autor2003 in .bib).
+
+## Extracting Search Keywords
+
+For verifiable claims, extract 2-5 **keyword fingerprints** — distinctive words/phrases that should appear near the target location if the claim is true.
+
+**Good keywords:**
+- Domain-specific terms ("Durbin Amendment", "merchant sorting", "debit-credit substitution")
+- Distinctive phrases from the claim ("weaker results", "full sample", "calibration exercise")
+- Named entities (author names, data source names)
+
+**Bad keywords:**
+- Generic words ("the", "results", "section", "table")
+- LaTeX commands (these are searched separately)
+- Words that appear everywhere in the manuscript
+
+## Output Schema
+
+```json
+{
+  "id": "ed_1a_claim_1",
+  "source_comment": "ed_1a",
+  "claim_text": "I have added a sentence in Section \\ref{subsec:durbin} clarifying that the results are weaker once we use the full sample.",
+  "claim_type": "content_addition",
+  "target_label": "subsec:durbin",
+  "verifiable": true,
+  "search_keywords": ["weaker", "full sample"],
+  "line_in_response": 107
+}
+```
+
+Fields:
+- `id` — Unique claim ID: `{source_comment}_claim_{N}`
+- `source_comment` — The referee/editor comment this claim responds to
+- `claim_text` — The exact text from the response document
+- `claim_type` — One of the taxonomy types above
+- `target_label` — LaTeX label referenced (null if none)
+- `verifiable` — Whether machine verification is possible
+- `search_keywords` — Distinctive terms to search for (empty for unverifiable)
+- `line_in_response` — Line number in the response .tex file

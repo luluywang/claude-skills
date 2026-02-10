@@ -1,6 +1,6 @@
 #!/bin/bash
 # bootstrap.sh - Initialize directory and detect current phase for revisions skill
-# Replaces a subagent for faster execution
+# Phases: init, extract, audit, fix, review, complete
 
 set -e
 
@@ -14,31 +14,26 @@ REASON=""
 STATUS_CONTENT=""
 STATUS_EXISTS="missing"
 CONFIG_EXISTS="missing"
-COMMENTS_EXISTS="missing"
-TRIAGE_EXISTS="missing"
-RESPONSES_DIR_EXISTS="missing"
-RESPONSES_COUNT=0
-VERIFICATION_EXISTS="missing"
+CLAIMS_EXISTS="missing"
+AUDIT_EXISTS="missing"
+FIX_STATE_EXISTS="missing"
+CHANGELOG_EXISTS="missing"
+TODOS_EXISTS="missing"
 
 # Step 1: Create directory if needed
 if [ ! -d "$CURRENT_DIR" ]; then
     mkdir -p "$CURRENT_DIR"
     DIR_CREATED="yes"
-    PHASE="fresh"
+    PHASE="init"
     REASON="New revision - directory created"
 else
     # Step 2: Check for key files
     [ -f "$CURRENT_DIR/config.json" ] && CONFIG_EXISTS="exists"
-    [ -f "$CURRENT_DIR/comments.json" ] && COMMENTS_EXISTS="exists"
-    [ -f "$CURRENT_DIR/triage.json" ] && TRIAGE_EXISTS="exists"
-    if [ -d "$CURRENT_DIR/verification" ] && [ "$(find "$CURRENT_DIR/verification" -name "*.json" 2>/dev/null | wc -l | tr -d ' ')" -gt 0 ]; then
-        VERIFICATION_EXISTS="exists"
-    fi
-
-    if [ -d "$CURRENT_DIR/responses" ]; then
-        RESPONSES_DIR_EXISTS="exists"
-        RESPONSES_COUNT=$(find "$CURRENT_DIR/responses" -name "*.md" 2>/dev/null | wc -l | tr -d ' ')
-    fi
+    [ -f "$CURRENT_DIR/claims.json" ] && CLAIMS_EXISTS="exists"
+    [ -f "$CURRENT_DIR/audit.json" ] && AUDIT_EXISTS="exists"
+    [ -f "$CURRENT_DIR/fix_state.json" ] && FIX_STATE_EXISTS="exists"
+    [ -f "$CURRENT_DIR/changelog.md" ] && CHANGELOG_EXISTS="exists"
+    [ -f "$CURRENT_DIR/todos.md" ] && TODOS_EXISTS="exists"
 
     # Step 3: Read status file if present
     if [ -f "$CURRENT_DIR/.status" ]; then
@@ -47,33 +42,29 @@ else
 
         # Phase detection based on status file
         case "$STATUS_CONTENT" in
-            "fresh")
-                PHASE="fresh"
-                REASON="Awaiting input collection"
+            "init")
+                PHASE="init"
+                REASON="Awaiting file path collection"
                 ;;
-            "parse")
-                PHASE="parse"
-                REASON="Parse phase - extracting comments from reports"
+            "extract")
+                PHASE="extract"
+                REASON="Extract phase - parsing response doc into claims"
                 ;;
-            "triage")
-                PHASE="triage"
-                REASON="Triage phase - categorizing comments"
+            "audit")
+                PHASE="audit"
+                REASON="Audit phase - cross-checking claims against manuscript"
                 ;;
-            "draft")
-                PHASE="draft"
-                REASON="Draft phase - writing responses"
+            "fix")
+                PHASE="fix"
+                REASON="Fix phase - fixer-critic loop in progress"
                 ;;
-            "verify")
-                PHASE="verify"
-                REASON="Verify phase - cross-checking claims"
-                ;;
-            "compile")
-                PHASE="compile"
-                REASON="Compile phase - assembling LaTeX document"
+            "review")
+                PHASE="review"
+                REASON="Review phase - presenting changelog and TODOs"
                 ;;
             "complete")
                 PHASE="complete"
-                REASON="Revision response complete"
+                REASON="Revision alignment complete"
                 ;;
             *)
                 PHASE="unknown"
@@ -83,23 +74,23 @@ else
     else
         # No status file - infer from files present
         if [ "$CONFIG_EXISTS" = "missing" ]; then
-            PHASE="fresh"
+            PHASE="init"
             REASON="No config yet"
-        elif [ "$COMMENTS_EXISTS" = "missing" ]; then
-            PHASE="parse"
-            REASON="Config exists but no comments extracted"
-        elif [ "$TRIAGE_EXISTS" = "missing" ]; then
-            PHASE="triage"
-            REASON="Comments exist but not triaged"
-        elif [ "$RESPONSES_COUNT" -eq 0 ]; then
-            PHASE="draft"
-            REASON="Triaged but no responses drafted"
-        elif [ "$VERIFICATION_EXISTS" = "missing" ]; then
-            PHASE="verify"
-            REASON="Responses exist but not verified"
+        elif [ "$CLAIMS_EXISTS" = "missing" ]; then
+            PHASE="extract"
+            REASON="Config exists but no claims extracted"
+        elif [ "$AUDIT_EXISTS" = "missing" ]; then
+            PHASE="audit"
+            REASON="Claims exist but not audited"
+        elif [ "$FIX_STATE_EXISTS" = "missing" ]; then
+            PHASE="fix"
+            REASON="Audit exists but fix loop not started"
+        elif [ "$CHANGELOG_EXISTS" = "missing" ]; then
+            PHASE="review"
+            REASON="Fix loop done but no changelog"
         else
-            PHASE="compile"
-            REASON="All files present, ready to compile"
+            PHASE="complete"
+            REASON="All files present"
         fi
     fi
 fi
@@ -114,11 +105,11 @@ cat << EOF
     "status": "$STATUS_EXISTS",
     "status_content": "$STATUS_CONTENT",
     "config": "$CONFIG_EXISTS",
-    "comments": "$COMMENTS_EXISTS",
-    "triage": "$TRIAGE_EXISTS",
-    "responses_dir": "$RESPONSES_DIR_EXISTS",
-    "responses_count": $RESPONSES_COUNT,
-    "verification": "$VERIFICATION_EXISTS"
+    "claims": "$CLAIMS_EXISTS",
+    "audit": "$AUDIT_EXISTS",
+    "fix_state": "$FIX_STATE_EXISTS",
+    "changelog": "$CHANGELOG_EXISTS",
+    "todos": "$TODOS_EXISTS"
   }
 }
 EOF

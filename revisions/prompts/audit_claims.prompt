@@ -1,0 +1,167 @@
+# Audit Claims Task
+
+**Purpose:** Cross-check each extracted claim against the actual manuscript files to produce a gap report.
+
+---
+
+## Input
+
+- **Claims:** `current/claims.json` — extracted claims from the response document
+- **Config:** `current/config.json` — file paths (manuscript, appendix files, .bib)
+- **Component references:**
+  - `revisions/prompts/components/claim_taxonomy.prompt` — verification rules per claim type
+  - `revisions/prompts/components/latex_conventions.prompt` — LaTeX structure reference
+
+## Task
+
+For each claim in `claims.json`, verify whether the manuscript actually contains what the response document promises.
+
+### Step 1: Build File Index
+
+Read the config to identify all files to check:
+- Main manuscript .tex file(s)
+- Appendix .tex file(s)
+- Bibliography .bib file(s)
+
+Scan each .tex file to build:
+- A map of all `\label{...}` → file + line number
+- A map of all `\section`, `\subsection`, etc. → structure outline
+- A list of all citation keys used (`\textcite{...}`, `\parencite{...}`, `\cite{...}`)
+
+Scan each .bib file to build:
+- A set of all defined citation keys
+
+### Step 2: Verify Each Claim
+
+For each claim, apply the verification strategy from `claim_taxonomy.prompt`:
+
+#### `reference_check`
+1. Look up `target_label` in the label map
+2. If found → `status: "found"`, record file + line
+3. If not found → `status: "missing"`, `fixable: false` (label must be created by user)
+
+#### `content_addition`
+1. Find `target_label` in the label map to locate the section
+2. Search within ~50 lines of that label for `search_keywords`
+3. If most keywords found nearby → `status: "found"`, record evidence
+4. If some keywords found → `status: "partial"`, note what's missing
+5. If no keywords found → `status: "missing"`, `fixable: true`
+
+#### `content_revision`
+Same strategy as `content_addition`. The difference is semantic (revision vs. addition) but the search is identical.
+
+#### `structural_change`
+1. Check destination label exists
+2. If claim says "moved to appendix," verify content is at destination
+3. If claim says content was removed from original location, check it's gone
+4. Status: `found` / `partial` / `missing`
+
+#### `numerical_claim`
+1. Search all .tex files for the exact numbers mentioned
+2. Also check for `\scalarinput{}` commands that might produce those numbers
+3. If numbers found → `status: "found"` with location
+4. If not found → `status: "missing"`, but note that numbers may be in compiled output only → `fixable: false`
+
+#### `citation_check`
+1. Check if citation key exists in .bib file(s)
+2. Check if citation key is used in manuscript .tex file(s)
+3. If in .bib and in .tex → `status: "found"`
+4. If in .bib but not in .tex → `status: "partial"` (exists but not cited in manuscript)
+5. If not in .bib → `status: "missing"`, `fixable: true` (can add .bib entry)
+
+#### `unverifiable`
+1. Set `status: "todo"`
+2. Set `fixable: false`
+3. Add to todos list
+
+### Step 3: Generate Fix Hints
+
+For each `missing` or `partial` claim that is `fixable: true`, generate a brief hint for the fixer:
+- "Add sentence about weaker results near `\label{subsec:durbin}`"
+- "Add `\textcite{Autor2003}` citation in Section 3"
+- "Move robustness table to appendix section `\label{sec:oa-robustness}`"
+
+Fix hints should be actionable and reference specific locations.
+
+## Output
+
+### Write `current/audit.json`
+
+```json
+{
+  "audited_at": "ISO timestamp",
+  "total_claims": 47,
+  "summary": {
+    "found": 28,
+    "missing": 10,
+    "partial": 3,
+    "todo": 6
+  },
+  "results": [
+    {
+      "claim_id": "ed_1a_claim_1",
+      "status": "found",
+      "evidence": "Line 342 in paper.tex: 'The results are weaker once we consider the full sample...'",
+      "file": "paper.tex",
+      "fixable": false,
+      "fix_hint": null
+    },
+    {
+      "claim_id": "ref1_2_claim_1",
+      "status": "missing",
+      "evidence": null,
+      "file": null,
+      "fixable": true,
+      "fix_hint": "Add sentence about merchant sorting near \\label{subsec:model-assumptions}"
+    }
+  ]
+}
+```
+
+### Write `current/todos.md`
+
+Collect all `unverifiable` claims and `fixable: false` items:
+
+```markdown
+# Items Requiring User Action
+
+These items cannot be machine-verified or fixed. Review and address manually.
+
+## Unverifiable Claims
+| # | Source | Claim | Why |
+|---|--------|-------|-----|
+| 1 | ed_2 | "I re-estimated the model..." | Process claim — requires running code |
+| 2 | ref1_5 | "Results are robust to..." | Requires checking estimation output |
+
+## Unfixable Issues
+| # | Claim ID | Issue | Action Needed |
+|---|----------|-------|---------------|
+| 1 | ref2_3_claim_1 | Label `tab:new-robustness` not found | Create table and add label |
+| 2 | ref1_1_claim_2 | Numbers not found in .tex | Verify compiled output matches |
+```
+
+### Return to Orchestrator (minimal)
+
+```json
+{
+  "status": "complete",
+  "total_claims": 47,
+  "found": 28,
+  "missing": 10,
+  "partial": 3,
+  "todo": 6,
+  "fixable_issues": 8
+}
+```
+
+Do NOT return the full audit results inline. The orchestrator reads `current/audit.json` and `current/todos.md`.
+
+## Rules
+
+1. **Read all manuscript files listed in config.** Don't stop at the first file — claims may reference appendix content.
+2. **Be strict on references.** A `\ref{}` to a non-existent `\label{}` WILL produce "??" in compiled output. Always flag as `missing`.
+3. **Be lenient on content.** If keywords are found nearby, count it as `found` even if the exact phrasing differs. The response doc paraphrases the manuscript.
+4. **Search beyond the immediate label.** Content may be within 50-100 lines of a label, or in a nearby subsection.
+5. **Check .bib files for citations.** Citation keys must be in the bibliography database, not just in the manuscript text.
+6. **Don't modify any files.** This is a read-only audit. Changes happen in the fix phase.
+7. **Record evidence verbatim.** When you find a match, quote the relevant manuscript line so the orchestrator can present it.

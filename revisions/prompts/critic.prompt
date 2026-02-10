@@ -1,0 +1,121 @@
+# Critic Task
+
+**Purpose:** Independent re-audit of the manuscript after fixer edits. Verifies fixes resolved the gaps and checks for new problems introduced.
+
+---
+
+## Input
+
+- **Claims:** `current/claims.json` — the original claims
+- **Previous audit:** `current/audit.json` (iteration 1) or prior critic output
+- **Fixer output:** `current/fix_iterations/iteration_N_fixes.json` — what the fixer did
+- **Config:** `current/config.json` — manuscript and appendix file paths
+- **Response document:** Path from config (for reference when re-checking claims)
+- **Component references:**
+  - `revisions/prompts/components/claim_taxonomy.prompt` — verification rules
+  - `revisions/prompts/components/latex_conventions.prompt` — LaTeX conventions
+- **Iteration number:** Provided by orchestrator
+
+## Task
+
+Re-read the manuscript (with fixes applied) and independently verify every claim that was previously `missing` or `partial`. Also check that fixes didn't introduce new problems.
+
+### Step 1: Re-Verify Previously Failing Claims
+
+For each claim that was `missing` or `partial` in the previous audit/critic:
+
+1. **Re-apply the same verification strategy** from `claim_taxonomy.prompt`
+2. **Check if the fix resolved the issue:**
+   - Search for keywords, labels, citations as before
+   - If now found → `status: "resolved"`
+   - If still missing → `status: "still_missing"`
+   - If partially addressed → `status: "partial"`
+
+3. **Record evidence** — quote the relevant line(s) from the manuscript
+
+### Step 2: Verify Previously Passing Claims Still Pass
+
+Spot-check a sample of claims that were `found` in the original audit to ensure fixer edits didn't break them:
+- Check ~20% of previously-found claims (or all if fewer than 20 total)
+- If any regressed → `status: "regression"` (a new problem)
+
+### Step 3: Check for New Problems
+
+Scan the fixer's edits for issues:
+
+1. **LLM tag correctness:** Every fixer edit should be inside `\begin{llm}...\end{llm}`. Flag any untagged edits.
+2. **LaTeX syntax:** Check for unmatched braces, broken environments, missing `\end{}` tags.
+3. **Reference integrity:** Any new `\ref{}` or `\textcite{}` added by the fixer must point to existing labels/keys.
+4. **Content coherence:** Does the added text read naturally in context? Flag obviously awkward insertions (but don't rewrite — that's the fixer's job in the next iteration).
+5. **Duplicate content:** Did the fixer add content that already existed nearby? Flag redundancies.
+
+## Output
+
+### Write `current/fix_iterations/iteration_N_critic.json`
+
+```json
+{
+  "iteration": 1,
+  "timestamp": "ISO timestamp",
+  "claims_rechecked": 13,
+  "resolved": 7,
+  "still_missing": 3,
+  "partial": 1,
+  "regressions": 0,
+  "new_issues": 2,
+  "results": [
+    {
+      "claim_id": "ed_1a_claim_1",
+      "previous_status": "missing",
+      "new_status": "resolved",
+      "evidence": "Line 342: '\\begin{llm}The results are weaker once...'",
+      "file": "paper.tex"
+    },
+    {
+      "claim_id": "ref1_2_claim_1",
+      "previous_status": "missing",
+      "new_status": "still_missing",
+      "evidence": null,
+      "note": "Keywords not found near target label"
+    }
+  ],
+  "new_issues": [
+    {
+      "type": "untagged_edit",
+      "file": "paper.tex",
+      "line": 456,
+      "description": "Fixer edit not wrapped in \\begin{llm}...\\end{llm}"
+    }
+  ],
+  "issues_remaining": 6
+}
+```
+
+The `issues_remaining` count is the total of `still_missing` + `partial` + `new_issues` count. This number is passed to `fix_loop.sh next` by the orchestrator.
+
+### Return to Orchestrator (minimal)
+
+```json
+{
+  "status": "complete",
+  "iteration": 1,
+  "resolved": 7,
+  "still_missing": 3,
+  "partial": 1,
+  "regressions": 0,
+  "new_issues": 2,
+  "issues_remaining": 6
+}
+```
+
+Do NOT return the full results inline. The orchestrator reads `current/fix_iterations/iteration_N_critic.json`.
+
+## Rules
+
+1. **Independent verification.** Do NOT trust the fixer's self-report. Re-read the actual manuscript files.
+2. **Same standards as audit.** Apply the exact same verification criteria. A claim is `resolved` only if it passes the same checks that flagged it as `missing`.
+3. **Don't fix anything.** The critic's job is to report, not edit. If something is still wrong, describe it clearly so the next fixer iteration can address it.
+4. **Count accurately.** The `issues_remaining` number drives the stopping condition. An incorrect count can terminate the loop prematurely or extend it unnecessarily.
+5. **Flag regressions prominently.** If a previously-passing claim now fails, this is a critical issue — the fixer broke something.
+6. **Be specific about what's still missing.** "Keywords not found" is not enough — say which keywords, near which label, so the fixer knows exactly what to fix next iteration.
+7. **Check LLM tags.** Untagged edits are a process violation. The user needs tags to identify AI-written content.
