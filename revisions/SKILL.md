@@ -22,14 +22,15 @@ This orchestrator ensures the manuscript matches what the user promised in their
 ## How It Works
 
 1. Detect current phase from `current/` state via `scripts/bootstrap.sh`
-2. Collect file paths (response doc, manuscript, appendix, .bib)
+2. Collect file paths (response doc, manuscript, appendix, .bib, referee reports)
 3. Extract claims from response doc → `claims.json`
-4. Audit claims against manuscript → `audit.json`
-5. Fixer-critic loop: fix gaps, re-audit, iterate until clean
-6. Present changelog + TODOs to user
+4. Profile referees → `referee_profiles.json`
+5. Audit claims against manuscript → `audit.json`
+6. Fixer-critic loop: fix gaps, re-audit, iterate until clean
+7. Present changelog + TODOs to user
 
 ```
-/revisions → [INIT] → [EXTRACT] → [AUDIT] → [FIX ↔ CRITIC loop] → [REVIEW] → [COMPLETE]
+/revisions → [INIT] → [EXTRACT] → [PROFILE] → [AUDIT] → [FIX ↔ CRITIC loop] → [REVIEW] → [COMPLETE]
 ```
 
 The key insight: subagents run autonomously and cannot interact with users. User interaction happens in the orchestrator (main context), kept lightweight by offloading analysis to subagents.
@@ -38,29 +39,13 @@ The key insight: subagents run autonomously and cannot interact with users. User
 
 ## Progress Tracking
 
-Native Tasks (TaskCreate/TaskUpdate) provide **real-time UX feedback** while `current/.status` tracks the **authoritative workflow state**.
+Progress is communicated via **text output** at phase transitions. The authoritative workflow state lives in `current/.status` (managed by `status.sh`).
 
-**Phase-level tracking:** At bootstrap, create one native Task per remaining phase. Mark each in_progress at entry and completed at transition.
+At each phase transition, output a brief status line:
+- Phase entry: `--- [PHASE] Spawning subagent...`
+- Phase exit: `--- [PHASE] Done: <summary>`
 
-```
-# After bootstrap returns "init":
-TaskCreate: "Collect file paths"              activeForm: "Collecting file paths"
-TaskCreate: "Extract claims from response"    activeForm: "Extracting claims"
-TaskCreate: "Audit claims against manuscript" activeForm: "Auditing claims"
-TaskCreate: "Fix manuscript gaps"             activeForm: "Fixing gaps"
-TaskCreate: "Review changes"                  activeForm: "Reviewing changes"
-```
-
-**Fix-loop tracking:** During the fix phase, create a native Task per iteration:
-
-```
-TaskCreate: "Fix iteration 1"    activeForm: "Running fix iteration 1"
-TaskCreate: "Critic iteration 1" activeForm: "Running critic iteration 1"
-```
-
-**Rules:**
-- Native Tasks are a UX layer only — never read them back to determine workflow state
-- Always update `.status` or `fix_state.json` first, then update the corresponding native Task
+Do NOT use TaskCreate or TaskUpdate — these tools consume context tokens on every call.
 
 ## Orchestrator Rules (Critical)
 
@@ -72,6 +57,7 @@ The orchestrator coordinates — it does NOT do the work itself.
 
 - `init` → Collect file paths via AskUserQuestion, write `config.json`
 - `extract` → **IMMEDIATELY** spawn extract subagent. Do NOT read the response doc.
+- `profile` → **IMMEDIATELY** spawn profile subagent. Do NOT read referee reports yourself.
 - `audit` → **IMMEDIATELY** spawn audit subagent. Do NOT read manuscript files.
 - `fix` → Run `fix_loop.sh status`, then spawn fixer/critic subagents
 - `review` → Read changelog + todos, present to user
@@ -81,22 +67,24 @@ The orchestrator coordinates — it does NOT do the work itself.
 
 ### The orchestrator CAN:
 - Read skill files (SKILL.md, prompts/*)
-- Read state files (current/.status, current/config.json, current/claims.json summary, current/audit.json summary, current/fix_state.json, current/changelog.md, current/todos.md)
+- Read state files (current/.status, current/config.json, current/claims.json summary, current/referee_profiles.json summary, current/audit.json summary, current/fix_state.json, current/changelog.md, current/todos.md)
 - Run scripts (bootstrap.sh, status.sh, fix_loop.sh)
 - Spawn subagents with appropriate context
 - Present questions to users and collect answers
 - Update `.status` files
 
 ### The orchestrator MUST NOT:
-- **Read the response document** — extract subagent does this
+- **Read the response document** — extract/profile subagents do this
+- **Read referee reports** — profile subagent does this
 - **Read manuscript .tex files** — audit/fixer/critic subagents do this
-- **Write claims.json or audit.json** — subagents write these
+- **Write claims.json, referee_profiles.json, or audit.json** — subagents write these
 - **Edit .tex files** — fixer subagent does this
 - **Write fix iteration files** — fixer/critic subagents write these
 - **Bypass the phase protocol** — even if user's request seems clear, follow the phases
+- **Use TaskCreate or TaskUpdate** — each call consumes context; use text output for progress instead
 
-### If you're tempted to read the response doc or manuscript:
-STOP. You're probably in extract/audit/fix phase and should spawn the appropriate subagent instead.
+### If you're tempted to read the response doc, referee reports, or manuscript:
+STOP. You're probably in extract/profile/audit/fix phase and should spawn the appropriate subagent instead.
 
 ## Bootstrap Phase (Always First)
 
@@ -111,7 +99,7 @@ bash revisions/scripts/bootstrap.sh
 Returns JSON:
 ```json
 {
-  "phase": "init|extract|audit|fix|review|complete",
+  "phase": "init|extract|profile|audit|fix|review|complete",
   "reason": "Brief explanation",
   "directory_created": "yes|no",
   "files": {
@@ -119,6 +107,7 @@ Returns JSON:
     "status_content": "...",
     "config": "exists|missing",
     "claims": "exists|missing",
+    "referee_profiles": "exists|missing",
     "audit": "exists|missing",
     "fix_state": "exists|missing",
     "changelog": "exists|missing",
@@ -133,6 +122,7 @@ Returns JSON:
 |-------|--------|------------|
 | `init` | Collect file paths | AskUserQuestion for response doc, manuscript, etc. |
 | `extract` | Parse response doc | Spawn extract subagent |
+| `profile` | Build referee profiles | Spawn profile subagent |
 | `audit` | Cross-check claims | Spawn audit subagent |
 | `fix` | Fixer-critic loop | Run `fix_loop.sh status`, dispatch accordingly |
 | `review` | Present results | Read changelog + todos, display to user |
@@ -163,6 +153,7 @@ Use AskUserQuestion:
 2. **Manuscript** (.tex) — main paper file
 3. **Appendix files** (.tex) — optional, supplementary material
 4. **Bibliography** (.bib) — optional, for citation checking
+5. **Referee reports** (.tex/.txt/.pdf) — optional, raw referee letters for personality profiling
 
 ### Write Config
 
@@ -173,6 +164,11 @@ After collecting inputs, write `current/config.json`:
   "manuscript": ["paper.tex"],
   "appendix": ["online_appendix.tex"],
   "bib": ["Bibliography.bib"],
+  "referee_reports": {
+    "ref1": "path/to/ref1_report.txt",
+    "ref2": "path/to/ref2_report.txt",
+    "editor": "path/to/editor_letter.txt"
+  },
   "created": "ISO timestamp"
 }
 ```
@@ -213,6 +209,40 @@ Your job:
 ### After Extract Returns
 
 1. Output summary: "Extracted N claims (X verifiable, Y unverifiable)"
+2. Update status:
+```bash
+bash revisions/scripts/status.sh profile
+```
+
+## Profile Phase (Single Sonnet Subagent)
+
+When the phase is `profile`, spawn the profile subagent immediately. Do NOT read referee reports or the response document yourself.
+
+```
+Task: [revisions:profile] Build referee personality profiles
+model: "sonnet"
+subagent_type: "general-purpose"
+
+Instructions:
+Read revisions/prompts/profile_referees.prompt for full instructions.
+Read revisions/prompts/components/response_patterns.prompt for response structure conventions.
+
+Context:
+- Config: current/config.json (contains response doc path + optional referee report paths)
+- Claims: current/claims.json (contains referee identifiers)
+
+Your job:
+1. Identify referees from claims.json
+2. Read referee reports (primary) or response doc refcommentnoclear blocks (fallback)
+3. Profile each referee across 8 personality dimensions
+4. Perform cross-referee analysis
+5. Write current/referee_profiles.json
+6. Return: {status, referees_profiled, referee_keys, sources_used, swing_referee}
+```
+
+### After Profile Returns
+
+1. Output summary: "Profiled N referees (swing: RefX). Sources: referee_reports|response_doc_comments"
 2. Update status:
 ```bash
 bash revisions/scripts/status.sh audit
@@ -303,17 +333,19 @@ Read revisions/prompts/components/claim_taxonomy.prompt for claim type context.
 Context:
 - Claims: current/claims.json
 - Issues: current/audit.json (iteration 1) OR current/fix_iterations/iteration_{N-1}_critic.json (later iterations)
+- Referee profiles: current/referee_profiles.json
 - Config: current/config.json
 - Iteration: {N}
 
 Your job:
 1. Read remaining issues (missing/partial with fixable:true)
-2. Make targeted edits to manuscript files
-3. Tag all edits with \begin{llm}...\end{llm}
-4. Write current/fix_iterations/iteration_{N}_fixes.json
-5. Append to current/changelog.md
-6. Commit: [revisions:fix:iter{N}] Fix M manuscript gaps
-7. Return: {status, iteration, fixed, skipped, escalated}
+2. Consult referee profiles to calibrate edits per referee
+3. Make targeted edits to manuscript files
+4. Tag all edits with \begin{llm}...\end{llm}
+5. Write current/fix_iterations/iteration_{N}_fixes.json
+6. Append to current/changelog.md
+7. Commit: [revisions:fix:iter{N}] Fix M manuscript gaps
+8. Return: {status, iteration, fixed, skipped, escalated}
 ```
 
 ### Step 4: Spawn Critic Subagent (Sonnet)
@@ -332,6 +364,7 @@ Context:
 - Claims: current/claims.json
 - Previous audit: current/audit.json (or prior critic)
 - Fixer output: current/fix_iterations/iteration_{N}_fixes.json
+- Referee profiles: current/referee_profiles.json
 - Config: current/config.json
 - Iteration: {N}
 
@@ -429,6 +462,7 @@ When the user says "reset", "clear", or "new revision":
 | Operation | Model | Rationale |
 |---|---|---|
 | Extract claims | Sonnet | Document parsing, classification |
+| Profile referees | Sonnet | Personality analysis, pattern recognition |
 | Audit claims | Sonnet | Cross-referencing, search |
 | Fixer (standard) | Sonnet | Targeted edits, style matching |
 | Fixer (escalation) | Opus | Complex structural changes |
@@ -447,6 +481,7 @@ revisions/
 │   └── fix_loop.sh                       # Fixer-critic iteration management
 ├── prompts/
 │   ├── extract_claims.prompt             # Parse response doc → claims.json
+│   ├── profile_referees.prompt           # Build referee personality profiles
 │   ├── audit_claims.prompt               # Cross-check claims vs manuscript
 │   ├── fixer.prompt                      # Make targeted edits to manuscript
 │   ├── critic.prompt                     # Re-audit after fixes
@@ -461,6 +496,7 @@ revisions/
     ├── .status
     ├── config.json                       # File paths
     ├── claims.json                       # Extracted claims from response doc
+    ├── referee_profiles.json             # Per-referee personality profiles
     ├── audit.json                        # Claim verification results
     ├── fix_state.json                    # Fix loop iteration state
     ├── changelog.md                      # Human-readable edit log
@@ -478,6 +514,7 @@ revisions/
 | `current/.status` | Current phase | Orchestrator (via status.sh) |
 | `current/config.json` | Input file paths | Orchestrator |
 | `current/claims.json` | Extracted claims | Extract subagent |
+| `current/referee_profiles.json` | Referee personality profiles | Profile subagent |
 | `current/audit.json` | Verification results | Audit subagent |
 | `current/fix_state.json` | Loop iteration state | fix_loop.sh |
 | `current/changelog.md` | Edit log | Fixer subagent (appends) |

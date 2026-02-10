@@ -1,0 +1,213 @@
+# Profile Referees Task
+
+**Purpose:** Build per-referee personality profiles ("soul documents") from referee reports or response document comments. These profiles calibrate downstream fixer and critic behavior per referee.
+
+---
+
+## Input
+
+- **Config:** `current/config.json` — file paths including optional `referee_reports`
+- **Claims:** `current/claims.json` — extracted claims with `source_comment` referee identifiers and optional `referees` summary
+- **Response document:** Path from config (fallback source for referee voice)
+- **Referee reports** (if available): Paths from `config.referee_reports` — the raw referee letters
+- **Component references:**
+  - `revisions/prompts/components/response_patterns.prompt` — response document structure conventions
+
+## Task
+
+Analyze each referee's writing to build a personality profile that downstream agents (fixer, critic) use to calibrate edits. The goal is to understand *who* each referee is so responses match their expectations.
+
+### Step 1: Identify Referees
+
+Read `claims.json` to get referee keys. If a `referees` summary exists, use it directly. Otherwise, extract unique referee prefixes from `source_comment` fields (e.g., `ref1_2_claim_1` → `ref1`, `ed_1a_claim_1` → `ed`).
+
+### Step 2: Gather Source Material
+
+**Primary source (preferred):** If `config.referee_reports` provides paths to raw referee letters, read those. These contain the referee's unfiltered voice.
+
+**Fallback source:** If no referee reports are available, read the response document and extract all `\begin{refcommentnoclear}...\end{refcommentnoclear}` blocks. Group by referee section headers.
+
+### Step 3: Profile Each Referee
+
+For each referee, analyze their writing across these dimensions:
+
+1. **`overall_stance`** — How does the referee feel about the paper?
+   - `strongly_supportive` — enthusiastic, minor suggestions only
+   - `supportive_with_reservations` — positive but has real concerns
+   - `neutral_constructive` — neither positive nor negative, focused on improvement
+   - `skeptical` — doubts about contribution or methods, needs convincing
+   - `hostile` — fundamentally opposed to the paper's approach or claims
+
+2. **`key_concerns`** — The 3-7 issues the referee cares most about, ranked by emphasis. For each concern, note:
+   - Brief description
+   - Which claim cluster it maps to (e.g., `ref1_2`, `ref1_5`)
+   - Whether it's a dealbreaker or nice-to-have
+
+3. **`communication_style`** — How the referee writes:
+   - `thorough` — detailed, methodical, covers everything
+   - `blunt` — direct, short, no pleasantries
+   - `collaborative` — suggests solutions, collegial tone
+   - `formal` — academic distance, impersonal
+   - `passionate` — strong opinions, emphatic language
+
+4. **`evidence_expectations`** — How much evidence does the referee demand?
+   - `low` — satisfied with verbal arguments
+   - `medium` — wants references to tables/figures but not deep detail
+   - `high` — expects specific numbers, robustness checks, data references
+   - `very_high` — demands appendix-level detail, multiple specifications
+
+5. **`tone_preferences`** — What tone will land well with this referee?
+   - `directness` — high/medium/low (how direct should responses be?)
+   - `gratitude` — high/medium/low (does the referee respond to thanks?)
+   - `apology_tolerance` — high/medium/low (do apologies help or annoy?)
+   - `defense_tolerance` — high/medium/low (can you push back, or should you concede?)
+
+6. **`concession_calibration`** — How should the response handle disagreements?
+   - `high` — referee expects you to agree with most points
+   - `moderate` — referee is open to reasoned pushback
+   - `low` — referee respects strong defense of positions
+   - `strategic` — concede on small points, defend on big ones
+
+7. **`red_flags`** — Specific patterns that would alienate this referee:
+   - E.g., "dismissive language about robustness concerns"
+   - E.g., "vague promises without concrete evidence"
+   - E.g., "excessive apologies that signal insecurity"
+
+8. **`overall_feeling`** — 1-2 sentence briefing on who this referee is and what they want. This is the quick-reference for the fixer.
+
+### Step 4: Cross-Referee Analysis
+
+After profiling each referee individually, analyze interactions:
+
+1. **`shared_concerns`** — Issues raised by multiple referees (highest priority — addressing these satisfies multiple reviewers)
+2. **`conflicting_expectations`** — Cases where one referee wants X and another wants the opposite
+3. **`priority_ordering`** — Which referee is most likely the swing vote? Who needs the most attention?
+
+### Step 5: Quality Checks
+
+Before writing output:
+- Every referee identified in claims.json should have a profile
+- Each profile should have all 8 dimensions populated
+- Red flags should be specific and actionable, not generic
+- Overall feeling should be distinctive per referee (not boilerplate)
+
+## Output
+
+### Write `current/referee_profiles.json`
+
+```json
+{
+  "profiled_at": "ISO timestamp",
+  "sources_used": "referee_reports|response_doc_comments",
+  "referees": {
+    "ref1": {
+      "label": "Referee 1",
+      "overall_stance": "supportive_with_reservations",
+      "key_concerns": [
+        {
+          "description": "Identification strategy may not hold in full sample",
+          "claim_cluster": "ref1_2",
+          "dealbreaker": true
+        },
+        {
+          "description": "Literature review misses key recent papers",
+          "claim_cluster": "ref1_5",
+          "dealbreaker": false
+        }
+      ],
+      "communication_style": "thorough",
+      "evidence_expectations": "high",
+      "tone_preferences": {
+        "directness": "high",
+        "gratitude": "low",
+        "apology_tolerance": "low",
+        "defense_tolerance": "medium"
+      },
+      "concession_calibration": "moderate",
+      "red_flags": [
+        "Vague promises without pointing to specific tables or numbers",
+        "Apologetic framing — this referee wants evidence, not apologies"
+      ],
+      "overall_feeling": "A careful methodologist who supports the paper's contribution but needs to be convinced the identification holds up. Responds best to concrete evidence and direct engagement with concerns."
+    },
+    "ref2": {
+      "label": "Referee 2",
+      "overall_stance": "skeptical",
+      "key_concerns": [],
+      "communication_style": "blunt",
+      "evidence_expectations": "very_high",
+      "tone_preferences": {
+        "directness": "high",
+        "gratitude": "medium",
+        "apology_tolerance": "low",
+        "defense_tolerance": "low"
+      },
+      "concession_calibration": "high",
+      "red_flags": [
+        "Dismissing robustness concerns as minor",
+        "Claiming results are 'obvious' without showing them"
+      ],
+      "overall_feeling": "A skeptic who needs to see the data. Concede where possible and back everything with numbers."
+    },
+    "ed": {
+      "label": "Editor",
+      "overall_stance": "neutral_constructive",
+      "key_concerns": [],
+      "communication_style": "formal",
+      "evidence_expectations": "medium",
+      "tone_preferences": {
+        "directness": "medium",
+        "gratitude": "medium",
+        "apology_tolerance": "medium",
+        "defense_tolerance": "medium"
+      },
+      "concession_calibration": "strategic",
+      "red_flags": [
+        "Ignoring editor suggestions entirely"
+      ],
+      "overall_feeling": "The editor wants a clean revision that addresses both referees. Focus on showing that referee concerns are handled."
+    }
+  },
+  "cross_referee": {
+    "shared_concerns": [
+      {
+        "description": "Both referees question the full-sample identification",
+        "referees": ["ref1", "ref2"],
+        "priority": "critical"
+      }
+    ],
+    "conflicting_expectations": [
+      {
+        "description": "Ref1 wants more literature discussion; Ref2 wants paper shortened",
+        "referees": ["ref1", "ref2"],
+        "resolution_hint": "Add targeted citations inline rather than expanding the lit review section"
+      }
+    ],
+    "priority_ordering": ["ref2", "ref1", "ed"],
+    "priority_rationale": "Ref2 is the skeptic and likely swing vote. Satisfying Ref2's evidence demands also addresses Ref1's methodological concerns."
+  }
+}
+```
+
+### Return to Orchestrator (minimal)
+
+```json
+{
+  "status": "complete",
+  "referees_profiled": 3,
+  "referee_keys": ["ref1", "ref2", "ed"],
+  "sources_used": "referee_reports",
+  "swing_referee": "ref2"
+}
+```
+
+Do NOT return the full profiles inline. The orchestrator reads `current/referee_profiles.json`.
+
+## Rules
+
+1. **Profile from evidence, not assumptions.** Base every dimension on specific things the referee wrote. Don't assume a referee is hostile just because they have concerns.
+2. **Be specific in red_flags.** "Don't be dismissive" is too generic. "Don't dismiss robustness concerns as minor when the referee spent 3 paragraphs on them" is actionable.
+3. **Preserve referee voice.** The overall_feeling should capture *this* specific referee, not a generic archetype.
+4. **Don't read the manuscript.** This phase only reads referee reports and/or the response document. Manuscript reading is the audit phase's job.
+5. **Handle missing referee reports gracefully.** If no raw reports exist, extract what you can from the `refcommentnoclear` blocks. Note in `sources_used` which source was used.
+6. **Include the editor.** If the editor's letter is available or editor comments appear in the response doc, profile the editor too.

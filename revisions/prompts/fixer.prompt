@@ -8,6 +8,7 @@
 
 - **Issues to fix:** Either `current/audit.json` (iteration 1) or `current/fix_iterations/iteration_N_critic.json` (subsequent iterations) — only items with `status: "missing"` or `"partial"` and `fixable: true`
 - **Claims:** `current/claims.json` — the original claims with claim text and context
+- **Referee profiles:** `current/referee_profiles.json` — per-referee personality profiles for calibrating tone and evidence level
 - **Config:** `current/config.json` — manuscript and appendix file paths
 - **Component references:**
   - `revisions/prompts/components/latex_conventions.prompt` — LaTeX formatting rules
@@ -34,14 +35,19 @@ For each issue:
 
 1. **Read the claim** from `claims.json` — understand what the response promises
 2. **Locate the target** in the manuscript using `target_label` or section structure
-3. **Make the minimal edit:**
+3. **Consult the referee profile.** Extract the referee key from `source_comment` (e.g., `ref1_2_claim_1` → `ref1`). Look up the referee in `referee_profiles.json` and calibrate:
+   - **Evidence expectations:** If `high` or `very_high`, add data references, table/figure pointers, or appendix citations — not just prose assertions
+   - **Tone:** If the referee's `apology_tolerance` is `low`, never insert apologetic framing ("We apologize for...", "We regret..."). Use direct, confident language instead
+   - **Red flags:** Check the referee's `red_flags` list and avoid those patterns in your edit
+   - **Concession calibration:** If `high`, frame the edit as a direct response to the referee's point. If `low`, frame it as strengthening the paper's argument
+4. **Make the minimal edit:**
    - For `content_addition`: Insert the promised content near the target label
    - For `content_revision`: Modify existing text to match the claim
    - For `citation_check`: Add `\textcite{}` or `\parencite{}` at an appropriate location, and add the .bib entry if missing
    - For `reference_check`: If a label is missing, DO NOT create it (label creation implies structural changes that need user review) — instead mark as skipped
    - For `structural_change`: Attempt if straightforward, skip if complex
 
-4. **Tag all edits** with `\begin{llm}...\end{llm}`:
+5. **Tag all edits** with `\begin{llm}...\end{llm}`:
    ```latex
    \begin{llm}
    The results are weaker once we consider the full sample, with the
@@ -49,7 +55,7 @@ For each issue:
    \end{llm}
    ```
 
-5. **Write naturally.** The edit should read as if the author wrote it. Match the surrounding prose style, tense, and level of detail. Use the claim text and response context as a guide.
+6. **Write naturally.** The edit should read as if the author wrote it. Match the surrounding prose style, tense, and level of detail. Use the claim text and response context as a guide.
 
 ### Step 3: Record Fixes
 
@@ -146,7 +152,7 @@ If `changelog.md` already exists (iteration > 1), append to it. Do not overwrite
 
 1. **Minimum viable edits.** Add exactly what the response document promises — no more. Don't "improve" surrounding text.
 2. **Always tag with `\begin{llm}...\end{llm}`.** Every character you add or change must be inside LLM tags.
-3. **Match the manuscript's style.** Read surrounding paragraphs to match tense, voice, notation, and citation style.
+3. **Match the manuscript's style and referee expectations.** Read surrounding paragraphs to match tense, voice, notation, and citation style. Also ensure the edit meets the originating referee's evidence and tone expectations from their profile.
 4. **Don't fabricate data.** If a claim references specific numbers you can't verify, use placeholder text: `[TODO: insert value]` inside LLM tags.
 5. **Don't create labels.** If `\label{foo}` doesn't exist, don't add it — that implies structural changes requiring user review. Skip and flag.
 6. **Preserve manuscript structure.** Don't reorganize sections, move content, or delete existing text unless the claim specifically says to.

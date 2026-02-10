@@ -9,6 +9,7 @@
 - **Claims:** `current/claims.json` — the original claims
 - **Previous audit:** `current/audit.json` (iteration 1) or prior critic output
 - **Fixer output:** `current/fix_iterations/iteration_N_fixes.json` — what the fixer did
+- **Referee profiles:** `current/referee_profiles.json` — per-referee personality profiles for checking alignment
 - **Config:** `current/config.json` — manuscript and appendix file paths
 - **Response document:** Path from config (for reference when re-checking claims)
 - **Component references:**
@@ -48,6 +49,11 @@ Scan the fixer's edits for issues:
 3. **Reference integrity:** Any new `\ref{}` or `\textcite{}` added by the fixer must point to existing labels/keys.
 4. **Content coherence:** Does the added text read naturally in context? Flag obviously awkward insertions (but don't rewrite — that's the fixer's job in the next iteration).
 5. **Duplicate content:** Did the fixer add content that already existed nearby? Flag redundancies.
+6. **Referee alignment:** For each resolved claim, look up the originating referee in `referee_profiles.json` (extract referee key from `source_comment`, e.g., `ref1_2_claim_1` → `ref1`). Check if the fix matches the referee's expectations:
+   - A one-sentence fix for a referee with `very_high` or `high` evidence expectations → flag as `partial` with note to add data references
+   - Apologetic framing ("We apologize...", "We regret...") for a referee with `apology_tolerance: low` → flag
+   - Dismissive tone for a referee with `defense_tolerance: low` → flag
+   - Patterns matching any item in the referee's `red_flags` list → flag
 
 ## Output
 
@@ -69,14 +75,22 @@ Scan the fixer's edits for issues:
       "previous_status": "missing",
       "new_status": "resolved",
       "evidence": "Line 342: '\\begin{llm}The results are weaker once...'",
-      "file": "paper.tex"
+      "file": "paper.tex",
+      "referee_alignment": {
+        "aligned": true,
+        "issue": null
+      }
     },
     {
       "claim_id": "ref1_2_claim_1",
       "previous_status": "missing",
       "new_status": "still_missing",
       "evidence": null,
-      "note": "Keywords not found near target label"
+      "note": "Keywords not found near target label",
+      "referee_alignment": {
+        "aligned": false,
+        "issue": "Fix is one sentence; referee evidence_expectations is 'high'. Suggest adding data reference."
+      }
     }
   ],
   "new_issues": [
