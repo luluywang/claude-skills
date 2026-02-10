@@ -15,6 +15,7 @@
 - **Component references:**
   - `revisions/prompts/components/claim_taxonomy.prompt` — verification rules
   - `revisions/prompts/components/latex_conventions.prompt` — LaTeX conventions
+  - `revisions/prompts/components/writing_quality.prompt` — **MANDATORY** writing standards for evaluating fixer prose
 - **Iteration number:** Provided by orchestrator
 
 ## Task
@@ -47,9 +48,20 @@ Scan the fixer's edits for issues:
 1. **LLM tag correctness:** Every fixer edit should be inside `\begin{llm}...\end{llm}`. Flag any untagged edits.
 2. **LaTeX syntax:** Check for unmatched braces, broken environments, missing `\end{}` tags.
 3. **Reference integrity:** Any new `\ref{}` or `\textcite{}` added by the fixer must point to existing labels/keys.
-4. **Content coherence:** Does the added text read naturally in context? Flag obviously awkward insertions (but don't rewrite — that's the fixer's job in the next iteration).
-5. **Duplicate content:** Did the fixer add content that already existed nearby? Flag redundancies.
-6. **Referee alignment:** For each resolved claim, look up the originating referee in `referee_profiles.json` (extract referee key from `source_comment`, e.g., `ref1_2_claim_1` → `ref1`). Check if the fix matches the referee's expectations:
+4. **Writing quality (AI detection):** Read `writing_quality.prompt` and check every fixer edit against it. Flag violations as `writing_quality` issues. Common failures:
+   - Meta-commentary: "proceeds as follows," "we now turn to," "this section discusses"
+   - AI transitions: "Moreover," "Additionally," "Furthermore," "Notably"
+   - AI vocabulary: align, crucial, delve, enhance, foster, leverage, robust, nuanced, comprehensive, facilitate, explicit (as intensifier)
+   - Hedging stacks: multiple hedges in one sentence
+   - Nominalizations: "make a calculation" instead of "calculate"
+   - Latinate words where Anglo-Saxon works: utilize, facilitate, demonstrate, prior to
+   - Template structures: "Not only... but also...", rule-of-three padding
+   - Uniform sentence length (all ~20 words)
+   - Passive voice where active is natural
+   Each writing quality violation is a bug — count it toward `issues_remaining`.
+5. **Content coherence:** Beyond writing quality, does the edit fit logically in context? Flag insertions that contradict or repeat surrounding text (but don't rewrite — that's the fixer's job in the next iteration).
+6. **Duplicate content:** Did the fixer add content that already existed nearby? Flag redundancies.
+7. **Referee alignment:** For each resolved claim, look up the originating referee in `referee_profiles.json` (extract referee key from `source_comment`, e.g., `ref1_2_claim_1` → `ref1`). Check if the fix matches the referee's expectations:
    - A one-sentence fix for a referee with `very_high` or `high` evidence expectations → flag as `partial` with note to add data references
    - Apologetic framing ("We apologize...", "We regret...") for a referee with `apology_tolerance: low` → flag
    - Dismissive tone for a referee with `defense_tolerance: low` → flag
@@ -99,6 +111,12 @@ Scan the fixer's edits for issues:
       "file": "paper.tex",
       "line": 456,
       "description": "Fixer edit not wrapped in \\begin{llm}...\\end{llm}"
+    },
+    {
+      "type": "writing_quality",
+      "file": "paper.tex",
+      "line": 342,
+      "description": "AI meta-commentary: 'The explicit microfoundation proceeds as follows.' Replace with direct statement."
     }
   ],
   "issues_remaining": 6

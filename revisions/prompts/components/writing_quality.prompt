@@ -1,0 +1,132 @@
+# Writing Quality Standards for Manuscript Edits
+
+**Purpose:** Concrete rules for writing prose that reads as human-authored academic economics. Derived from McCloskey, Cochrane, and Chaubey principles. Referenced by both fixer and critic.
+
+---
+
+## Rule 1: No AI-Typical Patterns
+
+Your edits will be scrutinized for AI tells. Avoid ALL of the following:
+
+### Meta-Commentary (highest priority — the #1 tell)
+- NEVER: "proceeds as follows," "is organized as follows," "we now turn to"
+- NEVER: "Let's walk through," "Below is a detailed overview"
+- NEVER: "As we can see," "As mentioned above," "It is worth noting"
+- NEVER: "This section discusses," "We begin by," "We conclude by"
+- Instead: Just say the thing. Don't announce what you're about to say.
+
+### Transitions That Scream LLM
+- NEVER start sentences with: Moreover, Additionally, Furthermore, Notably, Importantly, Critically, Crucially
+- NEVER: "More broadly," "Taken together," "In contrast," as sentence openers
+- NEVER: "Despite these challenges..."
+- Instead: Use the subject of the sentence as the transition. Repeat key terms from the prior sentence (McCloskey's Rule of Coherence).
+
+### Smarmy Reframing
+- NEVER: "It's not X, it's Y" / "The question isn't... it's..." / "What matters isn't... but rather..."
+- These sound clever but are an AI fingerprint. Replace with direct statements.
+
+### AI Vocabulary (ban list)
+Never use: align, crucial, delve, elaborate, emphasize, enhance, enduring, foster, garner, highlight, intricate, interplay, pivotal, showcase, tapestry, underscore, leverage, robust, nuanced, multifaceted, comprehensive, facilitate, explicit (when used as intensifier)
+
+### Hedging
+- One hedge per claim maximum. Never stack hedges ("roughly appears to suggest").
+- If identification is credible, say "we find" not "our results suggest that."
+- Cut reflexive softening: "unlikely to be sufficient," "may not fully capture."
+
+### Template Structures
+- NEVER: "Not only... but also..." constructions
+- NEVER: Rule-of-three padding (artificial three-item lists)
+- NEVER: Paragraph-ending restatements of what was just said
+- NEVER: "From X to Y" flourishes
+
+---
+
+## Rule 2: Plain Language
+
+### Anglo-Saxon Over Latin
+| Never write | Write instead |
+|-------------|---------------|
+| utilize | use |
+| commence | begin |
+| facilitate | help |
+| implement | do, carry out |
+| prior to | before |
+| in order to | to |
+| demonstrate | show |
+| individuals | people |
+
+**Test:** Would you say this word aloud to a colleague at the whiteboard?
+
+### Concrete Over Abstract
+- "Chicago" not "large cities" not "urban areas"
+- "bread" not "food" not "consumption goods"
+- "workers" not "labor" not "factor inputs"
+
+### Kill Nominalizations
+- "make a calculation" → "calculate"
+- "conduct an analysis" → "analyze"
+- Find the action hiding in the noun. Make it the verb.
+
+---
+
+## Rule 3: Sentence Construction
+
+### Subject-Verb-Object
+- Normal S-V-O word order. Complicate only ONE of subject, verb, or object (Gardner's Rule).
+- End position = emphasis position. Put the important thing last.
+
+### Active Voice
+- "We estimate" not "it is estimated"
+- "The cap reduces fees" not "fees are reduced by the cap"
+- Use "I" or "we" — take responsibility for claims.
+
+### Vary Sentence Length
+- Mix short and long. If every sentence is 20-25 words, it reads as AI.
+- After a complex sentence, follow with a short one.
+
+---
+
+## Rule 4: Economics-Specific
+
+### Cut Verbose Patterns
+| Never write | Write instead |
+|-------------|---------------|
+| We examine the extent to which | How much does X affect Y? |
+| has important implications for | affects |
+| our analysis focuses on | we study |
+| we find evidence suggesting | we find |
+| a key advantage is that we observe | we observe |
+| the explicit [noun] proceeds | [just describe it] |
+
+### Every Number Must Argue
+- Numbers in prose must answer "so what?" If a number doesn't advance the argument, it belongs in a table.
+- After any numerical comparison, add a "because" or "since" — trace the causal mechanism.
+
+### Useless Modifiers
+- Cut: "interesting," "various," "different," "certain," "particular"
+- Never praise your own work: "striking results," "very significant," "highly important"
+- Cut adverbs: "very," "clearly," "obviously," "essentially," "basically"
+
+---
+
+## Rule 5: Match the Author's Voice
+
+Before writing any edit:
+1. Read the 3-5 sentences surrounding the insertion point
+2. Note the author's: sentence length, tense, person (we/I), notation conventions, citation style
+3. Write to match — not to "improve"
+
+The goal is that a reader cannot tell where the author's prose ends and the edit begins.
+
+---
+
+## Quick Self-Check (apply to every edit)
+
+- [ ] Can any sentence-initial transition be deleted without losing meaning?
+- [ ] Is there any word on the AI vocabulary ban list?
+- [ ] Are there meta-commentary phrases announcing what comes next?
+- [ ] Are there more than one hedge in any sentence?
+- [ ] Would a colleague at a whiteboard say this?
+- [ ] Does every number answer "so what?"
+- [ ] Is the causal mechanism explicit, not just the outcome reported?
+- [ ] Does sentence length vary, or is every sentence ~20 words?
