@@ -1,6 +1,6 @@
 #!/bin/bash
 # bootstrap.sh - Initialize directory and detect current phase for revisions skill
-# Phases: init, extract, audit, fix, review, complete
+# Phases: init, extract, profile, audit, fix, review, complete
 
 set -e
 
@@ -17,6 +17,7 @@ CONFIG_EXISTS="missing"
 CLAIMS_EXISTS="missing"
 AUDIT_EXISTS="missing"
 FIX_STATE_EXISTS="missing"
+REFEREE_PROFILES_EXISTS="missing"
 CHANGELOG_EXISTS="missing"
 TODOS_EXISTS="missing"
 
@@ -30,6 +31,7 @@ else
     # Step 2: Check for key files
     [ -f "$CURRENT_DIR/config.json" ] && CONFIG_EXISTS="exists"
     [ -f "$CURRENT_DIR/claims.json" ] && CLAIMS_EXISTS="exists"
+    [ -f "$CURRENT_DIR/referee_profiles.json" ] && REFEREE_PROFILES_EXISTS="exists"
     [ -f "$CURRENT_DIR/audit.json" ] && AUDIT_EXISTS="exists"
     [ -f "$CURRENT_DIR/fix_state.json" ] && FIX_STATE_EXISTS="exists"
     [ -f "$CURRENT_DIR/changelog.md" ] && CHANGELOG_EXISTS="exists"
@@ -49,6 +51,10 @@ else
             "extract")
                 PHASE="extract"
                 REASON="Extract phase - parsing response doc into claims"
+                ;;
+            "profile")
+                PHASE="profile"
+                REASON="Profile phase - building referee personality profiles"
                 ;;
             "audit")
                 PHASE="audit"
@@ -79,6 +85,9 @@ else
         elif [ "$CLAIMS_EXISTS" = "missing" ]; then
             PHASE="extract"
             REASON="Config exists but no claims extracted"
+        elif [ "$REFEREE_PROFILES_EXISTS" = "missing" ]; then
+            PHASE="profile"
+            REASON="Claims exist but referees not profiled"
         elif [ "$AUDIT_EXISTS" = "missing" ]; then
             PHASE="audit"
             REASON="Claims exist but not audited"
@@ -106,6 +115,7 @@ cat << EOF
     "status_content": "$STATUS_CONTENT",
     "config": "$CONFIG_EXISTS",
     "claims": "$CLAIMS_EXISTS",
+    "referee_profiles": "$REFEREE_PROFILES_EXISTS",
     "audit": "$AUDIT_EXISTS",
     "fix_state": "$FIX_STATE_EXISTS",
     "changelog": "$CHANGELOG_EXISTS",

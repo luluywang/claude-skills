@@ -60,13 +60,21 @@ For each `\textbf{Reply:}` block:
 
 **Already-addressed claims:** If the reply says "this was addressed in the previous round" without making new claims, extract a single claim of type `unverifiable` noting it points to prior work.
 
-### Step 4: Quality Checks
+### Step 4: Build Referee Summary
+
+Before writing output, compile a top-level `referees` map from the comment IDs:
+- Extract unique referee prefixes (e.g., `ed`, `ref1`, `ref2`) from the comment IDs
+- For each referee, record their label (from `\section*{}` headers) and total comment count
+- This summary helps the profile phase identify referees without re-parsing the response doc
+
+### Step 5: Quality Checks
 
 Before writing output:
 - Every `\textbf{Reply:}` block should produce at least one claim
 - No duplicate claim IDs
 - Every claim with a `\ref{}` should have a non-null `target_label`
 - Every claim with `\textcite{}` or `\parencite{}` should also produce a `citation_check`
+- The `referees` map should contain every referee prefix found in the claims
 
 ## Output
 
@@ -77,6 +85,11 @@ Before writing output:
   "response_file": "path/to/response.tex",
   "extracted_at": "ISO timestamp",
   "total_claims": 47,
+  "referees": {
+    "ed": {"label": "Editor", "comment_count": 3},
+    "ref1": {"label": "Referee 1", "comment_count": 8},
+    "ref2": {"label": "Referee 2", "comment_count": 6}
+  },
   "by_type": {
     "reference_check": 12,
     "content_addition": 15,

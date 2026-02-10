@@ -4,6 +4,7 @@
 #   ./status.sh              # Get current status
 #   ./status.sh init         # Set status to "init"
 #   ./status.sh extract      # Set status to "extract"
+#   ./status.sh profile      # Set status to "profile"
 #   ./status.sh audit        # Set status to "audit"
 #   ./status.sh fix          # Set status to "fix"
 #   ./status.sh review       # Set status to "review"
@@ -32,12 +33,12 @@ else
 
     # Validate status value
     case "$NEW_STATUS" in
-        init|extract|audit|fix|review|complete)
+        init|extract|profile|audit|fix|review|complete)
             echo "$NEW_STATUS" > "$STATUS_FILE"
             echo "{\"status\": \"$NEW_STATUS\", \"set\": true}"
             ;;
         *)
-            echo "{\"error\": \"Invalid status: $NEW_STATUS. Valid values: init, extract, audit, fix, review, complete\", \"set\": false}"
+            echo "{\"error\": \"Invalid status: $NEW_STATUS. Valid values: init, extract, profile, audit, fix, review, complete\", \"set\": false}"
             exit 1
             ;;
     esac
