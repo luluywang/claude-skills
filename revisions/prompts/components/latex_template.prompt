@@ -1,0 +1,200 @@
+# LaTeX Template Specification
+
+**Purpose:** Define the document skeleton and custom commands for compiled response documents.
+
+---
+
+## Document Structure
+
+The response document follows this structure:
+
+```
+1. Preamble (document class, bibliography, custom commands)
+2. Opening letter to editor
+3. Summary of Main Changes (enumerated)
+4. Detailed Response to Editor Letter (refsection)
+5. Detailed Response to Referee 1 (refsection)
+6. Detailed Response to Referee 2 (refsection)
+7. ... (one refsection per referee)
+```
+
+## Preamble
+
+```latex
+\documentclass[main.tex]{subfiles}
+
+\addbibresource{../Bibliography.bib}
+
+\begin{document}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+```
+
+Adjust `\addbibresource` path based on the user's manuscript location.
+
+## Custom Commands
+
+### Editor Comment Toggle
+
+Shows/hides marginal notes indicating which referees are addressed:
+
+```latex
+\newcommand{\editorcomment}[2]{
+    \ifthenelse{\equal{#1}{1}}{#2}{}
+}
+```
+
+### Summary of Changes
+
+```latex
+\newcommand{\summarizechangeeditor}[1]{
+    \section*{Summary of the Main Changes}
+    \begin{enumerate}
+        \item \textbf{Theme 1.} Description of changes...
+        \editorcomment{#1}{These responds to concerns by R1 and R4 about [topic]}.
+        \item \textbf{Theme 2.} Description of changes...
+        ...
+    \end{enumerate}
+}
+```
+
+### Referee Letter Boilerplate
+
+```latex
+\newcommand{\refereeletter}{
+Dear Referee,
+
+Thank you for carefully reading the previous version of the paper and providing me with great comments and suggestions. I think that the paper has improved substantially thanks to your suggested revisions.
+
+This letter has two sections:
+\begin{enumerate}
+    \item The first section summarizes the key changes to the manuscript.
+    \item The second section reports a detailed answer to each of the comments and suggestions in your letter. For each point, I first report your comment (in blue) and then discuss how I modified the paper and extended my analysis to address it.
+\end{enumerate}
+
+Sincerely,
+
+[Author Name]
+\clearpage
+
+\summarizechangeeditor{0}
+\clearpage
+}
+```
+
+## Page Numbering
+
+```latex
+\setcounter{footnote}{0}
+\pagenumbering{arabic}
+\renewcommand{\thepage}{E-\arabic{page}}
+```
+
+The `E-` prefix is for the editor letter. Referee sections may use different prefixes (e.g., `R1-`, `R2-`).
+
+## Section Structure
+
+### Opening Letter to Editor
+
+```latex
+Dear Professor [Editor Name],
+
+Thank you for granting me the opportunity to re-submit my paper "[Paper Title]" to the [Journal Name].
+
+[1-2 paragraphs of gratitude and overview]
+
+This letter has two sections:
+\begin{enumerate}
+    \item The first section summarizes the key changes to the manuscript.
+    \item The second section reports a detailed answer to each of the comments and suggestions in your letter.
+\end{enumerate}
+
+[Mention attached referee response letters]
+
+[Author Name]
+
+\newpage{}
+\summarizechangeeditor{1}
+\newpage{}
+```
+
+### Editor Response Section
+
+```latex
+\begin{refsection}
+\section*{Detailed Response to the Editor Letter}
+
+\begin{refcommentnoclear}
+  [editor comment text]
+\end{refcommentnoclear}
+\textbf{Reply:} [response text]
+
+% Repeat for each editor comment
+
+\clearpage
+\printbibliography
+\end{refsection}
+```
+
+### Referee Response Sections
+
+```latex
+\begin{refsection}
+\section*{Detailed Response to Referee N}
+
+% Optional: \refereeletter  (if using the boilerplate command)
+
+\begin{refcommentnoclear}
+  [referee comment text]
+\end{refcommentnoclear}
+\textbf{Reply:} [response text]
+
+% Repeat for each referee comment
+
+\clearpage
+\printbibliography
+\end{refsection}
+```
+
+## Key Environments
+
+### refcommentnoclear
+
+Displays the referee's original comment (typically rendered in blue):
+
+```latex
+\begin{refcommentnoclear}
+  Full text of the referee's comment, preserved exactly as written.
+  Multi-paragraph comments are fine.
+\end{refcommentnoclear}
+```
+
+### refsection
+
+Scopes bibliography to a section. Each referee's section gets its own `refsection` so citations are grouped per-referee:
+
+```latex
+\begin{refsection}
+\section*{...}
+% comments and responses
+\printbibliography
+\end{refsection}
+```
+
+## Formatting Notes
+
+- Use `\clearpage` between the editor section and each referee section
+- Use `\newpage{}` for softer page breaks within sections
+- `\textbf{Reply:}` always has a space after the colon
+- No blank line between `\end{refcommentnoclear}` and `\textbf{Reply:}`
+- Blank line after `\textbf{Reply:}` content before next `\begin{refcommentnoclear}`
+
+## Adapting to Prior Response
+
+If the user provides a prior response document:
+1. Extract all custom commands from the preamble
+2. Match the page numbering convention
+3. Preserve the author name and editor name
+4. Use the same `\addbibresource` path
+5. Match the section ordering and boilerplate text
+6. Keep any `\scalarinput{}` commands the user has defined

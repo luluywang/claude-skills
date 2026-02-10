@@ -1,0 +1,235 @@
+Review of manuscript AER-2025-0455
+“Regulating Competing Payment Networks” by Lulu Wang
+This is my second report on a previously rejected and resubmitted version of the manuscript
+AER-2023-1664 which had the same title and similar research questions. In what follows, I
+briefly summarize the revised manuscript and focus the remainder of the review on the main
+issues of concern.
+The author studies the market for payments in the U.S. He develops a model with three types
+of players: networks, consumers and merchants. Networks offer products (cards) with observed
+and unobserved characteristics, both valued by the consumers. Consumers are heterogeneous in
+their income and preferences over payment methods. Merchants are heterogeneous in terms of
+increased sales from card acceptance. A static game unfolds in three stages. In the first stage,
+networks set merchant fees and promised adoption utilities for consumers. In the second stage,
+consumers and merchants make adoption and pricing choices. In the third stage, consumers make
+decisions of where to make consumption purchases. The author combines several data sets to
+estimate parameters of the model. Using parameter estimates he then conducts a counterfactual
+simulation by constraining debit and credit card merchant fees at the level of the cost of cash.
+Results of the counterfactual simulation suggest significant reduction in credit card use, lower
+merchant costs and lower retail prices. Consumer and total welfare increase by $36 and $31
+billion, respectively. By comparing outcomes of the simulation scenario with the implications of
+the Durbin Amendment’s regulation of debit card interchange fees (with an estimated negative
+total welfare impact of $8 billion), the author concludes that poor regulation practices can be
+more detrimental to welfare than no regulation.
+The new version of the paper has become better along several dimensions which were previously areas of concern. Specifically, the author collected more data, reported new reduced form
+evidence, and conducted a robustness analysis of the full pass-through assumption. He also
+modified the consumer side of the model by adding consumer heterogeneity along the income
+and reward sensitivity dimensions and included additional parameters into the model. At the
+same time, several previously raised issues still apply. The biggest concern is on the merchant
+side where sales benefits from card acceptance are not driven by consumer shopping behavior
+and an absence of acceptance costs raises concerns about the counterfactual predictions. On the
+consumer side, the biggest concern is the consistency between the adoption and usage stages
+where, in the latter, consumers do not substitute between two electronic means of payment if
+they are debit and credit. Consumer heterogeneity along monetary dimensions does not match
+potential differences in non-pecuniary benefits between high and low income consumers. Last
+but not least, it is not clear if a significant intervention does not lead to a much faster than
+predicted disintermediation of cards. I detail my comments below.
+
+Comments
+1. Model of consumer and merchant behavior. The author has introduced consumer heterogeneity with respect to monetary variables such as income and reward sensitivity. He
+also included an additional parameter χ which is supposed to capture complementarities
+between the cards (if χ > 0) or incremental adoption costs (if χ < 0).
+(a) Merchant acceptance costs. Unfortunately, not much has been done for the merchant
+side of the model. When discussing the role of acceptance costs the author mentions
+that “machines are cheap, and the incremental cost of accepting an additional network
+is zero” (p.25). While equipment costs are probably indeed relatively low, it is total
+
+acceptance costs instead that matter for merchant’s acceptance decisions. How likely
+is it that merchant acquirers use two-part tariffs with a variable component priced
+at or near marginal cost such that the surplus is extracted by means of fixed fees?
+The fees may include first time installation/setup fees, costs of point of sale solutions
+(e.g., electronic ordering/delivering), or can be buried even deeper in the long-term
+contracts with the payment service provider (as is often the case with Clover). Also,
+while the monetary component is clearly present it may not be the only cost incurred
+by the merchants. This is particularly true if the merchant makes a card acceptance
+choice for the first time. Substantial costs may be related to integrating a new network
+into existing accounting and bookkeeping systems, training employees, dealing with
+the risks of chargebacks, etc. For example, Huynh et al. (2022) (who you cite on p.5),
+report that “the rental cost of terminals represents only a small proportion of the
+total costs” and that the larger part of acceptance cost seems to be driven by various
+fees (p.34). Similarly, the fact that small and medium retailers are less likely to accept
+all payment options than large chain stores suggests the presence of fixed costs that
+can be recovered only if the market size facing a merchant is sufficiently large. To reemphasize the importance of an adequate model of merchant acceptance decisions and
+the role of merchant acceptance costs in this model I provide the following example of
+how the equilibrium response can change depending on the underlying assumptions.
+Merchants’ net profits from participating in a card market are given by the difference
+between their revenue and acceptance costs, where both are functions of a given
+acceptance choice Ms , i.e., Πs (Ms ) = Rs (Ms ) − Fs (Ms ). Merchant s then prefers
+to accept Ms as long as Πs (Ms ) ≥ 0. Suppose that merchants’ acceptance costs
+are large, Fs (Ms ) >> 0 and that Πs (Ms ) = 0.1 Then, even a small reduction in
+market size facing a merchant with acceptance combination Ms would trigger nonacceptance (provided Fs (Ms ) remains constant). If the market equilibrium is fragile
+to small perturbations in market conditions, a small reduction in the utilities from
+using cards can make consumers use them less and thus lead to a sharp drop in
+merchant acceptance. Hence, the question of welfare maximizing levels of fees in the
+payments industry can be fairly tricky. I will revisit this in my comments below on
+the counterfactual simulations.
+(b) Consumer utility function and shopping choice. Why does mean unobserved utility of
+a given card, Ξωi , not vary with consumer type? It is plausible that consumers with
+higher income have different consumption bundles and, hence, receive more utility
+along any dimension from using a given card than low income consumers? How does
+allowing for consumer heterogeneity along monetary dimensions but not along other
+characteristics affect the results? Can the result that reward sensitivity is increasing
+with income be driven by this asymmetric heterogeneity assumption? It would be
+nice if the author can allow Ξωi to vary with consumer income (at least in terms of
+discrete income types).
+My previous question is in part dictated by the difficulties in interpreting current
+findings. In general, I would expect consumer price sensitivity to decline as income
+increases. Higher responsiveness of high-income consumers to rewards does not seem
+to require higher absolute price sensitivity if high income consumers spend substantially more on their cards. Due to the high total value of all transactions, the amount
+of pecuniary rewards is naturally higher for richer individuals. Hence, even with low
+
+For example, this could be an outcome of a second-degree price discrimination by merchant acquirers setting
+merchant-specific two-part tariffs.
+
+price/reward sensitivity high income consumers should be gaining more from adopting
+and using cards than their low income counterparts.
+More discussion on the agents’ information sets is needed. There is very little discussion of how consumers interact with merchants and how much information they
+possess about the individual merchant decisions. As the author claims that the merchant indifference (or avoided cost) test conditions in Rochet and Tirole (2011) are
+satisfied in his model setup, all consumers must behave as if they interact with merchants only once, hence, the term “tourist”. In reality, consumers make purchases
+daily and interact with merchants repeatedly. As a result, consumers are typically
+well aware where to shop to be able to pay with a given payment method. If the
+consumer-preferred method is rejected, the merchant may lose this consumer’s purchases to competing merchants instead of losing additional sales to this consumer.
+Hence, merchant competition for the consumers is likely to be more intense when consumers change their shopping behavior (instead of the payment choice) in response to
+merchant acceptance decisions. Additional details on what consumers know and how
+they allocate their purchases across merchants are needed. For example, it looks like
+consumers observe merchant prices and acceptance decisions prior to making their
+own adoption choice (i.e., they have full information about these quantities). If this is
+correct, why do consumers not direct all their purchases toward merchants accepting
+their favorite payment choice such that there is a perfect sorting of consumers across
+merchants depending on the adoption and acceptance combination of the two? In the
+present model, there are no search or transport costs. Hence, if only one merchant
+accepts credit cards it should be able to attract all consumers willing to use the card.
+In this case, merchants are likely to compete fiercely for the market of credit card
+transactions and an increase in sales of one merchant implies a corresponding loss
+by other merchants. This does not seem to be the case in the current setup with a
+fixed distribution of sales benefits γ. Shouldn’t sales benefits due to a given merchant
+acceptance be decreasing in the total number of grocers accepting cards? Overall,
+the paper still needs more details on how consumer choice of payment methods maps
+into merchant benefits from card acceptance.
+I also do not like the fact that consumers are unwilling to substitute between debit
+and credit cards when making purchases. Both methods are electronic and probably
+have more common features with each other than either of them has with cash. This
+is clearly true for online transactions. Is it a typical behavior that a consumer holds
+one or more credit cards and does not have a debit account? How are balances on the
+cards paid at the end of a billing cycle in this case? In this respect, complementarity
+between debit and credit cards at least at the adoption stage appears sensible. At
+the same time, I think that Figure 4 suggests that there is a meaningful substitution
+from cash and debit transactions to credit card transactions. Unfortunately, there is
+some valuable information missing. The RHS panel (b) “Effects on the number of
+trips” only illustrates the change in trips by credit card consumers. What happens
+to the number of trips by cash and debit card consumers. Did they decline by the
+same amount? This evidence is important in understanding where the increase in
+sales is coming from. Is it possible that consumers who previously bought from this
+Large Grocer using cash or debit actually preferred to use credit but could not do so
+because it was not accepted?
+I do not understand footnote 12, which suggests that short-term transaction-specific
+incentives do not affect consumer usage decisions of credit versus debit cards, while
+rewards on all debit transactions do affect the adoption choice. Does Figure 5 apply
+
+only to consumers who can potentially substitute between Discover and debit (i.e.,
+face the choice between them and cash) or is it an aggregate pattern across all consumers? Is it possible that the pattern on the figure is generated by two groups of
+consumers? Consumers in one group do not have any credit cards to substitute away
+from, while consumers in the second group have another credit card in addition to
+Discover making it easy to switch without using their debit cards. This question can
+probably be addressed by reporting the probability of observing consumers with a
+debit card and Discover credit adoption combination only (i.e., without other cards
+from Visa or MC). If this group is relatively small or cannot be isolated for the
+purpose of the exercise, the evidence cannot be used in support of no substitution
+between debit and credit cards.
+Also, would it be possible to enforce debit card adoption if a consumer chooses to
+adopt a credit card such that the choice set contains options of being (1) cash-only
+user, (2) cash and debit user, (3) debit and one credit card user, and (4) debit and
+two credit cards user?
+(c) Differences between 3- and 4-party systems are important in the counterfactuals.
+Assuming away the market for issuers & acquirers is not innocuous when there is a
+significant change in the fee structure. The three-party system may be more efficient
+than a 4-party system because of the absence of a double-marginalization problem
+between issuers and acquirers and also because of no duplication of fixed costs of
+entry into the market. Hence, MC and Visa are likely to be more adversely affected
+than AmEx. If the merchant fees are regulated, it is not clear how sustainable
+issuing and acquiring businesses can be under significantly lower volumes of credit
+card transactions from the consumer side. This comment is similar in spirit to the
+one where high merchant acceptance fees may lead to a quick disintermediation of
+electronic payment methods but applies to the providers of the cards. It may well be
+the case that significantly lower merchant fees can lead to exit of MC and Visa from
+the market. Can the author compute total and consumer welfare for the case when,
+after the regulation, the only credit card surviving in the market is AmEx? This
+exercise can also illustrate the role of competition in rewards between card providers
+for the level of excessive card adoption.
+2. Counterfactual simulation.
+(a) Excessive adoption (and presumably usage) of credit cards implies that welfare can
+be increased by means of reducing adoption. What if credit cards are completely
+eliminated from the market? Is the counterfactual total welfare without credit cards
+still higher than the one in the factual equilibrium? What about consumer welfare?
+Edelman and Wright (2015) suggests that the card overuse can be so large that
+consumers can be better off in a market without any intermediation. Can the authors
+confirm this empirically? Also, the author should be able to trace a sequence of
+equilibria for different levels of merchant fees starting from the factual level all the
+way until credit cards are no longer used in equilibrium. This potentially may require
+a reversal of the fees, with consumers instead of receiving rewards having to pay
+merchants for the opportunity to use credit cards.
+(b) Why should unobserved characteristics of different cards remain invariant to the
+dramatic changes in the equilibrium usage of cards? If regulation severely constrains
+network profits, the product quality may deteriorate, or some products may no longer
+be available at such a low price. For example, credit providers may be unwilling
+
+to offer the credit function at the same price which, as the author acknowledges,
+enters the unobserved utility from different credit cards. Potentially, this should
+have further self-reenforcing effects of even lower usage and adoption of credit cards.
+Can the author compute a reduction in unobserved product characteristics in a new
+equilibrium (with fees constrained at the level of cost of cash) that would make cards
+effectively unused, i.e., where the average usage drops below a certain critical level
+(such as 1%)? Does it take a lot to drive cards out?
+(c) With material merchant acceptance costs even minor interventions can lead to a quick
+disintermediation of electronic means of payment. This can happen either because the
+value of the market for credit card transactions falls below merchants’ fixed acceptance
+costs or because regulation significantly reduces the number of card providers. The
+stronger is the regulatory intervention, the less likely it is that the market structure
+will remain unchanged. Hence, while it may be hard to believe in the accuracy of
+the far out of sample predictions, some perturbations around the factual equilibrium
+may be very informative about welfare changes. It would be nice if the author can
+report a sequence of equilibria with consumer and total welfare outcomes for a set of
+steps reducing merchant fees gradually toward the cost of cash.
+(d) If debit and credit cards are poor substitutes at the POS, how would a new payment
+method help if it is going to have similar dedicated usages and will thus not attract
+consumers who substitute away from services provided by debit or credit cards?
+
+Minor comments/questions
+3. Why is cash the cheapest payment method? Historically, this used to be true for small
+value transactions. However, with the development of contactless features (e.g., tap-andgo) the cost of card transactions must have gone down. Relatedly, using data from only
+signature cards, which are less convenient and costlier to use than contactless ones, may
+lead to incorrect estimates of unobserved characteristics. If the data distinguishes between
+contactless and signature cards, it would be nice to see different estimates of unobserved
+quality parameters for these distinct types of cards. Otherwise, the author may want to
+allow for some time variation in the unobserved product characteristics.
+4. It is really hard to see how consistent the different data sources used by the author in
+terms of years covered. It would help a lot if the author can report time period covered
+by each of the data sets used in estimation.
+5. How does competition between merchants in acceptance decisions work if the benefit of
+accepting is the same for the first and for the last merchant accepting a given payment
+method?
+6. Why does χ not vary with consumer income and reward sensitivity? High-income consumers tend to have a wider consumption bundle and, hence, more opportunities to use
+their debit and credit cards, while low-income consumers may not spend enough to rationalize adoption of both cards and hence are less likely to enjoy positive interaction effects.
+Similarly, consumers with relatively high reward sensitivity should be more likely to gain
+from the adoption of cards from different network to take advantage of a larger variety of
+reward and loyalty programs.
+
+References
+Edelman, B. and Wright, J. (2015). Price coherence and excessive intermediation. The Quarterly
+Journal of Economics, 130(3):1283–1328.
+Huynh, K., Nicholls, G., and Shcherbakov, O. (2022). ”equilibrium in two-sided markets for
+payments: Consumer awareness and the welfare cost of the interchange fee”. Staff Working
+Paper 2022-15, Bank of Canada.
+Rochet, J.-C. and Tirole, J. (2011). Must-take cards: merchant discounts and avoided costs.
+Journal of the European Economic Association, 9(3):462–495.
+
+

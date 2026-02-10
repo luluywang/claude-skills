@@ -1,0 +1,108 @@
+# Response Style Conventions
+
+**Purpose:** Define the voice, tone, and formatting patterns for draft responses, extracted from the user's prior response documents.
+
+---
+
+## Voice & Tone
+
+- **First person singular**: "I have revised...", "I now clarify...", "I was unable to..."
+- **Formal but direct**: No hedging or filler. State what was done and why.
+- **Gracious but not obsequious**: Thank the referee, then get to the substance.
+- **Acknowledge legitimate concerns**: "You are right that...", "The referee is correct that..."
+- **Don't be defensive**: If the criticism is valid, say so directly and explain the fix.
+
+## Opening Patterns
+
+Match the opening to the comment type:
+
+### Substantive (high priority)
+- "Thank you for this suggestion."
+- "Thank you for your suggestions on how to [address X]."
+- "This is an important point."
+- "Thank you for this advice."
+
+### Clarification
+- "Thank you for flagging this."
+- "I have clarified [topic] in Section \ref{...}."
+- "Your conjecture is correct: [restate the conjecture]."
+
+### Minor
+- "Thank you, I have corrected this."
+- "I have fixed this typo."
+- "Thank you for catching this."
+
+### Apologetic (when prior response was inadequate)
+- "I apologize for not being clear."
+- "I should have been clearer about this in the previous version."
+
+## Body Patterns
+
+### Enumerating Changes
+
+When multiple changes address one comment, use `\begin{enumerate}`:
+
+```latex
+I have made two changes to address this concern.
+\begin{enumerate}
+  \item I have added [specific change] in Section \ref{...}.
+  \item I have clarified [specific change] in Section \ref{...}.
+\end{enumerate}
+```
+
+### Referencing Specific Content
+
+Always be specific about what changed and where:
+- "I have revised Section \ref{subsec:model-assumptions} to state these limitations directly."
+- "I now frame the merchant-type estimation as a calibration exercise."
+- "Appendix \ref{subsec:oa-intermediate-cap} studies the case where..."
+
+### Citing Literature
+
+Use the user's citation commands:
+- Narrative: `\textcite{Author2020}` → "Author (2020) shows that..."
+- Parenthetical: `\parencite{Author2020}` → "...as shown in prior work \parencite{Author2020}."
+- Multiple: `\parencite{Author2020, Other2021}`
+
+### Cross-Referencing Other Responses
+
+When the same issue spans referees:
+- "This also addresses the concern raised by Referee N about [topic]."
+- "I discuss this further in my response to the Editor's comment (a)."
+- Use `\editorcomment{#1}{These responds to concerns by R1 and R4 about [topic]}` if the command is available.
+
+### Data and Results
+
+When citing specific numbers:
+- "The F-statistic drops from 23 to 4 in services."
+- Use `\scalarinput{variable_name}` when the user has dynamic scalar inputs.
+- "I arrive at a similar estimate that [specific finding]."
+
+## Length Scaling
+
+| Comment Type | Target Length |
+|---|---|
+| Typo / formatting | 1 sentence |
+| Minor suggestion | 2-3 sentences |
+| Clarification | 1 paragraph (4-6 sentences) |
+| Standard substantive | 2-3 paragraphs, often with `\begin{enumerate}` |
+| Hard substantive | Multi-paragraph with evidence, enumerated changes |
+
+## Formatting Rules
+
+1. **No markdown in responses.** Use LaTeX commands only.
+2. **Bold for emphasis**: `\textbf{...}` not `**...**`
+3. **Enumerate for lists**: `\begin{enumerate}...\end{enumerate}` not bullet points
+4. **U.S. spacing**: `U.S.\ ` with backslash-space after abbreviation periods
+5. **Em-dashes**: `---` for em-dashes
+6. **Percent**: `\%` in LaTeX context
+7. **Dollar amounts**: `\$8 billion`
+
+## Anti-Patterns (Avoid)
+
+- "I would like to thank the referee for this excellent suggestion." → Too sycophantic
+- "While I appreciate the comment, I disagree because..." → Too defensive
+- "This has been addressed." → Too vague. Say what was done and where.
+- "I have made many changes throughout the paper." → Not specific enough.
+- Starting every response with "Thank you for..." → Vary openings.
+- Repeating the same explanation for related comments → Cross-reference instead.

@@ -1,0 +1,51 @@
+I appreciate the new revision and I have only minor comments to consider going forward.
+In the previous version, I complained that not allowing consumers to hold both debit and credit
+was restrictive and drove results. In this round, the paper allows consumers to hold both types of
+cards but never substitute between them. The consumer that holds both types of card chooses
+between them according to probability \pi and always treats cash as the second choice if the first
+choice is not acceptable. I can see that this approach addresses the wording of my concern and
+addresses descriptive evidence of households using both types of cards. But by ruling out
+substitution, it is still quite unintuitive. I was not sure if the assumption was important for the
+results. Merchants get a lift of \gamma from accepting credit cards (but not debit cards). Why is
+that not enough to drive merchant adoption in the model, even if consumers can use debit as a
+backup for credit? Does estimating under a “debit-as-backup” assumption lead to an
+unreasonable distribution of \gamma? Along these lines, I think it would be helpful to describe
+what is meant to be captured by the model of consumer substitution at the top of page 17. There
+is a line at the end of the first paragraph, but it could be brought forward and expanded, at least a
+little.
+In the treatment effects estimation utilizing the grocer that adopted credit, obviously, the paper is
+covering a lot of ground with a single event. If the grocer engaged in significant advertising
+about the policy change, or perhaps even a promotion to introduce a new store-branded card, that
+would be a problem for the paper. If you know that this did or did not happen, I think that is
+worth discussing. Also, it’s worth acknowledging in the paper that we have very few such events
+and so this one is standing in for many stores in many industries and contexts.
+I am not sure I followed the discussion on page A-34 going to A-35. I think the key assumption
+is that consumers do not observe their preference on debit versus credit at the time of adoption
+(that is, at the bottom of A-33, V(M,W_i) is not a function of gamma_it because gamma_it are
+integrated out). If the consumer knew she was going to have extreme bifurcated preferences like
+described on A-35, the consumer would want to hold both cards.
+I was happy with how the paper engaged with passthrough. Can the paper produce the
+counterfactuals for the results in Table A.12?
+1. Table 1 should indicate which data set it uses (there are many in this paper!) and the number
+of observations.
+2. In estimation Equation 2, there is no mention of the recent developments in estimating
+treatment effects, such as Sun and Abraham. I am not sure any of them apply to triple-differences
+with a continuous treatment variable, so perhaps there is nothing to implement. If so, please
+acknowledge.
+3. In Section III.C.2, how is “carrying” a card measured? I don’t think you would see it in
+Homescan, which I think is what the section uses.
+4. Why does Pw have a “w” superscript? Does the price index depend on a consumer’s wallet?
+Or is it being distinguished from some other “P” variable?
+5. In the displayed equation near the bottom of page 21, should y be indexed by i?
+6. The acronym PCE is used in a few places but I don’t think ever spelled out.
+7. The first sentence of Section A.3.1 is not right. On the same page, the last sentence of the
+
+paragraph titled “Cash-only consumers” also needs revision.
+8. The first sentence of the proof of Theorem 1 (page A-24) needs revision.
+9. In Figure A.6, I could not distinguish between the two lines. Are they always perfectly
+overlapping?
+10. In the last paragraph of C.4.0, the paper should name the figure it is describing.
+11. Using “et. al.” for author names in text is OK but it is helpful to reviewers to get the full list
+of coauthors in the reference list.
+
+

@@ -1,0 +1,69 @@
+Referee Report for “Regulating Competing Payment Networks”
+Summary
+The paper estimates a quantitative model of payment network competition and simulates the
+welfare effects of regulation and competition. In the model, merchants do not price
+discriminate by payment method. As a result, consumers overuse credit cards to earn high
+rewards, which inflates retail prices and generates regressive and wasteful externalities.
+Moreover, because consumers are more sensitive to rewards than merchants are to fees,
+network competition leads to higher consumer rewards and merchant fees, exacerbating both
+regressive transfers and welfare losses.
+Using counterfactual simulations, the paper shows that capping both credit and debit card fees
+reduces regressive transfers and generates large welfare gains. In contrast, the Durbin
+regulation is shown to exacerbate welfare loss: by capping only debit card fees, the regulation
+eliminates debit card rewards and induces reward-sensitive debit users to switch to more
+expensive credit cards. The paper also finds that reducing network competition or introducing a
+low-cost public payment option can reduce credit card use and increase welfare.
+Comments
+The concept of excessive merchant fees and card use has been studied extensively in the twosided market literature. This paper contributes by developing and estimating a quantitative
+model to assess policy impacts. While it presents some novel progress in modeling and
+empirical work, its main analysis and findings have significant limitations, discussed below.
+A key component of the model is consumers’ high sensitivity to rewards. The paper estimates
+this parameter based on the impact of the Durbin regulation, using a difference-in-difference
+approach that compares regulated and exempt debit card issuers. It finds a 29% decline in
+signature debit volume for regulated issuers and interprets this as evidence of high reward
+sensitivity—i.e., that many debit users switched to credit cards after losing a modest 25 basis
+point debit card reward. However, this interpretation is likely incorrect.
+In the years following the Durbin regulation, debit card transactions continued to grow strongly,
+primarily by replacing cash. Because the Durbin cap reduced merchant fees, more merchants
+began accepting debit cards, which in turn encouraged exempt issuers to promote debit usage
+more aggressively. This may explain their higher volume growth relative to regulated issuers. In
+this context, the difference-in-difference result does not imply an overall decline in debit use,
+and attributing the entire effect to consumers’ reward sensitivity appears overstated or
+misinterpreted.
+Furthermore, the claim that the Durbin regulation reduced welfare by causing many debit users
+to switch to credit cards is largely speculative and unsupported. Debit and credit cards are not
+interchangeable for many consumers. Studies have shown that debit card users often face
+barriers to using credit cards—they may be unqualified, have maxed out credit lines, or have
+strong budgeting preferences. A small change in debit rewards is unlikely to cause a significant
+
+shift to credit card use. Although the paper argues that debit and credit cards may be
+substitutes at the adoption stage, this is presented only as a theoretical possibility, without
+empirical backing. In fact, no existing studies have documented a substantial migration from
+debit to credit following the Durbin regulation.
+Without a convincing interpretation of the Durbin impact, the model may misestimate
+consumers’ reward sensitivity and the substitutability between debit and credit card adoption.
+This could lead to model misspecification and flawed policy conclusions. For instance, if debit
+and credit cards are not substitutable, then the Durbin regulation may in fact enhance welfare.
+The model is highly complex and involves many moving parts. Before proceeding to quantitative
+exercises, it would help to establish some key model properties. For example, the paper could
+define a socially optimal benchmark within its framework and illustrate how and why market
+outcomes diverge from it. Currently, policy implications are drawn from a few specific
+counterfactuals, but the reliability of these findings is unclear. For instance, while the paper
+shows that capping both credit and debit card fees at the cost of cash improves welfare, it does
+not explore what the optimal cap level might be. Similarly, it finds that capping only debit card
+fees reduces welfare, but what would be the effect of capping only credit card fees? Would that
+improve welfare? The finding that network competition reduces welfare is based on an extreme
+scenario—merging all card networks into a monopoly. On the other hand, the paper also shows
+that adding a public debit network improves welfare. This raises a natural question: what is the
+optimal number and composition of competing networks?
+Finally, the paper assumes that the features of debit and credit cards are fixed and independent
+of fees and rewards. It also treats consumer preferences for payment methods as given by ad
+hoc parameters. These assumptions are vulnerable to the Lucas critique. After the Durbin
+regulation, for example, regulated banks reduced the availability of free checking accounts,
+raised monthly fees, and increased minimum balance requirements. Similarly, if credit card fees
+were capped, issuers might respond by tightening qualification criteria, adjusting lending terms,
+or changing service quality. These responses could significantly affect consumer behavior and
+welfare. Without accounting for these broader impact, the paper’s welfare and policy analysis
+may be incomplete or misleading.
+
+
