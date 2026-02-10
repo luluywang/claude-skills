@@ -10,6 +10,7 @@
 2. **Interpret request** → Determine which tasks are needed
 3. **Diagnostic questions** → Determine paper type and file scope
 4. **Task enumeration** → Generate (file, task) pairs
+4.5. **Task preview** → Show full task table, get user confirmation
 5. **Output setup** → Initialize `notes/` directory
 6. **Execute** → Spawn Haiku subagents in parallel
 7. **Wrapup** → Deduplicate, summarize
@@ -32,6 +33,7 @@
 {
   "created": "ISO timestamp",
   "paper_type": "A",
+  "llm_tagging": true,
   "tasks": [
     {"id": 1, "file": "intro.tex", "task": "grammar", "model": "haiku", "status": "pending"},
     {"id": 2, "file": "intro.tex", "task": "ai_detection", "model": "haiku", "status": "pending"},
@@ -44,6 +46,8 @@
   ]
 }
 ```
+
+**New field:** `llm_tagging` (boolean) - When true, subagents wrap all changes in `\begin{llm}...\end{llm}` blocks for review tracking. Only applies to .tex files.
 
 **Key:** Each (file, task) pair is a separate entry. Subagents read their own prompt files.
 
@@ -86,6 +90,7 @@ Return: {phase: "fresh"|"resume", details}
 | "Extract flow" / "First sentences" | flow_extraction |
 | "Word choice" / "Make it punchier" | word_choice |
 | "Sentence rhythm" / "Check variation" | sentence_analysis |
+| "Strip llm tags" / "Remove llm wrappers" / "Finalize" | strip_llm |
 | "Comprehensive review" | grammar, ai_detection, word_choice, sentence_analysis |
 | "Full review" | All tasks |
 
@@ -118,6 +123,7 @@ Generate all (file, task) pairs based on request and file scope.
 | ai_detection | haiku | notes/ai_detection.md, notes/simplifications.md |
 | word_choice | haiku | notes/word_choice_review.md |
 | sentence_analysis | haiku | notes/sentence_analysis.md |
+| strip_llm | haiku | (no output file - modifies .tex directly) |
 
 ### Paper-Level Tasks
 
@@ -151,6 +157,82 @@ FOR each requested paper-level task:
         status: "pending"
     })
 ```
+
+---
+
+## Step 4.5: Task Preview
+
+**CRITICAL: Output the full task table BEFORE calling AskUserQuestion.**
+
+After enumerating tasks, display the complete plan for user confirmation.
+
+### Preview Format
+
+Output this table structure:
+
+```
+## Task Preview
+
+**Paper Type:** {type} ({description})
+**Files:** {file1}, {file2}, ...
+
+### Phase 1: File-Level Tasks (Parallel, Haiku)
+
+| # | File | Task | Output |
+|---|------|------|--------|
+| 1 | intro.tex | grammar | copy_edits.md |
+| 2 | intro.tex | ai_detection | ai_detection.md, simplifications.md |
+| 3 | intro.tex | word_choice | word_choice_review.md |
+| ... | ... | ... | ... |
+
+**Subtotal:** N file-level tasks
+
+### Phase 2: Paper-Level Tasks (Sequential, Sonnet)
+
+| # | Task | Output |
+|---|------|--------|
+| 100 | structure | structure_analysis.md |
+| 101 | flow_extraction | flow_extraction.md |
+
+**Subtotal:** N paper-level tasks
+
+---
+**Total:** N tasks
+```
+
+### User Confirmation
+
+After displaying the table, use AskUserQuestion:
+
+```json
+{
+  "header": "Task plan",
+  "question": "Review the task list above. What would you like to do?",
+  "multiSelect": false,
+  "options": [
+    {"label": "Proceed (Recommended)", "description": "Start executing all tasks"},
+    {"label": "Modify tasks", "description": "Add, remove, or change tasks before running"},
+    {"label": "Cancel", "description": "Stop without running any tasks"}
+  ]
+}
+```
+
+### Handling Responses
+
+**"Proceed":** Continue to Step 5
+
+**"Modify tasks":**
+1. Ask what to change (remove files, remove task types, add tasks)
+2. Update enumeration
+3. Output the FULL updated table (not just changes)
+4. Ask again until "Proceed" or "Cancel"
+
+**"Cancel":** Stop workflow, output "Review cancelled. No files modified."
+
+### DO NOT:
+- Summarize as "14 tasks" without showing the table
+- Proceed without explicit user confirmation
+- Show only modified tasks after changes (always full table)
 
 ---
 
@@ -189,11 +271,13 @@ Read the task prompt: prompts/tasks/{task}.prompt
 
 File to analyze: {absolute_file_path}
 Paper type: {paper_type}
+LLM tagging: {llm_tagging}
 
 Output rules:
 - APPEND to notes/{output_file}.md
 - Start section with: ## [{filename}]
 - Follow output format from task prompt
+- If LLM tagging is true and file is .tex, wrap changes in \begin{llm}...\end{llm}
 
 Return: {status: complete|flagged, items_found: N}
 ```

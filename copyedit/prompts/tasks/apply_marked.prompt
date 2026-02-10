@@ -102,13 +102,30 @@ If the same target file + line range appears in multiple checklist files:
 
 ### Step 5: Apply Edits
 
+**First:** Check `notes/tasks.json` for the `llm_tagging` setting.
+
 For each target file:
 1. Read current file content
 2. For each edit (in descending line order):
-   - Use Edit tool: `old_string` = Original, `new_string` = Proposed
+   - Determine `new_string` based on LLM tagging:
+     - If `llm_tagging: true` AND file is `.tex`: `new_string` = `\begin{llm}` + Proposed + `\end{llm}`
+     - If `llm_tagging: false` OR file is not `.tex`: `new_string` = Proposed (unchanged)
+   - Use Edit tool: `old_string` = Original, `new_string` = (as determined above)
    - If Edit fails (text not found exactly), try with normalized whitespace
    - Log success or failure
 3. Continue until all edits for file complete
+
+### LLM Tagging Example
+
+**Without tagging:**
+```
+Edit: old_string = "the affect on prices", new_string = "the effect on prices"
+```
+
+**With tagging (llm_tagging: true):**
+```
+Edit: old_string = "the affect on prices", new_string = "\begin{llm}the effect on prices\end{llm}"
+```
 
 ### Step 6: Mark Items as Applied
 

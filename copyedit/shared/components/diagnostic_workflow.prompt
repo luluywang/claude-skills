@@ -73,22 +73,27 @@ Options:
 
 ---
 
-## Question Set 3: Task Confirmation
+## Question Set 2.6: LLM Tagging (Copyedit Only, .tex Files)
 
 ```
-Question: "Based on your request '[user's request]', I'll perform: [list of tasks]. Is this correct?"
-Header: "Tasks"
+Question: "Wrap LLM changes in \\begin{llm}...\\end{llm} for review tracking?"
+Header: "LLM tagging"
 MultiSelect: false
 Options:
-  - Label: "Yes, proceed"
-    Description: "This matches what I want"
+  - Label: "Yes (Recommended)"
+    Description: "Easier to identify and batch-review changes"
 
-  - Label: "Add more tasks"
-    Description: "I want additional analysis beyond what's listed"
-
-  - Label: "Different tasks"
-    Description: "That's not what I meant - let me clarify"
+  - Label: "No"
+    Description: "Apply changes directly without tagging"
 ```
+
+**Note:** Only show this question for .tex files. When enabled, all LLM-made changes are wrapped in `\begin{llm}...\end{llm}` blocks, making them easy to identify during review. Tags can be stripped later with the `strip_llm` task.
+
+---
+
+## Question Set 3: Task Confirmation
+
+**Note:** Detailed task preview with full table is shown in Step 4.5 after task enumeration. This question set is deprecated for copyedit workflow.
 
 ---
 
