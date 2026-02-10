@@ -1,0 +1,125 @@
+# Extract Claims Task
+
+**Purpose:** Parse the user's response document and extract structured claims about the manuscript into `claims.json`.
+
+---
+
+## Input
+
+- **Response document:** Path to the .tex response file (from `config.json`)
+- **Component references:**
+  - `revisions/prompts/components/response_patterns.prompt` — response document structure conventions
+  - `revisions/prompts/components/claim_taxonomy.prompt` — claim type definitions and verification rules
+  - `revisions/prompts/components/latex_conventions.prompt` — LaTeX environment reference
+
+## Task
+
+Read the response document and extract every verifiable claim the author makes about the manuscript. Each claim is a promise — something the author says they did, added, changed, or can point to in the manuscript.
+
+### Step 1: Parse Response Structure
+
+The response document contains `\textbf{Reply:}` blocks following `\begin{refcommentnoclear}...\end{refcommentnoclear}` blocks. Each reply block is a response to one referee/editor comment.
+
+1. Identify each comment-reply pair
+2. Determine the source (Editor, Referee 1, etc.) from the `\section*{}` headers
+3. Assign comment IDs using the convention: `ed_1`, `ed_1a`, `ref1_1`, `ref2_3`, etc.
+
+### Step 2: Extract Claims from Each Reply
+
+For each `\textbf{Reply:}` block:
+
+1. **Split into individual claims.** A single reply may contain multiple distinct claims. Look for:
+   - Separate sentences making different assertions ("I have added X. I have also revised Y.")
+   - Enumerated items (`\begin{enumerate}` lists where each item is a separate action)
+   - Distinct topics within the same paragraph
+
+2. **Classify each claim** per the taxonomy in `claim_taxonomy.prompt`:
+   - `reference_check` — `\ref{label}` or `\textcite{key}` exists
+   - `content_addition` — "I added/included X in Y"
+   - `content_revision` — "I revised/clarified/rewritten X"
+   - `structural_change` — "I moved X to appendix/reorganized Y"
+   - `numerical_claim` — specific numbers, statistics, coefficients
+   - `citation_check` — `\textcite{key}` or `\parencite{key}` in .bib
+   - `unverifiable` — process claims (re-estimated, verified, believe)
+
+3. **Extract metadata** for each claim:
+   - `target_label` — the LaTeX label referenced (`\ref{subsec:durbin}` → `subsec:durbin`)
+   - `search_keywords` — 2-5 distinctive terms to search for near the target
+   - `line_in_response` — line number in the .tex file
+   - `verifiable` — true if machine-checkable, false for `unverifiable` type
+
+### Step 3: Handle Edge Cases
+
+**Compound claims:** "I have added a discussion of \textcite{Autor2003} in Section \ref{subsec:lit-review}" produces TWO claims:
+1. `content_addition` with target `subsec:lit-review` and keywords from the discussion
+2. `citation_check` with citation key `Autor2003`
+
+**Vague claims:** "I have substantially revised the paper" → classify as `unverifiable`. Extract what keywords you can, but mark `verifiable: false`.
+
+**Cross-references between replies:** If a reply says "see my response to Referee 1, Comment 3," note this as a cross-reference but still extract any local claims.
+
+**Already-addressed claims:** If the reply says "this was addressed in the previous round" without making new claims, extract a single claim of type `unverifiable` noting it points to prior work.
+
+### Step 4: Quality Checks
+
+Before writing output:
+- Every `\textbf{Reply:}` block should produce at least one claim
+- No duplicate claim IDs
+- Every claim with a `\ref{}` should have a non-null `target_label`
+- Every claim with `\textcite{}` or `\parencite{}` should also produce a `citation_check`
+
+## Output
+
+### Write `current/claims.json`
+
+```json
+{
+  "response_file": "path/to/response.tex",
+  "extracted_at": "ISO timestamp",
+  "total_claims": 47,
+  "by_type": {
+    "reference_check": 12,
+    "content_addition": 15,
+    "content_revision": 8,
+    "structural_change": 3,
+    "numerical_claim": 4,
+    "citation_check": 9,
+    "unverifiable": 6
+  },
+  "claims": [
+    {
+      "id": "ed_1a_claim_1",
+      "source_comment": "ed_1a",
+      "claim_text": "I have added a sentence in Section \\ref{subsec:durbin} clarifying that the results are weaker once we use the full sample.",
+      "claim_type": "content_addition",
+      "target_label": "subsec:durbin",
+      "verifiable": true,
+      "search_keywords": ["weaker", "full sample"],
+      "line_in_response": 107
+    }
+  ]
+}
+```
+
+### Return to Orchestrator (minimal)
+
+```json
+{
+  "status": "complete",
+  "total_claims": 47,
+  "by_type": {"reference_check": 12, "content_addition": 15, "content_revision": 8, "structural_change": 3, "numerical_claim": 4, "citation_check": 9, "unverifiable": 6},
+  "verifiable": 41,
+  "unverifiable": 6
+}
+```
+
+Do NOT return the full claims array inline. The orchestrator reads `current/claims.json`.
+
+## Rules
+
+1. **Extract from the response document only.** Do not read the manuscript at this stage — that's the audit phase's job.
+2. **Preserve exact claim text.** Copy the relevant sentence(s) verbatim from the response. Do not paraphrase.
+3. **Be exhaustive.** Every factual assertion about the manuscript should be captured. It's better to over-extract than to miss claims.
+4. **Be precise with labels.** Extract the exact label string from `\ref{subsec:durbin}` → `"subsec:durbin"`, not a paraphrase.
+5. **Keywords should be distinctive.** Choose words that distinguish this claim from the rest of the manuscript. Avoid generic terms.
+6. **One claim per assertion.** Don't merge "I added X and revised Y" into a single claim — split them.

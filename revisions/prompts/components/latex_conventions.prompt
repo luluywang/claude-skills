@@ -1,0 +1,143 @@
+# LaTeX Conventions Reference
+
+**Purpose:** Reference for LaTeX environments, commands, and document structure used in economics manuscripts and response documents.
+
+---
+
+## Response Document Structure
+
+The response document follows this structure:
+
+```
+1. Preamble (document class, bibliography, custom commands)
+2. Opening letter to editor
+3. Summary of Main Changes (enumerated)
+4. Detailed Response to Editor Letter (refsection)
+5. Detailed Response to Referee 1 (refsection)
+6. Detailed Response to Referee 2 (refsection)
+7. ... (one refsection per referee)
+```
+
+## Key Environments
+
+### refcommentnoclear
+
+Wraps the referee's original comment (typically rendered in blue):
+
+```latex
+\begin{refcommentnoclear}
+  Full text of the referee's comment, preserved exactly as written.
+\end{refcommentnoclear}
+```
+
+### refsection
+
+Scopes bibliography to a section. Each referee's section gets its own `refsection`:
+
+```latex
+\begin{refsection}
+\section*{Detailed Response to Referee 1}
+% comments and responses
+\printbibliography
+\end{refsection}
+```
+
+### Reply Marker
+
+Responses always begin with `\textbf{Reply:}` (with a space after the colon), immediately after the `\end{refcommentnoclear}`.
+
+## Cross-Referencing Commands
+
+### Section/Figure/Table References
+
+- `\ref{label}` — produces the number (e.g., "3.2")
+- `\label{key}` — marks a location for referencing
+- Common label prefixes:
+  - `sec:` or `subsec:` — sections
+  - `tab:` — tables
+  - `fig:` — figures
+  - `eq:` — equations
+  - `fn:` — footnotes (less common)
+
+### Citation Commands (biblatex)
+
+- `\textcite{key}` — narrative citation: "Author (2020) shows..."
+- `\parencite{key}` — parenthetical: "...as shown (Author, 2020)."
+- `\parencite{key1, key2}` — multiple parenthetical citations
+- `\citet{key}` — alternative narrative citation (natbib style)
+- `\citep{key}` — alternative parenthetical (natbib style)
+
+### Dynamic Values
+
+- `\scalarinput{variable_name}` — pulls a computed value from a separate file (common in reproducible economics papers)
+
+## LLM Edit Tagging
+
+All content written or modified by LLM agents MUST be wrapped in `\begin{llm}...\end{llm}` tags for user review tracking:
+
+```latex
+\begin{llm}
+The results are weaker once we use the full sample, with the F-statistic
+declining from 23 to 4 in the services subsample.
+\end{llm}
+```
+
+**Rules for LLM tags:**
+- Wrap the **minimum necessary** text — the sentence or paragraph actually added/changed
+- Do NOT wrap surrounding unchanged text
+- For multi-paragraph additions, one `\begin{llm}...\end{llm}` block is fine
+- Tags are stripped by the user before final submission — they are review markers only
+- If the `llm` environment is not defined in the manuscript preamble, add:
+  ```latex
+  \newenvironment{llm}{}{}  % LLM-written content marker (strip before submission)
+  ```
+
+## Common Manuscript Structure
+
+Economics papers typically follow:
+
+```
+\section{Introduction}
+\section{Institutional Background / Context}
+\section{Model / Theoretical Framework}
+\section{Data}
+\section{Empirical Strategy / Identification}
+\section{Results}
+  \subsection{Main Results}
+  \subsection{Robustness}
+  \subsection{Heterogeneity}
+\section{Conclusion}
+
+% Appendix (often in separate file or after \appendix command)
+\appendix
+\section{Online Appendix: Additional Tables}
+\section{Online Appendix: Model Derivations}
+```
+
+## File Organization
+
+Economics manuscripts commonly use:
+- `main.tex` or `paper.tex` — main document
+- `appendix.tex` or `online_appendix.tex` — supplementary material
+- `Bibliography.bib` or `references.bib` — bibliography database
+- `subfiles` package — for modular compilation
+- Tables often in `tables/` directory as separate .tex files
+
+## Formatting Notes
+
+- `\clearpage` between major sections
+- `\newpage{}` for softer page breaks
+- No blank line between `\end{refcommentnoclear}` and `\textbf{Reply:}`
+- Blank line after reply content before next `\begin{refcommentnoclear}`
+- U.S. spacing: `U.S.\ ` with backslash-space
+- Em-dashes: `---`
+- Percent: `\%`
+
+## Adapting to User's Manuscript
+
+When working with a specific manuscript:
+1. Identify all `\label{}` commands and their locations
+2. Identify the bibliography file path from `\addbibresource{}` or `\bibliography{}`
+3. Note any custom commands in the preamble
+4. Identify whether the paper uses `subfiles`, `\input{}`, or `\include{}`
+5. Map the section structure to understand where content should go
