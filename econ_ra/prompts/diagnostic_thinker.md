@@ -1,5 +1,5 @@
 ---
-**Model Directive:** Use **Opus with extended thinking** for hypothesis generation. This task requires deep economic reasoning to generate substantive hypotheses grounded in theory, not mechanical debugging.
+**Model Directive:** Opus (passed via `model` parameter by orchestrator). This task requires deep economic reasoning to generate substantive hypotheses grounded in theory, not mechanical debugging.
 ---
 
 # Diagnostic Thinker: Generate Economically-Grounded Hypotheses

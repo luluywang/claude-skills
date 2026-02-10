@@ -1,5 +1,5 @@
 ---
-**Model Directive:** Use **Sonnet** for diagnostic interview. This task requires domain expertise to understand econometric problems and ask targeted questions, but not the deep reasoning needed for hypothesis generation.
+**Model Directive:** Sonnet (passed via `model` parameter by orchestrator). This task requires domain expertise to understand econometric problems and ask targeted questions, but not the deep reasoning needed for hypothesis generation.
 ---
 
 # Diagnostic Interview: Gather Problem Context

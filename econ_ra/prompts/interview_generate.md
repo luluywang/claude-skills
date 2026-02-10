@@ -1,5 +1,5 @@
 ---
-**Model Directive:** Use **Sonnet** for interview question generation. This task requires domain expertise to identify ambiguities and design meaningful questions, but not the deep reasoning of Extended Thinking.
+**Model Directive:** Sonnet (passed via `model` parameter by orchestrator). This task requires domain expertise to identify ambiguities and design meaningful questions, but not the deep reasoning of Extended Thinking.
 ---
 
 # Interview: Generate Questions
