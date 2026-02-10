@@ -13,6 +13,7 @@
 - **Component references:**
   - `revisions/prompts/components/latex_conventions.prompt` — LaTeX formatting rules
   - `revisions/prompts/components/claim_taxonomy.prompt` — claim type context
+  - `revisions/prompts/components/writing_quality.prompt` — **MANDATORY** writing standards (AI-pattern avoidance, plain language, sentence construction)
 - **Iteration number:** Provided by orchestrator (1, 2, 3, ...)
 
 ## Task
@@ -55,7 +56,11 @@ For each issue:
    \end{llm}
    ```
 
-6. **Write naturally.** The edit should read as if the author wrote it. Match the surrounding prose style, tense, and level of detail. Use the claim text and response context as a guide.
+6. **Write like the author, not like an LLM.** Before writing, read `writing_quality.prompt` completely. Then:
+   - Read the 3-5 sentences surrounding your insertion point to absorb the author's voice
+   - Write to match the author's sentence length, tense, person, and notation
+   - **Self-check every edit** against the quick self-check in `writing_quality.prompt`
+   - Violations of writing quality rules are treated as bugs — the critic will flag them
 
 ### Step 3: Record Fixes
 
@@ -152,7 +157,7 @@ If `changelog.md` already exists (iteration > 1), append to it. Do not overwrite
 
 1. **Minimum viable edits.** Add exactly what the response document promises — no more. Don't "improve" surrounding text.
 2. **Always tag with `\begin{llm}...\end{llm}`.** Every character you add or change must be inside LLM tags.
-3. **Match the manuscript's style and referee expectations.** Read surrounding paragraphs to match tense, voice, notation, and citation style. Also ensure the edit meets the originating referee's evidence and tone expectations from their profile.
+3. **Match the manuscript's style, avoid AI tells, and meet referee expectations.** Read surrounding paragraphs to match tense, voice, notation, and citation style. Apply all rules in `writing_quality.prompt` — no meta-commentary, no AI transitions, no banned vocabulary, plain language, active voice. Also ensure the edit meets the originating referee's evidence and tone expectations from their profile.
 4. **Don't fabricate data.** If a claim references specific numbers you can't verify, use placeholder text: `[TODO: insert value]` inside LLM tags.
 5. **Don't create labels.** If `\label{foo}` doesn't exist, don't add it — that implies structural changes requiring user review. Skip and flag.
 6. **Preserve manuscript structure.** Don't reorganize sections, move content, or delete existing text unless the claim specifically says to.
