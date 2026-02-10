@@ -1,5 +1,5 @@
 ---
-**Model Directive:** Use **Haiku** for diagnostic execution. This task involves running well-defined tests and writing structured findings. The hypothesis and test plan are already specified—execution should be cheap and fast.
+**Model Directive:** Haiku (passed via `model` parameter by orchestrator). This task involves running well-defined tests and writing structured findings. The hypothesis and test plan are already specified—execution should be cheap and fast.
 ---
 
 # Diagnostic Executor: Test One Hypothesis

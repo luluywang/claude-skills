@@ -57,11 +57,7 @@ else
                 PHASE="execution"
                 REASON="Execution in progress"
                 ;;
-            "paused")
-                PHASE="paused"
-                REASON="Execution paused - time limit reached"
-                ;;
-            "verification")
+"verification")
                 PHASE="execution"
                 REASON="Legacy verification status - treat as execution"
                 ;;

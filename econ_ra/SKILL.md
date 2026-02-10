@@ -36,6 +36,20 @@ This orchestrator manages a multi-phase workflow with context isolation between 
 
 The key insight: subagents run autonomously and cannot interact with users. User interaction happens in the orchestrator (main context), kept lightweight by offloading analysis to subagents.
 
+## Progress Tracking
+
+Progress is communicated via **text output** at phase transitions. The authoritative workflow state lives in `current/.status` (managed by `status.sh`) and `current/tasks.json` (for execution task status).
+
+At each phase transition, output a brief status line:
+- Phase entry: `--- [PHASE] Spawning subagent...`
+- Phase exit: `--- [PHASE] Done: <summary>`
+
+During execution, output task dispatch/completion lines:
+- `--- [TASK 3] Spawning: Merge QCEW with MW data`
+- `--- [TASK 3] Done: complete`
+
+Do NOT use TaskCreate or TaskUpdate — these tools consume context tokens on every call.
+
 ## Orchestrator Rules (Critical)
 
 The orchestrator coordinates—it does NOT do the work itself.
@@ -46,8 +60,7 @@ The orchestrator coordinates—it does NOT do the work itself.
 
 - `interview` → **IMMEDIATELY** spawn `interview_generate` subagent. Do NOT read user files first.
 - `planning` → **IMMEDIATELY** spawn `planning_verification_generate` subagent.
-- `execution` → Check time limit, then run dispatcher and spawn execution subagents.
-- `paused` → Prompt user to extend time or stop.
+- `execution` → Run dispatcher and spawn execution subagents.
 - `cleanup` → Run wrapup scripts.
 
 **NEVER** attempt to understand the user's request by reading their files yourself. The interview_generate subagent does this. Even if the user provides detailed instructions, the orchestrator's job is to route to the correct phase protocol, not to start working directly.
@@ -76,6 +89,7 @@ The orchestrator coordinates—it does NOT do the work itself.
 - **Run data analysis or scripts** — execution subagents do this
 - **Make commits for code changes** — subagents commit their own work
 - **Bypass the phase protocol** — even if user's request seems clear, follow the phases
+- **Use TaskCreate or TaskUpdate** — each call consumes context; use text output for progress instead
 
 ### If you're tempted to read a user file directly:
 STOP. You're probably in interview phase and should spawn interview_generate instead.
@@ -96,43 +110,10 @@ On every invocation, run the bootstrap script to detect the current phase. This 
 ./scripts/bootstrap.sh
 ```
 
-## Time Limit (Ask Once Per Project)
-
-After bootstrap, if this is a NEW project (phase is "interview" and no `current/.time_limit` file exists), ask the user about time limits using AskUserQuestion:
-
-```json
-{
-  "header": "Time limit",
-  "question": "How long should the RA work before pausing for your review?",
-  "multiSelect": false,
-  "options": [
-    {"label": "1 hour", "description": "Short session - good for quick tasks or when you want frequent check-ins"},
-    {"label": "3 hours (Recommended)", "description": "Standard session - enough time for most analyses"},
-    {"label": "No limit", "description": "Run until all tasks complete - you'll check back when done"}
-  ]
-}
-```
-
-After the user answers, record the start time and limit:
-```bash
-./scripts/time_limit.sh set [1|3|infinite|N]  # N = custom hours
-```
-
-This creates `current/.time_limit` with:
-```json
-{
-  "start_time": "2025-01-05T10:30:00",
-  "limit_hours": 3,
-  "limit_type": "3 hours"
-}
-```
-
-**Important:** The time limit applies to EXECUTION phase only (not interview/planning). The clock starts when execution begins, not when the project starts.
-
 Returns JSON:
 ```json
 {
-  "phase": "interview|planning|execution|paused|cleanup|unknown",
+  "phase": "interview|planning|execution|cleanup|unknown",
   "reason": "Brief explanation",
   "directory_created": "yes|no",
   "files": {
@@ -158,8 +139,7 @@ The script handles:
 |-------|--------|------------|
 | `interview` | Run interview phase | Spawn `interview_generate` subagent |
 | `planning` | Run planning phase | Spawn `planning_verification_generate` subagent |
-| `execution` | Check time limit, run execution | Run `dispatcher.py`, spawn execution subagents |
-| `paused` | Prompt user to extend | Use AskUserQuestion |
+| `execution` | Run execution | Run `dispatcher.py`, spawn execution subagents |
 | `cleanup` | Run wrapup scripts | Run `status.sh complete` then `archive.sh` |
 | `unknown` | Ask user for clarification | Use AskUserQuestion |
 
@@ -210,6 +190,8 @@ WHILE user has not selected "Move to planning":
 
 ```
 Task: [econ_ra:interview:generate] Explore codebase and generate questions (round N)
+model: "sonnet"
+subagent_type: "Explore"
 
 Instructions:
 Read prompts/interview_generate.md for full instructions.
@@ -239,7 +221,8 @@ Display the codebase summary (first round), then use the **AskUserQuestion tool*
 
 ```
 Task: [econ_ra:interview:process] Process user answers (round N)
-Model: haiku
+model: "haiku"
+subagent_type: "general-purpose"
 
 Instructions:
 Read prompts/interview_process.md for full instructions.
@@ -306,6 +289,8 @@ When the phase is Planning, use the generate → interact → process pattern.
 
 ```
 Task: [econ_ra:planning:generate] Generate task list and verification checks
+model: "sonnet"
+subagent_type: "Plan"
 
 Instructions:
 Read prompts/planning_verification_generate.md for full instructions.
@@ -420,7 +405,8 @@ The user needs to see every task in the proposal, not just a count or summary. T
 
 ```
 Task: [econ_ra:planning:process] Process approved proposal
-Model: haiku
+model: "haiku"
+subagent_type: "general-purpose"
 
 Instructions:
 Read prompts/planning_verification_process.md for full instructions.
@@ -444,32 +430,6 @@ Note: Do NOT update status to "execution" - the orchestrator handles this after 
 ## Execution Phase (Parallel by Default)
 
 During execution, use the dispatcher script to find ready tasks, then spawn execution subagents. The script is faster and cheaper than spawning a haiku subagent.
-
-### Check Time Limit First
-
-**Before spawning any execution subagent**, check if the time limit has been reached:
-
-```bash
-./scripts/time_limit.sh check
-```
-
-Returns JSON:
-```json
-{
-  "limit_hours": 3,
-  "elapsed_hours": 1.5,
-  "remaining_hours": 1.5,
-  "exceeded": false,
-  "status": "ok"
-}
-```
-
-**If `exceeded: true`**, do NOT spawn more tasks. Instead:
-1. Update status to "paused": `./scripts/status.sh paused`
-2. Notify the user: "Time limit reached (X hours elapsed). Y tasks complete, Z remaining. Resume with `/econ_ra continue` or extend time."
-3. Stop execution and wait for user
-
-**If `status: "ok"`**, proceed with dispatcher.
 
 ### Run dispatcher script
 
@@ -548,6 +508,8 @@ Pass model to Task tool: `model="haiku"`, `model="sonnet"`, or `model="opus"`
 
 ```
 Task: [econ_ra:task{id}] Execute task {id} - "{task.task}"
+model: (dynamic — see Model Selection for Execution Tasks above)
+subagent_type: "general-purpose"
 
 Instructions:
 Read prompts/execution.md for full instructions.
@@ -606,7 +568,8 @@ If you need a detailed retrospective with lessons learned, spawn a wrapup subage
 
 ```
 Task: [econ_ra:wrapup] Create retrospective and identify lessons
-Model: haiku
+model: "haiku"
+subagent_type: "general-purpose"
 
 Instructions:
 Read prompts/wrapup.md for full instructions.
@@ -624,35 +587,6 @@ Your job:
 ```
 
 For simple projects with no flagged/blocked items, you can skip the subagent. Do NOT commit internal workflow files (they are in .claude/ which is typically gitignored).
-
-## Resume After Time Limit
-
-When the user says "continue" and the status is "paused" (from time limit):
-
-1. Check time limit status: `./scripts/time_limit.sh check`
-2. Ask user using AskUserQuestion:
-
-```json
-{
-  "header": "Resume",
-  "question": "Time limit was reached. How would you like to proceed?",
-  "multiSelect": false,
-  "options": [
-    {"label": "Extend 1 hour (Recommended)", "description": "Add 1 more hour and continue execution"},
-    {"label": "Extend 3 hours", "description": "Add 3 more hours for larger remaining work"},
-    {"label": "Remove limit", "description": "Run until all tasks complete"},
-    {"label": "Stop here", "description": "Keep current progress, don't run more tasks"}
-  ]
-}
-```
-
-3. If extending:
-   - `./scripts/time_limit.sh extend [N]` (N = hours to add)
-   - `./scripts/status.sh execution`
-   - Continue with normal execution flow
-
-4. If stopping:
-   - Proceed to wrapup phase with partial results
 
 ## Reset (Clear for New Project)
 
@@ -728,6 +662,8 @@ When the phase is `diagnostic_interview`:
 
 ```
 Task: [econ_ra:diagnostic:interview] Gather problem context
+model: "sonnet"
+subagent_type: "Explore"
 
 Instructions:
 Read prompts/diagnostic_interview.md for full instructions.
@@ -774,7 +710,8 @@ If `should_stop: true` or `needs_checkpoint: true`, handle appropriately (see St
 
 ```
 Task: [econ_ra:diagnostic:brainstorm] Generate hypotheses (iteration N)
-Model: opus
+model: "opus"
+subagent_type: "Plan"
 
 Instructions:
 Read prompts/diagnostic_thinker.md for full instructions.
@@ -834,7 +771,8 @@ When the phase is `diagnostic_try`:
 
 ```
 Task: [econ_ra:diagnostic:try] Test hypothesis N
-Model: haiku
+model: "haiku"
+subagent_type: "general-purpose"
 
 Instructions:
 Read prompts/diagnostic_executor.md for full instructions.
@@ -998,23 +936,35 @@ Proposes refinement: restrict sample to manufacturing, or find a better instrume
 
 Some operations are now handled by scripts instead of LLM subagents for faster execution and lower cost:
 
-| Operation | Type | Rationale |
-|-----------|------|-----------|
-| **bootstrap** | **script** | `./scripts/bootstrap.sh` - Pure file/directory checks |
-| **task_dispatcher** | **script** | `./scripts/dispatcher.py` - JSON parsing for ready tasks |
-| **archive** | **script** | `./scripts/archive.sh` - File operations for wrapup |
-| **status** | **script** | `./scripts/status.sh` - Get/set status file |
-| **time_limit** | **script** | `./scripts/time_limit.sh` - Track execution time, pause when exceeded |
-| **diagnostic_loop** | **script** | `./scripts/diagnostic_loop.sh` - Track diagnostic iterations, check stopping |
-| interview_generate | subagent (default) | Needs domain knowledge for question design |
-| **interview_process** | **subagent (haiku)** | Structured parsing only |
-| planning_verification_generate | subagent (default) | Needs domain + technical expertise |
-| **planning_verification_process** | **subagent (haiku)** | Structured parsing only |
-| execution tasks | subagent (default) | Full code understanding required |
-| **wrapup** (retrospective) | **subagent (haiku)** | Summarizes session log, optional |
-| **diagnostic_interview** | **subagent (sonnet)** | Domain knowledge for problem scoping |
-| **diagnostic_thinker** | **subagent (opus)** | Deep reasoning for hypothesis generation |
-| **diagnostic_executor** | **subagent (haiku)** | Cheap execution of defined tests |
+| Operation | Type | Subagent Type | Rationale |
+|-----------|------|---------------|-----------|
+| **bootstrap** | **script** | — | `./scripts/bootstrap.sh` - Pure file/directory checks |
+| **task_dispatcher** | **script** | — | `./scripts/dispatcher.py` - JSON parsing for ready tasks |
+| **archive** | **script** | — | `./scripts/archive.sh` - File operations for wrapup |
+| **status** | **script** | — | `./scripts/status.sh` - Get/set status file |
+| **diagnostic_loop** | **script** | — | `./scripts/diagnostic_loop.sh` - Track diagnostic iterations, check stopping |
+| interview_generate | subagent (sonnet) | Explore | Reads codebase, no file writes |
+| **interview_process** | **subagent (haiku)** | general-purpose | Writes full_spec.md |
+| planning_verification_generate | subagent (sonnet) | Plan | Designs task list, no file writes |
+| **planning_verification_process** | **subagent (haiku)** | general-purpose | Writes tasks.json, checks.md |
+| execution tasks | subagent (dynamic) | general-purpose | Full tool access for code changes |
+| **wrapup** (retrospective) | **subagent (haiku)** | general-purpose | Writes retrospective |
+| **diagnostic_interview** | **subagent (sonnet)** | Explore | Explores codebase, no file writes |
+| **diagnostic_thinker** | **subagent (opus)** | Plan | Deep reasoning, no file writes |
+| **diagnostic_executor** | **subagent (haiku)** | general-purpose | Writes findings files |
+
+## Memory Integration
+
+The skill uses a dual-memory pattern:
+
+**`preferences.md` (skill-specific):** Domain research preferences accumulated across projects — clustering defaults, preferred estimators, data handling conventions, output format preferences. Read by subagents at the start of each phase. Updated by the wrapup subagent when new preferences are identified.
+
+**`MEMORY.md` (project-level):** Meta-knowledge about using econ_ra effectively — orchestrator debugging notes, common failure modes, workflow optimizations. Lives in the Claude Code auto-memory directory. Updated by the orchestrator (not subagents) when patterns emerge across projects.
+
+| Memory | Scope | Updated by | Read by |
+|--------|-------|------------|---------|
+| `preferences.md` | Research domain | Wrapup subagent | All subagents |
+| `MEMORY.md` | Tool/workflow | Orchestrator | Orchestrator |
 
 ## Files
 
@@ -1041,7 +991,6 @@ econ_ra/
 │   ├── dispatcher.py                 # Find ready tasks
 │   ├── archive.sh                    # Archive to history
 │   ├── status.sh                     # Get/set status
-│   ├── time_limit.sh                 # Execution time tracking
 │   └── diagnostic_loop.sh            # Diagnostic iteration tracking
 ├── prompts/                          # Phase instructions (for subagents)
 │   ├── bootstrap.md                  # (reference only, use script)
@@ -1062,7 +1011,6 @@ econ_ra/
 econ_ra_work/
 ├── current/                          # Active project
 │   ├── .status                       # Current phase status
-│   ├── .time_limit                   # Execution time tracking
 │   ├── spec.md                       # Original user spec (preserved)
 │   ├── full_spec.md                  # Consolidated specification
 │   ├── codebase_summary.md           # Directory structure, scripts, data
