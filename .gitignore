@@ -7,3 +7,6 @@
 
 # Cache files
 */cache/
+
+# Logs
+claude-logs
