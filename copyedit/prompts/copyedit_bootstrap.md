@@ -47,6 +47,7 @@ Return a structured response:
 ```
 Phase: [fresh|resume]
 Reason: [brief explanation]
+Output files present: [yes/no]
 Files found:
   - .copyedit_status: [exists/missing] [content if exists]
   - tasks.json: [exists/missing]
@@ -55,6 +56,8 @@ Files found:
     - Completed tasks: [M]
     - Next task: [task name]
 ```
+
+**Output files present** means `.md` files exist in `notes/`. This is informational only — archival runs unconditionally on `fresh` (the script is idempotent).
 
 ---
 

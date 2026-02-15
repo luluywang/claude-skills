@@ -142,6 +142,7 @@ When classifying a claim:
 4. **If only a citation is referenced** (no content claim about the manuscript), classify as `citation_check`.
 5. **If none of the above apply**, or the claim is about process (re-estimation, verification), classify as `unverifiable`.
 6. **A single sentence may produce multiple claims.** "I have added a discussion of \textcite{Autor2003} in Section \ref{subsec:lit-review}" produces both a `content_addition` (discussion was added) and a `citation_check` (Autor2003 in .bib).
+7. **Flag cross-referee references.** If a reply says "see my response to Referee N" or "as I discussed in my response to the Editor," flag this — each referee only reads their own response letter. The claim should be extracted but tagged with `cross_referee_ref: true` so the fixer knows to make the response self-contained.
 
 ## Extracting Search Keywords
 
