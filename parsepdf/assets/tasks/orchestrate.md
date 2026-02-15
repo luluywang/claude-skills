@@ -44,15 +44,33 @@ Read `work/[PAPER_NAME]/structure.json` and identify:
 - **Equations in sections**: Check Methods, Model, Results sections
 - **All sections**: For text cleaning task
 
+Also read configuration (`work/[PAPER_NAME]/config.json` or create default):
+
+```json
+{
+  "paper_name": "[PAPER_NAME]",
+  "visual_interpretation": {
+    "figures": "always|low_confidence|never",
+    "tables": "always|complex|never"
+  }
+}
+```
+
+**Configuration defaults**:
+- `visual_interpretation.figures`: "always" (interpret all figures visually)
+- `visual_interpretation.tables`: "complex" (verify only high-complexity tables)
+
 Note:
 - You may need to sample several pages to find examples
 - Create a checklist of which pages need processing
+- Use config settings to determine which pages trigger visual interpretation
 
 ## Phase 3: Parallel Processing
 
 Process the following in parallel (or sequentially based on context):
 
-### 3a. Extract Tables
+### 3a. Extract Tables (with optional visual verification)
+
 For each page identified as containing tables:
 
 1. Read layout text:
@@ -61,15 +79,30 @@ For each page identified as containing tables:
    ```
 
 2. Use `prompts/extract_tables.md` with this input
+   - Assesses `layout_complexity`
+   - Sets `needs_visual_verification` flag
+   - Save to: `work/[PAPER_NAME]/tables/page_N_extracted.json`
 
-3. Save output to:
-   ```
-   work/[PAPER_NAME]/tables/page_N.json
-   ```
+3. Check visual verification trigger:
+   - If `config.visual_interpretation.tables == "always"`, OR
+   - If `config.visual_interpretation.tables == "complex" AND needs_visual_verification == true`
+   - Then proceed to step 4, else skip to step 5
+
+4. Spawn visual verification subagent (IF triggered):
+   - Use `prompts/visual_interpret_table.md`
+   - Input: `pages/[PAPER_NAME]/page_N.pdf` (read as image)
+   - Context: `work/[PAPER_NAME]/tables/page_N_extracted.json`
+   - Save output to: `work/[PAPER_NAME]/tables/page_N_visual.json`
+
+5. Merge outputs (if visual exists):
+   - Read extracted JSON + visual JSON (if it exists)
+   - For each table in extracted: add `visual_metadata` from visual JSON
+   - Save final: `work/[PAPER_NAME]/tables/page_N.json`
 
 Repeat for all pages with tables (typically pages 10-35).
 
-### 3b. Describe Figures
+### 3b. Describe Figures (with visual interpretation)
+
 For each page with figures:
 
 1. Read text:
@@ -78,11 +111,25 @@ For each page with figures:
    ```
 
 2. Use `prompts/describe_figures.md` with this input
+   - Extracts captions, axes, legends
+   - Sets `needs_visual_interpretation` flag
+   - Save to: `work/[PAPER_NAME]/figures/page_N_text.json`
 
-3. Save output to:
-   ```
-   work/[PAPER_NAME]/figures/page_N.json
-   ```
+3. Check visual interpretation trigger:
+   - If `config.visual_interpretation.figures == "always"`, OR
+   - If `config.visual_interpretation.figures == "low_confidence" AND needs_visual_interpretation == true`
+   - Then proceed to step 4, else skip to step 5
+
+4. Spawn visual interpretation subagent (IF triggered):
+   - Use `prompts/visual_interpret_figure.md`
+   - Input: `pages/[PAPER_NAME]/page_N.pdf` (read as image)
+   - Context: `work/[PAPER_NAME]/figures/page_N_text.json` (text extraction results)
+   - Save output to: `work/[PAPER_NAME]/figures/page_N_visual.json`
+
+5. Merge outputs (if visual exists):
+   - Read text JSON + visual JSON (if it exists)
+   - For each figure in text: add `visual_description` from visual JSON
+   - Save final: `work/[PAPER_NAME]/figures/page_N.json`
 
 Note: Reference the PDF page if needed: `pages/[PAPER_NAME]/page_N.pdf`
 
@@ -175,7 +222,17 @@ By [AUTHORS from structure.json]
 
 [If section contains figures:]
 ### Figure N: [Figure Title]
-[FIGURE DESCRIPTION]
+
+[If visual_description exists:]
+**Description**: [visual_description from visual interpretation - full paragraph]
+
+**Technical details**:
+- X-axis: [axes.x]
+- Y-axis: [axes.y]
+- Legend: [legend items]
+
+[Else: use existing text-only format]
+Description: [Combined text from description.content and description.key_points]
 
 ---
 
@@ -209,7 +266,13 @@ EOF
    - Figures described: [count]
    - Footnotes: [count]
 
-2. Use `prompts/qa_check.md` with the assembled markdown
+2. Collect visual interpretation statistics (NEW):
+   - Figures with visual descriptions: [count]
+   - Figures with visual descriptions / Total figures: [percentage]
+   - Tables with visual metadata: [count]
+   - Cost estimate increase: $[amount] (visual interpretation adds ~$0.11 per paper)
+
+3. Use `prompts/qa_check.md` with the assembled markdown
 
 3. Save QA report to:
    ```
@@ -278,8 +341,10 @@ work/[PAPER_NAME]/
 | Phase | Prompt | Input | Output |
 |-------|--------|-------|--------|
 | 1 | segment.md | segment_task.md | structure.json |
-| 3a | extract_tables.md | layout/page_N.txt | tables/page_N.json |
-| 3b | describe_figures.md | text/page_N.txt | figures/page_N.json |
+| 3a | extract_tables.md | layout/page_N.txt | tables/page_N_extracted.json |
+| 3a-v | visual_interpret_table.md | pages/[PAPER]/page_N.pdf | tables/page_N_visual.json |
+| 3b | describe_figures.md | text/page_N.txt | figures/page_N_text.json |
+| 3b-v | visual_interpret_figure.md | pages/[PAPER]/page_N.pdf | figures/page_N_visual.json |
 | 3c | convert_equations.md | text/page_N.txt | equations/section_N.json |
 | 3d | clean_text.md | text/page_*.txt | cleaned/SECTION.md |
 | 4 | validate_tables.md | tables + context | validation/table_N.json |

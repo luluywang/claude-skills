@@ -23,6 +23,19 @@ No structured table data available for this page.
 {{LAYOUT_TEXT}}
 ```
 
+## Complexity Assessment (NEW)
+
+Before extracting, assess layout complexity:
+
+- **Simple**: Single header row, no merged cells, standard data layout
+- **Moderate**: 2-3 header rows OR some merged cells OR clear data grouping
+- **High**: Multi-level headers (3+ rows) OR complex merged cell patterns OR panel structure (Panel A/B/C) OR pdfplumber found 0 tables but layout text clearly contains table data
+
+**Examples**:
+- High complexity: "Panel A:", "Panel B:" detected, OR table titles suggest multi-panel structure
+- High complexity: Text shows repeated patterns like "Specification (1)", "Specification (2)" → suggests multi-level header structure
+- Moderate complexity: Phrases like "Robustness check:" indicate data grouping within single table
+
 ## Tasks
 
 ### If pdfplumber data is available (tables_found > 0):
@@ -73,11 +86,22 @@ No structured table data available for this page.
       "notes": "Standard errors in parentheses. *** p<0.01",
       "source": "pdfplumber",
       "continues_from_page": null,
-      "continues_to_page": null
+      "continues_to_page": null,
+      "layout_complexity": "simple|moderate|high",
+      "needs_visual_verification": false,
+      "visual_metadata": null
     }
   ]
 }
 ```
+
+**New Fields**:
+- `layout_complexity`: Set based on complexity assessment above
+- `needs_visual_verification`: Set to `true` if:
+  - `layout_complexity` is "high"
+  - OR pdfplumber found 0 tables but layout text suggests tables exist
+  - Otherwise `false`
+- `visual_metadata`: Initially null; will be populated by visual verification subagent (if triggered)
 
 ## Conversion Rules
 - Use pipe tables: `| Col1 | Col2 |`
