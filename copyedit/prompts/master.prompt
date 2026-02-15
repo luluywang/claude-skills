@@ -42,7 +42,8 @@
   ],
   "paper_tasks": [
     {"id": 100, "task": "structure", "model": "sonnet", "status": "pending"},
-    {"id": 101, "task": "flow_extraction", "model": "sonnet", "status": "pending"}
+    {"id": 101, "task": "flow_extraction", "model": "sonnet", "status": "pending"},
+    {"id": 102, "task": "writing_quality", "model": "sonnet", "status": "pending"}
   ]
 }
 ```
@@ -75,7 +76,7 @@ Return: {phase: "fresh"|"resume", details}
 ```
 
 **Handle return:**
-- `fresh` → Proceed to Step 2
+- `fresh` → Run: `bash {skill_dir}/scripts/new_session.sh {paper_dir}` to archive any prior output, then proceed to Step 2
 - `resume` → Skip to Step 6, continue from pending tasks
 
 ---
@@ -91,8 +92,9 @@ Return: {phase: "fresh"|"resume", details}
 | "Word choice" / "Make it punchier" | word_choice |
 | "Sentence rhythm" / "Check variation" | sentence_analysis |
 | "Strip llm tags" / "Remove llm wrappers" / "Finalize" | strip_llm |
+| "Grade writing quality" / "Improve writing" | writing_quality |
 | "Comprehensive review" | grammar, ai_detection, word_choice, sentence_analysis |
-| "Full review" | All tasks |
+| "Full review" | All tasks (including writing_quality) |
 
 ### Task Ownership (Avoid Duplicates)
 
@@ -101,6 +103,8 @@ Return: {phase: "fresh"|"resume", details}
 | Wordiness, weak verbs, nominalization | word_choice |
 | Sentence rhythm, monotony, passive patterns | sentence_analysis |
 | AI punctuation, transitions, smarmy language | ai_detection |
+| Rhetorical patterns: tension, mechanism, number embedding, limitations | ai_detection (quick flag) → writing_quality (definitive) |
+| Paragraph quality, mechanism clarity, math precision, intellectual precision | writing_quality |
 | Spelling, grammar errors | grammar |
 
 ---
@@ -131,6 +135,7 @@ Generate all (file, task) pairs based on request and file scope.
 |------|-------|-------------|
 | structure | sonnet | notes/structure_analysis.md |
 | flow_extraction | sonnet | notes/flow_extraction.md |
+| writing_quality | sonnet | notes/writing_quality.md |
 
 ### Enumeration Logic
 
@@ -193,6 +198,7 @@ Output this table structure:
 |---|------|--------|
 | 100 | structure | structure_analysis.md |
 | 101 | flow_extraction | flow_extraction.md |
+| 102 | writing_quality | writing_quality.md |
 
 **Subtotal:** N paper-level tasks
 
@@ -238,7 +244,8 @@ After displaying the table, use AskUserQuestion:
 
 ## Step 5: Output Setup
 
-**Before spawning subagents, initialize output files:**
+**Before spawning subagents, initialize output files.**
+The `new_session.sh` script already ran in Step 1, so `notes/` is guaranteed clean — all file creates are fresh (no read-then-overwrite needed).
 
 1. Create `notes/` directory if needed
 2. Create output files with headers:
@@ -250,6 +257,7 @@ After displaying the table, use AskUserQuestion:
 | `notes/simplifications.md` | `# Suggested Simplifications` |
 | `notes/word_choice_review.md` | `# Word Choice Review` |
 | `notes/sentence_analysis.md` | `# Sentence Structure Analysis` |
+| `notes/writing_quality.md` | `# Writing Quality Assessment` |
 
 3. Write `notes/tasks.json` with enumerated tasks
 4. Write `execution` to `notes/.copyedit_status`
@@ -257,6 +265,15 @@ After displaying the table, use AskUserQuestion:
 ---
 
 ## Step 6: Execute
+
+### Orchestrator Context Hygiene
+
+**DO NOT read task prompt files** (prompts/tasks/*.prompt) in the orchestrator. Each subagent
+reads its own prompt. Reading them here wastes ~50KB of orchestrator context for no purpose.
+
+**DO NOT read old output files** (notes/*.md) unless you need their content for a decision.
+The `new_session.sh` script archives prior output. If you must write headers to output files,
+use Write directly — do not Read first if the file was just created or cleaned.
 
 ### Subagent Spawn Template
 
@@ -282,6 +299,21 @@ Output rules:
 Return: {status: complete|flagged, items_found: N}
 ```
 
+### Context Budget Rules
+
+**CRITICAL:** The orchestrator context window is finite. Subagent results must NOT flow back
+into the orchestrator's context. Follow these rules strictly:
+
+1. **Always use `run_in_background: true`** for every Task call
+2. **NEVER call TaskOutput** — it returns full agent transcripts (100-300KB each) which will
+   blow out context when running 10+ agents
+3. **Subagents write results to files** (notes/*.md) — that is the output mechanism
+4. **Track completion via task-notifications** — these arrive automatically when agents finish
+   and contain only a short summary (~1KB), not the full transcript
+5. **Group subagents by file** — spawn ONE agent per file that runs all requested tasks for
+   that file, rather than one agent per (file, task) pair. This reduces the number of
+   returning task-notifications
+
 ### Execution Loop
 
 ```
@@ -291,16 +323,20 @@ PHASE 1: File-Level Tasks (Parallel)
 
     IF pending exists:
         Spawn ALL pending in parallel (one Task tool call per entry)
+        MUST use run_in_background: true on each Task call
         Each subagent reads its own .prompt file
-        On completion: mark status = "complete" or "flagged"
+        DO NOT call TaskOutput — wait for task-notifications instead
+        On task-notification arrival: mark status = "complete" or "flagged"
+        After all task-notifications received: proceed to Phase 2
 
 PHASE 2: Paper-Level Tasks (After Phase 1)
 
     IF all file tasks complete:
         FOR each paper_task WHERE status == "pending":
-            Spawn subagent with full paper context
+            Order: structure → flow_extraction → writing_quality → methodology
+            Spawn subagent with run_in_background: true
             Model: sonnet
-            On completion: mark status
+            Wait for task-notification, then mark status
 
 PHASE 3: Wrapup
 
