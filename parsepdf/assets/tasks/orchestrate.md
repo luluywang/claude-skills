@@ -58,7 +58,7 @@ Also read configuration (`work/[PAPER_NAME]/config.json` or create default):
 
 **Configuration defaults**:
 - `visual_interpretation.figures`: "always" (interpret all figures visually)
-- `visual_interpretation.tables`: "complex" (verify only high-complexity tables)
+- `visual_interpretation.tables`: "always" (verify all tables visually)
 
 Note:
 - You may need to sample several pages to find examples

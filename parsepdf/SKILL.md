@@ -272,7 +272,7 @@ The parsepdf skill can now augment text-based extraction with visual interpretat
 ### Configuration Defaults
 
 - `visual_figures`: "always" (interpret all figures)
-- `visual_tables`: "complex" (verify only high-complexity layouts)
+- `visual_tables`: "always" (verify all tables)
 - Users can override in `work/[PAPER_NAME]/config.json`
 
 ### Examples

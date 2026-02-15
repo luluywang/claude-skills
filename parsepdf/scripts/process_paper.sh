@@ -201,6 +201,10 @@ cat > "$CONFIG_FILE" << JSON_EOF
   "total_pages": $TOTAL_PAGES,
   "cache_dir": "$CACHE_DIR",
   "output_dir": "$OUTPUT_DIR",
+  "visual_interpretation": {
+    "figures": "always",
+    "tables": "always"
+  },
   "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 }
 JSON_EOF
