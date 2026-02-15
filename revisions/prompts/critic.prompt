@@ -9,7 +9,8 @@
 - **Claims:** `current/claims.json` — the original claims
 - **Previous audit:** `current/audit.json` (iteration 1) or prior critic output
 - **Fixer output:** `current/fix_iterations/iteration_N_fixes.json` — what the fixer did
-- **Referee profiles:** `current/referee_profiles.json` — per-referee personality profiles for checking alignment
+- **Referee soul documents:** `current/souls/{key}_soul.md` — narrative per-referee profiles for checking alignment (paths listed in `current/referee_profiles.json` under each referee's `soul_file`)
+- **Referee index:** `current/referee_profiles.json` — lightweight index with `soul_file` paths and cross-referee analysis
 - **Config:** `current/config.json` — manuscript and appendix file paths
 - **Response document:** Path from config (for reference when re-checking claims)
 - **Component references:**
@@ -45,10 +46,17 @@ Spot-check a sample of claims that were `found` in the original audit to ensure 
 
 Scan the fixer's edits for issues:
 
-1. **LLM tag correctness:** Every fixer edit should be inside `\begin{llm}...\end{llm}`. Flag any untagged edits.
-2. **LaTeX syntax:** Check for unmatched braces, broken environments, missing `\end{}` tags.
-3. **Reference integrity:** Any new `\ref{}` or `\textcite{}` added by the fixer must point to existing labels/keys.
-4. **Writing quality (AI detection):** Read `writing_quality.prompt` and check every fixer edit against it. Flag violations as `writing_quality` issues. Common failures:
+1. **Number hallucination (highest priority):** Check every number the fixer inserted. Does it appear in a table, figure, `\scalarinput{}`, or existing prose? If a number cannot be traced to a source in the manuscript, flag it as `hallucinated_number` — this is the most dangerous error and must be caught.
+2. **Notation consistency:** Check every Greek letter, subscript, superscript, and parameter name the fixer used. Compare against existing definitions in the manuscript. Common failures:
+   - Wrong subscript: `$\sigma$` instead of `$\sigma_\gamma$`
+   - Wrong parameter name: "unobserved interchange fees" instead of "fee adjustment parameters"
+   - Discrete sums where the model uses integrals (or vice versa)
+   - Undefined LaTeX commands (e.g., `\1` instead of `\mathbf{1}`)
+   Flag as `notation_error`.
+3. **LLM tag correctness:** Every fixer edit should be inside `\begin{llm}...\end{llm}`. Flag any untagged edits.
+4. **LaTeX syntax:** Check for unmatched braces, broken environments, missing `\end{}` tags.
+5. **Reference integrity:** Any new `\ref{}` or `\textcite{}` added by the fixer must point to existing labels/keys.
+6. **Writing quality (AI detection):** Read `writing_quality.prompt` and check every fixer edit against ALL rules (1-7). Flag violations as `writing_quality` issues. Common failures:
    - Meta-commentary: "proceeds as follows," "we now turn to," "this section discusses"
    - AI transitions: "Moreover," "Additionally," "Furthermore," "Notably"
    - AI vocabulary: align, crucial, delve, enhance, foster, leverage, robust, nuanced, comprehensive, facilitate, explicit (as intensifier)
@@ -58,14 +66,25 @@ Scan the fixer's edits for issues:
    - Template structures: "Not only... but also...", rule-of-three padding
    - Uniform sentence length (all ~20 words)
    - Passive voice where active is natural
+   - **Verbosity: multi-paragraph formulation for a one-sentence point** (Rule 6)
+   - **Artificial sequential structure: "First... Second... Third..." for joint procedures** (Rule 6)
+   - **Missing takeaways: listing exercises without summarizing conclusions** (Rule 6)
+   - **Lecturing tone: explaining TO the reader instead of reporting results** (Rule 6)
+   - **Approximate signs (`\approx`) when exact solutions exist** (Rule 6)
+   - **Legalistic language: "a fortiori," "mutatis mutandis"** (Rule 6)
    Each writing quality violation is a bug — count it toward `issues_remaining`.
-5. **Content coherence:** Beyond writing quality, does the edit fit logically in context? Flag insertions that contradict or repeat surrounding text (but don't rewrite — that's the fixer's job in the next iteration).
-6. **Duplicate content:** Did the fixer add content that already existed nearby? Flag redundancies.
-7. **Referee alignment:** For each resolved claim, look up the originating referee in `referee_profiles.json` (extract referee key from `source_comment`, e.g., `ref1_2_claim_1` → `ref1`). Check if the fix matches the referee's expectations:
+7. **Content coherence:** Beyond writing quality, does the edit fit logically in context? Flag insertions that contradict or repeat surrounding text (but don't rewrite — that's the fixer's job in the next iteration).
+8. **Duplicate content:** Did the fixer add content that already existed nearby? Flag redundancies.
+9. **Over-deletion:** Did the fixer remove notation, results, or definitions that are referenced later in the manuscript? Search for `\ref{}`, variable names, and equation labels that point to deleted content. Flag as `over_deletion`.
+10. **Content placement:** Is the content in the right file? Data construction details should be in the data appendix, not the estimation appendix. Confidential or single-firm results should not be in the published paper. Flag misplaced content.
+11. **Regression check:** Compare the fixer's edit against the surrounding text. Did the rewrite lose key economic insights that existed before? If the edit is worse than what it replaced (less precise, missing the punchline, losing the intuition), flag as `regression`.
+12. **Referee alignment:** For each resolved claim, read the originating referee's soul document at `current/souls/{key}_soul.md` (extract referee key from `source_comment`, e.g., `ref1_2_claim_1` → `ref1`). Check if the fix matches the referee's expectations:
+   - **Quick Reference table:** Check evidence expectations, tone preferences, concession calibration
+   - **Narrative sections:** Scan "What Do They Care About Most?" and "How Would They Want to Be Treated?" for contextual guidance — does the fix align with the spirit of what this referee wants?
    - A one-sentence fix for a referee with `very_high` or `high` evidence expectations → flag as `partial` with note to add data references
-   - Apologetic framing ("We apologize...", "We regret...") for a referee with `apology_tolerance: low` → flag
-   - Dismissive tone for a referee with `defense_tolerance: low` → flag
-   - Patterns matching any item in the referee's `red_flags` list → flag
+   - Apologetic framing ("We apologize...", "We regret...") for a referee with low apology tolerance → flag
+   - Dismissive tone for a referee with low defense tolerance → flag
+   - Patterns matching any item in the referee's Red Flags list → flag
 
 ## Output
 
@@ -80,7 +99,7 @@ Scan the fixer's edits for issues:
   "still_missing": 3,
   "partial": 1,
   "regressions": 0,
-  "new_issues": 2,
+  "new_issues_count": 2,
   "results": [
     {
       "claim_id": "ed_1a_claim_1",
