@@ -21,6 +21,7 @@ Automatically scan these files in `notes/`:
 - `sentence_analysis.md`
 - `structure_analysis.md`
 - `methodology_review.md`
+- `writing_quality.md`
 
 **Skip:** `copy_edits.md` (grammar log format — already auto-applied)
 

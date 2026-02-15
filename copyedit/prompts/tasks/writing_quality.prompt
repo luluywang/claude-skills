@@ -1,0 +1,206 @@
+# Task: Writing Quality Assessment
+
+**Purpose:** Assess whether each paragraph achieves its purpose — focused, mechanistic, precise, and terse. This is the middle layer between surface corrections (grammar, word choice) and macro structure (organization, flow).
+
+**Model:** Sonnet (requires deep judgment about argument quality)
+
+**Output:** `notes/writing_quality.md`
+
+**Output Mode:** APPEND — do not overwrite existing content
+
+**Reference:** Read `references/writing_quality_standards.md` before analyzing. It codifies the author's 14 principles and 9 LLM-vs-Human contrasts.
+
+---
+
+## Section Format
+
+When analyzing a file, append:
+
+```markdown
+## [filename.tex]
+
+### Section: [section name]
+
+[Assessment and checklist items organized by section]
+```
+
+---
+
+## The 8 Dimensions
+
+Assess each paragraph against these dimensions. Not every dimension applies to every paragraph — flag only genuine issues.
+
+### 1. Paragraph Focus (Principle #4)
+
+**Check:** Does the paragraph make exactly one point?
+
+**Flags:**
+- Paragraph introduces a concept, reports results, explains mechanism, AND draws implications
+- Topic sentence absent or buried
+- Paragraph exceeds ~8 sentences without a clear single argument
+
+### 2. Mechanism Clarity (Principle #2, Contrast II.3)
+
+**Check:** Does the paragraph explain *why*, not just *what*?
+
+**Flags:**
+- Numerical comparison stated without causal explanation
+- Results reported without tracing the economic channel
+- "Because" or "since" absent after any result
+
+### 3. Number Integration (Principle #7, Contrast II.6)
+
+**Check:** Does every number answer "so what?" and serve as evidence?
+
+**Flags:**
+- Inventory-style sequences: "X changed by A, Y changed by B, Z changed by C"
+- Numbers presented as a list rather than embedded as evidence for claims
+- Number in prose that would be better in a table
+
+### 4. Motivation & Tension (Principle #5, Contrast II.1)
+
+**Check:** Does the reader know *why* before *what*?
+
+**Flags:**
+- Section opens by announcing its result rather than the puzzle
+- No tension, surprise, or question motivating the analysis
+- Reader is told what to think before seeing the evidence
+
+### 5. Math Precision (Principle #3)
+
+**Check:** Are mathematical claims exact, not hand-waved?
+
+**Flags:**
+- Prose paraphrases a formula that should be displayed
+- "This moment identifies the parameter because..." instead of showing the moment condition
+- Vague identification arguments without explicit equations
+- "Approximately" or "roughly" used where exact values are available
+
+### 6. Intellectual Precision (Principles #11, #12)
+
+**Check:** Are results, assumptions, and calibration targets labeled correctly? Does the framing match the method?
+
+**Flags:**
+- Estimated result described as an assumption (or vice versa)
+- Joint estimation described as sequential steps
+- Two distinct mechanisms conflated into one summary
+- Calibrated parameter described as estimated
+- Causal language when identification is only correlational
+
+### 7. Economy (Principles #8, #9, #13, Contrast II.5)
+
+**Check:** Is the prose free of throat-clearing, lecturing, and unnecessary complexity?
+
+**Flags:**
+- "This section analyzes..." / "Below we show..." / "The following demonstrates..."
+- Explaining what fixed effects do, what IV means, or other basics to field experts
+- Elaborate indirect language where a direct statement would do
+- Meta-commentary about the paper's structure
+- Transition words as sentence openers ("Moreover," "Additionally," "Furthermore")
+
+### 8. Limitations Handling (Principle #6, Contrasts II.7, II.8)
+
+**Check:** Are limitations named plainly? Are minor caveats in footnotes, not inline?
+
+**Flags:**
+- "May not fully capture" / "unlikely to be sufficient" (reflexive softening)
+- Limitations buried in hedge-laden qualifications
+- Minor caveats cluttering the main argument instead of footnotes
+- Limitations omitted entirely when they should be acknowledged
+
+---
+
+## Priority Ordering
+
+When multiple issues overlap in the same paragraph, prioritize in this order:
+
+1. **Intellectual precision** — wrong characterization of results/assumptions
+2. **Missing mechanism** — *what* without *why*
+3. **False structure** — sequential framing of joint estimation, conflated mechanisms
+4. **Unfocused paragraph** — doing too much
+5. **Hand-waved math** — prose where formulas should be
+6. **Inventorial numbers** — list of numbers not serving as evidence
+7. **Missing motivation** — no tension before result
+8. **Throat-clearing** — meta-commentary, lecturing, over-explanation
+
+Flag the highest-priority issue; mention lower-priority issues briefly if present.
+
+---
+
+## Output Format (Checklist)
+
+**CRITICAL:** Original and Proposed Revision must show COMPLETE SENTENCES — never truncate mid-sentence. This enables batch application via `apply_marked.prompt`.
+
+```markdown
+### - [ ] Lines X-Y: [Brief description]
+
+**Dimension:** [Which of the 8 dimensions]
+
+**Comment:** [Why this paragraph falls short]
+
+**Original:**
+```
+[Full sentence(s) containing the issue — never fragments]
+```
+
+**Proposed Revision:**
+```
+[Complete revised sentence(s)]
+```
+
+**Why better:** [Concrete improvement linked to specific principle]
+```
+
+---
+
+## Optional: Section Grading
+
+When the user requests grading (e.g., `/copyedit quality --grade`), provide a letter grade per section:
+
+| Grade | Meaning |
+|-------|---------|
+| A | Paragraphs focused, mechanisms clear, math exact, no padding |
+| A- | Minor economy issues, one paragraph slightly overloaded |
+| B+ | Some inventorial numbers or missing motivation |
+| B | Multiple unfocused paragraphs or hand-waved math |
+| B- | Significant missing mechanisms or intellectual imprecision |
+| C+ | Systematic throat-clearing or false structural framing |
+| C | Fundamental issues: wrong characterization of results, missing causal logic |
+
+Grade summary format:
+
+```markdown
+## Section Grades
+
+| Section | Grade | Primary Issue |
+|---------|-------|---------------|
+| Introduction | A- | Minor throat-clearing in opening |
+| Model | B+ | Two paragraphs overloaded |
+| Estimation | B | Identification hand-waved in prose |
+| Results | A | Clean, mechanistic, terse |
+| Counterfactuals | B- | Inventorial numbers, missing mechanisms |
+```
+
+---
+
+## Relationship to Other Tasks
+
+- **ai_detection** (Haiku): Quickly flags surface LLM patterns (punctuation, vocabulary, transitions). Part C flags rhetorical patterns but defers definitive paragraph-level judgment here.
+- **writing_quality** (Sonnet): Makes the deep judgment call — is the paragraph genuinely good writing? Uses the author's standards, not just LLM pattern matching.
+- **word_choice**: Handles individual word substitutions (Anglo-Saxon over Latin, weak verbs). Writing_quality handles paragraph-level quality.
+- **sentence_analysis**: Handles sentence rhythm and S-V-O structure. Writing_quality handles whether the paragraph's argument is sound.
+
+If `ai_detection` flags a pattern that `writing_quality` also addresses, `writing_quality` takes precedence in wrapup deduplication.
+
+---
+
+## Quality Control
+
+- [ ] `writing_quality.md`: Assessment appended (not overwritten)
+- [ ] Section header `## [filename.tex]` present
+- [ ] Every flagged item has Dimension, Comment, Original, Proposed, Why better
+- [ ] Priority ordering respected: intellectual precision > mechanism > structure > focus
+- [ ] Proposed revisions are actionable rewrites, not vague advice
+- [ ] Math precision flags include what formula should replace the prose
+- [ ] No overlap with word_choice (individual word issues) or sentence_analysis (rhythm)
+- [ ] `references/writing_quality_standards.md` was read before analysis

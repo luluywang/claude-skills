@@ -28,6 +28,8 @@ When analyzing a file, append to BOTH files:
 [checklist items...]
 ### Part B: Language Tells
 [checklist items...]
+### Part C: Rhetorical & Argument Tells
+[checklist items...]
 ```
 
 **simplifications.md:**
@@ -53,6 +55,8 @@ When analyzing a file, append to BOTH files:
 
 **Transitions:**
 - "Moreover," "Additionally," "Furthermore" at paragraph starts
+- "More broadly," "Taken together" (signals pivot to generalization)
+- "In contrast," used as sentence opener instead of subordinate clause
 - "Critically, however" openers
 - "Notably," "Importantly" overuse
 
@@ -63,6 +67,8 @@ When analyzing a file, append to BOTH files:
 - "Not only... but also..." constructions
 - Rule-of-three padding (artificial three-item lists beyond natural enumeration)
 - "From X to Y" flourishes
+- Paragraph-ending restatements: restating what was just established instead of ending on the evidence
+- Long inline parentheticals (>10 words) that should be footnotes to keep the argument streamlined
 
 ---
 
@@ -80,7 +86,7 @@ When analyzing a file, append to BOTH files:
 These sound rhetorically clever but are overused by AI. Replace with direct statements.
 
 **Formulaic Openers:**
-- "This occurs because..."
+- "This occurs because..." / "This is because..." as standalone opener (integrate the reason into the prior sentence instead)
 - "Put differently..."
 - "From a [X] perspective..."
 
@@ -97,6 +103,9 @@ These sound rhetorically clever but are overused by AI. Replace with direct stat
 - "Our results suggest that" (when identification is credible)
 - "Is consistent with" (weak phrasing)
 - Overuse of "arguably," "potentially," "plausibly"
+- Stacked hedges: two or more hedges in one sentence ("roughly appears to suggest"); one hedge per claim maximum
+- Non-load-bearing hedges: "roughly" when not a true approximation, "appears" when not genuinely uncertain
+- "Unlikely to be sufficient," "may not fully capture" — reflexive softening that reads as uncertain rather than careful
 
 **Over-Explanation:**
 - Explaining Econ 101 to field experts
@@ -118,6 +127,36 @@ These sound rhetorically clever but are overused by AI. Replace with direct stat
 - Abstract platitudes instead of concrete facts/examples
 - Flowery or overly formal tone where casual fits
 - Didactic lines that moralize
+
+---
+
+## Part C: Rhetorical & Argument Tells (Quick Flag Only)
+
+**Note:** Part C is a quick-flag pass. It identifies rhetorical patterns that *look* LLM-typical. Definitive paragraph-level assessment — whether the argument is sound, the mechanism is clear, the math is precise — is handled by the `writing_quality` task (Sonnet). Flag patterns here; defer judgment there.
+
+These patterns reflect how LLM prose structures arguments differently from human academic writing. They require reading groups of sentences, not just individual lines.
+
+### Patterns to Flag
+
+**Results-First Openings (no tension):**
+- Paragraphs or sections that announce the result and then explain it, instead of building curiosity
+- Human pattern: opens with the puzzle, contradiction, or surprising fact; lets explanation follow
+- LLM pattern: states the conclusion upfront, then backfills the reasoning
+
+**Missing Causal Mechanism:**
+- Numerical comparisons or results stated without explaining *why* the result obtains
+- Human pattern: traces the causal chain ("Adding an expensive card incurs fees from both multi-homers and single-homers but increases sales only from single-homers")
+- LLM pattern: reports outcomes ("the cap reduces fees by 100 bps and rewards by 132 bps") without unpacking what produces the gap
+
+**Inventory-Style Numbers:**
+- Sequences of numbers presented as a list rather than embedded as evidence for claims
+- Human pattern: each number answers a "so what?" and serves as evidence mid-sentence
+- LLM pattern: fees change by X, rewards change by Y, share changes by Z — reads like a table caption, not an argument
+
+**Buried or Omitted Limitations:**
+- Known weaknesses softened with hedging language rather than confronted directly
+- Human pattern: names limitations explicitly and early, in plain language, then explains what the analysis achieves despite the limitation
+- LLM pattern: omits limitations entirely or buries them in hedge-laden qualifications
 
 ---
 
@@ -151,7 +190,22 @@ These sound rhetorically clever but are overused by AI. Replace with direct stat
 - [ ] `simplifications.md`: Suggested fixes appended (not overwritten)
 - [ ] Section header `## [filename.tex]` in both files
 - [ ] Part A (punctuation/structure) comprehensive
-- [ ] Part B (language) comprehensive — especially smarmy reframing
+- [ ] Part B (language) comprehensive — especially smarmy reframing and stacked hedges
+- [ ] Part C (rhetorical/argument) comprehensive — especially missing mechanisms and results-first openings
 - [ ] Organized in reading order within each part
 - [ ] Each item has Comment/Original/Proposed/Why better
 - [ ] Fixes are SUGGESTIONS only — not auto-applied to .tex files
+
+### LLM Section Checklist
+
+Before finalizing flags for any LLM-tagged or suspected-LLM section, verify:
+- [ ] Does the opening create tension or curiosity, or does it just announce the topic?
+- [ ] Is sentence length varied, or is every sentence roughly the same length?
+- [ ] Does every number in the text answer a "so what?"
+- [ ] Are there more than two hedges in any paragraph?
+- [ ] Can any sentence-initial transition be deleted without losing flow?
+- [ ] Is the causal mechanism explicit, or does the text only report outcomes?
+- [ ] Are minor caveats in footnotes rather than inline?
+- [ ] Would a reader familiar with LLM writing recognize this as AI-generated?
+
+**Note:** Items flagged in Part C are quick pattern detections. The `writing_quality` task (Sonnet) provides definitive paragraph-level assessment with actionable rewrites. When both tasks flag the same passage, `writing_quality` takes precedence during wrapup deduplication.
