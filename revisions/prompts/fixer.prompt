@@ -177,7 +177,8 @@ If `changelog.md` already exists (iteration > 1), append to it. Do not overwrite
 8. **One claim, one edit.** Don't combine fixes for different claims into a single text block.
 9. **Skip rather than guess.** If you're unsure where content should go or what it should say, skip and mark for escalation.
 10. **Check downstream before deleting.** If condensing text, verify that any notation, labels, or results you remove are not referenced later in the manuscript. Over-deletion forces the author to re-add content.
-11. **Content goes in the right file.** Verify content placement: main text vs. online appendix vs. referee response. Data construction details belong in the data appendix. Detailed derivations belong in the model appendix. Sensitive/confidential results may only go in the referee response, not the published paper.
+11. **Content goes in the right file — and key reasoning goes in the paper.** Verify content placement: main text vs. online appendix vs. referee response. Data construction details belong in the data appendix. Detailed derivations belong in the model appendix. Sensitive/confidential results may only go in the referee response, not the published paper. Additionally, key reasoning developed in the response letter should also appear in the manuscript (as footnotes, text, or appendix material). Don't leave important arguments only in the response — referees read the response once, but the paper is permanent.
+12. **Don't fabricate verification steps.** Never claim "I have computed X to verify Y" or "Computing Y confirms Z" in a response unless the computation was actually performed. If a claim can't be verified from the manuscript's tables, figures, or code output, either say so or omit the claim.
 
 ## Response Document Edits
 
