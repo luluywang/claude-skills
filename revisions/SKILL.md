@@ -24,7 +24,7 @@ This orchestrator ensures the manuscript matches what the user promised in their
 1. Detect current phase from `current/` state via `scripts/bootstrap.sh`
 2. Collect file paths (response doc, manuscript, appendix, .bib, referee reports)
 3. Extract claims from response doc → `claims.json`
-4. Profile referees → `referee_profiles.json`
+4. Profile referees → `souls/{key}_soul.md` + `referee_profiles.json`
 5. Audit claims against manuscript → `audit.json`
 6. Fixer-critic loop: fix gaps, re-audit, iterate until clean
 7. Present changelog + TODOs to user
@@ -77,7 +77,7 @@ The orchestrator coordinates — it does NOT do the work itself.
 - **Read the response document** — extract/profile subagents do this
 - **Read referee reports** — profile subagent does this
 - **Read manuscript .tex files** — audit/fixer/critic subagents do this
-- **Write claims.json, referee_profiles.json, or audit.json** — subagents write these
+- **Write claims.json, referee_profiles.json, soul documents, or audit.json** — subagents write these
 - **Edit .tex files** — fixer subagent does this
 - **Write fix iteration files** — fixer/critic subagents write these
 - **Bypass the phase protocol** — even if user's request seems clear, follow the phases
@@ -150,10 +150,11 @@ When the phase is `init`, gather file paths from the user.
 Use AskUserQuestion:
 
 1. **Response document** (.tex) — the user's response to referees (source of truth)
-2. **Manuscript** (.tex) — main paper file
-3. **Appendix files** (.tex) — optional, supplementary material
+2. **Manuscript** (.tex) — main paper file(s)
+3. **Appendix files** (.tex) — optional, supplementary material (including online appendix)
 4. **Bibliography** (.bib) — optional, for citation checking
 5. **Referee reports** (.tex/.txt/.pdf) — optional, raw referee letters for personality profiling
+6. **Code files** (.jl/.py/.R/.m) — optional, estimation code for verifying math/numbers against implementation
 
 ### Write Config
 
@@ -169,6 +170,7 @@ After collecting inputs, write `current/config.json`:
     "ref2": "path/to/ref2_report.txt",
     "editor": "path/to/editor_letter.txt"
   },
+  "code": ["code/model_functions.jl"],
   "created": "ISO timestamp"
 }
 ```
@@ -214,13 +216,13 @@ Your job:
 bash revisions/scripts/status.sh profile
 ```
 
-## Profile Phase (Single Sonnet Subagent)
+## Profile Phase (Single Opus Subagent)
 
 When the phase is `profile`, spawn the profile subagent immediately. Do NOT read referee reports or the response document yourself.
 
 ```
-Task: [revisions:profile] Build referee personality profiles
-model: "sonnet"
+Task: [revisions:profile] Build referee soul documents
+model: "opus"
 subagent_type: "general-purpose"
 
 Instructions:
@@ -235,14 +237,15 @@ Your job:
 1. Identify referees from claims.json
 2. Read referee reports (primary) or response doc refcommentnoclear blocks (fallback)
 3. Profile each referee across 8 personality dimensions
-4. Perform cross-referee analysis
-5. Write current/referee_profiles.json
-6. Return: {status, referees_profiled, referee_keys, sources_used, swing_referee}
+4. Synthesize into narrative soul documents
+5. Write current/souls/{key}_soul.md for each referee
+6. Write current/referee_profiles.json (slim index with soul_file pointers + cross-referee analysis)
+7. Return: {status, referees_profiled, referee_keys, sources_used, swing_referee, soul_files}
 ```
 
 ### After Profile Returns
 
-1. Output summary: "Profiled N referees (swing: RefX). Sources: referee_reports|response_doc_comments"
+1. Output summary: "Profiled N referees (swing: RefX). Sources: referee_reports|response_doc_comments. Soul files: current/souls/"
 2. Update status:
 ```bash
 bash revisions/scripts/status.sh audit
@@ -291,7 +294,7 @@ Your job:
 The fix phase uses an iterative loop: fixer makes edits, critic re-audits, repeat until clean or stopping condition.
 
 ```
-[AUDIT] → fix_loop.sh init → FIXER(Sonnet) → CRITIC(Sonnet) → check stopping → loop or exit
+[AUDIT] → fix_loop.sh init → FIXER(Opus) → CRITIC(Opus) → check stopping → loop or exit
                                     ↑                │
                                     └── still issues ─┘
 ```
@@ -318,61 +321,68 @@ If `should_stop: true`:
 
 If `should_stop: false`: continue to fixer.
 
-### Step 3: Spawn Fixer Subagent (Sonnet)
+### Step 3: Spawn Fixer Subagent (Opus)
 
 ```
 Task: [revisions:fix:iter{N}] Fix manuscript gaps (iteration {N})
-model: "sonnet"
+model: "opus"
 subagent_type: "general-purpose"
 
 Instructions:
 Read revisions/prompts/fixer.prompt for full instructions.
 Read revisions/prompts/components/latex_conventions.prompt for LaTeX reference.
 Read revisions/prompts/components/claim_taxonomy.prompt for claim type context.
+Read revisions/prompts/components/writing_quality.prompt for writing standards (ALL 7 rules).
+Read revisions/prompts/components/response_patterns.prompt for response document editing conventions.
 
 Context:
 - Claims: current/claims.json
 - Issues: current/audit.json (iteration 1) OR current/fix_iterations/iteration_{N-1}_critic.json (later iterations)
-- Referee profiles: current/referee_profiles.json
-- Config: current/config.json
+- Referee soul documents: current/souls/{key}_soul.md (paths in current/referee_profiles.json)
+- Referee index: current/referee_profiles.json (cross-referee analysis)
+- Config: current/config.json (includes manuscript, appendix, response doc, and optional code file paths)
 - Iteration: {N}
 
 Your job:
 1. Read remaining issues (missing/partial with fixable:true)
-2. Consult referee profiles to calibrate edits per referee
-3. Make targeted edits to manuscript files
-4. Tag all edits with \begin{llm}...\end{llm}
-5. Write current/fix_iterations/iteration_{N}_fixes.json
-6. Append to current/changelog.md
-7. Commit: [revisions:fix:iter{N}] Fix M manuscript gaps
-8. Return: {status, iteration, fixed, skipped, escalated}
+2. Consult referee soul documents to calibrate edits per referee
+3. Verify notation against existing manuscript definitions before writing
+4. Make targeted edits to manuscript files AND response document where needed
+5. NEVER insert specific numbers without verifying them against tables/figures/scalarinput
+6. Tag all edits with \begin{llm}...\end{llm}
+7. Write current/fix_iterations/iteration_{N}_fixes.json
+8. Append to current/changelog.md
+9. Commit: [revisions:fix:iter{N}] Fix M manuscript gaps
+10. Return: {status, iteration, fixed, skipped, escalated}
 ```
 
-### Step 4: Spawn Critic Subagent (Sonnet)
+### Step 4: Spawn Critic Subagent (Opus)
 
 ```
 Task: [revisions:critic:iter{N}] Re-audit after fixes (iteration {N})
-model: "sonnet"
+model: "opus"
 subagent_type: "general-purpose"
 
 Instructions:
 Read revisions/prompts/critic.prompt for full instructions.
 Read revisions/prompts/components/claim_taxonomy.prompt for verification rules.
 Read revisions/prompts/components/latex_conventions.prompt for LaTeX reference.
+Read revisions/prompts/components/writing_quality.prompt for writing standards (ALL 7 rules).
 
 Context:
 - Claims: current/claims.json
 - Previous audit: current/audit.json (or prior critic)
 - Fixer output: current/fix_iterations/iteration_{N}_fixes.json
-- Referee profiles: current/referee_profiles.json
-- Config: current/config.json
+- Referee soul documents: current/souls/{key}_soul.md (paths in current/referee_profiles.json)
+- Referee index: current/referee_profiles.json (cross-referee analysis)
+- Config: current/config.json (includes manuscript, appendix, response doc, and optional code file paths)
 - Iteration: {N}
 
 Your job:
 1. Re-read manuscript files (with fixes applied)
 2. Re-verify all previously failing claims
 3. Spot-check previously passing claims for regressions
-4. Check for new problems introduced by fixes
+4. Check for new problems: number hallucination, notation errors, over-deletion, content placement, verbosity, artificial structure, missing takeaways, regression from prior version
 5. Write current/fix_iterations/iteration_{N}_critic.json
 6. Return: {status, iteration, resolved, still_missing, partial, regressions, new_issues, issues_remaining}
 ```
@@ -462,11 +472,11 @@ When the user says "reset", "clear", or "new revision":
 | Operation | Model | Rationale |
 |---|---|---|
 | Extract claims | Sonnet | Document parsing, classification |
-| Profile referees | Sonnet | Personality analysis, pattern recognition |
+| Profile referees | Opus | Narrative soul documents require high-quality writing |
 | Audit claims | Sonnet | Cross-referencing, search |
-| Fixer (standard) | Sonnet | Targeted edits, style matching |
+| Fixer (standard) | Opus | Writing quality and structural alignment |
 | Fixer (escalation) | Opus | Complex structural changes |
-| Critic | Sonnet | Independent verification |
+| Critic | Opus | Re-verification and quality assurance |
 
 ## Files
 
@@ -488,7 +498,8 @@ revisions/
 │   └── components/
 │       ├── claim_taxonomy.prompt         # Claim type definitions + verification rules
 │       ├── latex_conventions.prompt       # LaTeX environments reference
-│       └── response_patterns.prompt      # Response document style conventions
+│       ├── response_patterns.prompt      # Response document style conventions
+│       └── writing_quality.prompt        # Human-like prose rules (7 rules)
 ├── templates/
 │   └── response_document.tex             # Reference template
 ├── examples/                             # Exemplar response docs
@@ -496,7 +507,11 @@ revisions/
     ├── .status
     ├── config.json                       # File paths
     ├── claims.json                       # Extracted claims from response doc
-    ├── referee_profiles.json             # Per-referee personality profiles
+    ├── referee_profiles.json             # Slim index with soul_file pointers + cross-referee analysis
+    ├── souls/                            # Narrative referee soul documents
+    │   ├── ref1_soul.md
+    │   ├── ref2_soul.md
+    │   └── ed_soul.md
     ├── audit.json                        # Claim verification results
     ├── fix_state.json                    # Fix loop iteration state
     ├── changelog.md                      # Human-readable edit log
@@ -514,7 +529,8 @@ revisions/
 | `current/.status` | Current phase | Orchestrator (via status.sh) |
 | `current/config.json` | Input file paths | Orchestrator |
 | `current/claims.json` | Extracted claims | Extract subagent |
-| `current/referee_profiles.json` | Referee personality profiles | Profile subagent |
+| `current/referee_profiles.json` | Slim index: soul_file pointers + cross-referee analysis | Profile subagent |
+| `current/souls/{key}_soul.md` | Narrative referee soul documents | Profile subagent |
 | `current/audit.json` | Verification results | Audit subagent |
 | `current/fix_state.json` | Loop iteration state | fix_loop.sh |
 | `current/changelog.md` | Edit log | Fixer subagent (appends) |
