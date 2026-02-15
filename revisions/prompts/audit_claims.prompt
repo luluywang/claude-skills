@@ -74,23 +74,12 @@ Same strategy as `content_addition`. The difference is semantic (revision vs. ad
 2. Set `fixable: false`
 3. Add to todos list
 
-### Step 3: Check Notation and Number Consistency
-
-For each `numerical_claim` and `content_addition`/`content_revision` that references model parameters:
-
-1. **Verify notation.** Check that Greek letters, subscripts, and parameter names in the response match the manuscript. Flag mismatches (e.g., response says `$\sigma$` but manuscript defines `$\sigma_\gamma$`).
-2. **Verify numbers against sources.** If the response cites a specific number (basis points, percentages, dollar amounts), check whether that number appears in a table, figure note, or `\scalarinput{}` command. Flag numbers that cannot be traced to a manuscript source.
-3. **Check content placement.** If a claim says "I added X in Section Y," verify it's in the right file. Common errors: putting data construction in the estimation appendix instead of the data appendix, putting confidential results in the main text instead of the referee response.
-
-If code files are listed in `config.json`, spot-check critical numerical claims against the code (e.g., does the welfare decomposition formula in the text match the code's computation?).
-
-### Step 4: Generate Fix Hints
+### Step 3: Generate Fix Hints
 
 For each `missing` or `partial` claim that is `fixable: true`, generate a brief hint for the fixer:
 - "Add sentence about weaker results near `\label{subsec:durbin}`"
 - "Add `\textcite{Autor2003}` citation in Section 3"
 - "Move robustness table to appendix section `\label{sec:oa-robustness}`"
-- "Fix notation: response says `$\sigma$` but manuscript uses `$\sigma_\gamma$`"
 
 Fix hints should be actionable and reference specific locations.
 
@@ -176,6 +165,3 @@ Do NOT return the full audit results inline. The orchestrator reads `current/aud
 5. **Check .bib files for citations.** Citation keys must be in the bibliography database, not just in the manuscript text.
 6. **Don't modify any files.** This is a read-only audit. Changes happen in the fix phase.
 7. **Record evidence verbatim.** When you find a match, quote the relevant manuscript line so the orchestrator can present it.
-8. **Flag notation mismatches.** If the response uses different notation than the manuscript for the same parameter, flag it — even if the content is otherwise correct. Wrong notation in the response is confusing to referees.
-9. **Flag suspicious numbers.** If a numerical claim in the response cannot be traced to any table, figure, or `\scalarinput{}` in the manuscript, flag it. Hardcoded numbers that were correct in a prior draft may be stale now.
-10. **Check content is in the right file.** Verify that content referenced in the response actually appears where claimed. Content in the wrong appendix (e.g., data appendix vs. estimation appendix vs. online appendix) is a real error.
