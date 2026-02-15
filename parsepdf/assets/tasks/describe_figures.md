@@ -35,6 +35,13 @@ Page {{PAGE_NUMBER}}
    - Can this be fully described in text? (confidence: high/medium/low)
    - Does it need manual review?
 
+5. **Flag for visual interpretation** (NEW):
+   - Set `needs_visual_interpretation: true` if:
+     - Confidence is medium or low
+     - Figure is multi-panel and complex structure isn't obvious from text
+     - Figure shows spatial relationships that are hard to convey in text (scatter, clustering)
+     - Otherwise set to `false`
+
 ## Output Format
 ```json
 {
@@ -47,6 +54,7 @@ Page {{PAGE_NUMBER}}
       "x": "Years of Education",
       "y": "Log Wages"
     },
+    "legend": ["Treatment", "Control"],
     "content": "Scatter plot showing positive correlation between education and wages",
     "key_points": [
       "Upward sloping trend",
@@ -56,9 +64,15 @@ Page {{PAGE_NUMBER}}
   },
   "confidence": "high",
   "needs_review": false,
+  "needs_visual_interpretation": false,
+  "visual_description": null,
   "pdf_reference": "page_{{PAGE_NUMBER}}.pdf"
 }
 ```
+
+**New Fields**:
+- `needs_visual_interpretation`: Set to `true` if confidence is low/medium OR if text extraction alone cannot fully capture the figure
+- `visual_description`: Initially null; will be populated by visual interpretation subagent (if triggered)
 
 ## If Description is Uncertain
 Mark as:

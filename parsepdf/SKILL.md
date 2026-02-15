@@ -2,9 +2,9 @@
 name: parsepdf
 description: |
   PDF parsing for economics papers. Splits PDFs into pages, extracts text and tables,
-  identifies document structure, and converts to markdown. Use when the PDF is too
-  large for Claude's native PDF support. Only activate when user explicitly invokes
-  '/parsepdf'.
+  identifies document structure, and converts to markdown. Includes visual interpretation
+  of figures and tables via Haiku subagents. Use when the PDF is too large for Claude's
+  native PDF support. Only activate when user explicitly invokes '/parsepdf'.
 ---
 
 # PDF Parser for Economics Papers
@@ -50,6 +50,8 @@ Estimated cost: ~$2/PDF with Haiku vs ~$10/PDF with Sonnet.
 | "Process this PDF" / "Parse paper.pdf" / Full extraction | Full workflow below |
 | "Extract tables from pages X-Y" | `assets/tasks/extract_tables.md` |
 | "Describe figures" / "What figures are in this paper?" | `assets/tasks/describe_figures.md` |
+| "Interpret figure page X as image" / "Visual description of figure" | `assets/tasks/visual_interpret_figure.md` |
+| "Verify table structure on page X" / "Analyze table layout" | `assets/tasks/visual_interpret_table.md` |
 | "Convert equations to LaTeX" | `assets/tasks/convert_equations.md` |
 | "Clean up extracted text" | `assets/tasks/clean_text.md` |
 | "What's the structure of this paper?" | `assets/tasks/segment.md` |
@@ -118,8 +120,10 @@ Extract bibliography section from a processed paper.
 | Task | Prompt | Input | Output |
 |------|--------|-------|--------|
 | Structure | `assets/tasks/segment.md` | segment_task.md | structure.json |
-| Tables | `assets/tasks/extract_tables.md` | layout/page_N.txt | tables/page_N.json |
-| Figures | `assets/tasks/describe_figures.md` | text/page_N.txt | figures/page_N.json |
+| Tables | `assets/tasks/extract_tables.md` | layout/page_N.txt | tables/page_N_extracted.json |
+| Table Visual Verify | `assets/tasks/visual_interpret_table.md` | pages/[PAPER]/page_N.pdf | tables/page_N_visual.json |
+| Figures | `assets/tasks/describe_figures.md` | text/page_N.txt | figures/page_N_text.json |
+| Figure Visual Interp | `assets/tasks/visual_interpret_figure.md` | pages/[PAPER]/page_N.pdf | figures/page_N_visual.json |
 | Equations | `assets/tasks/convert_equations.md` | text/page_N.txt | equations/section.json |
 | Text | `assets/tasks/clean_text.md` | text/page_*.txt | cleaned/SECTION.md |
 | Validate | `assets/tasks/validate_tables.md` | tables + context | validation/table_N.json |
@@ -209,7 +213,9 @@ User: "Process paper.pdf and extract everything"
 │   └── tasks/               ← Task prompts
 │       ├── segment.md
 │       ├── extract_tables.md
+│       ├── visual_interpret_table.md
 │       ├── describe_figures.md
+│       ├── visual_interpret_figure.md
 │       ├── convert_equations.md
 │       ├── clean_text.md
 │       ├── validate_tables.md
@@ -221,6 +227,72 @@ User: "Process paper.pdf and extract everything"
 ├── cache/                   ← Runtime cache (generated)
 └── output/                  ← Final output (generated)
 ```
+
+---
+
+## Visual Interpretation Features (NEW)
+
+The parsepdf skill can now augment text-based extraction with visual interpretation using Haiku subagents. This adds rich descriptions to figures and verifies complex table structures.
+
+### Figure Visual Interpretation
+
+**What it does:**
+- Reads PDF pages as images
+- Generates 2-4 sentence paragraph descriptions of figures
+- Captures visual patterns and observations beyond captions
+- Results in more accessible, informative markdown
+
+**Configuration:**
+```json
+"visual_interpretation": {
+  "figures": "always|low_confidence|never"
+}
+```
+
+**Cost:** ~$0.003 per figure (~$0.09 per typical paper with 30 figures)
+
+### Table Visual Verification
+
+**What it does:**
+- Reads PDF pages as images
+- Assesses table structure (simple, multi-level headers, panels, complex)
+- Detects merged cells and visual grouping
+- Validates pdfplumber extraction accuracy
+- Provides metadata for improved markdown conversion
+
+**Configuration:**
+```json
+"visual_interpretation": {
+  "tables": "always|complex|never"
+}
+```
+
+**Cost:** ~$0.003 per table (~$0.02 per paper with 15 tables, complex only)
+
+### Configuration Defaults
+
+- `visual_figures`: "always" (interpret all figures)
+- `visual_tables`: "complex" (verify only high-complexity layouts)
+- Users can override in `work/[PAPER_NAME]/config.json`
+
+### Examples
+
+**Simple scatter plot with visual interpretation:**
+- Text extraction gets: axes labels, legend
+- Visual interpretation adds: "Scatter plot showing positive relationship between education and wages. Points cluster around upward-sloping trend with 95% confidence band. Tighter scatter at higher education suggests less wage variability among college-educated workers."
+
+**Complex multi-level table verification:**
+- pdfplumber extraction gets: raw table data
+- Visual verification identifies: 3-row header hierarchy, merged cells for outcome groupings, panel structure
+- Result: Much cleaner markdown with proper header nesting
+
+### Backward Compatibility
+
+All changes are additive and backward compatible:
+- New JSON fields default to null
+- Visual interpretation is optional (config-driven)
+- Disabling entirely: `visual_figures="never"`, `visual_tables="never"`
+- Identical output to previous version if visual interpretation disabled
 
 ---
 
