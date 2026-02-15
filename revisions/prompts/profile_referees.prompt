@@ -1,6 +1,6 @@
 # Profile Referees Task
 
-**Purpose:** Build per-referee personality profiles ("soul documents") from referee reports or response document comments. These profiles calibrate downstream fixer and critic behavior per referee.
+**Purpose:** Build per-referee narrative "soul documents" from referee reports or response document comments. These documents give downstream fixer and critic agents a deep qualitative understanding of each referee — who they are as scholars, what they really care about, and how they'd want to be treated.
 
 ---
 
@@ -15,7 +15,7 @@
 
 ## Task
 
-Analyze each referee's writing to build a personality profile that downstream agents (fixer, critic) use to calibrate edits. The goal is to understand *who* each referee is so responses match their expectations.
+Analyze each referee's writing to build a rich narrative profile that downstream agents (fixer, critic) use to calibrate edits. The goal is to understand *who* each referee is — not as a set of labels, but as a scholar with specific values, concerns, and expectations.
 
 ### Step 1: Identify Referees
 
@@ -27,73 +27,111 @@ Read `claims.json` to get referee keys. If a `referees` summary exists, use it d
 
 **Fallback source:** If no referee reports are available, read the response document and extract all `\begin{refcommentnoclear}...\end{refcommentnoclear}` blocks. Group by referee section headers.
 
-### Step 3: Profile Each Referee
+### Step 3: Analyze Each Referee
 
-For each referee, analyze their writing across these dimensions:
+For each referee, analyze their writing across these dimensions. These are your **analytical framework** — use them to structure your thinking, but synthesize them into narrative prose for the output (don't dump them as JSON labels).
 
-1. **`overall_stance`** — How does the referee feel about the paper?
-   - `strongly_supportive` — enthusiastic, minor suggestions only
-   - `supportive_with_reservations` — positive but has real concerns
-   - `neutral_constructive` — neither positive nor negative, focused on improvement
-   - `skeptical` — doubts about contribution or methods, needs convincing
-   - `hostile` — fundamentally opposed to the paper's approach or claims
-
-2. **`key_concerns`** — The 3-7 issues the referee cares most about, ranked by emphasis. For each concern, note:
-   - Brief description
-   - Which claim cluster it maps to (e.g., `ref1_2`, `ref1_5`)
-   - Whether it's a dealbreaker or nice-to-have
-
-3. **`communication_style`** — How the referee writes:
-   - `thorough` — detailed, methodical, covers everything
-   - `blunt` — direct, short, no pleasantries
-   - `collaborative` — suggests solutions, collegial tone
-   - `formal` — academic distance, impersonal
-   - `passionate` — strong opinions, emphatic language
-
-4. **`evidence_expectations`** — How much evidence does the referee demand?
-   - `low` — satisfied with verbal arguments
-   - `medium` — wants references to tables/figures but not deep detail
-   - `high` — expects specific numbers, robustness checks, data references
-   - `very_high` — demands appendix-level detail, multiple specifications
-
-5. **`tone_preferences`** — What tone will land well with this referee?
-   - `directness` — high/medium/low (how direct should responses be?)
-   - `gratitude` — high/medium/low (does the referee respond to thanks?)
-   - `apology_tolerance` — high/medium/low (do apologies help or annoy?)
-   - `defense_tolerance` — high/medium/low (can you push back, or should you concede?)
-
-6. **`concession_calibration`** — How should the response handle disagreements?
-   - `high` — referee expects you to agree with most points
-   - `moderate` — referee is open to reasoned pushback
-   - `low` — referee respects strong defense of positions
-   - `strategic` — concede on small points, defend on big ones
-
-7. **`red_flags`** — Specific patterns that would alienate this referee:
-   - E.g., "dismissive language about robustness concerns"
-   - E.g., "vague promises without concrete evidence"
-   - E.g., "excessive apologies that signal insecurity"
-
-8. **`overall_feeling`** — 1-2 sentence briefing on who this referee is and what they want. This is the quick-reference for the fixer.
+1. **Overall stance** — How does the referee feel about the paper? (strongly supportive → hostile)
+2. **Key concerns** — The 3-7 issues the referee cares most about, ranked by emphasis. For each: description, which claim cluster it maps to, whether it's a dealbreaker or nice-to-have.
+3. **Communication style** — How the referee writes (thorough, blunt, collaborative, formal, passionate)
+4. **Evidence expectations** — How much evidence they demand (verbal arguments → appendix-level detail)
+5. **Tone preferences** — What tone will land well: directness, gratitude, apology tolerance, defense tolerance
+6. **Concession calibration** — How should the response handle disagreements?
+7. **Red flags** — Specific patterns that would alienate this referee
+8. **Overall feeling** — 1-2 sentence briefing on who this referee is and what they want
 
 ### Step 4: Cross-Referee Analysis
 
 After profiling each referee individually, analyze interactions:
 
-1. **`shared_concerns`** — Issues raised by multiple referees (highest priority — addressing these satisfies multiple reviewers)
-2. **`conflicting_expectations`** — Cases where one referee wants X and another wants the opposite
-3. **`priority_ordering`** — Which referee is most likely the swing vote? Who needs the most attention?
+1. **Shared concerns** — Issues raised by multiple referees (highest priority)
+2. **Conflicting expectations** — Cases where one referee wants X and another wants the opposite
+3. **Priority ordering** — Which referee is the swing vote? Who needs the most attention?
 
 ### Step 5: Quality Checks
 
 Before writing output:
-- Every referee identified in claims.json should have a profile
-- Each profile should have all 8 dimensions populated
+- Every referee identified in claims.json should have a soul document
+- Each soul document should cover all analytical dimensions, woven into narrative
 - Red flags should be specific and actionable, not generic
-- Overall feeling should be distinctive per referee (not boilerplate)
+- The narrative should capture *this specific referee*, not a generic archetype
+- Quick Reference tables should be consistent with the narrative
 
 ## Output
 
-### Write `current/referee_profiles.json`
+You produce **two types of output**: individual soul documents and a lightweight JSON index.
+
+### 1. Write Soul Documents: `current/souls/{key}_soul.md`
+
+Create the `current/souls/` directory. Write one soul document per referee/editor using the template below.
+
+**Writing guidance for soul documents:**
+- Write in **narrative essay tone** — these should read like a colleague briefing you about a reviewer over coffee, not like a database entry
+- Use **specific examples over generic labels** — instead of "this referee has high evidence expectations," write "this referee spent three paragraphs demanding specific robustness checks and flagged vague prose as a red flag"
+- **Quote the referee's own words** where they reveal character — their word choices are data
+- Ground every observation in **evidence from the actual referee report** — don't infer personality traits that aren't supported by what they wrote
+- The Quick Reference table at the end gives fixer/critic fast structured lookups; the narrative above it gives them the *why* behind each value
+
+#### Soul Document Template
+
+```markdown
+# {Label} Soul Document
+**Created:** {ISO timestamp}
+
+---
+
+## Who Is This Scholar?
+{Narrative: expertise, background inferred from their comments, role (referee vs. editor),
+approach to reviewing. What kind of scholar writes comments like these? What do their
+concerns reveal about their own research values?}
+
+## What Do They Care About Most?
+{Priority hierarchy with analysis. For each major concern:
+- What specifically bothers them (with quotes from their report)
+- Which claim clusters it maps to
+- Whether it's a dealbreaker or nice-to-have
+- Why they care — what deeper value does this concern reflect?}
+
+## What Is the Spirit of Their Concerns?
+{The deeper values, principles, and anxieties driving the specific concerns. What would
+this referee say if you asked them "what makes a good paper in this field?" Their
+concerns are symptoms — what's the underlying condition?}
+
+## How Would They Want to Be Treated?
+
+### What Would Feel Respectful:
+{Specific approaches, actions, and framings that would land well. Be concrete:
+"Lead with the robustness check results before explaining the methodology"
+not "be thorough."}
+
+### What Would Signal Disrespect:
+{Anti-patterns to avoid. Again, be specific:
+"Claiming to address their concern about X without actually showing the numbers"
+not "don't be dismissive."}
+
+---
+
+## Quick Reference
+
+| Dimension | Value | Notes |
+|-----------|-------|-------|
+| Overall Stance | {strongly_supportive / supportive_with_reservations / neutral_constructive / skeptical / hostile} | {1-sentence context} |
+| Evidence Expectations | {low / medium / high / very_high} | {what kind of evidence they want} |
+| Tone: Directness | {high / medium / low} | |
+| Tone: Apology Tolerance | {high / medium / low} | |
+| Tone: Defense Tolerance | {high / medium / low} | |
+| Concession Calibration | {high / moderate / low / strategic} | |
+
+**Red Flags:**
+- {specific pattern that would alienate this referee}
+- {specific pattern}
+
+**Overall Feeling:** {1-2 sentence briefing — the quick-reference for fixer/critic}
+```
+
+### 2. Write JSON Index: `current/referee_profiles.json`
+
+This is a **slim index** — it points to soul files and contains cross-referee analysis that doesn't belong in any individual soul document. It keeps `bootstrap.sh` working (which checks for this file's existence).
 
 ```json
 {
@@ -102,70 +140,15 @@ Before writing output:
   "referees": {
     "ref1": {
       "label": "Referee 1",
+      "soul_file": "current/souls/ref1_soul.md",
       "overall_stance": "supportive_with_reservations",
-      "key_concerns": [
-        {
-          "description": "Identification strategy may not hold in full sample",
-          "claim_cluster": "ref1_2",
-          "dealbreaker": true
-        },
-        {
-          "description": "Literature review misses key recent papers",
-          "claim_cluster": "ref1_5",
-          "dealbreaker": false
-        }
-      ],
-      "communication_style": "thorough",
-      "evidence_expectations": "high",
-      "tone_preferences": {
-        "directness": "high",
-        "gratitude": "low",
-        "apology_tolerance": "low",
-        "defense_tolerance": "medium"
-      },
-      "concession_calibration": "moderate",
-      "red_flags": [
-        "Vague promises without pointing to specific tables or numbers",
-        "Apologetic framing — this referee wants evidence, not apologies"
-      ],
-      "overall_feeling": "A careful methodologist who supports the paper's contribution but needs to be convinced the identification holds up. Responds best to concrete evidence and direct engagement with concerns."
+      "overall_feeling": "A careful methodologist who supports the paper's contribution but needs to be convinced the identification holds up."
     },
     "ref2": {
       "label": "Referee 2",
+      "soul_file": "current/souls/ref2_soul.md",
       "overall_stance": "skeptical",
-      "key_concerns": [],
-      "communication_style": "blunt",
-      "evidence_expectations": "very_high",
-      "tone_preferences": {
-        "directness": "high",
-        "gratitude": "medium",
-        "apology_tolerance": "low",
-        "defense_tolerance": "low"
-      },
-      "concession_calibration": "high",
-      "red_flags": [
-        "Dismissing robustness concerns as minor",
-        "Claiming results are 'obvious' without showing them"
-      ],
       "overall_feeling": "A skeptic who needs to see the data. Concede where possible and back everything with numbers."
-    },
-    "ed": {
-      "label": "Editor",
-      "overall_stance": "neutral_constructive",
-      "key_concerns": [],
-      "communication_style": "formal",
-      "evidence_expectations": "medium",
-      "tone_preferences": {
-        "directness": "medium",
-        "gratitude": "medium",
-        "apology_tolerance": "medium",
-        "defense_tolerance": "medium"
-      },
-      "concession_calibration": "strategic",
-      "red_flags": [
-        "Ignoring editor suggestions entirely"
-      ],
-      "overall_feeling": "The editor wants a clean revision that addresses both referees. Focus on showing that referee concerns are handled."
     }
   },
   "cross_referee": {
@@ -189,7 +172,7 @@ Before writing output:
 }
 ```
 
-### Return to Orchestrator (minimal)
+### 3. Return to Orchestrator (minimal)
 
 ```json
 {
@@ -197,17 +180,20 @@ Before writing output:
   "referees_profiled": 3,
   "referee_keys": ["ref1", "ref2", "ed"],
   "sources_used": "referee_reports",
-  "swing_referee": "ref2"
+  "swing_referee": "ref2",
+  "soul_files": ["current/souls/ref1_soul.md", "current/souls/ref2_soul.md", "current/souls/ed_soul.md"]
 }
 ```
 
-Do NOT return the full profiles inline. The orchestrator reads `current/referee_profiles.json`.
+Do NOT return the full profiles or soul documents inline. The orchestrator reads the files.
 
 ## Rules
 
-1. **Profile from evidence, not assumptions.** Base every dimension on specific things the referee wrote. Don't assume a referee is hostile just because they have concerns.
-2. **Be specific in red_flags.** "Don't be dismissive" is too generic. "Don't dismiss robustness concerns as minor when the referee spent 3 paragraphs on them" is actionable.
-3. **Preserve referee voice.** The overall_feeling should capture *this* specific referee, not a generic archetype.
+1. **Profile from evidence, not assumptions.** Base every narrative claim on specific things the referee wrote. Don't assume a referee is hostile just because they have concerns.
+2. **Be specific in red flags.** "Don't be dismissive" is too generic. "Don't dismiss robustness concerns as minor when the referee spent 3 paragraphs on them" is actionable.
+3. **Preserve referee voice.** Quote their distinctive phrases. The soul document should capture *this* specific referee, not a generic archetype.
 4. **Don't read the manuscript.** This phase only reads referee reports and/or the response document. Manuscript reading is the audit phase's job.
 5. **Handle missing referee reports gracefully.** If no raw reports exist, extract what you can from the `refcommentnoclear` blocks. Note in `sources_used` which source was used.
 6. **Include the editor.** If the editor's letter is available or editor comments appear in the response doc, profile the editor too.
+7. **Narrative over labels.** The Quick Reference table is a convenience index. The real value is in the narrative sections — that's what helps fixer/critic write responses that actually land with each referee.
+8. **Soul documents are Part 1 only.** Do NOT include concern-by-concern tracking with manuscript locations — the profile phase doesn't read the manuscript. That level of detail belongs in the audit phase.

@@ -8,12 +8,14 @@
 
 - **Issues to fix:** Either `current/audit.json` (iteration 1) or `current/fix_iterations/iteration_N_critic.json` (subsequent iterations) — only items with `status: "missing"` or `"partial"` and `fixable: true`
 - **Claims:** `current/claims.json` — the original claims with claim text and context
-- **Referee profiles:** `current/referee_profiles.json` — per-referee personality profiles for calibrating tone and evidence level
+- **Referee soul documents:** `current/souls/{key}_soul.md` — narrative per-referee profiles for calibrating tone and evidence level (paths listed in `current/referee_profiles.json` under each referee's `soul_file`)
+- **Referee index:** `current/referee_profiles.json` — lightweight index with `soul_file` paths and cross-referee analysis
 - **Config:** `current/config.json` — manuscript and appendix file paths
 - **Component references:**
   - `revisions/prompts/components/latex_conventions.prompt` — LaTeX formatting rules
   - `revisions/prompts/components/claim_taxonomy.prompt` — claim type context
-  - `revisions/prompts/components/writing_quality.prompt` — **MANDATORY** writing standards (AI-pattern avoidance, plain language, sentence construction)
+  - `revisions/prompts/components/writing_quality.prompt` — **MANDATORY** writing standards (7 rules: AI-pattern avoidance, plain language, sentence construction, economics-specific, voice matching, terse and precise, don't regress)
+  - `revisions/prompts/components/response_patterns.prompt` — response document editing conventions (tone, structure, personal address, no cross-referee refs)
 - **Iteration number:** Provided by orchestrator (1, 2, 3, ...)
 
 ## Task
@@ -36,19 +38,26 @@ For each issue:
 
 1. **Read the claim** from `claims.json` — understand what the response promises
 2. **Locate the target** in the manuscript using `target_label` or section structure
-3. **Consult the referee profile.** Extract the referee key from `source_comment` (e.g., `ref1_2_claim_1` → `ref1`). Look up the referee in `referee_profiles.json` and calibrate:
+3. **Verify notation before writing.** Before adding any math or parameter references:
+   - Search the manuscript for the parameter's definition: what Greek letter, what subscripts?
+   - Check: does the manuscript use sums or integrals for this quantity? Discrete or continuous?
+   - Check: what is the manuscript's name for this concept? (e.g., "fee adjustment parameters" not "unobserved interchange fees")
+   - If the claim references code output, verify the code actually computes what the text claims
+4. **Consult the referee soul document.** Extract the referee key from `source_comment` (e.g., `ref1_2_claim_1` → `ref1`). Read `current/souls/{key}_soul.md` and calibrate:
+   - **Read the narrative sections** ("What Do They Care About Most?", "Spirit of Their Concerns", "How Would They Want to Be Treated?") for contextual guidance on *why* the referee cares about this issue and what kind of response would land well
+   - **Check the Quick Reference table** for structured data: evidence expectations, tone preferences, concession calibration
    - **Evidence expectations:** If `high` or `very_high`, add data references, table/figure pointers, or appendix citations — not just prose assertions
-   - **Tone:** If the referee's `apology_tolerance` is `low`, never insert apologetic framing ("We apologize for...", "We regret..."). Use direct, confident language instead
-   - **Red flags:** Check the referee's `red_flags` list and avoid those patterns in your edit
+   - **Tone:** If apology tolerance is `low`, never insert apologetic framing ("We apologize for...", "We regret..."). Use direct, confident language instead
+   - **Red flags:** Check the Red Flags list and avoid those patterns in your edit
    - **Concession calibration:** If `high`, frame the edit as a direct response to the referee's point. If `low`, frame it as strengthening the paper's argument
-4. **Make the minimal edit:**
+5. **Make the minimal edit:**
    - For `content_addition`: Insert the promised content near the target label
    - For `content_revision`: Modify existing text to match the claim
    - For `citation_check`: Add `\textcite{}` or `\parencite{}` at an appropriate location, and add the .bib entry if missing
    - For `reference_check`: If a label is missing, DO NOT create it (label creation implies structural changes that need user review) — instead mark as skipped
    - For `structural_change`: Attempt if straightforward, skip if complex
 
-5. **Tag all edits** with `\begin{llm}...\end{llm}`:
+6. **Tag all edits** with `\begin{llm}...\end{llm}`:
    ```latex
    \begin{llm}
    The results are weaker once we consider the full sample, with the
@@ -56,9 +65,12 @@ For each issue:
    \end{llm}
    ```
 
-6. **Write like the author, not like an LLM.** Before writing, read `writing_quality.prompt` completely. Then:
+7. **Write like the author, not like an LLM.** Before writing, read `writing_quality.prompt` completely (all 7 rules). Then:
    - Read the 3-5 sentences surrounding your insertion point to absorb the author's voice
    - Write to match the author's sentence length, tense, person, and notation
+   - Be terse: if the point can be made in one sentence, use one sentence (Rule 6)
+   - No artificial sequential structure for joint procedures (Rule 6)
+   - Always include takeaways — don't just list exercises (Rule 6)
    - **Self-check every edit** against the quick self-check in `writing_quality.prompt`
    - Violations of writing quality rules are treated as bugs — the critic will flag them
 
@@ -155,14 +167,32 @@ If `changelog.md` already exists (iteration > 1), append to it. Do not overwrite
 
 ## Rules
 
-1. **Minimum viable edits.** Add exactly what the response document promises — no more. Don't "improve" surrounding text.
-2. **Always tag with `\begin{llm}...\end{llm}`.** Every character you add or change must be inside LLM tags.
-3. **Match the manuscript's style, avoid AI tells, and meet referee expectations.** Read surrounding paragraphs to match tense, voice, notation, and citation style. Apply all rules in `writing_quality.prompt` — no meta-commentary, no AI transitions, no banned vocabulary, plain language, active voice. Also ensure the edit meets the originating referee's evidence and tone expectations from their profile.
-4. **Don't fabricate data.** If a claim references specific numbers you can't verify, use placeholder text: `[TODO: insert value]` inside LLM tags.
-5. **Don't create labels.** If `\label{foo}` doesn't exist, don't add it — that implies structural changes requiring user review. Skip and flag.
-6. **Preserve manuscript structure.** Don't reorganize sections, move content, or delete existing text unless the claim specifically says to.
-7. **One claim, one edit.** Don't combine fixes for different claims into a single text block.
-8. **Skip rather than guess.** If you're unsure where content should go or what it should say, skip and mark for escalation.
+1. **NEVER hallucinate numbers.** This is the single most dangerous error. Do NOT insert specific percentages, dollar amounts, basis points, coefficients, or shares unless you have verified them against the manuscript's tables, figures, or `\scalarinput{}` commands. If a claim references numbers you cannot find in the manuscript, use `[TODO: verify X]` inside LLM tags. Getting a number 3x wrong destroys credibility.
+2. **Minimum viable edits.** Add exactly what the response document promises — no more. Don't "improve" surrounding text.
+3. **Always tag with `\begin{llm}...\end{llm}`.** Every character you add or change must be inside LLM tags.
+4. **Match notation exactly.** Before writing any math, check the manuscript's existing notation: Greek letters, subscripts, superscripts, parameter names. Common failures: using `$\sigma$` when the manuscript uses `$\sigma_\gamma$`, writing sums when the model uses integrals, calling parameters by the wrong name (e.g., "unobserved interchange fees" when they are "fee adjustment parameters"). Verify every symbol against its definition in the manuscript.
+5. **Match the manuscript's style, avoid AI tells, and meet referee expectations.** Read surrounding paragraphs to match tense, voice, notation, and citation style. Apply all rules in `writing_quality.prompt` — no meta-commentary, no AI transitions, no banned vocabulary, plain language, active voice, terse and precise (Rule 6). Also ensure the edit meets the originating referee's evidence and tone expectations from their soul document.
+6. **Don't create labels.** If `\label{foo}` doesn't exist, don't add it — that implies structural changes requiring user review. Skip and flag.
+7. **Preserve manuscript structure.** Don't reorganize sections, move content, or delete existing text unless the claim specifically says to.
+8. **One claim, one edit.** Don't combine fixes for different claims into a single text block.
+9. **Skip rather than guess.** If you're unsure where content should go or what it should say, skip and mark for escalation.
+10. **Check downstream before deleting.** If condensing text, verify that any notation, labels, or results you remove are not referenced later in the manuscript. Over-deletion forces the author to re-add content.
+11. **Content goes in the right file.** Verify content placement: main text vs. online appendix vs. referee response. Data construction details belong in the data appendix. Detailed derivations belong in the model appendix. Sensitive/confidential results may only go in the referee response, not the published paper.
+
+## Response Document Edits
+
+Some claims require edits to the **response document** (not the manuscript). When auditing finds that a response promises something the manuscript already contains, but the response text is poorly written, the fix should target the response document.
+
+When editing the response document:
+1. **Read `response_patterns.prompt`** for voice, tone, and formatting conventions
+2. **Address the referee personally** — use "you" and "your," not "the referee"
+3. **Lead with concession, then pivot** — acknowledge the valid part of the criticism before making your argument
+4. **Be humble** — acknowledge limitations rather than defending everything
+5. **No cross-referee references** — each referee only reads their own response. Never reference what another referee said.
+6. **Cite specific locations** — point referees to exact sections, equations, footnotes, table/figure numbers
+7. **Confidentiality** — some results (single-firm data, retailer-specific charts) cannot go in the published paper. Move these to the response letter only and explain the data disclosure constraint.
+8. **Scale length to comment importance** — typos get one sentence, major concerns get structured multi-paragraph responses
+9. **Tag response edits** with `\begin{llm}...\end{llm}` just like manuscript edits
 
 ## Escalation
 
