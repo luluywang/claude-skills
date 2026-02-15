@@ -102,6 +102,10 @@ Never use: align, crucial, delve, elaborate, emphasize, enhance, enduring, foste
 - Numbers in prose must answer "so what?" If a number doesn't advance the argument, it belongs in a table.
 - After any numerical comparison, add a "because" or "since" — trace the causal mechanism.
 
+### Word Precision: Match the Model's Objects
+- Choose words that reflect the model's actual objects. If the model is about card usage (not ownership), write "use" not "carry." If the model has "merchants" not "firms," use "merchants."
+- Before picking verbs and nouns, check the model's definitions. The wrong word signals a misunderstanding of the paper's own framework.
+
 ### Useless Modifiers
 - Cut: "interesting," "various," "different," "certain," "particular"
 - Never praise your own work: "striking results," "very significant," "highly important"
@@ -120,6 +124,54 @@ The goal is that a reader cannot tell where the author's prose ends and the edit
 
 ---
 
+## Rule 6: Terse and Precise
+
+LLM-written prose consistently reads as a B-/C+ compared to A-/B for human-written sections. The core failure mode is **lecturing** — explaining to the reader rather than reporting results. Fix this:
+
+### Don't Explain What the Math Already Shows
+- If a displayed equation shows the result, do NOT restate it in prose. One sentence introducing the equation, then move on.
+- Wrong: "Differentiating the merchant's profit function with respect to price, applying the CES first-order condition, simplifying, and solving the resulting expression yields the following optimal pricing rule: [equation]. As we can see, the optimal price depends on the merchant fee through..."
+- Right: "The merchant's optimal price is [equation]."
+
+### One Sentence Over Multi-Paragraph
+- If a point can be stated in one sentence, use one sentence. Multi-paragraph formulations for simple ideas are the second-biggest AI tell after meta-commentary.
+- Wrong: 4 paragraphs with notation defining how the Durbin Amendment is simulated.
+- Right: "I match this in the model by simulating a 25 bps cut to debit rewards."
+
+### No Artificial Sequential Structure
+- NEVER: "First, we pin down X. Second, we pin down Y. Third, we pin down Z." when the estimation is joint.
+- NEVER: "Step 1... Step 2... Step 3..." framing for simultaneous procedures.
+- Estimation in economics is typically joint. If parameters are jointly identified, say so. Don't impose a false sequence.
+
+### Always Include Takeaways
+- After listing robustness checks, counterfactuals, or exercises: state the punchline. "What do we learn?" must be answerable from the text.
+- NEVER list exercises without summarizing conclusions. The reader needs to know what the results mean, not just that they exist.
+
+### Flowing Prose Over Bullet Lists
+- Replace bullet-point lists with flowing prose that builds intuition. Bullet lists in economics papers are a formatting crutch — build the argument in connected sentences.
+- Exception: `\begin{enumerate}` lists in referee responses when enumerating distinct changes are fine (see `response_patterns.prompt`).
+
+### No Approximate Signs When Exact Solutions Exist
+- If the algebra can be solved exactly, use `=` not `\approx`.
+- If the model admits a closed-form solution, present it exactly.
+
+### Legalistic Language Ban
+- NEVER: "a fortiori," "mutatis mutandis," "ceteris paribus" (except in established econ usage), "ipso facto"
+- This is an economics paper, not a legal brief.
+
+---
+
+## Rule 7: Don't Regress
+
+When rewriting a section, compare against the prior version. Key failure mode: LLM rewrites lose economic insights that the author carefully included in earlier drafts.
+
+Before submitting a rewrite:
+1. Check if the key economic intuition from the original is preserved
+2. Check if any notation defined in the original is still needed downstream
+3. If you removed content, verify it's not referenced later in the manuscript
+
+---
+
 ## Quick Self-Check (apply to every edit)
 
 - [ ] Can any sentence-initial transition be deleted without losing meaning?
@@ -130,3 +182,7 @@ The goal is that a reader cannot tell where the author's prose ends and the edit
 - [ ] Does every number answer "so what?"
 - [ ] Is the causal mechanism explicit, not just the outcome reported?
 - [ ] Does sentence length vary, or is every sentence ~20 words?
+- [ ] Could the point be made in one sentence instead of a paragraph?
+- [ ] Is there artificial sequential structure ("First... Second... Third...") for a joint procedure?
+- [ ] Does the edit preserve key insights from the prior version?
+- [ ] Is any notation being deleted that's still used downstream?

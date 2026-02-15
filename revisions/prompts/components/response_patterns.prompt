@@ -17,24 +17,17 @@
 Match the opening to the comment type:
 
 ### Substantive (high priority)
-- "Thank you for this suggestion."
-- "Thank you for your suggestions on how to [address X]."
-- "This is an important point."
-- "Thank you for this advice."
+- Jump straight to the substance: the economic mechanism, identification argument, or what changed.
+- When thanking, name what was helpful: "Thank you for suggesting the dual-routing counterfactual — it strengthened the welfare analysis."
+- "Your conjecture is correct: [restate the conjecture]."
 
 ### Clarification
-- "Thank you for flagging this."
 - "I have clarified [topic] in Section \ref{...}."
-- "Your conjecture is correct: [restate the conjecture]."
 
 ### Minor
 - "Thank you, I have corrected this."
 - "I have fixed this typo."
 - "Thank you for catching this."
-
-### Apologetic (when prior response was inadequate)
-- "I apologize for not being clear."
-- "I should have been clearer about this in the previous version."
 
 ## Body Patterns
 
@@ -64,12 +57,13 @@ Use the user's citation commands:
 - Parenthetical: `\parencite{Author2020}` → "...as shown in prior work \parencite{Author2020}."
 - Multiple: `\parencite{Author2020, Other2021}`
 
-### Cross-Referencing Other Responses
+**Make citations do work.** Every citation must explain WHY you're citing — not just a parenthetical. "Because past work shows X \parencite{Y}" is stronger than "...consistent with prior findings \parencite{Y}."
 
-When the same issue spans referees:
-- "This also addresses the concern raised by Referee N about [topic]."
-- "I discuss this further in my response to the Editor's comment (a)."
-- Use `\editorcomment{#1}{These responds to concerns by R1 and R4 about [topic]}` if the command is available.
+### Shared Concerns Across Referees
+
+When multiple referees raise the same issue, each response must be self-contained — never reference another referee's response (each referee only reads their own letter). Instead:
+- Write independent responses to each referee addressing the shared concern
+- Use `\editorcomment{#1}{This responds to concerns by R1 and R4 about [topic]}` in the editor letter only (the editor reads everything)
 
 ### Data and Results
 
@@ -77,6 +71,34 @@ When citing specific numbers:
 - "The F-statistic drops from 23 to 4 in services."
 - Use `\scalarinput{variable_name}` when the user has dynamic scalar inputs.
 - "I arrive at a similar estimate that [specific finding]."
+
+## Substance Over Procedure
+
+### Lead with the economic mechanism (not procedure)
+Don't open with "I have revised the discussion of X." Instead, state the actual identification argument, economic mechanism, or substantive point — then note where the revision appears.
+
+### Be honest about model limitations
+When the model can't answer a question, say so: "The model is not well-suited to answer this question." Don't attempt answers the model can't support.
+
+### Name the exact constraint
+Not "the data are not precise enough" but "the DCPC has limited AmEx coverage." Not "a small number of events" but "only two clear cases." Specificity is more credible and more useful.
+
+### Distinguish claims from evidence
+Hedge mechanisms, not facts. When the data doesn't directly show a mechanism: "While the data does not provide direct evidence on the mechanism, one possibility consistent with testimony is..."
+
+### Give concrete examples of assumption violations
+When discussing identifying assumptions, don't just state them abstractly — show what would violate them. E.g., "A co-branded card campaign that shifts both acceptance and card holdings would violate this assumption."
+
+### Reference literature, don't re-derive
+When a theoretical result is already established: "The theoretical literature has already established this... I take the benchmark and evaluate it directly." Don't re-derive known results.
+
+### State the contribution clearly
+Distinguish what the paper adds from what it borrows. Be explicit about the paper's unique contribution relative to prior work.
+
+## Structure
+
+### Consolidate related comments
+When 2-3 related referee comments cover the same ground, consolidate into a single unified reply rather than repeating similar arguments across separate responses. Each comment can still get a brief individual acknowledgment, but the substantive reasoning belongs in one place.
 
 ## Length Scaling
 
@@ -98,6 +120,47 @@ When citing specific numbers:
 6. **Percent**: `\%` in LaTeX context
 7. **Dollar amounts**: `\$8 billion`
 
+## Tone: Personal and Humble
+
+### Address the Referee Personally
+- Use "you" and "your" when addressing the referee: "In response to your concern about..."
+- Prefer "You are exactly right that..." over "The referee raises an important point..."
+- Be conversational: "as you note," "your suggestion," "the issue you raise"
+
+### Lead with Concession, Then Pivot
+The strongest response structure:
+1. Concede the legitimate part of the criticism
+2. Pivot to what the referee is missing or what you've done about it
+
+- "I agree that [referee's point]. However, the mechanism in the model operates through [what they're missing]."
+- "You are correct that [X]. I have addressed this by [specific action]."
+- "This is an important concern. The key distinction is between [A] and [B]."
+
+### Be Humble
+- Acknowledge limitations rather than defending everything
+- "I should have been clearer about this" is better than explaining why the referee misread
+- When asked to do more work, "elevate the fact that I did the work" — show the referee you took their concern seriously
+
+### No Cross-Referee References
+Each referee only reads their OWN response letter. NEVER write:
+- "As I noted in my response to Referee 2..."
+- "The referee raises a concern similar to Referee 1's Comment 3..."
+- "This also addresses the concern raised by Referee N about..."
+
+Each response must be self-contained. If the same issue spans referees, write independent responses to each. Use `\editorcomment{}` to flag shared concerns only in the editor letter.
+
+### Cite Specific Locations
+Referees should know exactly where to look:
+- "I have revised Section \ref{subsec:model-assumptions} to state these limitations directly."
+- "See the footnote on page [X] for the identifying assumption."
+- Always point to: equations, sections, footnotes, appendix locations, table/figure numbers.
+
+### Confidentiality Awareness
+Some content cannot go in the published paper due to data disclosure requirements:
+- Single-firm results, retailer-specific charts → referee response only
+- "Data disclosure requirements mean I can't put these results in the paper, but I include them here for the referee's review."
+- Move confidential charts/tables to the response letter, not the main text or appendix.
+
 ## Anti-Patterns (Avoid)
 
 - "I would like to thank the referee for this excellent suggestion." → Too sycophantic
@@ -106,3 +169,9 @@ When citing specific numbers:
 - "I have made many changes throughout the paper." → Not specific enough.
 - Starting every response with "Thank you for..." → Vary openings.
 - Repeating the same explanation for related comments → Cross-reference instead.
+- "As the referee noted in an earlier comment..." when referencing a DIFFERENT referee → Wrong audience
+- Packing in more content than the referee asked for → Looks like anticipating criticism
+- Multi-paragraph response for a typo or minor suggestion → Scale length to comment importance
+- Generic throat-clearing: "The referee raises an important point," "This is an interesting thought experiment," "I apologize for not being clear" → Just answer the question.
+- Self-congratulatory framing: "This approach has two main advantages..." → Let the evidence speak.
+- Vague cross-references: "I clarified this in the text" → Say where: "see footnote~\ref{foot:surcharge-equivalence}"

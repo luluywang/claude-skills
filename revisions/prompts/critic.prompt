@@ -85,6 +85,7 @@ Scan the fixer's edits for issues:
    - Apologetic framing ("We apologize...", "We regret...") for a referee with low apology tolerance → flag
    - Dismissive tone for a referee with low defense tolerance → flag
    - Patterns matching any item in the referee's Red Flags list → flag
+13. **Fabricated verification:** Check for claims like "I have verified X," "I have computed X to verify Y," or "Computing Y confirms Z" in response document edits where no actual computation occurred. If the verification cannot be traced to a table, figure, `\scalarinput{}`, or code output in the manuscript, flag as `fabricated_verification`.
 
 ## Output
 
