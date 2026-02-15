@@ -29,7 +29,6 @@ Comprehensive copyediting system for academic writing, following McCloskey and C
 /copyedit sentence intro.tex        # Sentence structure analysis
 /copyedit structure paper/          # Paper structure analysis
 /copyedit flow paper/               # Flow extraction
-/copyedit quality paper/            # Writing quality assessment
 /copyedit methodology paper/        # Methodology clarity
 ```
 
@@ -60,7 +59,6 @@ Comprehensive copyediting system for academic writing, following McCloskey and C
 |------|--------|-------------|
 | `structure` | notes/structure_analysis.md | High-level paper organization |
 | `flow` | notes/flow_extraction.md | Paragraph skeleton and flow analysis |
-| `quality` | notes/writing_quality.md | Paragraph-level writing quality (focus, mechanism, precision) |
 | `methodology` | notes/methodology_review.md | Identification strategy clarity |
 
 ---
@@ -75,9 +73,8 @@ Comprehensive copyediting system for academic writing, following McCloskey and C
 | "check sentence rhythm" | sentence |
 | "improve structure", "paper flow" | structure |
 | "extract flow", "first sentences" | flow |
-| "grade writing quality", "improve writing" | quality |
 | "comprehensive review" | grammar + ai_detection + word_choice + sentence |
-| "full review" | All tasks (including quality) |
+| "full review" | All tasks |
 
 ---
 
@@ -88,7 +85,6 @@ Comprehensive copyediting system for academic writing, following McCloskey and C
 | `review` | grammar + ai_detection + word_choice + sentence |
 | `full` | All tasks including paper-level |
 | `quick` | grammar + ai_detection |
-| `quality` | writing_quality |
 
 ---
 
@@ -137,8 +133,7 @@ paper/
     ├── word_choice_review.md
     ├── sentence_analysis.md
     ├── structure_analysis.md
-    ├── flow_extraction.md
-    └── writing_quality.md
+    └── flow_extraction.md
 ```
 
 ---
@@ -242,21 +237,6 @@ Applies all `[x]` marked changes to source files
 
 ---
 
-## Session History
-
-Old copyedit runs are archived automatically when a new session starts:
-
-```
-notes/history/20250211_183000/   ← timestamped snapshot of prior run
-notes/history/20250212_091500/   ← another prior run
-```
-
-The archival script (`scripts/new_session.sh`) moves `.md` files, `tasks.json`, and `.copyedit_status` into `notes/history/{timestamp}/`. It is idempotent — safe to run when no prior output exists.
-
-To manually reset instead: `rm -rf notes/`
-
----
-
 ## Task Prompts
 
 Individual task prompts are located at:
@@ -267,7 +247,6 @@ Individual task prompts are located at:
 - `prompts/tasks/sentence_analysis.prompt`
 - `prompts/tasks/structure.prompt`
 - `prompts/tasks/flow_extraction.prompt`
-- `prompts/tasks/writing_quality.prompt`
 - `prompts/tasks/methodology.prompt`
 - `prompts/tasks/apply_marked.prompt`
 - `prompts/tasks/interactive_review.prompt`

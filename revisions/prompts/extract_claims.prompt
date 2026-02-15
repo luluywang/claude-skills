@@ -136,4 +136,3 @@ Do NOT return the full claims array inline. The orchestrator reads `current/clai
 4. **Be precise with labels.** Extract the exact label string from `\ref{subsec:durbin}` → `"subsec:durbin"`, not a paraphrase.
 5. **Keywords should be distinctive.** Choose words that distinguish this claim from the rest of the manuscript. Avoid generic terms.
 6. **One claim per assertion.** Don't merge "I added X and revised Y" into a single claim — split them.
-7. **Flag cross-referee references.** If a reply references another referee's comment ("as I discussed in my response to Referee 2"), flag it — each referee only reads their own response letter. The fixer should make each response self-contained.

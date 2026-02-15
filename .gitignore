@@ -8,5 +8,8 @@
 # Cache files
 */cache/
 
+# Reference data (not skills)
+reference/
+
 # Logs
 claude-logs

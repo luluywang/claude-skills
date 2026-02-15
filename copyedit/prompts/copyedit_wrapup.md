@@ -43,7 +43,6 @@ Scan these files if they exist:
 - `notes/simplifications.md`
 - `notes/word_choice_review.md`
 - `notes/sentence_analysis.md`
-- `notes/writing_quality.md`
 
 ### Identify Duplicates
 
@@ -66,13 +65,10 @@ When duplicates found:
 4. Remove the duplicate from the other file
 
 **Priority order for keeping:**
-1. `writing_quality.md` (deepest paragraph-level judgment)
-2. `word_choice_review.md` (most specific for individual words)
-3. `sentence_analysis.md` (quantitative)
-4. `simplifications.md` (general suggestions)
-5. `ai_detection.md` (pattern identification)
-
-**Note:** `writing_quality` takes precedence over `ai_detection` Part C for overlapping rhetorical/argument issues. If both flag the same passage, keep the `writing_quality` version (it has the actionable rewrite).
+1. `word_choice_review.md` (most specific)
+2. `sentence_analysis.md` (quantitative)
+3. `simplifications.md` (general suggestions)
+4. `ai_detection.md` (pattern identification)
 
 ### Write Cleaned Files
 
