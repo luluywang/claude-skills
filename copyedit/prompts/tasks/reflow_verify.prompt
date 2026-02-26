@@ -1,0 +1,71 @@
+# Task: Reflow Verification
+
+**Model:** Haiku (file verification)
+
+**Purpose:** Inspect a reflowed .tex file for suspicious sentence breaks that the script may have missed or introduced incorrectly.
+
+**Output:**
+- Appends issues to `notes/reflow_verify.md` (only if issues found)
+
+---
+
+## What to Check
+
+Read the .tex file passed by the orchestrator. Scan each non-blank, non-comment line for these patterns:
+
+### 1. Short fragment lines (< 20 characters, non-structural)
+
+Lines that are very short and look like they should be part of the previous or next sentence:
+- Abbreviation fragments ending a line: `U.`, `S.`, `Fig.`, `Sec.`, `Eq.`, `al.`
+- A line that is just punctuation or a partial word
+
+**Skip** structural short lines: `\end{...}`, `\begin{...}`, `%` comments, lines inside table/equation environments.
+
+### 2. Lines starting with lowercase
+
+A line that begins with a lowercase letter likely represents a mid-sentence split. The script should have kept these joined, but may miss cases involving:
+- Lines starting with lowercase after a line ending with a comma
+- Lines starting with `(` followed by lowercase (continuation of a parenthetical)
+
+**Skip** lines inside environments (table, equation, align, etc.) and comment lines.
+
+### 3. Missed abbreviation patterns
+
+Lines where the previous line ends with a known abbreviation fragment that should NOT be a sentence boundary:
+- `e.g.`, `i.e.`, `vs.`, `cf.`, `et al.`, `op.`, `cit.`
+- Single uppercase letter followed by period: `A.`, `B.`, `C.` (initials)
+
+### 4. Detached LaTeX fragments
+
+A line that is just a LaTeX command argument fragment, e.g.:
+- A line containing only `}` or `{}` when not part of a known block command
+- A `\footnote{` split across lines mid-sentence
+
+---
+
+## Output Format
+
+If issues are found, append to `notes/reflow_verify.md`:
+
+```markdown
+## [filename.tex]
+
+- [ ] Line 42: Short fragment — `al.` on its own line (likely split from "et al.")
+- [ ] Line 87: Lowercase start — line begins with `the` (possible mid-sentence break)
+- [ ] Line 103: Possible missed abbreviation — previous line ends with `i.e.`
+```
+
+If no issues found for this file, do **not** write anything to `notes/reflow_verify.md`.
+
+---
+
+## Return Value
+
+```json
+{
+  "status": "complete",
+  "issues_found": N
+}
+```
+
+Use `"status": "flagged"` if `issues_found > 0`.
