@@ -93,6 +93,7 @@ Return: {phase: "fresh"|"resume", details}
 | "Sentence rhythm" / "Check variation" | sentence_analysis |
 | "Strip llm tags" / "Remove llm wrappers" / "Finalize" | strip_llm |
 | "Grade writing quality" / "Improve writing" | writing_quality |
+| "Reflow sentences" / "One sentence per line" / "reflow" | reflow (Phase 0 — pre-processing) |
 | "Comprehensive review" | grammar, ai_detection, word_choice, sentence_analysis |
 | "Full review" | All tasks (including writing_quality) |
 
@@ -112,6 +113,59 @@ Return: {phase: "fresh"|"resume", details}
 ## Step 3: Diagnostic Questions
 
 @IMPORT: shared/components/diagnostic_workflow.prompt
+
+---
+
+## Phase 0: Reflow (Pre-Processing)
+
+**Run this phase only IF the user requested reflow. Skip entirely otherwise.**
+
+### Phase 0a: Script Execution
+
+Spawn ONE Haiku subagent using `reflow.prompt`:
+
+```
+Task: [copyedit:reflow] Run sentence reflow
+Model: haiku
+
+Instructions:
+Read the task prompt: prompts/tasks/reflow.prompt
+
+Files to process: {list of absolute file paths from scope}
+Skill dir: {skill_dir}
+
+Return: {status: complete, files_processed: N, errors: [...]}
+```
+
+- Pass file **paths** only — do NOT pass file contents
+- Use `run_in_background: true`
+- Wait for task-notification
+- If errors returned: surface to user before proceeding
+
+### Phase 0b: Verification (Parallel, One Per File)
+
+After Phase 0a completes, initialize `notes/reflow_verify.md` with header `# Reflow Verification`, then spawn one Haiku subagent **per file** using `reflow_verify.prompt`:
+
+```
+Task: [copyedit:reflow_verify] {file}
+Model: haiku
+
+Instructions:
+Read the task prompt: prompts/tasks/reflow_verify.prompt
+
+File to verify: {absolute_file_path}
+
+Return: {status: complete|flagged, issues_found: N}
+```
+
+- Use `run_in_background: true` on each
+- Wait for all task-notifications
+- If any subagent returns `issues_found > 0`:
+  - Read `notes/reflow_verify.md` and display flagged items to user
+  - Use AskUserQuestion: "Reflow introduced some suspicious sentence breaks (see above). How would you like to proceed?"
+    - Options: "Continue with review anyway" / "I'll fix issues first (pause)" / "Cancel"
+  - Handle accordingly
+- If no issues found: proceed directly to Step 4
 
 ---
 
@@ -250,14 +304,15 @@ The `new_session.sh` script already ran in Step 1, so `notes/` is guaranteed cle
 1. Create `notes/` directory if needed
 2. Create output files with headers:
 
-| Output File | Header |
-|-------------|--------|
-| `notes/copy_edits.md` | `# Grammar & Mechanics Corrections` |
-| `notes/ai_detection.md` | `# AI Detection Review` |
-| `notes/simplifications.md` | `# Suggested Simplifications` |
-| `notes/word_choice_review.md` | `# Word Choice Review` |
-| `notes/sentence_analysis.md` | `# Sentence Structure Analysis` |
-| `notes/writing_quality.md` | `# Writing Quality Assessment` |
+| Output File | Header | When Created |
+|-------------|--------|--------------|
+| `notes/copy_edits.md` | `# Grammar & Mechanics Corrections` | Step 5 |
+| `notes/ai_detection.md` | `# AI Detection Review` | Step 5 |
+| `notes/simplifications.md` | `# Suggested Simplifications` | Step 5 |
+| `notes/word_choice_review.md` | `# Word Choice Review` | Step 5 |
+| `notes/sentence_analysis.md` | `# Sentence Structure Analysis` | Step 5 |
+| `notes/writing_quality.md` | `# Writing Quality Assessment` | Step 5 |
+| `notes/reflow_verify.md` | `# Reflow Verification` | Phase 0b (only if reflow requested) |
 
 3. Write `notes/tasks.json` with enumerated tasks
 4. Write `execution` to `notes/.copyedit_status`

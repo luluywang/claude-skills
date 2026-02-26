@@ -1,39 +1,47 @@
 # Task: Reflow Sentences
 
-**Model:** Haiku (simple script execution)
+**Model:** Haiku (script execution only)
 
-**Purpose:** Reformat LaTeX files to place one sentence per line, improving readability for version control and editing.
+**Purpose:** Run the reflow_sentences.py script on each .tex file to place one sentence per line.
 
 **Output:**
-- Modified .tex files in place
+- Modified .tex files in place (script writes directly)
 
 ---
 
-## What This Task Does
+## CRITICAL: No File Reading
 
-Runs the `reflow_sentences.py` script on each requested .tex file. The script:
+**DO NOT use the Read tool or any file-reading operation.**
+**DO NOT glob for .tex files — the orchestrator provides the file list.**
 
-- Places each sentence on its own line
-- Preserves abbreviations (U.S., e.g., Dr., et al., etc.)
-- Skips special environments (tables, equations, math blocks)
-- Handles LaTeX commands appropriately
-- Preserves blank lines between paragraphs
+This task uses ONLY the Bash tool to execute the Python script.
 
 ---
 
 ## Workflow
 
-1. Identify all .tex files to process (from user scope)
-2. For each file, run:
-   ```bash
-   python3 /Users/luluwang/Dropbox/Documents/Economics/Projects/Claude/reflow_sentences.py <file>
-   ```
-3. Report files processed
+The orchestrator passes you a list of absolute file paths. For each file path, run ONE bash call:
+
+```bash
+python3 {skill_dir}/scripts/reflow_sentences.py <absolute_file_path>
+```
+
+Where `{skill_dir}` is the copyedit skill directory (the same directory that contains `prompts/` and `scripts/`).
+
+**One Bash call per file. No other tool calls.**
 
 ---
 
-## Quality Control
+## Return Value
 
-- [ ] Script executed successfully on all files
-- [ ] Files still compile (no LaTeX errors introduced)
-- [ ] Math environments and tables preserved unchanged
+After all files are processed, return:
+
+```json
+{
+  "status": "complete",
+  "files_processed": N,
+  "errors": []
+}
+```
+
+If a file fails, include it in `errors` as `{"file": "<path>", "error": "<message>"}` and continue processing remaining files.
