@@ -20,8 +20,8 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 LOGS_DIR = Path("/Users/luluywang/Library/CloudStorage/Dropbox/claude-logs/claude")
-SKILL_DIR = Path("/Users/luluywang/.claude/skills/self-improve")
-MANIFEST_PATH = SKILL_DIR / "cache" / "manifest.json"
+CACHE_DIR = Path("/Users/luluywang/Library/CloudStorage/Dropbox/claude-logs/self-improve-cache")
+MANIFEST_PATH = CACHE_DIR / "manifest.json"
 MIN_SIZE_KB = 10
 
 
