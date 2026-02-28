@@ -4,8 +4,9 @@ update_manifest.py — Record one or more processed files in the manifest.
 
 Usage:
     python3 update_manifest.py <rel_path> [--summary-file cache/sessions/xyz.md]
-    python3 update_manifest.py --batch entries.json   # JSON list of {rel_path, summary_file?}
-    python3 update_manifest.py --set-last-run-date    # Update last_run_date to now
+    python3 update_manifest.py --batch entries.json       # JSON list of {rel_path, summary_file?}
+    python3 update_manifest.py --set-last-run-date        # Update last_run_date to now
+    python3 update_manifest.py --update-skills '{...}'   # Merge skill session counts
 
 Writes atomically (writes to .tmp then renames).
 """
@@ -17,15 +18,15 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-SKILL_DIR = Path("/Users/luluywang/.claude/skills/self-improve")
-MANIFEST_PATH = SKILL_DIR / "cache" / "manifest.json"
+CACHE_DIR = Path("/Users/luluywang/Library/CloudStorage/Dropbox/claude-logs/self-improve-cache")
+MANIFEST_PATH = CACHE_DIR / "manifest.json"
 
 
 def load_manifest():
     if MANIFEST_PATH.exists():
         with open(MANIFEST_PATH) as f:
             return json.load(f)
-    return {"version": 1, "last_updated": None, "last_run_date": None, "processed": {}}
+    return {"version": 1, "last_updated": None, "last_run_date": None, "skills": {}, "processed": {}}
 
 
 def save_manifest(manifest):
@@ -53,13 +54,27 @@ def main():
     parser.add_argument("--batch", default=None, help="Path to JSON file with list of entries")
     parser.add_argument("--set-last-run-date", action="store_true",
                         help="Set last_run_date to current UTC time")
+    parser.add_argument("--update-skills", default=None,
+                        help='JSON object of {skill: session_count} to merge, e.g. \'{"econ_ra": 5}\'')
     args = parser.parse_args()
 
     manifest = load_manifest()
+    if "skills" not in manifest:
+        manifest["skills"] = {}
 
     if args.set_last_run_date:
         now = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
         manifest["last_run_date"] = now
+        manifest["last_updated"] = now
+
+    if args.update_skills:
+        skills_data = json.loads(args.update_skills)
+        today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        now = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+        for skill, count in skills_data.items():
+            entry = manifest["skills"].setdefault(skill, {"sessions": 0, "last_seen": None})
+            entry["sessions"] += int(count)
+            entry["last_seen"] = today
         manifest["last_updated"] = now
 
     if args.batch:
@@ -74,8 +89,9 @@ def main():
             )
     elif args.rel_path:
         record_entry(manifest, args.rel_path, summary_file=args.summary_file)
-    elif not args.set_last_run_date:
-        print("Error: provide rel_path, --batch, or --set-last-run-date", file=sys.stderr)
+    elif not args.set_last_run_date and not args.update_skills:
+        print("Error: provide rel_path, --batch, --set-last-run-date, or --update-skills",
+              file=sys.stderr)
         sys.exit(1)
 
     save_manifest(manifest)

@@ -15,8 +15,9 @@ Produces ranked, evidence-backed proposals. Applies them on demand.
 ## Key Paths
 
 ```
-LOGS_DIR  = /Users/luluywang/Library/CloudStorage/Dropbox/claude-logs/claude
-SKILL_DIR = /Users/luluywang/.claude/skills/self-improve
+LOGS_DIR   = /Users/luluywang/Library/CloudStorage/Dropbox/claude-logs/claude
+CACHE_DIR  = /Users/luluywang/Library/CloudStorage/Dropbox/claude-logs/self-improve-cache
+SKILL_DIR  = /Users/luluywang/.claude/skills/self-improve
 SKILLS_DIR = /Users/luluywang/.claude/skills
 ```
 
@@ -28,11 +29,16 @@ SKILLS_DIR = /Users/luluywang/.claude/skills
 /self-improve --since 90d  # Last 90 days
 /self-improve --all        # Reprocess all logs (full audit)
 /self-improve --report     # Re-read last proposals without reprocessing
-/self-improve apply P1     # Apply proposal P1 from most recent proposals file
+/self-improve docket       # Show all pending docket items (no re-scan)
+/self-improve apply P1     # Apply proposal P1 from docket (marks as applied)
 /self-improve apply P1 P3  # Apply multiple proposals
+/self-improve close P1     # Close/reject a docket item without applying
 /self-improve compress     # Gzip processed logs older than 90 days
 /self-improve compress --older-than 30d
 ```
+
+IDs accept either short form (`P1`) resolved against the most recent proposals file,
+or full docket form (`20260227/P1`).
 
 ---
 
@@ -40,19 +46,38 @@ SKILLS_DIR = /Users/luluywang/.claude/skills
 
 ### `--report` Subcommand
 Skip all analysis. Just:
-1. Find the most recent `cache/proposals_*.md` (sort by date)
+1. Find the most recent `{CACHE_DIR}/proposals_*.md` (sort by date)
 2. Read and present it to the user
 
 ---
 
+### `docket` Subcommand
+1. Read `{CACHE_DIR}/docket.md`
+2. Extract all entries under `## Pending`
+3. Display as a compact table (ID | Title | Type | Target | Effort | Added) plus item count
+
+---
+
+### `close` Subcommand
+Usage: `/self-improve close P1` or `/self-improve close 20260227/P1`
+
+1. Resolve the ID: short form `P1` → find matching entry in docket whose ID ends in `/P1` from the most recent run date
+2. Read `{CACHE_DIR}/docket.md`
+3. Move the matching entry from `## Pending` to `## Closed`, prepending `**Closed**: {today's date}` to its metadata line
+4. Write the updated docket
+5. Confirm: "Closed 20260227/P1: {title}"
+
+---
+
 ### `apply` Subcommand
-1. Find most recent `cache/proposals_*.md`
-2. Read it; extract the specified proposal(s) by ID (P1, P2, ...)
+1. Resolve the ID: short form `P1` → match entry in `{CACHE_DIR}/docket.md` whose ID ends in `/P1` from the most recent run date; full form `20260227/P1` → direct lookup
+2. Read the full proposal text from `{CACHE_DIR}/docket.md` (under `## Pending`)
 3. For **Type A** or **Type C** (skill improvement / UX): spawn a **Sonnet subagent**
    with `@prompts/skill_editor.md` plus the proposal text and target skill path
 4. For **Type B** (new skill): spawn a **Sonnet subagent**
    with `@prompts/skill_creator.md` plus the proposal text
-5. Present the diff summary returned by the subagent
+5. On success: move the entry in `{CACHE_DIR}/docket.md` from `## Pending` to `## Applied`, prepending `**Applied**: {today's date}`
+6. Present the diff summary returned by the subagent
 
 ---
 
@@ -67,126 +92,28 @@ Report files compressed and MB freed.
 
 ### Main Analysis Workflow (default / `--since` / `--all`)
 
-#### Phase 1 — SCAN
+Spawn a **general-purpose subagent** with `@prompts/orchestrator.md`, passing:
+- `ARGS`: the invocation flags (e.g., `--since 7d`, `--all`, or empty)
+- `LOGS_DIR`: `/Users/luluywang/Library/CloudStorage/Dropbox/claude-logs/claude`
+- `CACHE_DIR`: `/Users/luluywang/Library/CloudStorage/Dropbox/claude-logs/self-improve-cache`
+- `SKILL_DIR`: `/Users/luluywang/.claude/skills/self-improve`
+- `SKILLS_DIR`: `/Users/luluywang/.claude/skills`
 
-Run:
-```bash
-python3 {SKILL_DIR}/scripts/scan_logs.py [--since Nd] [--all]
-```
-This respects `cache/manifest.json` and `last_run_date`. Returns JSON list of unprocessed files.
+Present the subagent's return value (compact proposals table) to the user.
 
-Output: `--- [SCAN] Found N new files (X MB)`
-
-If 0 new files → skip to Phase 3 (re-run aggregation on cached outputs).
-
-#### Phase 2A — TARGETED SKILL ANALYSIS
-
-**Step 1 — Grep (Bash)**:
-```bash
-python3 {SKILL_DIR}/scripts/find_skill_sessions.sh
-```
-Returns JSON map `{skill: [path, ...]}`. Takes seconds.
-
-**Step 2 — Per-skill Haiku subagents (parallel)**:
-For each skill with ≥1 matched session file that is also in the Phase 1 new-files list:
-
-Spawn a **Haiku subagent** with `@prompts/skill_analyst.md`, passing:
-- `SKILL_NAME`: the skill name
-- `SESSION_FILES`: matched paths (intersected with Phase 1 list, max 15 per skill)
-- `SKILL_DIR`: `{SKILLS_DIR}`
-- `OUTPUT_FILE`: `{SKILL_DIR}/cache/skill-analysis/{skill_name}.md`
-
-Output: `--- [2A] econ_ra: analyzed N sessions → cache/skill-analysis/econ_ra.md`
-
-#### Phase 2B — GENERAL SESSION SCAN
-
-Files from Phase 1 that were NOT matched in Phase 2A (no skill grep hit).
-
-If >0 unmatched files:
-
-**Step 1 — Extract user messages (Bash, per file)**:
-```bash
-python3 {SKILL_DIR}/scripts/extract_user_messages.py "{path}" --max-kb 20
-```
-
-**Step 2 — Session analyst Haiku subagents (batches of ≤10)**:
-Spawn **Haiku subagents** with `@prompts/session_analyst.md`, passing:
-- `SESSION_FILES`: batch of ≤10 file paths
-- `EXISTING_SKILLS`: econ_ra, copyedit, parsepdf, referee, revisions, taskmaster
-- `OUTPUT_DIR`: `{SKILL_DIR}/cache/sessions/`
-
-Each subagent returns a JSON list of `{rel_path, summary_file}` pairs.
-
-After each batch: run `python3 {SKILL_DIR}/scripts/update_manifest.py --batch {entries_json}`.
-
-Output: `--- [2B] Processed N sessions → M summaries written`
-
-#### Phase 3 — AGGREGATE PATTERNS
-
-Spawn a **Sonnet subagent** with `@prompts/pattern_aggregator.md`, passing:
-- `SKILL_ANALYSIS_DIR`: `{SKILL_DIR}/cache/skill-analysis/`
-- `SESSIONS_DIR`: `{SKILL_DIR}/cache/sessions/`
-- `EXISTING_AGGREGATE`: `{SKILL_DIR}/cache/aggregate.md`
-- `OUTPUT_FILE`: `{SKILL_DIR}/cache/aggregate.md`
-
-Output: `--- [3] Aggregate updated → cache/aggregate.md`
-
-#### Phase 4 — GENERATE PROPOSALS
-
-Spawn an **Opus subagent** with `@prompts/proposal_writer.md`, passing:
-- `AGGREGATE_FILE`: `{SKILL_DIR}/cache/aggregate.md`
-- `SKILLS_DIR`: `{SKILLS_DIR}`
-- `OUTPUT_FILE`: `{SKILL_DIR}/cache/proposals_{YYYYMMDD}.md`
-
-Output: `--- [4] Proposals written → cache/proposals_{date}.md`
-
-#### Phase 5 — UPDATE MANIFEST + PRESENT
-
-Run:
-```bash
-python3 {SKILL_DIR}/scripts/update_manifest.py --set-last-run-date
-```
-
-Present a summary of the proposals file to the user:
-- List each proposal by ID and title
-- Show evidence count and effort
-- Tell the user: "Run `/self-improve apply P1` to implement any proposal."
-
----
-
-## Progress Output Convention
-
-```
---- [SCAN] Found 23 new files (45.2 MB)
---- [2A] Skill grep: econ_ra=8, copyedit=3, parsepdf=1, revisions=2
---- [2A] econ_ra: analyzing 8 sessions...
---- [2A] econ_ra: done → cache/skill-analysis/econ_ra.md
---- [2B] Processing 12 general sessions (2 batches)...
---- [2B] Done: 12 sessions → 8 summaries
---- [3] Aggregating patterns...
---- [3] Done → cache/aggregate.md
---- [4] Writing proposals...
---- [4] Done → cache/proposals_20260227.md
---- [DONE] Manifest updated. 7 proposals generated.
-```
-
----
-
-## Orchestrator Rules
-
-- Orchestrator coordinates — it does NOT do the analysis itself.
-- Spawn subagents for all LLM work (skill_analyst, session_analyst, pattern_aggregator, proposal_writer).
-- Use Bash directly for scripts (scan_logs.py, find_skill_sessions.sh, update_manifest.py).
-- Keep orchestrator context lean: only pass inputs/outputs, not raw session content.
-- Do NOT use TaskCreate/TaskUpdate tools.
+Tell the user: "Run `/self-improve apply P1` to implement any proposal."
 
 ---
 
 ## Cache Structure
 
+Stored in `CACHE_DIR` (`~/Dropbox/claude-logs/self-improve-cache/`), separate from the
+skill directory so upgrades to the skill never lose processed state.
+
 ```
-cache/
-├── manifest.json          # Processed files + last_run_date high-water mark
+self-improve-cache/
+├── manifest.json          # Processed files, last_run_date, and skills usage registry
+├── docket.md              # Persistent backlog: all proposals with status tracking
 ├── skill-analysis/
 │   ├── econ_ra.md         # Per-skill findings (Phase 2A output)
 │   ├── copyedit.md
@@ -194,5 +121,29 @@ cache/
 ├── sessions/
 │   └── {date}_{prefix}.md # Per-session discovery summaries (Phase 2B output)
 ├── aggregate.md           # Rolling aggregate (Phase 3 output, appended each run)
-└── proposals_{date}.md    # Ranked proposals (Phase 4 output, one per run)
+└── proposals_{date}.md    # Ranked proposals snapshot (Phase 4 output, one per run)
 ```
+
+### Manifest Schema
+
+```json
+{
+  "version": 1,
+  "last_updated": "2026-02-27T...",
+  "last_run_date": "2026-02-27T...",
+  "skills": {
+    "econ_ra":  {"sessions": 42, "last_seen": "2026-02-27"},
+    "copyedit": {"sessions": 18, "last_seen": "2026-01-15"}
+  },
+  "processed": {
+    "filename.jsonl": {"processed_at": "...", "summary_file": "...", "compressed": false}
+  }
+}
+```
+
+`skills` is populated by Phase 2A and persists across runs, making it easy to see which
+skills are actively used without re-scanning logs.
+
+### Docket IDs
+Format: `YYYYMMDD/P{n}` — run date plus proposal number within that run.
+Short form `P1` resolves to the most recent run's `P1` entry in the docket.
