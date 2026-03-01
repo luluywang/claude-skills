@@ -22,6 +22,10 @@ CHECKS_EXISTS="missing"
 SESSION_LOG_EXISTS="missing"
 DIAGNOSTIC_STATE_EXISTS="missing"
 DIAGNOSTIC_MODE="false"
+PROJECT_STATE_EXISTS="missing"
+
+# Check for project_state.md (lives at WORK_DIR level, not inside current/)
+[ -f "$WORK_DIR/project_state.md" ] && PROJECT_STATE_EXISTS="exists"
 
 # Step 1: Create directory if needed
 if [ ! -d "$CURRENT_DIR" ]; then
@@ -105,6 +109,24 @@ else
                 REASON="Diagnostic complete - generating summary"
                 DIAGNOSTIC_MODE="true"
                 ;;
+            # Investigation mode
+            "investigate")
+                PHASE="investigate"
+                REASON="Investigation in progress"
+                ;;
+            "investigate_complete")
+                PHASE="investigate_complete"
+                REASON="Investigation complete - report ready"
+                ;;
+            # Verification mode
+            "verify")
+                PHASE="verify"
+                REASON="Verification in progress"
+                ;;
+            "verify_complete")
+                PHASE="verify_complete"
+                REASON="Verification complete - report ready"
+                ;;
             *)
                 PHASE="unknown"
                 REASON="Unrecognized status: $STATUS_CONTENT"
@@ -139,7 +161,8 @@ cat << EOF
     "tasks": "$TASKS_EXISTS",
     "checks": "$CHECKS_EXISTS",
     "session_log": "$SESSION_LOG_EXISTS",
-    "diagnostic_state": "$DIAGNOSTIC_STATE_EXISTS"
+    "diagnostic_state": "$DIAGNOSTIC_STATE_EXISTS",
+    "project_state": "$PROJECT_STATE_EXISTS"
   }
 }
 EOF
