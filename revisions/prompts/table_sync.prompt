@@ -1,0 +1,146 @@
+# Table Sync Task
+
+**Purpose:** Compare updated tables against manuscript text, identify every numerical conflict (observation counts, percentage effects, test statistics), and produce a line-by-line report of required text changes.
+
+---
+
+## Input
+
+- **Table file(s):** Provided by the orchestrator — `.tex` table files, `.csv` exports, or a directory containing multiple table files.
+- **Manuscript:** Main `.tex` file(s) and optional appendix `.tex` file(s), provided by the orchestrator.
+
+## Task
+
+### Step 1: Read and Index the Tables
+
+Read all table files provided. For each table, extract:
+
+1. **Table identifier** — the `\label{...}` key (for `.tex`) or filename (for `.csv`).
+2. **Column headers** — variable names, sample labels, specification labels.
+3. **Row labels** — outcome variable names, covariate names, statistic labels.
+4. **All numerical values** — coefficients, standard errors, percentages, observation counts, p-values, F-statistics, R-squared values, and any other reported numbers.
+5. **Notes** — table notes or footnotes that report additional statistics or sample restrictions.
+
+Build a lookup structure: `{table_id: {stat_label: value}}`. For example:
+
+```
+tab:main-results → {
+  "N (col 1)": 12450,
+  "coef_treat_col1": 0.082,
+  "se_treat_col1": 0.031,
+  "p_treat_col1": 0.008,
+  ...
+}
+```
+
+For `.csv` files, treat the filename (without extension) as the table identifier and use column/row headers as keys.
+
+### Step 2: Index Numerical Claims in the Manuscript
+
+Read all manuscript `.tex` files. For each file, scan every line and identify:
+
+1. **Observation counts** — patterns like `N = 12{,}345`, `12,345 observations`, `sample of N observations`, `N firms`, etc.
+2. **Percentage effects** — patterns like `X\%`, `X percent`, `increases by X`, `a Y\% increase`, effect sizes stated in text.
+3. **Test statistics** — F-statistics (`F = X.XX`), t-statistics, chi-squared values, p-values stated in prose (`p < 0.05`, `p = 0.003`).
+4. **Coefficients** — specific coefficient values cited in text (`the coefficient is 0.082`, `an effect of 8.2 basis points`).
+5. **R-squared / fit statistics** — `R^2 = X.XX`, `explains X\% of the variation`.
+
+For each identified number, record:
+- File path
+- Line number
+- The full sentence or phrase containing the number
+- The apparent source (which table and which cell it likely refers to, based on context)
+
+### Step 3: Match Text Numbers to Table Values
+
+For each numerical claim found in Step 2, attempt to locate the corresponding value in the indexed tables from Step 1.
+
+**Matching strategy:**
+1. Use context (nearby table references like `\ref{tab:main-results}`, section headings, variable names) to identify which table the text number comes from.
+2. Compare the text value against the table value. Account for rounding: a manuscript that says "8.2 percent" matches a table value of 0.0823 (rounded to one decimal place). A manuscript that says "0.082" matches a table coefficient of 0.0822.
+3. Flag as a **conflict** when the text value cannot plausibly be a rounded version of any table value in the inferred source table.
+4. Flag as **unmatched** when the text references a number but no table cell can be identified as the source.
+
+**Rounding tolerance:**
+- Percentages: ±0.05 percentage points (i.e., 8.2% matches any value in [8.15%, 8.25%])
+- Coefficients: ±1 unit in the last reported digit (0.082 matches [0.0815, 0.0825])
+- Observation counts: exact match required (commas and formatting differences excepted)
+- p-values stated as inequalities (p < 0.05): match if the table p-value satisfies the inequality
+
+### Step 4: Generate the Report
+
+Write `current/table_sync_report.md` with the following structure:
+
+```markdown
+# Table Sync Report
+
+Generated: {ISO timestamp}
+Tables checked: {list of table identifiers}
+Manuscript files checked: {list of file paths}
+
+## Summary
+
+- Conflicts found: {N}
+- Unmatched text numbers: {N}
+- Sections affected: {list of section names or headings}
+
+---
+
+## Conflicts
+
+Each conflict lists: the current manuscript text, the correct value from the updated table, and the exact location.
+
+### {Section heading or file:line range}
+
+**File:** `{filename.tex}`, **Line:** {line number}
+
+**Current text:**
+> {exact sentence or phrase from manuscript}
+
+**Conflict:** `{text value}` does not match table `{table_id}`, {cell description}: `{table value}`
+
+**Suggested fix:**
+Replace `{old text fragment}` with `{new text fragment}`
+
+---
+
+[repeat for each conflict]
+
+## Unmatched Numbers
+
+Numbers in the manuscript text that could not be traced to any table cell. These may be correct (hand-computed, from figures, or from external sources) or may be stale. Review manually.
+
+| Line | File | Text | Note |
+|------|------|------|------|
+| {line} | {file} | {phrase} | Cannot match to table |
+
+## No Changes Needed
+
+{If no conflicts found, state: "All numerical claims in the manuscript are consistent with the updated tables."}
+```
+
+### Step 5: Return to Orchestrator
+
+```json
+{
+  "status": "complete",
+  "conflicts_found": 7,
+  "unmatched_numbers": 2,
+  "sections_affected": ["Section 4.2", "Section 5", "Appendix B"]
+}
+```
+
+Do NOT return the full report inline. The orchestrator reads `current/table_sync_report.md`.
+
+## Rules
+
+1. **Read every table file provided.** Do not skip tables because they appear similar.
+2. **Read every manuscript file.** Conflicts may be in the appendix, not just the main text.
+3. **Be precise about location.** Always give file path and line number.
+4. **Account for rounding.** A value of 0.0823 reporting as "8.2 percent" is correct, not a conflict.
+5. **Be conservative about conflicts.** Only flag as a conflict when the discrepancy cannot be explained by rounding. When uncertain, list in "Unmatched Numbers" rather than "Conflicts."
+6. **Do not suggest edits beyond the numbers.** Only fix the specific numerical values — do not rewrite surrounding prose.
+7. **Preserve LaTeX formatting.** Suggested fixes must use valid LaTeX (e.g., `12{,}450` not `12,450` for comma-separated numbers in math mode; `\%` for percent signs in LaTeX text mode).
+8. **Do not modify any files.** This is a read-only diagnostic. The user applies changes manually or via a follow-up task.
+9. **Flag observation count mismatches prominently.** Sample size discrepancies are high-stakes errors that affect reproducibility claims.
+10. **Check table notes.** Statistics reported only in table notes (e.g., "mean of dependent variable = 0.34") are also in scope.

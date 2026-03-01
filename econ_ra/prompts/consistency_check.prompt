@@ -1,0 +1,244 @@
+# Internal Numerical Consistency Check
+
+You are performing a **read-only audit** of numerical results across a project's output files. Your job is to find and report inconsistencies — not to fix them.
+
+Do NOT modify any project files. Do NOT run new estimations. Do NOT commit anything. Just read, check, and report.
+
+---
+
+## Your Job
+
+Systematically verify that numerical values reported across tables, code output, and text are internally consistent. Produce `current/consistency_report.md` with a pass/fail verdict for each check.
+
+---
+
+## Step 1: Locate Output Files
+
+Search the project for files containing numerical results. Typical locations:
+
+- Tables: `tables/`, `output/`, `results/`, `*.tex`, `*.csv`, `*.txt` files with tabular data
+- Text: `*.tex`, `*.md`, `*.txt` draft or paper files referencing regression results
+- Code output: log files, `.log`, `.out`, `.txt` output from scripts
+- Session log: `current/session_log.md`
+
+Read the codebase summary (`current/codebase_summary.md`) if available for directory structure.
+
+Prioritize files that contain:
+- Summary statistics tables (means, standard deviations, observation counts)
+- Regression coefficient tables
+- Any mention of percentage effects, elasticities, or percentage-point changes
+- Sample size statements ("N = ...", "observations:", "sample:")
+
+---
+
+## Step 2: Extract Quantities
+
+For each numerical result you find, note:
+1. The **quantity** (e.g., "mean outcome", "coefficient on log MW", "% employment effect")
+2. The **value** (e.g., 0.082, -0.031, "3.2%")
+3. The **source** (file path + line/table reference)
+
+Build a working inventory. You do not need to write this out — keep it in working memory.
+
+---
+
+## Step 3: Run Consistency Checks
+
+Apply all four check types below. For each check, record: PASS, FAIL, WARNING, or SKIP (if insufficient data).
+
+### Check Type A: % Effect Denominator Reconciliation
+
+A % effect is typically reported as `coef / mean_outcome`. Verify:
+
+1. Find each reported % effect (e.g., "a 1% increase in minimum wage reduces employment by 3.2%")
+2. Find the denominator used (mean outcome, baseline level)
+3. Find the coefficient and its standard error
+4. Compute: `coef / denominator` and compare to reported % effect
+
+**Tolerance:** Accept if `|reported - computed| / |reported| <= 0.02` (2% relative error, accommodating rounding). If the reported value uses different rounding conventions (e.g., rounded to nearest 0.1%), widen tolerance to 5% before flagging.
+
+**Flag as FAIL if:**
+- Computed % effect differs from reported by more than 5% (relative)
+- The denominator used in the % effect cannot be matched to any reported summary statistic
+
+**Flag as WARNING if:**
+- The denominator is plausible but not explicitly reported in a summary stats table (may be from a different sample or time period)
+
+### Check Type B: Cross-File Value Consistency
+
+The same quantity (e.g., "mean log employment", "number of treated counties") should have the same value everywhere it appears.
+
+1. For each quantity that appears in multiple locations, compare values
+2. Flag if values differ beyond rounding (more than 1 unit in last reported digit)
+
+Common cross-file conflicts to check:
+- Sample size stated in text vs. observation count in regression table
+- Mean outcome in summary stats vs. mean used to compute % effects
+- Coefficient value in table vs. coefficient cited in text discussion
+- Standard errors or confidence intervals cited in text vs. table values
+
+**Flag as FAIL if:** Values differ by more than rounding in the last reported digit.
+
+**Flag as WARNING if:** Values appear consistent but use different variable definitions or sample restrictions that could explain the difference.
+
+### Check Type C: Observation Count Consistency
+
+Regression tables report N (observation count). Text descriptions describe the sample.
+
+1. Find all reported observation counts in regression tables
+2. Find all sample description statements in text (e.g., "our sample covers 2,400 county-year observations from 2000–2015")
+3. Check that observation counts are consistent with sample descriptions
+
+**Flag as FAIL if:**
+- Observation count in a regression table contradicts an explicit statement in text (e.g., text says 2,400 obs but table shows 2,247)
+- Observation counts differ across specifications that claim to use the same sample
+
+**Flag as WARNING if:**
+- Observation counts vary across columns in a way that is not explained (could reflect balanced panel restrictions, missing covariates, or different samples — worth confirming)
+
+### Check Type D: Sign and Magnitude Plausibility
+
+Basic sanity checks on signs and magnitudes relative to stated hypotheses or prior results.
+
+1. Check that the sign of key coefficients matches stated hypotheses (if any are stated)
+2. Check that % effects are bounded: employment elasticities to minimum wage are typically in [-0.3, 0.0] for teens; wage effects in [0.0, 0.5]
+3. Flag any coefficient whose implied elasticity or % effect is implausibly large (|effect| > 50% for a 10% change in the treatment variable, absent explanation)
+
+**Flag as WARNING** (not FAIL) for sign/magnitude issues — these may reflect genuine findings, but warrant attention.
+
+Do NOT apply standard ranges from the literature as hard rules. Flag as WARNING only when magnitudes are extreme enough that a data error is plausible.
+
+---
+
+## Step 4: Summarize and Write Report
+
+Write `current/consistency_report.md` using the format below.
+
+**Rounding note:** When evaluating whether values "match", use common sense. A coefficient of 0.0823 and a reported value of "0.082" are the same. A mean of 12.47 and a denominator of 12 are not.
+
+---
+
+## Output Format: `current/consistency_report.md`
+
+```markdown
+# Consistency Report
+
+**Generated:** [timestamp]
+**Project:** [project name from full_spec.md, or "unknown"]
+**Files checked:** [list of files examined]
+
+## Summary
+
+| Check Type | PASS | FAIL | WARNING | SKIP |
+|------------|------|------|---------|------|
+| A: % Effect Denominators | N | N | N | N |
+| B: Cross-File Values | N | N | N | N |
+| C: Observation Counts | N | N | N | N |
+| D: Sign/Magnitude | N | N | N | N |
+| **Total** | **N** | **N** | **N** | **N** |
+
+Overall: PASS / FAIL / REVIEW NEEDED
+(PASS = 0 FAILs; REVIEW NEEDED = 0 FAILs but 1+ WARNINGs; FAIL = 1+ FAILs)
+
+---
+
+## Check A: % Effect Denominators
+
+### A1: [Name of % effect checked]
+**Status:** PASS / FAIL / WARNING / SKIP
+**Reported:** "[exact quote of the % effect from source]" (file, location)
+**Coefficient:** [value] (file, location)
+**Denominator:** [value] (file, location)
+**Computed:** [coef / denominator] = [result]
+**Discrepancy:** [absolute and relative difference, or "within tolerance"]
+**Notes:** [any relevant context]
+
+[Repeat for each % effect found]
+
+---
+
+## Check B: Cross-File Value Consistency
+
+### B1: [Quantity name]
+**Status:** PASS / FAIL / WARNING / SKIP
+**Instances found:**
+- [value] — [file, location]
+- [value] — [file, location]
+**Assessment:** [consistent / inconsistent, explanation]
+
+[Repeat for each quantity with multiple appearances]
+
+---
+
+## Check C: Observation Counts
+
+### C1: [Table or regression name]
+**Status:** PASS / FAIL / WARNING / SKIP
+**Reported N:** [value] (file, location)
+**Expected from description:** [value or range] (file, location)
+**Assessment:** [consistent / inconsistent, explanation]
+
+[Repeat for each table checked]
+
+---
+
+## Check D: Sign and Magnitude
+
+### D1: [Coefficient name]
+**Status:** PASS / WARNING / SKIP
+**Value:** [coefficient and SE]
+**Implied effect:** [% effect or elasticity]
+**Assessment:** [plausible / unusual, brief explanation]
+
+[Repeat for key coefficients]
+
+---
+
+## Failures and Warnings
+
+[If any FAILs or WARNINGs exist, summarize them here in plain language. If none, write "No failures or warnings."]
+
+### Failures (require attention before submission)
+[List each FAIL with a one-sentence description of what is wrong and where]
+
+### Warnings (review recommended)
+[List each WARNING with a one-sentence description of what to verify]
+
+---
+
+## Files Not Checked
+
+[List any files that appeared relevant but could not be parsed or were skipped, with reason]
+```
+
+---
+
+## Return to Orchestrator
+
+After writing `current/consistency_report.md`, return:
+
+```
+status: complete
+pass_count: N
+fail_count: N
+warning_count: N
+summary: "N passed, M failed, K warnings. [One sentence on most important finding, or 'No issues found.']"
+```
+
+If you cannot locate enough output files to run any checks, return:
+
+```
+status: flagged
+summary: "Insufficient output files found. [List what was searched and what was missing.]"
+```
+
+---
+
+## Rules
+
+- **Read-only**: Do not modify any project files, run any scripts, or make commits
+- **Cite sources**: Every check must reference the exact file and location of the values being compared
+- **No inference**: Do not infer what a value "probably" is — if you cannot find it, record SKIP with explanation
+- **Rounding tolerance**: Apply 2% relative tolerance for % effect checks; accept last-digit rounding differences for all other checks
+- **Be precise**: Quote the exact text where values appear; do not paraphrase numbers
+- **Scope**: Check only what you can read from existing output files — do not re-run regressions to verify

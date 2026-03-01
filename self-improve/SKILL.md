@@ -30,8 +30,11 @@ SKILLS_DIR = /Users/luluywang/.claude/skills
 /self-improve --all        # Reprocess all logs (full audit)
 /self-improve --report     # Re-read last proposals without reprocessing
 /self-improve docket       # Show all pending docket items (no re-scan)
-/self-improve apply P1     # Apply proposal P1 from docket (marks as applied)
-/self-improve apply P1 P3  # Apply multiple proposals
+/self-improve apply P1        # Apply proposal P1 from docket (marks as applied)
+/self-improve apply P1 P3    # Apply multiple proposals
+/self-improve apply P1-P5    # Apply a range of proposals (P1 through P5)
+/self-improve apply P1-P10   # Apply a larger range
+/self-improve apply --all    # Apply all pending proposals from the most recent run
 /self-improve close P1     # Close/reject a docket item without applying
 /self-improve compress     # Gzip processed logs older than 90 days
 /self-improve compress --older-than 30d
@@ -70,6 +73,12 @@ Usage: `/self-improve close P1` or `/self-improve close 20260227/P1`
 ---
 
 ### `apply` Subcommand
+
+**Argument parsing (run before step 1)**:
+- If `--all` is passed: collect all IDs from `## Pending` in `{CACHE_DIR}/docket.md` that belong to the most recent run date. Replace the argument list with those IDs.
+- If any argument matches the pattern `P{n}-P{m}` (e.g. `P1-P5`): expand it to the individual IDs `P1 P2 P3 P4 P5`. Mixed usage is allowed, e.g. `P1-P3 P7` expands to `P1 P2 P3 P7`.
+
+For each resolved ID, in order:
 1. Resolve the ID: short form `P1` → match entry in `{CACHE_DIR}/docket.md` whose ID ends in `/P1` from the most recent run date; full form `20260227/P1` → direct lookup
 2. Read the full proposal text from `{CACHE_DIR}/docket.md` (under `## Pending`)
 3. For **Type A** or **Type C** (skill improvement / UX): spawn a **Sonnet subagent**
@@ -121,7 +130,8 @@ self-improve-cache/
 ├── sessions/
 │   └── {date}_{prefix}.md # Per-session discovery summaries (Phase 2B output)
 ├── aggregate.md           # Rolling aggregate (Phase 3 output, appended each run)
-└── proposals_{date}.md    # Ranked proposals snapshot (Phase 4 output, one per run)
+├── proposals_{date}.md    # Ranked proposals snapshot (Phase 4 output, one per run)
+└── todos_{date}.md        # Actionable checkbox list generated alongside proposals
 ```
 
 ### Manifest Schema

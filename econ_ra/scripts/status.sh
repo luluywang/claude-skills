@@ -15,14 +15,6 @@
 #   ./status.sh diagnostic_ingest       # Processing test results
 #   ./status.sh diagnostic_checkpoint   # Checkpoint - awaiting user input
 #   ./status.sh diagnostic_wrapup       # Diagnostic complete
-#
-# Investigation mode:
-#   ./status.sh investigate             # Investigation in progress
-#   ./status.sh investigate_complete    # Investigation report ready
-#
-# Verification mode:
-#   ./status.sh verify                  # Verification in progress
-#   ./status.sh verify_complete         # Verification report ready
 
 set -e
 
@@ -60,18 +52,8 @@ else
             echo "$NEW_STATUS" > "$STATUS_FILE"
             echo "{\"status\": \"$NEW_STATUS\", \"set\": true, \"diagnostic_mode\": true}"
             ;;
-        # Investigation mode phases
-        investigate|investigate_complete)
-            echo "$NEW_STATUS" > "$STATUS_FILE"
-            echo "{\"status\": \"$NEW_STATUS\", \"set\": true, \"mode\": \"investigate\"}"
-            ;;
-        # Verification mode phases
-        verify|verify_complete)
-            echo "$NEW_STATUS" > "$STATUS_FILE"
-            echo "{\"status\": \"$NEW_STATUS\", \"set\": true, \"mode\": \"verify\"}"
-            ;;
         *)
-            echo "{\"error\": \"Invalid status: $NEW_STATUS. Valid values: interview, planning, execution, paused, complete, cleanup, diagnostic_*, investigate, investigate_complete, verify, verify_complete\", \"set\": false}"
+            echo "{\"error\": \"Invalid status: $NEW_STATUS. Valid values: interview, planning, execution, paused, complete, cleanup, diagnostic_interview, diagnostic_brainstorm, diagnostic_select, diagnostic_try, diagnostic_ingest, diagnostic_checkpoint, diagnostic_wrapup\", \"set\": false}"
             exit 1
             ;;
     esac

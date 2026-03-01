@@ -37,11 +37,17 @@ If 0 new files → skip to Phase 3 (re-run aggregation on cached outputs).
 
 ## Phase 2A — TARGETED SKILL ANALYSIS
 
-**Step 1 — Grep (Bash)**:
+**Step 1 — Route sessions to skills (Bash)**:
 ```bash
 python3 {SKILL_DIR}/scripts/find_skill_sessions.sh
 ```
 Returns JSON map `{skill: [path, ...]}`. Takes seconds.
+
+Routing priority (authoritative first):
+1. **Manifest digest** (`skill_invocations` list): when a file has a `digested` entry in the manifest with a `skill_invocations` list, that list is the authoritative routing signal — used directly without reading the file.
+2. **Text-search fallback**: for files not yet in the digest, searches file content (gzip-aware for `.jsonl.gz`). Excludes sessions where the skill name appears only in a "construction" context (cwd is the Claude project dir and all matches are on `skills/{name}/SKILL.md` write/edit lines).
+
+If any skill returns zero matched sessions, a warning is printed to stderr.
 
 **Step 2 — Per-skill Haiku subagents (parallel)**:
 For each skill with ≥1 matched session file that is also in the Phase 1 new-files list:
@@ -121,6 +127,14 @@ Output: `--- [4] Proposals written → self-improve-cache/proposals_{date}.md`
 
 Output: `--- [4] Docket updated → N new proposals added (M skipped as duplicates)`
 
+**After the docket is updated**, generate the todos file:
+
+```bash
+python3 {SKILL_DIR}/scripts/update_manifest.py --generate-todos {CACHE_DIR}/proposals_{YYYYMMDD}.md
+```
+
+Output: `--- [4] Todos written → self-improve-cache/todos_{date}.md`
+
 ---
 
 ## Phase 5 — UPDATE MANIFEST
@@ -131,6 +145,16 @@ python3 {SKILL_DIR}/scripts/update_manifest.py --set-last-run-date
 ```
 
 Output: `--- [DONE] Manifest updated.`
+
+---
+
+## Apply Subcommand — Argument Parsing
+
+When the orchestrator is invoked with `apply` args (e.g. via the SKILL.md dispatch), resolve the argument list before any docket lookups:
+
+1. **Range expansion**: If any argument matches `P{n}-P{m}` (e.g. `P1-P10`), replace it with the sequence `P1 P2 … P10`. Mixed forms are allowed — `P1-P3 P7` expands to `P1 P2 P3 P7`. Invalid ranges (start > end) are rejected with an error.
+2. **`--all` flag**: If `--all` is present, read `{CACHE_DIR}/docket.md`, collect every entry under `## Pending` whose ID prefix matches the most recent run date, extract their short IDs (e.g. `P1`, `P2`, …), and use that list as the full argument list.
+3. After expansion, deduplicate (preserve order, remove later duplicates) and proceed with the per-ID apply loop described in `SKILL.md`.
 
 ---
 

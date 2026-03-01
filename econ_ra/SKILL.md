@@ -15,15 +15,10 @@ This orchestrator manages a multi-phase workflow with context isolation between 
 ```
 /econ_ra tackle @notes/my_project.md       # Start new project
 /econ_ra tackle @notes/my_project.md --interactive  # Pause between phases
-/econ_ra continue                          # Resume (active project or from project_state.md)
+/econ_ra continue                          # Resume interrupted project
 /econ_ra reset                             # Clear for new project
 /econ_ra diagnose "my IV is weak"          # Start diagnostic mode
-/econ_ra investigate "why are welfare numbers negative"  # Read-only investigation
-/econ_ra investigate                       # Open-ended scan for issues
-/econ_ra verify                            # Full cross-reference check
-/econ_ra verify --numbers                  # Code outputs vs scalars vs LaTeX
-/econ_ra verify --notation                 # Symbol consistency across .tex files
-/econ_ra verify --claims                   # Referee response claims vs manuscript
+/econ_ra check                             # Run internal consistency check on current project
 ```
 
 ## Modes
@@ -123,24 +118,6 @@ The orchestrator coordinates—it does NOT do the work itself.
 - Do NOT consider the project "done" until wrapup has archived to history/
 - The wrapup subagent handles archival, retrospective creation, and cleanup
 
-### Auto-Detection: Route to Correct Mode
-
-If the user invokes `/econ_ra tackle` but their spec contains debugging or investigation language, suggest a more appropriate mode:
-
-**Debugging language → suggest investigate or diagnose:**
-- Keywords: "doesn't make sense", "wrong sign", "can't figure out why", "broken", "unexpected", "not working", "results are off", "numbers don't add up"
-- Suggest: "This sounds like a debugging task. Would you prefer `/econ_ra investigate` (read-only report) or `/econ_ra diagnose` (iterative hypothesis testing)?"
-
-**Verification language → suggest verify:**
-- Keywords: "check if numbers match", "make sure LaTeX is correct", "verify consistency", "before I submit"
-- Suggest: "This sounds like a verification task. Would you prefer `/econ_ra verify`?"
-
-**Quick execution language → abbreviated interview:**
-- Keywords: "just run", "quick change", "simple fix", "one thing"
-- Proceed with tackle but note that the interview should be abbreviated (2-3 questions max)
-
-Use AskUserQuestion to confirm the mode switch. If the user insists on tackle, proceed with tackle.
-
 ### The orchestrator CAN:
 - Read skill files (SKILL.md, prompts/*.md, preferences.md)
 - Read state files (current/.status, current/tasks.json, current/full_spec.md)
@@ -210,10 +187,6 @@ The script handles:
 | `planning` | Run planning phase | Spawn `planning_verification_generate` subagent |
 | `execution` | Run execution | Run `dispatcher.py`, spawn execution subagents |
 | `cleanup` | Run wrapup scripts | Run `status.sh complete` then `archive.sh` |
-| `investigate` | Run investigation | Spawn investigation subagent (Opus) |
-| `investigate_complete` | Present report | Show findings, offer fixes |
-| `verify` | Run verification | Run `verify_scan.sh`, spawn verification subagent |
-| `verify_complete` | Present report | Show failures, offer fixes |
 | `unknown` | Ask user for clarification | Use AskUserQuestion |
 
 **CRITICAL: When phase is `interview`, your FIRST action MUST be spawning `interview_generate`. Do NOT read user files. Do NOT start working on the user's request. The interview_generate subagent handles codebase exploration.**
@@ -661,6 +634,57 @@ Your job:
 
 For simple projects with no flagged/blocked items, you can skip the subagent. Do NOT commit internal workflow files (they are in .claude/ which is typically gitignored).
 
+## Consistency Check (`/econ_ra check`)
+
+When the user invokes `/econ_ra check`, run the internal numerical consistency checker on the current project. This is a standalone task — it does **not** advance the workflow phase.
+
+### When to Use
+
+Use this task when:
+- Summary statistics have been generated and regression tables exist
+- The user wants to confirm that % effects, observation counts, and reported magnitudes are internally coherent
+- Tables have been regenerated and the user wants to verify no numerical discrepancies were introduced
+
+### Protocol
+
+1. **Spawn consistency_check subagent (Sonnet)**
+
+```
+Task: [econ_ra:check] Internal consistency check
+model: "sonnet"
+subagent_type: "general-purpose"
+
+Instructions:
+Read prompts/consistency_check.prompt for full instructions.
+
+Context:
+- Full spec: current/full_spec.md (if exists)
+- Codebase summary: current/codebase_summary.md (if exists)
+- Session log: current/session_log.md (if exists)
+
+Your job:
+1. Locate all tables, outputs, and text containing numerical results
+2. Run all consistency checks (% effects, denominators, observation counts, cross-file values)
+3. Write current/consistency_report.md with pass/fail per check
+4. Return: { pass_count, fail_count, warning_count, summary }
+```
+
+2. **Present results to user**
+
+After the subagent returns, output a brief summary:
+
+```
+--- [CHECK] Done: N passed, M failed, K warnings
+```
+
+Then display the key failures/warnings from the report. Direct the user to `current/consistency_report.md` for full details.
+
+3. **Do NOT change workflow phase**
+
+The check runs in-place and does not modify `.status`. The project continues from wherever it was.
+
+---
+
 ## Reset (Clear for New Project)
 
 When the user says "reset", "clear", "start fresh", or "new project":
@@ -669,59 +693,6 @@ When the user says "reset", "clear", "start fresh", or "new project":
 2. IF current/ exists AND has content:
    - Ask user: "Archive current project before clearing, or discard?"
 3. Archive or discard as requested, then confirm ready for new project
-
----
-
-## Session State Persistence
-
-Every econ_ra session (any mode) saves state to `$WORK_DIR/project_state.md` at wrapup. This file persists across sessions and archives, enabling continuity.
-
-### How It Works
-
-1. **Auto-save at wrapup:** The wrapup subagent writes/updates `project_state.md` (Step 3.5 in wrapup.md). Contents include: current status, what was accomplished, what failed, what was tried, open questions, key files modified, and a session history table.
-
-2. **project_state.md lives at `$WORK_DIR/project_state.md`** — NOT inside `current/`. The `current/` directory gets archived to `history/` on wrapup, but the state file persists so the next session can find it.
-
-3. **State accumulates:** Each session appends a row to the session history table and updates the status sections.
-
-### Enhanced `/econ_ra continue` Semantics
-
-When the user invokes `/econ_ra continue`:
-
-1. **Run `bootstrap.sh` as normal** — check for active `current/` project
-2. **If `current/` has an active project:** Resume normally (existing behavior)
-3. **If no active project but `project_state.md` exists:**
-   - Run `./scripts/state.sh check` to read state summary
-   - Run `./scripts/state.sh read` to get full contents
-   - Present the project state summary to the user
-   - Use AskUserQuestion:
-     ```json
-     {
-       "header": "Resume",
-       "question": "Found state from your last session. What would you like to do?",
-       "multiSelect": false,
-       "options": [
-         {"label": "Resume open items (Recommended)", "description": "Continue working on unfinished items from last session"},
-         {"label": "Start related task", "description": "New task in the same project context"},
-         {"label": "Full new project", "description": "Start fresh (state file will be archived)"}
-       ]
-     }
-     ```
-   - **If "Resume open items":** Extract open items from state file, create a spec from them, proceed to interview (abbreviated — skip codebase exploration since state file has context)
-   - **If "Start related task":** Proceed to interview with state file as context (subagent reads it for background)
-   - **If "Full new project":** Archive state file to `history/`, proceed as new project
-
-4. **If no active project and no project_state.md:** Start new project (existing behavior)
-
-### Bootstrap Integration
-
-The bootstrap script checks for `project_state.md` and reports its existence:
-
-```bash
-./scripts/state.sh check
-```
-
-Returns JSON with `exists`, `status`, `last_session`, `open_items` count.
 
 ---
 
@@ -1058,241 +1029,6 @@ Proposes refinement: restrict sample to manufacturing, or find a better instrume
 
 ---
 
-## Investigate Mode
-
-Investigate mode is for **autonomous exploration** when the user has a question about their project ("why don't my welfare numbers add up?") or wants a general consistency scan. Unlike diagnostic mode (iterative hypothesis testing with user checkpoints), investigate mode is a single read-only pass that produces a report.
-
-### When to Use Investigate Mode
-
-Use investigate mode when the user:
-- Has a specific question about their code or results
-- Wants to understand what normalization or methodology is used
-- Wants a general scan for issues before submitting a paper
-- Needs a code path trace from data to output
-
-**Investigate vs. Diagnose:** Investigate is read-only and produces a report. Diagnose is interactive and tries fixes.
-
-### Invocation
-
-```
-/econ_ra investigate "why are my welfare numbers negative"   # With question
-/econ_ra investigate                                        # Open-ended scan
-```
-
-### Architecture
-
-```
-[START] → [BOOTSTRAP] → set status "investigate"
-                              ↓
-                    [SPAWN INVESTIGATION SUBAGENT (Opus)]
-                    - Reads code, outputs, LaTeX, scalars
-                    - Traces computation paths
-                    - Cross-references values
-                    - Checks economic sense
-                              ↓
-                    [SAVE investigation_report.md]
-                              ↓
-                    [PRESENT FINDINGS TO USER]
-                              ↓
-                    "Want me to fix any issues found?"
-                         ↓              ↓
-                    [YES: quick-run]  [NO: done]
-```
-
-### Orchestrator Protocol
-
-1. **Run bootstrap.sh** to check for existing `current/` state
-
-2. **Set status:**
-   ```bash
-   ./scripts/status.sh investigate
-   ```
-
-3. **Spawn investigation subagent (Opus):**
-   ```
-   Task: [econ_ra:investigate] Investigate: "[user's question]"
-   model: "opus"
-   subagent_type: "general-purpose"
-
-   Instructions:
-   Read prompts/investigate.md for full instructions.
-
-   Context:
-   - Question: [user's question, or "General consistency scan"]
-   - Project state: [project_state.md contents if exists]
-   - Codebase summary: [current/codebase_summary.md if exists]
-   - Preferences: preferences.md
-
-   Your job:
-   1. Explore the project end-to-end (orientation → focused → cross-reference)
-   2. Trace computation paths relevant to the question
-   3. Check consistency across code, outputs, scalars, and LaTeX
-   4. Produce a structured investigation_report.md
-   5. Do NOT modify any files
-   ```
-
-4. **Save report:** Write the subagent's output to `current/investigation_report.md`
-
-5. **Set status:**
-   ```bash
-   ./scripts/status.sh investigate_complete
-   ```
-
-6. **Present findings to user:** Show the executive summary and top issues from the report
-
-7. **Offer fixes:** Use AskUserQuestion:
-   ```json
-   {
-     "header": "Fix issues",
-     "question": "Investigation found [N] issues. Would you like me to fix any?",
-     "multiSelect": false,
-     "options": [
-       {"label": "Fix HIGH severity issues", "description": "Spawn execution subagents for critical fixes"},
-       {"label": "Fix all issues", "description": "Address all findings from the report"},
-       {"label": "No fixes needed", "description": "I'll handle this myself"}
-     ]
-   }
-   ```
-
-8. **If fixes requested:** For each fix, create a lightweight execution task (no full interview/planning cycle). Spawn execution subagents directly with the fix instructions from the report. Update project_state.md at completion.
-
-9. **Wrapup:** Archive investigation report, update project_state.md.
-
-### Model Selection
-
-| Step | Model | Rationale |
-|------|-------|-----------|
-| Investigation subagent | **Opus** | Needs cross-file reasoning and economic understanding |
-
----
-
-## Verify Mode
-
-Verify mode performs **systematic cross-reference checking** across code outputs, scalar files, and LaTeX documents. It catches number hallucination, stale values, notation drift, and unsupported claims.
-
-### When to Use Verify Mode
-
-Use verify mode when the user:
-- Is about to submit a paper and wants a final consistency check
-- Has edited LaTeX and wants to make sure numbers still match
-- Wants to check that referee response claims are backed by the manuscript
-- Has regenerated results and wants to verify LaTeX is up to date
-
-**Verify vs. Investigate:** Verify is systematic checking with pass/fail results. Investigate is exploratory analysis.
-
-### Invocation
-
-```
-/econ_ra verify                   # Full cross-reference check (all categories)
-/econ_ra verify --numbers         # Code outputs vs scalar files vs LaTeX prose
-/econ_ra verify --notation        # Symbol consistency across .tex files
-/econ_ra verify --claims          # Referee response claims vs manuscript support
-```
-
-### Architecture
-
-```
-[START] → [BOOTSTRAP] → set status "verify"
-                              ↓
-                    [RUN verify_scan.sh]
-                    - Extracts .tex files, scalar files
-                    - Finds code output writers
-                    - Locates output directories
-                    - Identifies referee response files
-                              ↓
-                    [SPAWN VERIFICATION SUBAGENT (Sonnet)]
-                    - Reads scan results + all target files
-                    - Performs systematic checks per category
-                    - Produces verification_report.md
-                              ↓
-                    [PRESENT REPORT TO USER]
-                              ↓
-                    Per FAIL: "Want me to fix this?"
-                         ↓              ↓
-                    [YES: quick-run]  [NO: skip]
-```
-
-### Orchestrator Protocol
-
-1. **Run bootstrap.sh** to check for existing `current/` state
-
-2. **Set status:**
-   ```bash
-   ./scripts/status.sh verify
-   ```
-
-3. **Determine check type** from user invocation:
-   - `--numbers` → check_type = "numbers"
-   - `--notation` → check_type = "notation"
-   - `--claims` → check_type = "claims"
-   - No flag → check_type = "all"
-
-4. **Run verify_scan.sh** to extract targets:
-   ```bash
-   ./scripts/verify_scan.sh [project_root]
-   ```
-   Returns JSON with tex_files, scalar_files, output_writers, output_directories, referee_files.
-
-   If scan finds zero .tex files, inform user and ask for the project root directory.
-
-5. **Spawn verification subagent (Sonnet):**
-   ```
-   Task: [econ_ra:verify] Verify consistency (check_type: [type])
-   model: "sonnet"
-   subagent_type: "general-purpose"
-
-   Instructions:
-   Read prompts/verify.md for full instructions.
-
-   Context:
-   - Check type: [numbers/notation/claims/all]
-   - Scan results: [JSON from verify_scan.sh]
-   - Preferences: preferences.md (especially Economic Sanity Check Library)
-
-   Your job:
-   1. Read all target files from the scan results
-   2. Perform systematic checks per the requested category
-   3. Produce a verification_report.md with pass/fail/warn for each check
-   4. Do NOT modify any files
-   ```
-
-6. **Save report:** Write the subagent's output to `current/verification_report.md`
-
-7. **Set status:**
-   ```bash
-   ./scripts/status.sh verify_complete
-   ```
-
-8. **Present report to user:** Show the summary table and all FAIL items
-
-9. **Offer fixes per FAIL item:** For each failure, offer a quick-run fix:
-   ```json
-   {
-     "header": "Fix issues",
-     "question": "Found [N] verification failures. How should I proceed?",
-     "multiSelect": false,
-     "options": [
-       {"label": "Fix all failures (Recommended)", "description": "Auto-fix all FAIL items"},
-       {"label": "Fix one at a time", "description": "Review and approve each fix individually"},
-       {"label": "No fixes", "description": "I'll fix these myself"}
-     ]
-   }
-   ```
-
-10. **If fixes requested:** For each fix, spawn a lightweight execution subagent (Haiku for simple scalar updates, Sonnet for notation fixes). Update project_state.md at completion.
-
-11. **Wrapup:** Archive verification report, update project_state.md.
-
-### Model Selection
-
-| Step | Model | Rationale |
-|------|-------|-----------|
-| verify_scan.sh | **script** | File system scanning, no LLM needed |
-| Verification subagent | **Sonnet** | Systematic checking, doesn't need deep reasoning |
-| Fix subagents | **Haiku/Sonnet** | Simple fixes use Haiku; notation fixes use Sonnet |
-
----
-
 ## Model Selection & Scripts
 
 Some operations are now handled by scripts instead of LLM subagents for faster execution and lower cost:
@@ -1313,10 +1049,7 @@ Some operations are now handled by scripts instead of LLM subagents for faster e
 | **diagnostic_interview** | **subagent (sonnet)** | Explore | Explores codebase, no file writes |
 | **diagnostic_thinker** | **subagent (opus)** | Plan | Deep reasoning, no file writes |
 | **diagnostic_executor** | **subagent (haiku)** | general-purpose | Writes findings files |
-| **investigation** | **subagent (opus)** | general-purpose | Cross-file reasoning, no file writes |
-| **verify_scan** | **script** | — | `./scripts/verify_scan.sh` - Extract .tex, scalar, output files |
-| **verification** | **subagent (sonnet)** | general-purpose | Systematic checks, no file writes |
-| **state** | **script** | — | `./scripts/state.sh` - Session state persistence |
+| **consistency_check** | **subagent (sonnet)** | general-purpose | Reads outputs, writes consistency_report.md |
 
 ## Memory Integration
 
@@ -1357,9 +1090,7 @@ econ_ra/
 │   ├── archive.sh                    # Archive to history
 │   ├── status.sh                     # Get/set status
 │   ├── task_ops.sh                   # Atomic task state operations
-│   ├── diagnostic_loop.sh            # Diagnostic iteration tracking
-│   ├── state.sh                      # Session state persistence (read/check/init)
-│   └── verify_scan.sh                # Extract verification targets from project
+│   └── diagnostic_loop.sh            # Diagnostic iteration tracking
 ├── prompts/                          # Phase instructions (for subagents)
 │   ├── bootstrap.md                  # (reference only, use script)
 │   ├── interview_generate.md
@@ -1372,14 +1103,12 @@ econ_ra/
 │   ├── diagnostic_interview.md       # Diagnostic problem scoping
 │   ├── diagnostic_thinker.md         # Hypothesis generation (Opus)
 │   ├── diagnostic_executor.md        # Hypothesis testing (Haiku)
-│   ├── investigate.md                # Investigation subagent prompt
-│   └── verify.md                     # Verification subagent prompt
+│   └── consistency_check.prompt      # Internal numerical consistency checks
 ├── templates/                        # Project templates
 └── references/                       # Reference materials
 
 # Working directory ($ECON_RA_WORKDIR or $PWD/econ_ra_work/)
 econ_ra_work/
-├── project_state.md                  # Session continuity (persists across archives)
 ├── current/                          # Active project
 │   ├── .status                       # Current phase status
 │   ├── spec.md                       # Original user spec (preserved)
@@ -1389,6 +1118,7 @@ econ_ra_work/
 │   ├── checks.md
 │   ├── session_log.md
 │   ├── diagnostic_state.json         # Diagnostic mode state (if in diagnostic)
+│   ├── consistency_report.md         # Output of /econ_ra check (if run)
 │   └── findings/                      # Diagnostic test results
 │       └── iteration_N_*.md           # Findings from each hypothesis test
 └── history/                          # Archived projects
@@ -1407,5 +1137,4 @@ For detailed phase instructions, see the files in `prompts/`:
 - [diagnostic_interview.md](prompts/diagnostic_interview.md)
 - [diagnostic_thinker.md](prompts/diagnostic_thinker.md)
 - [diagnostic_executor.md](prompts/diagnostic_executor.md)
-- [investigate.md](prompts/investigate.md)
-- [verify.md](prompts/verify.md)
+- [consistency_check.prompt](prompts/consistency_check.prompt)
