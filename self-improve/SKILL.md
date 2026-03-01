@@ -15,7 +15,7 @@ Produces ranked, evidence-backed proposals. Applies them on demand.
 ## Key Paths
 
 ```
-LOGS_DIR   = /Users/luluywang/Library/CloudStorage/Dropbox/claude-logs/claude
+LOGS_DIR   = /Users/luluywang/Library/CloudStorage/Dropbox/claude-logs
 CACHE_DIR  = /Users/luluywang/Library/CloudStorage/Dropbox/claude-logs/self-improve-cache
 SKILL_DIR  = /Users/luluywang/.claude/skills/self-improve
 SKILLS_DIR = /Users/luluywang/.claude/skills

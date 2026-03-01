@@ -50,6 +50,51 @@ During execution, output task dispatch/completion lines:
 
 Do NOT use TaskCreate or TaskUpdate — these tools consume context tokens on every call.
 
+## Task Operations
+
+All task state changes MUST go through `scripts/task_ops.sh`. **Never edit `tasks.json` directly.**
+
+Direct JSON editing is error-prone and leaves the file in inconsistent states. The script performs atomic writes (write to `.tmp`, then `os.replace`) so a crash cannot corrupt the file.
+
+### Available commands
+
+```bash
+# Set the status of a task by id
+./scripts/task_ops.sh set-status <id> <status>
+# Valid statuses: pending, partial, complete, flagged, blocked
+
+# Append a new task to tasks.json
+./scripts/task_ops.sh add-task '<json>'
+# JSON must include: id, task, type, status
+# Example: ./scripts/task_ops.sh add-task '{"id": 6, "task": "Run robustness check", "type": "analysis", "status": "pending", "depends_on": [5], "notes": ""}'
+
+# Replace one task with multiple tasks (split a task into subtasks)
+./scripts/task_ops.sh split-task <id> '<new_tasks_json>'
+# new_tasks_json must be a JSON array with at least 2 task objects
+```
+
+All commands print JSON and exit 0 on success, 1 on error.
+
+### When to use each command
+
+| Situation | Command |
+|-----------|---------|
+| Execution subagent finishes a task | `set-status <id> complete` |
+| Task is blocked by an external dependency | `set-status <id> blocked` |
+| Task partially complete (context limit hit) | `set-status <id> partial` |
+| Task has issues requiring user review | `set-status <id> flagged` |
+| User requests a new task during planning | `add-task '<json>'` |
+| User requests splitting a large task | `split-task <id> '<subtasks>'` |
+
+### MANDATORY: Orchestrator must use task_ops.sh
+
+The orchestrator MUST call `task_ops.sh` for every task state change. Do NOT:
+- Edit `tasks.json` with a text editor or Write tool
+- Use `jq` or `python3` inline to modify `tasks.json` directly
+- Ask execution subagents to update their own status via JSON editing
+
+Execution subagents MAY call `task_ops.sh set-status` directly to update their own task entry after completing work.
+
 ## Orchestrator Rules (Critical)
 
 The orchestrator coordinates—it does NOT do the work itself.
@@ -991,6 +1036,7 @@ econ_ra/
 │   ├── dispatcher.py                 # Find ready tasks
 │   ├── archive.sh                    # Archive to history
 │   ├── status.sh                     # Get/set status
+│   ├── task_ops.sh                   # Atomic task state operations
 │   └── diagnostic_loop.sh            # Diagnostic iteration tracking
 ├── prompts/                          # Phase instructions (for subagents)
 │   ├── bootstrap.md                  # (reference only, use script)

@@ -7,6 +7,7 @@
 ## Input
 
 - **Response document:** Path to the .tex response file (from `config.json`)
+- **AE letter:** Optional path to a separate Associate Editor letter file (from `config.json`, key `ae_letter`). If not provided, check whether the response document itself opens with an AE section (see Step 1).
 - **Component references:**
   - `revisions/prompts/components/response_patterns.prompt` — response document structure conventions
   - `revisions/prompts/components/claim_taxonomy.prompt` — claim type definitions and verification rules
@@ -14,15 +15,21 @@
 
 ## Task
 
-Read the response document and extract every verifiable claim the author makes about the manuscript. Each claim is a promise — something the author says they did, added, changed, or can point to in the manuscript.
+Read the response document (and AE letter if present) and extract every verifiable claim the author makes about the manuscript. Each claim is a promise — something the author says they did, added, changed, or can point to in the manuscript.
 
 ### Step 1: Parse Response Structure
 
 The response document contains `\textbf{Reply:}` blocks following `\begin{refcommentnoclear}...\end{refcommentnoclear}` blocks. Each reply block is a response to one referee/editor comment.
 
-1. Identify each comment-reply pair
-2. Determine the source (Editor, Referee 1, etc.) from the `\section*{}` headers
-3. Assign comment IDs using the convention: `ed_1`, `ed_1a`, `ref1_1`, `ref2_3`, etc.
+**Multi-section documents:** A response document may contain multiple labelled sections:
+- `[AE Letter]` — Associate Editor letter (may appear first)
+- `[Referee 1]`, `[Referee 2]`, etc. — individual referee reports
+
+If `config.json` includes an `ae_letter` path, read that file first and treat its entire content as the `ae` section. Otherwise, if the response document starts with a "Dear Associate Editor" salutation or has a `\section*{}` header matching "Associate Editor" / "AE" / "Action Editor", treat everything before the first referee section as the `ae` section.
+
+1. Identify each comment-reply pair across all sections
+2. Determine the source from `\section*{}` headers or the explicit `[AE Letter]` / `[Referee N]` markers
+3. Assign comment IDs using the convention: `ae_1`, `ae_1a`, `ref1_1`, `ref2_3`, etc.
 
 ### Step 2: Extract Claims from Each Reply
 
@@ -43,6 +50,7 @@ For each `\textbf{Reply:}` block:
    - `unverifiable` — process claims (re-estimated, verified, believe)
 
 3. **Extract metadata** for each claim:
+   - `source` — which section the claim comes from: `"ae"` for the AE letter, `"referee_1"`, `"referee_2"`, etc. for referee sections
    - `target_label` — the LaTeX label referenced (`\ref{subsec:durbin}` → `subsec:durbin`)
    - `search_keywords` — 2-5 distinctive terms to search for near the target
    - `line_in_response` — line number in the .tex file
@@ -63,8 +71,9 @@ For each `\textbf{Reply:}` block:
 ### Step 4: Build Referee Summary
 
 Before writing output, compile a top-level `referees` map from the comment IDs:
-- Extract unique referee prefixes (e.g., `ed`, `ref1`, `ref2`) from the comment IDs
-- For each referee, record their label (from `\section*{}` headers) and total comment count
+- Extract unique referee prefixes (e.g., `ae`, `ed`, `ref1`, `ref2`) from the comment IDs
+- For each referee, record their label (from `\section*{}` headers or section marker), total comment count, and the `source` key used in claims (`"ae"`, `"referee_1"`, etc.)
+- If an AE letter was present (separate file or embedded section), include it under key `"ae"`
 - This summary helps the profile phase identify referees without re-parsing the response doc
 
 ### Step 5: Quality Checks
@@ -83,12 +92,14 @@ Before writing output:
 ```json
 {
   "response_file": "path/to/response.tex",
+  "ae_letter_file": "path/to/ae_letter.txt",
   "extracted_at": "ISO timestamp",
   "total_claims": 47,
   "referees": {
-    "ed": {"label": "Editor", "comment_count": 3},
-    "ref1": {"label": "Referee 1", "comment_count": 8},
-    "ref2": {"label": "Referee 2", "comment_count": 6}
+    "ae": {"label": "Associate Editor", "comment_count": 4, "source": "ae"},
+    "ed": {"label": "Editor", "comment_count": 3, "source": "referee_0"},
+    "ref1": {"label": "Referee 1", "comment_count": 8, "source": "referee_1"},
+    "ref2": {"label": "Referee 2", "comment_count": 6, "source": "referee_2"}
   },
   "by_type": {
     "reference_check": 12,
@@ -101,8 +112,20 @@ Before writing output:
   },
   "claims": [
     {
-      "id": "ed_1a_claim_1",
-      "source_comment": "ed_1a",
+      "id": "ae_1_claim_1",
+      "source_comment": "ae_1",
+      "source": "ae",
+      "claim_text": "We have restructured the introduction to foreground the main contribution as suggested.",
+      "claim_type": "content_revision",
+      "target_label": null,
+      "verifiable": true,
+      "search_keywords": ["restructured", "introduction", "contribution"],
+      "line_in_response": 12
+    },
+    {
+      "id": "ref1_1a_claim_1",
+      "source_comment": "ref1_1a",
+      "source": "referee_1",
       "claim_text": "I have added a sentence in Section \\ref{subsec:durbin} clarifying that the results are weaker once we use the full sample.",
       "claim_type": "content_addition",
       "target_label": "subsec:durbin",
@@ -120,7 +143,9 @@ Before writing output:
 {
   "status": "complete",
   "total_claims": 47,
+  "ae_letter_present": true,
   "by_type": {"reference_check": 12, "content_addition": 15, "content_revision": 8, "structural_change": 3, "numerical_claim": 4, "citation_check": 9, "unverifiable": 6},
+  "by_source": {"ae": 7, "referee_1": 20, "referee_2": 20},
   "verifiable": 41,
   "unverifiable": 6
 }

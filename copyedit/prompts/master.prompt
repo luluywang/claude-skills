@@ -24,8 +24,22 @@
 
 | File | Purpose |
 |------|---------|
-| `notes/.copyedit_status` | Current phase: `pending` \| `execution` \| `complete` |
+| `notes/.copyedit_status` | Current phase: `pending` \| `execution` \| `complete`; also tracks ai_detection per-file progress |
 | `notes/tasks.json` | Task manifest with status per (file, task) pair |
+
+### .copyedit_status — AI Detection Fields
+
+`.copyedit_status` may contain two optional ai_detection tracking lines:
+
+```
+ai_detection_complete: [intro.tex, methods.tex]
+ai_detection_pending: [results.tex, conclusion.tex]
+```
+
+- `ai_detection_complete`: files whose ai_detection task finished successfully in a prior (possibly interrupted) run.
+- `ai_detection_pending`: files that still need ai_detection processing.
+
+These fields are written/updated by ai_detection subagents as they finish each file. The orchestrator reads them during bootstrap to detect incomplete ai_detection runs.
 
 ### tasks.json Schema
 
@@ -76,12 +90,86 @@ Return: {phase: "fresh"|"resume", details}
 ```
 
 **Handle return:**
-- `fresh` → Run: `bash {skill_dir}/scripts/new_session.sh {paper_dir}` to archive any prior output, then proceed to Step 2
+- `fresh` → Check `.copyedit_status` for `ai_detection_pending` field (see below). If non-empty, route to AI Detection Resume Path. Otherwise run: `bash {skill_dir}/scripts/new_session.sh {paper_dir}` to archive any prior output, then proceed to Step 2.
 - `resume` → Skip to Step 6, continue from pending tasks
+
+### AI Detection Resume Path
+
+Triggered when bootstrap returns `fresh` (prior review complete) BUT `.copyedit_status` contains a non-empty `ai_detection_pending` list.
+
+```
+IF .copyedit_status contains "ai_detection_pending: [file1, file2, ...]" AND list is non-empty:
+    ROUTE TO: AI Detection Resume Path
+    DO NOT archive prior output
+    DO NOT run new_session.sh
+```
+
+**Resume Path Steps:**
+
+1. Read `ai_detection_complete` and `ai_detection_pending` from `.copyedit_status`
+2. Inform user: "Resuming ai_detection — N files already done, M files remaining: [list]"
+3. Use AskUserQuestion to confirm:
+   ```json
+   {
+     "header": "Resume ai_detection",
+     "question": "Pick up where we left off, or start fresh?",
+     "multiSelect": false,
+     "options": [
+       {"label": "Resume (Recommended)", "description": "Process only remaining files"},
+       {"label": "Start fresh", "description": "Re-run ai_detection on all files"},
+       {"label": "Cancel", "description": "Stop without running"}
+     ]
+   }
+   ```
+4. **If "Resume":** Enumerate (file, ai_detection) pairs only for files in `ai_detection_pending`. Skip Step 2-3 diagnostic questions (reuse existing paper_type if available in tasks.json). Go directly to Step 4.5 (Task Preview) with the reduced file list.
+5. **If "Start fresh":** Run `new_session.sh` to archive, then proceed to Step 2 normally.
+6. **If "Cancel":** Stop, output "Review cancelled."
+
+**Updating `.copyedit_status` during ai_detection execution:**
+
+After each ai_detection subagent completes a file:
+- Move that file from `ai_detection_pending` to `ai_detection_complete` in `.copyedit_status`
+- Write the updated `.copyedit_status` immediately (so a mid-run context exhaustion preserves progress)
+
+**Initializing ai_detection tracking:**
+
+When a new ai_detection run starts (fresh session), write the full file list to `.copyedit_status`:
+```
+ai_detection_complete: []
+ai_detection_pending: [intro.tex, methods.tex, results.tex, conclusion.tex]
+```
+
+When all files complete, clear the pending list:
+```
+ai_detection_complete: [intro.tex, methods.tex, results.tex, conclusion.tex]
+ai_detection_pending: []
+```
 
 ---
 
 ## Step 2: Interpret Request
+
+### Pre-check: ai_detection_pending
+
+**Before interpreting the request**, check `.copyedit_status` for `ai_detection_pending`.
+
+```
+IF ai_detection_pending is non-empty AND user did NOT explicitly request a new ai_detection run:
+    Surface to user: "There are N files with incomplete ai_detection from a prior run: [list]"
+    Use AskUserQuestion:
+    {
+      "header": "Incomplete ai_detection",
+      "question": "What would you like to do?",
+      "options": [
+        {"label": "Finish the ai_detection first", "description": "Process remaining files before this request"},
+        {"label": "Ignore and proceed", "description": "Continue with the current request, skip resume"},
+        {"label": "Cancel", "description": "Stop without running anything"}
+      ]
+    }
+    IF "Finish first": GOTO AI Detection Resume Path (Step 1), then return here when done
+    IF "Ignore": clear ai_detection_pending from .copyedit_status, proceed normally
+    IF "Cancel": stop
+```
 
 | Request Pattern | Tasks |
 |----------------|-------|

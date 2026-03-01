@@ -12,8 +12,7 @@
 
 set -e
 
-SKILL_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-CURRENT_DIR="$SKILL_DIR/current"
+CURRENT_DIR="$(pwd)/revisions/current"
 STATUS_FILE="$CURRENT_DIR/.status"
 
 # Ensure current directory exists

@@ -64,3 +64,8 @@ Rank the top 5 most evidence-backed findings across all categories, with evidenc
 ```
 
 Be concrete. Cite evidence counts ("observed in 7 sessions", "3 skill analyses mention this"). Don't pad with weak signals.
+
+## Return Value
+
+Return to orchestrator: a single line —
+`--- [3] Aggregate updated → cache/aggregate.md`

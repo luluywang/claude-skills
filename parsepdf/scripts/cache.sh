@@ -11,10 +11,7 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-# SKILL_DIR is the parsepdf skill root (parent of scripts/)
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-SKILL_DIR="$( cd "$SCRIPT_DIR/.." && pwd )"
-CACHE_DIR="$SKILL_DIR/cache"
+CACHE_DIR="$(pwd)/parsepdf/cache"
 
 show_help() {
     echo "Usage: $0 <command> [paper_name]"

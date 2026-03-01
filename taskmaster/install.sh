@@ -35,6 +35,7 @@ copy_skill_files() {
 
   mkdir -p "$skill_dir/hooks"
   mkdir -p "$skill_dir/docs"
+  mkdir -p "$skill_dir/scripts"
 
   safe_copy "$SCRIPT_DIR/SKILL.md" "$skill_dir/SKILL.md"
   safe_copy "$SCRIPT_DIR/README.md" "$skill_dir/README.md"
@@ -42,6 +43,7 @@ copy_skill_files() {
   safe_copy "$SCRIPT_DIR/docs/SPEC.md" "$skill_dir/docs/SPEC.md"
   safe_copy "$SCRIPT_DIR/install.sh" "$skill_dir/install.sh"
   safe_copy "$SCRIPT_DIR/uninstall.sh" "$skill_dir/uninstall.sh"
+  safe_copy "$SCRIPT_DIR/verify.sh" "$skill_dir/verify.sh"
   safe_copy "$SCRIPT_DIR/taskmaster-compliance-prompt.sh" "$skill_dir/taskmaster-compliance-prompt.sh"
 
   safe_copy "$SCRIPT_DIR/run-taskmaster-codex.sh" "$skill_dir/run-taskmaster-codex.sh"
@@ -49,15 +51,18 @@ copy_skill_files() {
   safe_copy "$SCRIPT_DIR/hooks/check-completion.sh" "$skill_dir/hooks/check-completion.sh"
   safe_copy "$SCRIPT_DIR/hooks/inject-continue-codex.sh" "$skill_dir/hooks/inject-continue-codex.sh"
   safe_copy "$SCRIPT_DIR/hooks/run-codex-expect-bridge.exp" "$skill_dir/hooks/run-codex-expect-bridge.exp"
+  safe_copy "$SCRIPT_DIR/scripts/verify_install.sh" "$skill_dir/scripts/verify_install.sh"
 
   chmod +x "$skill_dir/install.sh"
   chmod +x "$skill_dir/uninstall.sh"
+  chmod +x "$skill_dir/verify.sh"
   chmod +x "$skill_dir/taskmaster-compliance-prompt.sh"
   chmod +x "$skill_dir/run-taskmaster-codex.sh"
   chmod +x "$skill_dir/check-completion.sh"
   chmod +x "$skill_dir/hooks/check-completion.sh"
   chmod +x "$skill_dir/hooks/inject-continue-codex.sh"
   chmod +x "$skill_dir/hooks/run-codex-expect-bridge.exp"
+  chmod +x "$skill_dir/scripts/verify_install.sh"
 }
 
 codex_detected() {
@@ -233,4 +238,15 @@ if [[ "$INSTALL_CLAUDE" -eq 1 ]]; then
   echo ""
   echo "Claude usage:"
   echo "  Claude Stop hook is configured at $CLAUDE_HOOK_COMMAND"
+  echo ""
+  echo "Scope filter config (set in your shell environment):"
+  echo "  TASKMASTER_MIN_TOOLS=3          # skip sessions with fewer than N tool calls (default: 3)"
+  echo "  TASKMASTER_SKIP_PATTERNS=''     # colon-separated cwd path patterns to skip entirely"
+fi
+
+# Run installation smoke test
+if [[ "$INSTALL_CLAUDE" -eq 1 ]]; then
+  echo ""
+  echo "Verifying installation..."
+  bash "$CLAUDE_SKILL_DIR/scripts/verify_install.sh" || true
 fi

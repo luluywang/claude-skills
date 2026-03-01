@@ -4,11 +4,8 @@
 
 set -e
 
-# SKILL_DIR is the parsepdf skill root (parent of scripts/)
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-SKILL_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
-CACHE_DIR="$SKILL_DIR/cache"
-OUTPUT_DIR="$SKILL_DIR/output"
+CACHE_DIR="$(pwd)/parsepdf/cache"
+OUTPUT_DIR="$(pwd)/parsepdf/output"
 
 usage() {
     echo "Usage: $0 [OPTIONS] <paper_name>"

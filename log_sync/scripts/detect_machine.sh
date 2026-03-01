@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
 # detect_machine.sh
 # Detects machine type (local Mac vs HPC cluster) and sets LOG_SOURCE_DIR.
-# Source this file; do not execute directly.
 #
-# Usage:
+# Usage (sourced — sets variables in caller's shell):
 #   source detect_machine.sh
 #   echo "$LOG_SOURCE_DIR"   # path to Claude Code logs on this machine
 #   echo "$MACHINE_TYPE"     # "local" or "hpc"
 #   echo "$MACHINE_NAME"     # hostname (short form)
+#
+# Usage (executed directly — prints machine summary and recommended install command):
+#   bash detect_machine.sh
 
 MACHINE_NAME="$(hostname -s 2>/dev/null || hostname)"
 
@@ -44,3 +46,37 @@ fi
 export MACHINE_TYPE
 export MACHINE_NAME
 export LOG_SOURCE_DIR
+
+# ── When executed directly (not sourced), print summary + install command ─────
+# $0 == bash or the script path; use $BASH_SOURCE to detect sourcing.
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    echo "[detect_machine] Machine:  ${MACHINE_NAME} (${MACHINE_TYPE})"
+    echo "[detect_machine] Log dir:  ${LOG_SOURCE_DIR}"
+    echo ""
+    if [ "$MACHINE_TYPE" = "hpc" ]; then
+        echo "Detected: HPC cluster (no Dropbox). Recommended setup:"
+        echo ""
+        echo "  # 1. Copy skill files from your laptop (run on your laptop):"
+        echo "  rsync -az ~/.claude/skills/log_sync/ ${MACHINE_NAME}:~/.claude/skills/log_sync/"
+        echo ""
+        echo "  # 2. Run installer on this cluster:"
+        echo "  bash ~/.claude/skills/log_sync/install.sh"
+        echo ""
+        echo "  # 3. Pull logs back to laptop (run on your laptop):"
+        echo "  /log_sync   # inside Claude Code, or:"
+        echo "  bash ~/.claude/skills/log_sync/scripts/sync.sh"
+        echo ""
+        echo "  See docs/install_guide.md section 2 for full HPC instructions."
+    else
+        echo "Detected: local Mac. Recommended setup:"
+        echo ""
+        echo "  # Run the installer:"
+        echo "  bash ~/.claude/skills/log_sync/install.sh"
+        echo ""
+        echo "  # (Optional) Configure HPC pull in ~/.claude/hooks/log_sync.conf:"
+        echo "  #   HPC_HOST=username@cluster.university.edu"
+        echo "  #   HPC_LOG_DIR=~/claude-logs"
+        echo ""
+        echo "  See docs/install_guide.md section 1 for full Mac instructions."
+    fi
+fi
