@@ -64,58 +64,6 @@ In the archived folder, create `retrospective.md`:
 [List any blocked tasks with their notes, or "None"]
 ```
 
-## Step 3.5: Update Project State File
-
-Write/update `$WORK_DIR/project_state.md` (one level above `current/`, persists across sessions) to capture what happened in this session. This file is the primary mechanism for session continuity — the next `/econ_ra continue` invocation will read it.
-
-If `project_state.md` already exists, **update it** (don't overwrite). Append a new session history row and update the status/summary sections.
-
-If it doesn't exist, create it with this structure:
-
-```markdown
-# Project State
-
-**Status:** completed | partial | needs-followup
-**Last Session:** [date]
-**Project:** [project name from spec.md]
-
-## Current Status
-
-[1-3 sentence summary of where the project stands]
-
-## What Was Accomplished
-
-- [key accomplishment 1]
-- [key accomplishment 2]
-
-## What Failed or Was Flagged
-
-- [issue 1 with brief explanation, or "None"]
-
-## What Was Tried
-
-[For debugging continuity — approaches attempted, what worked/didn't]
-- [approach 1]: [outcome]
-
-## Open Questions
-
-- [ ] [open item 1]
-- [ ] [open item 2]
-- (or "None — project complete")
-
-## Key Files Modified
-
-- `path/to/file.jl` — [what changed]
-
-## Session History
-
-| Date | Summary | Outcome |
-|------|---------|---------|
-| [date] | [brief summary] | [complete/partial/flagged] |
-```
-
-**Important:** The state file lives at `$WORK_DIR/project_state.md`, NOT inside `current/`. This is because `current/` gets archived to `history/` on wrapup, but the state file needs to persist so the next session can find it. When a new project starts, the orchestrator will check for this file and offer to resume.
-
 ## Step 4: Update Preferences (if warranted)
 
 If any task revealed a **genuinely reusable lesson** (threshold that worked well, approach to prefer in future projects), append to `preferences.md` under the appropriate section.

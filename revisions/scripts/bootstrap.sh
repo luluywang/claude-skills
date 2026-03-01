@@ -1,10 +1,11 @@
 #!/bin/bash
 # bootstrap.sh - Initialize directory and detect current phase for revisions skill
-# Phases: init, extract, profile, strategy, audit, fix, review, complete
+# Phases: init, extract, profile, strategy, audit, fix, review, complete, table_sync
 
 set -e
 
 CURRENT_DIR="$(pwd)/revisions/current"
+INVOCATION_MODE="${1:-}"  # First argument: "sync-tables" for table_sync mode
 
 # Initialize output variables
 DIR_CREATED="no"
@@ -21,6 +22,32 @@ REFEREE_PROFILES_EXISTS="missing"
 CHANGELOG_EXISTS="missing"
 TODOS_EXISTS="missing"
 AE_LETTER_DETECTED="no"
+
+# Step 0: Check for standalone invocation modes that bypass normal phase detection
+if [ "$INVOCATION_MODE" = "sync-tables" ]; then
+    mkdir -p "$CURRENT_DIR"
+    cat << EOF
+{
+  "phase": "table_sync",
+  "reason": "sync-tables invocation mode detected",
+  "directory_created": "no",
+  "ae_letter_detected": "no",
+  "files": {
+    "status": "n/a",
+    "status_content": "",
+    "config": "n/a",
+    "claims": "n/a",
+    "referee_profiles": "n/a",
+    "strategy_memo": "n/a",
+    "audit": "n/a",
+    "fix_state": "n/a",
+    "changelog": "n/a",
+    "todos": "n/a"
+  }
+}
+EOF
+    exit 0
+fi
 
 # Step 1: Create directory if needed
 if [ ! -d "$CURRENT_DIR" ]; then
@@ -94,6 +121,10 @@ else
             "complete")
                 PHASE="complete"
                 REASON="Revision alignment complete"
+                ;;
+            "table_sync")
+                PHASE="table_sync"
+                REASON="Table sync phase - reconciling updated tables with manuscript text"
                 ;;
             *)
                 PHASE="unknown"

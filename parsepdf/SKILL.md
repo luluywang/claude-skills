@@ -116,6 +116,16 @@ Extract bibliography section from a processed paper.
 ./scripts/extract_bibliography.sh paper_name
 ```
 
+### check_env.sh
+
+Verify that all required system tools and Python packages are present before starting a parse job.
+
+```bash
+./scripts/check_env.sh
+```
+
+Prints `PASS` or `FAIL` for each dependency (pdfinfo, pdftotext, pdfseparate, python3, pdfplumber, fitz/PyMuPDF) and exits non-zero if anything is missing. Run this first on any new machine.
+
 ---
 
 ## Tasks Reference
@@ -136,7 +146,19 @@ Extract bibliography section from a processed paper.
 
 ---
 
-## Dependencies
+## Environment Setup
+
+### Quick check
+
+Before running a parse job on a new machine, verify all dependencies are present:
+
+```bash
+./scripts/check_env.sh
+```
+
+The script prints `PASS` or `FAIL` for each dependency and exits non-zero if anything is missing.
+
+---
 
 ### Required: poppler-utils (system package)
 
@@ -147,13 +169,47 @@ The shell scripts require `pdfinfo`, `pdftotext`, and `pdfseparate` from poppler
 - **Ubuntu/Debian:** `sudo apt-get install poppler-utils`
 - **Fedora:** `sudo dnf install poppler-utils`
 
-### Optional: pdfplumber (Python package)
+### Required: Python 3
+
+Needed for `extract_tables.py` and pdfplumber table extraction.
+
+- **conda/mamba:** `mamba activate <your-env>`  (Python 3 ships with any standard conda environment)
+- **System:** ensure `python3` is on `$PATH`
+
+### Required: pdfplumber (Python package)
 
 Used for advanced table extraction. **Auto-installed** when you run `extract_tables.py`.
 
-If auto-install fails:
+If auto-install fails, install manually:
+
 ```bash
+# pip
 pip install pdfplumber>=0.10.0
+
+# conda/mamba (recommended on shared machines)
+mamba install -c conda-forge pdfplumber
+```
+
+### Optional: PyMuPDF / fitz (Python package)
+
+Used for visual interpretation of figures and tables via Haiku subagents. Not required for basic text extraction.
+
+```bash
+# pip
+pip install pymupdf>=1.23.0
+
+# conda/mamba
+mamba install -c conda-forge pymupdf
+```
+
+### Recommended: conda/mamba environment activation
+
+If you manage dependencies through conda or mamba, activate the environment before running any scripts:
+
+```bash
+mamba activate <your-env>          # e.g.: mamba activate research
+./scripts/check_env.sh             # verify all packages are visible
+./scripts/process_paper.sh paper.pdf
 ```
 
 ---
@@ -212,7 +268,8 @@ User: "Process paper.pdf and extract everything"
 │   ├── cache.sh             ← Cache management
 │   ├── extract_tables.py    ← pdfplumber table extraction
 │   ├── extract_bibliography.sh
-│   └── extract_citations.sh
+│   ├── extract_citations.sh
+│   └── check_env.sh          ← Verify environment before parsing
 ├── assets/
 │   └── tasks/               ← Task prompts
 │       ├── segment.md

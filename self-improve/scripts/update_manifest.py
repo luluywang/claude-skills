@@ -7,6 +7,8 @@ Usage:
     python3 update_manifest.py --batch entries.json       # JSON list of {rel_path, summary_file?}
     python3 update_manifest.py --set-last-run-date        # Update last_run_date to now
     python3 update_manifest.py --update-skills '{...}'   # Merge skill session counts
+    python3 update_manifest.py --generate-todos <proposals_file>
+        # Read proposals file, write todos_{YYYYMMDD}.md alongside it
 
 Writes atomically (writes to .tmp then renames).
 """
@@ -14,6 +16,7 @@ Writes atomically (writes to .tmp then renames).
 import argparse
 import json
 import os
+import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -47,6 +50,69 @@ def record_entry(manifest, rel_path, summary_file=None, compressed=False):
     manifest["last_updated"] = now
 
 
+def generate_todos(proposals_file: Path) -> Path:
+    """Read a proposals_{YYYYMMDD}.md file and write a todos_{YYYYMMDD}.md alongside it.
+
+    Proposal entries are expected in the format written by proposal_writer.md:
+        ## P{n}: {title}
+        - **Type**: ...
+        - **Target**: {target}
+        - **Effort**: {effort}
+        ...
+
+    Output format (grouped by target skill, sorted by proposal number):
+        ## {skill}
+        - [ ] P{n}: {title} (Effort: {effort}, Target: {target})
+    """
+    text = proposals_file.read_text()
+
+    # Extract date from filename, e.g. proposals_20260301.md → 20260301
+    date_match = re.search(r"proposals_(\d{8})\.md", proposals_file.name)
+    date_str = date_match.group(1) if date_match else datetime.now().strftime("%Y%m%d")
+
+    # Parse each proposal block
+    # Match headings like "## P3: Some Title" (with optional leading spaces)
+    proposal_blocks = re.split(r"\n(?=##\s+P\d+:)", text)
+
+    proposals = []
+    for block in proposal_blocks:
+        heading = re.match(r"##\s+(P(\d+)):\s+(.+)", block)
+        if not heading:
+            continue
+        pid = heading.group(1)       # e.g. "P3"
+        pnum = int(heading.group(2)) # e.g. 3
+        title = heading.group(3).strip()
+
+        target_m = re.search(r"\*\*Target\*\*:\s*(.+)", block)
+        effort_m = re.search(r"\*\*Effort\*\*:\s*(.+)", block)
+
+        target = target_m.group(1).strip() if target_m else "unknown"
+        effort = effort_m.group(1).strip() if effort_m else "unknown"
+
+        proposals.append({"pid": pid, "pnum": pnum, "title": title,
+                          "target": target, "effort": effort})
+
+    if not proposals:
+        print("Warning: no proposals parsed from file", file=sys.stderr)
+
+    # Group by target, preserving insertion order within each group
+    groups: dict[str, list] = {}
+    for p in sorted(proposals, key=lambda x: x["pnum"]):
+        groups.setdefault(p["target"], []).append(p)
+
+    lines = [f"# Todos — {date_str}\n"]
+    for skill_target in sorted(groups.keys()):
+        lines.append(f"\n## {skill_target}\n")
+        for p in groups[skill_target]:
+            lines.append(
+                f"- [ ] {p['pid']}: {p['title']} (Effort: {p['effort']}, Target: {p['target']})\n"
+            )
+
+    todos_path = proposals_file.parent / f"todos_{date_str}.md"
+    todos_path.write_text("".join(lines))
+    return todos_path
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("rel_path", nargs="?", help="Relative path key (e.g. filename.jsonl)")
@@ -56,7 +122,19 @@ def main():
                         help="Set last_run_date to current UTC time")
     parser.add_argument("--update-skills", default=None,
                         help='JSON object of {skill: session_count} to merge, e.g. \'{"econ_ra": 5}\'')
+    parser.add_argument("--generate-todos", default=None, metavar="PROPOSALS_FILE",
+                        help="Read proposals file and write todos_{YYYYMMDD}.md alongside it")
     args = parser.parse_args()
+
+    # --generate-todos is self-contained; run it and exit without touching the manifest
+    if args.generate_todos:
+        proposals_path = Path(args.generate_todos)
+        if not proposals_path.exists():
+            print(f"Error: proposals file not found: {proposals_path}", file=sys.stderr)
+            sys.exit(1)
+        todos_path = generate_todos(proposals_path)
+        print(f"Todos written: {todos_path}")
+        return
 
     manifest = load_manifest()
     if "skills" not in manifest:

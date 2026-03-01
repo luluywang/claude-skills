@@ -1,0 +1,188 @@
+# Evaluate Methodology Complaints
+
+**Purpose:** Read a complaints file listing RA methodology concerns alongside the paper PDF. Spawn one Haiku subagent per complaint to assess validity and impact. Rank complaints by impact × validity score and write `output/top_complaints.md`.
+
+**Output:** `output/top_complaints.md` saved next to the input PDF.
+
+---
+
+## Your Role
+
+You are an orchestrator coordinating a parallel evaluation of methodology complaints. You dispatch lightweight evaluator subagents, collect their verdicts, synthesize a ranked list, and deliver a strategic summary the author can act on.
+
+---
+
+## Inputs
+
+You will receive:
+
+1. **complaints.md** — A markdown file listing methodology concerns. Each concern should be a distinct numbered or bulleted item. If the file uses another format (prose paragraphs, numbered list without headers), parse it into discrete complaints before dispatching.
+2. **paper.pdf** — The paper under review. Extract text via parsepdf if needed.
+
+If either input is missing, ask the user to provide it before proceeding.
+
+---
+
+## Phase 1: Parse Complaints
+
+Read `complaints.md` and extract a numbered list of discrete complaints. Each complaint must have:
+
+- A short title (5–10 words)
+- The verbatim text (or close paraphrase) from the file
+
+If two complaints are near-duplicates (same underlying concern), merge them and note the merge.
+
+---
+
+## Phase 2: Dispatch Haiku Subagents
+
+For each complaint, spawn **one subagent** with the following instructions:
+
+```
+You are a methodology evaluator for an economics paper.
+
+Paper text: {paper_text}
+
+Complaint: {complaint_text}
+
+Evaluate this complaint on three dimensions:
+
+1. VALIDITY (0–3)
+   0 = Invalid: complaint misreads the paper or is factually wrong
+   1 = Weak: concern has some basis but is overstated or already addressed
+   2 = Moderate: legitimate concern, partially addressed in the paper
+   3 = Strong: well-founded concern, not adequately addressed
+
+2. IMPACT (0–3)
+   0 = Cosmetic: no effect on core conclusions
+   1 = Minor: affects presentation or secondary results only
+   2 = Moderate: affects robustness or scope of main claims
+   3 = Major: threatens identification strategy or primary contribution
+
+3. ADDRESSED (yes / partial / no)
+   Does the paper already address this concern?
+   yes = fully addressed in text or appendix
+   partial = mentioned but not resolved
+   no = not addressed
+
+Return JSON only:
+{
+  "validity": <0-3>,
+  "impact": <0-3>,
+  "addressed": "<yes|partial|no>",
+  "one_line": "<one sentence summarizing your verdict>",
+  "detail": "<2-4 sentences explaining your scoring>"
+}
+```
+
+Run subagents in parallel. Collect all JSON responses before proceeding.
+
+---
+
+## Phase 3: Score and Rank
+
+For each complaint, compute:
+
+```
+score = validity × impact
+```
+
+Apply tiebreakers in order: higher impact wins, then higher validity, then original order.
+
+Adjust display priority:
+- Complaints with `addressed = no` are ranked above `partial`, which rank above `yes` at equal scores.
+
+---
+
+## Phase 4: Select Top Complaints
+
+Include **all complaints** in the output, but section them:
+
+- **Top concerns** — score ≥ 4 (i.e., validity ≥ 2 and impact ≥ 2)
+- **Moderate concerns** — score 2–3
+- **Low-priority / invalid** — score 0–1
+
+Within each section, order by descending score.
+
+---
+
+## Output Format
+
+Write `output/top_complaints.md` with the following structure:
+
+```markdown
+# Top Methodology Complaints: {Paper Title}
+Generated: {YYYY-MM-DD}
+Source: {complaints filename}
+
+## Summary
+
+| Section | Count |
+|---------|-------|
+| Top concerns (score ≥ 4) | N |
+| Moderate concerns (score 2–3) | N |
+| Low-priority / invalid (score 0–1) | N |
+
+Score = validity (0–3) × impact (0–3). Higher = more urgent.
+
+---
+
+## Top Concerns
+
+### 1. {Complaint Title}
+**Score:** {score} (validity={v}, impact={i})
+**Addressed in paper:** yes / partial / no
+**Verdict:** {one_line from subagent}
+**Detail:** {detail from subagent}
+**Original text:** "{verbatim complaint or close paraphrase}"
+
+### 2. {Complaint Title}
+...
+
+---
+
+## Moderate Concerns
+
+### {N+1}. {Complaint Title}
+**Score:** {score} (validity={v}, impact={i})
+**Addressed in paper:** yes / partial / no
+**Verdict:** {one_line}
+**Detail:** {detail}
+**Original text:** "{verbatim or paraphrase}"
+
+...
+
+---
+
+## Low-Priority / Invalid
+
+### {M+1}. {Complaint Title}
+**Score:** {score} (validity={v}, impact={i})
+**Addressed in paper:** yes / partial / no
+**Verdict:** {one_line}
+
+...
+
+---
+
+## Strategic Notes
+
+{3-5 sentences: which top concerns are most urgent, whether any are already addressed and just need clearer exposition, and overall difficulty of responding to this complaint set}
+```
+
+---
+
+## Execution Steps
+
+1. **Parse inputs.** Extract paper text (parsepdf if needed). Parse complaints into a numbered list.
+2. **Dispatch subagents.** Spawn one Haiku subagent per complaint in parallel. Pass full paper text and complaint text to each.
+3. **Collect results.** Wait for all subagents to return JSON. Log any failures; re-run failed complaints once before marking as unscored.
+4. **Score and rank.** Compute score = validity × impact. Sort within sections by descending score.
+5. **Write output.** Save to `{paper_dir}/output/top_complaints.md` where `{paper_dir}` is the directory containing the input PDF.
+6. **Report.** Confirm path written and print the count of top / moderate / low complaints.
+
+---
+
+## Integration with Referee Skill
+
+The ranked complaint list in `output/top_complaints.md` can feed directly into a revision response. If the user subsequently runs `/revisions`, the revisions skill can read this file as optional context for its strategy phase, skipping redundant triage work.
