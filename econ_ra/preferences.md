@@ -58,6 +58,61 @@ This file accumulates your preferences from past projects. The long-running agen
 
 ---
 
+## Economic Sanity Check Library
+
+Standard ranges for economics research. Read by execution, investigation, and verification subagents. Flag values outside these ranges for review — they may be correct but warrant explanation.
+
+### Reduced-Form Estimates
+
+| Parameter | Typical Range | Flag If | Notes |
+|-----------|--------------|---------|-------|
+| Labor demand elasticity | -0.1 to -0.5 | >0 or <-2 | Hamermesh (1993); short-run closer to -0.2 |
+| Labor supply elasticity (extensive) | 0.1 to 0.5 | <0 or >2 | Chetty et al. (2012); women higher than men |
+| Price elasticity of demand | -0.5 to -2.0 | >0 or <-5 | Varies by product; necessities near -0.5 |
+| Income elasticity | 0.3 to 1.5 | <0 for normal goods | Luxury goods >1, necessities <1 |
+| Minimum wage employment effect | -0.1 to -0.3 | <-1 or >0.5 | Elasticity; Dube (2019) |
+| Treatment effects (DiD/RD) | varies | SE > 2x point estimate | Wide SEs suggest power issues |
+| First-stage F-statistic | >10 | <10 | Stock-Yogo weak instrument threshold |
+
+### Structural Model Parameters
+
+| Parameter | Typical Range | Flag If | Notes |
+|-----------|--------------|---------|-------|
+| Discount factor (β) | 0.9 to 0.99 | <0.8 or >1.0 | Annual; quarterly β ≈ 0.99 |
+| Risk aversion (σ) | 1 to 5 | <0.5 or >10 | CRRA; σ=1 is log utility |
+| Substitution elasticity (CES) | 0.5 to 5.0 | <0.1 or >20 | Depends on context |
+| Demand curvature (logit) | 0.3 to 3.0 | <0.01 or >10 | Price coefficient in BLP-type models |
+| Fixed cost of entry | varies | negative | Should be positive in most models |
+
+### Data Quality
+
+| Metric | Acceptable | Flag If | Notes |
+|--------|-----------|---------|-------|
+| Merge rate | >95% | <90% | Investigate unmatched records |
+| Missing data | <5% of key vars | >10% | Document pattern of missingness |
+| Outlier share | <1% | >5% | After reasonable winsorization |
+| Sample size (micro) | >1000 | <500 | For asymptotic properties |
+| Sample size (state-level panel) | >200 | <100 | State × year cells |
+
+### Welfare and Counterfactual
+
+| Check | Rule | Notes |
+|-------|------|-------|
+| Welfare decomposition | Components must sum to total | Consumer + producer = total (in partial equilibrium) |
+| Counterfactual prices | Must be positive | Negative prices are usually a bug |
+| Market shares | Must sum to ≤1 (with outside option) | Exactly 1 without outside option |
+| Consumer surplus sign | Typically positive | Negative CS rare unless quality-adjusted |
+| Deadweight loss | Should be positive | Negative DWL usually indicates error |
+
+### How to Use This Library
+
+1. **Execution subagents:** After computing a result, compare against relevant ranges. If outside range, add a note to the task explaining why (or flag for review).
+2. **Investigation subagent:** During cross-reference checking, compare values in output/scalar files against these ranges.
+3. **Verification subagent:** When checking numbers in LaTeX, flag any that fall outside expected ranges.
+4. **The ranges are guidelines, not hard rules.** Many valid results fall outside these ranges — the point is to flag them for human review, not to reject them automatically.
+
+---
+
 ## Project-Specific Lessons
 
 ### 2025-12-10: Bootstrap Audit, J*=0 Fix
