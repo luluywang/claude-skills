@@ -25,6 +25,7 @@ Estimated cost: ~$2/PDF with Haiku vs ~$10/PDF with Sonnet.
 
 ```
 /parsepdf process paper.pdf           # Full extraction workflow
+/parsepdf process paper.pdf --no-summary  # Skip findings summary step
 /parsepdf tables paper.pdf            # Extract tables only
 /parsepdf structure paper.pdf         # Identify document structure
 /parsepdf cache status                # Show cached papers
@@ -40,6 +41,7 @@ Estimated cost: ~$2/PDF with Haiku vs ~$10/PDF with Sonnet.
 3. **Process components** → Extract tables, figures, equations as needed
 4. **Assemble output** → Combine into final markdown
 5. **Quality check** → Validate output completeness
+6. **Findings summary** → Generate table-by-table summaries and key quantitative findings (opt-out with `--no-summary`)
 
 ---
 
@@ -57,6 +59,7 @@ Estimated cost: ~$2/PDF with Haiku vs ~$10/PDF with Sonnet.
 | "What's the structure of this paper?" | `assets/tasks/segment.md` |
 | "Validate table extraction" | `assets/tasks/validate_tables.md` |
 | "Run QA on output" | `assets/tasks/qa_check.md` |
+| "Summarize findings" / "What are the key results?" / "Generate findings summary" | `assets/tasks/findings_summary.md` |
 
 ---
 
@@ -128,6 +131,7 @@ Extract bibliography section from a processed paper.
 | Text | `assets/tasks/clean_text.md` | text/page_*.txt | cleaned/SECTION.md |
 | Validate | `assets/tasks/validate_tables.md` | tables + context | validation/table_N.json |
 | QA | `assets/tasks/qa_check.md` | assembled markdown | *_qa.json |
+| Findings Summary | `assets/tasks/findings_summary.md` | output/[PAPER].md | output/[PAPER]_findings.md |
 | Full run | `assets/tasks/orchestrate.md` | segment_task.md | output/*.md |
 
 ---
@@ -179,7 +183,7 @@ User: "Process paper.pdf and extract everything"
 
 4. Follow orchestration phases to completion
 
-5. Output: output/paper.md + output/paper_qa.json
+5. Output: output/paper.md + output/paper_qa.json + output/paper_findings.md
 ```
 
 ---
@@ -220,6 +224,7 @@ User: "Process paper.pdf and extract everything"
 │       ├── clean_text.md
 │       ├── validate_tables.md
 │       ├── qa_check.md
+│       ├── findings_summary.md
 │       └── orchestrate.md
 ├── references/              ← Documentation
 │   ├── README.md

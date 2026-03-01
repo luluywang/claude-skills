@@ -1,0 +1,149 @@
+# Strategy Memo Task
+
+**Purpose:** Synthesize the extracted claims and referee profiles into a high-level response strategy document. This memo is for the author — it answers the question "what is the overall plan for this revision?" before any manuscript editing begins.
+
+---
+
+## Input
+
+- **Claims:** `current/claims.json` — all extracted claims with source_comment, referee attributions, and types
+- **Referee profiles:** `current/referee_profiles.json` — slim index with soul_file pointers and cross-referee analysis
+- **Referee soul documents:** `current/souls/{key}_soul.md` — narrative profiles (paths listed in referee_profiles.json)
+- **Config:** `current/config.json` — file paths (for context only — do NOT read manuscript files in this phase)
+
+## Task
+
+Produce a strategy memo that gives the author a clear, prioritized view of what this revision needs to accomplish. The memo should be actionable and opinionated — not a neutral summary, but a concrete plan.
+
+### Step 1: Load the Inputs
+
+1. Read `current/claims.json` — scan the full set of claims, noting:
+   - How many claims per referee
+   - Which claim types dominate (text_edit, citation_add, analysis_add, etc.)
+   - Which claims are flagged as verifiable vs. unverifiable
+2. Read `current/referee_profiles.json` — note the swing referee and cross-referee shared concerns
+3. Read each soul document listed in `referee_profiles.json` — extract each referee's top concerns, stance, and red flags
+
+Do NOT read any manuscript files. Strategy is based on claims and profiles, not the current state of the paper.
+
+### Step 2: Prioritize Concerns
+
+Rank the referee concerns by importance. Use these criteria:
+
+1. **Shared concerns** — raised by multiple referees, weighted highest
+2. **Swing referee concerns** — the referee identified in cross-referee analysis as the priority
+3. **Dealbreakers** — concerns marked as such in soul documents
+4. **Claim volume** — claim clusters where many claims share the same underlying concern
+5. **Claim type** — `analysis_add` and structural changes typically outrank `text_edit` revisions in effort and risk
+
+For each top concern, note which claim IDs map to it (reference `source_comment` keys from claims.json, not the full claim text).
+
+### Step 3: Draft the Response Narrative
+
+Determine the overall narrative arc of the revision:
+
+- What is the single most important thing this revision needs to accomplish?
+- Are there tensions or tradeoffs (e.g., one referee wants more; another wants less)?
+- What is the right tone: mostly conceding, mostly defending, mixed?
+- Are there concerns where the authors should push back rather than concede?
+
+This narrative shapes how the response document reads as a whole — it's the story the authors are telling.
+
+### Step 4: Flag Sections Needing the Most Work
+
+Based on claim types and claim density, identify which manuscript sections will require the most substantive revision. Use the section references embedded in claim text or source_comment fields where available.
+
+Typical section categories: Introduction, Literature Review, Data/Sample, Empirical Strategy/Identification, Results/Main Tables, Robustness Checks, Conclusion, Online Appendix.
+
+For each flagged section, briefly state why it needs attention (e.g., "three separate claims require new robustness checks here").
+
+### Step 5: Quality Checks
+
+Before writing output:
+- The top concerns should reflect the actual claim content, not generic revision platitudes
+- The swing referee should feature prominently in the prioritization
+- Section flags should correspond to actual claim clusters, not guesses
+- The narrative should be opinionated and actionable, not a neutral summary
+
+## Output
+
+Write a single file: `current/strategy_memo.md`
+
+### Strategy Memo Template
+
+```markdown
+# Revision Strategy Memo
+**Generated:** {ISO timestamp}
+
+---
+
+## Overall Response Narrative
+
+{2-4 sentences capturing the overarching posture for this revision: what the authors are doing, what tone to strike, and how to handle the main tensions between referees.}
+
+## Priority Concerns
+
+These are the concerns that must be addressed for the revision to succeed. Listed in priority order.
+
+### 1. {Concern title} — {Critical / High / Medium}
+**Raised by:** {referee key(s)}
+**Claim clusters:** {claim IDs or source_comment keys}
+**Why it matters:** {1-2 sentences: which referee this is, why this concern carries weight, what a successful response looks like}
+
+### 2. {Concern title} — {Critical / High / Medium}
+...
+
+{Include all Critical and High priority concerns. Include Medium concerns only if they represent distinct issues, not sub-points of higher-priority items.}
+
+## Response Posture by Referee
+
+{For each referee, one short paragraph: what they want, how to treat them, and what to be careful of. Draw from soul documents.}
+
+### {Referee Label}
+{Paragraph.}
+
+...
+
+## Manuscript Sections Needing the Most Work
+
+| Section | Effort | Reason |
+|---------|--------|--------|
+| {section name} | {High / Medium / Low} | {brief reason tied to claim clusters} |
+| ... | ... | ... |
+
+## Tensions and Tradeoffs
+
+{Optional section — include only if there are genuine conflicts between referee expectations that the authors need to navigate. If no real conflicts, omit this section.}
+
+{Describe the tension and suggest how to resolve it.}
+
+## What to Do First
+
+{A short ordered list (3-5 items) of the first actions the fixer agent should take. These should be the highest-impact, highest-risk items — the things that, if done wrong, would sink the revision.}
+
+1. {Action}
+2. {Action}
+3. {Action}
+```
+
+### Return to Orchestrator (minimal)
+
+```json
+{
+  "status": "complete",
+  "referees_addressed": ["ref1", "ref2", "ed"],
+  "top_concerns": 5,
+  "sections_flagged": ["Empirical Strategy", "Robustness Checks", "Introduction"]
+}
+```
+
+Do NOT return the full memo inline. The orchestrator reads the file.
+
+## Rules
+
+1. **Base everything on the claims and profiles, not the manuscript.** This phase does not read manuscript files. Priorities come from what referees asked for, not from what the paper currently says.
+2. **Be opinionated.** The memo should help the author decide what to do, not just describe what was asked. Say which concerns are critical, which are easy wins, and where to be careful.
+3. **Reference claim IDs, not claim text.** Use `source_comment` keys (e.g., `ref1_2_claim_1`) to point to specific claims — don't reproduce the full claim text in the memo.
+4. **Keep it scannable.** The memo is for a human author to read before a long revision process. Use headers, short paragraphs, and tables. Avoid walls of text.
+5. **Don't inflate the concern list.** List the concerns that genuinely matter. A memo with 15 "critical" items is not useful. If everything is critical, nothing is.
+6. **Handle single-referee cases.** If there is only one referee, skip the "Tensions and Tradeoffs" section and the cross-referee comparisons. Focus the memo on that referee's priorities.

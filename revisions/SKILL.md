@@ -17,6 +17,7 @@ This orchestrator ensures the manuscript matches what the user promised in their
 /revisions                        # Start new alignment (or resume)
 /revisions continue               # Resume interrupted alignment
 /revisions reset                  # Clear for new revision
+/revisions strategy-only          # Run through STRATEGY phase only, then stop
 ```
 
 ## How It Works
@@ -25,13 +26,16 @@ This orchestrator ensures the manuscript matches what the user promised in their
 2. Collect file paths (response doc, manuscript, appendix, .bib, referee reports)
 3. Extract claims from response doc → `claims.json`
 4. Profile referees → `souls/{key}_soul.md` + `referee_profiles.json`
-5. Audit claims against manuscript → `audit.json`
-6. Fixer-critic loop: fix gaps, re-audit, iterate until clean
-7. Present changelog + TODOs to user
+5. **Strategy memo** → `current/strategy_memo.md` (high-level response narrative)
+6. Audit claims against manuscript → `audit.json`
+7. Fixer-critic loop: fix gaps, re-audit, iterate until clean
+8. Present changelog + TODOs to user
 
 ```
-/revisions → [INIT] → [EXTRACT] → [PROFILE] → [AUDIT] → [FIX ↔ CRITIC loop] → [REVIEW] → [COMPLETE]
+/revisions → [INIT] → [EXTRACT] → [PROFILE] → [STRATEGY] → [AUDIT] → [FIX ↔ CRITIC loop] → [REVIEW] → [COMPLETE]
 ```
+
+With `/revisions strategy-only`, the workflow stops after `[STRATEGY]` and presents `current/strategy_memo.md` to the user.
 
 The key insight: subagents run autonomously and cannot interact with users. User interaction happens in the orchestrator (main context), kept lightweight by offloading analysis to subagents.
 
@@ -58,6 +62,7 @@ The orchestrator coordinates — it does NOT do the work itself.
 - `init` → Collect file paths via AskUserQuestion, write `config.json`
 - `extract` → **IMMEDIATELY** spawn extract subagent. Do NOT read the response doc.
 - `profile` → **IMMEDIATELY** spawn profile subagent. Do NOT read referee reports yourself.
+- `strategy` → **IMMEDIATELY** spawn strategy subagent. Do NOT read claims or profiles yourself.
 - `audit` → **IMMEDIATELY** spawn audit subagent. Do NOT read manuscript files.
 - `fix` → Run `fix_loop.sh status`, then spawn fixer/critic subagents
 - `review` → Read changelog + todos, present to user
@@ -67,7 +72,7 @@ The orchestrator coordinates — it does NOT do the work itself.
 
 ### The orchestrator CAN:
 - Read skill files (SKILL.md, prompts/*)
-- Read state files (current/.status, current/config.json, current/claims.json summary, current/referee_profiles.json summary, current/audit.json summary, current/fix_state.json, current/changelog.md, current/todos.md)
+- Read state files (current/.status, current/config.json, current/claims.json summary, current/referee_profiles.json summary, current/strategy_memo.md, current/audit.json summary, current/fix_state.json, current/changelog.md, current/todos.md)
 - Run scripts (bootstrap.sh, status.sh, fix_loop.sh)
 - Spawn subagents with appropriate context
 - Present questions to users and collect answers
@@ -77,7 +82,7 @@ The orchestrator coordinates — it does NOT do the work itself.
 - **Read the response document** — extract/profile subagents do this
 - **Read referee reports** — profile subagent does this
 - **Read manuscript .tex files** — audit/fixer/critic subagents do this
-- **Write claims.json, referee_profiles.json, soul documents, or audit.json** — subagents write these
+- **Write claims.json, referee_profiles.json, soul documents, strategy_memo.md, or audit.json** — subagents write these
 - **Edit .tex files** — fixer subagent does this
 - **Write fix iteration files** — fixer/critic subagents write these
 - **Bypass the phase protocol** — even if user's request seems clear, follow the phases
@@ -99,7 +104,7 @@ bash revisions/scripts/bootstrap.sh
 Returns JSON:
 ```json
 {
-  "phase": "init|extract|profile|audit|fix|review|complete",
+  "phase": "init|extract|profile|strategy|audit|fix|review|complete",
   "reason": "Brief explanation",
   "directory_created": "yes|no",
   "files": {
@@ -108,6 +113,7 @@ Returns JSON:
     "config": "exists|missing",
     "claims": "exists|missing",
     "referee_profiles": "exists|missing",
+    "strategy_memo": "exists|missing",
     "audit": "exists|missing",
     "fix_state": "exists|missing",
     "changelog": "exists|missing",
@@ -123,6 +129,7 @@ Returns JSON:
 | `init` | Collect file paths | AskUserQuestion for response doc, manuscript, etc. |
 | `extract` | Parse response doc | Spawn extract subagent |
 | `profile` | Build referee profiles | Spawn profile subagent |
+| `strategy` | Produce strategy memo | Spawn strategy subagent; pause for user review if `--interactive` or `strategy-only` |
 | `audit` | Cross-check claims | Spawn audit subagent |
 | `fix` | Fixer-critic loop | Run `fix_loop.sh status`, dispatch accordingly |
 | `review` | Present results | Read changelog + todos, display to user |
@@ -150,11 +157,22 @@ When the phase is `init`, gather file paths from the user.
 Use AskUserQuestion:
 
 1. **Response document** (.tex) — the user's response to referees (source of truth)
-2. **Manuscript** (.tex) — main paper file(s)
-3. **Appendix files** (.tex) — optional, supplementary material (including online appendix)
-4. **Bibliography** (.bib) — optional, for citation checking
-5. **Referee reports** (.tex/.txt/.pdf) — optional, raw referee letters for personality profiling
-6. **Code files** (.jl/.py/.R/.m) — optional, estimation code for verifying math/numbers against implementation
+2. **AE letter** (.tex/.txt) — optional, separate Associate Editor letter file. If not provided, bootstrap.sh checks whether the response document opens with "Dear Associate Editor" and flags it automatically.
+3. **Manuscript** (.tex) — main paper file(s)
+4. **Appendix files** (.tex) — optional, supplementary material (including online appendix)
+5. **Bibliography** (.bib) — optional, for citation checking
+6. **Referee reports** (.tex/.txt/.pdf) — optional, raw referee letters for personality profiling
+7. **Code files** (.jl/.py/.R/.m) — optional, estimation code for verifying math/numbers against implementation
+8. **Referee grades** (`output/referee_grades.md`) — optional, pre-computed grading from `/referee grade`. If present, pass to the strategy subagent so it can skip re-prioritizing concerns and focus directly on response narrative.
+
+### Using Referee Grades (Optional)
+
+If the user has already run `/referee grade paper.pdf`, a graded priority list exists at `output/referee_grades.md` next to the paper. When this file is available:
+
+- Ask the user during init whether to use it (or check for it automatically at the expected path)
+- Add `"referee_grades": "path/to/output/referee_grades.md"` to `current/config.json`
+- The strategy subagent reads this file to get pre-computed severity tags (MAJOR/MINOR/COSMETIC), recommended response approaches (AGREE/DISAGREE/ACKNOWLEDGE), and effort estimates — reducing duplicated analysis
+- The profile subagent can use it as a supplementary signal when the grades contain referee-specific language patterns
 
 ### Write Config
 
@@ -162,6 +180,7 @@ After collecting inputs, write `current/config.json`:
 ```json
 {
   "response_doc": "path/to/response_round2.tex",
+  "ae_letter": "path/to/ae_letter.txt",
   "manuscript": ["paper.tex"],
   "appendix": ["online_appendix.tex"],
   "bib": ["Bibliography.bib"],
@@ -171,11 +190,12 @@ After collecting inputs, write `current/config.json`:
     "editor": "path/to/editor_letter.txt"
   },
   "code": ["code/model_functions.jl"],
+  "referee_grades": "path/to/output/referee_grades.md",
   "created": "ISO timestamp"
 }
 ```
 
-Note: `manuscript`, `appendix`, and `bib` are arrays to support multi-file projects.
+Note: `manuscript`, `appendix`, and `bib` are arrays to support multi-file projects. `ae_letter` is optional — omit the key if not provided. If `ae_letter` is omitted, bootstrap.sh will automatically detect an embedded AE section in the response document. `referee_grades` is optional — omit the key if the user has not run `/referee grade`.
 
 Update status:
 ```bash
@@ -185,6 +205,8 @@ bash revisions/scripts/status.sh extract
 ## Extract Phase (Single Sonnet Subagent)
 
 When the phase is `extract`, spawn the extract subagent immediately. Do NOT read the response document.
+
+If bootstrap returned `ae_letter_detected: "yes"`, surface that in the subagent context so it knows to look for an AE section.
 
 ```
 Task: [revisions:extract] Parse response document into claims
@@ -198,19 +220,21 @@ Read revisions/prompts/components/claim_taxonomy.prompt for claim type definitio
 Read revisions/prompts/components/latex_conventions.prompt for LaTeX reference.
 
 Context:
-- Config: current/config.json (contains response doc path)
+- Config: current/config.json (contains response doc path and optional ae_letter path)
+- AE letter detected by bootstrap: {yes|no}
 
 Your job:
-1. Read the response document
-2. Parse all \textbf{Reply:} blocks
-3. Extract each claim, classify by taxonomy type
-4. Write current/claims.json
-5. Return: {status, total_claims, by_type, verifiable, unverifiable}
+1. Read the AE letter (if config.json has ae_letter key) or detect an embedded AE section
+2. Read the response document
+3. Parse all \textbf{Reply:} blocks across all sections (AE + referees)
+4. Extract each claim, classify by taxonomy type, tag with source ("ae" or "referee_N")
+5. Write current/claims.json
+6. Return: {status, total_claims, ae_letter_present, by_type, by_source, verifiable, unverifiable}
 ```
 
 ### After Extract Returns
 
-1. Output summary: "Extracted N claims (X verifiable, Y unverifiable)"
+1. Output summary: "Extracted N claims (X verifiable, Y unverifiable) — AE letter: yes/no"
 2. Update status:
 ```bash
 bash revisions/scripts/status.sh profile
@@ -247,6 +271,59 @@ Your job:
 
 1. Output summary: "Profiled N referees (swing: RefX). Sources: referee_reports|response_doc_comments. Soul files: current/souls/"
 2. Update status:
+```bash
+bash revisions/scripts/status.sh strategy
+```
+
+## Strategy Phase (Single Opus Subagent)
+
+When the phase is `strategy`, spawn the strategy subagent immediately. Do NOT read claims or profiles yourself.
+
+```
+Task: [revisions:strategy] Produce strategy memo
+model: "opus"
+subagent_type: "general-purpose"
+
+Instructions:
+Read revisions/prompts/strategy_memo.prompt for full instructions.
+
+Context:
+- Claims: current/claims.json
+- Referee profiles: current/referee_profiles.json
+- Referee soul documents: current/souls/{key}_soul.md (paths in current/referee_profiles.json)
+- Config: current/config.json
+
+Your job:
+1. Read claims.json to understand all referee concerns and promised changes
+2. Read referee_profiles.json and each soul document to understand referee priorities
+3. Identify the most serious concerns and the swing referee
+4. Draft the overall response narrative and prioritization
+5. Identify which manuscript sections need the most work
+6. Write current/strategy_memo.md
+7. Return: {status, referees_addressed, top_concerns, sections_flagged}
+```
+
+### After Strategy Returns
+
+1. Output summary: "Strategy memo written to current/strategy_memo.md"
+2. **If `strategy-only` alias was used**: Read `current/strategy_memo.md` and present it to the user. Stop here — do NOT advance to audit.
+3. **If `--interactive`**: Read `current/strategy_memo.md`, present it to the user, and ask:
+
+```json
+{
+  "header": "Strategy Memo Review",
+  "question": "Review the strategy memo above. How would you like to proceed?",
+  "multiSelect": false,
+  "options": [
+    {"label": "Proceed to audit", "description": "Continue with claim-by-claim audit"},
+    {"label": "Stop here", "description": "Keep the strategy memo and stop for now"}
+  ]
+}
+```
+
+If user chooses to stop: do NOT advance status. Inform user they can resume with `/revisions continue`.
+
+4. **Otherwise (normal run)**: Advance status automatically:
 ```bash
 bash revisions/scripts/status.sh audit
 ```
@@ -473,6 +550,7 @@ When the user says "reset", "clear", or "new revision":
 |---|---|---|
 | Extract claims | Sonnet | Document parsing, classification |
 | Profile referees | Opus | Narrative soul documents require high-quality writing |
+| Strategy memo | Opus | Synthesizing referee concerns into high-level narrative |
 | Audit claims | Sonnet | Cross-referencing, search |
 | Fixer (standard) | Opus | Writing quality and structural alignment |
 | Fixer (escalation) | Opus | Complex structural changes |
@@ -492,6 +570,7 @@ revisions/
 ├── prompts/
 │   ├── extract_claims.prompt             # Parse response doc → claims.json
 │   ├── profile_referees.prompt           # Build referee personality profiles
+│   ├── strategy_memo.prompt              # High-level response strategy memo
 │   ├── audit_claims.prompt               # Cross-check claims vs manuscript
 │   ├── fixer.prompt                      # Make targeted edits to manuscript
 │   ├── critic.prompt                     # Re-audit after fixes
@@ -512,6 +591,7 @@ revisions/
     │   ├── ref1_soul.md
     │   ├── ref2_soul.md
     │   └── ed_soul.md
+    ├── strategy_memo.md                  # High-level response strategy
     ├── audit.json                        # Claim verification results
     ├── fix_state.json                    # Fix loop iteration state
     ├── changelog.md                      # Human-readable edit log
@@ -531,6 +611,7 @@ revisions/
 | `current/claims.json` | Extracted claims | Extract subagent |
 | `current/referee_profiles.json` | Slim index: soul_file pointers + cross-referee analysis | Profile subagent |
 | `current/souls/{key}_soul.md` | Narrative referee soul documents | Profile subagent |
+| `current/strategy_memo.md` | High-level response strategy | Strategy subagent |
 | `current/audit.json` | Verification results | Audit subagent |
 | `current/fix_state.json` | Loop iteration state | fix_loop.sh |
 | `current/changelog.md` | Edit log | Fixer subagent (appends) |

@@ -7,8 +7,7 @@
 
 set -e
 
-SKILL_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-CURRENT_DIR="$SKILL_DIR/current"
+CURRENT_DIR="$(pwd)/revisions/current"
 STATE_FILE="$CURRENT_DIR/fix_state.json"
 ITERATIONS_DIR="$CURRENT_DIR/fix_iterations"
 

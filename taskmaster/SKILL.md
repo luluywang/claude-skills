@@ -41,6 +41,14 @@ This gives external automation a deterministic completion marker to parse.
 
 - `TASKMASTER_MAX` (default `0`): max warning count before suppression in the
   stop hook. `0` means unlimited warnings.
+- `TASKMASTER_MIN_TOOLS` (default `3`): minimum number of tool calls a session
+  must contain before the stop hook activates. Sessions with fewer tool calls
+  (e.g. single-question answers, skill-setup tasks) are skipped automatically
+  and the stop is allowed without a checklist.
+- `TASKMASTER_SKIP_PATTERNS` (default unset): colon-separated list of cwd path
+  substrings. If the session's working directory matches any pattern the stop
+  hook exits immediately without blocking. Example:
+  `TASKMASTER_SKIP_PATTERNS=/tmp/scratch:/home/user/playground`
 
 Fixed behavior (not configurable):
 - Done token prefix: `TASKMASTER_DONE`
@@ -75,3 +83,52 @@ Install and run:
 bash ~/.codex/skills/taskmaster/install.sh
 codex-taskmaster
 ```
+
+## Installation Verification
+
+`install.sh` automatically runs a smoke test after installation. You can also
+run it manually at any time:
+
+```bash
+bash ~/.claude/skills/taskmaster/scripts/verify_install.sh
+```
+
+The smoke test checks:
+
+1. **Hook symlink exists** — `~/.claude/hooks/taskmaster-check-completion.sh`
+   is present and resolves to a real file.
+2. **Hook is executable** — the symlink target has the execute bit set.
+3. **Settings registration** — `~/.claude/settings.json` contains a Stop hook
+   entry whose `command` includes `taskmaster`.
+4. **Mock stop invocation** — feeds a synthetic JSON payload to the hook and
+   confirms it returns a valid JSON response (either `block` decision or a
+   clean exit for short/empty transcripts).
+
+A passing run looks like:
+
+```
+Taskmaster installation check
+=============================
+  [OK]  Hook symlink exists: /Users/you/.claude/hooks/taskmaster-check-completion.sh
+  [OK]  Hook symlink resolves to: /Users/you/.claude/skills/taskmaster/check-completion.sh
+  [OK]  Hook is executable
+  [OK]  Compliance prompt exists: ...
+  [OK]  jq is available (jq-1.7)
+  [OK]  Stop hook registered in settings.json
+  [OK]  Smoke test passed: hook returns block when done signal absent
+
+Results: 7 passed, 0 failed
+Taskmaster is ready.
+```
+
+### Troubleshooting
+
+| Symptom | Fix |
+|---------|-----|
+| `Hook symlink missing` | Re-run `install.sh`; check that `~/.claude/hooks/` is writable. |
+| `Hook is not executable` | `chmod +x ~/.claude/hooks/taskmaster-check-completion.sh` |
+| `Stop hook not found in settings.json` | Re-run `install.sh`, or add the hook manually per SETUP.md. |
+| `jq not found` | `brew install jq` (macOS) or `apt install jq` (Linux). |
+| `settings.json is not valid JSON` | Fix or delete `~/.claude/settings.json` and re-run `install.sh`. |
+| Hook fires but does nothing | Check that `TASKMASTER_MIN_TOOLS` is not set too high for your sessions. |
+| Hook never fires | Confirm the hook command path in settings.json matches the actual symlink path. |

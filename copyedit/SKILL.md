@@ -23,14 +23,15 @@ Comprehensive copyediting system for academic writing, following McCloskey and C
 ### Single Task
 
 ```
-/copyedit grammar intro.tex         # Grammar only (auto-applied)
-/copyedit ai_detection *.tex        # AI tells check
-/copyedit word_choice methods.tex   # Word choice review
-/copyedit sentence intro.tex        # Sentence structure analysis
-/copyedit structure paper/          # Paper structure analysis
-/copyedit flow paper/               # Flow extraction
-/copyedit quality paper/            # Writing quality assessment
-/copyedit methodology paper/        # Methodology clarity
+/copyedit grammar intro.tex                      # Grammar only (auto-applied)
+/copyedit ai_detection *.tex                     # AI tells check (full output)
+/copyedit ai_detection --only-issues *.tex       # AI tells check (issues only, passes suppressed)
+/copyedit word_choice methods.tex                # Word choice review
+/copyedit sentence intro.tex                     # Sentence structure analysis
+/copyedit structure paper/                       # Paper structure analysis
+/copyedit flow paper/                            # Flow extraction
+/copyedit quality paper/                         # Writing quality assessment
+/copyedit methodology paper/                     # Methodology clarity
 ```
 
 ### Utility Commands
@@ -50,7 +51,7 @@ Comprehensive copyediting system for academic writing, following McCloskey and C
 | Task | Output | Description |
 |------|--------|-------------|
 | `grammar` | notes/copy_edits.md | Auto-fix spelling, punctuation, syntax errors |
-| `ai_detection` | notes/ai_detection.md, notes/simplifications.md | Flag AI-generated patterns |
+| `ai_detection` | notes/ai_detection.md, notes/ai_detection_issues.md, notes/simplifications.md | Flag AI-generated patterns; severity-sorted; issues-only file auto-generated |
 | `word_choice` | notes/word_choice_review.md | Anglo-Saxon over Latin, weak verbs, wordiness |
 | `sentence` | notes/sentence_analysis.md | Length variation, rhythm, S-V-O clarity |
 
@@ -62,6 +63,42 @@ Comprehensive copyediting system for academic writing, following McCloskey and C
 | `flow` | notes/flow_extraction.md | Paragraph skeleton and flow analysis |
 | `quality` | notes/writing_quality.md | Paragraph-level writing quality (focus, mechanism, precision) |
 | `methodology` | notes/methodology_review.md | Identification strategy clarity |
+
+---
+
+## AI Detection: Severity Tiers and Flags
+
+### Severity Tiers
+
+Every flagged entry in `ai_detection.md` carries one of four severity labels. Output is sorted Critical → High → Medium → Low within each file section.
+
+| Tier | Label | Examples |
+|------|-------|---------|
+| 1 | **Critical** | Smarmy reframing ("It's not X, it's Y"), stacked hedges (2+ per sentence), missing causal mechanism |
+| 2 | **High** | AI vocabulary used 2+ times; results-first openings with no tension; inventory-style numbers |
+| 3 | **Medium** | Transition overuse (Moreover, Furthermore); template structures; meta-commentary; padding phrases |
+| 4 | **Low** | Single-instance AI vocabulary; minor parentheticals; minor hedging; low-confidence Part C flags |
+
+### --only-issues Flag
+
+```
+/copyedit ai_detection --only-issues *.tex
+```
+
+Suppresses entries where the verdict is "pass" or "no issues found." The full `ai_detection.md` is always written. The wrapup step always generates `ai_detection_issues.md` as an issues-only filtered view regardless of whether the flag is used.
+
+### Resume Behavior
+
+When an `ai_detection` run is interrupted mid-way (e.g., context exhausted after processing some files), the skill tracks which files completed in `.copyedit_status`:
+
+```
+ai_detection_complete: [intro.tex, methods.tex]
+ai_detection_pending: [results.tex, conclusion.tex]
+```
+
+On the next `/copyedit ai_detection` invocation (or any `/copyedit` invocation), the orchestrator checks `ai_detection_pending`. If the list is non-empty, it automatically routes to the resume path — skipping already-completed files and running only the remaining ones. No re-processing of completed files occurs.
+
+To force a full re-run from scratch, start a new session: `/copyedit review` will archive prior output and reset all state.
 
 ---
 
@@ -132,7 +169,8 @@ paper/
     ├── .copyedit_status
     ├── tasks.json
     ├── copy_edits.md               # Grammar log (auto-applied)
-    ├── ai_detection.md             # AI pattern flags
+    ├── ai_detection.md             # AI pattern flags (full, severity-sorted)
+    ├── ai_detection_issues.md      # Issues-only view (passes suppressed, severity-sorted)
     ├── simplifications.md          # Style suggestions
     ├── word_choice_review.md
     ├── sentence_analysis.md
@@ -221,7 +259,15 @@ Output: Auto-corrected `paper.tex` + `notes/copy_edits.md` log
 /copyedit ai_detection *.tex
 ```
 
-Output: `notes/ai_detection.md` and `notes/simplifications.md`
+Output: `notes/ai_detection.md`, `notes/ai_detection_issues.md`, and `notes/simplifications.md`
+
+### Example 2a: AI Detection — Issues Only
+
+```
+/copyedit ai_detection --only-issues *.tex
+```
+
+Suppresses entries where the agent's verdict is "pass" or "no issues found." The raw `ai_detection.md` is still written; only the console output and `ai_detection_issues.md` reflect the filtered view. Entries are sorted by severity (Critical → High → Medium → Low).
 
 ### Example 3: Full Paper Review
 

@@ -270,6 +270,15 @@ Incorporate the feedback and return an updated proposal.
 
 ---
 
+## Iteration Requirement
+
+The orchestrator runs a revision loop: after you return your proposal, the user may request changes, and the orchestrator will re-invoke you with the updated context. **Continue surfacing ambiguities and refining the task list across rounds until all open questions are resolved.** Do not produce a minimal proposal and leave gaps for the user to discover later — the orchestrator will not move to execution until the user explicitly confirms the plan is complete.
+
+When re-invoked with revision context:
+- Address every piece of user feedback explicitly
+- If the user's feedback raises new ambiguities, call them out in the Notes section
+- Do not silently drop checks or threshold questions from previous rounds unless the user asked you to
+
 ## What NOT to Do
 
 - Do NOT ask the user questions directly

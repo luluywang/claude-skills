@@ -59,3 +59,8 @@ Sessions analyzed: N
 ```
 
 Be specific and evidence-based. Don't invent findings — only report what you actually observed in the sessions.
+
+## Return Value
+
+Return to orchestrator: a single line —
+`--- [2A] {SKILL_NAME}: analyzed {N} sessions → cache/skill-analysis/{SKILL_NAME}.md`

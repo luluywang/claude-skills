@@ -45,10 +45,9 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-# Configuration - SKILL_DIR is the parsepdf skill root (parent of scripts/)
+# Configuration
 INPUT_DIR="${POSITIONAL_ARGS[0]:-input}"
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-SKILL_DIR="$( cd "$SCRIPT_DIR/.." && pwd )"
 
 # Validate input directory
 if [ ! -d "$INPUT_DIR" ]; then

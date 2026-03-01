@@ -284,13 +284,32 @@ EOF
    - Broken table/figure references
    - Section hierarchy issues
 
+## Phase 7: Findings Summary
+
+Generate a structured summary of all tables and key quantitative findings. Skip this phase only if the user invoked with `--no-summary`.
+
+1. Use `prompts/findings_summary.md` with:
+   - Assembled markdown: `output/[PAPER_NAME].md`
+   - Document structure: `work/[PAPER_NAME]/structure.json`
+
+2. Save findings summary to:
+   ```
+   output/[PAPER_NAME]_findings.md
+   ```
+
+The findings summary contains:
+- Table-by-table inventory (what each table shows, key estimates)
+- Key quantitative findings (5-10 most important numerical results)
+- Notes for future agents pointing to relevant files
+
 ## What To Do Next
 
 Based on the QA report:
 
-- **If QA passes**: Document is complete! ✅
+- **If QA passes**: Document is complete!
   - Final markdown: `output/[PAPER_NAME].md`
   - QA report: `output/[PAPER_NAME]_qa.json`
+  - Findings summary: `output/[PAPER_NAME]_findings.md`
 
 - **If QA fails**: Fix indicated issues:
   - Missing footnotes: Add to cleaned sections
@@ -303,8 +322,9 @@ After completing all phases, you should have:
 
 ```
 output/
-├── [PAPER_NAME].md           ← Final markdown document
-└── [PAPER_NAME]_qa.json      ← Quality assurance report
+├── [PAPER_NAME].md             ← Final markdown document
+├── [PAPER_NAME]_qa.json        ← Quality assurance report
+└── [PAPER_NAME]_findings.md    ← Table inventory and key quantitative findings
 
 work/[PAPER_NAME]/
 ├── structure.json            ← Document structure
@@ -349,6 +369,7 @@ work/[PAPER_NAME]/
 | 3d | clean_text.md | text/page_*.txt | cleaned/SECTION.md |
 | 4 | validate_tables.md | tables + context | validation/table_N.json |
 | 6 | qa_check.md | assembled markdown | output/*_qa.json |
+| 7 | findings_summary.md | output/[PAPER].md | output/*_findings.md |
 
 ## Example: Processing the Buchak Paper
 
@@ -374,7 +395,9 @@ Starting with: work/Buchak*/segment_task.md
 
 6. Run qa_check.md for final validation
 
-Output: output/buchak_2018.md (final document)
+7. Run findings_summary.md to generate table inventory and key results
+
+Output: output/buchak_2018.md + output/buchak_2018_findings.md
 ```
 
 ## Tips for Success

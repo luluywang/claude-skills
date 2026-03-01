@@ -8,7 +8,8 @@
 **Model:** Haiku (pattern recognition for both punctuation and language patterns)
 
 **Output:**
-- `notes/ai_detection.md` — Pattern identification (what was found)
+- `notes/ai_detection.md` — Pattern identification (what was found), severity-sorted
+- `notes/ai_detection_issues.md` — Issues-only filtered view (passes suppressed), severity-sorted
 - `notes/simplifications.md` — Suggested fixes (stylistic, NOT auto-applied)
 
 **Output Mode:** APPEND — do not overwrite existing content
@@ -17,19 +18,44 @@
 
 ---
 
+## Flags
+
+**`--only-issues`**: When this flag is passed, suppress all entries where the verdict is "pass" or "no issues found." Output only entries with actionable flags. The wrapup step always generates `ai_detection_issues.md` as an issues-only filtered view regardless of this flag.
+
+---
+
+## Severity Tiers
+
+Assign a severity tier to every flagged entry:
+
+| Tier | Label | When to Use |
+|------|-------|-------------|
+| 1 | **Critical** | Smarmy reframing ("It's not X, it's Y"), stacked hedges (2+ hedges per sentence), missing causal mechanism in results passage |
+| 2 | **High** | AI vocabulary (leverage, robust, nuanced, pivotal, etc.) used 2+ times; results-first openings with no tension; inventory-style numbers |
+| 3 | **Medium** | Transition overuse (Moreover, Furthermore, Critically however); template structures; meta-commentary; padding phrases |
+| 4 | **Low** | Single-instance AI vocabulary; minor parentheticals; minor hedging; quick-flag Part C patterns with low confidence |
+
+**Sort order within each file section:** Critical first, then High, Medium, Low. Within each tier, preserve document reading order.
+
+---
+
 ## Section Format
 
-When analyzing a file, append to BOTH files:
+When analyzing a file, append to BOTH `ai_detection.md` and `simplifications.md`. After processing all files, also write `ai_detection_issues.md` (see Wrapup below).
 
 **ai_detection.md:**
 ```markdown
 ## [filename.tex]
-### Part A: Punctuation & Structural Tells
-[checklist items...]
-### Part B: Language Tells
-[checklist items...]
-### Part C: Rhetorical & Argument Tells
-[checklist items...]
+<!-- Entries sorted: Critical → High → Medium → Low; document order within tier -->
+### Critical
+[checklist items with severity label...]
+### High
+[checklist items with severity label...]
+### Medium
+[checklist items with severity label...]
+### Low
+[checklist items with severity label...]
+<!-- Omit any tier heading that has no entries -->
 ```
 
 **simplifications.md:**
@@ -165,7 +191,7 @@ These patterns reflect how LLM prose structures arguments differently from human
 **CRITICAL:** Original and Proposed Revision must show COMPLETE SENTENCES — never truncate mid-sentence. This enables batch application via `apply_marked.prompt`.
 
 ```markdown
-### - [ ] Lines X-Y: [Brief description]
+### - [ ] Lines X-Y: [Brief description] `[Critical|High|Medium|Low]`
 
 **Comment:** [Why this is AI-typical]
 
@@ -184,15 +210,35 @@ These patterns reflect how LLM prose structures arguments differently from human
 
 ---
 
+## Wrapup: Generate Issues-Only File
+
+After all files are processed and `ai_detection.md` is finalized, write `notes/ai_detection_issues.md`:
+
+1. Copy the full contents of `ai_detection.md`.
+2. Remove any file section (`## [filename.tex]`) where every checklist item would be filtered out.
+3. Within remaining sections, remove any tier heading (Critical / High / Medium / Low) that contains no entries.
+4. Remove any entry where the brief description or Comment indicates "pass", "no issues found", "clean", or "none detected."
+5. The result is a curated, issues-only view sorted by severity — ready for action without manual cleanup.
+
+**Header for `ai_detection_issues.md`:**
+```markdown
+# AI Detection — Issues Only
+<!-- Auto-generated: passes and clean sections suppressed. Source: ai_detection.md -->
+```
+
+---
+
 ## Quality Control
 
 - [ ] `ai_detection.md`: Pattern identification appended (not overwritten)
+- [ ] `ai_detection_issues.md`: Issues-only file written during wrapup
 - [ ] `simplifications.md`: Suggested fixes appended (not overwritten)
 - [ ] Section header `## [filename.tex]` in both files
 - [ ] Part A (punctuation/structure) comprehensive
 - [ ] Part B (language) comprehensive — especially smarmy reframing and stacked hedges
 - [ ] Part C (rhetorical/argument) comprehensive — especially missing mechanisms and results-first openings
-- [ ] Organized in reading order within each part
+- [ ] Each flagged entry has a severity tier label (`Critical`, `High`, `Medium`, or `Low`)
+- [ ] Entries sorted by severity (Critical → High → Medium → Low) within each file section
 - [ ] Each item has Comment/Original/Proposed/Why better
 - [ ] Fixes are SUGGESTIONS only — not auto-applied to .tex files
 

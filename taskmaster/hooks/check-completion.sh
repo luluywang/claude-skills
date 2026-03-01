@@ -6,7 +6,9 @@
 #   TASKMASTER_DONE::<session_id>
 #
 # Optional env vars:
-#   TASKMASTER_MAX          Max number of blocks before allowing stop (default: 0 = infinite)
+#   TASKMASTER_MAX              Max number of blocks before allowing stop (default: 0 = infinite)
+#   TASKMASTER_MIN_TOOLS        Min tool calls in session before hook is active (default: 3)
+#   TASKMASTER_SKIP_PATTERNS    Colon-separated list of cwd path patterns to skip entirely
 #
 set -u
 
@@ -17,8 +19,30 @@ source "$SCRIPT_DIR/../taskmaster-compliance-prompt.sh"
 INPUT=$(cat)
 SESSION_ID=$(echo "$INPUT" | jq -r '.session_id')
 TRANSCRIPT=$(echo "$INPUT" | jq -r '.transcript_path')
+CWD=$(echo "$INPUT" | jq -r '.cwd // ""')
 if [ -z "$SESSION_ID" ] || [ "$SESSION_ID" = "null" ]; then
   SESSION_ID="unknown-session"
+fi
+
+# --- scope filter: skip if cwd matches any TASKMASTER_SKIP_PATTERNS ---
+if [ -n "${TASKMASTER_SKIP_PATTERNS:-}" ]; then
+  IFS=':' read -ra _PATTERNS <<< "$TASKMASTER_SKIP_PATTERNS"
+  for _PAT in "${_PATTERNS[@]}"; do
+    case "$CWD" in
+      *"$_PAT"*)
+        exit 0
+        ;;
+    esac
+  done
+fi
+
+# --- scope filter: skip trivial sessions with fewer tool calls than TASKMASTER_MIN_TOOLS ---
+MIN_TOOLS=${TASKMASTER_MIN_TOOLS:-3}
+if [ -f "$TRANSCRIPT" ]; then
+  TOOL_CALL_COUNT=$(grep -c '"type":\s*"tool_use"' "$TRANSCRIPT" 2>/dev/null || echo "0")
+  if [ "$TOOL_CALL_COUNT" -lt "$MIN_TOOLS" ]; then
+    exit 0
+  fi
 fi
 
 # --- skip subagents: they have very short transcripts ---

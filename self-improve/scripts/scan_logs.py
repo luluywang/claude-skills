@@ -19,10 +19,11 @@ import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-LOGS_DIR = Path("/Users/luluywang/Library/CloudStorage/Dropbox/claude-logs/claude")
+LOGS_DIR = Path("/Users/luluywang/Library/CloudStorage/Dropbox/claude-logs")
 CACHE_DIR = Path("/Users/luluywang/Library/CloudStorage/Dropbox/claude-logs/self-improve-cache")
 MANIFEST_PATH = CACHE_DIR / "manifest.json"
 MIN_SIZE_KB = 10
+EXCLUDE_DIRS = {"self-improve-cache", "config", ".claude"}
 
 
 def load_manifest():
@@ -67,13 +68,19 @@ def main():
         print(json.dumps([]), flush=True)
         sys.exit(0)
 
+    all_files = []
+    for p in sorted(LOGS_DIR.rglob("*.jsonl")) + sorted(LOGS_DIR.rglob("*.jsonl.gz")):
+        if p.relative_to(LOGS_DIR).parts[0] in EXCLUDE_DIRS:
+            continue
+        all_files.append(p)
+
     results = []
-    for p in sorted(LOGS_DIR.glob("*.jsonl")) + sorted(LOGS_DIR.glob("*.jsonl.gz")):
+    for p in all_files:
         size_kb = p.stat().st_size / 1024
         if size_kb < MIN_SIZE_KB:
             continue
 
-        rel_path = p.name
+        rel_path = str(p.relative_to(LOGS_DIR))
         if not args.all_files and rel_path in processed_keys:
             continue
 

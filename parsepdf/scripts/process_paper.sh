@@ -64,10 +64,9 @@ while [[ "$1" == --* ]]; do
     esac
 done
 
-# Configuration - SKILL_DIR is the parsepdf skill root (parent of scripts/)
+# Configuration
 PDF_FILE="$1"
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-SKILL_DIR="$( cd "$SCRIPT_DIR/.." && pwd )"
 
 # Validate input
 if [ -z "$PDF_FILE" ]; then
@@ -86,8 +85,8 @@ check_dependencies
 
 BASE_NAME=$(basename "$PDF_FILE" .pdf)
 PDF_DIR="$(cd "$(dirname "$PDF_FILE")" && pwd)"
-CACHE_DIR="$SKILL_DIR/cache/$BASE_NAME"
-OUTPUT_DIR="$SKILL_DIR/output"
+CACHE_DIR="$(pwd)/parsepdf/cache/$BASE_NAME"
+OUTPUT_DIR="$(pwd)/parsepdf/output"
 
 # Clear cache by default
 if [ "$KEEP_CACHE" = false ] && [ -d "$CACHE_DIR" ]; then
