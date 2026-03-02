@@ -1,0 +1,193 @@
+# Task: Targeted Principle Rewrite
+
+**Purpose:** Rewrite a specific section of a paper by applying writing principles directly. No subagents, no notes files, no pipeline. The orchestrator runs this in its own context.
+
+**Model:** Orchestrator (no subagent dispatch)
+
+**Output:** Annotated diff shown to user, then applied via Edit tool on approval.
+
+---
+
+## When This Runs
+
+The user invokes one of:
+```
+/copyedit rewrite file.tex:50-80
+/copyedit rewrite file.tex "Section 3"
+/copyedit rewrite file.tex:50-80 --principles 2,5,7
+```
+
+The orchestrator handles the entire rewrite without spawning subagents.
+
+---
+
+## Workflow
+
+### 1. Parse Target
+
+Extract from the user's request:
+- **File**: the .tex or .md file
+- **Range**: line numbers (e.g. `50-80`) OR section name (e.g. `"Model"`, `"Introduction"`)
+- **Principles**: optional comma-separated principle numbers (default: all applicable)
+
+If a section name is given, find it by scanning for `\section{...}`, `\subsection{...}`, or `## ...` headers. Read from the header to the next header at the same or higher level.
+
+### 2. Read the Target
+
+Read ONLY the target lines into context. Do NOT read the entire file or any other files.
+
+If the section exceeds 200 lines, warn the user and ask whether to proceed or narrow the range.
+
+### 3. Analyze
+
+Scan the section against all applicable principles (see Principle Reference below). For each violation found, note:
+- Which principle is violated
+- The specific sentence(s)
+- What the fix is
+
+### 4. Rewrite
+
+Produce a rewritten version of the entire target section. The rewrite must:
+
+**Preserve:**
+- All LaTeX commands, labels, references, equations
+- The argument's logical structure and claims
+- Technical content and numerical values
+- Footnotes (content may be edited but footnotes are not deleted)
+
+**Fix (always, regardless of --principles flag):**
+- Artificial colons used for drama or as sentence connectors
+- Em-dashes (`---` in LaTeX, or `--`) used as punctuation. Replace with restructured sentences. Em-dashes are almost never needed in academic writing.
+- Stacked hedges (keep at most one per claim)
+- Transition-word sentence openers (Moreover, Furthermore, Additionally, etc.)
+
+**Fix (when principle is selected or all principles apply):**
+Apply the relevant principles from the reference below.
+
+### 5. Present Diff
+
+Show the user an annotated diff:
+
+```
+## Rewrite: [file.tex] Lines X-Y
+
+### Changes Applied
+
+| # | Principle | What Changed |
+|---|-----------|-------------|
+| 1 | #2 Mechanism | Added causal explanation after fee comparison |
+| 2 | #5 Motivation | Moved puzzle before result in opening |
+| 3 | Surface | Removed 3 em-dashes, 2 artificial colons |
+| ... | ... | ... |
+
+### Original
+[original text]
+
+### Rewritten
+[rewritten text]
+```
+
+### 6. Apply
+
+Ask the user:
+```json
+{
+  "header": "Apply rewrite",
+  "question": "Apply this rewrite to the file?",
+  "multiSelect": false,
+  "options": [
+    {"label": "Apply (Recommended)", "description": "Replace the original with the rewrite"},
+    {"label": "Edit first", "description": "I want to modify the rewrite before applying"},
+    {"label": "Reject", "description": "Discard the rewrite"}
+  ]
+}
+```
+
+- **Apply**: Use the Edit tool to replace the original text with the rewrite.
+- **Edit first**: Ask what to change, revise, re-present.
+- **Reject**: Stop. No files modified.
+
+---
+
+## Principle Reference
+
+These are the author's 14 principles. When `--principles N,M` is specified, apply only those numbered principles. When no flag is given, apply all that are relevant to the target section.
+
+### 1. Terse and Precise
+Every sentence earns its place. No restatement, no padding. If a sentence can be deleted without losing information, delete it.
+
+### 2. Mechanism Over Description
+Explain WHY a result obtains, not just WHAT happens. After any number or result, there must be a sentence tracing the causal chain.
+
+### 3. Math Is Exact
+If there is math, write it out. Do not substitute vague prose for formulas. Replace hand-waving with explicit moment conditions or equations.
+
+### 4. One Point Per Paragraph
+Each paragraph makes one claim and supports it. If it does too much, split it.
+
+### 5. Motivation First
+The reader knows WHY before WHAT. Open with the puzzle, contradiction, or tension. Not the result.
+
+### 6. Direct About Limitations
+Name weaknesses explicitly, in plain language, early. Then state what the analysis achieves despite the limitation. No hedge-laden qualifications.
+
+### 7. Numbers Earn Their Place
+Every number in prose answers "so what?" If a number doesn't serve as evidence for a claim, move it to a table.
+
+### 8. No Throat-Clearing
+Cut preambles, meta-commentary, road-mapping sentences. Sections begin with their content.
+
+### 9. No Lecturing Experts
+Do not explain Econ 101 to field experts. The reader is a professional economist.
+
+### 10. Finesse Over Brute Force
+Build to conclusions. Don't announce them and backfill.
+
+### 11. Intellectual Precision
+Results are not assumptions. Assumptions are not findings. Label correctly.
+
+### 12. No False Structure
+If the method is joint, don't describe it as sequential. Describe the actual structure.
+
+### 13. Simple When Possible
+Say the simple thing directly. Don't wrap a straightforward claim in elaborate indirect language.
+
+### 14. Direct but Not Dismissive
+Be honest and direct without being combative.
+
+---
+
+## Surface Fixes (Always Applied)
+
+These are applied on every rewrite regardless of principle selection:
+
+### Colons
+- Remove colons used as sentence connectors or for dramatic setup
+- "The result is clear: fees fall" becomes "Fees fall because..." or similar direct statement
+- Colons introducing lists are fine; colons as rhetorical punctuation are not
+
+### Em-Dashes
+- Remove `---` (LaTeX em-dash) and `--` (en-dash used as em-dash)
+- Restructure the sentence instead. Use a period, comma, or subordinate clause.
+- "The model --- which nests both Hotelling and CES --- predicts" becomes "The model, which nests both Hotelling and CES, predicts" or two sentences
+
+### Transitions
+- Delete sentence-initial "Moreover," "Furthermore," "Additionally," "In contrast," "Notably," "Importantly"
+- If the connection between sentences is unclear without the transition, rewrite to make the logical link implicit in the content
+
+### Hedging
+- Maximum one hedge per claim
+- Remove non-load-bearing hedges: "roughly" when not approximating, "appears" when not uncertain
+- "Our results suggest" only when genuinely uncertain about identification
+
+---
+
+## Quality Control
+
+Before presenting the diff:
+- [ ] All LaTeX commands, labels, refs preserved
+- [ ] No content or claims deleted (only reworded)
+- [ ] Every change traceable to a specific principle or surface fix
+- [ ] Rewrite is shorter than or equal in length to original (never longer)
+- [ ] No new AI-typical patterns introduced in the rewrite
+- [ ] Change summary table is complete and accurate
