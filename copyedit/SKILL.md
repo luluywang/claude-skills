@@ -20,6 +20,17 @@ Comprehensive copyediting system for academic writing, following McCloskey and C
 /copyedit review paper/             # All tex/md files in directory
 ```
 
+### Targeted Rewrite (No Subagents)
+
+```
+/copyedit rewrite intro.tex:50-80                    # Rewrite lines 50-80
+/copyedit rewrite intro.tex "Model"                  # Rewrite named section
+/copyedit rewrite intro.tex:50-80 --principles 2,5   # Apply only principles 2 and 5
+/copyedit rewrite results.tex "Counterfactuals"       # Rewrite by section name
+```
+
+Rewrites a section directly in the orchestrator context. No subagents, no notes files, no pipeline. Applies the 14 writing principles plus surface fixes (colons, em-dashes, transitions, hedging). Shows annotated diff, applies on approval.
+
 ### Single Task
 
 ```
@@ -45,6 +56,12 @@ Comprehensive copyediting system for academic writing, following McCloskey and C
 ---
 
 ## Available Tasks
+
+### Targeted Rewrite (No Subagents, Orchestrator-Direct)
+
+| Task | Output | Description |
+|------|--------|-------------|
+| `rewrite` | Direct file edits | Apply 14 writing principles + surface fixes to a specific section. No notes files. |
 
 ### File-Level Tasks (Parallel, Haiku)
 
@@ -106,6 +123,7 @@ To force a full re-run from scratch, start a new session: `/copyedit review` wil
 
 | User Says | Tasks Invoked |
 |-----------|---------------|
+| "rewrite this section", "rewrite lines" | rewrite (fast-path, no subagents) |
 | "fix grammar", "check for errors" | grammar |
 | "check for AI tells", "sound less AI" | ai_detection |
 | "improve word choice", "make it punchier" | word_choice |
@@ -122,6 +140,7 @@ To force a full re-run from scratch, start a new session: `/copyedit review` wil
 
 | Alias | Expands To |
 |-------|------------|
+| `rewrite` | Targeted principle rewrite (no subagents) |
 | `review` | grammar + ai_detection + word_choice + sentence |
 | `full` | All tasks including paper-level |
 | `quick` | grammar + ai_detection |
@@ -245,6 +264,20 @@ Reference: `prompts/economics_writing_prompt.md` (comprehensive guide)
 
 ## Examples
 
+### Example 0: Targeted Rewrite (Fast)
+
+```
+/copyedit rewrite intro.tex:50-80
+```
+
+Reads lines 50-80, applies all 14 writing principles plus surface fixes (colons, em-dashes, transitions, hedging). Shows annotated diff with principle citations. Applies on approval. No subagents, no notes files.
+
+```
+/copyedit rewrite results.tex "Counterfactuals" --principles 2,5,7
+```
+
+Rewrites the Counterfactuals section focusing on mechanism (#2), motivation (#5), and numbers (#7) only.
+
 ### Example 1: Quick Grammar Check
 
 ```
@@ -307,6 +340,7 @@ To manually reset instead: `rm -rf notes/`
 
 Individual task prompts are located at:
 
+- `prompts/tasks/rewrite.prompt` **(fast-path, no subagents)**
 - `prompts/tasks/grammar.prompt`
 - `prompts/tasks/ai_detection.prompt`
 - `prompts/tasks/word_choice.prompt`

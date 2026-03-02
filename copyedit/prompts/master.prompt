@@ -149,6 +149,38 @@ ai_detection_pending: []
 
 ## Step 2: Interpret Request
 
+### Fast-Path: Rewrite
+
+**Before any other interpretation**, check if the request is a rewrite:
+
+```
+IF request matches "rewrite" pattern:
+    GOTO Rewrite Path (no subagents, no pipeline)
+    DO NOT proceed to Step 3 or beyond
+```
+
+**Rewrite Path** runs entirely in the orchestrator context. No subagents are spawned.
+
+1. Read `prompts/tasks/rewrite.prompt` for full instructions
+2. Parse the target: file + line range or section name + optional `--principles` flag
+3. Read ONLY the target section into context
+4. Read `references/writing_quality_standards.md` for principle definitions
+5. Analyze violations and rewrite the section directly
+6. Present annotated diff to user
+7. On approval, apply via Edit tool
+8. Done. No wrapup, no notes files, no tasks.json.
+
+**Request patterns that trigger Rewrite Path:**
+
+| Pattern | Example |
+|---------|---------|
+| "rewrite" + file + range | `/copyedit rewrite intro.tex:50-80` |
+| "rewrite" + file + section | `/copyedit rewrite intro.tex "Model"` |
+| "rewrite" + principles | `/copyedit rewrite intro.tex:50-80 --principles 2,5` |
+| "rewrite this section" | `/copyedit rewrite results.tex "Counterfactuals"` |
+
+---
+
 ### Pre-check: ai_detection_pending
 
 **Before interpreting the request**, check `.copyedit_status` for `ai_detection_pending`.
@@ -181,6 +213,7 @@ IF ai_detection_pending is non-empty AND user did NOT explicitly request a new a
 | "Sentence rhythm" / "Check variation" | sentence_analysis |
 | "Strip llm tags" / "Remove llm wrappers" / "Finalize" | strip_llm |
 | "Grade writing quality" / "Improve writing" | writing_quality |
+| "Rewrite section" / "Rewrite lines" / "rewrite" | rewrite (Fast-Path — no subagents) |
 | "Reflow sentences" / "One sentence per line" / "reflow" | reflow (Phase 0 — pre-processing) |
 | "Comprehensive review" | grammar, ai_detection, word_choice, sentence_analysis |
 | "Full review" | All tasks (including writing_quality) |
