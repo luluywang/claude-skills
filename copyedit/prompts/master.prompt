@@ -181,6 +181,38 @@ IF request matches "rewrite" pattern:
 
 ---
 
+### Fast-Path: number_fix
+
+**Before any other interpretation**, check if the request is `number_fix`:
+
+```
+IF request matches "number_fix" pattern:
+    GOTO Number Fix Path (no standard pipeline)
+    DO NOT proceed to Step 3 or beyond
+```
+
+**Number Fix Path:**
+
+1. Read `prompts/tasks/number_fix.prompt` for full instructions
+2. Parse mode: `mode=A`, `mode=B`, or auto-detect
+3. Parse file scope: explicit file(s) or current directory `.tex` files
+4. Run auto-discovery (Step 0 in prompt)
+5. For each file in scope: spawn ONE Sonnet subagent with `run_in_background: true`
+   - Instruction: read `prompts/tasks/number_fix.prompt`, process file in detected mode
+   - Pass: file path, mode, scalar dir (if found), tables dir (if found)
+6. Wait for task-notifications
+7. Summarize results from `notes/number_fix_report.md`
+
+**Request patterns that trigger Number Fix Path:**
+
+| Pattern | Example |
+|---------|---------|
+| "number_fix" + file | `/copyedit number_fix intro.tex` |
+| "number_fix" + mode + file | `/copyedit number_fix mode=A results.tex` |
+| "number_fix" + mode + glob | `/copyedit number_fix mode=B *.tex` |
+
+---
+
 ### Pre-check: ai_detection_pending
 
 **Before interpreting the request**, check `.copyedit_status` for `ai_detection_pending`.
@@ -215,6 +247,7 @@ IF ai_detection_pending is non-empty AND user did NOT explicitly request a new a
 | "Grade writing quality" / "Improve writing" | writing_quality |
 | "Rewrite section" / "Rewrite lines" / "rewrite" | rewrite (Fast-Path — no subagents) |
 | "Reflow sentences" / "One sentence per line" / "reflow" | reflow (Phase 0 — pre-processing) |
+| "number_fix" / "Fix numbers" / "Update numbers" / "Annotate numbers" | number_fix (Opt-In — not in review/full) |
 | "Comprehensive review" | grammar, ai_detection, word_choice, sentence_analysis |
 | "Full review" | All tasks (including writing_quality) |
 
@@ -311,6 +344,12 @@ Generate all (file, task) pairs based on request and file scope.
 | structure | sonnet | notes/structure_analysis.md |
 | flow_extraction | sonnet | notes/flow_extraction.md |
 | writing_quality | sonnet | notes/writing_quality.md |
+
+### Opt-In Tasks (NOT included in review/full; explicit invocation only)
+
+| Task | Model | Output File | Notes |
+|------|-------|-------------|-------|
+| number_fix | sonnet | notes/number_fix_report.md | Requires pipeline output; supports mode=A and mode=B |
 
 ### Enumeration Logic
 
@@ -434,6 +473,7 @@ The `new_session.sh` script already ran in Step 1, so `notes/` is guaranteed cle
 | `notes/sentence_analysis.md` | `# Sentence Structure Analysis` | Step 5 |
 | `notes/writing_quality.md` | `# Writing Quality Assessment` | Step 5 |
 | `notes/reflow_verify.md` | `# Reflow Verification` | Phase 0b (only if reflow requested) |
+| `notes/number_fix_report.md` | `# Number Fix Report` | number_fix path (only if number_fix requested) |
 
 3. Write `notes/tasks.json` with enumerated tasks
 4. Write `execution` to `notes/.copyedit_status`
