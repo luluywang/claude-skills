@@ -1,0 +1,261 @@
+# Task: Number Fixer
+
+**Model:** Sonnet (needs reasoning to match table values to prose)
+
+**Purpose:** Keep hard-coded numbers in LaTeX prose current after a data pipeline reruns.
+
+**Modes:**
+- **Mode A (Fix Structure):** Annotate hard-coded numbers with `HARDCODED` comments so Mode B can update them later.
+- **Mode B (Update All Numbers):** Read existing `HARDCODED` annotations and refresh prose values to match current source data.
+
+**Output:**
+- Modifies `.tex` files in place (both modes)
+- `notes/number_fix_report.md` — summary of annotations added (Mode A) or numbers updated (Mode B)
+
+**Output Mode:** APPEND to report — do not overwrite existing content
+
+**Section Format:** Start each file's entries with `## [filename.tex]`
+
+---
+
+## Mode Detection
+
+**Explicit:** User passes `mode=A` or `mode=B`.
+
+**Auto-detect (if no mode specified):**
+- IF the target `.tex` file already contains `% HARDCODED[` annotations → run Mode B
+- ELSE → run Mode A
+
+---
+
+## STEP 0: Auto-Discover Project Structure
+
+Run this before either mode. Search relative to the working directory (where the `.tex` files live).
+
+### 0a. Find scalar directory
+
+Search for any directory named `scalars/` (e.g., `../output/scalars/`, `scalars/`).
+
+For each `.tex` file found in that directory:
+- Read its contents
+- If the entire content (trimming whitespace) is a single number (possibly with LaTeX formatting like `\num{...}`), treat it as a scalar
+- Record: `scalar_name` = filename without extension, `scalar_value` = the number, `scalar_path` = absolute path
+
+**Example scalar file** `scalars/beta_ols.tex`:
+```
+0.47
+```
+
+### 0b. Find tables directory
+
+Search for any directory named `tables/` (excluding `scalars/`).
+
+For each `.tex` file in that directory, record it as a candidate table file. Do NOT read table contents yet — load on demand in Mode A when matching prose numbers.
+
+### 0c. If no scalar/table directories found
+
+Note this in the report and proceed in annotation-only mode (Mode A will annotate without source references; Mode B will report nothing to update).
+
+---
+
+## Mode A: Fix Structure (Annotate Hard-Coded Numbers)
+
+**Goal:** Walk through the target `.tex` file and add `HARDCODED` comments beside every hard-coded number so Mode B can update them automatically.
+
+### A1. Parse the file
+
+Read the target `.tex` file line by line.
+
+### A2. Identify hard-coded numbers
+
+For each line, look for numeric values embedded in prose. A number qualifies if:
+- It appears in running text (not a LaTeX equation or formula)
+- It is not a year (1900–2099)
+- It is not a citation key or reference number (`\cite`, `\ref`, `\label`, `\footnote{[N]}`)
+- It is not inside a math environment: `$...$`, `$$...$$`, `\begin{equation}...\end{equation}`, `\begin{align}...`, etc.
+- It is not a section/figure/table number (`Figure 1`, `Table 2`, `Section 3`)
+- It is not a constant that will never change (flag these as `CONSTANT` instead — see below)
+
+**LaTeX parsing rules:**
+- Strip `\%` → treat as a percentage sign (the number before it is a percentage value)
+- Strip `\$` → treat as dollar sign
+- Numbers in `$...$` inline math are in equations — SKIP
+- Direction words immediately before/after a number (`above`, `below`, `more than`, `less than`, `approximately`) are prose context — keep them, they do not affect the number
+- `\num{N}` or `\numprint{N}` — the number is `N`; annotate the whole `\num{N}` token
+
+### A3. Match to source data
+
+For each identified hard-coded number, attempt to match it to a scalar or table:
+
+**Try scalars first:**
+- Round scalar values to 2 significant figures
+- If the prose number matches a scalar value (within rounding), annotate with scalar reference
+
+**Try tables:**
+- Load the table `.tex` file
+- Parse rows and columns (see LaTeX Table Parsing below)
+- If the prose number matches a cell value (within rounding), annotate with table reference
+
+**If no match found:** Still annotate as `HARDCODED` without a source reference — the user will need to fill in the source manually.
+
+### A4. Write annotations
+
+Add the annotation as a `%` comment on the SAME line as the number, immediately after the number or at end of line.
+
+**Annotation formats:**
+
+```latex
+% HARDCODED[table: filename.tex, row: "row label", col: N] current=VALUE
+% HARDCODED[scalar: scalar_name] current=VALUE
+% HARDCODED[source: unknown] current=VALUE
+% CONSTANT: reason why this never changes
+```
+
+**Rules:**
+- `current=VALUE` stores the value as it appears in the source (unrounded), so Mode B can round correctly
+- `col: N` is the 1-based column index (after splitting by `&`, excluding the label column)
+- `row: "row label"` is the text content of the row's label cell (first `&`-delimited cell, stripped of LaTeX formatting)
+- Do NOT annotate the same number twice if it already has a `HARDCODED` comment
+
+**CONSTANT examples** (never changes — do not annotate as HARDCODED):
+- Number of observations in the *final* sample when the sample definition is fixed by design
+- Threshold values that are definitional (e.g., "cutoff of 40 hours")
+- Constants from the literature or law (e.g., "the statutory rate of 35%")
+
+### A5. Write report
+
+Append to `notes/number_fix_report.md`:
+
+```markdown
+## [filename.tex] — Mode A
+
+- N numbers annotated as HARDCODED (M matched to source, K unmatched)
+- P numbers marked CONSTANT
+
+### Unmatched (manual review needed):
+- Line X: VALUE — could not find in scalars or tables
+```
+
+---
+
+## Mode B: Update All Numbers
+
+**Goal:** For each `HARDCODED` annotation, read the current value from the source file and update the prose number if it has changed.
+
+### B1. Collect annotations
+
+Scan the target `.tex` file for all `% HARDCODED[...]` comments. For each:
+- Parse the annotation to extract: source type (table/scalar/unknown), source file, row label, col index, current value
+
+### B2. Read current values
+
+**For scalar annotations:**
+- Read the scalar file at the recorded path
+- Extract the current number
+
+**For table annotations:**
+- Read the table `.tex` file
+- Parse the row matching `row: "label"` (see LaTeX Table Parsing below)
+- Extract cell at `col: N`
+
+**For unknown-source annotations:**
+- Skip (cannot auto-update; leave a note in the report)
+
+### B3. Round and compare
+
+Round the current source value to 2 significant figures (matching standard economics prose convention).
+
+**Rounding rule:** 2 significant figures. Examples:
+- `0.473` → `0.47`
+- `12,847` → `13,000`
+- `0.0312` → `0.031`
+- `1.247` → `1.2`
+
+Compare rounded current value to the number currently in prose.
+
+### B4. Update prose
+
+If the rounded current value differs from the prose number:
+- Replace the prose number with the new rounded value
+- Update `current=VALUE` in the annotation to the new raw source value
+- Preserve surrounding LaTeX formatting (e.g., if prose has `47\%`, keep the `\%`)
+
+If the value is unchanged: leave the line as-is.
+
+### B5. Write report
+
+Append to `notes/number_fix_report.md`:
+
+```markdown
+## [filename.tex] — Mode B
+
+- N numbers checked
+- M numbers updated
+- K numbers unchanged
+- P numbers skipped (unknown source)
+
+### Updated:
+- Line X: OLD → NEW (source: scalar_name / table filename.tex row "label" col N)
+
+### Skipped (unknown source, manual review needed):
+- Line X: VALUE
+```
+
+---
+
+## LaTeX Table Parsing (Generic)
+
+Use this procedure whenever you need to read a value from a table `.tex` file.
+
+### Find rows
+
+Lines matching the pattern `\hspace{...}LABEL & ...` or any line containing multiple `&`-separated cells are data rows. The first `&`-delimited token is the row label.
+
+Strip LaTeX formatting from the label for comparison: remove `\textbf{}`, `\textit{}`, `\hspace{...}`, `\quad`, leading/trailing whitespace.
+
+### Split columns
+
+Split each row by `&`. Cells are 1-indexed starting after the label:
+- `cell[0]` = row label
+- `cell[1]` = column 1 value
+- `cell[2]` = column 2 value
+- ...
+
+Strip LaTeX formatting from cell values: remove `$`, `\num{}`, `\numprint{}`, `***`, `**`, `*`, `(`, `)`, whitespace.
+
+### Identify standard errors
+
+A row where all cells are in parentheses (after stripping `$`) is a standard error row — it belongs to the preceding label row. Do not annotate SE rows as separate sources.
+
+### Column headers
+
+Look for `\multicolumn` commands or header rows above the first data row. Record column header text at each index for use in annotations.
+
+---
+
+## Skip Rules (Do Not Annotate)
+
+| Pattern | Reason |
+|---------|--------|
+| Inside `$...$` or `$$...$$` | Equation — not prose |
+| Inside `\begin{equation}` / `\begin{align}` / `\begin{eqnarray}` | Equation environment |
+| Year values (1900–2099) | Not an outcome number |
+| `\cite{...}` keys | Citation, not data |
+| `\ref{...}`, `\label{...}` | Cross-reference |
+| `Figure N`, `Table N`, `Section N` (N = small integer) | Structural numbering |
+| Numbers in `\footnote{[N]}` bracket notation | Footnote references |
+| Page numbers | Not data |
+| Numbers already annotated with `% HARDCODED` or `% CONSTANT` | Already handled |
+
+---
+
+## Invocation
+
+```
+/copyedit number_fix mode=A intro.tex       # Annotate hard-coded numbers in intro.tex
+/copyedit number_fix mode=B intro.tex       # Update annotated numbers in intro.tex
+/copyedit number_fix intro.tex              # Auto-detect mode based on existing annotations
+/copyedit number_fix mode=B *.tex           # Update all .tex files in scope
+```
+
+This task does NOT run automatically as part of `review` or `full` — it is opt-in only, since it requires the user's data pipeline output to be current.

@@ -45,6 +45,16 @@ Rewrites a section directly in the orchestrator context. No subagents, no notes 
 /copyedit methodology paper/                     # Methodology clarity
 ```
 
+### Number Management
+
+```
+/copyedit number_fix mode=A intro.tex            # Annotate hard-coded numbers (run once after writing)
+/copyedit number_fix mode=B *.tex                # Refresh all annotated numbers after pipeline reruns
+/copyedit number_fix intro.tex                   # Auto-detect mode (Mode B if HARDCODED annotations exist)
+```
+
+**Workflow:** Run Mode A once to tag every hard-coded number with its source (scalar file or table cell). After each data pipeline rerun, run Mode B to refresh all tagged numbers automatically.
+
 ### Utility Commands
 
 ```
@@ -80,6 +90,19 @@ Rewrites a section directly in the orchestrator context. No subagents, no notes 
 | `flow` | notes/flow_extraction.md | Paragraph skeleton and flow analysis |
 | `quality` | notes/writing_quality.md | Paragraph-level writing quality (focus, mechanism, precision) |
 | `methodology` | notes/methodology_review.md | Identification strategy clarity |
+
+### Number Management (Opt-In, Sonnet)
+
+| Task | Output | Description |
+|------|--------|-------------|
+| `number_fix` | notes/number_fix_report.md | Annotate or refresh hard-coded numbers from scalars/tables |
+
+**Does not run in `review` or `full` — must be invoked explicitly.** Requires data pipeline output to be current.
+
+| Mode | Description |
+|------|-------------|
+| `mode=A` | Annotate hard-coded numbers with `% HARDCODED[source]` comments (run once) |
+| `mode=B` | Update annotated numbers to match current source data (run after pipeline reruns) |
 
 ---
 
@@ -195,7 +218,8 @@ paper/
     ├── sentence_analysis.md
     ├── structure_analysis.md
     ├── flow_extraction.md
-    └── writing_quality.md
+    ├── writing_quality.md
+    └── number_fix_report.md        # Number annotation/update log (opt-in)
 ```
 
 ---
@@ -352,3 +376,4 @@ Individual task prompts are located at:
 - `prompts/tasks/apply_marked.prompt`
 - `prompts/tasks/interactive_review.prompt`
 - `prompts/tasks/deduplication.prompt`
+- `prompts/tasks/number_fix.prompt`
