@@ -1,6 +1,6 @@
 # Writing Quality Standards
 
-Reference for the `writing_quality` task. Subagents read this before assessing paragraphs.
+Voice reference for the copyedit skill. All editing tasks read this file.
 
 ---
 
@@ -203,5 +203,143 @@ These 9 contrasts distinguish LLM prose habits from the author's natural voice. 
 
 ### 9. Specific LLM Tells
 
-**LLM pattern:** "(1) X, (2) Y, (3) Z" enumeration in prose. "Not only X but also Y." "It is worth noting." Rule-of-three padding.
+**LLM pattern:** "(1) X, (2) Y, (3) Z" enumeration in prose. "Not only X but also Y." "It is worth noting." Rule-of-three padding. CLAUSE: LONGER CLAUSE colon constructions ("The implication is direct: fees fall.") used as rhetorical setup.
 **Human pattern:** Separate sentences for separate points. Direct statements. No artificial enumeration.
+
+---
+
+## III. Surface Fix Rules
+
+Mechanical rules always applied to new or changed text, regardless of which task runs.
+
+- **Em-dash removal**: `---` (LaTeX) and `--` used as punctuation → restructure the sentence instead (period, comma, or subordinate clause)
+- **Artificial colon removal**: `CLAUSE: LONGER CLAUSE` rhetorical constructions → convert to a direct statement. ("The result is clear: fees fall" → "Fees fall.")
+- **Transition opener removal**: Delete sentence-initial "Moreover," "Furthermore," "Additionally," "In contrast," "Notably," "Importantly"
+- **Hedging discipline**: Maximum one hedge per claim; cut non-load-bearing hedges ("roughly" when not approximating, "appears" when not genuinely uncertain); "Our results suggest" only when truly uncertain about identification
+
+---
+
+## IV. AI Tell Pattern Reference
+
+### Severity Tiers
+
+| Tier | Label | When to Use |
+|------|-------|-------------|
+| 1 | **Critical** | Smarmy reframing ("It's not X, it's Y"), stacked hedges (2+ hedges per sentence), missing causal mechanism in results passage |
+| 2 | **High** | AI vocabulary (leverage, robust, nuanced, pivotal, etc.) used 2+ times; results-first openings with no tension; inventory-style numbers |
+| 3 | **Medium** | Transition overuse (Moreover, Furthermore, Critically however); template structures; meta-commentary; padding phrases |
+| 4 | **Low** | Single-instance AI vocabulary; minor parentheticals; minor hedging; quick-flag Part C patterns with low confidence |
+
+Sort order: Critical first, then High, Medium, Low. Within each tier, preserve document reading order.
+
+---
+
+### Part A: Punctuation & Structure Tells
+
+**Punctuation:**
+- Em-dash overuse: multiple `---` per paragraph (use rarely)
+- Excessive parentheticals
+- CLAUSE: LONGER CLAUSE construction — using a colon to introduce a conclusion or elaboration that could stand on its own. "The result is clear: fees fall." → "Fees fall." Assign **Medium** severity (High if 3+ occurrences in a passage).
+
+**Lists & Enumeration:**
+- "One is... A second is... A third is..."
+- Artificial balance (exactly 3 items when 2 or 4 is natural)
+
+**Transitions:**
+- "Moreover," "Additionally," "Furthermore" at paragraph starts
+- "More broadly," "Taken together" (signals pivot to generalization)
+- "In contrast," used as sentence opener instead of subordinate clause
+- "Critically, however" openers
+- "Notably," "Importantly" overuse
+
+**Template Structures:**
+- "Despite these challenges..."
+- "In conclusion / In summary / Overall" (formulaic endings)
+- "Challenges and future prospects" section endings
+- "Not only... but also..." constructions
+- Rule-of-three padding (artificial three-item lists beyond natural enumeration)
+- "From X to Y" flourishes
+- Paragraph-ending restatements: restating what was just established instead of ending on the evidence
+- Long inline parentheticals (>10 words) that should be footnotes to keep the argument streamlined
+
+---
+
+### Part B: Language Tells
+
+**🚨 Smarmy Reframing (HIGH PRIORITY — very AI-typical):**
+- "It's not X, it's Y" constructions
+- "The question isn't... it's..."
+- "This isn't about... it's about..."
+- "The real issue isn't... it's..."
+- "What matters isn't... but rather..."
+
+These sound rhetorically clever but are overused by AI. Replace with direct statements.
+
+**Formulaic Openers:**
+- "This occurs because..." / "This is because..." as standalone opener (integrate the reason into the prior sentence instead)
+- "Put differently..."
+- "From a [X] perspective..."
+
+**Meta-Commentary & Collaboration Language:**
+- "The paper proceeds in three parts..."
+- "[Analysis] yields two main conclusions..."
+- "Let's walk through..."
+- "Below is a detailed overview..."
+- "As we can see..." / "As mentioned above..."
+- "It is important to remember..." (moralizing)
+- "It is worth noting that..." / "It bears mentioning..."
+
+**Hedging:**
+- "Our results suggest that" (when identification is credible)
+- "Is consistent with" (weak phrasing)
+- Overuse of "arguably," "potentially," "plausibly"
+- Stacked hedges: two or more hedges in one sentence ("roughly appears to suggest"); one hedge per claim maximum
+- Non-load-bearing hedges: "roughly" when not a true approximation, "appears" when not genuinely uncertain
+- "Unlikely to be sufficient," "may not fully capture" — reflexive softening that reads as uncertain rather than careful
+
+**Over-Explanation:**
+- Explaining Econ 101 to field experts
+- Explaining the obvious
+
+**AI Vocabulary (flag when overused: 2+ occurrences or AI-typical context):**
+- align, crucial, delve, elaborate, emphasize, enhance
+- enduring, foster, garner, highlight, intricate, interplay
+- pivotal, showcase, tapestry, underscore, leverage, robust
+- nuanced, multifaceted, comprehensive, facilitate
+
+**Padding Phrases:**
+- "highlighting," "underscoring" (as sentence fillers)
+- "plays a pivotal role," "continues to captivate"
+- "serves as a testament to," "stands as a reminder"
+
+**Content Style:**
+- Exaggerating meaning, symbolism, or significance
+- Abstract platitudes instead of concrete facts/examples
+- Flowery or overly formal tone where casual fits
+- Didactic lines that moralize
+
+---
+
+### Part C: Argument Tells
+
+Quick-flag pass: identifies rhetorical patterns that look LLM-typical. Definitive paragraph-level assessment is handled by the `writing_quality` task (Sonnet). Flag patterns here; defer judgment there.
+
+**Results-First Openings (no tension):**
+- Paragraphs or sections that announce the result and then explain it, instead of building curiosity
+- Human pattern: opens with the puzzle, contradiction, or surprising fact; lets explanation follow
+- LLM pattern: states the conclusion upfront, then backfills the reasoning
+
+**Missing Causal Mechanism:**
+- Numerical comparisons or results stated without explaining *why* the result obtains
+- Human pattern: traces the causal chain ("Adding an expensive card incurs fees from both multi-homers and single-homers but increases sales only from single-homers")
+- LLM pattern: reports outcomes ("the cap reduces fees by 100 bps and rewards by 132 bps") without unpacking what produces the gap
+
+**Inventory-Style Numbers:**
+- Sequences of numbers presented as a list rather than embedded as evidence for claims
+- Human pattern: each number answers a "so what?" and serves as evidence mid-sentence
+- LLM pattern: fees change by X, rewards change by Y, share changes by Z — reads like a table caption, not an argument
+
+**Buried or Omitted Limitations:**
+- Known weaknesses softened with hedging language rather than confronted directly
+- Human pattern: names limitations explicitly and early, in plain language, then explains what the analysis achieves despite the limitation
+- LLM pattern: omits limitations entirely or buries them in hedge-laden qualifications

@@ -20,6 +20,25 @@ Comprehensive copyediting system for academic writing, following McCloskey and C
 /copyedit review paper/             # All tex/md files in directory
 ```
 
+### Task Edit — Catch-All (No Subagents)
+
+```
+/copyedit <any task> file.tex                  # Task edit: do task, follow principles
+/copyedit <any task> file.tex:50-80            # Task edit on line range
+/copyedit <any task> file.tex "Intro"          # Task edit on named section
+```
+
+Examples:
+
+```
+/copyedit make sure the notation for the estimator is consistent in main.tex
+/copyedit add a sentence explaining the intuition after equation 3 in results.tex
+/copyedit move the limitations paragraph before the conclusion in discussion.tex
+/copyedit tighten the second paragraph of the intro in main.tex
+```
+
+Task-first editing in the orchestrator context. No subagents, no notes files, no pipeline. Accomplishes the user's task, then applies principle guardrails (surface fixes + AI tell check) to every new or changed sentence. Shows annotated diff, applies on approval.
+
 ### Targeted Rewrite (No Subagents)
 
 ```
@@ -67,10 +86,11 @@ Rewrites a section directly in the orchestrator context. No subagents, no notes 
 
 ## Available Tasks
 
-### Targeted Rewrite (No Subagents, Orchestrator-Direct)
+### Fast-Path Edits (No Subagents, Orchestrator-Direct)
 
 | Task | Output | Description |
 |------|--------|-------------|
+| `task_edit` | Direct file edits | Execute any free-form task, then apply principle guardrails to new/changed text. Catch-all route. |
 | `rewrite` | Direct file edits | Apply 14 writing principles + surface fixes to a specific section. No notes files. |
 
 ### File-Level Tasks (Parallel, Haiku)
@@ -146,6 +166,7 @@ To force a full re-run from scratch, start a new session: `/copyedit review` wil
 
 | User Says | Tasks Invoked |
 |-----------|---------------|
+| any free-form task + file (not a known keyword) | task_edit (catch-all fast-path, no subagents) |
 | "rewrite this section", "rewrite lines" | rewrite (fast-path, no subagents) |
 | "fix grammar", "check for errors" | grammar |
 | "check for AI tells", "sound less AI" | ai_detection |
@@ -163,6 +184,7 @@ To force a full re-run from scratch, start a new session: `/copyedit review` wil
 
 | Alias | Expands To |
 |-------|------------|
+| `<any task>` | task_edit catch-all (no subagents) — when not a known keyword |
 | `rewrite` | Targeted principle rewrite (no subagents) |
 | `review` | grammar + ai_detection + word_choice + sentence |
 | `full` | All tasks including paper-level |
@@ -288,7 +310,27 @@ Reference: `prompts/economics_writing_prompt.md` (comprehensive guide)
 
 ## Examples
 
-### Example 0: Targeted Rewrite (Fast)
+### Example 0a: Task Edit (Catch-All, Fast)
+
+```
+/copyedit make sure the notation for the estimator is consistent in main.tex
+```
+
+Reads main.tex, normalizes estimator notation throughout, scans every changed sentence for principle violations (no AI tells, no em-dashes, no stacked hedges, etc.). Shows annotated diff with task changes and any principle fixes. Applies on approval. No subagents, no notes files.
+
+```
+/copyedit add a sentence explaining the intuition after equation 3 in results.tex
+```
+
+Reads results.tex, drafts the intuition sentence at the correct location, checks new text against surface fixes and AI tell patterns. Shows diff and applies on approval.
+
+```
+/copyedit tighten the second paragraph of the intro in main.tex "Introduction"
+```
+
+Reads the Introduction section, tightens the second paragraph, applies guardrails to changed sentences. Confirms before applying.
+
+### Example 0b: Targeted Rewrite (Fast)
 
 ```
 /copyedit rewrite intro.tex:50-80
@@ -364,6 +406,7 @@ To manually reset instead: `rm -rf notes/`
 
 Individual task prompts are located at:
 
+- `prompts/tasks/task_edit.prompt` **(catch-all fast-path, no subagents)**
 - `prompts/tasks/rewrite.prompt` **(fast-path, no subagents)**
 - `prompts/tasks/grammar.prompt`
 - `prompts/tasks/ai_detection.prompt`

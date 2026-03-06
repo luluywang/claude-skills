@@ -61,6 +61,8 @@ Produce a rewritten version of the entire target section. The rewrite must:
 - Stacked hedges (keep at most one per claim)
 - Transition-word sentence openers (Moreover, Furthermore, Additionally, etc.)
 
+Read `../references/writing_quality_standards.md` Sections III–IV for the complete surface fix rules and AI tell patterns.
+
 **Fix (when principle is selected or all principles apply):**
 Apply the relevant principles from the reference below.
 
@@ -162,9 +164,12 @@ Be honest and direct without being combative.
 These are applied on every rewrite regardless of principle selection:
 
 ### Colons
-- Remove colons used as sentence connectors or for dramatic setup
-- "The result is clear: fees fall" becomes "Fees fall because..." or similar direct statement
-- Colons introducing lists are fine; colons as rhetorical punctuation are not
+- The CLAUSE: LONGER CLAUSE construction is an AI tell. Remove colons used as sentence
+  connectors or for dramatic setup.
+- "The result is clear: fees fall" → "Fees fall." or "Fees fall because..."
+- "The challenge is evident: identification requires..." → "Identification requires..."
+- Colons introducing true lists (3+ parallel items) are fine. Colons as rhetorical
+  punctuation are not.
 
 ### Em-Dashes
 - Remove `---` (LaTeX em-dash) and `--` (en-dash used as em-dash)
@@ -182,6 +187,16 @@ These are applied on every rewrite regardless of principle selection:
 
 ---
 
+## AI Pattern Checks (Run on Every Rewritten Sentence)
+
+After producing the rewrite, scan every rewritten sentence against these before presenting the diff:
+
+Read `../references/writing_quality_standards.md` Sections III–IV for the complete surface fix rules and AI tell patterns.
+
+**Sentence rhythm**: After a multi-sentence rewrite, confirm sentence lengths vary — not every sentence the same length.
+
+---
+
 ## Quality Control
 
 Before presenting the diff:
@@ -189,5 +204,11 @@ Before presenting the diff:
 - [ ] No content or claims deleted (only reworded)
 - [ ] Every change traceable to a specific principle or surface fix
 - [ ] Rewrite is shorter than or equal in length to original (never longer)
-- [ ] No new AI-typical patterns introduced in the rewrite
+- [ ] No new smarmy reframing, formulaic openers, or meta-commentary
+- [ ] No AI vocabulary (leverage, robust, nuanced, pivotal, etc.) in rewritten text
+- [ ] No padding phrases in rewritten text
+- [ ] No results-first openings introduced
+- [ ] No missing causal mechanisms in result sentences
+- [ ] No inventory-style number lists
+- [ ] Sentence lengths vary across the rewritten passage
 - [ ] Change summary table is complete and accurate
