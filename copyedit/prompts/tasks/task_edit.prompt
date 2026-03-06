@@ -1,0 +1,182 @@
+# Task: Task-First Edit with Principle Guardrails
+
+**Purpose:** Execute a free-form editing task on a file, then apply writing principle guardrails to every new or changed sentence. The task goal is primary; principles are a quality filter on the result.
+
+**Model:** Orchestrator (no subagent dispatch)
+
+**Output:** Annotated diff shown to user, then applied via Edit tool on approval.
+
+---
+
+## When This Runs
+
+This is the catch-all fast-path. It fires when the request is not a `rewrite`, `number_fix`, known task name, `review`, or `full`. Examples:
+
+```
+/copyedit make sure the notation for the estimator is consistent in main.tex
+/copyedit add a sentence explaining the intuition after equation 3 in results.tex
+/copyedit move the limitations paragraph before the conclusion in discussion.tex
+/copyedit tighten the second paragraph of the intro in main.tex
+```
+
+The orchestrator handles the entire edit without spawning subagents.
+
+---
+
+## Workflow
+
+### 1. Parse
+
+Extract from the user's request:
+
+- **Task goal**: what the user wants accomplished (free text)
+- **File**: the .tex or .md file to edit
+- **Scope** (optional): line range (e.g. `50-80`) or section name (e.g. `"Introduction"`)
+
+If no file is specified, use AskUserQuestion:
+```json
+{
+  "header": "File required",
+  "question": "Which file should I edit?",
+  "multiSelect": false
+}
+```
+
+If a section name is given, find it by scanning for `\section{...}`, `\subsection{...}`, or `## ...` headers. Read from the header to the next header at the same or higher level.
+
+### 2. Read Target
+
+Read ONLY the target lines into context. Do NOT read the entire file unless no scope is specified and the file is short (<200 lines).
+
+If no scope is given and the file exceeds 200 lines, warn the user:
+
+```
+The file has N lines. Reading the full file may be slow.
+```
+
+Use AskUserQuestion:
+```json
+{
+  "header": "Large file",
+  "question": "How would you like to scope the edit?",
+  "multiSelect": false,
+  "options": [
+    {"label": "Read full file", "description": "Process all N lines"},
+    {"label": "Specify range", "description": "I'll give you line numbers or a section name"},
+    {"label": "Cancel", "description": "Stop without running"}
+  ]
+}
+```
+
+### 3. Execute Task
+
+Do exactly what the user asked. This is the primary goal. Examples:
+
+- **Consistency**: Find all instances of the target notation/term and normalize them
+- **Add content**: Draft the requested sentence/paragraph, placed precisely where indicated
+- **Move content**: Relocate the specified passage, adjusting surrounding text as needed
+- **Delete content**: Remove the specified passage, smoothing the transition
+- **Rephrase**: Rewrite the specified passage to achieve the stated goal (clearer, shorter, etc.)
+
+**Preserve during execution:**
+- All LaTeX commands, labels, references, equations not involved in the task
+- The argument's logical structure and claims
+- Technical content and numerical values
+- Footnotes (unless the task explicitly targets them)
+
+### 4. Apply Principle Guardrails
+
+After completing the task, scan every **new or changed sentence** against the surface fixes and AI tell patterns below. Do NOT re-edit unchanged sentences.
+
+**Surface fixes (always apply to changed text):**
+
+- **Em-dashes**: Remove `---` (LaTeX) and `--` used as punctuation. Restructure the sentence instead.
+- **Artificial colons**: Remove `CLAUSE: LONGER CLAUSE` constructions used as rhetorical setup. ("The result is clear: fees fall" → "Fees fall.")
+- **Transition openers**: Delete sentence-initial "Moreover," "Furthermore," "Additionally," "In contrast," "Notably," "Importantly" from any new sentence you wrote.
+- **Stacked hedges**: At most one hedge per claim in new text. Cut non-load-bearing hedges.
+
+Read `../references/writing_quality_standards.md` Sections III–IV for surface fix rules and the full AI tell pattern reference (Parts A, B, C). Check every new or changed sentence systematically against each category.
+
+**Sentence rhythm** (only if multiple new sentences added): vary length — not every sentence the same.
+
+If no new text was added (e.g. pure deletion or pure relabeling), skip this step.
+
+### 5. Present Diff
+
+Show the user an annotated diff:
+
+```
+## Task Edit: [file.tex] — [task goal summary]
+
+### Changes Summary
+
+| Category | Count | Description |
+|----------|-------|-------------|
+| Task changes | N | [what was done for the task] |
+| Principle fixes | N | [surface/AI-tell fixes applied to new text] |
+
+### Original
+[original text]
+
+### Edited
+[edited text]
+```
+
+If principle guardrails made no changes to new text (it was already clean), omit the "Principle fixes" row and note: "New text passed principle check."
+
+### 6. Apply
+
+Ask the user:
+```json
+{
+  "header": "Apply edit",
+  "question": "Apply this edit to the file?",
+  "multiSelect": false,
+  "options": [
+    {"label": "Apply (Recommended)", "description": "Replace the original with the edit"},
+    {"label": "Edit first", "description": "I want to modify the edit before applying"},
+    {"label": "Reject", "description": "Discard the edit"}
+  ]
+}
+```
+
+- **Apply**: Use the Edit tool to replace the original text with the edited version.
+- **Edit first**: Ask what to change, revise, re-present diff.
+- **Reject**: Stop. No files modified.
+
+---
+
+## Scope Behavior
+
+### Single file (default)
+
+Edit only the specified file.
+
+### Multiple files (`*.tex` or directory)
+
+Process each file **sequentially**:
+
+1. Read file, execute task, apply guardrails, present diff
+2. AskUserQuestion: Apply / Skip / Reject
+3. Move to next file
+
+Do NOT batch all files into one diff. Confirm per file.
+
+---
+
+## Quality Control
+
+Before presenting the diff:
+
+- [ ] Task goal fully accomplished (not partially — re-examine if uncertain)
+- [ ] All LaTeX commands, labels, refs preserved (unless task required changing them)
+- [ ] No content or claims deleted beyond what the task requires
+- [ ] No new em-dashes, artificial colons, transition openers, or stacked hedges in new text
+- [ ] No smarmy reframing, formulaic openers, or meta-commentary in new text
+- [ ] No AI vocabulary (leverage, robust, nuanced, pivotal, etc.) in new text
+- [ ] No padding phrases in new text
+- [ ] No results-first openings in newly added sentences
+- [ ] No missing causal mechanism in newly added result sentences
+- [ ] No inventory-style number lists in new text
+- [ ] If multiple new sentences added: sentence lengths vary
+- [ ] Change summary table accurately reflects both task changes and principle fixes

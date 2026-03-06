@@ -213,6 +213,53 @@ IF request matches "number_fix" pattern:
 
 ---
 
+### Fast-Path: task_edit (Catch-All)
+
+**After checking rewrite and number_fix**, but **before** the full pipeline, check if the request is a free-form task edit:
+
+```
+IF request does NOT match:
+    - "rewrite" keyword → already handled above
+    - "number_fix" keyword → already handled above
+    - Known task names: grammar, ai_detection, word_choice, sentence_analysis,
+      structure, flow_extraction, writing_quality, methodology, strip_llm,
+      reflow, apply, interactive, continue
+    - "review" / "full" / "comprehensive" / "quick" → pipeline routes
+THEN:
+    GOTO Task Edit Path (no subagents, no pipeline)
+    DO NOT proceed to Step 3 or beyond
+```
+
+**Task Edit Path** runs entirely in the orchestrator context. No subagents are spawned.
+
+1. Read `prompts/tasks/task_edit.prompt` for full instructions
+2. Parse the task goal (free text) and file from the request
+3. Read ONLY the target section or file into context
+4. Execute the task — do exactly what the user asked
+5. Apply principle guardrails to new/changed text (surface fixes + AI tell check)
+6. Present annotated diff with summary table (task changes vs. principle fixes)
+7. On approval, apply via Edit tool
+8. Done. No wrapup, no notes files, no tasks.json.
+
+**Request patterns that trigger Task Edit Path:**
+
+| Pattern | Example |
+|---------|---------|
+| Consistency task + file | `/copyedit make sure notation for X is consistent in main.tex` |
+| Add content + file | `/copyedit add a sentence explaining the intuition after equation 3 in results.tex` |
+| Move content + file | `/copyedit move the limitations paragraph before the conclusion in discussion.tex` |
+| Tighten/rephrase + file | `/copyedit tighten the second paragraph of the intro in main.tex` |
+| Any other free-form task + file | `/copyedit <anything> file.tex` |
+
+**Line range and section targeting work the same as rewrite:**
+
+| Syntax | Example |
+|--------|---------|
+| `file.tex:50-80` | `/copyedit fix the notation in results.tex:30-60` |
+| `file.tex "Section Name"` | `/copyedit tighten main.tex "Introduction"` |
+
+---
+
 ### Pre-check: ai_detection_pending
 
 **Before interpreting the request**, check `.copyedit_status` for `ai_detection_pending`.
