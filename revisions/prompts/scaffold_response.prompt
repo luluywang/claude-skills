@@ -1,0 +1,159 @@
+# Scaffold Response Document from Raw Referee Reports
+
+**Purpose:** Read raw editor/referee report files, segment into individual comments, and produce a LaTeX response document scaffold with each comment wrapped in its own `refcommentnoclear` block and a blank `\textbf{Reply:}` placeholder.
+
+---
+
+## Inputs
+
+- Editor letter file path (or "none" if no editor letter)
+- Referee report file paths: `{ref1: path, ref2: path, ...}`
+
+---
+
+## Step 1: Read Each Report File
+
+Read files in this order: editor letter first (if provided), then ref1, ref2, etc.
+
+If a file is not found or unreadable, skip it and record it in the return value. Do not abort.
+
+---
+
+## Step 2: Segment Into Individual Comments
+
+For each file, split the text into individual comment units.
+
+### Primary method: numbered/lettered structure
+
+Look for any of these numbering patterns that signal a new comment:
+- Arabic numerals: `1.`, `2.`, `1)`, `2)`, `(1)`, `(2)`
+- Lowercase letters: `a.`, `b.`, `a)`, `b)`, `(a)`, `(b)`
+- Roman numerals: `i.`, `ii.`, `iii.`, `i)`, `ii)`, `(i)`, `(ii)`
+
+When a numbered structure is found, each numbered item is one comment. Keep sub-bullets, continuation paragraphs, and clarifying sentences with their parent item — do not split a single numbered point into multiple blocks.
+
+### Fallback: paragraph breaks
+
+If the text has no numbered structure (e.g., a flowing narrative letter), split on paragraph breaks where each paragraph addresses a distinct concern. If the entire document is one flowing narrative without clear breakpoints, treat the whole text as a single comment.
+
+### Ambiguous cases
+
+If segmentation is unclear — for example, a long numbered point with embedded sub-questions — keep the full numbered point as a single block. Do not over-split.
+
+### Internal labels
+
+Label each segment for tracking (not for output):
+- Editor comments: `ed_1`, `ed_2`, `ed_3`, ...
+- Referee comments: `ref1_1`, `ref1_2`, ..., `ref2_1`, `ref2_2`, ...
+
+---
+
+## Step 3: Build LaTeX Scaffold
+
+### Preamble
+
+Copy the preamble verbatim from `revisions/templates/response_document.tex` (lines before `\begin{document}` and through the custom command definitions, up to and including the `\clearpage` before the body). Use the template as-is — do not modify it.
+
+### Document body opening
+
+```latex
+\begin{document}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+```
+
+Then insert the standard opening letter placeholder:
+
+```latex
+% --- Opening Letter to Editor ---
+% [Fill in: Dear Professor [Editor Name], ...]
+% [Fill in: Summary of Main Changes]
+
+\newpage{}
+```
+
+### One refsection per file
+
+For each source file (editor first, then ref1, ref2, ...):
+
+```latex
+\begin{refsection}
+\section*{Detailed Response to the Editor Letter}
+
+[comment blocks — see format below]
+
+\clearpage
+\printbibliography
+\end{refsection}
+```
+
+Use these section headings:
+- Editor letter → `\section*{Detailed Response to the Editor Letter}`
+- Referee 1 → `\section*{Detailed Response to Referee 1}`
+- Referee 2 → `\section*{Detailed Response to Referee 2}`
+- (and so on)
+
+### Comment block format
+
+For each segmented comment:
+
+```latex
+\begin{refcommentnoclear}
+[exact comment text — verbatim, lightly cleaned]
+\end{refcommentnoclear}
+\textbf{Reply:}
+
+```
+
+Rules:
+- Preserve the referee/editor text **verbatim** — no rewrites, no summaries, no paraphrasing
+- Light cleaning only: normalize whitespace (collapse multiple spaces/tabs to single space, normalize line endings), fix obvious encoding artifacts (e.g., `â€™` → `'`, `â€"` → `—`)
+- No blank line between `\end{refcommentnoclear}` and `\textbf{Reply:}`
+- One blank line after `\textbf{Reply:}` before the next `\begin{refcommentnoclear}`
+- Do NOT fill in any reply text — leave the `\textbf{Reply:}` line blank
+
+### Document close
+
+```latex
+\end{document}
+```
+
+---
+
+## Step 4: Write Output File
+
+Write the complete scaffold to `current/response_scaffold.tex`.
+
+Create the `current/` directory if it does not exist.
+
+---
+
+## Rules
+
+1. **Verbatim preservation:** Never rewrite, summarize, or paraphrase referee/editor text. The comment blocks must contain exactly what the referee wrote (modulo light whitespace/encoding cleanup).
+2. **No over-splitting:** A single numbered point with multiple sentences is one block. Only split where the source document clearly signals a new point.
+3. **No reply text:** Leave `\textbf{Reply:}` blank. The user fills these in.
+4. **Skip unreadable files:** If a file cannot be read, skip it and include it in the return's `skipped_files` list. Do not abort.
+5. **No LLM tags:** Do not wrap scaffold content in `\begin{llm}...\end{llm}` — the refcommentnoclear blocks are verbatim referee text, not LLM-generated content.
+
+---
+
+## Return Value
+
+Return a JSON object:
+
+```json
+{
+  "status": "success|partial|error",
+  "editor_comments": 3,
+  "referees": [
+    {"key": "ref1", "label": "Referee 1", "comment_count": 7},
+    {"key": "ref2", "label": "Referee 2", "comment_count": 5}
+  ],
+  "total_comments": 15,
+  "skipped_files": [],
+  "output_file": "current/response_scaffold.tex"
+}
+```
+
+`status` is `partial` if one or more files were skipped; `error` only if no output was produced.
