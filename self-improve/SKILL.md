@@ -103,7 +103,7 @@ Report files compressed and MB freed.
 
 Spawn a **general-purpose subagent** with `@prompts/orchestrator.md`, passing:
 - `ARGS`: the invocation flags (e.g., `--since 7d`, `--all`, or empty)
-- `LOGS_DIR`: `/Users/luluywang/Library/CloudStorage/Dropbox/claude-logs/claude`
+- `LOGS_DIR`: `/Users/luluywang/Library/CloudStorage/Dropbox/claude-logs`
 - `CACHE_DIR`: `/Users/luluywang/Library/CloudStorage/Dropbox/claude-logs/self-improve-cache`
 - `SKILL_DIR`: `/Users/luluywang/.claude/skills/self-improve`
 - `SKILLS_DIR`: `/Users/luluywang/.claude/skills`

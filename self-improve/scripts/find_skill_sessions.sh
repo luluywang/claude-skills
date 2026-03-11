@@ -20,7 +20,7 @@ import sys
 from pathlib import Path
 
 LOGS_DIR = Path(sys.argv[1]) if len(sys.argv) > 1 else \
-    Path("/Users/luluywang/Library/CloudStorage/Dropbox/claude-logs/claude")
+    Path("/Users/luluywang/Library/CloudStorage/Dropbox/claude-logs")
 
 MANIFEST_PATH = Path("/Users/luluywang/Library/CloudStorage/Dropbox/claude-logs/self-improve-cache/manifest.json")
 
