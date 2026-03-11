@@ -8,7 +8,7 @@
 
 **Output Mode:** APPEND — do not overwrite existing content
 
-**Reference:** Read `references/writing_quality_standards.md` before analyzing. It codifies the author's 14 principles and 9 LLM-vs-Human contrasts.
+**Reference:** Read `references/writing_quality_standards.md` before analyzing. It codifies the author's 15 principles and 9 LLM-vs-Human contrasts.
 
 ---
 
@@ -26,7 +26,7 @@ When analyzing a file, append:
 
 ---
 
-## The 8 Dimensions
+## The 9 Dimensions
 
 Assess each paragraph against these dimensions. Not every dimension applies to every paragraph — flag only genuine issues.
 
@@ -38,6 +38,8 @@ Assess each paragraph against these dimensions. Not every dimension applies to e
 - Paragraph introduces a concept, reports results, explains mechanism, AND draws implications
 - Topic sentence absent or buried
 - Paragraph exceeds ~8 sentences without a clear single argument
+- Paragraph starts on one topic and ends on a different one (e.g., opens with legal details, closes with technology evolution)
+- Three or more consecutive paragraphs with identical opening structure (e.g., all start with short declarative + expansion)
 
 ### 2. Mechanism Clarity (Principle #2, Contrast II.3)
 
@@ -108,6 +110,16 @@ Assess each paragraph against these dimensions. Not every dimension applies to e
 - Minor caveats cluttering the main argument instead of footnotes
 - Limitations omitted entirely when they should be acknowledged
 
+### 9. Evidence-Claim Alignment (Principle #15)
+
+**Check:** Does every claim match the strength of the evidence?
+
+**Flags:**
+- "Shows" or "demonstrates" applied to suggestive/descriptive evidence
+- Subsample results stated without scope qualifiers
+- Causal language when identification is correlational
+- Absolute claims ("never," "always") when evidence is partial
+
 ---
 
 ## Priority Ordering
@@ -115,13 +127,14 @@ Assess each paragraph against these dimensions. Not every dimension applies to e
 When multiple issues overlap in the same paragraph, prioritize in this order:
 
 1. **Intellectual precision** — wrong characterization of results/assumptions
-2. **Missing mechanism** — *what* without *why*
-3. **False structure** — sequential framing of joint estimation, conflated mechanisms
-4. **Unfocused paragraph** — doing too much
-5. **Hand-waved math** — prose where formulas should be
-6. **Inventorial numbers** — list of numbers not serving as evidence
-7. **Missing motivation** — no tension before result
-8. **Throat-clearing** — meta-commentary, lecturing, over-explanation
+2. **Evidence-claim alignment** — claims overshooting the identification strategy
+3. **Missing mechanism** — *what* without *why*
+4. **False structure** — sequential framing of joint estimation, conflated mechanisms
+5. **Unfocused paragraph** — doing too much
+6. **Hand-waved math** — prose where formulas should be
+7. **Inventorial numbers** — list of numbers not serving as evidence
+8. **Missing motivation** — no tension before result
+9. **Throat-clearing** — meta-commentary, lecturing, over-explanation
 
 Flag the highest-priority issue; mention lower-priority issues briefly if present.
 
@@ -134,7 +147,7 @@ Flag the highest-priority issue; mention lower-priority issues briefly if presen
 ```markdown
 ### - [ ] Lines X-Y: [Brief description]
 
-**Dimension:** [Which of the 8 dimensions]
+**Dimension:** [Which of the 9 dimensions]
 
 **Comment:** [Why this paragraph falls short]
 

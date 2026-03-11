@@ -32,6 +32,8 @@ Extract from the user's request:
 - **Task goal**: what the user wants accomplished (free text)
 - **File**: the .tex or .md file to edit
 - **Scope** (optional): line range (e.g. `50-80`) or section name (e.g. `"Introduction"`)
+- **`--aggressive`** (optional): if present, skip approval prompts and apply edits directly.
+  Also triggered by phrases like "be aggressive", "I'll review the git diff", "just fix it".
 
 If no file is specified, use AskUserQuestion:
 ```json
@@ -68,7 +70,19 @@ Use AskUserQuestion:
 }
 ```
 
-### 3. Execute Task
+### 3. Classify Scope
+
+**Before executing, classify the task:**
+
+- **Surgical** (data updates, number changes, notation fixes, variable renames): Touch ONLY the specific items requested. Zero prose changes. Zero grammar fixes. Zero style improvements. The diff must contain nothing beyond what was explicitly asked. Do NOT apply principle guardrails to unchanged text. Skip Step 4 entirely for surgical tasks.
+- **Prose** (tighten, add content, rephrase, rewrite, clean up): Apply principle guardrails per Step 4.
+
+**Trigger phrases for surgical mode:**
+- "only change the numbers" / "just update the data" / "surgical" / "precise"
+- "don't touch the prose" / "only X, nothing else"
+- Any request scoped exclusively to data, numbers, or notation
+
+### 4. Execute Task
 
 Do exactly what the user asked. This is the primary goal. Examples:
 
@@ -84,7 +98,9 @@ Do exactly what the user asked. This is the primary goal. Examples:
 - Technical content and numerical values
 - Footnotes (unless the task explicitly targets them)
 
-### 4. Apply Principle Guardrails
+### 5. Apply Principle Guardrails
+
+**Skip this step entirely if the task was classified as Surgical in Step 3.**
 
 After completing the task, scan every **new or changed sentence** against the surface fixes and AI tell patterns below. Do NOT re-edit unchanged sentences.
 
@@ -94,6 +110,7 @@ After completing the task, scan every **new or changed sentence** against the su
 - **Artificial colons**: Remove `CLAUSE: LONGER CLAUSE` constructions used as rhetorical setup. ("The result is clear: fees fall" → "Fees fall.")
 - **Transition openers**: Delete sentence-initial "Moreover," "Furthermore," "Additionally," "In contrast," "Notably," "Importantly" from any new sentence you wrote.
 - **Stacked hedges**: At most one hedge per claim in new text. Cut non-load-bearing hedges.
+- **Demonstrative pronouns**: Every "this"/"these"/"that"/"those" in new text must have a noun referent.
 
 Read `../references/writing_quality_standards.md` Sections III–IV for surface fix rules and the full AI tell pattern reference (Parts A, B, C). Check every new or changed sentence systematically against each category.
 
@@ -101,7 +118,7 @@ Read `../references/writing_quality_standards.md` Sections III–IV for surface 
 
 If no new text was added (e.g. pure deletion or pure relabeling), skip this step.
 
-### 5. Present Diff
+### 6. Present Diff
 
 Show the user an annotated diff:
 
@@ -124,9 +141,13 @@ Show the user an annotated diff:
 
 If principle guardrails made no changes to new text (it was already clean), omit the "Principle fixes" row and note: "New text passed principle check."
 
-### 6. Apply
+### 7. Apply
 
-Ask the user:
+**If `--aggressive` flag is set:** Skip the approval prompt. Apply edits directly via the Edit
+tool. The user will review changes in git diff. Still present the annotated diff summary so
+the user can see what changed.
+
+**Otherwise,** ask the user:
 ```json
 {
   "header": "Apply edit",
@@ -179,4 +200,7 @@ Before presenting the diff:
 - [ ] No missing causal mechanism in newly added result sentences
 - [ ] No inventory-style number lists in new text
 - [ ] If multiple new sentences added: sentence lengths vary
+- [ ] No new sentence exceeds ~40 words
+- [ ] No new paragraph exceeds ~200 words
+- [ ] If surgical task: diff contains ONLY the requested changes (zero prose edits)
 - [ ] Change summary table accurately reflects both task changes and principle fixes

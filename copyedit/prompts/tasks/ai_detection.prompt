@@ -122,6 +122,9 @@ Before finalizing flags for any LLM-tagged or suspected-LLM section, verify:
 - [ ] Is the causal mechanism explicit, or does the text only report outcomes?
 - [ ] Are minor caveats in footnotes rather than inline?
 - [ ] Does any sentence use a colon to introduce a dramatic conclusion? ("X: Y" where Y is the punchline)
+- [ ] Do any claims overshoot the evidence? (e.g., "shows" for descriptive evidence, unscoped generalizations from subsample results)
+- [ ] Are there bare "this"/"these" without noun referents? (3+ in a paragraph = High severity)
+- [ ] Are technical terms (strategic complementarities, moral hazard, adverse selection, GE effects) used correctly per their formal definitions?
 - [ ] Would a reader familiar with LLM writing recognize this as AI-generated?
 
 **Note:** Items flagged in Part C are quick pattern detections. The `writing_quality` task (Sonnet) provides definitive paragraph-level assessment with actionable rewrites. When both tasks flag the same passage, `writing_quality` takes precedence during wrapup deduplication.

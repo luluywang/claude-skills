@@ -29,14 +29,22 @@ Extract from the user's request:
 - **File**: the .tex or .md file
 - **Range**: line numbers (e.g. `50-80`) OR section name (e.g. `"Model"`, `"Introduction"`)
 - **Principles**: optional comma-separated principle numbers (default: all applicable)
+- **`--aggressive`** (optional): if present, skip approval prompts and apply edits directly.
+  Also triggered by phrases like "be aggressive", "I'll review the git diff", "just fix it".
 
 If a section name is given, find it by scanning for `\section{...}`, `\subsection{...}`, or `## ...` headers. Read from the header to the next header at the same or higher level.
 
 ### 2. Read the Target
 
-Read ONLY the target lines into context. Do NOT read the entire file or any other files.
+Read ONLY the target lines into context.
 
 If the section exceeds 200 lines, warn the user and ask whether to proceed or narrow the range.
+
+**Anti-repetition context:** For conclusion, introduction, or abstract rewrites, also skim the
+other main-text files (read first 3-5 lines of each paragraph) to identify phrases already used
+elsewhere in the paper. The rewrite must not reuse verbatim or near-verbatim phrasing from
+other sections. Flag any sentence that closely echoes language from elsewhere and rephrase it
+to make the same point with fresh wording.
 
 ### 3. Analyze
 
@@ -44,6 +52,7 @@ Scan the section against all applicable principles (see Principle Reference belo
 - Which principle is violated
 - The specific sentence(s)
 - What the fix is
+- Whether any claim overshoots the evidence (Principle #15). For each result statement, check: does the verb match the identification strategy? Does the scope match the data?
 
 ### 4. Rewrite
 
@@ -91,7 +100,11 @@ Show the user an annotated diff:
 
 ### 6. Apply
 
-Ask the user:
+**If `--aggressive` flag is set:** Skip the approval prompt. Apply the rewrite directly via the
+Edit tool. The user will review changes in git diff. Still present the annotated diff summary
+so the user can see what changed.
+
+**Otherwise,** ask the user:
 ```json
 {
   "header": "Apply rewrite",
@@ -113,7 +126,7 @@ Ask the user:
 
 ## Principle Reference
 
-These are the author's 14 principles. When `--principles N,M` is specified, apply only those numbered principles. When no flag is given, apply all that are relevant to the target section.
+These are the author's 15 principles. When `--principles N,M` is specified, apply only those numbered principles. When no flag is given, apply all that are relevant to the target section.
 
 ### 1. Terse and Precise
 Every sentence earns its place. No restatement, no padding. If a sentence can be deleted without losing information, delete it.
@@ -157,11 +170,19 @@ Say the simple thing directly. Don't wrap a straightforward claim in elaborate i
 ### 14. Direct but Not Dismissive
 Be honest and direct without being combative.
 
+### 15. Match Claims to Evidence
+Claims must not exceed the evidence. Verb strength matches identification strategy. Scope qualifiers match the data.
+
 ---
 
 ## Surface Fixes (Always Applied)
 
 These are applied on every rewrite regardless of principle selection:
+
+### Demonstrative Pronouns
+- Every "this," "these," "that," "those" must have a noun referent
+- "This suggests..." → "This price gap suggests..."
+- Exception: "this" referring to the immediately preceding clause with zero ambiguity
 
 ### Colons
 - The CLAUSE: LONGER CLAUSE construction is an AI tell. Remove colons used as sentence
@@ -195,6 +216,8 @@ Read `../references/writing_quality_standards.md` Sections III–IV for the comp
 
 **Sentence rhythm**: After a multi-sentence rewrite, confirm sentence lengths vary — not every sentence the same length.
 
+**Paragraph openings**: After a multi-paragraph rewrite, confirm consecutive paragraphs do NOT all begin with the same sentence structure. Vary the opening pattern (evidence, question, concession, claim).
+
 ---
 
 ## Quality Control
@@ -211,4 +234,8 @@ Before presenting the diff:
 - [ ] No missing causal mechanisms in result sentences
 - [ ] No inventory-style number lists
 - [ ] Sentence lengths vary across the rewritten passage
+- [ ] No verbatim or near-verbatim phrases recycled from other sections of the paper
+- [ ] No claim overshoots the evidence — verb strength matches identification strategy
+- [ ] No new sentence exceeds ~40 words
+- [ ] No new paragraph exceeds ~200 words or ~10 sentences
 - [ ] Change summary table is complete and accurate

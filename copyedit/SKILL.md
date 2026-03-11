@@ -26,6 +26,7 @@ Comprehensive copyediting system for academic writing, following McCloskey and C
 /copyedit <any task> file.tex                  # Task edit: do task, follow principles
 /copyedit <any task> file.tex:50-80            # Task edit on line range
 /copyedit <any task> file.tex "Intro"          # Task edit on named section
+/copyedit --aggressive <any task> *.tex        # Skip approval, apply directly (review via git diff)
 ```
 
 Examples:
@@ -46,9 +47,10 @@ Task-first editing in the orchestrator context. No subagents, no notes files, no
 /copyedit rewrite intro.tex "Model"                  # Rewrite named section
 /copyedit rewrite intro.tex:50-80 --principles 2,5   # Apply only principles 2 and 5
 /copyedit rewrite results.tex "Counterfactuals"       # Rewrite by section name
+/copyedit --aggressive rewrite *.tex "Conclusion"    # Rewrite + skip approval (git diff review)
 ```
 
-Rewrites a section directly in the orchestrator context. No subagents, no notes files, no pipeline. Applies the 14 writing principles plus surface fixes (colons, em-dashes, transitions, hedging). Shows annotated diff, applies on approval.
+Rewrites a section directly in the orchestrator context. No subagents, no notes files, no pipeline. Applies the 15 writing principles plus surface fixes (colons, em-dashes, transitions, hedging). Shows annotated diff, applies on approval.
 
 ### Single Task
 
@@ -91,7 +93,7 @@ Rewrites a section directly in the orchestrator context. No subagents, no notes 
 | Task | Output | Description |
 |------|--------|-------------|
 | `task_edit` | Direct file edits | Execute any free-form task, then apply principle guardrails to new/changed text. Catch-all route. |
-| `rewrite` | Direct file edits | Apply 14 writing principles + surface fixes to a specific section. No notes files. |
+| `rewrite` | Direct file edits | Apply 15 writing principles + surface fixes to a specific section. No notes files. |
 
 ### File-Level Tasks (Parallel, Haiku)
 
@@ -336,7 +338,7 @@ Reads the Introduction section, tightens the second paragraph, applies guardrail
 /copyedit rewrite intro.tex:50-80
 ```
 
-Reads lines 50-80, applies all 14 writing principles plus surface fixes (colons, em-dashes, transitions, hedging). Shows annotated diff with principle citations. Applies on approval. No subagents, no notes files.
+Reads lines 50-80, applies all 15 writing principles plus surface fixes (colons, em-dashes, transitions, hedging). Shows annotated diff with principle citations. Applies on approval. No subagents, no notes files.
 
 ```
 /copyedit rewrite results.tex "Counterfactuals" --principles 2,5,7

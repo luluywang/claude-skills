@@ -4,7 +4,9 @@ Voice reference for the copyedit skill. All editing tasks read this file.
 
 ---
 
-## I. The Author's 14 Principles
+## I. The Author's 15 Principles
+
+> **Scope note:** These principles apply to paper prose AND to referee/editor response letters. In response letters, Principles 1, 8, 13, and 14 are most relevant. Additionally, avoid all sycophantic language — see Part B, "Referee/Editor Letter Sycophancy."
 
 ### 1. Terse and Precise
 
@@ -47,6 +49,14 @@ Voice reference for the copyedit skill. All editing tasks read this file.
 
 **Bad:** A paragraph that introduces a counterfactual, reports its results, explains the mechanism, and draws policy implications.
 **Good:** Separate paragraphs: setup, result + mechanism, implication.
+
+**Bad:** A paragraph that opens with the legal details of the Durbin Amendment and ends discussing how payment technology has evolved. The reader cannot state the paragraph's single point.
+**Good:** One paragraph on the legal structure. A separate paragraph on the technology response.
+
+**Length guardrails:**
+- Paragraphs exceeding ~10 sentences or ~200 words likely need splitting even if nominally single-topic.
+- Sentences exceeding ~40 words likely need splitting into two sentences.
+- When rewriting, the output must be equal to or shorter than the input. If a rewrite is longer, something was added that was not in the original — cut it.
 
 ---
 
@@ -157,6 +167,20 @@ Voice reference for the copyedit skill. All editing tasks read this file.
 
 ---
 
+### 15. Match Claims to Evidence
+
+**Standard:** Claims must not exceed the evidence presented. If the paper shows a correlation, do not write "demonstrates." If the result is scoped to a subsample, do not generalize. Suggestive evidence stays suggestive. Descriptive patterns are not causal findings.
+
+**Test:** For each claim, what is the strongest verb the identification strategy supports? "Shows" requires a credible causal design. "Suggests" fits suggestive evidence. "Is consistent with" fits descriptive patterns. If the verb overshoots the method, downgrade it.
+
+**Bad:** "shows the opposite" (when evidence only complicates the prior logic)
+**Good:** "complicates this logic" — matches the descriptive nature of the evidence
+
+**Bad:** "credit never substitutes for debit" (when the analysis covers only point-of-sale)
+**Good:** "at the point of sale, credit does not substitute for debit" — scoped to the evidence
+
+---
+
 ## II. LLM-vs-Human Contrasts
 
 These 9 contrasts distinguish LLM prose habits from the author's natural voice. The `writing_quality` task uses these as diagnostic markers.
@@ -166,10 +190,13 @@ These 9 contrasts distinguish LLM prose habits from the author's natural voice. 
 **LLM pattern:** Opens with the conclusion, then backfills reasoning. "Monopoly can be welfare-improving because..."
 **Human pattern:** Opens with the puzzle or surprise, builds to the conclusion. "A merger to monopoly would *increase* total welfare."
 
-### 2. Sentence Rhythm
+### 2. Sentence and Paragraph Rhythm
 
-**LLM pattern:** Uniform sentence length (~20-25 words). Every sentence roughly the same structure.
-**Human pattern:** Short punchy sentences mixed with longer analytical ones. Rhythm varies deliberately.
+**LLM pattern (sentence):** Uniform sentence length (~20-25 words). Every sentence roughly the same structure.
+**Human pattern (sentence):** Short punchy sentences mixed with longer analytical ones. Rhythm varies deliberately.
+
+**LLM pattern (paragraph):** Monotonous paragraph openings — every paragraph starts with the same structure (e.g., short declarative sentence followed by expansion). Formulaic internal cadence.
+**Human pattern (paragraph):** Paragraph openings vary — some start with evidence, some with a question, some with a concession, some mid-argument. No detectable template across consecutive paragraphs.
 
 ### 3. Mechanism vs Description
 
@@ -216,6 +243,10 @@ Mechanical rules always applied to new or changed text, regardless of which task
 - **Artificial colon removal**: `CLAUSE: LONGER CLAUSE` rhetorical constructions → convert to a direct statement. ("The result is clear: fees fall" → "Fees fall.")
 - **Transition opener removal**: Delete sentence-initial "Moreover," "Furthermore," "Additionally," "In contrast," "Notably," "Importantly"
 - **Hedging discipline**: Maximum one hedge per claim; cut non-load-bearing hedges ("roughly" when not approximating, "appears" when not genuinely uncertain); "Our results suggest" only when truly uncertain about identification
+- **Demonstrative pronoun discipline**: Bare "this," "these," "that," "those" without a noun referent → add the specific noun. ("This suggests..." → "This price gap suggests..."; "these results" → "the merger counterfactual results"). Exception: "this" is acceptable when the referent is the immediately preceding clause and no ambiguity exists.
+- **Sentence length cap**: Any new or rewritten sentence exceeding ~40 words → split into two sentences. Long sentences are an LLM tell (humans naturally break at ~25 words in academic prose).
+- **Paragraph length cap**: Any new or rewritten paragraph exceeding ~200 words or ~10 sentences → split at the natural topic break.
+- **Surgical edit discipline**: When the user requests only specific changes (data updates, number fixes, notation changes), touch NOTHING else. Zero prose changes, zero grammar fixes, zero style improvements beyond the explicit request. "Surgical" means the diff contains only what was asked for.
 
 ---
 
@@ -225,7 +256,7 @@ Mechanical rules always applied to new or changed text, regardless of which task
 
 | Tier | Label | When to Use |
 |------|-------|-------------|
-| 1 | **Critical** | Smarmy reframing ("It's not X, it's Y"), stacked hedges (2+ hedges per sentence), missing causal mechanism in results passage |
+| 1 | **Critical** | Smarmy reframing ("It's not X, it's Y"), stacked hedges (2+ hedges per sentence), missing causal mechanism in results passage, claims overshooting evidence |
 | 2 | **High** | AI vocabulary (leverage, robust, nuanced, pivotal, etc.) used 2+ times; results-first openings with no tension; inventory-style numbers |
 | 3 | **Medium** | Transition overuse (Moreover, Furthermore, Critically however); template structures; meta-commentary; padding phrases |
 | 4 | **Low** | Single-instance AI vocabulary; minor parentheticals; minor hedging; quick-flag Part C patterns with low confidence |
@@ -261,6 +292,13 @@ Sort order: Critical first, then High, Medium, Low. Within each tier, preserve d
 - "From X to Y" flourishes
 - Paragraph-ending restatements: restating what was just established instead of ending on the evidence
 - Long inline parentheticals (>10 words) that should be footnotes to keep the argument streamlined
+- Monotonous paragraph openings: consecutive paragraphs that all begin with the same sentence structure (e.g., short declarative + expansion, or topic sentence + evidence + implication repeated 3+ times)
+
+**Ambiguous Reference:**
+- Bare "this"/"these"/"that"/"those" without a noun — forces reader to guess the referent
+- "These results show..." (which results? from which table/counterfactual?)
+- "This is driven by..." (what is "this"?)
+- Assign **Medium** severity (single occurrence), **High** (3+ bare demonstratives in a paragraph)
 
 ---
 
@@ -306,17 +344,42 @@ These sound rhetorically clever but are overused by AI. Replace with direct stat
 - enduring, foster, garner, highlight, intricate, interplay
 - pivotal, showcase, tapestry, underscore, leverage, robust
 - nuanced, multifaceted, comprehensive, facilitate
+- channel (as verb meaning "transmit/convey"), landscape, ecosystem, navigate
+- underpin, bolster, cornerstone, framework (when used loosely)
+- dynamic, lens ("through the lens of"), shed light, pathway
 
 **Padding Phrases:**
 - "highlighting," "underscoring" (as sentence fillers)
 - "plays a pivotal role," "continues to captivate"
 - "serves as a testament to," "stands as a reminder"
 
+**Misused Technical Terminology:**
+- Economics jargon used loosely or incorrectly: "strategic complementarities" (requires firms choosing higher actions when competitors do), "moral hazard" (requires hidden action, not just risk), "adverse selection" (requires hidden type), "general equilibrium effects" (requires actual GE model, not just spillovers)
+- LLM pattern: sprinkles technical terms for credibility without checking the formal definition applies
+- Human pattern: uses a technical term only when its formal conditions are met; otherwise uses plain language ("firms tend to match each other's actions" instead of "strategic complementarities")
+- Assign severity: **High** — misusing a term in a paper submitted to a field journal is worse than using no term at all
+
+**Referee/Editor Letter Sycophancy (flag in cover letters and response documents):**
+- "genuine economic insight," "genuinely novel," "elegant framework," "excellent paper"
+- "important contribution to the literature," "groundbreaking," "seminal"
+- Any adjective praising the quality of the paper, referee, or editor
+- Human pattern: understated, matter-of-fact. "Useful contribution." "We appreciate this suggestion." "The referee raises a fair point."
+- LLM pattern: effusive praise that reads as brown-nosing. Flattery of the referee's intelligence or the paper's significance.
+- Fix: strip all praising adjectives. State what the paper does, not how wonderful it is.
+- Assign severity: **High**
+
 **Content Style:**
 - Exaggerating meaning, symbolism, or significance
 - Abstract platitudes instead of concrete facts/examples
 - Flowery or overly formal tone where casual fits
 - Didactic lines that moralize
+
+**Tone Oscillation (inconsistent register):**
+- Mixing casual phrasing ("might look like," "kind of") with formal academic prose in the same passage
+- Mixing dramatic/literary phrasing ("the landscape shifts," "a pivotal moment") with understated technical prose
+- LLM pattern: oscillates between registers within a single section, sometimes within a paragraph
+- Human pattern: consistent register throughout — academic economics prose is precise and understated, neither casual nor dramatic
+- Fix: choose the register of the surrounding text and match it. When in doubt, default to precise and understated.
 
 ---
 
@@ -343,3 +406,10 @@ Quick-flag pass: identifies rhetorical patterns that look LLM-typical. Definitiv
 - Known weaknesses softened with hedging language rather than confronted directly
 - Human pattern: names limitations explicitly and early, in plain language, then explains what the analysis achieves despite the limitation
 - LLM pattern: omits limitations entirely or buries them in hedge-laden qualifications
+
+**Claims Overshooting Evidence:**
+- Verbs that exceed the identification strategy: "shows," "demonstrates," "proves" applied to suggestive or descriptive evidence
+- Scope creep: results from a subsample or specific margin stated as general findings
+- Human pattern: verb strength matches method strength — "suggests" for suggestive, "is consistent with" for descriptive, "shows" only with credible causal identification
+- LLM pattern: upgrades every finding to the strongest available verb regardless of design; drops scope qualifiers
+- Assign severity: **Critical** (misrepresents the paper's contribution)
