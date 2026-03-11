@@ -168,6 +168,7 @@ When writing, check for and eliminate:
 - Parallel structure that feels mechanical
 - Overly smooth transitions (however, furthermore, moreover)
 - Starting consecutive sentences with similar structure
+- Colons as dramatic setup: "CLAUSE: LONGER CLAUSE" — replace with a period or recast
 
 ---
 
