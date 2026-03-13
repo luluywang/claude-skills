@@ -80,7 +80,7 @@ If >0 unmatched files:
 **Session analyst Haiku subagents (batches of ≤10)**:
 Spawn **Haiku subagents** with `@prompts/session_analyst.md`, passing:
 - `SESSION_FILES`: batch of ≤10 file paths
-- `EXISTING_SKILLS`: econ_ra, copyedit, parsepdf, referee, revisions, taskmaster
+- `EXISTING_SKILLS`: econ_ra, copyedit, parsepdf, revisions, taskmaster
 - `OUTPUT_DIR`: `{CACHE_DIR}/sessions/`
 
 Each subagent handles its own extraction internally and returns a JSON list of `{rel_path, summary_file}` pairs.

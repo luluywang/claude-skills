@@ -27,7 +27,7 @@ MANIFEST_PATH = Path("/Users/luluywang/Library/CloudStorage/Dropbox/claude-logs/
 # Claude project directory — sessions with this cwd are "construction" sessions.
 CLAUDE_PROJECT_DIR = "/Users/luluywang/Library/CloudStorage/Dropbox/Documents/Economics/Projects/Claude"
 
-SKILLS = ["econ_ra", "copyedit", "parsepdf", "referee", "revisions", "taskmaster"]
+SKILLS = ["econ_ra", "copyedit", "parsepdf", "revisions", "taskmaster"]
 
 if not LOGS_DIR.exists():
     print("{}", file=sys.stderr)

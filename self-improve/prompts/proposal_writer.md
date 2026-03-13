@@ -15,7 +15,7 @@ You receive:
 
 ### Step 1 — Read all inputs
 - Read `AGGREGATE_FILE`
-- Read `SKILL.md` for each existing skill (econ_ra, copyedit, parsepdf, referee, revisions, taskmaster, self-improve)
+- Read `SKILL.md` for each existing skill (econ_ra, copyedit, parsepdf, revisions, taskmaster, self-improve)
 - Read `DOCKET_FILE` — note all **pending** entries (target + title) to avoid proposing duplicates
 
 ### Step 2 — Generate proposals
