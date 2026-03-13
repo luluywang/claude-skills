@@ -169,6 +169,8 @@ When writing, check for and eliminate:
 - Overly smooth transitions (however, furthermore, moreover)
 - Starting consecutive sentences with similar structure
 - Colons as dramatic setup: "CLAUSE: LONGER CLAUSE" — replace with a period or recast
+- "Bracket" used casually — in economics, means to formally bound a quantity between upper and lower limits; flag when no bounding argument is present
+- "Polar" as casual intensifier — flag unless referring to actual polarity, coordinates, or regions
 
 ---
 

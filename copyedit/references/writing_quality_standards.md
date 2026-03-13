@@ -347,6 +347,8 @@ These sound rhetorically clever but are overused by AI. Replace with direct stat
 - channel (as verb meaning "transmit/convey"), landscape, ecosystem, navigate
 - underpin, bolster, cornerstone, framework (when used loosely)
 - dynamic, lens ("through the lens of"), shed light, pathway
+- bracket (technical economics term: to bound a quantity between formal limits; flag when used without a bounding argument)
+- polar (overused as intensifier or modifier; flag unless referring to actual polarity, coordinates, or regions)
 
 **Padding Phrases:**
 - "highlighting," "underscoring" (as sentence fillers)
