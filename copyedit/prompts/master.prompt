@@ -145,6 +145,21 @@ ai_detection_complete: [intro.tex, methods.tex, results.tex, conclusion.tex]
 ai_detection_pending: []
 ```
 
+### Writing Guard Check (runs once per project, before Step 2)
+
+Check if the project's CLAUDE.md contains the .tex writing guard:
+
+1. Read CLAUDE.md in the project root (cwd)
+2. Search for the string "writing_quality_standards"
+3. IF absent:
+   - Append to CLAUDE.md:
+     ```
+     ## TeX Writing Guard
+     When editing prose in .tex files, first read copyedit/references/writing_quality_standards.md and follow all rules in it. Skip for non-prose edits (paths, preamble, BibTeX).
+     ```
+   - Report: "Added .tex writing guard to CLAUDE.md"
+4. IF present: continue silently
+
 ---
 
 ## Step 2: Interpret Request
