@@ -65,12 +65,8 @@ Produce a rewritten version of the entire target section. The rewrite must:
 - Footnotes (content may be edited but footnotes are not deleted)
 
 **Fix (always, regardless of --principles flag):**
-- Artificial colons used for drama or as sentence connectors
-- Em-dashes (`---` in LaTeX, or `--`) used as punctuation. Replace with restructured sentences. Em-dashes are almost never needed in academic writing.
-- Stacked hedges (keep at most one per claim)
-- Transition-word sentence openers (Moreover, Furthermore, Additionally, etc.)
 
-Read `../references/writing_quality_standards.md` Sections III–IV for the complete surface fix rules and AI tell patterns.
+Run the surface critic on all rewritten text: read @prompts/shared/components/surface_critic.prompt and follow its procedure (apply context).
 
 **Fix (when principle is selected or all principles apply):**
 Apply the relevant principles from the reference below.
@@ -175,46 +171,9 @@ Claims must not exceed the evidence. Verb strength matches identification strate
 
 ---
 
-## Surface Fixes (Always Applied)
+## Surface and AI Tell Checks
 
-These are applied on every rewrite regardless of principle selection:
-
-### Demonstrative Pronouns
-- Every "this," "these," "that," "those" must have a noun referent
-- "This suggests..." → "This price gap suggests..."
-- Exception: "this" referring to the immediately preceding clause with zero ambiguity
-
-### Colons
-- The CLAUSE: LONGER CLAUSE construction is an AI tell. Remove colons used as sentence
-  connectors or for dramatic setup.
-- "The result is clear: fees fall" → "Fees fall." or "Fees fall because..."
-- "The challenge is evident: identification requires..." → "Identification requires..."
-- Colons introducing true lists (3+ parallel items) are fine. Colons as rhetorical
-  punctuation are not.
-
-### Em-Dashes
-- Remove `---` (LaTeX em-dash) and `--` (en-dash used as em-dash)
-- Restructure the sentence instead. Use a period, comma, or subordinate clause.
-- "The model --- which nests both Hotelling and CES --- predicts" becomes "The model, which nests both Hotelling and CES, predicts" or two sentences
-
-### Transitions
-- Delete sentence-initial "Moreover," "Furthermore," "Additionally," "In contrast," "Notably," "Importantly"
-- If the connection between sentences is unclear without the transition, rewrite to make the logical link implicit in the content
-
-### Hedging
-- Maximum one hedge per claim
-- Remove non-load-bearing hedges: "roughly" when not approximating, "appears" when not uncertain
-- "Our results suggest" only when genuinely uncertain about identification
-
----
-
-## AI Pattern Checks (Run on Every Rewritten Sentence)
-
-After producing the rewrite, scan every rewritten sentence against these before presenting the diff:
-
-Read `../references/writing_quality_standards.md` Sections III–IV for the complete surface fix rules and AI tell patterns.
-
-**Sentence rhythm**: After a multi-sentence rewrite, confirm sentence lengths vary — not every sentence the same length.
+Run the surface critic on all rewritten text: read @prompts/shared/components/surface_critic.prompt and follow its procedure (apply context).
 
 **Paragraph openings**: After a multi-paragraph rewrite, confirm consecutive paragraphs do NOT all begin with the same sentence structure. Vary the opening pattern (evidence, question, concession, claim).
 
@@ -227,15 +186,11 @@ Before presenting the diff:
 - [ ] No content or claims deleted (only reworded)
 - [ ] Every change traceable to a specific principle or surface fix
 - [ ] Rewrite is shorter than or equal in length to original (never longer)
-- [ ] No new smarmy reframing, formulaic openers, or meta-commentary
-- [ ] No AI vocabulary (leverage, robust, nuanced, pivotal, etc.) in rewritten text
-- [ ] No padding phrases in rewritten text
+- [ ] Surface critic ran on all rewritten text — no violations remain
 - [ ] No results-first openings introduced
 - [ ] No missing causal mechanisms in result sentences
 - [ ] No inventory-style number lists
-- [ ] Sentence lengths vary across the rewritten passage
-- [ ] No verbatim or near-verbatim phrases recycled from other sections of the paper
+- [ ] No verbatim or near-verbatim phrases recycled from other sections
 - [ ] No claim overshoots the evidence — verb strength matches identification strategy
-- [ ] No new sentence exceeds ~40 words
 - [ ] No new paragraph exceeds ~200 words or ~10 sentences
 - [ ] Change summary table is complete and accurate

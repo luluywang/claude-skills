@@ -144,6 +144,8 @@ Flag the highest-priority issue; mention lower-priority issues briefly if presen
 
 **CRITICAL:** Original and Proposed Revision must show COMPLETE SENTENCES — never truncate mid-sentence. This enables batch application via `apply_marked.prompt`.
 
+**CRITICAL:** Proposed Revision text must itself be free of AI tells. Before writing any Proposed Revision, run the surface critic on it: read @prompts/shared/components/surface_critic.prompt and follow its procedure (proposal context). Fix any violations before writing the entry.
+
 ```markdown
 ### - [ ] Lines X-Y: [Brief description]
 
@@ -214,6 +216,7 @@ If `ai_detection` flags a pattern that `writing_quality` also addresses, `writin
 - [ ] Every flagged item has Dimension, Comment, Original, Proposed, Why better
 - [ ] Priority ordering respected: intellectual precision > mechanism > structure > focus
 - [ ] Proposed revisions are actionable rewrites, not vague advice
+- [ ] **Every Proposed Revision is itself clean** — surface critic ran on each
 - [ ] Math precision flags include what formula should replace the prose
 - [ ] No overlap with word_choice (individual word issues) or sentence_analysis (rhythm)
 - [ ] `references/writing_quality_standards.md` was read before analysis

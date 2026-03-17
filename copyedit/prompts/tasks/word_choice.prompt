@@ -111,6 +111,8 @@ Other tasks should NOT flag these issues.
 
 **CRITICAL:** Original and Proposed Revision must show COMPLETE SENTENCES — never truncate mid-sentence. This enables batch application via `apply_marked.prompt`.
 
+**CRITICAL:** Proposed Revision text must itself be free of AI tells. Before writing any Proposed Revision, run the surface critic on it: read @prompts/shared/components/surface_critic.prompt and follow its procedure (proposal context). Fix any violations before writing the entry.
+
 ```markdown
 ### - [ ] Lines X-Y: [Brief description]
 
@@ -151,3 +153,4 @@ Other tasks should NOT flag these issues.
 - [ ] Categories labeled
 - [ ] Full sentences shown
 - [ ] Organized by file in reading order
+- [ ] **Every Proposed Revision is itself clean** — surface critic ran on each

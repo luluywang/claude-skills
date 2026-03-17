@@ -102,19 +102,7 @@ Do exactly what the user asked. This is the primary goal. Examples:
 
 **Skip this step entirely if the task was classified as Surgical in Step 3.**
 
-After completing the task, scan every **new or changed sentence** against the surface fixes and AI tell patterns below. Do NOT re-edit unchanged sentences.
-
-**Surface fixes (always apply to changed text):**
-
-- **Em-dashes**: Remove `---` (LaTeX) and `--` used as punctuation. Restructure the sentence instead.
-- **Artificial colons**: Remove `CLAUSE: LONGER CLAUSE` constructions used as rhetorical setup. ("The result is clear: fees fall" → "Fees fall.")
-- **Transition openers**: Delete sentence-initial "Moreover," "Furthermore," "Additionally," "In contrast," "Notably," "Importantly" from any new sentence you wrote.
-- **Stacked hedges**: At most one hedge per claim in new text. Cut non-load-bearing hedges.
-- **Demonstrative pronouns**: Every "this"/"these"/"that"/"those" in new text must have a noun referent.
-
-Read `../references/writing_quality_standards.md` Sections III–IV for surface fix rules and the full AI tell pattern reference (Parts A, B, C). Check every new or changed sentence systematically against each category.
-
-**Sentence rhythm** (only if multiple new sentences added): vary length — not every sentence the same.
+Run the surface critic on all new or changed text: read @prompts/shared/components/surface_critic.prompt and follow its procedure (apply context).
 
 If no new text was added (e.g. pure deletion or pure relabeling), skip this step.
 
@@ -192,15 +180,10 @@ Before presenting the diff:
 - [ ] Task goal fully accomplished (not partially — re-examine if uncertain)
 - [ ] All LaTeX commands, labels, refs preserved (unless task required changing them)
 - [ ] No content or claims deleted beyond what the task requires
-- [ ] No new em-dashes, artificial colons, transition openers, or stacked hedges in new text
-- [ ] No smarmy reframing, formulaic openers, or meta-commentary in new text
-- [ ] No AI vocabulary (leverage, robust, nuanced, pivotal, etc.) in new text
-- [ ] No padding phrases in new text
+- [ ] Surface critic ran on all new/changed text — no violations remain
 - [ ] No results-first openings in newly added sentences
 - [ ] No missing causal mechanism in newly added result sentences
 - [ ] No inventory-style number lists in new text
-- [ ] If multiple new sentences added: sentence lengths vary
-- [ ] No new sentence exceeds ~40 words
 - [ ] No new paragraph exceeds ~200 words
 - [ ] If surgical task: diff contains ONLY the requested changes (zero prose edits)
 - [ ] Change summary table accurately reflects both task changes and principle fixes

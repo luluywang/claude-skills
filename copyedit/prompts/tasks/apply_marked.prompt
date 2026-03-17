@@ -111,6 +111,7 @@ For each target file:
    - Determine `new_string` based on LLM tagging:
      - If `llm_tagging: true` AND file is `.tex`: `new_string` = `\begin{llm}` + Proposed + `\end{llm}`
      - If `llm_tagging: false` OR file is not `.tex`: `new_string` = Proposed (unchanged)
+   - **Surface fix scan (before applying):** Run the surface critic on `new_string`: read @prompts/shared/components/surface_critic.prompt and follow its procedure (apply context). Fix violations in-place before the Edit call. Log any fixes in the summary under the item.
    - Use Edit tool: `old_string` = Original, `new_string` = (as determined above)
    - If Edit fails (text not found exactly), try with normalized whitespace
    - Log success or failure
@@ -202,6 +203,7 @@ If exact Original text not found, try:
 - [ ] Only `[x]` items WITHOUT `(applied)` processed
 - [ ] Items with `(applied)` or `[-]` skipped
 - [ ] Edits applied in reverse line order per file
+- [ ] **Surface critic ran on every `new_string` before applying** — no violations remain
 - [ ] Successfully applied items marked with `(applied)` suffix in markdown
 - [ ] All changes logged in summary
 - [ ] Failed edits reported with reason

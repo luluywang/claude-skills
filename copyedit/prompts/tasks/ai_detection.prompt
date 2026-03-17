@@ -59,6 +59,8 @@ When analyzing a file, append to BOTH `ai_detection.md` and `simplifications.md`
 
 **CRITICAL:** Original and Proposed Revision must show COMPLETE SENTENCES — never truncate mid-sentence. This enables batch application via `apply_marked.prompt`.
 
+**CRITICAL:** Proposed Revision text must itself be free of AI tells. Before writing any Proposed Revision, run the surface critic on it: read @prompts/shared/components/surface_critic.prompt and follow its procedure (proposal context). Fix any violations before writing the entry. The proposed revision cannot introduce the same class of errors it claims to fix.
+
 ```markdown
 ### - [ ] Lines X-Y: [Brief description] `[Critical|High|Medium|Low]`
 
@@ -109,6 +111,7 @@ After all files are processed and `ai_detection.md` is finalized, write `notes/a
 - [ ] Each flagged entry has a severity tier label (`Critical`, `High`, `Medium`, or `Low`)
 - [ ] Entries sorted by severity (Critical → High → Medium → Low) within each file section
 - [ ] Each item has Comment/Original/Proposed/Why better
+- [ ] **Every Proposed Revision is itself clean** — surface critic ran on each
 - [ ] Fixes are SUGGESTIONS only — not auto-applied to .tex files
 
 ### LLM Section Checklist

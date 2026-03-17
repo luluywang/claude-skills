@@ -1,0 +1,53 @@
+# Surface Critic
+
+**Purpose:** Single source of truth for the surface fix and AI tell check. Called from apply-context tasks (fix new/changed text before writing to .tex) and proposal-context tasks (fix proposed revision before writing to notes file).
+
+---
+
+## Authority
+
+Rules are defined in `../../../references/writing_quality_standards.md` Section III (Surface Fix Rules) and Section IV (AI Tell Pattern Reference, Parts A and B). Read those sections now. The standards file is authoritative.
+
+**Quick reference (non-exhaustive — Section III–IV governs):**
+- Em-dash removal: restructure sentence (period, comma, or subordinate clause)
+- Artificial colon removal: convert to direct statement
+- Transition opener removal: delete sentence-initial Moreover, Furthermore, Additionally, In contrast, Notably, Importantly
+- Hedging discipline: at most one hedge per claim; cut non-load-bearing hedges
+- Demonstrative discipline: bare this/these/that/those → add noun referent
+- AI vocabulary: replace leverage, robust, nuanced, pivotal, crucial, highlight, underscore, etc. with plain alternatives
+- Smarmy reframing: "It's not X, it's Y" and variants → direct statement
+- Sentence length: any sentence exceeding ~40 words → split
+- Paragraph length: any paragraph exceeding ~200 words / ~10 sentences → split
+
+---
+
+## Procedure
+
+### What to scan
+
+**Apply context** (task_edit, rewrite, apply_marked): every sentence in the new or changed text being written to the file. Do NOT scan unchanged surrounding text.
+
+**Proposal context** (ai_detection, word_choice, writing_quality): every sentence in the Proposed Revision before writing it to the notes file. The proposed revision cannot introduce the same class of errors it claims to fix.
+
+### How to check
+
+Work through Section III rules and Section IV Parts A and B systematically, sentence by sentence.
+
+### When a violation is found
+
+Fix it in-place. Restructure, substitute, or split as the rule specifies. Do not flag-and-skip.
+
+### Reporting (apply context only)
+
+If any fixes were made, log them in the change summary: "Surface fix: [what] in sentence [N]."
+If no violations found, no entry needed.
+
+### Sentence rhythm (apply context, multi-sentence output only)
+
+After fixing violations, confirm sentence lengths vary. If every new sentence is the same length, vary one or two.
+
+---
+
+## Scope limit
+
+This critic covers surface rules only (Sections III–IV Parts A–B). Argument quality — results-first openings, missing causal mechanism, inventory-style numbers, claims overshooting evidence (Part C) — belongs to the writing_quality task.
