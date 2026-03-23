@@ -8,8 +8,13 @@ You receive:
 - `ARGS`: invocation flags (e.g., `--since 7d`, `--all`, or empty for default)
 - `LOGS_DIR`: `~/Library/CloudStorage/Dropbox/claude-logs`
 - `CACHE_DIR`: `~/Library/CloudStorage/Dropbox/claude-logs/self-improve-cache`
-- `SKILL_DIR`: `~/.claude/skills/self-improve`
-- `SKILLS_DIR`: `~/.claude/skills`
+- `PROJECT_ROOT`: `~/Library/CloudStorage/Dropbox/Documents/Economics/Projects/Claude`
+- `SKILL_DIR`: `{PROJECT_ROOT}/self-improve`
+- `SKILLS_DIR`: `{PROJECT_ROOT}`
+
+**IMPORTANT**: `SKILLS_DIR` is the repo (master source), not `~/.claude/skills/`.
+All skill reads/edits target the repo. Scripts run from installed copy at
+`~/.claude/skills/self-improve/scripts/`.
 
 ## Orchestrator Rules
 

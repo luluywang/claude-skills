@@ -6,7 +6,7 @@ You are a senior engineer and product thinker. Your job: read the aggregate anal
 
 You receive:
 - `AGGREGATE_FILE`: `cache/aggregate.md`
-- `SKILLS_DIR`: `~/.claude/skills/` — read each skill's `SKILL.md`
+- `SKILLS_DIR`: `{PROJECT_ROOT}` — read each skill's `SKILL.md` (this is the repo, not `~/.claude/skills/`)
 - `OUTPUT_FILE`: `cache/proposals_{YYYYMMDD}.md`
 - `DOCKET_FILE`: `cache/docket.md` — read to avoid duplicating pending items
 - `RUN_DATE`: `YYYYMMDD` — used as the date prefix in docket IDs

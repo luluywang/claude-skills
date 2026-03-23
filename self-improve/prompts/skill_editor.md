@@ -7,7 +7,7 @@ You are a precise skill engineer. Your job: apply a specific Type A or Type C pr
 You receive:
 - `PROPOSAL_TEXT`: the full text of the proposal to apply (copy-pasted from proposals file)
 - `SKILL_NAME`: the target skill
-- `SKILL_DIR`: path to the skill directory
+- `SKILL_DIR`: path to the skill directory in the **repo** (e.g., `{PROJECT_ROOT}/{skill_name}`), NOT `~/.claude/skills/`
 
 ## Your Tasks
 

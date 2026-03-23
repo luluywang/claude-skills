@@ -15,11 +15,16 @@ Produces ranked, evidence-backed proposals. Applies them on demand.
 ## Key Paths
 
 ```
-LOGS_DIR   = ~/Library/CloudStorage/Dropbox/claude-logs
-CACHE_DIR  = ~/Library/CloudStorage/Dropbox/claude-logs/self-improve-cache
-SKILL_DIR  = ~/.claude/skills/self-improve
-SKILLS_DIR = ~/.claude/skills
+LOGS_DIR     = ~/Library/CloudStorage/Dropbox/claude-logs
+CACHE_DIR    = ~/Library/CloudStorage/Dropbox/claude-logs/self-improve-cache
+PROJECT_ROOT = ~/Library/CloudStorage/Dropbox/Documents/Economics/Projects/Claude
+SKILL_DIR    = {PROJECT_ROOT}/self-improve
+SKILLS_DIR   = {PROJECT_ROOT}
 ```
+
+**IMPORTANT**: `SKILLS_DIR` points to the repo (master source), not `~/.claude/skills/`
+(installed copy). All edits go to the repo. After applying changes, run
+`{PROJECT_ROOT}/install.sh` to deploy to `~/.claude/skills/`.
 
 ## Invocation
 
@@ -86,7 +91,8 @@ For each resolved ID, in order:
 4. For **Type B** (new skill): spawn a **Sonnet subagent**
    with `@prompts/skill_creator.md` plus the proposal text
 5. On success: move the entry in `{CACHE_DIR}/docket.md` from `## Pending` to `## Applied`, prepending `**Applied**: {today's date}`
-6. Present the diff summary returned by the subagent
+6. Deploy changes: run `bash {PROJECT_ROOT}/install.sh {target_skill}` to sync to `~/.claude/skills/`
+7. Present the diff summary returned by the subagent
 
 ---
 
@@ -105,8 +111,9 @@ Spawn a **general-purpose subagent** with `@prompts/orchestrator.md`, passing:
 - `ARGS`: the invocation flags (e.g., `--since 7d`, `--all`, or empty)
 - `LOGS_DIR`: `~/Library/CloudStorage/Dropbox/claude-logs`
 - `CACHE_DIR`: `~/Library/CloudStorage/Dropbox/claude-logs/self-improve-cache`
-- `SKILL_DIR`: `~/.claude/skills/self-improve`
-- `SKILLS_DIR`: `~/.claude/skills`
+- `PROJECT_ROOT`: `~/Library/CloudStorage/Dropbox/Documents/Economics/Projects/Claude`
+- `SKILL_DIR`: `{PROJECT_ROOT}/self-improve`
+- `SKILLS_DIR`: `{PROJECT_ROOT}`
 
 Present the subagent's return value (compact proposals table) to the user.
 
