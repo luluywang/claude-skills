@@ -199,6 +199,18 @@ The orchestrator coordinates — it does NOT do the work itself.
 ### If you're tempted to read the response doc, referee reports, or manuscript:
 STOP. You're probably in extract/profile/audit/fix phase and should spawn the appropriate subagent instead.
 
+## Script Path Resolution
+
+All script paths use `$PROJECT_ROOT` which resolves to the git repo root. Since shell
+state does not persist between Bash tool calls, **every script invocation must inline
+the resolution**:
+
+```bash
+PROJECT_ROOT="$(git rev-parse --show-toplevel)" && bash "$PROJECT_ROOT/revisions/scripts/<name>.sh" [args]
+```
+
+Every code block below follows this pattern.
+
 ## Bootstrap Phase (Always First)
 
 On every invocation, run the bootstrap script to detect the current phase.
@@ -206,7 +218,7 @@ On every invocation, run the bootstrap script to detect the current phase.
 ### Run bootstrap script
 
 ```bash
-bash revisions/scripts/bootstrap.sh
+PROJECT_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)" && bash "$PROJECT_ROOT/revisions/scripts/bootstrap.sh"
 ```
 
 Returns JSON:
@@ -307,7 +319,7 @@ Note: `manuscript`, `appendix`, and `bib` are arrays to support multi-file proje
 
 Update status:
 ```bash
-bash revisions/scripts/status.sh extract
+PROJECT_ROOT="$(git rev-parse --show-toplevel)" && bash "$PROJECT_ROOT/revisions/scripts/status.sh" extract
 ```
 
 ## Extract Phase (Single Sonnet Subagent)
@@ -345,7 +357,7 @@ Your job:
 1. Output summary: "Extracted N claims (X verifiable, Y unverifiable) — AE letter: yes/no"
 2. Update status:
 ```bash
-bash revisions/scripts/status.sh profile
+PROJECT_ROOT="$(git rev-parse --show-toplevel)" && bash "$PROJECT_ROOT/revisions/scripts/status.sh" profile
 ```
 
 ## Profile Phase (Single Opus Subagent)
@@ -380,7 +392,7 @@ Your job:
 1. Output summary: "Profiled N referees (swing: RefX). Sources: referee_reports|response_doc_comments. Soul files: current/souls/"
 2. Update status:
 ```bash
-bash revisions/scripts/status.sh strategy
+PROJECT_ROOT="$(git rev-parse --show-toplevel)" && bash "$PROJECT_ROOT/revisions/scripts/status.sh" strategy
 ```
 
 ## Strategy Phase (Single Opus Subagent)
@@ -433,7 +445,7 @@ If user chooses to stop: do NOT advance status. Inform user they can resume with
 
 4. **Otherwise (normal run)**: Advance status automatically:
 ```bash
-bash revisions/scripts/status.sh audit
+PROJECT_ROOT="$(git rev-parse --show-toplevel)" && bash "$PROJECT_ROOT/revisions/scripts/status.sh" audit
 ```
 
 ## Audit Phase (Single Sonnet Subagent)
@@ -467,11 +479,11 @@ Your job:
 1. Output summary: "Audit complete: N found, M missing, P partial, T unverifiable"
 2. If `missing + partial == 0`: Skip fix phase, go directly to review
    ```bash
-   bash revisions/scripts/status.sh review
+   PROJECT_ROOT="$(git rev-parse --show-toplevel)" && bash "$PROJECT_ROOT/revisions/scripts/status.sh" review
    ```
 3. Otherwise: Proceed to fix phase
    ```bash
-   bash revisions/scripts/status.sh fix
+   PROJECT_ROOT="$(git rev-parse --show-toplevel)" && bash "$PROJECT_ROOT/revisions/scripts/status.sh" fix
    ```
 
 ## Fix Phase (Fixer-Critic Loop)
@@ -488,7 +500,7 @@ The fix phase uses an iterative loop: fixer makes edits, critic re-audits, repea
 
 On first entry to fix phase (fix_state.json doesn't exist yet):
 ```bash
-bash revisions/scripts/fix_loop.sh init
+PROJECT_ROOT="$(git rev-parse --show-toplevel)" && bash "$PROJECT_ROOT/revisions/scripts/fix_loop.sh" init
 ```
 
 Returns: `{initialized: true, issues_initial: N, max_iterations: 5}`
@@ -497,12 +509,12 @@ Returns: `{initialized: true, issues_initial: N, max_iterations: 5}`
 
 At the start of each iteration:
 ```bash
-bash revisions/scripts/fix_loop.sh status
+PROJECT_ROOT="$(git rev-parse --show-toplevel)" && bash "$PROJECT_ROOT/revisions/scripts/fix_loop.sh" status
 ```
 
 If `should_stop: true`:
 - Present stop reason to user
-- Move to review: `bash revisions/scripts/status.sh review`
+- Move to review: `PROJECT_ROOT="$(git rev-parse --show-toplevel)" && bash "$PROJECT_ROOT/revisions/scripts/status.sh" review`
 
 If `should_stop: false`: continue to fixer.
 
@@ -576,14 +588,14 @@ Your job:
 
 After critic returns, record the result:
 ```bash
-bash revisions/scripts/fix_loop.sh next {issues_remaining}
+PROJECT_ROOT="$(git rev-parse --show-toplevel)" && bash "$PROJECT_ROOT/revisions/scripts/fix_loop.sh" next {issues_remaining}
 ```
 
 ### Step 6: Check Stopping or Continue
 
 Check the loop status:
 ```bash
-bash revisions/scripts/fix_loop.sh status
+PROJECT_ROOT="$(git rev-parse --show-toplevel)" && bash "$PROJECT_ROOT/revisions/scripts/fix_loop.sh" status
 ```
 
 **Stopping conditions:**
@@ -593,7 +605,7 @@ bash revisions/scripts/fix_loop.sh status
 
 If stopped:
 ```bash
-bash revisions/scripts/status.sh review
+PROJECT_ROOT="$(git rev-parse --show-toplevel)" && bash "$PROJECT_ROOT/revisions/scripts/status.sh" review
 ```
 
 If not stopped: loop back to Step 3 (fixer).
@@ -635,12 +647,12 @@ When the phase is `review`:
 
 If user accepts:
 ```bash
-bash revisions/scripts/status.sh complete
+PROJECT_ROOT="$(git rev-parse --show-toplevel)" && bash "$PROJECT_ROOT/revisions/scripts/status.sh" complete
 ```
 
 If user wants another iteration:
 ```bash
-bash revisions/scripts/status.sh fix
+PROJECT_ROOT="$(git rev-parse --show-toplevel)" && bash "$PROJECT_ROOT/revisions/scripts/status.sh" fix
 ```
 Then re-enter the fix loop.
 
