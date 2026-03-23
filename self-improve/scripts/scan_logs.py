@@ -19,8 +19,8 @@ import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-LOGS_DIR = Path("/Users/luluywang/Library/CloudStorage/Dropbox/claude-logs")
-CACHE_DIR = Path("/Users/luluywang/Library/CloudStorage/Dropbox/claude-logs/self-improve-cache")
+LOGS_DIR = Path.home() / "Library/CloudStorage/Dropbox/claude-logs"
+CACHE_DIR = Path.home() / "Library/CloudStorage/Dropbox/claude-logs/self-improve-cache"
 MANIFEST_PATH = CACHE_DIR / "manifest.json"
 MIN_SIZE_KB = 10
 EXCLUDE_DIRS = {"self-improve-cache", "config", ".claude"}

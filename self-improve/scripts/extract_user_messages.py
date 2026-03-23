@@ -59,7 +59,9 @@ def main():
                 # Handle both top-level message objects and nested formats
                 msg = None
                 if isinstance(record, dict):
-                    if record.get("type") == "user":
+                    if record.get("type") == "user" and "message" in record:
+                        msg = record["message"]
+                    elif record.get("type") == "user":
                         msg = record
                     elif "message" in record and isinstance(record["message"], dict):
                         inner = record["message"]

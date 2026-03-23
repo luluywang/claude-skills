@@ -21,7 +21,7 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-CACHE_DIR = Path("/Users/luluywang/Library/CloudStorage/Dropbox/claude-logs/self-improve-cache")
+CACHE_DIR = Path.home() / "Library/CloudStorage/Dropbox/claude-logs/self-improve-cache"
 MANIFEST_PATH = CACHE_DIR / "manifest.json"
 
 

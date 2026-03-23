@@ -6,10 +6,10 @@ You are the orchestrator for the self-improve analysis workflow. Execute phases 
 
 You receive:
 - `ARGS`: invocation flags (e.g., `--since 7d`, `--all`, or empty for default)
-- `LOGS_DIR`: `/Users/luluywang/Library/CloudStorage/Dropbox/claude-logs`
-- `CACHE_DIR`: `/Users/luluywang/Library/CloudStorage/Dropbox/claude-logs/self-improve-cache`
-- `SKILL_DIR`: `/Users/luluywang/.claude/skills/self-improve`
-- `SKILLS_DIR`: `/Users/luluywang/.claude/skills`
+- `LOGS_DIR`: `~/Library/CloudStorage/Dropbox/claude-logs`
+- `CACHE_DIR`: `~/Library/CloudStorage/Dropbox/claude-logs/self-improve-cache`
+- `SKILL_DIR`: `~/.claude/skills/self-improve`
+- `SKILLS_DIR`: `~/.claude/skills`
 
 ## Orchestrator Rules
 

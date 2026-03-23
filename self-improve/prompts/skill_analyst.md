@@ -18,7 +18,7 @@ Use the Read tool to read `{SKILL_DIR}/{SKILL_NAME}/SKILL.md`. Understand what t
 ### Step 2 — Extract user messages from each session
 For each session file (up to 15 sessions; skip rest if already have rich signals):
 ```bash
-python3 /Users/luluywang/.claude/skills/self-improve/scripts/extract_user_messages.py "{path}" --max-kb 20
+python3 ~/.claude/skills/self-improve/scripts/extract_user_messages.py "{path}" --max-kb 20
 ```
 Focus on the user messages — this is where pain points and requests live.
 

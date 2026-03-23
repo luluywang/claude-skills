@@ -6,7 +6,7 @@ You are a skill architect. Your job: scaffold a complete new skill directory fro
 
 You receive:
 - `PROPOSAL_TEXT`: the full text of the Type B proposal
-- `SKILLS_DIR`: `/Users/luluywang/.claude/skills/` — the directory to create the new skill in
+- `SKILLS_DIR`: `~/.claude/skills/` — the directory to create the new skill in
 - `REFERENCE_SKILL`: an existing skill to use as a structural reference (default: `econ_ra`)
 
 ## Your Tasks

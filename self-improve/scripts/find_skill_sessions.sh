@@ -20,12 +20,12 @@ import sys
 from pathlib import Path
 
 LOGS_DIR = Path(sys.argv[1]) if len(sys.argv) > 1 else \
-    Path("/Users/luluywang/Library/CloudStorage/Dropbox/claude-logs")
+    Path.home() / "Library/CloudStorage/Dropbox/claude-logs"
 
-MANIFEST_PATH = Path("/Users/luluywang/Library/CloudStorage/Dropbox/claude-logs/self-improve-cache/manifest.json")
+MANIFEST_PATH = Path.home() / "Library/CloudStorage/Dropbox/claude-logs/self-improve-cache/manifest.json"
 
 # Claude project directory — sessions with this cwd are "construction" sessions.
-CLAUDE_PROJECT_DIR = "/Users/luluywang/Library/CloudStorage/Dropbox/Documents/Economics/Projects/Claude"
+CLAUDE_PROJECT_DIR = str(Path.home() / "Library/CloudStorage/Dropbox/Documents/Economics/Projects/Claude")
 
 SKILLS = ["econ_ra", "copyedit", "parsepdf", "revisions", "taskmaster"]
 

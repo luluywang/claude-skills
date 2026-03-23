@@ -14,7 +14,7 @@ You receive:
 ### Step 1 — Extract user messages from each session
 For each session file:
 ```bash
-python3 /Users/luluywang/.claude/skills/self-improve/scripts/extract_user_messages.py "{path}" --max-kb 20
+python3 ~/.claude/skills/self-improve/scripts/extract_user_messages.py "{path}" --max-kb 20
 ```
 
 ### Step 2 — Classify each session

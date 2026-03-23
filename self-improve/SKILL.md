@@ -15,10 +15,10 @@ Produces ranked, evidence-backed proposals. Applies them on demand.
 ## Key Paths
 
 ```
-LOGS_DIR   = /Users/luluywang/Library/CloudStorage/Dropbox/claude-logs
-CACHE_DIR  = /Users/luluywang/Library/CloudStorage/Dropbox/claude-logs/self-improve-cache
-SKILL_DIR  = /Users/luluywang/.claude/skills/self-improve
-SKILLS_DIR = /Users/luluywang/.claude/skills
+LOGS_DIR   = ~/Library/CloudStorage/Dropbox/claude-logs
+CACHE_DIR  = ~/Library/CloudStorage/Dropbox/claude-logs/self-improve-cache
+SKILL_DIR  = ~/.claude/skills/self-improve
+SKILLS_DIR = ~/.claude/skills
 ```
 
 ## Invocation
@@ -103,10 +103,10 @@ Report files compressed and MB freed.
 
 Spawn a **general-purpose subagent** with `@prompts/orchestrator.md`, passing:
 - `ARGS`: the invocation flags (e.g., `--since 7d`, `--all`, or empty)
-- `LOGS_DIR`: `/Users/luluywang/Library/CloudStorage/Dropbox/claude-logs`
-- `CACHE_DIR`: `/Users/luluywang/Library/CloudStorage/Dropbox/claude-logs/self-improve-cache`
-- `SKILL_DIR`: `/Users/luluywang/.claude/skills/self-improve`
-- `SKILLS_DIR`: `/Users/luluywang/.claude/skills`
+- `LOGS_DIR`: `~/Library/CloudStorage/Dropbox/claude-logs`
+- `CACHE_DIR`: `~/Library/CloudStorage/Dropbox/claude-logs/self-improve-cache`
+- `SKILL_DIR`: `~/.claude/skills/self-improve`
+- `SKILLS_DIR`: `~/.claude/skills`
 
 Present the subagent's return value (compact proposals table) to the user.
 
