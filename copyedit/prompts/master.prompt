@@ -395,6 +395,7 @@ Generate all (file, task) pairs based on request and file scope.
 |------|-------|-------------|
 | grammar | haiku | notes/copy_edits.md |
 | ai_detection | haiku | notes/ai_detection.md, notes/simplifications.md |
+| (wrapup) | haiku | notes/review_digest.md |
 | word_choice | haiku | notes/word_choice_review.md |
 | sentence_analysis | haiku | notes/sentence_analysis.md |
 | strip_llm | haiku | (no output file - modifies .tex directly) |

@@ -100,7 +100,7 @@ Rewrites a section directly in the orchestrator context. No subagents, no notes 
 | Task | Output | Description |
 |------|--------|-------------|
 | `grammar` | notes/copy_edits.md | Auto-fix spelling, punctuation, syntax errors |
-| `ai_detection` | notes/ai_detection.md, notes/ai_detection_issues.md, notes/simplifications.md | Flag AI-generated patterns; severity-sorted; issues-only file auto-generated |
+| `ai_detection` | notes/ai_detection.md, notes/simplifications.md | Flag AI-generated patterns; severity-sorted |
 | `word_choice` | notes/word_choice_review.md | Anglo-Saxon over Latin, weak verbs, wordiness |
 | `sentence` | notes/sentence_analysis.md | Length variation, rhythm, S-V-O clarity |
 
@@ -147,7 +147,7 @@ Every flagged entry in `ai_detection.md` carries one of four severity labels. Ou
 /copyedit ai_detection --only-issues *.tex
 ```
 
-Suppresses entries where the verdict is "pass" or "no issues found." The full `ai_detection.md` is always written. The wrapup step always generates `ai_detection_issues.md` as an issues-only filtered view regardless of whether the flag is used.
+Suppresses entries where the verdict is "pass" or "no issues found." The full `ai_detection.md` is always written regardless of this flag.
 
 ### Resume Behavior
 
@@ -236,13 +236,13 @@ paper/
     ├── tasks.json
     ├── copy_edits.md               # Grammar log (auto-applied)
     ├── ai_detection.md             # AI pattern flags (full, severity-sorted)
-    ├── ai_detection_issues.md      # Issues-only view (passes suppressed, severity-sorted)
     ├── simplifications.md          # Style suggestions
     ├── word_choice_review.md
     ├── sentence_analysis.md
     ├── structure_analysis.md
     ├── flow_extraction.md
     ├── writing_quality.md
+    ├── review_digest.md            # Consolidated view: severity → file (generated at wrapup)
     └── number_fix_report.md        # Number annotation/update log (opt-in)
 ```
 
@@ -360,7 +360,7 @@ Output: Auto-corrected `paper.tex` + `notes/copy_edits.md` log
 /copyedit ai_detection *.tex
 ```
 
-Output: `notes/ai_detection.md`, `notes/ai_detection_issues.md`, and `notes/simplifications.md`
+Output: `notes/ai_detection.md` and `notes/simplifications.md`
 
 ### Example 2a: AI Detection — Issues Only
 
@@ -368,7 +368,7 @@ Output: `notes/ai_detection.md`, `notes/ai_detection_issues.md`, and `notes/simp
 /copyedit ai_detection --only-issues *.tex
 ```
 
-Suppresses entries where the agent's verdict is "pass" or "no issues found." The raw `ai_detection.md` is still written; only the console output and `ai_detection_issues.md` reflect the filtered view. Entries are sorted by severity (Critical → High → Medium → Low).
+Suppresses entries where the agent's verdict is "pass" or "no issues found." The raw `ai_detection.md` is still written; only the console output reflects the filtered view. Entries are sorted by severity (Critical → High → Medium → Low).
 
 ### Example 3: Full Paper Review
 

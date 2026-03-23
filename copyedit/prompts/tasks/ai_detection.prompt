@@ -9,7 +9,6 @@
 
 **Output:**
 - `notes/ai_detection.md` — Pattern identification (what was found), severity-sorted
-- `notes/ai_detection_issues.md` — Issues-only filtered view (passes suppressed), severity-sorted
 - `notes/simplifications.md` — Suggested fixes (stylistic, NOT auto-applied)
 
 **Output Mode:** APPEND — do not overwrite existing content
@@ -20,7 +19,7 @@
 
 ## Flags
 
-**`--only-issues`**: When this flag is passed, suppress all entries where the verdict is "pass" or "no issues found." Output only entries with actionable flags. The wrapup step always generates `ai_detection_issues.md` as an issues-only filtered view regardless of this flag.
+**`--only-issues`**: When this flag is passed, suppress all entries where the verdict is "pass" or "no issues found." Output only entries with actionable flags.
 
 ---
 
@@ -30,7 +29,7 @@ Read `../references/writing_quality_standards.md` Sections II–IV for the LLM-v
 
 ## Section Format
 
-When analyzing a file, append to BOTH `ai_detection.md` and `simplifications.md`. After processing all files, also write `ai_detection_issues.md` (see Wrapup below).
+When analyzing a file, append to BOTH `ai_detection.md` and `simplifications.md`.
 
 **ai_detection.md:**
 ```markdown
@@ -81,28 +80,9 @@ When analyzing a file, append to BOTH `ai_detection.md` and `simplifications.md`
 
 ---
 
-## Wrapup: Generate Issues-Only File
-
-After all files are processed and `ai_detection.md` is finalized, write `notes/ai_detection_issues.md`:
-
-1. Copy the full contents of `ai_detection.md`.
-2. Remove any file section (`## [filename.tex]`) where every checklist item would be filtered out.
-3. Within remaining sections, remove any tier heading (Critical / High / Medium / Low) that contains no entries.
-4. Remove any entry where the brief description or Comment indicates "pass", "no issues found", "clean", or "none detected."
-5. The result is a curated, issues-only view sorted by severity — ready for action without manual cleanup.
-
-**Header for `ai_detection_issues.md`:**
-```markdown
-# AI Detection — Issues Only
-<!-- Auto-generated: passes and clean sections suppressed. Source: ai_detection.md -->
-```
-
----
-
 ## Quality Control
 
 - [ ] `ai_detection.md`: Pattern identification appended (not overwritten)
-- [ ] `ai_detection_issues.md`: Issues-only file written during wrapup
 - [ ] `simplifications.md`: Suggested fixes appended (not overwritten)
 - [ ] Section header `## [filename.tex]` in both files
 - [ ] Part A (punctuation/structure) comprehensive

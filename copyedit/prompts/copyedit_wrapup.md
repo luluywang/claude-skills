@@ -16,9 +16,10 @@ Load:
 
 1. Verify all tasks complete
 2. Run deduplication across output files
-3. Mark status complete
-4. Generate summary for user
-5. Return to orchestrator
+3. Generate review digest (severity-sorted consolidated view)
+4. Mark status complete
+5. Generate summary for user
+6. Return to orchestrator
 
 ---
 
@@ -41,9 +42,9 @@ If any entry is still `pending` or `in_progress`:
 Scan these files if they exist:
 - `notes/ai_detection.md`
 - `notes/simplifications.md`
+- `notes/writing_quality.md`
 - `notes/word_choice_review.md`
 - `notes/sentence_analysis.md`
-- `notes/writing_quality.md`
 
 ### Identify Duplicates
 
@@ -89,7 +90,74 @@ Add summary at end of each cleaned file:
 
 ---
 
-## Step 3: Mark Complete
+## Step 3: Generate Review Digest
+
+After deduplication, create `notes/review_digest.md` — a single consolidated view of all actionable items across every checklist file, reorganized by severity then by file.
+
+### Process
+
+1. Read all deduplicated checklist files (`ai_detection.md`, `simplifications.md`, `word_choice_review.md`, `sentence_analysis.md`, `writing_quality.md`).
+2. Extract every checklist item (`### - [ ] Lines X-Y: ...`).
+3. Determine severity for each item:
+   - `ai_detection.md` items already carry explicit severity labels (`Critical`, `High`, `Medium`, `Low`).
+   - For items from other tasks, assign severity based on impact:
+     - **Critical:** Factual errors, logical gaps, missing causal mechanisms, claims that overshoot evidence
+     - **High:** Substantial rewrites needed — paragraph-level focus problems, repeated patterns (2+ instances), misleading framing
+     - **Medium:** Individual word/phrase improvements, moderate structural issues, single-instance style problems
+     - **Low:** Minor polish, optional alternatives, subjective preferences
+4. Skip items that are passes ("no issues found", "clean", "none detected").
+5. Write to `notes/review_digest.md` using the format below.
+
+### Output Format
+
+```markdown
+# Review Digest
+<!-- Consolidated from all task output files. Sorted: severity → file. -->
+<!-- Source files preserved in notes/ for full context. -->
+
+## Critical
+
+### [filename.tex]
+
+#### - [ ] Lines X-Y: [Brief description] `Critical`
+**Source:** ai_detection.md
+**Comment:** [Why this is problematic]
+**Original:**
+```
+[text]
+```
+**Proposed Revision:**
+```
+[text]
+```
+
+### [other_file.tex]
+...
+
+## High
+
+### [filename.tex]
+...
+
+## Medium
+...
+
+## Low
+...
+```
+
+### Rules
+
+- Include **every** actionable checklist item from every file (not just ai_detection)
+- Preserve the full item content (Comment, Original, Proposed Revision, Why better) — do not summarize
+- Add a `**Source:** filename.md` line to each item so the reader can trace it back
+- Omit any severity tier heading that has no entries
+- Within a severity tier, order files alphabetically
+- Within a file, preserve document order (by line number)
+
+---
+
+## Step 4: Mark Complete
 
 ```bash
 echo "complete" > notes/.copyedit_status
@@ -97,7 +165,7 @@ echo "complete" > notes/.copyedit_status
 
 ---
 
-## Step 4: Generate Summary
+## Step 5: Generate Summary
 
 Create a summary for the orchestrator to present:
 
@@ -126,13 +194,14 @@ Create a summary for the orchestrator to present:
 - [etc. for each file that exists]
 
 ### Recommended Next Steps
-1. Review suggestions in simplifications.md
-2. Run interactive review to accept/reject changes
+1. Start with `review_digest.md` — all issues consolidated by severity
+2. Check individual task files for full context if needed
+3. Run interactive review to accept/reject changes
 ```
 
 ---
 
-## Step 5: Return to Orchestrator
+## Step 6: Return to Orchestrator
 
 ```
 status: wrapup_complete
@@ -151,6 +220,7 @@ output_files: [list]
 ## Rules
 
 - **DO**: Run deduplication on all checklist files
+- **DO**: Generate review digest after deduplication
 - **DO**: Mark status complete
 - **DO**: Generate summary
 - **DO NOT**: Ask user questions

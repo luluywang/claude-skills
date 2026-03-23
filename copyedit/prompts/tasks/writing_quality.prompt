@@ -26,7 +26,7 @@ When analyzing a file, append:
 
 ---
 
-## The 9 Dimensions
+## The 10 Dimensions
 
 Assess each paragraph against these dimensions. Not every dimension applies to every paragraph — flag only genuine issues.
 
@@ -120,6 +120,45 @@ Assess each paragraph against these dimensions. Not every dimension applies to e
 - Causal language when identification is correlational
 - Absolute claims ("never," "always") when evidence is partial
 
+### 10. Within-Paragraph Flow (Principles #2, #4, #5)
+
+**Check:** Does the sentence sequence within the paragraph build a coherent causal chain? Can a reader follow the argument step-by-step without backtracking?
+
+This dimension operates at the "meso" level — between sentence-level mechanics (rhythm, grammar) and macro-level structure (section ordering, paper flow). It examines whether each sentence follows logically from the previous one within a single paragraph.
+
+**Argument types to identify:**
+- **Mechanism:** premise → step 1 → step 2 → conclusion
+- **Claim-Evidence:** claim → evidence → interpretation
+- **Concession-Response:** acknowledge concern → explain why it doesn't bite → conclude
+- **Problem-Solution:** state problem → explain constraints → present solution → verify it works
+
+**Issue types:**
+
+| Issue | Description |
+|-------|-------------|
+| **Missing link** | Conclusion asserted without the chain connecting premises to it |
+| **Ordering** | Result/conclusion appears before the mechanism that earns it |
+| **Connector misuse** | "But," "however," "therefore" signals a logical relationship that doesn't hold |
+| **Direction reversal** | Paragraph undercuts its own argument (evidence → caveat → re-assertion without resolving the caveat) |
+| **Shared premise buried** | Two sub-arguments depend on the same concept, but it's introduced only in the first — the second dangles |
+| **Dead zone** | Throat-clearing or road-map sentences that break the causal chain without advancing the argument |
+
+**Diagnostic method:** Map the paragraph's sentence-by-sentence flow as a numbered chain, then check:
+1. Does each sentence build on the previous one (given → new information)?
+2. Are there logical jumps where a bridging sentence is missing?
+3. Is the conclusion *earned* by the preceding steps, or asserted before the chain completes?
+4. Do connectors ("but," "therefore," "however") accurately describe the logical relationship?
+
+**Output for this dimension includes a "Current paragraph flow" map:**
+```
+1. [What sentence 1 does] ← [annotation if problematic]
+2. [What sentence 2 does]
+3. [What sentence 3 does] ← HERE (conclusion before mechanism)
+4. [What sentence 4 does]
+```
+
+Followed by a "Proposed reordering" that fixes the chain, then the concrete revision.
+
 ---
 
 ## Priority Ordering
@@ -129,12 +168,13 @@ When multiple issues overlap in the same paragraph, prioritize in this order:
 1. **Intellectual precision** — wrong characterization of results/assumptions
 2. **Evidence-claim alignment** — claims overshooting the identification strategy
 3. **Missing mechanism** — *what* without *why*
-4. **False structure** — sequential framing of joint estimation, conflated mechanisms
-5. **Unfocused paragraph** — doing too much
-6. **Hand-waved math** — prose where formulas should be
-7. **Inventorial numbers** — list of numbers not serving as evidence
-8. **Missing motivation** — no tension before result
-9. **Throat-clearing** — meta-commentary, lecturing, over-explanation
+4. **Broken causal chain** — conclusion before mechanism, missing links, connector misuse within a paragraph
+5. **False structure** — sequential framing of joint estimation, conflated mechanisms
+6. **Unfocused paragraph** — doing too much
+7. **Hand-waved math** — prose where formulas should be
+8. **Inventorial numbers** — list of numbers not serving as evidence
+9. **Missing motivation** — no tension before result
+10. **Throat-clearing** — meta-commentary, lecturing, over-explanation
 
 Flag the highest-priority issue; mention lower-priority issues briefly if present.
 
@@ -149,7 +189,7 @@ Flag the highest-priority issue; mention lower-priority issues briefly if presen
 ```markdown
 ### - [ ] Lines X-Y: [Brief description]
 
-**Dimension:** [Which of the 9 dimensions]
+**Dimension:** [Which of the 10 dimensions]
 
 **Comment:** [Why this paragraph falls short]
 
