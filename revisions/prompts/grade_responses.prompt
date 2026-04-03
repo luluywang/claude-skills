@@ -1,0 +1,143 @@
+# Grade Responses Task
+
+**Purpose:** Grade the quality and coherence of the user's referee responses on a specific thematic point. Identify which responses are strong, which are weak, and where the argument could be tightened or made more consistent across sections.
+
+---
+
+## Input
+
+- **Response document:** Path from `current/config.json` → `response_doc` (or user-specified path)
+- **Manuscript files:** Paths from `current/config.json` → `manuscript`, `appendix` (or user-specified)
+- **Theme:** A specific thematic point or argument the user wants graded (e.g., "substitution assumption", "welfare decomposition", "identification strategy")
+- **Referee soul documents** (optional): `current/souls/{key}_soul.md` if available from a prior `/revisions` run
+- **Writing standards:** Read `revisions/prompts/components/writing_quality.prompt`
+
+## Task
+
+Grade every response passage that touches the specified theme. The goal is to help the author see which responses are strong and which need work — and to identify how to carry the best version of the argument throughout.
+
+### Step 1: Read All Relevant Material
+
+1. Read the response document end to end
+2. Read the manuscript sections referenced by the thematic responses
+3. If soul documents exist, read them for context on what each referee cares about
+
+### Step 2: Extract Theme-Relevant Passages
+
+Find every passage in the response document that touches the theme. This includes:
+- Direct responses to referee comments on this topic
+- Passages where the theme is invoked as supporting evidence for another point
+- Summary-of-changes entries that reference this theme
+
+For each passage, record:
+- Location (referee section + comment number, e.g., "R1-M3", "Editor-2")
+- The verbatim text (or a clear excerpt if long)
+- What the passage is trying to accomplish
+
+### Step 3: Grade Each Passage
+
+For each passage, assign a letter grade (A/B/C/D/F) on each dimension:
+
+| Dimension | What It Measures |
+|-----------|-----------------|
+| **Clarity** | Does the reader immediately understand the point? |
+| **Precision** | Are claims specific and verifiable, not vague? |
+| **Persuasiveness** | Would this convince a skeptical referee? |
+| **Consistency** | Does it align with how the theme is treated elsewhere? |
+| **Writing quality** | Per writing_quality.prompt standards — no AI tells, terse, concrete |
+
+Also assign an **overall grade** that reflects the passage's effectiveness as a referee response.
+
+### Step 4: Identify the Strongest Version
+
+Across all passages, identify:
+1. **The best articulation** of the theme — which passage nails it?
+2. **The core argument structure** that should be carried through everywhere
+3. **Key phrases or framings** that work well and should be reused
+4. **Contradictions** between passages (e.g., one response says X, another implies not-X)
+
+### Step 5: Formulate Improvement Plan
+
+For each passage graded B or below, write a specific improvement recommendation:
+- What's wrong (be concrete — quote the problematic text)
+- What it should say instead (or what structure to adopt)
+- Which strong passage to use as a model
+
+## Output
+
+Write a single file: `current/grade_report.md`
+
+### Grade Report Template
+
+```markdown
+# Response Grading Report: {Theme}
+**Generated:** {ISO timestamp}
+**Response document:** {path}
+**Passages graded:** {N}
+
+---
+
+## Summary
+
+**Strongest passage:** {location} (Grade: {X})
+**Weakest passage:** {location} (Grade: {X})
+**Core argument:** {1-2 sentence distillation of the best version of the argument}
+
+## Grades by Passage
+
+### {Location}: {Brief description}
+
+**Text:** {excerpt, up to ~150 words}
+
+| Dimension | Grade | Note |
+|-----------|-------|------|
+| Clarity | {A-F} | {brief} |
+| Precision | {A-F} | {brief} |
+| Persuasiveness | {A-F} | {brief} |
+| Consistency | {A-F} | {brief} |
+| Writing quality | {A-F} | {brief} |
+| **Overall** | **{A-F}** | |
+
+**Recommendation:** {What to fix, or "No changes needed" for A grades}
+
+...
+
+## Consistency Map
+
+{Table showing how the argument evolves across referee responses. Flag any contradictions.}
+
+| Location | Core Claim | Framing | Consistent? |
+|----------|-----------|---------|-------------|
+| ... | ... | ... | Yes/No — {note} |
+
+## Recommended Argument Structure
+
+{The structure that should be carried through all responses on this theme. Written as a template the author can adapt.}
+
+1. {Opening claim}
+2. {Supporting evidence or mechanism}
+3. {Quantitative anchor if applicable}
+4. {Connection to referee's specific concern}
+```
+
+### Return to Orchestrator (minimal)
+
+```json
+{
+  "status": "complete",
+  "theme": "{theme}",
+  "passages_graded": N,
+  "grade_distribution": {"A": X, "B": Y, "C": Z, "D": W, "F": V},
+  "strongest": "{location}",
+  "weakest": "{location}",
+  "output_file": "current/grade_report.md"
+}
+```
+
+## Rules
+
+1. **Grade honestly.** A is genuinely excellent. B is solid. C has clear problems. D is seriously flawed. F fails to address the concern. Don't grade-inflate.
+2. **Be specific.** "This is vague" is not useful. "Line 3 says 'results suggest' — replace with the actual coefficient" is useful.
+3. **Judge by referee persuasion, not abstract quality.** A response that is technically correct but would annoy the referee is a C.
+4. **Flag AI tells aggressively.** Any passage with AI vocabulary or meta-commentary gets docked at least one letter grade on writing quality.
+5. **The consistency dimension is key.** If the author says different things to different referees about the same point, flag it prominently — this is a credibility risk.

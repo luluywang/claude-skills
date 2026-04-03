@@ -12,7 +12,14 @@
 
 set -e
 
-CURRENT_DIR="$(pwd)/revisions/current"
+# Resolve CURRENT_DIR: REVISIONS_PROJECT_DIR env var > git repo root > cwd
+if [ -n "${REVISIONS_PROJECT_DIR:-}" ]; then
+    CURRENT_DIR="$REVISIONS_PROJECT_DIR/revisions/current"
+elif PROJECT_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)"; then
+    CURRENT_DIR="$PROJECT_ROOT/revisions/current"
+else
+    CURRENT_DIR="$(pwd)/revisions/current"
+fi
 STATUS_FILE="$CURRENT_DIR/.status"
 
 # Ensure current directory exists
@@ -32,12 +39,12 @@ else
 
     # Validate status value
     case "$NEW_STATUS" in
-        init|extract|profile|audit|fix|review|complete)
+        init|extract|profile|strategy|audit|fix|review|complete|table_sync)
             echo "$NEW_STATUS" > "$STATUS_FILE"
             echo "{\"status\": \"$NEW_STATUS\", \"set\": true}"
             ;;
         *)
-            echo "{\"error\": \"Invalid status: $NEW_STATUS. Valid values: init, extract, profile, audit, fix, review, complete\", \"set\": false}"
+            echo "{\"error\": \"Invalid status: $NEW_STATUS. Valid values: init, extract, profile, strategy, audit, fix, review, complete, table_sync\", \"set\": false}"
             exit 1
             ;;
     esac

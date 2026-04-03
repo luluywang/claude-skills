@@ -4,7 +4,17 @@
 
 set -e
 
-CURRENT_DIR="$(pwd)/revisions/current"
+# Resolve CURRENT_DIR: use REVISIONS_PROJECT_DIR env var if set (points to
+# the working project), otherwise fall back to $PROJECT_ROOT/revisions/current
+# (git repo root), otherwise $(pwd)/revisions/current.
+if [ -n "${REVISIONS_PROJECT_DIR:-}" ]; then
+    CURRENT_DIR="$REVISIONS_PROJECT_DIR/revisions/current"
+elif PROJECT_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)"; then
+    CURRENT_DIR="$PROJECT_ROOT/revisions/current"
+else
+    CURRENT_DIR="$(pwd)/revisions/current"
+fi
+
 INVOCATION_MODE="${1:-}"  # First argument: "sync-tables" for table_sync mode
 
 # Initialize output variables

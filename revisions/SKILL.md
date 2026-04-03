@@ -20,7 +20,131 @@ This orchestrator ensures the manuscript matches what the user promised in their
 /revisions strategy-only          # Run through STRATEGY phase only, then stop
 /revisions sync-tables [table_file] [manuscript]  # Reconcile updated tables with manuscript text
 /revisions scaffold [editor_letter] [ref1] [ref2] ...  # Build response doc scaffold from raw reports
+/revisions grade <theme> [files...]  # Grade all responses on a thematic point
+/revisions fix-theme <theme> [instructions...]  # Targeted cross-cutting edit on one theme
 ```
+
+## Grade Mode
+
+`/revisions grade <theme> [files...]` is a **standalone mode** for grading the quality and consistency of all referee responses on a single thematic point. It does not require a prior full `/revisions` run — it works with just a response document and manuscript.
+
+### When to Use
+
+Use this mode when the user wants to:
+- Assess how well they address a specific concern across all referee responses
+- Find contradictions between responses on the same point
+- Identify the strongest articulation of an argument to use as a model
+- Get letter grades (A-F) on clarity, precision, persuasiveness, consistency, and writing quality
+
+### Inputs
+
+- `<theme>`: The thematic point to grade (e.g., "substitution assumption", "welfare decomposition")
+- `[files...]`: Optional explicit file paths. If omitted, uses `current/config.json` paths.
+
+If no config exists and no files are provided, use AskUserQuestion to collect:
+1. Response document path
+2. Manuscript path(s)
+
+### Phase Protocol
+
+When the invocation argument starts with `grade`, the orchestrator MUST:
+1. Confirm the theme and file paths
+2. Write or update `current/config.json` if needed
+3. **IMMEDIATELY** spawn the grade subagent — do NOT read the response doc or manuscript yourself
+
+```
+Task: [revisions:grade] Grade responses on theme: {theme}
+model: "opus"
+subagent_type: "general-purpose"
+
+Instructions:
+Read revisions/prompts/grade_responses.prompt for full instructions.
+Read revisions/prompts/components/writing_quality.prompt for writing standards.
+
+Context:
+- Theme: {theme}
+- Response document: {path}
+- Manuscript: {paths}
+- Soul documents: {paths if available, else "none"}
+
+Your job:
+1. Read all files
+2. Find every passage touching the theme
+3. Grade each passage on 5 dimensions (A-F)
+4. Identify the strongest version and recommended argument structure
+5. Write current/grade_report.md
+6. Return: {status, theme, passages_graded, grade_distribution, strongest, weakest}
+```
+
+### After Grade Returns
+
+1. Read `current/grade_report.md` and present to the user
+2. Suggest: "Run `/revisions fix-theme {theme}` to implement the recommended changes."
+3. **Do NOT advance `.status`** — grading is standalone
+
+---
+
+## Fix-Theme Mode
+
+`/revisions fix-theme <theme> [instructions...]` is a **standalone mode** for making targeted, cross-cutting edits on a single thematic point across the manuscript and response document. It does not require or trigger the full pipeline.
+
+### When to Use
+
+Use this mode when the user wants to:
+- Rewrite how a specific argument is presented everywhere it appears
+- Carry a structural improvement through the main text and all referee responses
+- Fix terminology consistency across files
+- Implement changes recommended by a prior `/revisions grade` report
+
+### Inputs
+
+- `<theme>`: The thematic point to fix (e.g., "substitution assumption")
+- `[instructions...]`: User's direction for the edit (e.g., "lead with what the model does, then defend it")
+
+If no config exists, use AskUserQuestion to collect file paths.
+
+### Phase Protocol
+
+When the invocation argument starts with `fix-theme`, the orchestrator MUST:
+1. Confirm the theme, instructions, and file paths
+2. Check if `current/grade_report.md` exists (from a prior `/revisions grade` on the same theme) — if so, pass it to the subagent
+3. **IMMEDIATELY** spawn the fix-theme subagent — do NOT read files yourself
+
+```
+Task: [revisions:fix-theme] Fix theme: {theme}
+model: "opus"
+subagent_type: "general-purpose"
+
+Instructions:
+Read revisions/prompts/fix_theme.prompt for full instructions.
+Read revisions/prompts/components/writing_quality.prompt for writing standards.
+Read revisions/prompts/components/response_patterns.prompt for response document conventions.
+Read revisions/prompts/components/latex_conventions.prompt for LaTeX reference.
+
+Context:
+- Theme: {theme}
+- User instructions: {instructions}
+- Response document: {path}
+- Manuscript: {paths}
+- Grade report: {path if exists, else "none"}
+- Config: current/config.json
+
+Your job:
+1. Read all relevant files
+2. Find every passage touching the theme
+3. Edit each passage per user instructions, maintaining cross-file consistency
+4. Tag edits with \begin{llm}...\end{llm}
+5. Append to current/changelog.md
+6. Commit changes
+7. Return: {status, theme, files_modified, edits_made}
+```
+
+### After Fix-Theme Returns
+
+1. Read `current/changelog.md` and present the new entries to the user
+2. **Do NOT advance `.status`** — fix-theme is standalone
+
+---
 
 ## Table Sync
 
@@ -201,15 +325,28 @@ STOP. You're probably in extract/profile/audit/fix phase and should spawn the ap
 
 ## Script Path Resolution
 
-All script paths use `$PROJECT_ROOT` which resolves to the git repo root. Since shell
-state does not persist between Bash tool calls, **every script invocation must inline
-the resolution**:
+Scripts auto-detect the project root via git, but when the CWD is a different project
+(e.g., an Overleaf directory), set `REVISIONS_PROJECT_DIR` to the working project's root
+so scripts can find `revisions/current/`. The `SKILL_ROOT` variable points to the
+skill's installed location (for finding script files).
+
+```bash
+# Set once per session — SKILL_ROOT is the skill install dir, PROJECT_DIR is the working project
+SKILL_ROOT="$(cd "$(dirname "$0")/.." && pwd)"  # resolved by orchestrator
+REVISIONS_PROJECT_DIR="/path/to/working/project" bash "$SKILL_ROOT/scripts/<name>.sh" [args]
+```
+
+When invoking from the orchestrator, use `$PROJECT_ROOT` (git repo root) for the skill
+scripts location, and export `REVISIONS_PROJECT_DIR` when the working project differs:
 
 ```bash
 PROJECT_ROOT="$(git rev-parse --show-toplevel)" && bash "$PROJECT_ROOT/revisions/scripts/<name>.sh" [args]
 ```
 
-Every code block below follows this pattern.
+If the user's manuscript lives outside the skill repo (common with Overleaf), prepend:
+```bash
+REVISIONS_PROJECT_DIR="/path/to/overleaf/project" PROJECT_ROOT="$(git rev-parse --show-toplevel)" && bash "$PROJECT_ROOT/revisions/scripts/<name>.sh" [args]
+```
 
 ## Bootstrap Phase (Always First)
 
@@ -661,8 +798,12 @@ Then re-enter the fix loop.
 When the user says "reset", "clear", or "new revision":
 1. Check if current/ exists and has content
 2. Ask user to confirm
-3. Remove current/ contents
+3. Remove **all** contents of current/ (including any orphan files like `audit_in_progress.json`)
 4. Confirm ready for new revision
+
+**Known orphan files** that may exist from earlier skill versions and should be removed on reset:
+- `audit_in_progress.json` — replaced by `audit.json` + `fix_state.json`
+- Any `.bak` or `.tmp` files
 
 ## Model Selection Summary
 
@@ -675,6 +816,8 @@ When the user says "reset", "clear", or "new revision":
 | Fixer (standard) | Opus | Writing quality and structural alignment |
 | Fixer (escalation) | Opus | Complex structural changes |
 | Critic | Opus | Re-verification and quality assurance |
+| Grade responses | Opus | Evaluative judgment requires high-quality reasoning |
+| Fix-theme | Opus | Cross-cutting edits require consistency and writing quality |
 
 ## Files
 
@@ -696,6 +839,8 @@ revisions/
 │   ├── critic.prompt                     # Re-audit after fixes
 │   ├── table_sync.prompt                 # Reconcile updated tables with manuscript text
 │   ├── scaffold_response.prompt          # Build response doc scaffold from raw reports
+│   ├── grade_responses.prompt            # Grade responses on a thematic point
+│   ├── fix_theme.prompt                  # Targeted cross-cutting edits on one theme
 │   └── components/
 │       ├── claim_taxonomy.prompt         # Claim type definitions + verification rules
 │       ├── latex_conventions.prompt       # LaTeX environments reference
@@ -742,3 +887,4 @@ revisions/
 | `current/fix_iterations/iteration_N_critic.json` | Per-iteration re-audit | Critic subagent |
 | `current/table_sync_report.md` | Line-by-line text changes to match updated tables | Table sync subagent |
 | `current/response_scaffold.tex` | LaTeX scaffold with verbatim comments + blank Reply placeholders | Scaffold subagent |
+| `current/grade_report.md` | Per-passage grades + recommended argument structure | Grade subagent |

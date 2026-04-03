@@ -1,0 +1,96 @@
+# Fix Theme Task
+
+**Purpose:** Make targeted, cross-cutting edits across the manuscript and response document on a single thematic point. This is a surgical operation — edit only passages related to the theme, leave everything else untouched.
+
+---
+
+## Input
+
+- **Response document:** Path from config or user-specified
+- **Manuscript files:** Paths from config or user-specified
+- **Theme:** The specific point to fix (e.g., "substitution assumption", "debit sales channel terminology")
+- **Instructions:** User's specific direction for what to change (e.g., "lead with what the model does, then defend it", "replace 'debit sales channel' everywhere")
+- **Grade report** (optional): `current/grade_report.md` from a prior `/revisions grade` run — contains the recommended argument structure
+- **Writing standards:** Read `revisions/prompts/components/writing_quality.prompt`
+- **Response patterns:** Read `revisions/prompts/components/response_patterns.prompt`
+
+## Task
+
+Edit every passage that touches the theme to implement the user's instructions, maintaining consistency across all files.
+
+### Step 1: Inventory All Theme-Relevant Passages
+
+Scan all files and build a list:
+- Response document: every `\textbf{Reply:}` block and summary-of-changes entry touching the theme
+- Manuscript: every section/paragraph touching the theme
+- Appendix: any relevant passages
+
+For each passage, note its location (file:line) and current content.
+
+### Step 2: Determine the Target Structure
+
+If a grade report exists, use its "Recommended Argument Structure" as the template.
+Otherwise, synthesize the user's instructions into a clear target:
+- What is the core claim?
+- What order should the argument follow?
+- What terminology should be used consistently?
+
+### Step 3: Edit Each Passage
+
+For each passage, in order of importance:
+
+1. **Read the surrounding context** (3-5 sentences before and after)
+2. **Draft the edit** following the target structure
+3. **Check consistency** with already-edited passages
+4. **Tag edits** with `\begin{llm}...\end{llm}` markers
+5. **Verify** no broken cross-references, labels, or citations
+
+### Editing Priorities
+
+1. **Manuscript main text first** — this is the authoritative version
+2. **Response document second** — align responses to match what the manuscript now says
+3. **Appendix third** — ensure consistency with main text
+
+### Step 4: Write Changelog
+
+Append to `current/changelog.md` (create if it doesn't exist):
+
+```markdown
+## Fix-Theme: {theme} ({ISO date})
+
+### Files Modified
+- {file}: {brief description of changes}
+
+### Edits
+| Location | Before (excerpt) | After (excerpt) |
+|----------|-----------------|-----------------|
+| {file:line} | {old text, ~30 words} | {new text, ~30 words} |
+| ... | ... | ... |
+```
+
+## Output
+
+### Return to Orchestrator (minimal)
+
+```json
+{
+  "status": "complete",
+  "theme": "{theme}",
+  "files_modified": ["file1.tex", "file2.tex"],
+  "edits_made": N,
+  "manuscript_edits": M,
+  "response_edits": R,
+  "changelog_appended": true
+}
+```
+
+## Rules
+
+1. **Surgical precision.** Edit ONLY passages related to the theme. If a paragraph mentions the theme in passing but isn't about it, leave it alone.
+2. **Consistency is paramount.** After all edits, every passage on this theme should tell the same story with the same terminology.
+3. **Match the author's voice.** Read surrounding text. Write to blend in. See writing_quality.prompt Rule 5.
+4. **No AI tells.** See writing_quality.prompt Rule 1. This is non-negotiable.
+5. **Response document edits must match the manuscript.** If you change how the manuscript describes X, update the response document to reference the new description. Never let the response promise something the manuscript doesn't deliver.
+6. **Preserve the referee comment structure.** In the response document, edit only within `\textbf{Reply:}` blocks. Never modify `\begin{refcommentnoclear}` content.
+7. **NEVER invent numbers.** If a quantitative claim is needed, pull it from the actual tables/figures. If you can't find the number, leave a `[CHECK: ...]` placeholder.
+8. **Commit after editing.** Create a git commit: `[revisions:fix-theme] {theme} — N edits across M files`
