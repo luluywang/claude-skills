@@ -639,7 +639,7 @@ Spawn wrapup subagent after all tasks complete:
 
 ```
 Task: [copyedit:wrapup] Complete review
-Model: haiku
+Model: sonnet
 
 Instructions:
 Read prompts/copyedit_wrapup.md for full instructions.

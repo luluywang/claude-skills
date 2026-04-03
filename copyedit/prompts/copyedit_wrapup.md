@@ -96,17 +96,19 @@ After deduplication, create `notes/review_digest.md` — a single consolidated v
 
 ### Process
 
-1. Read all deduplicated checklist files (`ai_detection.md`, `simplifications.md`, `word_choice_review.md`, `sentence_analysis.md`, `writing_quality.md`).
-2. Extract every checklist item (`### - [ ] Lines X-Y: ...`).
-3. Determine severity for each item:
+**CRITICAL: The digest must contain EVERY actionable item from every checklist file. Do NOT summarize, paraphrase, or drop items. Copy each item's full content (Comment, Original, Proposed Revision, Why better) verbatim into the digest. The only items you may skip are explicit passes (lines that say "no issues found", "clean", or "none detected"). If in doubt, INCLUDE the item.**
+
+1. Read each deduplicated checklist file one at a time: `ai_detection.md`, `simplifications.md`, `word_choice_review.md`, `sentence_analysis.md`, `writing_quality.md`.
+2. For each file, scan for every heading that starts with `### - [ ]`. Each such heading and everything below it until the next `### - [ ]` heading (or end of file section) is one item.
+3. For each extracted item, determine severity:
    - `ai_detection.md` items already carry explicit severity labels (`Critical`, `High`, `Medium`, `Low`).
    - For items from other tasks, assign severity based on impact:
      - **Critical:** Factual errors, logical gaps, missing causal mechanisms, claims that overshoot evidence
      - **High:** Substantial rewrites needed — paragraph-level focus problems, repeated patterns (2+ instances), misleading framing
      - **Medium:** Individual word/phrase improvements, moderate structural issues, single-instance style problems
      - **Low:** Minor polish, optional alternatives, subjective preferences
-4. Skip items that are passes ("no issues found", "clean", "none detected").
-5. Write to `notes/review_digest.md` using the format below.
+4. Skip ONLY items that are explicit passes — lines containing "no issues found", "clean", or "none detected". Everything else is included.
+5. Write to `notes/review_digest.md` using the format below. Count items as you write — the total in the digest must equal the total extracted minus passes.
 
 ### Output Format
 
@@ -149,11 +151,15 @@ After deduplication, create `notes/review_digest.md` — a single consolidated v
 ### Rules
 
 - Include **every** actionable checklist item from every file (not just ai_detection)
-- Preserve the full item content (Comment, Original, Proposed Revision, Why better) — do not summarize
+- Preserve the full item content (Comment, Original, Proposed Revision, Why better) — do not summarize or paraphrase
 - Add a `**Source:** filename.md` line to each item so the reader can trace it back
 - Omit any severity tier heading that has no entries
 - Within a severity tier, order files alphabetically
 - Within a file, preserve document order (by line number)
+
+### Verification
+
+After writing `review_digest.md`, count the `### - [ ]` headings in the digest and compare to the total across all source files. If the digest has fewer items than the sources (minus passes and duplicates removed), you have dropped items — go back and find what's missing.
 
 ---
 
