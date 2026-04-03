@@ -51,6 +51,9 @@ This gives external automation a deterministic completion marker to parse.
   `TASKMASTER_SKIP_PATTERNS=/tmp/scratch:/home/user/playground`
 
 Fixed behavior (not configurable):
+- **Informational session bypass**: sessions with zero mutating tool calls
+  (Edit, Write, Bash, NotebookEdit) are treated as Q&A and stop is allowed
+  without a done signal.
 - Done token prefix: `TASKMASTER_DONE`
 - Poll interval: `1` second
 - Transport: expect only

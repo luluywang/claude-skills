@@ -53,6 +53,14 @@ if [ -f "$TRANSCRIPT" ]; then
   fi
 fi
 
+# --- skip informational sessions: no mutating tool calls means no real task ---
+if [ -f "$TRANSCRIPT" ]; then
+  MUTATING_COUNT=$(grep -cE '"name":\s*"(Edit|Write|Bash|NotebookEdit)"' "$TRANSCRIPT" 2>/dev/null || echo "0")
+  if [ "$MUTATING_COUNT" -eq 0 ]; then
+    exit 0
+  fi
+fi
+
 # --- counter ---
 COUNTER_DIR="${TMPDIR:-/tmp}/taskmaster"
 mkdir -p "$COUNTER_DIR"
