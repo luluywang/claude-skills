@@ -1,10 +1,6 @@
 ---
 name: taskmaster
-description: |
-  Codex wrapper plus same-process expect PTY injector
-  that keeps work moving until an explicit parseable done signal is emitted.
-author: blader
-version: 4.3.0
+description: Use when running long Codex/agent tasks that must continue until an explicit done-token is emitted; provides a Codex wrapper plus a same-process expect PTY injector that monitors session-log events and forces continuation by injecting compliance prompts back into the running process whenever the parseable done signal is missing.
 ---
 
 # Taskmaster
@@ -78,60 +74,4 @@ Before emitting the done signal, verify each of the following:
 
 **HONESTY CHECK.** Before marking anything "not possible", ask: did you actually try? Attempt it first.
 
-## Setup
-
-Install and run:
-
-```bash
-bash ~/.codex/skills/taskmaster/install.sh
-codex-taskmaster
-```
-
-## Installation Verification
-
-`install.sh` automatically runs a smoke test after installation. You can also
-run it manually at any time:
-
-```bash
-bash ~/.claude/skills/taskmaster/scripts/verify_install.sh
-```
-
-The smoke test checks:
-
-1. **Hook symlink exists** — `~/.claude/hooks/taskmaster-check-completion.sh`
-   is present and resolves to a real file.
-2. **Hook is executable** — the symlink target has the execute bit set.
-3. **Settings registration** — `~/.claude/settings.json` contains a Stop hook
-   entry whose `command` includes `taskmaster`.
-4. **Mock stop invocation** — feeds a synthetic JSON payload to the hook and
-   confirms it returns a valid JSON response (either `block` decision or a
-   clean exit for short/empty transcripts).
-
-A passing run looks like:
-
-```
-Taskmaster installation check
-=============================
-  [OK]  Hook symlink exists: /Users/you/.claude/hooks/taskmaster-check-completion.sh
-  [OK]  Hook symlink resolves to: /Users/you/.claude/skills/taskmaster/check-completion.sh
-  [OK]  Hook is executable
-  [OK]  Compliance prompt exists: ...
-  [OK]  jq is available (jq-1.7)
-  [OK]  Stop hook registered in settings.json
-  [OK]  Smoke test passed: hook returns block when done signal absent
-
-Results: 7 passed, 0 failed
-Taskmaster is ready.
-```
-
-### Troubleshooting
-
-| Symptom | Fix |
-|---------|-----|
-| `Hook symlink missing` | Re-run `install.sh`; check that `~/.claude/hooks/` is writable. |
-| `Hook is not executable` | `chmod +x ~/.claude/hooks/taskmaster-check-completion.sh` |
-| `Stop hook not found in settings.json` | Re-run `install.sh`, or add the hook manually per SETUP.md. |
-| `jq not found` | `brew install jq` (macOS) or `apt install jq` (Linux). |
-| `settings.json is not valid JSON` | Fix or delete `~/.claude/settings.json` and re-run `install.sh`. |
-| Hook fires but does nothing | Check that `TASKMASTER_MIN_TOOLS` is not set too high for your sessions. |
-| Hook never fires | Confirm the hook command path in settings.json matches the actual symlink path. |
+For installation and troubleshooting, see `references/setup.md`.
