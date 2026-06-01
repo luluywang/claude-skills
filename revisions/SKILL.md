@@ -1,10 +1,6 @@
 ---
 name: revisions
-description: |
-  Response-driven manuscript alignment. Reads the user's response document as
-  source of truth, extracts claims, audits the manuscript, and fixes gaps via
-  a fixer-critic loop. Only activate when user explicitly invokes '/revisions'.
-  Do NOT activate for general questions about papers or referee reports.
+description: Response-driven manuscript alignment. Reads the user's response document as source of truth, extracts claims, audits the manuscript, and fixes gaps via a fixer-critic loop. Only activate when user explicitly invokes '/revisions'. Do NOT activate for general questions about papers or referee reports.
 ---
 
 # Revisions Workflow Orchestrator
@@ -24,235 +20,23 @@ This orchestrator ensures the manuscript matches what the user promised in their
 /revisions fix-theme <theme> [instructions...]  # Targeted cross-cutting edit on one theme
 ```
 
-## Grade Mode
+## Standalone Modes (Progressive Disclosure)
 
-`/revisions grade <theme> [files...]` is a **standalone mode** for grading the quality and consistency of all referee responses on a single thematic point. It does not require a prior full `/revisions` run — it works with just a response document and manuscript.
+Each standalone mode has its own reference file with full inputs, phase protocol, and Task spawn block. When the user invokes one, read the matching file before doing anything else:
 
-### When to Use
+| Invocation | Trigger | One-line summary | Reference |
+|---|---|---|---|
+| `/revisions grade <theme>` | Argument starts with `grade` | Grade all responses on a thematic point (A-F across 5 dimensions). | `references/modes/grade.md` |
+| `/revisions fix-theme <theme>` | Argument starts with `fix-theme` | Targeted cross-cutting edit on one theme across manuscript + response doc. | `references/modes/fix-theme.md` |
+| `/revisions sync-tables [tables] [ms]` | Bootstrap returns `table_sync` | Reconcile updated tables with manuscript text (numerical conflicts). | `references/modes/table_sync.md` |
+| `/revisions scaffold [editor] [ref1]…` | Argument is `scaffold` | Build response doc scaffold from raw referee/editor reports. | `references/modes/scaffold.md` |
+| `/revisions strategy-only` | Argument is `strategy-only` | Run the pipeline through STRATEGY phase only, then stop. | `references/modes/strategy-only.md` |
 
-Use this mode when the user wants to:
-- Assess how well they address a specific concern across all referee responses
-- Find contradictions between responses on the same point
-- Identify the strongest articulation of an argument to use as a model
-- Get letter grades (A-F) on clarity, precision, persuasiveness, consistency, and writing quality
-
-### Inputs
-
-- `<theme>`: The thematic point to grade (e.g., "substitution assumption", "welfare decomposition")
-- `[files...]`: Optional explicit file paths. If omitted, uses `current/config.json` paths.
-
-If no config exists and no files are provided, use AskUserQuestion to collect:
-1. Response document path
-2. Manuscript path(s)
-
-### Phase Protocol
-
-When the invocation argument starts with `grade`, the orchestrator MUST:
-1. Confirm the theme and file paths
-2. Write or update `current/config.json` if needed
-3. **IMMEDIATELY** spawn the grade subagent — do NOT read the response doc or manuscript yourself
-
-```
-Task: [revisions:grade] Grade responses on theme: {theme}
-model: "opus"
-subagent_type: "general-purpose"
-
-Instructions:
-Read revisions/prompts/grade_responses.prompt for full instructions.
-Read revisions/prompts/components/writing_quality.prompt for writing standards.
-
-Context:
-- Theme: {theme}
-- Response document: {path}
-- Manuscript: {paths}
-- Soul documents: {paths if available, else "none"}
-
-Your job:
-1. Read all files
-2. Find every passage touching the theme
-3. Grade each passage on 5 dimensions (A-F)
-4. Identify the strongest version and recommended argument structure
-5. Write current/grade_report.md
-6. Return: {status, theme, passages_graded, grade_distribution, strongest, weakest}
-```
-
-### After Grade Returns
-
-1. Read `current/grade_report.md` and present to the user
-2. Suggest: "Run `/revisions fix-theme {theme}` to implement the recommended changes."
-3. **Do NOT advance `.status`** — grading is standalone
+When a standalone mode runs, it does NOT advance the main pipeline `.status` (except `strategy-only`, which uses the standard phase scripts and stops at the strategy boundary).
 
 ---
 
-## Fix-Theme Mode
-
-`/revisions fix-theme <theme> [instructions...]` is a **standalone mode** for making targeted, cross-cutting edits on a single thematic point across the manuscript and response document. It does not require or trigger the full pipeline.
-
-### When to Use
-
-Use this mode when the user wants to:
-- Rewrite how a specific argument is presented everywhere it appears
-- Carry a structural improvement through the main text and all referee responses
-- Fix terminology consistency across files
-- Implement changes recommended by a prior `/revisions grade` report
-
-### Inputs
-
-- `<theme>`: The thematic point to fix (e.g., "substitution assumption")
-- `[instructions...]`: User's direction for the edit (e.g., "lead with what the model does, then defend it")
-
-If no config exists, use AskUserQuestion to collect file paths.
-
-### Phase Protocol
-
-When the invocation argument starts with `fix-theme`, the orchestrator MUST:
-1. Confirm the theme, instructions, and file paths
-2. Check if `current/grade_report.md` exists (from a prior `/revisions grade` on the same theme) — if so, pass it to the subagent
-3. **IMMEDIATELY** spawn the fix-theme subagent — do NOT read files yourself
-
-```
-Task: [revisions:fix-theme] Fix theme: {theme}
-model: "opus"
-subagent_type: "general-purpose"
-
-Instructions:
-Read revisions/prompts/fix_theme.prompt for full instructions.
-Read revisions/prompts/components/writing_quality.prompt for writing standards.
-Read revisions/prompts/components/response_patterns.prompt for response document conventions.
-Read revisions/prompts/components/latex_conventions.prompt for LaTeX reference.
-
-Context:
-- Theme: {theme}
-- User instructions: {instructions}
-- Response document: {path}
-- Manuscript: {paths}
-- Grade report: {path if exists, else "none"}
-- Config: current/config.json
-
-Your job:
-1. Read all relevant files
-2. Find every passage touching the theme
-3. Edit each passage per user instructions, maintaining cross-file consistency
-4. Tag edits with \begin{llm}...\end{llm}
-5. Append to current/changelog.md
-6. Commit changes
-7. Return: {status, theme, files_modified, edits_made}
-```
-
-### After Fix-Theme Returns
-
-1. Read `current/changelog.md` and present the new entries to the user
-2. **Do NOT advance `.status`** — fix-theme is standalone
-
----
-
-## Table Sync
-
-`/revisions sync-tables [table_file] [manuscript]` is a **standalone mode** for reconciling updated tables or data files with manuscript text. It is distinct from the main response-doc → manuscript alignment workflow and does not use claims, referee profiles, or the fixer-critic loop.
-
-### When to Use
-
-Use this mode after updating tables (e.g., re-running estimation, changing sample restrictions) when the manuscript text still references old observation counts, percentage effects, or test statistics. The main `/revisions` workflow handles response-doc alignment; this mode handles data-manuscript alignment.
-
-### Inputs
-
-- `[table_file]`: Path to updated table file(s) — `.tex` tables, `.csv`, or a directory containing multiple table files. May also be passed as a config key if multiple files are involved.
-- `[manuscript]`: Path to the main manuscript `.tex` file (and optionally appendix files).
-
-### What It Does
-
-1. Runs `bootstrap.sh` to detect `table_sync` phase
-2. Spawns a single subagent reading `revisions/prompts/table_sync.prompt`
-3. The subagent reads the tables and manuscript, finds all numerical conflicts (obs counts, % effects, statistics), and writes `current/table_sync_report.md`
-4. The orchestrator presents `current/table_sync_report.md` to the user
-
-### Output
-
-`current/table_sync_report.md` — a line-by-line diff of required text changes: what the manuscript currently says, what it should say based on the updated tables, and the exact file/line location.
-
-### Phase Protocol
-
-When bootstrap returns `table_sync`, the orchestrator MUST:
-1. Confirm input paths with the user if not already provided as arguments
-2. **IMMEDIATELY** spawn the table_sync subagent — do NOT read tables or manuscript yourself
-3. After the subagent returns, read and present `current/table_sync_report.md` to the user
-
-```
-Task: [revisions:table_sync] Reconcile updated tables with manuscript text
-model: "sonnet"
-subagent_type: "general-purpose"
-
-Instructions:
-Read revisions/prompts/table_sync.prompt for full instructions.
-
-Context:
-- Table file(s): {path(s) provided by user}
-- Manuscript: {path(s) provided by user}
-
-Your job:
-1. Read all table files (LaTeX tables, CSV exports, or both)
-2. Read the manuscript (and appendix if provided)
-3. Find every obs count, % effect, and test statistic in the manuscript text
-4. Compare each against the corresponding value in the updated tables
-5. Write current/table_sync_report.md with line-by-line changes needed
-6. Return: {status, conflicts_found, sections_affected}
-```
-
-## Scaffold Mode
-
-`/revisions scaffold [editor_letter] [ref1] [ref2] ...` is a **standalone mode** for building a response document scaffold from raw referee/editor report files. It runs before any response document exists — once the user fills in replies, they run `/revisions` normally.
-
-### When to Use
-
-Use this mode at the start of a new revision round, when the user has raw referee/editor letters but no response document yet. The output is `current/response_scaffold.tex`, which the user fills in and then passes to `/revisions` as the response document.
-
-### Inputs
-
-- `[editor_letter]`: Path to the editor letter file (plain text or .tex). Optional — pass `none` or omit to skip.
-- `[ref1]`, `[ref2]`, ...: Paths to referee report files in order.
-
-If file paths are not provided as CLI arguments, use AskUserQuestion to collect them:
-1. Ask which file is the editor letter (if any)
-2. Ask for referee report files one by one (ref1, ref2, ...)
-
-### Phase Protocol
-
-When the invocation argument is `scaffold`, the orchestrator MUST:
-1. Confirm input paths (from CLI args or via AskUserQuestion)
-2. **IMMEDIATELY** spawn the scaffold subagent — do NOT read the report files yourself
-3. After the subagent returns, present the output path and remind the user to fill in replies
-
-```
-Task: [revisions:scaffold] Build response document scaffold from raw reports
-model: "sonnet"
-subagent_type: "general-purpose"
-
-Instructions:
-Read revisions/prompts/scaffold_response.prompt for full instructions.
-Read revisions/prompts/components/latex_conventions.prompt for LaTeX reference.
-
-Context:
-- Editor letter: {path or "none"}
-- Referee reports: {ref1: path, ref2: path, ...}
-
-Your job:
-1. Read each raw report file
-2. Segment each into individual comments/points
-3. Wrap each in \begin{refcommentnoclear}...\end{refcommentnoclear} + \textbf{Reply:} placeholder
-4. Structure into a LaTeX response document with one refsection per referee
-5. Write current/response_scaffold.tex
-6. Return: {status, editor_comments, referees: [{key, label, comment_count}], total_comments, output_file}
-```
-
-### After Subagent Returns
-
-1. Output summary: "Scaffold written to `current/response_scaffold.tex` — N total comments (editor: X, ref1: Y, ref2: Z)"
-2. Remind user: "Fill in the `\textbf{Reply:}` placeholders, then run `/revisions` with `current/response_scaffold.tex` as the response document."
-3. **Do NOT advance `.status`** — workflow stays at `init` so the user can run `/revisions` normally after filling in replies.
-
----
-
-## How It Works
+## How It Works (Main Pipeline)
 
 1. Detect current phase from `current/` state via `scripts/bootstrap.sh`
 2. Collect file paths (response doc, manuscript, appendix, .bib, referee reports)
@@ -266,8 +50,6 @@ Your job:
 ```
 /revisions → [INIT] → [EXTRACT] → [PROFILE] → [STRATEGY] → [AUDIT] → [FIX ↔ CRITIC loop] → [REVIEW] → [COMPLETE]
 ```
-
-With `/revisions strategy-only`, the workflow stops after `[STRATEGY]` and presents `current/strategy_memo.md` to the user.
 
 The key insight: subagents run autonomously and cannot interact with users. User interaction happens in the orchestrator (main context), kept lightweight by offloading analysis to subagents.
 
@@ -303,7 +85,7 @@ The orchestrator coordinates — it does NOT do the work itself.
 **NEVER** read the response document or manuscript yourself. Subagents do this.
 
 ### The orchestrator CAN:
-- Read skill files (SKILL.md, prompts/*)
+- Read skill files (SKILL.md, prompts/*, references/*)
 - Read state files (current/.status, current/config.json, current/claims.json summary, current/referee_profiles.json summary, current/strategy_memo.md, current/audit.json summary, current/fix_state.json, current/changelog.md, current/todos.md)
 - Run scripts (bootstrap.sh, status.sh, fix_loop.sh)
 - Spawn subagents with appropriate context
@@ -325,26 +107,13 @@ STOP. You're probably in extract/profile/audit/fix phase and should spawn the ap
 
 ## Script Path Resolution
 
-Scripts auto-detect the project root via git, but when the CWD is a different project
-(e.g., an Overleaf directory), set `REVISIONS_PROJECT_DIR` to the working project's root
-so scripts can find `revisions/current/`. The `SKILL_ROOT` variable points to the
-skill's installed location (for finding script files).
+Scripts auto-detect the project root via git. Use `$PROJECT_ROOT` (git repo root) for the skill scripts location. When the working project differs from the skill repo (e.g., Overleaf), export `REVISIONS_PROJECT_DIR` so scripts can find `revisions/current/`:
 
 ```bash
-# Set once per session — SKILL_ROOT is the skill install dir, PROJECT_DIR is the working project
-SKILL_ROOT="$(cd "$(dirname "$0")/.." && pwd)"  # resolved by orchestrator
-REVISIONS_PROJECT_DIR="/path/to/working/project" bash "$SKILL_ROOT/scripts/<name>.sh" [args]
-```
-
-When invoking from the orchestrator, use `$PROJECT_ROOT` (git repo root) for the skill
-scripts location, and export `REVISIONS_PROJECT_DIR` when the working project differs:
-
-```bash
+# Standard
 PROJECT_ROOT="$(git rev-parse --show-toplevel)" && bash "$PROJECT_ROOT/revisions/scripts/<name>.sh" [args]
-```
 
-If the user's manuscript lives outside the skill repo (common with Overleaf), prepend:
-```bash
+# Overleaf or other external working project
 REVISIONS_PROJECT_DIR="/path/to/overleaf/project" PROJECT_ROOT="$(git rev-parse --show-toplevel)" && bash "$PROJECT_ROOT/revisions/scripts/<name>.sh" [args]
 ```
 
@@ -352,32 +121,11 @@ REVISIONS_PROJECT_DIR="/path/to/overleaf/project" PROJECT_ROOT="$(git rev-parse 
 
 On every invocation, run the bootstrap script to detect the current phase.
 
-### Run bootstrap script
-
 ```bash
 PROJECT_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)" && bash "$PROJECT_ROOT/revisions/scripts/bootstrap.sh"
 ```
 
-Returns JSON:
-```json
-{
-  "phase": "init|extract|profile|strategy|audit|fix|review|complete",
-  "reason": "Brief explanation",
-  "directory_created": "yes|no",
-  "files": {
-    "status": "exists|missing",
-    "status_content": "...",
-    "config": "exists|missing",
-    "claims": "exists|missing",
-    "referee_profiles": "exists|missing",
-    "strategy_memo": "exists|missing",
-    "audit": "exists|missing",
-    "fix_state": "exists|missing",
-    "changelog": "exists|missing",
-    "todos": "exists|missing"
-  }
-}
-```
+Returns JSON with `phase`, `reason`, `directory_created`, and a `files` map (status/config/claims/referee_profiles/strategy_memo/audit/fix_state/changelog/todos each `exists|missing`).
 
 **Phase actions (MANDATORY — follow exactly):**
 
@@ -394,24 +142,11 @@ Returns JSON:
 
 ## Context Isolation (Critical)
 
-**Maintain mental separation between phases:**
-
-### Between phases, "forget":
-- File contents from subagent work
-- Intermediate analysis
-- Anything not in the state files
-
-### Each phase starts fresh with ONLY:
-- Its specified input files
-- State from previous phases (JSON summaries, not raw content)
+**Maintain mental separation between phases.** Between phases, "forget" file contents from subagent work and intermediate analysis — anything not in the state files. Each phase starts fresh with ONLY its specified input files plus state from previous phases (JSON summaries, not raw content).
 
 ## Init Phase
 
-When the phase is `init`, gather file paths from the user.
-
-### Required Inputs
-
-Use AskUserQuestion:
+When the phase is `init`, gather file paths from the user via AskUserQuestion:
 
 1. **Response document** (.tex) — the user's response to referees (source of truth)
 2. **AE letter** (.tex/.txt) — optional, separate Associate Editor letter file. If not provided, bootstrap.sh checks whether the response document opens with "Dear Associate Editor" and flags it automatically.
@@ -452,7 +187,7 @@ After collecting inputs, write `current/config.json`:
 }
 ```
 
-Note: `manuscript`, `appendix`, and `bib` are arrays to support multi-file projects. `ae_letter` is optional — omit the key if not provided. If `ae_letter` is omitted, bootstrap.sh will automatically detect an embedded AE section in the response document. `referee_grades` is optional — omit the key if the user has not run `/referee grade`.
+`manuscript`, `appendix`, and `bib` are arrays to support multi-file projects. `ae_letter` and `referee_grades` are optional — omit the key if not provided.
 
 Update status:
 ```bash
@@ -461,9 +196,7 @@ PROJECT_ROOT="$(git rev-parse --show-toplevel)" && bash "$PROJECT_ROOT/revisions
 
 ## Extract Phase (Single Sonnet Subagent)
 
-When the phase is `extract`, spawn the extract subagent immediately. Do NOT read the response document.
-
-If bootstrap returned `ae_letter_detected: "yes"`, surface that in the subagent context so it knows to look for an AE section.
+When the phase is `extract`, spawn the extract subagent immediately. Do NOT read the response document. If bootstrap returned `ae_letter_detected: "yes"`, surface that in the subagent context.
 
 ```
 Task: [revisions:extract] Parse response document into claims
@@ -479,23 +212,9 @@ Read revisions/prompts/components/latex_conventions.prompt for LaTeX reference.
 Context:
 - Config: current/config.json (contains response doc path and optional ae_letter path)
 - AE letter detected by bootstrap: {yes|no}
-
-Your job:
-1. Read the AE letter (if config.json has ae_letter key) or detect an embedded AE section
-2. Read the response document
-3. Parse all \textbf{Reply:} blocks across all sections (AE + referees)
-4. Extract each claim, classify by taxonomy type, tag with source ("ae" or "referee_N")
-5. Write current/claims.json
-6. Return: {status, total_claims, ae_letter_present, by_type, by_source, verifiable, unverifiable}
 ```
 
-### After Extract Returns
-
-1. Output summary: "Extracted N claims (X verifiable, Y unverifiable) — AE letter: yes/no"
-2. Update status:
-```bash
-PROJECT_ROOT="$(git rev-parse --show-toplevel)" && bash "$PROJECT_ROOT/revisions/scripts/status.sh" profile
-```
+After return: output summary "Extracted N claims (X verifiable, Y unverifiable) — AE letter: yes/no", then advance status to `profile`.
 
 ## Profile Phase (Single Opus Subagent)
 
@@ -513,24 +232,9 @@ Read revisions/prompts/components/response_patterns.prompt for response structur
 Context:
 - Config: current/config.json (contains response doc path + optional referee report paths)
 - Claims: current/claims.json (contains referee identifiers)
-
-Your job:
-1. Identify referees from claims.json
-2. Read referee reports (primary) or response doc refcommentnoclear blocks (fallback)
-3. Profile each referee across 8 personality dimensions
-4. Synthesize into narrative soul documents
-5. Write current/souls/{key}_soul.md for each referee
-6. Write current/referee_profiles.json (slim index with soul_file pointers + cross-referee analysis)
-7. Return: {status, referees_profiled, referee_keys, sources_used, swing_referee, soul_files}
 ```
 
-### After Profile Returns
-
-1. Output summary: "Profiled N referees (swing: RefX). Sources: referee_reports|response_doc_comments. Soul files: current/souls/"
-2. Update status:
-```bash
-PROJECT_ROOT="$(git rev-parse --show-toplevel)" && bash "$PROJECT_ROOT/revisions/scripts/status.sh" strategy
-```
+After return: output summary "Profiled N referees (swing: RefX). Sources: ...", then advance status to `strategy`.
 
 ## Strategy Phase (Single Opus Subagent)
 
@@ -549,38 +253,14 @@ Context:
 - Referee profiles: current/referee_profiles.json
 - Referee soul documents: current/souls/{key}_soul.md (paths in current/referee_profiles.json)
 - Config: current/config.json
-
-Your job:
-1. Read claims.json to understand all referee concerns and promised changes
-2. Read referee_profiles.json and each soul document to understand referee priorities
-3. Identify the most serious concerns and the swing referee
-4. Draft the overall response narrative and prioritization
-5. Identify which manuscript sections need the most work
-6. Write current/strategy_memo.md
-7. Return: {status, referees_addressed, top_concerns, sections_flagged}
 ```
 
 ### After Strategy Returns
 
 1. Output summary: "Strategy memo written to current/strategy_memo.md"
-2. **If `strategy-only` alias was used**: Read `current/strategy_memo.md` and present it to the user. Stop here — do NOT advance to audit.
-3. **If `--interactive`**: Read `current/strategy_memo.md`, present it to the user, and ask:
-
-```json
-{
-  "header": "Strategy Memo Review",
-  "question": "Review the strategy memo above. How would you like to proceed?",
-  "multiSelect": false,
-  "options": [
-    {"label": "Proceed to audit", "description": "Continue with claim-by-claim audit"},
-    {"label": "Stop here", "description": "Keep the strategy memo and stop for now"}
-  ]
-}
-```
-
-If user chooses to stop: do NOT advance status. Inform user they can resume with `/revisions continue`.
-
-4. **Otherwise (normal run)**: Advance status automatically:
+2. **If `strategy-only` alias was used**: Read `current/strategy_memo.md`, present it to the user, stop. Do NOT advance to audit. (See `references/modes/strategy-only.md`.)
+3. **If `--interactive`**: Read and present the memo, then ask via AskUserQuestion whether to proceed to audit or stop. If stop: do NOT advance status; inform user they can resume with `/revisions continue`.
+4. **Otherwise (normal run)**: Advance status to `audit`:
 ```bash
 PROJECT_ROOT="$(git rev-parse --show-toplevel)" && bash "$PROJECT_ROOT/revisions/scripts/status.sh" audit
 ```
@@ -602,26 +282,9 @@ Read revisions/prompts/components/latex_conventions.prompt for LaTeX reference.
 Context:
 - Claims: current/claims.json
 - Config: current/config.json (contains manuscript/appendix/bib paths)
-
-Your job:
-1. Read claims.json and all manuscript files
-2. Verify each claim against the actual manuscript
-3. Write current/audit.json with results
-4. Write current/todos.md with unverifiable/unfixable items
-5. Return: {status, total_claims, found, missing, partial, todo, fixable_issues}
 ```
 
-### After Audit Returns
-
-1. Output summary: "Audit complete: N found, M missing, P partial, T unverifiable"
-2. If `missing + partial == 0`: Skip fix phase, go directly to review
-   ```bash
-   PROJECT_ROOT="$(git rev-parse --show-toplevel)" && bash "$PROJECT_ROOT/revisions/scripts/status.sh" review
-   ```
-3. Otherwise: Proceed to fix phase
-   ```bash
-   PROJECT_ROOT="$(git rev-parse --show-toplevel)" && bash "$PROJECT_ROOT/revisions/scripts/status.sh" fix
-   ```
+After return: output summary "Audit complete: N found, M missing, P partial, T unverifiable". If `missing + partial == 0`: skip fix, advance to `review`. Otherwise: advance to `fix`.
 
 ## Fix Phase (Fixer-Critic Loop)
 
@@ -639,7 +302,6 @@ On first entry to fix phase (fix_state.json doesn't exist yet):
 ```bash
 PROJECT_ROOT="$(git rev-parse --show-toplevel)" && bash "$PROJECT_ROOT/revisions/scripts/fix_loop.sh" init
 ```
-
 Returns: `{initialized: true, issues_initial: N, max_iterations: 5}`
 
 ### Step 2: Check Loop Status
@@ -648,12 +310,7 @@ At the start of each iteration:
 ```bash
 PROJECT_ROOT="$(git rev-parse --show-toplevel)" && bash "$PROJECT_ROOT/revisions/scripts/fix_loop.sh" status
 ```
-
-If `should_stop: true`:
-- Present stop reason to user
-- Move to review: `PROJECT_ROOT="$(git rev-parse --show-toplevel)" && bash "$PROJECT_ROOT/revisions/scripts/status.sh" review`
-
-If `should_stop: false`: continue to fixer.
+If `should_stop: true`, present the stop reason and advance to `review`. Otherwise continue to fixer.
 
 ### Step 3: Spawn Fixer Subagent (Opus)
 
@@ -676,19 +333,9 @@ Context:
 - Referee index: current/referee_profiles.json (cross-referee analysis)
 - Config: current/config.json (includes manuscript, appendix, response doc, and optional code file paths)
 - Iteration: {N}
-
-Your job:
-1. Read remaining issues (missing/partial with fixable:true)
-2. Consult referee soul documents to calibrate edits per referee
-3. Verify notation against existing manuscript definitions before writing
-4. Make targeted edits to manuscript files AND response document where needed
-5. NEVER insert specific numbers without verifying them against tables/figures/scalarinput
-6. Tag all edits with \begin{llm}...\end{llm}
-7. Write current/fix_iterations/iteration_{N}_fixes.json
-8. Append to current/changelog.md
-9. Commit: [revisions:fix:iter{N}] Fix M manuscript gaps
-10. Return: {status, iteration, fixed, skipped, escalated}
 ```
+
+The fixer.prompt file owns the procedural steps (read issues, consult souls, verify notation, edit, tag with `\begin{llm}…\end{llm}`, write iteration JSON, append changelog, commit). Do not duplicate them here.
 
 ### Step 4: Spawn Critic Subagent (Opus)
 
@@ -711,26 +358,19 @@ Context:
 - Referee index: current/referee_profiles.json (cross-referee analysis)
 - Config: current/config.json (includes manuscript, appendix, response doc, and optional code file paths)
 - Iteration: {N}
-
-Your job:
-1. Re-read manuscript files (with fixes applied)
-2. Re-verify all previously failing claims
-3. Spot-check previously passing claims for regressions
-4. Check for new problems: number hallucination, notation errors, over-deletion, content placement, verbosity, artificial structure, missing takeaways, regression from prior version
-5. Write current/fix_iterations/iteration_{N}_critic.json
-6. Return: {status, iteration, resolved, still_missing, partial, regressions, new_issues, issues_remaining}
 ```
+
+The critic.prompt file owns the procedural steps (re-verify, regression checks, write iteration_{N}_critic.json). Do not duplicate them here.
 
 ### Step 5: Update Loop State
 
-After critic returns, record the result:
+After critic returns:
 ```bash
 PROJECT_ROOT="$(git rev-parse --show-toplevel)" && bash "$PROJECT_ROOT/revisions/scripts/fix_loop.sh" next {issues_remaining}
 ```
 
 ### Step 6: Check Stopping or Continue
 
-Check the loop status:
 ```bash
 PROJECT_ROOT="$(git rev-parse --show-toplevel)" && bash "$PROJECT_ROOT/revisions/scripts/fix_loop.sh" status
 ```
@@ -740,24 +380,11 @@ PROJECT_ROOT="$(git rev-parse --show-toplevel)" && bash "$PROJECT_ROOT/revisions
 2. `max_iterations` — default 5 → proceed to review with remaining issues
 3. `stagnation` — 2 consecutive iterations with same count → proceed to review
 
-If stopped:
-```bash
-PROJECT_ROOT="$(git rev-parse --show-toplevel)" && bash "$PROJECT_ROOT/revisions/scripts/status.sh" review
-```
-
-If not stopped: loop back to Step 3 (fixer).
+If stopped: advance status to `review`. If not: loop back to Step 3 (fixer).
 
 ### Escalation
 
-If specific claims are structural/complex and unfixed after iteration 2, escalate to Opus:
-
-```
-Task: [revisions:fix:iter{N}:escalate] Fix complex gaps (Opus escalation)
-model: "opus"
-subagent_type: "general-purpose"
-
-[Same instructions as fixer, but only for escalated items]
-```
+If specific claims are structural/complex and unfixed after iteration 2, escalate to Opus with the same fixer instructions but only the escalated items in context.
 
 ## Review Phase
 
@@ -765,45 +392,18 @@ When the phase is `review`:
 
 1. **Read `current/changelog.md`** and output to user
 2. **Read `current/todos.md`** and output to user
-3. **Read `current/fix_state.json`** and output summary:
-   - Initial issues, final remaining, iterations used
-4. **Ask user:**
+3. **Read `current/fix_state.json`** and output summary (initial issues, final remaining, iterations used)
+4. **Ask user via AskUserQuestion**: accept and complete, run another fix iteration, or reset.
 
-```json
-{
-  "header": "Review",
-  "question": "Review the changes above. What would you like to do?",
-  "multiSelect": false,
-  "options": [
-    {"label": "Accept and complete (Recommended)", "description": "Mark revision alignment as complete"},
-    {"label": "Run another fix iteration", "description": "Try to resolve remaining issues"},
-    {"label": "Reset", "description": "Clear everything and start over"}
-  ]
-}
-```
-
-If user accepts:
-```bash
-PROJECT_ROOT="$(git rev-parse --show-toplevel)" && bash "$PROJECT_ROOT/revisions/scripts/status.sh" complete
-```
-
-If user wants another iteration:
-```bash
-PROJECT_ROOT="$(git rev-parse --show-toplevel)" && bash "$PROJECT_ROOT/revisions/scripts/status.sh" fix
-```
-Then re-enter the fix loop.
+If user accepts: advance status to `complete`. If user wants another iteration: advance to `fix` and re-enter the loop. If reset: see Reset section.
 
 ## Reset (Clear for New Revision)
 
 When the user says "reset", "clear", or "new revision":
 1. Check if current/ exists and has content
 2. Ask user to confirm
-3. Remove **all** contents of current/ (including any orphan files like `audit_in_progress.json`)
+3. Remove **all** contents of current/ (including any orphan files like `audit_in_progress.json`, `.bak`, or `.tmp` files)
 4. Confirm ready for new revision
-
-**Known orphan files** that may exist from earlier skill versions and should be removed on reset:
-- `audit_in_progress.json` — replaced by `audit.json` + `fix_state.json`
-- Any `.bak` or `.tmp` files
 
 ## Model Selection Summary
 
@@ -813,8 +413,7 @@ When the user says "reset", "clear", or "new revision":
 | Profile referees | Opus | Narrative soul documents require high-quality writing |
 | Strategy memo | Opus | Synthesizing referee concerns into high-level narrative |
 | Audit claims | Sonnet | Cross-referencing, search |
-| Fixer (standard) | Opus | Writing quality and structural alignment |
-| Fixer (escalation) | Opus | Complex structural changes |
+| Fixer (standard + escalation) | Opus | Writing quality and structural alignment |
 | Critic | Opus | Re-verification and quality assurance |
 | Grade responses | Opus | Evaluative judgment requires high-quality reasoning |
 | Fix-theme | Opus | Cross-cutting edits require consistency and writing quality |
@@ -826,6 +425,13 @@ When the user says "reset", "clear", or "new revision":
 ```
 revisions/
 ├── SKILL.md                              # This orchestrator
+├── references/
+│   └── modes/                            # Standalone-mode reference files
+│       ├── grade.md
+│       ├── fix-theme.md
+│       ├── table_sync.md
+│       ├── scaffold.md
+│       └── strategy-only.md
 ├── scripts/
 │   ├── bootstrap.sh                      # Phase detection
 │   ├── status.sh                         # Get/set status

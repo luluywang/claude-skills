@@ -2,6 +2,21 @@
 
 **Purpose:** Define claim types extracted from response documents and their verification rules.
 
+## Contents
+
+- Overview
+- Claim Types
+  - `reference_check` — LaTeX label or citation reference (fully verifiable)
+  - `content_addition` — new content added (partially verifiable)
+  - `content_revision` — existing content revised or rewritten (partially verifiable)
+  - `structural_change` — content moved or reorganized (partially verifiable)
+  - `numerical_claim` — specific number, statistic, or coefficient (partially verifiable)
+  - `citation_check` — bibliographic citation (fully verifiable)
+  - `unverifiable` — requires running code or judgment
+- Classification Rules
+- Extracting Search Keywords
+- Output Schema
+
 ---
 
 ## Overview
