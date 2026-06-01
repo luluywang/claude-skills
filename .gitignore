@@ -13,3 +13,10 @@ reference/
 
 # Logs
 claude-logs
+
+# Private skills (synced via Dropbox, not git)
+# Academics are cagey about AI referees — keep source out of the repo
+referee/
+
+# Stale local git backup directory
+.git-backup/
