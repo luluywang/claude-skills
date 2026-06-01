@@ -111,7 +111,7 @@ Other tasks should NOT flag these issues.
 
 **CRITICAL:** Original and Proposed Revision must show COMPLETE SENTENCES — never truncate mid-sentence. This enables batch application via `apply_marked.prompt`.
 
-**CRITICAL:** Proposed Revision text must itself be free of AI tells. Before writing any Proposed Revision, run the surface critic on it: read @prompts/shared/components/surface_critic.prompt and follow its procedure (proposal context). Fix any violations before writing the entry.
+**CRITICAL:** Before writing any Proposed Revision, run the full surface critic procedure on it: read @prompts/shared/components/surface_critic.prompt and follow (1) the surface rules (proposal context) and (2) the Self-Critic Pass (Tests 1–6). If any test fails structurally, emit the flag-only shape instead. For this task, focus on R-LENGTH-DELTA (Test 3), R-WEAK-FOR-WEAK (Test 6), and R-LOADBEARING (Test 1).
 
 ```markdown
 ### - [ ] Lines X-Y: [Brief description]
@@ -153,4 +153,7 @@ Other tasks should NOT flag these issues.
 - [ ] Categories labeled
 - [ ] Full sentences shown
 - [ ] Organized by file in reading order
-- [ ] **Every Proposed Revision is itself clean** — surface critic ran on each
+- [ ] Every Proposed Revision passed the full Self-Critic Pass (Tests 1–6) — surface critic ran on each
+- [ ] Items that failed Self-Critic Pass structurally use the flag-only entry shape (no Proposed Revision block)
+- [ ] R-LENGTH-DELTA enforced on every revision
+- [ ] R-WEAK-FOR-WEAK and R-LOADBEARING enforced on every revision

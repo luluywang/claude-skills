@@ -66,7 +66,7 @@ Produce a rewritten version of the entire target section. The rewrite must:
 
 **Fix (always, regardless of --principles flag):**
 
-Run the surface critic on all rewritten text: read @prompts/shared/components/surface_critic.prompt and follow its procedure (apply context).
+Run the surface critic on all rewritten text: read @prompts/shared/components/surface_critic.prompt and follow its procedure (apply context). The apply-context rules to enforce on this task: R-VOICE-LOCK, R-NEW-CLAIMS, R-INTENSITY, R-LOADBEARING. Bodies are in `writing_quality_standards.md`.
 
 **Fix (when principle is selected or all principles apply):**
 Apply the relevant principles from the reference below.
@@ -173,7 +173,7 @@ Claims must not exceed the evidence. Verb strength matches identification strate
 
 ## Surface and AI Tell Checks
 
-Run the surface critic on all rewritten text: read @prompts/shared/components/surface_critic.prompt and follow its procedure (apply context).
+Run the surface critic on all rewritten text: read @prompts/shared/components/surface_critic.prompt and follow its procedure (apply context). The apply-context rules to enforce on this task (R-VOICE-LOCK, R-NEW-CLAIMS, R-INTENSITY, R-LOADBEARING) are listed under Step 4 above.
 
 **Paragraph openings**: After a multi-paragraph rewrite, confirm consecutive paragraphs do NOT all begin with the same sentence structure. Vary the opening pattern (evidence, question, concession, claim).
 
@@ -184,13 +184,17 @@ Run the surface critic on all rewritten text: read @prompts/shared/components/su
 Before presenting the diff:
 - [ ] All LaTeX commands, labels, refs preserved
 - [ ] No content or claims deleted (only reworded)
-- [ ] Every change traceable to a specific principle or surface fix
+- [ ] Every change traceable to a specific principle or rule (by ID)
 - [ ] Rewrite is shorter than or equal in length to original (never longer)
 - [ ] Surface critic ran on all rewritten text — no violations remain
-- [ ] No results-first openings introduced
-- [ ] No missing causal mechanisms in result sentences
-- [ ] No inventory-style number lists
+- [ ] R-VOICE-LOCK enforced (voice match; `I find that`/`I estimate that` preserved)
+- [ ] R-NEW-CLAIMS enforced (no numeral/citation/fact absent from source)
+- [ ] R-INTENSITY enforced (no added `collapses`/`drives` hyperbolic/`dramatically`/etc.)
+- [ ] R-LOADBEARING enforced (no listed term replaced with verbose paraphrase)
+- [ ] R-RAP / R-TRIANGULAR respected — no results-first body openers, no buried punchlines in body paragraphs
+- [ ] No missing causal mechanisms in result sentences (Principle 2)
+- [ ] No inventory-style number lists (Principle 7)
 - [ ] No verbatim or near-verbatim phrases recycled from other sections
-- [ ] No claim overshoots the evidence — verb strength matches identification strategy
-- [ ] No new paragraph exceeds ~200 words or ~10 sentences
+- [ ] No claim overshoots the evidence (Principle 15)
+- [ ] R-200WORD enforced (no new paragraph exceeds ~200 words / ~10 sentences)
 - [ ] Change summary table is complete and accurate

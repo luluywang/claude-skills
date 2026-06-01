@@ -1,0 +1,205 @@
+# Task: Orality Check (Read-Aloud Pass)
+
+**Scope:** Passages that read poorly when spoken aloud. The ear catches stumbles the eye misses,
+because reading lets you backtrack but listening doesn't. Use before talks and seminars, but
+also as a general copyedit pass — prose that trips a reader-aloud usually has a real defect
+(ambiguity, repetition, opposite-meaning landing) that just happens to be invisible to silent
+skimming.
+
+**This task does NOT cover:**
+- Sentence length statistics / rhythm metrics (→ `sentence_analysis.prompt`)
+- AI punctuation, transitions, smarmy language (→ `ai_detection.prompt`)
+- Wordiness, weak verbs, nominalization (→ `word_choice.prompt`)
+- Spelling, grammar errors (→ `grammar.prompt`)
+
+**Model:** Haiku
+
+**Output:** `notes/orality.md`
+
+**Output Mode:** APPEND — do not overwrite existing content
+
+**Section Format:** Start each file's analysis with `## [filename.tex]`
+
+---
+
+## Method
+
+Read each sentence as if speaking it to a colleague in the next room. Listen for:
+
+- Stumbles or restarts
+- Breath running out before the sentence ends
+- The wrong meaning landing first, forcing the listener to revise
+- Repetitions that sound like a stutter
+- Lists whose parallel structure dissolves mid-sentence
+- Pronouns the ear can't anchor
+
+Do a full read-through first, marking locations. Don't fix on the read — collect the inventory,
+then propose fixes in a second pass. **Order findings by document position, not severity**,
+since the user is going to walk through the file top to bottom.
+
+---
+
+## Patterns to Flag
+
+### 1. Word repetition in close proximity
+
+The eye skims duplicates; the ear catches them like a stutter. Flag any content word repeated
+within ~15 words, especially the same noun three times in one sentence. Variants of the same
+root ("accepting" near "accept", "payment methods" near "payment acceptance") trip the ear
+even though they're technically different words.
+
+**Bad:** "Accepting credit cards increases sales to consumers who use credit cards by around 12% for merchants on the margin of acceptance."
+**Good:** "For merchants on the margin of acceptance, beginning to accept credit cards raises sales from credit users by around 12%."
+
+### 2. Verbatim sentence repetition across paragraphs
+
+Saying the same sentence twice within a section is a stutter on the page and a stumble in the
+ear. The listener wonders if they missed something. Delete one instance, or rephrase so the
+second occurrence advances the argument.
+
+### 3. Ambiguous list parallelism
+
+Lists hanging off a prepositional phrase need an unambiguous attachment point. The eye can
+re-anchor; the ear can't.
+
+**Bad:** "the effects of AmEx cutting its fees on merchant acceptance, merchant profit margins, and network costs" — does the list hang off "effects of" or "effects on"?
+**Good:** "the merchant acceptance response to AmEx fee cuts, as well as merchant profit margins and network costs."
+
+### 4. Words that land as the opposite of their meaning
+
+The ear takes the first available reading of a phrase. Watch for noun phrases where the
+natural parse contradicts the writer's intent.
+
+**Bad:** "the reduced credit aversion is a real social benefit" — sounds like consumers becoming less averse, but the writer means the credit-aversion cost they no longer incur.
+**Good:** "the credit aversion that switchers avoid is a real social benefit."
+
+Fix: name the direction explicitly, or restructure so the reading can't invert.
+
+### 5. Embedded clauses that break list rhythm
+
+A relative clause inside the first item of a list scrambles parallel-tracking. The listener
+loses the thread.
+
+**Bad:** "...the 2011 Durbin Amendment, which capped interchange fees on debit cards, the 2022 Credit Card Competition Act, and the 2024 lawsuit..."
+**Good:** "...the 2011 Durbin Amendment's cap on debit interchange fees, the 2022 Credit Card Competition Act, and the 2024 lawsuit..."
+
+Compress the embedded clause into a noun phrase, or move it to its own sentence.
+
+### 6. Noun pile-ups
+
+Three or more nouns chained together force the ear to hold a stack it can't unwind in real time.
+
+**Bad:** "the credit-aversion costs that switchers no longer incur"
+**Good:** "the credit aversion that switchers avoid"
+
+### 7. Mandate / requirement constructions with mangled syntax
+
+"X is a mandate that Y do Z" parses awkwardly because "mandate that" reads as a noun complement
+before the subjunctive command resolves.
+
+**Bad:** "technological mandates that all issuers give merchants the option..."
+**Good:** "mandates requiring issuers to give merchants the option..." or "mandate that issuers put X on each card."
+
+### 8. Gerund / noun mismatches in comparisons
+
+Comparing a noun phrase to a gerund phrase sounds off-kilter even when grammatical.
+
+**Bad:** "The increase in multi-homing is more effective than introducing a public option."
+**Good:** "Increasing multi-homing is more effective than introducing a public option." — match both sides.
+
+### 9. Long preamble before the main verb
+
+The listener has to hold the suspended subject in working memory. About 12 words of preamble
+before the verb is the comfortable cap. Beyond that, restructure so the verb arrives sooner.
+
+### 10. Pronouns and demonstratives the ear can't anchor
+
+"This shows that..." with a referent two sentences back works on the page because the eye can
+scan up. The ear can't. Either name the referent or keep the pronoun within one sentence of
+its antecedent.
+
+### 11. False analogies introduced by loose paraphrase
+
+When prose paraphrases a technical mechanism into everyday language, the analogy can drift
+away from the actual mechanism. The listener catches the mismatch because the literal words
+have to make sense in real time.
+
+**Bad:** "are technological mandates requiring issuers to give merchants the option to route transactions" — the actual mechanism is putting multiple networks on each card; "giving merchants the option to route" is a downstream consequence, not the mandate itself.
+**Good:** "mandate that issuers put multiple networks on each card. Every cardholder thus multi-homes by technological fiat."
+
+State the mechanism in its own terms before any analogy to model objects.
+
+---
+
+## Severity
+
+Orality issues are usually **Medium**. They rarely change meaning on a careful read, but they
+signal that prose hasn't been pressure-tested. A paper read aloud at a seminar will be heard,
+not skimmed — and the same defects that trip the ear often hide real ambiguities
+(Patterns 3, 4, 5, 11) that a careful reader will also stumble on, just more slowly.
+
+**Promote to High** when:
+- The misreading inverts the claim (Pattern 4)
+- The paraphrase misrepresents a mechanism (Pattern 11)
+
+**Low** is reserved for minor single-instance repetitions (Pattern 1) where the ear wobbles
+but no meaning is at stake.
+
+---
+
+## Output Format (Checklist)
+
+**CRITICAL:** Original and Proposed Revision must show COMPLETE SENTENCES — never truncate
+mid-sentence. This enables batch application via `apply_marked.prompt`.
+
+**CRITICAL:** Before writing any Proposed Revision, run the full surface critic procedure on it: read @prompts/shared/components/surface_critic.prompt and follow (1) the surface rules (proposal context) and (2) the Self-Critic Pass (Tests 1–6). If any test fails structurally, emit the flag-only shape instead. For orality, Test 1 (which enforces R-WEAK-FOR-WEAK) is primary: the rewrite must improve what the ear hears — a stumble-free, unambiguous, speakable passage — not just substitute words of equal clarity.
+
+**Order entries by document position (line number ascending), NOT by severity.** The severity
+label is still attached to each entry, but the user walks the file top to bottom.
+
+```markdown
+### - [ ] Lines X-Y: [Brief description] `[High|Medium|Low]` `[Pattern #N]`
+
+**Comment:** [One-line diagnosis — which pattern, why it trips the ear]
+
+**Original:**
+```
+[Full sentence(s) containing the issue — never fragments]
+```
+
+**Proposed Revision:**
+```
+[Complete revised sentence(s)]
+```
+
+**Why better:** [Specific improvement — what the ear no longer stumbles on]
+```
+
+---
+
+## Output Structure
+
+```markdown
+## [filename.tex]
+
+### Summary
+- Total flags: N (High: X, Medium: Y, Low: Z)
+- Most common pattern: [Pattern #N — name]
+
+### Findings (document order)
+[All entries, ordered by line number]
+```
+
+---
+
+## Workflow
+
+1. **Pass 1 — Inventory.** Read the file top to bottom as if speaking it aloud. For each
+   stumble, note: line number, the offending phrase quoted briefly, which pattern it matches,
+   one-line diagnosis. Do not draft fixes yet.
+2. **Pass 2 — Fixes.** For each inventoried item, draft the Proposed Revision. Check the
+   revision against the same 11 patterns before writing it — a fix that introduces a new
+   stumble is not a fix.
+3. **Writing-Principles Gate (blocking).** Before writing any Proposed Revision to `notes/orality.md`, run the full surface critic on it: read @prompts/shared/components/surface_critic.prompt and follow (1) the surface rules (proposal context) and (2) the Self-Critic Pass (Tests 1–6). Fix surface violations in-place. If a structural test fails, emit the flag-only shape. The proposed revision cannot introduce the same class of errors it claims to fix.
+4. **Write to `notes/orality.md`** in document order with the checklist format above.
+5. **Return** `{status: complete|flagged, items_found: N}`.

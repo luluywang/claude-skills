@@ -18,6 +18,7 @@ Scan these files if they exist:
 - `notes/simplifications.md`
 - `notes/word_choice_review.md`
 - `notes/sentence_analysis.md`
+- `notes/orality.md`
 
 ### Step 2: Extract Items
 
@@ -51,8 +52,9 @@ When duplicates found:
 **Priority order for keeping:**
 1. `word_choice_review.md` (most specific word-level suggestions)
 2. `sentence_analysis.md` (quantitative backing)
-3. `simplifications.md` (general suggestions)
-4. `ai_detection.md` (pattern identification)
+3. `orality.md` (read-aloud stumbles)
+4. `simplifications.md` (general suggestions)
+5. `ai_detection.md` (pattern identification)
 
 ### Step 5: Write Cleaned Files
 

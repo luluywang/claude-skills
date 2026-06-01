@@ -46,7 +46,6 @@ These fields are written/updated by ai_detection subagents as they finish each f
 ```json
 {
   "created": "ISO timestamp",
-  "paper_type": "A",
   "llm_tagging": true,
   "tasks": [
     {"id": 1, "file": "intro.tex", "task": "grammar", "model": "haiku", "status": "pending"},
@@ -56,7 +55,7 @@ These fields are written/updated by ai_detection subagents as they finish each f
   ],
   "paper_tasks": [
     {"id": 100, "task": "structure", "model": "sonnet", "status": "pending"},
-    {"id": 101, "task": "flow_extraction", "model": "sonnet", "status": "pending"},
+    {"id": 101, "task": "relevance", "model": "sonnet", "status": "pending"},
     {"id": 102, "task": "writing_quality", "model": "sonnet", "status": "pending"}
   ]
 }
@@ -121,7 +120,7 @@ IF .copyedit_status contains "ai_detection_pending: [file1, file2, ...]" AND lis
      ]
    }
    ```
-4. **If "Resume":** Enumerate (file, ai_detection) pairs only for files in `ai_detection_pending`. Skip Step 2-3 diagnostic questions (reuse existing paper_type if available in tasks.json). Go directly to Step 4.5 (Task Preview) with the reduced file list.
+4. **If "Resume":** Enumerate (file, ai_detection) pairs only for files in `ai_detection_pending`. Skip Step 2-3 diagnostic questions. Go directly to Step 4.5 (Task Preview) with the reduced file list.
 5. **If "Start fresh":** Run `new_session.sh` to archive, then proceed to Step 2 normally.
 6. **If "Cancel":** Stop, output "Review cancelled."
 
@@ -145,6 +144,45 @@ ai_detection_complete: [intro.tex, methods.tex, results.tex, conclusion.tex]
 ai_detection_pending: []
 ```
 
+### Banned Phrases Load (runs once per project, before Step 2)
+
+Check for a project-local banned-phrases file:
+
+1. Look for `notes/copyedit_banned_phrases.md` (primary). If absent, look for `notes/banned_phrases.md` (fallback).
+2. If found: read every bullet under the `## Banned` header. Store the list as `banned_phrases` and pass it to every prose-emitting task (surface-critic gate). Log: "Loaded N banned phrases from [file]."
+3. If absent: proceed silently with `banned_phrases = []`.
+
+### Voice Load (P4, runs once per project, before Step 2)
+
+After the bootstrap subagent completes, check `notes/.copyedit_status` for a `voice:` line.
+
+1. If present: store the value (`I`, `we`, or `mixed`) as `project_voice`. Pass to every prose-emitting task — the surface critic uses it in Test 2 of the Self-Critic Pass.
+2. If absent: set `project_voice = "unknown"`. The surface critic will infer from the passage.
+
+Log: "Project voice: [value]."
+
+### Load-Bearing Jargon Load (P5, runs once per project, before Step 2)
+
+After the bootstrap subagent completes, check for `notes/copyedit_load_bearing_terms.md`.
+
+1. If present: read every bullet under `## Terms`. Store as `load_bearing_terms` and pass to every prose-emitting task.
+2. If absent: set `load_bearing_terms = []`.
+
+Log: "Loaded N load-bearing terms from copyedit_load_bearing_terms.md" (or "No load-bearing terms file found.")
+
+The surface critic's Test 1 treats removal of any listed term from a proposed rewrite as a fail.
+
+**Banned-phrases file format:**
+
+```markdown
+## Banned
+
+- "phrase one" — optional rationale
+- "phrase two"
+```
+
+---
+
 ### Writing Guard Check (runs once per project, before Step 2)
 
 Check if the project's CLAUDE.md contains the .tex writing guard:
@@ -163,6 +201,28 @@ Check if the project's CLAUDE.md contains the .tex writing guard:
 ---
 
 ## Step 2: Interpret Request
+
+### Orchestrator-level flags
+
+**Before any fast-path dispatch**, strip the following flags from the raw request
+and remember their values. Pass the stripped request through the normal
+interpretation logic.
+
+| Flag | Consumed by | Values |
+|------|-------------|--------|
+| `--aggressive` | `rewrite`, `task_edit` | boolean |
+| `--level=<list>` | `relevance` only | comma-separated subset of `section,subsection,subsubsection,paragraph` |
+
+If `--aggressive` is set and the request is not a `rewrite` or `task_edit`, the flag
+is ignored. **Note:** `--aggressive` is NOT supported for `relevance` — the user
+reviews and applies relevance rewrites by hand, from `notes/relevance_audit.md`.
+
+If `--level` is set and the request does NOT include `relevance`, the flag is ignored.
+Default when unset: audit all levels.
+
+When a `relevance` task is enumerated, pass `level_filter` into the subagent spawn
+instructions (see Step 6). The subagent reads it from the spawn prompt and applies it
+per `relevance.prompt` Step 1.5.
 
 ### Fast-Path: Rewrite
 
@@ -237,8 +297,8 @@ IF request does NOT match:
     - "rewrite" keyword → already handled above
     - "number_fix" keyword → already handled above
     - Known task names: grammar, ai_detection, word_choice, sentence_analysis,
-      structure, flow_extraction, writing_quality, methodology, strip_llm,
-      reflow, apply, interactive, continue
+      orality, structure, flow_extraction, relevance, writing_quality, methodology,
+      strip_llm, reflow, apply, interactive, continue
     - "review" / "full" / "comprehensive" / "quick" → pipeline routes
 THEN:
     GOTO Task Edit Path (no subagents, no pipeline)
@@ -297,21 +357,28 @@ IF ai_detection_pending is non-empty AND user did NOT explicitly request a new a
     IF "Cancel": stop
 ```
 
+**Rule registry:** Skim the Rule Index at the top of `references/writing_quality_standards.md` before any prose-emitting task runs. Rules are referenced by stable ID (`R-*`) throughout this skill — surface_critic, task prompts, SKILL.md, and the wrapup gate all cite rules by ID, with bodies only in the standards file.
+
+**Surface-critic gate invariant:** Every prose-emitting task runs the surface-critic gate on new/changed sentences before writing to disk. No exceptions. Applies in both apply context (text written to .tex files) and proposal context (proposed revisions written to notes files). In proposal context, the gate includes the full Self-Critic Pass (Tests 1–6 in surface_critic.prompt). A pass emits the standard entry (Original / Comment / Proposed Revision / Why better). A structural fail emits the flag-only shape (Original / Comment / Why no rewrite / Self-screen note) with no Proposed Revision block. Tasks that emit only analysis reports with no new prose (structure, methodology, flow_extraction, deduplication, number_fix, strip_llm, reflow, reflow_verify, interactive_review) are exempt.
+
 | Request Pattern | Tasks |
 |----------------|-------|
 | "Fix grammar" / "Check for errors" | grammar |
 | "Check for AI tells" / "Sound less AI" | ai_detection |
 | "Improve structure" / "Paper flow" | structure |
 | "Extract flow" / "First sentences" | flow_extraction |
+| "RAP relevance" / "Section opener motivation" / "Section earns its place" / "Tie back to intro" | relevance (interviews user for RAP seed — see Step 6.4) |
 | "Word choice" / "Make it punchier" | word_choice |
 | "Sentence rhythm" / "Check variation" | sentence_analysis |
+| "Read aloud" / "Sounds stumbly" / "Orality" / "Prep for talk" | orality |
 | "Strip llm tags" / "Remove llm wrappers" / "Finalize" | strip_llm |
 | "Grade writing quality" / "Improve writing" | writing_quality |
 | "Rewrite section" / "Rewrite lines" / "rewrite" | rewrite (Fast-Path — no subagents) |
 | "Reflow sentences" / "One sentence per line" / "reflow" | reflow (Phase 0 — pre-processing) |
 | "number_fix" / "Fix numbers" / "Update numbers" / "Annotate numbers" | number_fix (Opt-In — not in review/full) |
-| "Comprehensive review" | grammar, ai_detection, word_choice, sentence_analysis |
-| "Full review" | All tasks (including writing_quality) |
+| `ban "phrase"` / `/copyedit ban "phrase"` | Append phrase to `notes/copyedit_banned_phrases.md` (create if absent). File-append only — not a prose-emitting task. Confirm: "Added 'phrase' to banned list." |
+| "Comprehensive review" | grammar, ai_detection, word_choice, sentence_analysis, orality |
+| "Full review" | grammar, ai_detection, word_choice, sentence_analysis, orality, structure, relevance, writing_quality (NB: flow_extraction is **opt-in only**, not part of `full`) |
 
 ### Task Ownership (Avoid Duplicates)
 
@@ -319,6 +386,7 @@ IF ai_detection_pending is non-empty AND user did NOT explicitly request a new a
 |-----------|------------|
 | Wordiness, weak verbs, nominalization | word_choice |
 | Sentence rhythm, monotony, passive patterns | sentence_analysis |
+| Read-aloud stumbles: repetition, ambiguous parallelism, misreadings, noun pile-ups, pronoun anchoring | orality |
 | AI punctuation, transitions, smarmy language | ai_detection |
 | Rhetorical patterns: tension, mechanism, number embedding, limitations | ai_detection (quick flag) → writing_quality (definitive) |
 | Paragraph quality, mechanism clarity, math precision, intellectual precision | writing_quality |
@@ -398,6 +466,7 @@ Generate all (file, task) pairs based on request and file scope.
 | (wrapup) | haiku | notes/review_digest.md |
 | word_choice | haiku | notes/word_choice_review.md |
 | sentence_analysis | haiku | notes/sentence_analysis.md |
+| orality | haiku | notes/orality.md |
 | strip_llm | haiku | (no output file - modifies .tex directly) |
 
 ### Paper-Level Tasks
@@ -405,8 +474,14 @@ Generate all (file, task) pairs based on request and file scope.
 | Task | Model | Output File |
 |------|-------|-------------|
 | structure | sonnet | notes/structure_analysis.md |
-| flow_extraction | sonnet | notes/flow_extraction.md |
+| relevance | sonnet | notes/relevance_audit.md |
 | writing_quality | sonnet | notes/writing_quality.md |
+
+### Opt-In Paper-Level Tasks (NOT in review/full; explicit invocation only)
+
+| Task | Model | Output File |
+|------|-------|-------------|
+| flow_extraction | sonnet | notes/flow_extraction.md |
 
 ### Opt-In Tasks (NOT included in review/full; explicit invocation only)
 
@@ -455,7 +530,6 @@ Output this table structure:
 ```
 ## Task Preview
 
-**Paper Type:** {type} ({description})
 **Files:** {file1}, {file2}, ...
 
 ### Phase 1: File-Level Tasks (Parallel, Haiku)
@@ -474,7 +548,7 @@ Output this table structure:
 | # | Task | Output |
 |---|------|--------|
 | 100 | structure | structure_analysis.md |
-| 101 | flow_extraction | flow_extraction.md |
+| 101 | relevance | relevance_audit.md |
 | 102 | writing_quality | writing_quality.md |
 
 **Subtotal:** N paper-level tasks
@@ -534,6 +608,9 @@ The `new_session.sh` script already ran in Step 1, so `notes/` is guaranteed cle
 | `notes/simplifications.md` | `# Suggested Simplifications` | Step 5 |
 | `notes/word_choice_review.md` | `# Word Choice Review` | Step 5 |
 | `notes/sentence_analysis.md` | `# Sentence Structure Analysis` | Step 5 |
+| `notes/orality.md` | `# Orality Check` | Step 5 |
+| `notes/relevance_audit.md` | `# Relevance Audit` | Step 5 (only if relevance task requested) |
+| `notes/relevance_rap_seed.md` | `# RAP Seed (confirmed by user)` | Step 6.4 (written after user interview) |
 | `notes/writing_quality.md` | `# Writing Quality Assessment` | Step 5 |
 | `notes/reflow_verify.md` | `# Reflow Verification` | Phase 0b (only if reflow requested) |
 | `notes/number_fix_report.md` | `# Number Fix Report` | number_fix path (only if number_fix requested) |
@@ -566,8 +643,8 @@ Instructions:
 Read the task prompt: prompts/tasks/{task}.prompt
 
 File to analyze: {absolute_file_path}
-Paper type: {paper_type}
 LLM tagging: {llm_tagging}
+(relevance task only) level_filter: {level_filter or "all"}
 
 Output rules:
 - APPEND to notes/{output_file}.md
@@ -612,7 +689,17 @@ PHASE 2: Paper-Level Tasks (After Phase 1)
 
     IF all file tasks complete:
         FOR each paper_task WHERE status == "pending":
-            Order: structure → flow_extraction → writing_quality → methodology
+            Order: structure → relevance → writing_quality → methodology
+                   (flow_extraction is opt-in; only included if explicitly requested,
+                    run before relevance when present)
+
+            IF task == "relevance":
+                # Run the RAP interview BEFORE spawning the subagent.
+                # The interview writes notes/relevance_rap_seed.md, which the
+                # subagent reads in its Step 1.
+                GOTO Step 6.4 (RAP Interview)
+                Return here once the seed file is written.
+
             Spawn subagent with run_in_background: true
             Model: sonnet
             Wait for task-notification, then mark status
@@ -630,6 +717,112 @@ Grammar task uses adversarial iteration internally:
 - Pass 2+: Adversarial check until "no errors found"
 
 This is handled by the grammar subagent, not the orchestrator.
+
+---
+
+## Step 6.4: RAP Interview (Relevance Only)
+
+**Trigger:** Runs once, in Phase 2, before the relevance subagent is spawned. Skip
+this step entirely if `relevance` is not in the task list.
+
+**Why this exists.** The relevance task is only as good as its RAP seed (research
+question, main finding, positioning, thematic phrases, promised deliverables). Claude
+is not reliably good at extracting these from a technical intro — it paraphrases
+thematic phrases, drops the author's preferred framing, and then grades downstream
+nodes against its own paraphrase. This step hands RAP extraction back to the user via
+a brief confirmation interview, then writes `notes/relevance_rap_seed.md` for the
+subagent to read in its Step 1.
+
+### Flow
+
+1. **Read intro.tex** (or the intro section of main.tex) from the paper directory.
+   Do not spawn a subagent for this — the orchestrator reads the intro directly.
+
+2. **Draft the RAP seed.** Extract, verbatim where possible:
+   - **Research question** — one sentence quoted from the intro.
+   - **Main answer / finding** — one to two sentences quoted from the intro.
+   - **Positioning** — the gap this paper fills relative to prior work.
+   - **Thematic phrases** — 3–6 distinctive phrases the intro actually uses (e.g.,
+     "competitive bottleneck," "credit aversion," "price coherence").
+   - **Promised deliverables by section** — what the intro says each section will show.
+
+3. **Print the draft to the user** as a regular message in this format:
+
+   ```markdown
+   ## Drafted RAP
+
+   **Research question:** "..."
+
+   **Main answer / finding:** "..."
+
+   **Positioning:** "..."
+
+   **Thematic phrases:** "phrase 1" · "phrase 2" · "phrase 3" · ...
+
+   **Promised deliverables:**
+   - §2: ...
+   - §3: ...
+   - ...
+   ```
+
+4. **Ask for confirmation** via AskUserQuestion:
+
+   ```json
+   {
+     "header": "Confirm RAP",
+     "question": "Relevance judgment is only as good as this seed. Is the draft above correct?",
+     "multiSelect": false,
+     "options": [
+       {"label": "Correct — proceed", "description": "The draft matches my intent."},
+       {"label": "Edit — I'll correct in my next message", "description": "Mostly right; I'll give targeted corrections."},
+       {"label": "Replace — I'll write it myself", "description": "Discard the draft; I'll provide the full RAP."}
+     ]
+   }
+   ```
+
+5. **Handle the response:**
+   - **Correct:** proceed to step 6 with the drafted RAP as-is.
+   - **Edit:** wait for the user's next message. Apply their corrections to the draft,
+     then re-print the updated draft and loop back to step 4 (omit the "Edit" option on
+     the second pass). Loop until confirmed.
+   - **Replace:** wait for the user's next message. Parse it as the new RAP. Re-print
+     and loop back to step 4 for final confirmation.
+
+6. **Write `notes/relevance_rap_seed.md`** with the confirmed RAP:
+
+   ```markdown
+   # RAP Seed (confirmed by user)
+
+   **Research question:**
+   > [quote]
+
+   **Main answer / finding:**
+   > [quote]
+
+   **Positioning:**
+   > [quote]
+
+   **Thematic phrases:**
+   - "phrase 1"
+   - "phrase 2"
+   - ...
+
+   **Promised deliverables by section:**
+   - §2: ...
+   - §3: ...
+   - ...
+   ```
+
+7. **Return to Phase 2.** Spawn the relevance subagent as normal. It will find the
+   seed file in its Step 1 and use it verbatim (no re-extraction).
+
+### Context rules
+
+- The orchestrator handles all interactivity in this step. The subagent never talks
+  to the user.
+- Keep the orchestrator's context lean — read only intro.tex, not the full paper.
+- If intro.tex does not exist (unusual project layout), ask the user to point to the
+  file that contains the RAP, then proceed.
 
 ---
 
@@ -665,7 +858,9 @@ Present wrapup summary to user:
 
 ## Output Format
 
-All output files use checklist format (except copy_edits.md):
+All output files use one of two checklist entry shapes (except copy_edits.md):
+
+**Standard entry** (Self-Critic Pass passed):
 
 ```markdown
 ### - [ ] Lines X-Y: [Brief description]
@@ -683,6 +878,23 @@ All output files use checklist format (except copy_edits.md):
 ```
 
 **Why better:** [Concrete improvements]
+```
+
+**Flag-only entry** (Self-Critic Pass failed — no rewrite proposed) (P2):
+
+```markdown
+### - [ ] Lines X-Y: [Brief description]
+
+**Comment:** [Why this is problematic]
+
+**Original:**
+```
+[Full sentence(s)]
+```
+
+**Why no rewrite:** [One sentence: which test failed and why]
+
+**Self-screen:** rewrite withheld — [reason]
 ```
 
 **Exception:** `copy_edits.md` uses log format: `File:Line → Previous → New`

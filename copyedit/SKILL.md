@@ -10,6 +10,10 @@ description: |
 
 Comprehensive copyediting system for academic writing, following McCloskey and Cochrane principles.
 
+**Rule registry:** All enforceable rules live in `references/writing_quality_standards.md` with stable IDs (`R-*`). Every reference in this skill — surface_critic, task prompts, the wrapup gate — cites rules by ID. To change a rule, edit the standards file. The five priority rules (`R-COLON`, `R-EMDASH`, `R-40WORD`, `R-THROAT-CLEAR`, `R-WEAK-FOR-WEAK`) additionally appear as one-line reminders at the top of `surface_critic.prompt`.
+
+**Invariant:** Every prose-emitting task runs the surface-critic gate on new/changed sentences before writing to disk. No exceptions. Applies in apply context (text written to .tex files) and proposal context (proposed revisions written to notes files).
+
 ## Invocation
 
 ### Full Review (Default)
@@ -60,8 +64,14 @@ Rewrites a section directly in the orchestrator context. No subagents, no notes 
 /copyedit ai_detection --only-issues *.tex       # AI tells check (issues only, passes suppressed)
 /copyedit word_choice methods.tex                # Word choice review
 /copyedit sentence intro.tex                     # Sentence structure analysis
+/copyedit orality intro.tex                      # Read-aloud pass (stumbles, misreadings)
 /copyedit structure paper/                       # Paper structure analysis
-/copyedit flow paper/                            # Flow extraction
+/copyedit flow paper/                            # Flow extraction (opt-in; not in review/full)
+/copyedit relevance paper/                       # Fractal relevance audit: every node earns its place
+/copyedit relevance --level=subsection paper/    # Audit only subsections (dip-toes mode)
+/copyedit relevance --level=section,subsection paper/   # Audit two levels
+/copyedit --aggressive relevance paper/          # Audit + auto-apply all `fail`-verdict opener rewrites
+/copyedit --aggressive relevance --level=subsection paper/   # Combine: subsection-only + auto-apply
 /copyedit quality paper/                         # Writing quality assessment
 /copyedit methodology paper/                     # Methodology clarity
 ```
@@ -82,6 +92,39 @@ Rewrites a section directly in the orchestrator context. No subagents, no notes 
 /copyedit apply                     # Apply all marked [x] changes
 /copyedit interactive notes/simplifications.md  # Walk through suggestions
 /copyedit continue                  # Resume interrupted review
+/copyedit ban "phrase"              # Add phrase to project banned list
+```
+
+### Banned Phrases (R-BANNED)
+
+A project-local banned-phrases file is auto-loaded at the start of every session. Any match in new/changed text is a **Critical** violation that must be fixed before the edit is presented (R-BANNED).
+
+**File locations (checked in order):**
+- `notes/copyedit_banned_phrases.md` (primary)
+- `notes/banned_phrases.md` (fallback)
+
+**File format:**
+
+```markdown
+# Banned
+
+- "phrase one" — optional rationale
+- "phrase two"
+```
+
+**Adding phrases:** `/copyedit ban "phrase"` appends to `notes/copyedit_banned_phrases.md`, creating it if absent.
+
+### Load-Bearing Terms (R-LOADBEARING)
+
+The bootstrap auto-detects hyphenated multi-word phrases appearing 3+ times in source and writes them to `notes/copyedit_load_bearing_terms.md`. These are field-specific terms whose removal in a rewrite is a Test 1 fail in the Self-Critic Pass (R-LOADBEARING — paraphrasing them is a quality regression, not an improvement). The user may edit this file to add or remove terms.
+
+**File format:**
+
+```markdown
+# Terms
+
+- credit-aversion (N occurrences)
+- price-coherence (N occurrences)
 ```
 
 ---
@@ -103,15 +146,22 @@ Rewrites a section directly in the orchestrator context. No subagents, no notes 
 | `ai_detection` | notes/ai_detection.md, notes/simplifications.md | Flag AI-generated patterns; severity-sorted |
 | `word_choice` | notes/word_choice_review.md | Anglo-Saxon over Latin, weak verbs, wordiness |
 | `sentence` | notes/sentence_analysis.md | Length variation, rhythm, S-V-O clarity |
+| `orality` | notes/orality.md | Read-aloud pass: stumbles, ambiguous parallelism, misreadings, noun pile-ups |
 
 ### Paper-Level Tasks (Sequential, Sonnet)
 
 | Task | Output | Description |
 |------|--------|-------------|
 | `structure` | notes/structure_analysis.md | High-level paper organization |
-| `flow` | notes/flow_extraction.md | Paragraph skeleton and flow analysis |
+| `relevance` | notes/relevance_audit.md, notes/relevance_rewrites.json | Fractal opener audit — every section, subsection, subsubsection, and paragraph judged against its parent goal. Supports `--aggressive` for auto-apply of `fail`-verdict rewrites. |
 | `quality` | notes/writing_quality.md | Paragraph-level writing quality (focus, mechanism, precision) |
 | `methodology` | notes/methodology_review.md | Identification strategy clarity |
+
+### Opt-In Paper-Level Tasks (NOT in review/full; explicit invocation only)
+
+| Task | Output | Description |
+|------|--------|-------------|
+| `flow` | notes/flow_extraction.md | Paragraph skeleton and flow analysis. Kept available for debugging; `relevance` is the actionable version. |
 
 ### Number Management (Opt-In, Sonnet)
 
@@ -174,10 +224,12 @@ To force a full re-run from scratch, start a new session: `/copyedit review` wil
 | "check for AI tells", "sound less AI" | ai_detection |
 | "improve word choice", "make it punchier" | word_choice |
 | "check sentence rhythm" | sentence |
+| "read aloud", "sounds stumbly", "orality", "prep for talk" | orality |
 | "improve structure", "paper flow" | structure |
 | "extract flow", "first sentences" | flow |
+| "RAP relevance", "section opener motivation", "section earns its place", "tie back to intro" | relevance |
 | "grade writing quality", "improve writing" | quality |
-| "comprehensive review" | grammar + ai_detection + word_choice + sentence |
+| "comprehensive review" | grammar + ai_detection + word_choice + sentence + orality |
 | "full review" | All tasks (including quality) |
 
 ---
@@ -188,8 +240,8 @@ To force a full re-run from scratch, start a new session: `/copyedit review` wil
 |-------|------------|
 | `<any task>` | task_edit catch-all (no subagents) — when not a known keyword |
 | `rewrite` | Targeted principle rewrite (no subagents) |
-| `review` | grammar + ai_detection + word_choice + sentence |
-| `full` | All tasks including paper-level |
+| `review` | grammar + ai_detection + word_choice + sentence + orality |
+| `full` | All tasks including paper-level **except** `flow` (flow is opt-in only — `relevance` replaces it in the default pipeline) |
 | `quick` | grammar + ai_detection |
 | `quality` | writing_quality |
 
@@ -210,19 +262,6 @@ Read the orchestration instructions from `@prompts/master.prompt` and follow its
 
 ---
 
-## Paper Types
-
-The skill adapts advice based on paper type:
-
-- **Type A**: Intuitive topic, complex identification (e.g., EITC labor supply)
-- **Type B**: Specialized topic needing institutional context (e.g., securitization)
-- **Type C**: Methodological innovation
-- **Type D**: Theory applied to data
-
-Ask user to identify their paper type if doing structure/methodology review.
-
----
-
 ## Output Location
 
 All output goes to a `notes/` directory alongside input files:
@@ -232,17 +271,22 @@ paper/
 ├── intro.tex
 ├── methods.tex
 └── notes/                          # Created by copyedit
-    ├── .copyedit_status
+    ├── .copyedit_status            # Phase + voice detection result (voice: I/we/mixed)
     ├── tasks.json
+    ├── copyedit_load_bearing_terms.md  # Auto-detected load-bearing jargon (user-editable)
+    ├── copyedit_banned_phrases.md  # Project-local banned phrases (user-editable)
     ├── copy_edits.md               # Grammar log (auto-applied)
     ├── ai_detection.md             # AI pattern flags (full, severity-sorted)
     ├── simplifications.md          # Style suggestions
     ├── word_choice_review.md
     ├── sentence_analysis.md
+    ├── orality.md                  # Read-aloud pass flags
     ├── structure_analysis.md
-    ├── flow_extraction.md
+    ├── flow_extraction.md          # opt-in; only when `/copyedit flow` is invoked explicitly
+    ├── relevance_audit.md          # Fractal opener audit (purpose tree + violations + dashboard)
+    ├── relevance_rewrites.json     # Machine-parseable rewrites for --aggressive apply
     ├── writing_quality.md
-    ├── review_digest.md            # Consolidated view: severity → file (generated at wrapup)
+    ├── review_digest.md            # Flags first, then proposed rewrites; self-screened (wrapup)
     └── number_fix_report.md        # Number annotation/update log (opt-in)
 ```
 
@@ -250,7 +294,9 @@ paper/
 
 ## Output Format
 
-All output files use checklist format (except copy_edits.md):
+All output files use one of two checklist entry shapes (except copy_edits.md):
+
+**Standard entry** (Self-Critic Pass passed):
 
 ```markdown
 ### - [ ] Lines X-Y: [Brief description]
@@ -270,7 +316,44 @@ All output files use checklist format (except copy_edits.md):
 **Why better:** [Concrete improvements]
 ```
 
+**Flag-only entry** (Self-Critic Pass failed — no rewrite proposed; rule IDs identify which test failed) (P2):
+
+```markdown
+### - [ ] Lines X-Y: [Brief description]
+
+**Comment:** [Why this is problematic]
+
+**Original:**
+```
+[Full sentence(s)]
+```
+
+**Why no rewrite:** [One sentence: which test failed and why]
+
+**Self-screen:** rewrite withheld — [reason]
+```
+
+The flag-only shape surfaces the problem to the author without offering a rewrite that would fail quality tests. The author decides whether and how to fix it.
+
 **Exception:** `copy_edits.md` uses log format: `File:Line -> Previous -> New`
+
+## Review Digest Layout (P10)
+
+`notes/review_digest.md` is the consolidated view of all actionable items. It has two top-level sections:
+
+```
+## Flags (no rewrite proposed) — N items
+[severity-sorted, file-grouped; items with no Proposed Revision]
+
+## Proposed Rewrites — M items
+[severity-sorted, file-grouped; items with a Proposed Revision]
+```
+
+After the wrapup self-screen pass (Step 3.5), any proposed revision that fails the Self-Critic Pass is stripped and its item moves to the Flags section. The summary table reports: Flags (no rewrite), Proposed rewrites, and Rewrites withheld by self-screen.
+
+## Rationale Fields Gate (P8)
+
+The surface critic also runs on rationale fields — `**Comment:**`, `**Why better:**`, `**Why no rewrite:**` — in every notes/*.md entry. These fields must satisfy the same surface rules as proposed revision text: R-EMDASH, R-COLON, R-TRANSITION, R-40WORD, plus the smarmy-reframing language tells. The wrapup gate coverage checklist verifies this for each prose-emitting task.
 
 ---
 
@@ -304,88 +387,9 @@ Follows McCloskey and Cochrane writing principles:
 - Active voice, strong verbs
 - Sentence variety for rhythm
 - Clear S-V-O structure
-- Avoid AI-typical patterns (em-dashes, "Moreover", smarmy reframing)
+- Avoid AI-typical patterns (R-EMDASH, R-TRANSITION, smarmy reframing)
 
-Reference: `prompts/economics_writing_prompt.md` (comprehensive guide)
-
----
-
-## Examples
-
-### Example 0a: Task Edit (Catch-All, Fast)
-
-```
-/copyedit make sure the notation for the estimator is consistent in main.tex
-```
-
-Reads main.tex, normalizes estimator notation throughout, scans every changed sentence for principle violations (no AI tells, no em-dashes, no stacked hedges, etc.). Shows annotated diff with task changes and any principle fixes. Applies on approval. No subagents, no notes files.
-
-```
-/copyedit add a sentence explaining the intuition after equation 3 in results.tex
-```
-
-Reads results.tex, drafts the intuition sentence at the correct location, checks new text against surface fixes and AI tell patterns. Shows diff and applies on approval.
-
-```
-/copyedit tighten the second paragraph of the intro in main.tex "Introduction"
-```
-
-Reads the Introduction section, tightens the second paragraph, applies guardrails to changed sentences. Confirms before applying.
-
-### Example 0b: Targeted Rewrite (Fast)
-
-```
-/copyedit rewrite intro.tex:50-80
-```
-
-Reads lines 50-80, applies all 15 writing principles plus surface fixes (colons, em-dashes, transitions, hedging). Shows annotated diff with principle citations. Applies on approval. No subagents, no notes files.
-
-```
-/copyedit rewrite results.tex "Counterfactuals" --principles 2,5,7
-```
-
-Rewrites the Counterfactuals section focusing on mechanism (#2), motivation (#5), and numbers (#7) only.
-
-### Example 1: Quick Grammar Check
-
-```
-/copyedit grammar paper.tex
-```
-
-Output: Auto-corrected `paper.tex` + `notes/copy_edits.md` log
-
-### Example 2: AI Detection
-
-```
-/copyedit ai_detection *.tex
-```
-
-Output: `notes/ai_detection.md` and `notes/simplifications.md`
-
-### Example 2a: AI Detection — Issues Only
-
-```
-/copyedit ai_detection --only-issues *.tex
-```
-
-Suppresses entries where the agent's verdict is "pass" or "no issues found." The raw `ai_detection.md` is still written; only the console output reflects the filtered view. Entries are sorted by severity (Critical → High → Medium → Low).
-
-### Example 3: Full Paper Review
-
-```
-/copyedit full paper/
-```
-
-Output: All notes/*.md files with comprehensive analysis
-
-### Example 4: Apply Approved Changes
-
-```
-# After reviewing notes/simplifications.md and marking items [x]
-/copyedit apply
-```
-
-Applies all `[x]` marked changes to source files
+The full enforceable rule set with stable IDs lives in `references/writing_quality_standards.md`. Reference for the underlying writing standards: `prompts/economics_writing_prompt.md` (comprehensive guide).
 
 ---
 
@@ -414,11 +418,26 @@ Individual task prompts are located at:
 - `prompts/tasks/ai_detection.prompt`
 - `prompts/tasks/word_choice.prompt`
 - `prompts/tasks/sentence_analysis.prompt`
+- `prompts/tasks/orality.prompt` — read-aloud pass (stumbles, ambiguous parallelism)
 - `prompts/tasks/structure.prompt`
 - `prompts/tasks/flow_extraction.prompt`
+- `prompts/tasks/relevance.prompt` — fractal opener audit (every node earns its place)
 - `prompts/tasks/writing_quality.prompt`
 - `prompts/tasks/methodology.prompt`
 - `prompts/tasks/apply_marked.prompt`
 - `prompts/tasks/interactive_review.prompt`
 - `prompts/tasks/deduplication.prompt`
 - `prompts/tasks/number_fix.prompt`
+- `prompts/tasks/reflow.prompt` — Phase 0 pre-processing: runs `scripts/reflow_sentences.py` to place one sentence per line
+- `prompts/tasks/reflow_verify.prompt` — Phase 0b: inspects reflowed .tex for suspicious sentence breaks
+- `prompts/tasks/strip_llm.prompt` — finalization: removes `\begin{llm}...\end{llm}` wrappers after review
+
+---
+
+## Background References (Do Not Load)
+
+Three corpus files live in `references/` for citation by `writing_quality_standards.md` only. **They must not be loaded whole-file by any prompt** (combined ~3,650 lines — context-window risk). Use grep against them when a stylistic question arises:
+
+- `references/deirdre-mccloskey-economical-writing.txt` — McCloskey, *Economical Writing* (2nd ed.). Stylistic patterns and word-choice guidance. Do not load whole-file. Example: `grep -in "concrete\|abstract" references/deirdre-mccloskey-economical-writing.txt | head -20`.
+- `references/phd_paper_writing.txt` — Cochrane, *Writing Tips for Ph.D. Students*. Triangular/newspaper structure. Do not load whole-file. Example: `grep -in "introduction\|first sentence" references/phd_paper_writing.txt | head -20`.
+- `references/Chaubey_Research_Writing.txt` — Chaubey, *Research Writing* (Minto's Pyramid). Paragraph-level argument structure. Do not load whole-file. Example: `grep -in "pyramid\|topic sentence" references/Chaubey_Research_Writing.txt | head -20`.

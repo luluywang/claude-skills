@@ -61,6 +61,30 @@ def split_sentences(paragraph: str) -> list[str]:
         sentences.append(s)
     return sentences
 
+# LaTeX line comments (unescaped % through end of line) must stay at end-of-line
+# or they silently comment out whatever follows on the joined paragraph. Protect
+# them with placeholders that restore with a trailing newline.
+LINE_COMMENT_RE = re.compile(r"(?<!\\)%[^\n]*")
+
+def protect_line_comments(line: str, start_idx: int) -> tuple[str, list[str]]:
+    """Replace unescaped '%...' comments with <LCOMMENT{i}> placeholders.
+    start_idx lets callers accumulate a single numbering across many lines.
+    """
+    captured: list[str] = []
+    def repl(m: re.Match) -> str:
+        captured.append(m.group(0))
+        return f"<LCOMMENT{start_idx + len(captured) - 1}>"
+    protected = LINE_COMMENT_RE.sub(repl, line)
+    return protected, captured
+
+def restore_line_comments(s: str, comments: list[str]) -> str:
+    """Restore each <LCOMMENT{i}> placeholder as '{comment}\\n' so the caller
+    can split on '\\n' and emit each segment on its own line — keeping every
+    LaTeX comment at end-of-line, as LaTeX requires."""
+    for i, ph in enumerate(comments):
+        s = s.replace(f"<LCOMMENT{i}>", f"{ph}\n")
+    return s
+
 INLINE_COMMANDS = {
     # citations and references
     'cite', 'citep', 'citet', 'parencite', 'footcite', 'textcite', 'autocite',
@@ -107,10 +131,24 @@ def main(path: str):
         nonlocal buffer
         if not buffer:
             return
-        # Join buffer into one paragraph and split into sentences
-        paragraph = " ".join(buffer)
+        # Protect LaTeX line comments in each buffer line BEFORE joining,
+        # so end-of-line comments don't consume text from the next line
+        # once newlines collapse to spaces.
+        all_comments: list[str] = []
+        protected_lines: list[str] = []
+        for bl in buffer:
+            pl, caps = protect_line_comments(bl, len(all_comments))
+            protected_lines.append(pl)
+            all_comments.extend(caps)
+        paragraph = " ".join(protected_lines)
         for s in split_sentences(paragraph):
-            out_lines.append(s)
+            # Restore comments with trailing newlines, then split so each
+            # comment sits alone at end-of-line.
+            restored = restore_line_comments(s, all_comments)
+            for sub in restored.split('\n'):
+                sub = sub.strip()
+                if sub:
+                    out_lines.append(sub)
         out_lines.append("")  # keep paragraph break
         buffer = []
 

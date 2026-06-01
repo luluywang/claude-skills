@@ -59,14 +59,30 @@ Assess each paragraph against these dimensions. Not every dimension applies to e
 - Numbers presented as a list rather than embedded as evidence for claims
 - Number in prose that would be better in a table
 
-### 4. Motivation & Tension (Principle #5, Contrast II.1)
+### 4. Motivation & Tension — Introductions (Principle #5, Contrast II.1)
 
-**Check:** Does the reader know *why* before *what*?
+**Scope:** Introduction and section-opener motivation paragraphs only. Does NOT apply to body paragraphs — those follow the opposite pattern (Dimension 4b).
+
+**Check:** In the introduction, does the reader know *why* before *what*?
 
 **Flags:**
-- Section opens by announcing its result rather than the puzzle
+- Introduction opens by announcing the topic rather than the puzzle
 - No tension, surprise, or question motivating the analysis
 - Reader is told what to think before seeing the evidence
+
+### 4b. Triangular Body Paragraphs (Principle #5b)
+
+**Scope:** Body paragraphs (everything outside the introduction's RAP setup).
+
+**Check:** Does the topic sentence state the paragraph's conclusion (result, finding, claim), with mechanism/evidence following?
+
+**Flags:**
+- Body paragraph opens with "Consider...", "Suppose...", or a setup clause; result lands only in the closing sentence
+- Topic sentence describes what the paragraph will do ("This section/paragraph examines...") rather than what it concludes
+- Paragraph reads as a derivation — premise → step → step → result — when only the result is load-bearing for the reader and the mechanism is supporting detail
+- A previous rewrite flipped a result-first paragraph into a windup-first paragraph (structural regression — see Self-Critic Test 1)
+
+**Test:** Strip the paragraph to its first sentence. Can a reader state the paragraph's point from that sentence alone?
 
 ### 5. Math Precision (Principle #3)
 
@@ -137,7 +153,7 @@ This dimension operates at the "meso" level — between sentence-level mechanics
 | Issue | Description |
 |-------|-------------|
 | **Missing link** | Conclusion asserted without the chain connecting premises to it |
-| **Ordering** | Result/conclusion appears before the mechanism that earns it |
+| **Ordering** | Within the supporting chain, a step depends on a premise introduced later — the reader has to backtrack. Does NOT apply to the topic sentence: a result-first topic sentence followed by mechanism is correct (Principle #5b); the issue is jumps inside the explanation, not the headline placement. |
 | **Connector misuse** | "But," "however," "therefore" signals a logical relationship that doesn't hold |
 | **Direction reversal** | Paragraph undercuts its own argument (evidence → caveat → re-assertion without resolving the caveat) |
 | **Shared premise buried** | Two sub-arguments depend on the same concept, but it's introduced only in the first — the second dangles |
@@ -168,12 +184,13 @@ When multiple issues overlap in the same paragraph, prioritize in this order:
 1. **Intellectual precision** — wrong characterization of results/assumptions
 2. **Evidence-claim alignment** — claims overshooting the identification strategy
 3. **Missing mechanism** — *what* without *why*
-4. **Broken causal chain** — conclusion before mechanism, missing links, connector misuse within a paragraph
+4. **Broken causal chain** — missing links, ordering jumps within the supporting chain, connector misuse (does NOT include result-first topic sentences, which are correct per Principle #5b)
 5. **False structure** — sequential framing of joint estimation, conflated mechanisms
 6. **Unfocused paragraph** — doing too much
 7. **Hand-waved math** — prose where formulas should be
 8. **Inventorial numbers** — list of numbers not serving as evidence
-9. **Missing motivation** — no tension before result
+9. **Missing motivation** — no tension before result (introduction only — body paragraphs follow Principle #5b)
+10. **Buried punchline** — body paragraph opens with windup; result lands at the end (Principle #5b)
 10. **Throat-clearing** — meta-commentary, lecturing, over-explanation
 
 Flag the highest-priority issue; mention lower-priority issues briefly if present.
@@ -184,7 +201,7 @@ Flag the highest-priority issue; mention lower-priority issues briefly if presen
 
 **CRITICAL:** Original and Proposed Revision must show COMPLETE SENTENCES — never truncate mid-sentence. This enables batch application via `apply_marked.prompt`.
 
-**CRITICAL:** Proposed Revision text must itself be free of AI tells. Before writing any Proposed Revision, run the surface critic on it: read @prompts/shared/components/surface_critic.prompt and follow its procedure (proposal context). Fix any violations before writing the entry.
+**CRITICAL:** Before writing any Proposed Revision, run the full surface critic procedure on it: read @prompts/shared/components/surface_critic.prompt and follow (1) the surface rules (proposal context) and (2) the Self-Critic Pass (Tests 1–6). If any test fails structurally, emit the flag-only shape instead. For this task, focus on R-LENGTH-DELTA (Test 3), R-NEW-CLAIMS (Test 4), and R-INTENSITY (Test 5).
 
 ```markdown
 ### - [ ] Lines X-Y: [Brief description]
@@ -256,7 +273,11 @@ If `ai_detection` flags a pattern that `writing_quality` also addresses, `writin
 - [ ] Every flagged item has Dimension, Comment, Original, Proposed, Why better
 - [ ] Priority ordering respected: intellectual precision > mechanism > structure > focus
 - [ ] Proposed revisions are actionable rewrites, not vague advice
-- [ ] **Every Proposed Revision is itself clean** — surface critic ran on each
+- [ ] Every Proposed Revision passed the full Self-Critic Pass (Tests 1–6) — surface critic ran on each
+- [ ] Items that failed Self-Critic Pass structurally use the flag-only entry shape (no Proposed Revision block)
+- [ ] R-LENGTH-DELTA enforced on every paragraph rewrite
+- [ ] R-NEW-CLAIMS enforced on every revision
+- [ ] R-INTENSITY enforced on every revision
 - [ ] Math precision flags include what formula should replace the prose
 - [ ] No overlap with word_choice (individual word issues) or sentence_analysis (rhythm)
 - [ ] `references/writing_quality_standards.md` was read before analysis

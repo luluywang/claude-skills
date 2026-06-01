@@ -6,32 +6,107 @@
 
 ## Authority
 
-Rules are defined in `../../../references/writing_quality_standards.md` Section III (Surface Fix Rules) and Section IV (AI Tell Pattern Reference, Parts A and B). Read those sections now. The standards file is authoritative.
+Rules are defined in `../../../references/writing_quality_standards.md`. The standards file is authoritative; this critic does not restate rule bodies.
 
-**Quick reference (non-exhaustive — Section III–IV governs):**
-- Em-dash removal: restructure sentence (period, comma, or subordinate clause)
-- Artificial colon removal: convert to direct statement
-- Transition opener removal: delete sentence-initial Moreover, Furthermore, Additionally, In contrast, Notably, Importantly
-- Hedging discipline: at most one hedge per claim; cut non-load-bearing hedges
-- Demonstrative discipline: bare this/these/that/those → add noun referent
-- AI vocabulary: replace leverage, robust, nuanced, pivotal, crucial, highlight, underscore, etc. with plain alternatives
-- Smarmy reframing: "It's not X, it's Y" and variants → direct statement
-- Sentence length: any sentence exceeding ~40 words → split
-- Paragraph length: any paragraph exceeding ~200 words / ~10 sentences → split
+**On invocation, consult the Rule Index in `writing_quality_standards.md`.** Apply every rule with `Enforcement: auto-fix` or `block` whose `Context` includes the current invocation context (apply, proposal, or rationale). Rules with `Enforcement: flag` are surfaced for human review without auto-modification. Rules with `Enforcement: info` (e.g., R-RAP, R-TRIANGULAR) inform the Self-Critic Pass but are not gate-blocking on their own.
+
+The procedure below names rules by ID. To look up the body of any rule, search `writing_quality_standards.md` for `### R-X` (the principle-anchored rules R-RAP and R-TRIANGULAR live in Sections I.5 and I.5b respectively).
 
 ---
 
 ## Procedure
 
+### Priority-rule reminders (read before scanning)
+
+These five rules account for the bulk of past violations. Keep them in working memory while scanning; the full bodies are in `writing_quality_standards.md`.
+
+- **R-COLON** — no body-prose `CLAUSE: CLAUSE` or `CLAUSE: A,B,C`; rewrite as direct sentences.
+- **R-EMDASH** — no `---` or `--` punctuation; restructure with a period, comma, or subordinate clause.
+- **R-40WORD** — no new/rewritten sentence above ~40 words; auto-split.
+- **R-THROAT-CLEAR** — no paragraph-first sentence that announces what the paragraph will do.
+- **R-WEAK-FOR-WEAK** — no `speak to`→`illuminate`-style swaps; preserve `I find that`/`I estimate that`/`I show that`.
+
 ### What to scan
 
 **Apply context** (task_edit, rewrite, apply_marked): every sentence in the new or changed text being written to the file. Do NOT scan unchanged surrounding text.
 
-**Proposal context** (ai_detection, word_choice, writing_quality): every sentence in the Proposed Revision before writing it to the notes file. The proposed revision cannot introduce the same class of errors it claims to fix.
+**Proposal context** (ai_detection, word_choice, writing_quality, orality, sentence_analysis, rewrite, task_edit): every sentence in the Proposed Revision before writing it to the notes file. The proposed revision cannot introduce the same class of errors it claims to fix. Also scan rationale fields (**Comment:**, **Why better:**, **Why no rewrite:**) — apply the same surface rules (R-COLON, R-EMDASH, R-TRANSITION, R-40WORD, plus smarmy-reframing language tells). (P8)
+
+### P3: Enforce R-BANNED (check first)
+
+If a `banned_phrases` list was loaded (from `notes/copyedit_banned_phrases.md` or `notes/banned_phrases.md` — see master.prompt Bootstrap), scan all new/changed text for any match. A match is a **Critical** violation. Fix it — replace with a plain-language alternative — before proceeding to other checks. Do not present the diff until all banned-phrase violations are resolved.
 
 ### How to check
 
-Work through Section III rules and Section IV Parts A and B systematically, sentence by sentence.
+Work through the P-sections below in order. Each P-section enforces one or more rules from the standards file (named by ID). For rule bodies, consult `writing_quality_standards.md`.
+
+### P4: Enforce R-40WORD
+
+After fixing all other violations, count words in every new/changed sentence.
+
+Any sentence exceeding 40 words **must be split or restructured before the diff is shown**. This is not a suggestion — auto-fix in place. Split at a natural clause boundary, using a period or a short connecting phrase.
+
+Reporting (apply context only): always log "Max new-sentence word count: N (≤40 required)" in the change summary, whether or not a fix was needed.
+
+### P5: Enforce R-RHETQ
+
+Any sentence in body prose ending in `?` → block and rewrite as an assertion. Exclusions:
+- Section headings
+- Quoted referee comments (text inside `\begin{quotation}` or similar, or framed as "Referee: ...")
+- Footnotes discussing literature
+- Survey/questionnaire items
+
+Convert `Why does X matter? Because Y.` → `X matters because Y.`
+
+### P6: Enforce R-THROAT-CLEAR
+
+If the FIRST sentence of any new/changed paragraph starts with a meta-opener AND announces what the paragraph will do rather than doing it → block and rewrite.
+
+**Meta-openers to flag:** `This section`, `This paragraph`, `To understand`, `To see how`, `By requiring`, `In order to`, `Thank you for`, `I appreciate`, `I deeply`, `I would like to`.
+
+**Exception:** In a referee-reply letter context, one canned thanks-opener is allowed at the very top of the letter only. Any further thanks-opener in the same letter → block.
+
+### P7: Enforce R-COLON
+
+**Zero tolerance in agent-emitted text.** Any body-prose sentence containing a colon (`:`) where the colon separates two independent clauses OR introduces an enumerated list of clauses → block and rewrite. This is the most persistent AI tell in this skill's output and must never appear in a Proposed Revision, rewrite, or rationale field.
+
+**Patterns to block:**
+
+1. **`CLAUSE: CLAUSE`** — colon as rhetorical setup or punchline.
+   - `The result is clear: fees fall.` → `Fees fall.`
+   - `The implication is direct: welfare rises.` → `Welfare rises.`
+   - `The mechanism is straightforward: merchants pass fees to consumers.` → `Merchants pass fees to consumers.`
+
+2. **`CLAUSE: A, B, C`** — colon dumping an enumerated list onto a topic word.
+   - `The mechanism has three parts: firms enter, prices fall, and entry stops.` → `Firms enter. Prices fall. Entry stops.`
+   - `Three forces drive the result: competition, entry, and exit.` → `Three forces drive the result. Competition lowers prices, entry erodes margins, and exit restores them.` (or split into separate sentences)
+
+3. **`CLAUSE: A and B`** — even two-item colon lists count.
+   - `The key insight is twofold: fees rise and welfare falls.` → `Fees rise. Welfare falls.`
+
+**Exclusions (colon allowed):**
+- Equation introducers in math display (`We solve: $\max U$`).
+- Bibliographic citations and ratios (`See Smith (2020): p. 15`, `1:2`, time `3:30`).
+- Section/subsection titles where editorial style permits.
+- Direct quotations (`The referee writes: "..."`).
+- Code or pseudo-code blocks.
+
+**Auto-fix procedure:**
+- If the right-hand side restates or expands the left → drop the left, keep the right.
+- If the right-hand side is a list → break into separate sentences, one per item, integrating connector context.
+- If the colon is a soft pause that could be a period → use a period.
+
+**Apply context:** Block before writing to the .tex file. If the source already contains a colon construction and the user did NOT request its removal, leave it alone (surgical edit discipline) — but if the agent is *introducing* a colon in new text, refuse.
+
+**Proposal context:** Block before writing the Proposed Revision to notes. If the proposed rewrite contains a colon construction, fix in place; if the fix produces a worse rewrite than the original, downgrade to flag-only (P2).
+
+**Rationale context (P8):** Block in `**Comment:**`, `**Why better:**`, `**Why no rewrite:**` fields. The agent's prose about its own edits must also be free of this pattern.
+
+Reporting (apply context): if a colon was removed, log `Surface fix: colon construction in sentence [N].`
+
+### P2: Enforce R-NOVEL-COMPOUND, R-METAPHOR-VERB, R-VAGUE-QUALIFIER
+
+Apply the three rules listed by ID. Bodies are in `writing_quality_standards.md`. Fix in-place when the rule's enforcement is auto-fix; flag for human review otherwise.
 
 ### When a violation is found
 
@@ -40,7 +115,8 @@ Fix it in-place. Restructure, substitute, or split as the rule specifies. Do not
 ### Reporting (apply context only)
 
 If any fixes were made, log them in the change summary: "Surface fix: [what] in sentence [N]."
-If no violations found, no entry needed.
+Always log: "Max new-sentence word count: N (≤40 required)."
+If no violations found (beyond the word-count log), no additional entry needed.
 
 ### Sentence rhythm (apply context, multi-sentence output only)
 
@@ -48,6 +124,98 @@ After fixing violations, confirm sentence lengths vary. If every new sentence is
 
 ---
 
+## Self-Critic Pass (proposal context only) (P1)
+
+Run this pass on every **Proposed Revision** before writing it to any notes file. The pass has six tests. Tests 1 and 2 are structural gates; 3–6 are content gates. Any structural fail → downgrade to flag-only (P2-shape). A fixable surface fail (single banned word, single em-dash) → fix in place and proceed; do NOT downgrade for a surface fix alone.
+
+**Decision rule:**
+- All tests pass → emit the full entry (Original / Comment / Proposed Revision / Why better).
+- Fixable surface fail only → fix in place, log it, emit full entry.
+- Any structural fail (Tests 1–6) → strip the Proposed Revision block. Emit flag-only shape (see below). Add `**Self-screen:** rewrite withheld — [reason]` line.
+
+### Test 1: Clearly better, not just different — enforces R-WEAK-FOR-WEAK, R-LOADBEARING, R-TRIANGULAR
+
+The rewrite must improve the original on at least one axis — clarity, precision, or brevity — WITHOUT degrading any other axis.
+
+**Fail conditions:**
+- Triggers R-WEAK-FOR-WEAK (vocabulary swap of equal vagueness).
+- Triggers R-LOADBEARING (replaces a load-bearing term with a verbose paraphrase).
+- Makes the sentence longer without adding concrete content.
+- Rearranges but leaves the same problems intact.
+- The only difference is vocabulary substitution with no gain in precision.
+- **Triangular regression (R-TRIANGULAR):** the rewrite flips a body paragraph from result-first to windup-first — moves the topic-sentence conclusion later in the paragraph, or replaces a result-first opener with `Consider...` / `Suppose...` / `This paragraph examines...`. (Does not apply to introduction openers; those follow R-RAP, the opposite pattern.)
+
+**Pass condition:** Identify specifically which axis improves and confirm no axis degrades.
+
+### Test 2: Voice and notation lock — enforces R-VOICE-LOCK
+
+Apply R-VOICE-LOCK as defined in `writing_quality_standards.md`. Voice is detected by the bootstrap and stored in `notes/.copyedit_status` as `voice: I`, `voice: we`, or `voice: mixed`. Read it there. If absent, infer from the passage.
+
+**Fail conditions:**
+- Voice mismatch (I → we, we → I, active → passive without reason).
+- Notation parenthetical that restates a LaTeX symbol definition.
+- Deletion of `I find that` / `I estimate that` / `I show that` (also enforced by R-WEAK-FOR-WEAK).
+
+### Test 3: Length-delta budget — enforces R-LENGTH-DELTA
+
+Apply R-LENGTH-DELTA as defined in `writing_quality_standards.md`: rewrite ≤ max(1.2× original, original+5 words), with the (a)/(b)/(c) carve-outs. Breach without a carve-out → downgrade to flag-only.
+
+### Test 4: No new claims — enforces R-NEW-CLAIMS
+
+Apply R-NEW-CLAIMS as defined. Any new numeral, capitalized multi-word phrase, `\cite{...}`, or `\ref{...}` introduced by the rewrite that is absent from the original sentence, ±3 surrounding paragraphs, and the user's response document → fail. Note: `**Self-screen:** rewrite withheld — introduced new fact (\`{token}\`)`.
+
+### Test 5: No intensity inflation — enforces R-INTENSITY
+
+Apply R-INTENSITY as defined. If any flagged word is added in the rewrite but absent from the original → downgrade to flag-only. Note: `**Self-screen:** rewrite withheld — intensity inflation (\`{word}\`)`. Intensity-inflation words are only a problem when ADDED; if they were already in the original and preserved, that is not a fail.
+
+### Test 6: No weak-for-weak swap — enforces R-WEAK-FOR-WEAK
+
+Apply R-WEAK-FOR-WEAK as defined; the anti-substitution table is in `writing_quality_standards.md`. If any banned swap is present → downgrade to flag-only. Note: `**Self-screen:** rewrite withheld — weak-for-weak swap (\`{original term}\` → \`{replacement}\`)`.
+
+---
+
+## Flag-only entry shape (P2)
+
+When the Self-Critic Pass downgrades an entry, emit this shape instead of the standard checklist item:
+
+```markdown
+### - [ ] Lines X-Y: [Brief description] `[Severity]`
+
+**Comment:** [Why this is problematic — ≤40 words per sentence, no em-dashes, no Moreover/Furthermore]
+
+**Original:**
+```
+[Full sentence(s)]
+```
+
+**Why no rewrite:** [One sentence: which test failed and why — e.g., "Rewrite traded `speak to` for `illuminate` — same register, no clarity gain."]
+
+**Self-screen:** rewrite withheld — [reason]
+```
+
+No `**Proposed Revision:**` block. No `**Why better:**` block. The item surfaces the problem to the author; the author decides whether to fix it and how.
+
+---
+
+## Digest-mode wrapper (P11)
+
+Used by `copyedit_wrapup.md` Step 3.5. In this mode, the surface critic loops over every `**Proposed Revision:**` block in `notes/review_digest.md` rather than over sentences in a source file.
+
+**Inputs:** The full text of `notes/review_digest.md`.
+
+**Procedure:**
+1. Find every checklist item that contains a `**Proposed Revision:**` block.
+2. For each, run the full Self-Critic Pass (Tests 1–6) on the proposed revision, using the `**Original:**` block in the same item as the source sentence for comparison.
+3. For surrounding-context check (Test 4), the ±3 paragraphs of source are NOT available in digest mode — skip the (b) exception; only check (a) the original sentence and (c) the response document if loaded.
+4. Apply decision rule:
+   - Pass → leave item as-is.
+   - Fixable surface fail → fix the revision in place in the digest file, log it.
+   - Structural fail → strip the `**Proposed Revision:**` and `**Why better:**` blocks. Add `**Self-screen:** rewrite withheld — [reason]` line. The item becomes flag-only.
+5. After processing all items, re-group the digest: flag-only items move to the `## Flags (no rewrite proposed)` section; items with surviving proposed revisions stay in `## Proposed Rewrites`.
+6. Log at the end of the digest: `Self-screen: kept R, fixed F, downgraded D to flag.`
+
+---
+
 ## Scope limit
 
-This critic covers surface rules only (Sections III–IV Parts A–B). Argument quality — results-first openings, missing causal mechanism, inventory-style numbers, claims overshooting evidence (Part C) — belongs to the writing_quality task.
+This critic enforces every rule in `writing_quality_standards.md` whose Context includes the current invocation context, plus the Self-Critic Pass (Tests 1–6). Argument quality — results-first openings, missing causal mechanism, inventory-style numbers, claims overshooting evidence (Section IV Part C) — is identified as a quick flag in `ai_detection`; definitive paragraph-level judgment belongs to `writing_quality`.

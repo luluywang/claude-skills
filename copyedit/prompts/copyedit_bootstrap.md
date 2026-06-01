@@ -61,11 +61,63 @@ Files found:
 
 ---
 
+## Voice Detection (P4)
+
+After determining phase, scan the body prose of the .tex source files in scope to detect the author's grammatical voice. Count occurrences of first-person singular ("I find", "I estimate", "I parameterize", "I show", "I assume", "I model") versus first-person plural ("we find", "we estimate", "we parameterize", "we show", "we assume", "we model"). Exclude footnotes and quoted text.
+
+**Detection rule:**
+- If singular count > 5× plural count → `voice: I`
+- If plural count > 5× singular count → `voice: we`
+- Otherwise → `voice: mixed`
+
+Write the result as an additional line in `notes/.copyedit_status`:
+
+```
+voice: I
+```
+
+or `voice: we` or `voice: mixed`. This line is used by the surface critic (Test 2 of the Self-Critic Pass) to fail any rewrite that mismatches the detected voice.
+
+If no .tex files are found, skip silently and do not write a voice line.
+
+---
+
+## Load-Bearing Jargon Detection (P5)
+
+After voice detection, scan the body prose of all .tex source files to identify load-bearing terms: hyphenated multi-word phrases that appear 3 or more times.
+
+**Detection procedure:**
+1. Extract all hyphenated multi-word tokens (e.g., `credit-aversion`, `price-coherence`, `single-homing`).
+2. Count occurrences of each across all source files.
+3. Keep those with count ≥ 3.
+
+Write detected terms to `notes/copyedit_load_bearing_terms.md`:
+
+```markdown
+# Load-Bearing Terms
+
+Terms appearing 3+ times in source. Removing these in a rewrite is a Test 1 fail (Self-Critic Pass).
+User may edit this file to add or remove terms.
+
+## Terms
+
+- credit-aversion (N occurrences)
+- price-coherence (N occurrences)
+- [etc.]
+```
+
+Create this file if terms are found. If no hyphenated terms appear 3+ times, create the file with an empty `## Terms` section and a note: "No load-bearing terms detected."
+
+The master.prompt Bootstrap loads this file and passes the term list to every prose-emitting task. The surface critic treats removal of any listed term in a proposed rewrite as a Test 1 fail.
+
+---
+
 ## Rules
 
 - **DO**: Read files to determine state
-- **DO NOT**: Write any files
-- **DO NOT**: Modify status
+- **DO**: Write `notes/.copyedit_status` with voice detection result
+- **DO**: Write `notes/copyedit_load_bearing_terms.md` with detected jargon
+- **DO NOT**: Modify any other files
 - **DO NOT**: Proceed to any other phase logic
 
 You are a detection-only subagent. Report what you find and let the orchestrator decide what to do next.

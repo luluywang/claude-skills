@@ -102,7 +102,7 @@ Do exactly what the user asked. This is the primary goal. Examples:
 
 **Skip this step entirely if the task was classified as Surgical in Step 3.**
 
-Run the surface critic on all new or changed text: read @prompts/shared/components/surface_critic.prompt and follow its procedure (apply context).
+Run the surface critic on all new or changed text: read @prompts/shared/components/surface_critic.prompt and follow its procedure (apply context). The apply-context rules to enforce on this task: R-VOICE-LOCK and R-NEW-CLAIMS (with the carve-out that an explicit "add the estimate from Table 2"-style task overrides R-NEW-CLAIMS for that specific addition; source from the file or user instruction, do not invent).
 
 If no new text was added (e.g. pure deletion or pure relabeling), skip this step.
 
@@ -181,9 +181,11 @@ Before presenting the diff:
 - [ ] All LaTeX commands, labels, refs preserved (unless task required changing them)
 - [ ] No content or claims deleted beyond what the task requires
 - [ ] Surface critic ran on all new/changed text — no violations remain
-- [ ] No results-first openings in newly added sentences
-- [ ] No missing causal mechanism in newly added result sentences
-- [ ] No inventory-style number lists in new text
-- [ ] No new paragraph exceeds ~200 words
-- [ ] If surgical task: diff contains ONLY the requested changes (zero prose edits)
+- [ ] R-VOICE-LOCK enforced
+- [ ] R-NEW-CLAIMS enforced (unless the task explicitly required adding a fact)
+- [ ] R-RAP / R-TRIANGULAR respected — no results-first body openers in newly added sentences
+- [ ] No missing causal mechanism in newly added result sentences (Principle 2)
+- [ ] No inventory-style number lists in new text (Principle 7)
+- [ ] R-200WORD enforced
+- [ ] R-SURGICAL enforced for surgical tasks (diff contains ONLY the requested changes)
 - [ ] Change summary table accurately reflects both task changes and principle fixes

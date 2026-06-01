@@ -21,14 +21,12 @@
 - Literature review first
 - Excessive roadmap paragraphs
 - "This paper..." openings
-
-**Paper type considerations:**
-- Type A: Gets to identification fast
-- Type B: Explains institutions before deep dive
-- Type C: Economic question before method details
-- Type D: Empirical puzzle before theory
+- Delaying the identification strategy, institutional setup, or empirical puzzle
+  past the first few paragraphs when the reader needs it to follow the contribution
 
 ### 2. Body Section Structure
+
+**Triangular structure (Principle #5b):** Body sections and body paragraphs follow the inverted pyramid — result first, mechanism after. This is the opposite of the introduction's RAP, which builds tension before the answer. The intro opens with the puzzle; body paragraphs open with the conclusion.
 
 **Two goals for each body section:**
 
@@ -39,16 +37,18 @@
    - Good: "Having established X, we now examine the mechanism..."
    - Bad: Jumping into details without context
 
-2. **Clearly Explain What Is Done**
-   - State what the section will show BEFORE showing it
-   - Preview findings, then present evidence
-   - Good: "We find effect is concentrated in X. Table 3 confirms..."
+2. **Lead with the Result (Triangular)**
+   - Topic sentence states the section's conclusion or main finding
+   - Mechanism, evidence, derivation come after
+   - Good: "Fees rise above the competitive level under price coherence. The mechanism: merchants..."
+   - Bad: "Consider a market with two networks. Under price coherence, merchants set uniform prices... As a result, fees rise."
    - Bad: "Table 3 shows the results" (results of what?)
 
 **Common problems:**
-- Diving into details without connecting to story
-- Section openers that describe methods without explaining purpose
+- Body sections opening with windup ("Consider...", "Suppose...") and burying the result
+- Section openers that describe methods without explaining purpose or stating what was found
 - Missing bridge between "what we're doing" and "why it matters"
+- Confusing intro structure (tension first) with body structure (result first)
 
 ### 3. Section Ordering
 
@@ -85,7 +85,6 @@
 
 ```markdown
 # Structure Analysis
-**Paper Type:** [A/B/C/D with justification]
 
 ## Executive Summary
 **Strengths:** [What's working]

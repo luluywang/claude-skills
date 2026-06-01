@@ -78,6 +78,8 @@ Other tasks should NOT flag these issues.
 
 **CRITICAL:** Original and Proposed Revision must show COMPLETE SENTENCES — never truncate mid-sentence. This enables batch application via `apply_marked.prompt`.
 
+**CRITICAL:** Before writing any Proposed Revision, run the full surface critic procedure on it: read @prompts/shared/components/surface_critic.prompt and follow (1) the surface rules (proposal context) and (2) the Self-Critic Pass (Tests 1–6). If any test fails structurally, emit the flag-only shape instead. For this task, focus on Test 1 (R-WEAK-FOR-WEAK and R-TRIANGULAR — a rhythm fix must produce a genuinely clearer sentence) and Test 3 (R-LENGTH-DELTA — the combined output must not exceed the budget when splitting or restructuring).
+
 Use checklist format:
 
 ```markdown

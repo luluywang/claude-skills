@@ -1,0 +1,446 @@
+# Task: Fractal Relevance Audit
+
+**Purpose:** Every structural node in a paper — section, subsection, subsubsection, and
+paragraph — must earn its place against its *parent's* stated purpose. Sections earn their
+place against the paper's RAP; subsections against their section's promised deliverable;
+subsubsections against their subsection; paragraphs against their enclosing node. A human
+cannot hold this hierarchy in her head. This task walks the full tree and judges each node
+against the correct local yardstick.
+
+Every failing node gets a concrete proposed rewrite of its opener, emitted inline in the
+audit report. The user reviews and applies rewrites by hand — there is no automated apply
+path, because every rewrite must survive human review before it touches source files.
+
+**Output:**
+- `notes/relevance_audit.md` — the only output. Contains the RAP seed, purpose tree, violations with inline proposed rewrites, and summary dashboard. There is intentionally no machine-parseable sidecar — every rewrite is reviewed by a human before it touches source files.
+
+**Model:** Sonnet. This task requires paragraph-level judgment and cannot be done by Haiku.
+
+---
+
+## Step 1: Build the RAP Seed
+
+**The orchestrator runs a user-facing interview before spawning this task** and writes the confirmed RAP to `notes/relevance_rap_seed.md`. The interview exists because Claude is not reliably good at extracting the RAP from a technical intro — it paraphrases thematic phrases and misses the author's preferred framing.
+
+**Preferred path: use the seed file.** If `notes/relevance_rap_seed.md` exists, read it and use it verbatim. Do not second-guess it or re-extract from the intro. Quote it under "RAP Seed" in the audit with the note "confirmed by user via interview."
+
+**Fallback path: extract from intro.** If the seed file does not exist, read the full introduction (intro.tex or the intro section of main.tex) and extract:
+
+1. **Research question** — the one sentence that states what the paper asks. Quote it.
+2. **Answer / main finding** — the one-to-two sentence punchline. Quote it.
+3. **Positioning / contribution** — what gap this paper fills relative to prior work.
+   Quote the contribution paragraph if it exists.
+4. **Thematic phrases** — the 3–6 distinctive phrases the intro uses to name the
+   paper's central concepts. Examples from real papers:
+   - "competitive bottleneck"
+   - "diagnose what ails"
+   - "rate-awakeness vs. default-awakeness"
+   - "deposit franchise"
+   - "issuer incentives → consumer payment choices"
+   These are the phrases that should echo through every downstream section. A section
+   opener that does not touch any of them is a suspect.
+5. **Promised deliverables by section** — what the intro promises the paper will show,
+   section by section. Record these as the parent goals for every top-level section.
+   If the intro says "Section 3 establishes three facts…", that is the yardstick for §3.
+
+Quote directly — do not paraphrase — so later readers can verify.
+
+---
+
+## Step 1.5: Apply `--level` Filter (if set)
+
+The orchestrator may pass a `level_filter` parameter with one or more of:
+`section`, `subsection`, `subsubsection`, `paragraph` (comma-separated).
+
+If `level_filter` is set, the audit still **walks the full tree** (so purpose-tree
+context and parent-goal resolution still work), but verdicts and rewrites are emitted
+**only for nodes at the requested levels**. Nodes outside the filter appear in the
+purpose tree with their heading and "Claude's read" line only — no verdict line and
+no entry in the violations section.
+
+If `level_filter` is unset, audit all levels (default behavior).
+
+Example:
+- `level_filter = "subsection"` → audit only subsections; sections, subsubsections,
+  and paragraphs appear in the purpose tree as context but are not graded.
+- `level_filter = "section,subsection"` → audit both levels.
+
+---
+
+## Step 2: Walk the Full Structural Tree
+
+Build the node list in document order, preserving hierarchy. Record for each node:
+
+- **Level** — `section`, `subsection`, `subsubsection`, or `paragraph`
+- **Heading** — for sectional nodes only (paragraphs have none)
+- **File + line range** — absolute path, start and end lines
+- **Opener paragraph** — verbatim first paragraph of the node
+- **First sentence of that opener** — this is what the reader sees first
+
+Include `\section`, `\subsection`, `\subsubsection`, and **every body paragraph** in the
+non-appendix, non-references portion of the paper. Body paragraphs are audited against the
+closest enclosing structural node (whichever of section / subsection / subsubsection is
+deepest at that point in the document).
+
+Skip `\section*{References}`, `\bibliography`, appendix-only matter (data sources, proofs,
+code listings), unless the user passed `--include-appendix`. For sectional openers that
+happen to coincide with a paragraph (i.e., the section's first paragraph), audit it once
+as the section node — do not double-count it as a paragraph.
+
+**Note:** If the user passed only the intro file, walk only that file's tree. If the user
+passed the whole paper, walk every .tex file the main document `\input`s, in input order.
+
+---
+
+## Step 3: Assign a Parent Goal to Every Node
+
+For each node, write down the parent's stated purpose in one sentence. This is the
+yardstick the node must meet.
+
+| Node level     | Parent goal                                                              |
+|----------------|--------------------------------------------------------------------------|
+| section        | The paper's RAP (from Step 1) — specifically the promised deliverable for this section |
+| subsection     | The parent section's promised deliverable (derive from the section opener if the intro does not name it) |
+| subsubsection  | The parent subsection's opener-sentence purpose                          |
+| paragraph      | The enclosing structural node's opener-sentence purpose                  |
+
+If a parent node itself has a broken opener (Claude cannot read its purpose), fall back one
+level up. Record that fallback in the node's `parent_goal` field so the user can see it.
+
+---
+
+## Step 4: Judge Each Node
+
+### 4a. Section-level criteria (A–E)
+
+For each `\section` opener, score each criterion as **pass / weak / fail**:
+
+- **A. RAP linkage** — Does the opener restate, extend, or advance one of the RAP seed
+  elements? If it touches none, fail. If only implicitly, flag.
+- **B. Why-this-matters** — Does it explain *why the paper needs this section*, not just
+  what it contains? "In this section we…" / "Having established X, we now turn to…" /
+  "This section presents…" / "The section is organized as follows" are automatic fails
+  for B unless immediately followed by a substantive motivation clause.
+- **C. Thematic keyword chain** — Does it use at least one distinctive thematic phrase
+  from the intro? Terminology drift for the same concept is a flag.
+- **D. Deliverable** — Does it promise a specific, concrete result? Weak: "We investigate
+  the mechanism." Strong: "We show that a 30% decline in debit volume after Durbin is
+  almost entirely driven by issuer fee pass-through."
+- **E. Quantitative preview (results sections only)** — Does the opener preview the key
+  magnitudes? Missing magnitudes in a results-section opener is a flag.
+
+### 4b. Sub-level criteria (F–H)
+
+For `\subsection`, `\subsubsection`, and paragraph nodes, apply the stricter 3-criterion
+test. The yardstick is the **parent goal**, not the paper's RAP.
+
+- **F. Why-this-node-exists** — If this node vanished, what hole would open in the parent's
+  argument? If the opener does not make this clear, fail.
+- **G. Local argument chain** — Does the opener pick up where the previous sibling node
+  left off, and hand off naturally to the next? Check by reading sibling openers in order.
+- **H. Subordination check** — Does the opener make clear this is a *part* of a larger
+  argument, or does it read like a standalone mini-intro? Fails on mini-intros.
+
+Paragraphs inside body text get a lighter version of F–H: does the first sentence state
+a claim that advances the enclosing node's argument, or is it a detail / transition /
+filler sentence?
+
+### 4c. Verdict
+
+Roll each node up to a single verdict: **pass / weak / fail**.
+
+- **fail** — at least one criterion is `fail`, OR the opener is pure roadmap language with
+  no substance. Rewrite is required.
+- **weak** — *used sparingly*. A node is weak only if **both** hold:
+  (a) a concrete, specific improvement is available — not just "this could be said
+  differently," but "moving the thematic phrase forward lets the reader catch the argument
+  in sentence 1"; AND (b) the rewrite you produce in Step 5 is clearly better than the
+  original in voice and information density. If you cannot produce a clearly-better rewrite
+  in one honest pass, or if the "rewrite" just reorders existing sentences, the correct
+  verdict is **pass**. For a well-edited paper, most nodes should pass.
+- **pass** — no rewrite needed, OR the opener is good enough that a rewrite would be mere
+  variation. Pass is the default for polished writing.
+
+### 4d. Claude's read of the node
+
+For every node (including passes), write one short sentence describing what Claude thinks
+the node is doing for its parent. This is *not* a verdict — it is an interpretation the
+user can grade against the raw first sentence. Examples:
+
+- "establish the RAP"
+- "provide the institutional background the reader needs before §3"
+- "show issuer incentives drive consumer choices (promised by intro §3)"
+- "motivate the empirical setting"
+
+If Claude cannot confidently state what the node is doing for its parent, the verdict is
+at least `weak` — an opener that is hard to interpret is failing its job.
+
+---
+
+## Step 5: Propose Rewrites for Every Weak or Failing Node
+
+For each node with verdict `weak` or `fail`, write a concrete replacement opener. Rules:
+
+1. **Replace the opener text the node actually has.** The `original` field must quote the
+   exact text currently in the file — it is the string the `--aggressive` path will search
+   for. Do not paraphrase.
+2. **Section rewrites:** 2–4 sentences. Anchor on a thematic phrase from the RAP seed,
+   say why the paper needs this section, and preview the specific deliverable (with
+   magnitudes for results sections).
+3. **Subsection / subsubsection rewrites:** 1–2 sentences. Hand off from the prior sibling
+   and set up the current node. Do not re-state the parent goal in full.
+4. **Paragraph rewrites:** one sentence. The new first sentence must state a claim that
+   advances the enclosing node's argument. Keep the rest of the paragraph untouched —
+   only the first sentence is rewritten.
+5. **No generic advice.** Every rewrite cites intro phrases by exact wording. "Add
+   motivation" is banned; write the actual replacement words.
+
+6. **Preserve the author's voice.** Do not introduce editorial verbs ("exploit,"
+   "weaponize," "tax," "leverage," "channel," etc.) unless the intro already uses them
+   on the same concept. Match the author's sentence rhythm — if the intro averages
+   ~15-word sentences in neutral diction, your rewrite does too. A good rewrite is
+   indistinguishable from something the author could have written on a better day.
+
+7. **Cap sentence 1 at 25 words.** The opener must land on first read. If the claim
+   does not fit in 25 words, use two sentences and let sentence 2 carry the supporting
+   detail. Nested opens with em-dashes and multiple subclauses are failures in their
+   own right, even if the content is correct.
+
+8. **Do not introduce new LaTeX commands.** No `\ref`, `\cite`, `\absinput`,
+   `\scalarinput`, or other macros unless they already appear in the node's current
+   text or have been verified to exist (grep the project). When you need a magnitude,
+   prefer plain prose ("around 25 percent," "roughly half their current level") so the
+   rewrite is safe to paste into any paper and the critic pass stays honest.
+
+Record each rewrite with a severity tag:
+- `high` — the node is `fail` and anchors a major argument beat (section, main subsection)
+- `medium` — the node is `fail` at a deeper level, or `weak` at a shallow level
+- `low` — the node is `weak` at a deeper level
+
+---
+
+## Step 5.4: Writing-Principles Gate (blocking)
+
+Before writing any proposed rewrite to `notes/relevance_audit.md`, run the surface critic on it: read @prompts/shared/components/surface_critic.prompt and follow its procedure (proposal context). Fix all violations in-place. The proposed rewrite cannot introduce R-THROAT-CLEAR, R-RHETQ, R-EMDASH, R-COLON, R-BANNED, or any other surface violation.
+
+---
+
+## Step 5.5: Self-Critic Pass (mandatory)
+
+Before writing the audit, re-read every rewrite you produced against four tests. Fail
+any test and you must either fix the rewrite or downgrade the node's verdict to pass.
+Never carry a bad rewrite forward on the theory that some rewrite is better than none.
+
+1. **Is it clearly better than the original?** Not just different — *better*. Read the
+   original and rewrite side by side and ask: would a careful reader prefer the rewrite?
+   If the honest answer is "they're both fine," the verdict is pass.
+
+2. **Does it preserve the author's voice?** Put your rewrite next to three random
+   sentences from the intro. If it sounds like a different author wrote it — different
+   diction, different rhythm, more editorial — revise until it does not.
+
+3. **Is sentence 1 ≤ 25 words?** Count them. If not, split or trim. No exceptions.
+
+4. **Did you introduce any new LaTeX macros?** Scan your rewrites for `\ref`, `\cite`,
+   `\absinput`, `\scalarinput`, `\input`. Any macro not already in the node's existing
+   text must be replaced with plain prose *or* verified to exist via grep before you
+   keep it.
+
+Then, before committing verdict counts, ask yourself: "Does this paper really have N
+weak openers, or did I hunt for problems because I was told to?" Papers that have been
+through multiple copyedit passes typically have ≤3 genuinely weak openers in the
+non-appendix material. If your count is materially higher, reread each weak node with
+the pass bar in mind and demote the marginal ones.
+
+---
+
+## Step 6: Write `notes/relevance_audit.md`
+
+Structure:
+
+```markdown
+# Relevance Audit
+
+## RAP Seed
+
+**Research question** (intro.tex:LL–LL):
+> [exact quote]
+
+**Main answer / finding** (intro.tex:LL–LL):
+> [exact quote]
+
+**Positioning** (intro.tex:LL–LL):
+> [exact quote]
+
+**Thematic phrases:**
+- "competitive bottleneck" (intro.tex:LL)
+- "diagnose what ails" (intro.tex:LL)
+- ...
+
+**Promised deliverables by section:**
+- §2 (Institutional Context): [what the intro says this section will show]
+- §3 (Reduced-Form Facts): ...
+
+---
+
+## How Claude Reads the Paper (Purpose Tree)
+
+Each node shows the actual first sentence of its opener paragraph and Claude's
+one-sentence read of what the node is doing for its parent. A mismatch between
+the two is a signal that either the opener is misleading or Claude has misread
+the paper — spot-check these before trusting the rewrites below.
+
+- **Paper thesis:** "[quoted from intro]"
+  - **§1 Introduction** (intro.tex:4)
+    - *First sentence:* "In the U.S., Visa and Mastercard process 80% of card transactions..."
+    - *Claude's read:* establish the RAP
+    - *Verdict:* pass
+  - **§2 Institutional Context** (context.tex:5)
+    - *First sentence:* "This section describes the institutional setting of payment networks."
+    - *Claude's read:* provide the background the reader needs before §3
+    - *Verdict:* **weak** — roadmap opener; never names the "competitive bottleneck" framing
+    - **§2.1 Payment networks** (context.tex:18)
+      - *First sentence:* "Payment networks are two-sided platforms..."
+      - *Claude's read:* introduce the two-sided platform model
+      - *Verdict:* pass
+    - **§2.2 Durbin Amendment** (context.tex:47)
+      - *First sentence:* "The Durbin Amendment capped debit interchange fees in 2010."
+      - *Claude's read:* motivate the empirical setting
+      - *Verdict:* **fail** — opener is a fact, not an argument; no link to the reduced-form findings
+      - *¶ (context.tex:52):* "Before the Amendment, debit interchange averaged 44 cents."
+        - *Claude's read:* pre-period baseline
+        - *Verdict:* weak
+  - **§3 Reduced-Form Facts** (reducedform.tex:12)
+    - ...
+
+Use `###`/`####`-style nesting via `-` bullets and indentation as shown above. The tree
+must cover every section, subsection, subsubsection, and paragraph that was audited.
+
+---
+
+## Violations (severity-sorted)
+
+List every `fail` entry first, then every `weak` entry. For each:
+
+### [H1] §2.2 Durbin Amendment (context.tex:47–51) — **fail**
+
+**Parent goal:** Motivate the empirical setting so §3's reduced-form findings land.
+
+**Original opener:**
+> The Durbin Amendment capped debit interchange fees in 2010. The amendment applied only
+> to banks with more than $10 billion in assets.
+
+**Verdict:** fail — opener is a fact, not an argument; no link to the reduced-form findings.
+Criterion F fails (no reason the paper needs this subsection), criterion H fails (reads as
+a standalone encyclopedic entry).
+
+**Proposed rewrite:**
+> The Durbin Amendment is the shock we exploit to diagnose what ails payment competition:
+> it capped debit interchange for large banks in 2010, driving a wedge between issuer
+> incentives at the treated and control banks. Section 3 uses this wedge to show that
+> issuer incentives, not consumer preferences, explain the post-reform collapse in debit
+> volume.
+
+**Why the rewrite works:**
+- Anchors on "diagnose what ails" (intro thematic phrase).
+- Makes the subsection's role explicit: it sets up §3's identification.
+- Previews the magnitude-bearing claim the reader will meet in §3.
+
+---
+
+### [H2] ...
+
+---
+
+## Summary Dashboard
+
+**Verdicts by level:**
+| Level          | Pass | Weak | Fail | Total |
+|----------------|------|------|------|-------|
+| section        |      |      |      |       |
+| subsection     |      |      |      |       |
+| subsubsection  |      |      |      |       |
+| paragraph      |      |      |      |       |
+
+**Top priority fixes:**
+1. [H1] §2.2 Durbin Amendment — see rewrite above.
+2. ...
+
+## What's Working
+
+1–3 bullets on strong openers — this is not filler, it reinforces the pattern
+the writer should replicate elsewhere.
+```
+
+---
+
+## Invocation
+
+```
+/copyedit relevance paper/
+/copyedit relevance main.tex
+/copyedit relevance intro.tex reducedform.tex model.tex
+/copyedit relevance --level=subsection paper/              # audit only subsections (dip-toes mode)
+/copyedit relevance --level=section,subsection paper/      # audit two levels
+```
+
+The orchestrator runs a RAP interview with the user before spawning this subagent (see
+`master.prompt` Step 6.4). The interview writes `notes/relevance_rap_seed.md`, which
+Step 1 reads verbatim.
+
+---
+
+## Judgment Principles (read before writing verdicts)
+
+1. **Do not grade on surface features.** A technically well-written opener that fails to
+   advance the parent goal is still a failure. Conversely, a clunky sentence that genuinely
+   anchors on the thematic phrase and advances the local argument is `weak` at worst.
+
+2. **Quote the evidence.** Every verdict cites the specific words that triggered it. Do
+   not write "lacks motivation" — write `lacks motivation: the only motivating clause is
+   "we now turn to" (line 47)`.
+
+3. **Proposed rewrites must be concrete.** Write the actual replacement sentences, citing
+   intro phrases by exact wording. "Add motivation" is banned.
+
+4. **Subsection rewrites should be shorter than section rewrites.** A subsection opener
+   that re-states the parent-section goal is over-scaffolding. Aim for 1–2 sentences that
+   hand off from the previous subsection and set up this one.
+
+5. **Roadmap-opener tells** — automatic fails for criterion B / H unless immediately
+   followed by a substantive motivation clause:
+   - "In this section we…"
+   - "Having established X, we now turn to Y."
+   - "This section presents…"
+   - "The section is organized as follows."
+   - "We first {verb}, then we {verb}, and finally {verb}."
+
+   **Exception — procedural subsections.** Goodness-of-fit, equilibrium definition,
+   robustness checks, model-closure nodes, proofs, and computational-detail subsections
+   are allowed to open with scoped roadmap language when the scope itself is the claim
+   ("I assess fit by examining three untargeted moments relevant to the counterfactuals").
+   For these nodes, criterion B is satisfied if the opener names the specific objects
+   being analyzed and their relevance. Do not flag them as weak unless criterion D also
+   fails — i.e., the opener gives no preview of what the analysis finds.
+
+6. **The principle behind the task** (quote this to yourself before writing each verdict):
+   *Every opener is a promise. The promise the reader will keep reading is earned when the
+   opener names the parent goal in the paper's own words, says why the reader will lose
+   something by skipping the node, and — for sectional nodes — hints at the magnitude of
+   what is to come.*
+
+---
+
+## Output Rules
+
+- Write `notes/relevance_audit.md`. It is the only output of this task.
+- The purpose tree must cover every audited node. Every weak-or-failing node must include
+  its proposed rewrite inline in the Violations section.
+- Do NOT edit source files. This task produces diagnosis + proposed rewrites only; the
+  user reviews and applies them by hand.
+- Do NOT emit a JSON sidecar or any machine-parseable artifact. The markdown is the
+  single source of truth and every rewrite must survive a human review.
+- Do NOT duplicate findings that `flow_extraction.md` already surfaces if both were run —
+  focus on the specific parent-goal judgment this task owns.
+
+Return to orchestrator: `{status: complete, nodes_audited: N, violations: M}`
