@@ -20,6 +20,11 @@ DAG_CACHE  = {project_root}/current/dag.json
 DAG_META   = {project_root}/current/dag_meta.json
 ```
 
+Before running any of the bash blocks below, export `SKILL_DIR`:
+```bash
+export SKILL_DIR=~/.claude/skills/plumber
+```
+
 ## Invocation
 
 ```
@@ -44,16 +49,16 @@ does not exist or is older than 1 hour, rebuild it:
 
 1. Run bootstrap to detect project:
    ```bash
-   bash ~/.claude/skills/plumber/scripts/bootstrap.sh [dir]
+   bash $SKILL_DIR/scripts/bootstrap.sh [dir]
    ```
 2. Scan all code files for I/O:
    ```bash
-   python3 ~/.claude/skills/plumber/scripts/scan_notebook.py <project_root>
-   python3 ~/.claude/skills/plumber/scripts/scan_script.py <project_root>
+   python3 $SKILL_DIR/scripts/scan_notebook.py <project_root>
+   python3 $SKILL_DIR/scripts/scan_script.py <project_root>
    ```
 3. Build the DAG:
    ```bash
-   python3 ~/.claude/skills/plumber/scripts/build_dag.py <project_root>
+   python3 $SKILL_DIR/scripts/build_dag.py <project_root>
    ```
 
 ### `reset` Command
@@ -62,14 +67,14 @@ Delete `current/dag.json` and `current/dag_meta.json`. Confirm to user.
 ### `status` Command (no subagent)
 Run directly:
 ```bash
-bash ~/.claude/skills/plumber/scripts/staleness.sh [dir]
+bash $SKILL_DIR/scripts/staleness.sh [dir]
 ```
 Display the staleness report to the user.
 
 ### `dry` Command (no subagent)
 Run directly:
 ```bash
-python3 ~/.claude/skills/plumber/scripts/find_duplicates.py [dirs...]
+python3 $SKILL_DIR/scripts/find_duplicates.py [dirs...]
 ```
 Display the duplicate report to the user.
 
