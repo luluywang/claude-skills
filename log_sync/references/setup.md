@@ -1,6 +1,14 @@
-# log_sync Install Guide
+# log_sync Setup
 
 Cross-machine installation reference for the log_sync skill (SessionEnd hook + bulk sync).
+
+## Table of contents
+
+- [Quick start](#quick-start)
+- [1. Local Mac setup](#1-local-mac-setup)
+- [2. HPC cluster setup](#2-hpc-cluster-setup)
+- [3. Hook registration in settings.json — step by step](#3-hook-registration-in-settingsjson--step-by-step)
+- [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -13,6 +21,26 @@ bash ~/.claude/skills/log_sync/scripts/detect_machine.sh
 ```
 
 It will print the recommended install command for the detected machine type.
+
+The canonical SessionEnd hook block used throughout this guide is:
+
+```json
+{
+  "hooks": {
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/log-sync-session-end.sh",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}
+```
 
 ---
 
@@ -37,25 +65,7 @@ It will print the recommended install command for the detected machine type.
    - Symlink the SessionEnd hook at `~/.claude/hooks/log-sync-session-end.sh`
    - Register the hook in `~/.claude/settings.json` automatically
 
-2. **Verify the hook is registered** in `~/.claude/settings.json`:
-
-   ```json
-   {
-     "hooks": {
-       "SessionEnd": [
-         {
-           "hooks": [
-             {
-               "type": "command",
-               "command": "~/.claude/hooks/log-sync-session-end.sh",
-               "timeout": 30
-             }
-           ]
-         }
-       ]
-     }
-   }
-   ```
+2. **Verify the hook is registered** in `~/.claude/settings.json` (see Quick start above for the canonical JSON block).
 
 3. **(Optional) Configure HPC pull** — create `~/.claude/hooks/log_sync.conf`:
 
@@ -102,25 +112,8 @@ On HPC clusters, Dropbox is not available. Transcripts are written to a local di
    `~/claude-logs/<project>/` on the cluster's home filesystem.
 
 3. **Register the hook in settings.json manually** if `python3` is unavailable on
-   the login node. Add this block to `~/.claude/settings.json`:
-
-   ```json
-   {
-     "hooks": {
-       "SessionEnd": [
-         {
-           "hooks": [
-             {
-               "type": "command",
-               "command": "~/.claude/hooks/log-sync-session-end.sh",
-               "timeout": 30
-             }
-           ]
-         }
-       ]
-     }
-   }
-   ```
+   the login node. Add the canonical SessionEnd hook block (see Quick start above)
+   to `~/.claude/settings.json`.
 
 4. **Pull logs to your laptop** — from the laptop, run `/log_sync` inside Claude Code,
    or run directly:
@@ -148,25 +141,8 @@ hook manually:
    {}
    ```
 
-3. Add (or merge) the `hooks` section:
-
-   ```json
-   {
-     "hooks": {
-       "SessionEnd": [
-         {
-           "hooks": [
-             {
-               "type": "command",
-               "command": "~/.claude/hooks/log-sync-session-end.sh",
-               "timeout": 30
-             }
-           ]
-         }
-       ]
-     }
-   }
-   ```
+3. Add (or merge) the `hooks` section using the canonical SessionEnd hook block
+   (see Quick start above).
 
 4. Verify the symlink exists:
 

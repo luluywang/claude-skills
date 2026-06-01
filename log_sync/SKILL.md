@@ -71,30 +71,7 @@ In dry-run mode, files are listed but nothing is transferred or logged.
 
 To override detection, set `LOG_SOURCE_DIR` in the environment before calling `sync.sh`.
 
-## Getting Started on a New Machine
-
-Run `detect_machine.sh` first — it identifies the machine type and prints the
-correct install command:
-
-```bash
-bash ~/.claude/skills/log_sync/scripts/detect_machine.sh
-```
-
-For detailed step-by-step instructions see
-[`docs/install_guide.md`](docs/install_guide.md), which covers:
-
-- **Local Mac** (section 1): `install.sh` + optional HPC pull config
-- **HPC cluster** (section 2): rsync skill files over SSH, manual hook registration
-- **Manual settings.json** (section 3): step-by-step hook entry when `install.sh` cannot write it
-
-## Installation
-
-```bash
-bash <repo>/log_sync/install.sh
-```
-
-This copies scripts to `~/.claude/skills/log_sync/` and symlinks the SessionEnd
-hook at `~/.claude/hooks/log-sync-session-end.sh`.
+For first-time setup on a new machine, see [`references/setup.md`](references/setup.md).
 
 ## Files
 
@@ -102,8 +79,8 @@ hook at `~/.claude/hooks/log-sync-session-end.sh`.
 log_sync/
 ├── SKILL.md                    # This document
 ├── install.sh                  # Installer (copies + symlinks + settings.json)
-├── docs/
-│   └── install_guide.md        # Cross-machine install guide (Mac, HPC, manual)
+├── references/
+│   └── setup.md                # Cross-machine setup guide (Mac, HPC, manual)
 ├── hooks/
 │   └── session_end.sh          # SessionEnd hook (transcript export + HPC pull)
 └── scripts/

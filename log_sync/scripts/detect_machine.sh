@@ -66,7 +66,7 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
         echo "  /log_sync   # inside Claude Code, or:"
         echo "  bash ~/.claude/skills/log_sync/scripts/sync.sh"
         echo ""
-        echo "  See docs/install_guide.md section 2 for full HPC instructions."
+        echo "  See references/setup.md section 2 for full HPC instructions."
     else
         echo "Detected: local Mac. Recommended setup:"
         echo ""
@@ -77,6 +77,6 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
         echo "  #   HPC_HOST=username@cluster.university.edu"
         echo "  #   HPC_LOG_DIR=~/claude-logs"
         echo ""
-        echo "  See docs/install_guide.md section 1 for full Mac instructions."
+        echo "  See references/setup.md section 1 for full Mac instructions."
     fi
 fi
