@@ -6,7 +6,31 @@
 
 You are orchestrating the complete processing of an economics paper PDF. This prompt will guide you through the entire workflow from segmentation to final assembly and QA.
 
-## Setup: Input Files
+## Table of Contents
+
+- [Setup: Capture Calling Directory and Input Files](#setup-capture-calling-directory-and-input-files)
+- [Phase 1: Document Segmentation (IF NEEDED)](#phase-1-document-segmentation-if-needed)
+- [Phase 2: Identify Processing Needs](#phase-2-identify-processing-needs)
+- [Phase 3: Parallel Processing](#phase-3-parallel-processing)
+  - [3a. Extract Tables (with optional visual verification)](#3a-extract-tables-with-optional-visual-verification)
+  - [3b. Describe Figures (with visual interpretation)](#3b-describe-figures-with-visual-interpretation)
+  - [3c. Convert Equations](#3c-convert-equations)
+  - [3d. Clean Section Text](#3d-clean-section-text)
+- [Phase 4: Validate Tables](#phase-4-validate-tables)
+- [Phase 5: Assembly](#phase-5-assembly)
+- [Phase 6: Quality Assurance](#phase-6-quality-assurance)
+- [Phase 7: Findings Summary](#phase-7-findings-summary)
+- [Phase 8: Copy Output to Calling Directory](#phase-8-copy-output-to-calling-directory)
+- [What To Do Next](#what-to-do-next)
+- [Output Summary](#output-summary)
+- [Important Notes](#important-notes)
+- [Quick Reference](#quick-reference)
+- [Example: Processing the Buchak Paper](#example-processing-the-buchak-paper)
+- [Tips for Success](#tips-for-success)
+
+## Setup: Capture Calling Directory and Input Files
+
+**First action**: Run `pwd` and save the result as `CALLING_DIR`. This is where output files will be copied at the end so the user doesn't lose them.
 
 Your working directory contains:
 - **Processed PDF pages**: `pages/[PAPER_NAME]/page_*.pdf`
@@ -301,6 +325,24 @@ The findings summary contains:
 - Table-by-table inventory (what each table shows, key estimates)
 - Key quantitative findings (5-10 most important numerical results)
 - Notes for future agents pointing to relevant files
+
+## Phase 8: Copy Output to Calling Directory
+
+Copy the final output files back to `CALLING_DIR` (captured at setup) so the user has them in the directory where they invoked the skill:
+
+```bash
+cp output/[PAPER_NAME].md "$CALLING_DIR/[PAPER_NAME].md"
+cp output/[PAPER_NAME]_findings.md "$CALLING_DIR/[PAPER_NAME]_findings.md" 2>/dev/null || true
+```
+
+Then tell the user:
+> Output saved to:
+> - `[CALLING_DIR]/[PAPER_NAME].md`
+> - `[CALLING_DIR]/[PAPER_NAME]_findings.md` (if generated)
+
+Skip the QA JSON — it's a debug artifact, not useful to the user.
+
+---
 
 ## What To Do Next
 

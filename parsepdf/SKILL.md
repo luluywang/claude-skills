@@ -15,7 +15,7 @@ Convert economics research PDFs into structured markdown with tables, figures, a
 
 ## Model Selection Policy
 
-**All parsepdf tasks should use Haiku** when/if subagents are added. All operations (segmentation, table extraction, figure captioning, equation conversion, text cleaning, validation, QA) involve pattern recognition, structured transformation, or mechanical validation—none require the field expertise of Sonnet or deep reasoning of Extended Thinking.
+**All parsepdf tasks use Haiku.** Each task prompt declares this in its frontmatter `Model Directive`. All operations (segmentation, table extraction, figure captioning, equation conversion, text cleaning, validation, QA) involve pattern recognition, structured transformation, or mechanical validation—none require the field expertise of Sonnet or deep reasoning of Extended Thinking.
 
 Estimated cost: ~$2/PDF with Haiku vs ~$10/PDF with Sonnet.
 
@@ -36,12 +36,14 @@ Estimated cost: ~$2/PDF with Haiku vs ~$10/PDF with Sonnet.
 
 ## Workflow
 
-1. **Extract PDF content** → Run shell script to split pages and extract text
-2. **Segment document** → Identify structure (sections, page ranges)
-3. **Process components** → Extract tables, figures, equations as needed
-4. **Assemble output** → Combine into final markdown
-5. **Quality check** → Validate output completeness
-6. **Findings summary** → Generate table-by-table summaries and key quantitative findings (opt-out with `--no-summary`)
+1. **Capture calling directory** → Record `$PWD` so output can be returned there
+2. **Extract PDF content** → Run shell script to split pages and extract text
+3. **Segment document** → Identify structure (sections, page ranges)
+4. **Process components** → Extract tables, figures, equations as needed
+5. **Assemble output** → Combine into final markdown
+6. **Quality check** → Validate output completeness
+7. **Findings summary** → Generate table-by-table summaries and key quantitative findings (opt-out with `--no-summary`)
+8. **Copy output** → Copy final `.md` files back to the calling directory
 
 ---
 
@@ -148,69 +150,7 @@ Prints `PASS` or `FAIL` for each dependency (pdfinfo, pdftotext, pdfseparate, py
 
 ## Environment Setup
 
-### Quick check
-
-Before running a parse job on a new machine, verify all dependencies are present:
-
-```bash
-./scripts/check_env.sh
-```
-
-The script prints `PASS` or `FAIL` for each dependency and exits non-zero if anything is missing.
-
----
-
-### Required: poppler-utils (system package)
-
-The shell scripts require `pdfinfo`, `pdftotext`, and `pdfseparate` from poppler-utils.
-
-**Install:**
-- **macOS:** `brew install poppler`
-- **Ubuntu/Debian:** `sudo apt-get install poppler-utils`
-- **Fedora:** `sudo dnf install poppler-utils`
-
-### Required: Python 3
-
-Needed for `extract_tables.py` and pdfplumber table extraction.
-
-- **conda/mamba:** `mamba activate <your-env>`  (Python 3 ships with any standard conda environment)
-- **System:** ensure `python3` is on `$PATH`
-
-### Required: pdfplumber (Python package)
-
-Used for advanced table extraction. **Auto-installed** when you run `extract_tables.py`.
-
-If auto-install fails, install manually:
-
-```bash
-# pip
-pip install pdfplumber>=0.10.0
-
-# conda/mamba (recommended on shared machines)
-mamba install -c conda-forge pdfplumber
-```
-
-### Optional: PyMuPDF / fitz (Python package)
-
-Used for visual interpretation of figures and tables via Haiku subagents. Not required for basic text extraction.
-
-```bash
-# pip
-pip install pymupdf>=1.23.0
-
-# conda/mamba
-mamba install -c conda-forge pymupdf
-```
-
-### Recommended: conda/mamba environment activation
-
-If you manage dependencies through conda or mamba, activate the environment before running any scripts:
-
-```bash
-mamba activate <your-env>          # e.g.: mamba activate research
-./scripts/check_env.sh             # verify all packages are visible
-./scripts/process_paper.sh paper.pdf
-```
+Run `./scripts/check_env.sh` before parsing on a new machine — it prints `PASS`/`FAIL` for each dependency (poppler-utils, python3, pdfplumber, PyMuPDF) and exits non-zero if anything is missing.
 
 ---
 
@@ -249,117 +189,8 @@ User: "Process paper.pdf and extract everything"
 | Problem | Solution |
 |---------|----------|
 | PDF extraction fails | Check PDF is not password-protected |
-| Missing poppler tools | Install poppler-utils (see Dependencies) |
+| Missing poppler tools | Install poppler-utils (run `./scripts/check_env.sh` for details) |
 | pdfplumber not found | Will auto-install; if fails, run `pip install pdfplumber` |
 | Structure unclear | Use segment.md with more context pages |
 | Tables garbled | Use layout text instead of plain text |
 | Missing content | Check QA report, re-extract specific pages |
-
----
-
-## Directory Structure
-
-```
-.claude/skills/parsepdf/
-├── SKILL.md                 ← This file (entry point)
-├── scripts/                 ← Shell and Python scripts
-│   ├── process_paper.sh     ← Main PDF extraction
-│   ├── batch_process.sh     ← Batch processing
-│   ├── cache.sh             ← Cache management
-│   ├── extract_tables.py    ← pdfplumber table extraction
-│   ├── extract_bibliography.sh
-│   ├── extract_citations.sh
-│   └── check_env.sh          ← Verify environment before parsing
-├── assets/
-│   └── tasks/               ← Task prompts
-│       ├── segment.md
-│       ├── extract_tables.md
-│       ├── visual_interpret_table.md
-│       ├── describe_figures.md
-│       ├── visual_interpret_figure.md
-│       ├── convert_equations.md
-│       ├── clean_text.md
-│       ├── validate_tables.md
-│       ├── qa_check.md
-│       ├── findings_summary.md
-│       └── orchestrate.md
-├── references/              ← Documentation
-│   ├── README.md
-│   └── QUICKSTART.md
-├── cache/                   ← Runtime cache (generated)
-└── output/                  ← Final output (generated)
-```
-
----
-
-## Visual Interpretation Features (NEW)
-
-The parsepdf skill can now augment text-based extraction with visual interpretation using Haiku subagents. This adds rich descriptions to figures and verifies complex table structures.
-
-### Figure Visual Interpretation
-
-**What it does:**
-- Reads PDF pages as images
-- Generates 2-4 sentence paragraph descriptions of figures
-- Captures visual patterns and observations beyond captions
-- Results in more accessible, informative markdown
-
-**Configuration:**
-```json
-"visual_interpretation": {
-  "figures": "always|low_confidence|never"
-}
-```
-
-**Cost:** ~$0.003 per figure (~$0.09 per typical paper with 30 figures)
-
-### Table Visual Verification
-
-**What it does:**
-- Reads PDF pages as images
-- Assesses table structure (simple, multi-level headers, panels, complex)
-- Detects merged cells and visual grouping
-- Validates pdfplumber extraction accuracy
-- Provides metadata for improved markdown conversion
-
-**Configuration:**
-```json
-"visual_interpretation": {
-  "tables": "always|complex|never"
-}
-```
-
-**Cost:** ~$0.003 per table (~$0.02 per paper with 15 tables, complex only)
-
-### Configuration Defaults
-
-- `visual_figures`: "always" (interpret all figures)
-- `visual_tables`: "always" (verify all tables)
-- Users can override in `work/[PAPER_NAME]/config.json`
-
-### Examples
-
-**Simple scatter plot with visual interpretation:**
-- Text extraction gets: axes labels, legend
-- Visual interpretation adds: "Scatter plot showing positive relationship between education and wages. Points cluster around upward-sloping trend with 95% confidence band. Tighter scatter at higher education suggests less wage variability among college-educated workers."
-
-**Complex multi-level table verification:**
-- pdfplumber extraction gets: raw table data
-- Visual verification identifies: 3-row header hierarchy, merged cells for outcome groupings, panel structure
-- Result: Much cleaner markdown with proper header nesting
-
-### Backward Compatibility
-
-All changes are additive and backward compatible:
-- New JSON fields default to null
-- Visual interpretation is optional (config-driven)
-- Disabling entirely: `visual_figures="never"`, `visual_tables="never"`
-- Identical output to previous version if visual interpretation disabled
-
----
-
-## References
-
-For detailed documentation:
-- [README](references/README.md) - Full feature documentation
-- [QUICKSTART](references/QUICKSTART.md) - Getting started guide
