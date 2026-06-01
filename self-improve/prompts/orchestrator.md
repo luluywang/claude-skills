@@ -30,13 +30,32 @@ All skill reads/edits target the repo. Scripts run from installed copy at
 
 Run:
 ```bash
-python3 {SKILL_DIR}/scripts/scan_logs.py [--since Nd] [--all]
+python3 {SKILL_DIR}/scripts/scan_logs.py [--since Nd] [--all] [--project-filter a,b,c]
 ```
 This respects `{CACHE_DIR}/manifest.json` and `last_run_date`. Returns JSON list of unprocessed files.
+
+Pass through `--project-filter` verbatim if present in `ARGS` — it restricts the scan to the named top-level project dirs under `LOGS_DIR`. Use this when the user wants an analysis scoped to specific projects (e.g. writing-loop evidence mining across `crosssell,payment-network-competition,fiserv_interchange`).
 
 Output: `--- [SCAN] Found N new files (X MB)`
 
 If 0 new files → skip to Phase 3 (re-run aggregation on cached outputs).
+
+**Phase 1.5 — writing-turn mining (optional, when `--project-filter` is set)**:
+When a project filter is active, also pre-mine each listed project for writing-iteration evidence:
+
+```bash
+for proj in <csv>; do
+  python3 {SKILL_DIR}/scripts/extract_writing_turns.py --project "$proj"
+  python3 {SKILL_DIR}/scripts/tag_iteration_loops.py --project "$proj"
+done
+python3 {SKILL_DIR}/scripts/summarize_writing_sessions.py \
+  --projects <csv> \
+  --out {CACHE_DIR}/writing-loop-evidence.md
+```
+
+Output: `--- [1.5] Writing-loop evidence → self-improve-cache/writing-loop-evidence.md`
+
+The brief is a side output consumed directly by the user; it is not fed into the aggregate or proposal phases.
 
 ---
 

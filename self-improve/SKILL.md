@@ -33,6 +33,9 @@ SKILLS_DIR   = {PROJECT_ROOT}
 /self-improve --since 7d   # Only last 7 days
 /self-improve --since 90d  # Last 90 days
 /self-improve --all        # Reprocess all logs (full audit)
+/self-improve --project-filter crosssell,fiserv_interchange
+                           # Restrict scan to listed project dirs (comma-separated).
+                           # Combine with --since or --all.
 /self-improve --report     # Re-read last proposals without reprocessing
 /self-improve docket       # Show all pending docket items (no re-scan)
 /self-improve apply P1        # Apply proposal P1 from docket (marks as applied)

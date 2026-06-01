@@ -3,11 +3,16 @@
 scan_logs.py — Find unprocessed JSONL files in claude-logs.
 
 Usage:
-    python3 scan_logs.py [--since Nd] [--all]
+    python3 scan_logs.py [--since Nd] [--all] [--project-filter a,b,c]
 
 Options:
-    --since Nd    Override last_run_date; look back N days (e.g. 7d, 30d)
-    --all         Reprocess everything (ignore manifest + last_run_date)
+    --since Nd             Override last_run_date; look back N days (e.g. 7d, 30d)
+    --all                  Reprocess everything (ignore manifest + last_run_date)
+    --project-filter CSV   Restrict scan to these top-level project dirs under LOGS_DIR.
+                           Also widens manifest-skip: when a filter is given, files
+                           NOT under the filter's dirs are excluded, and files that
+                           ARE under it but already processed can be force-included
+                           with --all.
 
 Output: JSON list of {path, rel_path, size_kb} to stdout
 """
@@ -47,7 +52,13 @@ def main():
     parser.add_argument("--since", default=None, help="Look back N days (e.g. 7d)")
     parser.add_argument("--all", dest="all_files", action="store_true",
                         help="Reprocess all files (ignore manifest)")
+    parser.add_argument("--project-filter", dest="project_filter", default=None,
+                        help="CSV of top-level project dirs under LOGS_DIR to restrict scan")
     args = parser.parse_args()
+
+    project_filter = None
+    if args.project_filter:
+        project_filter = {p.strip() for p in args.project_filter.split(",") if p.strip()}
 
     manifest = load_manifest()
     processed_keys = set(manifest.get("processed", {}).keys())
@@ -70,7 +81,10 @@ def main():
 
     all_files = []
     for p in sorted(LOGS_DIR.rglob("*.jsonl")) + sorted(LOGS_DIR.rglob("*.jsonl.gz")):
-        if p.relative_to(LOGS_DIR).parts[0] in EXCLUDE_DIRS:
+        top = p.relative_to(LOGS_DIR).parts[0]
+        if top in EXCLUDE_DIRS:
+            continue
+        if project_filter is not None and top not in project_filter:
             continue
         all_files.append(p)
 
