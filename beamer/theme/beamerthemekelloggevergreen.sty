@@ -1,0 +1,466 @@
+% beamerthemekelloggevergreen.sty
+% Kellogg School of Management - Evergreen Beamer Theme
+% Replicates Kellogg-PPT-template_Apr2024.pptx visual design
+
+\ProvidesPackage{beamerthemekelloggevergreen}[2026/03/26 Kellogg Evergreen Beamer Theme]
+
+% ── Required packages ──────────────────────────────────────────────
+\RequirePackage{tikz}
+\RequirePackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\RequirePackage[T1]{fontenc}
+\RequirePackage[default,semibold]{sourcesanspro}  % Source Sans Pro family
+\RequirePackage{amsmath,amssymb}
+\RequirePackage{graphicx}
+\RequirePackage{booktabs}
+\RequirePackage{hyperref}
+\RequirePackage{xcolor}
+\RequirePackage{array}
+\RequirePackage{multirow}
+\RequirePackage{textcomp}
+
+\renewcommand{\familydefault}{\sfdefault}
+
+% Prevent hyphenation; use ragged right for body text
+\tolerance=1000
+\emergencystretch=3em
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+\raggedright
+
+% ── Wider content margins (match PPTX ~0.64" = 1.6cm from each side) ──
+\setbeamersize{text margin left=1.6cm, text margin right=1.6cm}
+
+% ── Colors (from theme1.xml "Kellogg Evergreen" color scheme) ─────
+\definecolor{kelloggpurple}{HTML}{4E2A84}     % Northwestern purple
+\definecolor{kelloggdarkpurple}{HTML}{472580}  % Darker variant
+\definecolor{kelloggdeeppurple}{HTML}{3B1F6E}  % Deep shade for geometric pattern
+\definecolor{kelloggmidpurple}{HTML}{7B6BA0}   % Mid-tone for geometric facets
+\definecolor{kelloggaccent1}{HTML}{422A6C}     % Theme accent1
+\definecolor{kelloggmagenta}{HTML}{A22663}     % Theme dk2
+\definecolor{kelloggteal}{HTML}{177392}        % Theme accent2
+\definecolor{kellogggreen}{HTML}{0E7D52}       % Theme accent3
+\definecolor{kelloggolive}{HTML}{6BA04B}       % Theme accent4
+\definecolor{kellogggold}{HTML}{E0A42E}        % Theme accent5
+\definecolor{kelloggcoral}{HTML}{D74B3D}       % Theme accent6
+\definecolor{kelloggcream}{HTML}{E9E9E5}       % Theme lt2
+
+% Colored box backgrounds (softer, more modern palette)
+\definecolor{boxblue}{RGB}{218,230,244}
+\definecolor{boxgreen}{RGB}{224,240,226}
+\definecolor{boxpink}{RGB}{244,226,226}
+\definecolor{boxlightblue}{RGB}{224,236,248}
+
+% ── Beamer structure colors ──────────────────────────────────────
+\setbeamercolor{structure}{fg=kelloggpurple}
+\setbeamercolor{title}{fg=white}
+\setbeamercolor{subtitle}{fg=white}
+\setbeamercolor{author}{fg=white}
+\setbeamercolor{date}{fg=white}
+\setbeamercolor{institute}{fg=white}
+
+\setbeamercolor{frametitle}{fg=kelloggpurple,bg=white}
+\setbeamercolor{framesubtitle}{fg=kelloggpurple!70}
+
+\setbeamercolor{normal text}{fg=black,bg=white}
+\setbeamercolor{alerted text}{fg=kelloggcoral}
+\setbeamercolor{example text}{fg=kellogggreen}
+
+\setbeamercolor{itemize item}{fg=kelloggpurple}
+\setbeamercolor{itemize subitem}{fg=kelloggpurple!70}
+\setbeamercolor{itemize subsubitem}{fg=kelloggpurple!50}
+\setbeamercolor{enumerate item}{fg=kelloggpurple}
+
+\setbeamercolor{footline}{fg=white,bg=kelloggpurple}
+
+% ── Fonts ────────────────────────────────────────────────────────
+\setbeamerfont{title}{size=\Large,series=\bfseries}
+\setbeamerfont{subtitle}{size=\normalsize,series=\fontseries{l}\selectfont}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamerfont{framesubtitle}{size=\normalsize,series=\fontseries{l}\selectfont}
+\setbeamerfont{footline}{size=\tiny}
+\setbeamerfont{institute}{size=\small,series=\fontseries{l}\selectfont}
+
+% ── Navigation & outer theme ────────────────────────────────────
+\setbeamertemplate{navigation symbols}{}
+\beamertemplatenavigationsymbolsempty
+
+% ── Itemize bullets ──────────────────────────────────────────────
+\setbeamertemplate{itemize item}{\raisebox{0.12ex}{\scriptsize$\blacksquare$}}
+\setbeamertemplate{itemize subitem}{\raisebox{0.08ex}{\scriptsize\color{kelloggpurple!60}$\blacktriangleright$}}
+\setbeamertemplate{itemize subsubitem}{\raisebox{0.12ex}{\tiny$\bullet$}}
+
+% ── Itemize spacing ──────────────────────────────────────────────
+\setlength{\itemsep}{0.5em}
+
+% ═════════════════════════════════════════════════════════════════
+% BACKGROUND IMAGE PATHS
+% Users can override these with \renewcommand before \begin{document}
+% ═════════════════════════════════════════════════════════════════
+\newcommand{\kelloggbgpurple}{kellogg-bg-purple}
+\newcommand{\kelloggbgwhite}{kellogg-bg-white}
+\newcommand{\kellogglogowhite}{kellogg-logo-white-small}
+
+% Content slides use plain white background (Content A/B style).
+% Geometric backgrounds are only used on title/divider/statement slides.
+
+% ═════════════════════════════════════════════════════════════════
+% HEADLINE TEMPLATE
+% Thin purple strip at very top of content slides (4pt)
+% ═════════════════════════════════════════════════════════════════
+\setbeamertemplate{headline}{%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=4pt]{headlinebar}%
+  \end{beamercolorbox}%
+}
+\setbeamercolor{headlinebar}{bg=kelloggpurple}
+
+% ═════════════════════════════════════════════════════════════════
+% FRAME TITLE TEMPLATE (Content A / Content B style)
+% ═════════════════════════════════════════════════════════════════
+\setbeamertemplate{frametitle}{%
+  \vskip8pt%
+  \begin{beamercolorbox}[wd=\paperwidth,leftskip=1.6cm,rightskip=1.6cm]{frametitle}%
+    \usebeamerfont{frametitle}\insertframetitle%
+    \ifx\insertframesubtitle\empty\else%
+      \\[2pt]%
+      {\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle}%
+    \fi%
+  \end{beamercolorbox}%
+  \vskip6pt%
+}
+
+% ═════════════════════════════════════════════════════════════════
+% FOOTLINE TEMPLATE (Content slides)
+% Purple trapezoid bar at bottom-left (2.73in wide, 0.29in tall)
+% with slide number + Kellogg logo image inside.
+% ═════════════════════════════════════════════════════════════════
+\setbeamertemplate{footline}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    % Slide number (small, bottom-left corner)
+    \node[anchor=south west,text=kelloggpurple!60,font=\fontsize{5}{6}\selectfont,
+          inner sep=0pt]
+      at ([xshift=0.3cm,yshift=0.18cm]current page.south west)
+      {\insertframenumber};
+    % Small Kellogg logo (bottom-left, next to slide number)
+    \node[anchor=south west,inner sep=0pt]
+      at ([xshift=0.8cm,yshift=0.18cm]current page.south west)
+      {\includegraphics[height=0.22cm]{kellogg-logo-purple}};
+  \end{tikzpicture}%
+  \vspace{0.5cm}%
+}
+
+% ═════════════════════════════════════════════════════════════════
+% TITLE PAGE TEMPLATE (Purple variant - Layout 0)
+% Uses actual PPTX background image for pixel-perfect match
+% ═════════════════════════════════════════════════════════════════
+\defbeamertemplate*{title page}{kelloggevergreen}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    % Background image (purple with geometric triangles)
+    \node[anchor=center,inner sep=0pt] at (current page.center)
+      {\includegraphics[width=\paperwidth,height=\paperheight]{\kelloggbgpurple}};
+    % Semi-transparent purple overlay for text legibility
+    \fill[kelloggpurple,opacity=0.35]
+      (current page.south west) rectangle (current page.north east);
+    % Title (white, ~1" from left, ~16% from top)
+    \node[anchor=north west,text=white,font=\fontsize{26}{30}\selectfont\bfseries,
+          text width=0.75\paperwidth,align=left]
+      at ([xshift=0.075\paperwidth,yshift=-0.16\paperheight]current page.north west)
+      {\raggedright\inserttitle};
+    % Subtitle
+    \node[anchor=north west,text=white,font=\fontsize{13}{17}\selectfont,
+          text width=0.72\paperwidth,align=left]
+      at ([xshift=0.075\paperwidth,yshift=-0.39\paperheight]current page.north west)
+      {\raggedright\insertsubtitle};
+    % Author / date / institute
+    \node[anchor=north west,text=white,font=\fontsize{10}{14}\selectfont,
+          text width=0.4\paperwidth,align=left]
+      at ([xshift=0.075\paperwidth,yshift=-0.60\paperheight]current page.north west)
+      {\insertauthor\ifx\insertinstitute\empty\else\\[3pt]\insertinstitute\fi%
+       \ifx\insertdate\empty\else\\[3pt]\insertdate\fi};
+    % Kellogg logo image (white, bottom-left)
+    \node[anchor=south west,inner sep=0pt]
+      at ([xshift=0.075\paperwidth,yshift=0.085\paperheight]current page.south west)
+      {\includegraphics[height=0.4cm]{\kellogglogowhite}};
+    % Copyright bottom-right
+    \node[anchor=south east,text=white!70,font=\fontsize{6}{8}\selectfont,
+          inner sep=0pt]
+      at ([xshift=-0.04\paperwidth,yshift=0.03\paperheight]current page.south east)
+      {\textcopyright\ \the\year\ Northwestern University};
+  \end{tikzpicture}%
+}
+
+% ═════════════════════════════════════════════════════════════════
+% WHITE TITLE PAGE (Layout 3)
+% Uses actual PPTX white background image
+% ═════════════════════════════════════════════════════════════════
+\newcommand{\whitetitlepage}{%
+  {%
+    \setbeamertemplate{headline}{}%
+    \setbeamertemplate{footline}{}%
+    \begin{frame}[plain,noframenumbering]
+      \begin{tikzpicture}[remember picture,overlay]
+        % White background image (with purple geometric triangles)
+        \node[anchor=center,inner sep=0pt] at (current page.center)
+          {\includegraphics[width=\paperwidth,height=\paperheight]{\kelloggbgwhite}};
+        % Title (purple)
+        \node[anchor=north west,text=kelloggpurple,
+              font=\fontsize{26}{30}\selectfont\bfseries,
+              text width=0.75\paperwidth,align=left]
+          at ([xshift=0.075\paperwidth,yshift=-0.16\paperheight]current page.north west)
+          {\raggedright\inserttitle};
+        % Subtitle
+        \node[anchor=north west,text=kelloggpurple,
+              font=\fontsize{13}{17}\selectfont,
+              text width=0.72\paperwidth,align=left]
+          at ([xshift=0.075\paperwidth,yshift=-0.39\paperheight]current page.north west)
+          {\raggedright\insertsubtitle};
+        % Author / date / institute (purple)
+        \node[anchor=north west,text=kelloggpurple,
+              font=\fontsize{10}{14}\selectfont,
+              text width=0.4\paperwidth,align=left]
+          at ([xshift=0.075\paperwidth,yshift=-0.60\paperheight]current page.north west)
+          {\insertauthor\ifx\insertinstitute\empty\else\\[3pt]\insertinstitute\fi%
+           \ifx\insertdate\empty\else\\[3pt]\insertdate\fi};
+        % Kellogg logo image (purple version)
+        \node[anchor=south west,inner sep=0pt]
+          at ([xshift=0.075\paperwidth,yshift=0.085\paperheight]current page.south west)
+          {\includegraphics[height=0.4cm]{kellogg-logo-purple}};
+      \end{tikzpicture}
+    \end{frame}
+  }%
+}
+
+% ═════════════════════════════════════════════════════════════════
+% SECTION DIVIDER SLIDE (Layout 6 - "Divider Slide - Kellogg")
+% Uses actual PPTX purple background image
+% ═════════════════════════════════════════════════════════════════
+\newcounter{secslide}
+\newcommand{\sectionslide}[2][]{%
+  \stepcounter{secslide}%
+  {%
+    \setbeamertemplate{headline}{}%
+    \setbeamertemplate{footline}{%
+      \begin{tikzpicture}[remember picture,overlay]
+        \node[anchor=south west,text=white,font=\fontsize{6}{7}\selectfont,
+              inner sep=0pt]
+          at ([xshift=0.25cm,yshift=0.15cm]current page.south west)
+          {\insertframenumber};
+      \end{tikzpicture}%
+      \vspace{0.5cm}%
+    }%
+    \begin{frame}[plain]
+      \begin{tikzpicture}[remember picture,overlay]
+        % Background image (purple with geometric triangles)
+        \node[anchor=center,inner sep=0pt] at (current page.center)
+          {\includegraphics[width=\paperwidth,height=\paperheight]{\kelloggbgpurple}};
+        % Semi-transparent overlay
+        \fill[kelloggpurple,opacity=0.35]
+          (current page.south west) rectangle (current page.north east);
+        % Section title (white, large, left-aligned)
+        \node[anchor=north west,text=white,
+              font=\fontsize{24}{29}\selectfont\bfseries,
+              text width=0.70\paperwidth,align=left,
+              name=sectitle\thesecslide]
+          at ([xshift=0.075\paperwidth,yshift=-0.26\paperheight]current page.north west)
+          {\raggedright #2};
+        % Optional subtitle label (small, above the line)
+        \ifx\relax#1\relax\else
+          \node[anchor=north west,text=white!70,
+                font=\fontsize{9}{11}\selectfont\fontseries{l}\selectfont,
+                inner sep=0pt]
+            at ([yshift=-14pt]sectitle\thesecslide.south west)
+            {#1};
+        \fi
+        % Horizontal accent line
+        \draw[white!60,line width=0.5pt]
+          ([yshift=-28pt]sectitle\thesecslide.south west) --
+          ([xshift=0.845\paperwidth,yshift=-28pt]sectitle\thesecslide.south west);
+        % Kellogg logo image (white, bottom-left)
+        \node[anchor=south west,inner sep=0pt]
+          at ([xshift=0.075\paperwidth,yshift=0.06\paperheight]current page.south west)
+          {\includegraphics[height=0.35cm]{\kellogglogowhite}};
+      \end{tikzpicture}
+    \end{frame}
+  }%
+}
+
+% ═════════════════════════════════════════════════════════════════
+% SUBSECTION DIVIDER (lighter variant for sub-topics)
+% ═════════════════════════════════════════════════════════════════
+\newcommand{\subsectionslide}[1]{%
+  {%
+    \setbeamertemplate{headline}{}%
+    \setbeamertemplate{footline}{%
+      \begin{tikzpicture}[remember picture,overlay]
+        \node[anchor=south west,text=kelloggpurple!50,
+              font=\fontsize{6}{7}\selectfont,inner sep=0pt]
+          at ([xshift=0.25cm,yshift=0.15cm]current page.south west)
+          {\insertframenumber};
+      \end{tikzpicture}%
+      \vspace{0.5cm}%
+    }%
+    \begin{frame}[plain]
+      \begin{tikzpicture}[remember picture,overlay]
+        % Light background
+        \fill[kelloggpurple!6] (current page.south west) rectangle (current page.north east);
+        % Faded white background image
+        \node[anchor=center,inner sep=0pt,opacity=0.06] at (current page.center)
+          {\includegraphics[width=\paperwidth,height=\paperheight]{\kelloggbgwhite}};
+        % Section title (purple)
+        \node[anchor=north west,text=kelloggpurple,
+              font=\fontsize{24}{29}\selectfont\bfseries,
+              text width=0.70\paperwidth,align=left]
+          at ([xshift=0.075\paperwidth,yshift=-0.26\paperheight]current page.north west)
+          {\raggedright #1};
+        % Horizontal accent line
+        \draw[kelloggpurple!60,line width=0.7pt]
+          ([xshift=0.075\paperwidth,yshift=-0.51\paperheight]current page.north west) --
+          ([xshift=0.92\paperwidth,yshift=-0.51\paperheight]current page.north west);
+        % Kellogg logo (purple, faded)
+        \node[anchor=south west,inner sep=0pt,opacity=0.3]
+          at ([xshift=0.075\paperwidth,yshift=0.06\paperheight]current page.south west)
+          {\includegraphics[height=0.35cm]{kellogg-logo-purple}};
+      \end{tikzpicture}
+    \end{frame}
+  }%
+}
+
+% ═════════════════════════════════════════════════════════════════
+% STATEMENT SLIDE (Layout 15 - "Statment")
+% Large quote/statement text on purple background
+% ═════════════════════════════════════════════════════════════════
+\newcommand{\statementslide}[1]{%
+  {%
+    \setbeamertemplate{headline}{}%
+    \setbeamertemplate{footline}{}%
+    \begin{frame}[plain]
+      \begin{tikzpicture}[remember picture,overlay]
+        % Background image
+        \node[anchor=center,inner sep=0pt] at (current page.center)
+          {\includegraphics[width=\paperwidth,height=\paperheight]{\kelloggbgpurple}};
+        % Darker overlay for contrast
+        \fill[kelloggpurple,opacity=0.45]
+          (current page.south west) rectangle (current page.north east);
+        % Statement text (white, large, left side)
+        \node[anchor=west,text=white,
+              font=\fontsize{18}{24}\selectfont,
+              text width=0.55\paperwidth,align=left]
+          at ([xshift=0.075\paperwidth]current page.west)
+          {\raggedright #1};
+        % Footer bar
+        \fill[kelloggpurple]
+          (current page.south west) --
+          ([xshift=6.93cm]current page.south west) --
+          ([xshift=6.50cm,yshift=0.74cm]current page.south west) --
+          ([yshift=0.74cm]current page.south west) -- cycle;
+        % Slide number
+        \node[anchor=south west,text=white,font=\fontsize{6}{7}\selectfont,
+              inner sep=0pt]
+          at ([xshift=0.25cm,yshift=0.15cm]current page.south west)
+          {\insertframenumber};
+        % Logo in footer
+        \node[anchor=south west,inner sep=0pt]
+          at ([xshift=1.2cm,yshift=0.22cm]current page.south west)
+          {\includegraphics[height=0.32cm]{\kellogglogowhite}};
+      \end{tikzpicture}
+    \end{frame}
+  }%
+}
+
+% ═════════════════════════════════════════════════════════════════
+% COLORED BOX ENVIRONMENTS (tcolorbox)
+% ═════════════════════════════════════════════════════════════════
+\newtcolorbox{bluebox}[1][]{
+  colback=boxblue!35,
+  colframe=kelloggpurple!30,
+  boxrule=0pt,
+  arc=6pt,
+  left=10pt, right=10pt, top=8pt, bottom=8pt,
+  fontupper=\normalsize\raggedright,
+  leftrule=3pt,
+  coltitle=kelloggpurple, fonttitle=\bfseries,
+  colbacktitle=boxblue!55,
+  toptitle=5pt, bottomtitle=5pt,
+  #1
+}
+
+\newtcolorbox{greenbox}[1][]{
+  colback=boxgreen!35,
+  colframe=kellogggreen!40,
+  boxrule=0pt,
+  arc=6pt,
+  left=10pt, right=10pt, top=8pt, bottom=8pt,
+  fontupper=\normalsize\raggedright,
+  leftrule=3pt,
+  coltitle=kellogggreen!80!black, fonttitle=\bfseries,
+  colbacktitle=boxgreen!55,
+  toptitle=5pt, bottomtitle=5pt,
+  #1
+}
+
+\newtcolorbox{pinkbox}[1][]{
+  colback=boxpink!35,
+  colframe=kelloggcoral!40,
+  boxrule=0pt,
+  arc=6pt,
+  left=10pt, right=10pt, top=8pt, bottom=8pt,
+  fontupper=\normalsize\raggedright,
+  leftrule=3pt,
+  coltitle=kelloggcoral!90!black, fonttitle=\bfseries,
+  colbacktitle=boxpink!55,
+  toptitle=5pt, bottomtitle=5pt,
+  #1
+}
+
+% Column header box (high-contrast: dark text on colored background)
+\newtcolorbox{columnheader}[1][]{
+  colback=boxpink!60,
+  colframe=boxpink!80,
+  boxrule=0pt,
+  arc=3pt,
+  left=4pt, right=4pt, top=4pt, bottom=4pt,
+  fontupper=\normalsize\bfseries,
+  colupper=black,
+  halign=center,
+  #1
+}
+
+% Purple-accented box for key takeaways
+\newtcolorbox{purplebox}[1][]{
+  colback=kelloggpurple!6,
+  colframe=kelloggpurple!6,
+  boxrule=0pt,
+  arc=6pt,
+  left=10pt, right=10pt, top=8pt, bottom=8pt,
+  fontupper=\normalsize\raggedright,
+  leftrule=3pt,
+  colframe=kelloggpurple!50,
+  #1
+}
+
+% ── Return decomposition box ───────────────────────────────────
+\newcommand{\returndecomp}[4]{%
+  \begin{center}
+  \begin{tikzpicture}[
+    box/.style={rectangle, rounded corners=4pt, draw=kelloggpurple!25, fill=kelloggpurple!8,
+                minimum width=2.2cm, minimum height=1cm, align=center,
+                font=\small\bfseries, text=kelloggpurple!90!black},
+    op/.style={font=\Large\bfseries, text=kelloggpurple!60}
+  ]
+    \node[box] (tr) at (0,0) {#1};
+    \node[op] at (1.5,0) {=};
+    \node[box] (dy) at (3,0) {#2};
+    \node[op] at (4.5,0) {+};
+    \node[box] (eg) at (6,0) {#3};
+    \node[op] at (7.5,0) {+};
+    \node[box] (pe) at (9.3,0) {#4};
+  \end{tikzpicture}
+  \end{center}
+}
+
+% ── Utility: class/slide numbering ─────────────────────────────
+\newcommand{\classnum}{4}
+\newcounter{slideidx}
+\setcounter{slideidx}{0}
+
+\endinput
