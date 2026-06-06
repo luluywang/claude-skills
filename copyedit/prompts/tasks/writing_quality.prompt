@@ -10,6 +10,12 @@
 
 **Reference:** Read `references/writing_quality_standards.md` before analyzing. It codifies the author's 15 principles and 9 LLM-vs-Human contrasts.
 
+**Author voice (guidance, not enforced rules):**
+
+@~/.claude/skills/writing_standards/voice_spec.md
+
+Use this as the author's diagnostic-stance layer. When a body paragraph buries its verdict, hedges the sign, or leads with evidence/citation instead of the claim, flag it as a **guidance** note tied to the relevant voice rule — do not force a rewrite. The 10 Dimensions below remain the operational checklist; voice_spec sharpens what "good stance" looks like for this author.
+
 ---
 
 ## Section Format

@@ -8,6 +8,8 @@ The **canonical prose definitions** of the underlying writing rules live in `wri
 
 When a rule's IDs, severity, or enforcement behavior needs to change, edit this file. When the underlying writing principle itself needs to change, edit `writing_standards/economics_writing.md` (and reflect any registry consequences here).
 
+The author's diagnostic-stance layer lives in `writing_standards/voice_spec.md` (lead with the verdict, commit the sign, the prior is a foil). It is **reference guidance, not part of this registry** — the `writing_quality` task reads it to judge paragraph-level stance, but it generates no `R-*` IDs and triggers no auto-fix or block. Surgical surface rules cannot manufacture assertiveness; voice_spec informs judgment, not enforcement.
+
 ---
 
 ## Rule Index

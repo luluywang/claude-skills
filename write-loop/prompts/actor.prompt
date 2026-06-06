@@ -22,6 +22,17 @@ Treat those principles as binding on every rewrite. In particular: terse and
 precise, mechanism over description, one point per paragraph, motivation first,
 no throat-clearing, claims match evidence.
 
+## Author voice — diagnostic stance
+
+@~/.claude/skills/writing_standards/voice_spec.md
+
+This is where assertiveness is produced. When the goal calls for stance (or when
+the persona is "diagnostic voice"), restructure toward the spec: open each
+paragraph with the verdict, split the claim sentence from the mechanism, commit
+the sign while hedging only the magnitude, and make the prior view a foil ("not
+A, but B") rather than a lead-in. Never invent claims to do this — restructure
+what's already there.
+
 ## Procedure
 
 1. Read `PREV_TEXT` and `PREV_CRITIQUE` in full.

@@ -1,6 +1,6 @@
 ---
 name: write-loop
-description: Iterative writing with an actor-critic loop. Asks the user for a goal (e.g. "sound less AI") and a critic persona (harsh editor, McCloskey-strict, generous mentor, hostile referee, or custom), then rewrites the target text, has a fresh-eyes critic grade against the goal and shared writing standards, and iterates until clean, stagnant, or max iterations. Only activate when the user explicitly invokes '/write-loop'.
+description: Iterative writing with an actor-critic loop. Asks the user for a goal (e.g. "sound less AI") and a critic persona (harsh editor, McCloskey-strict, generous mentor, hostile referee, diagnostic voice, or custom), then rewrites the target text, has a fresh-eyes critic grade against the goal and shared writing standards, and iterates until clean, stagnant, or max iterations. Only activate when the user explicitly invokes '/write-loop'.
 ---
 
 # write-loop
@@ -23,6 +23,9 @@ formats are out of scope.
   This skill reads copyedit's files at runtime through `@` references:
   - `~/.claude/skills/copyedit/references/writing_quality_standards.md`
   - `~/.claude/skills/copyedit/prompts/shared/components/surface_critic.prompt`
+- The `writing_standards` skill must be installed at `~/.claude/skills/writing_standards/`.
+  The actor and critic read its author-voice spec at runtime:
+  - `~/.claude/skills/writing_standards/voice_spec.md`
 
   **Design constraint:** write-loop never copies those files. Editing
   copyedit's principles or surface rules automatically propagates to

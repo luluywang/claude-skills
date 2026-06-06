@@ -18,6 +18,12 @@ The copyedit and revisions skills both assess and enforce writing quality. This 
 directory prevents standard drift: when a rule improves, update it here once and both
 skills benefit automatically.
 
+Most files here are universal principles. `voice_spec.md` is the one author-specific
+layer — Lulu Wang's diagnostic stance (lead with the verdict, commit the sign, the prior
+is a foil) — that sits on top of the universal rules and is read by the judgment-based
+consumers (copyedit's quality task, write-loop, revisions) as guidance, not as enforced
+rule IDs.
+
 ## Contents
 
 | File | Purpose | Used by |
@@ -25,6 +31,7 @@ skills benefit automatically.
 | `economics_writing.md` | 14 prose principles + 9 LLM-vs-Human contrasts | copyedit (quality task), revisions (fixer, critic) |
 | `ai_detection_rules.md` | Concrete anti-patterns: meta-commentary, transitions, hedging, template structures | copyedit (ai_detection task), revisions (fixer) |
 | `vocabulary_ban_list.md` | Banned AI vocabulary + verbose economics phrases + forbidden constructions | copyedit (ai_detection, word_choice tasks), revisions (fixer, critic) |
+| `voice_spec.md` | Author voice & diagnostic stance: 18 rules + use/avoid vocabulary + annotated examples | copyedit (quality task), revisions (fixer, critic), write-loop (actor, critic) |
 
 ## How to Reference These Files
 

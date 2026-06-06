@@ -2,6 +2,12 @@
 
 **Purpose:** Concrete rules for writing prose that reads as human-authored academic economics. Derived from McCloskey, Cochrane, and Chaubey principles. Referenced by both fixer and critic.
 
+**Author voice (guidance, not enforced rules):**
+
+@~/.claude/skills/writing_standards/voice_spec.md
+
+Match this diagnostic stance when editing: verdict-first paragraphs, the claim sentence split from the mechanism, a committed sign with only the magnitude hedged, and the prior view used as a foil. An edit that buries the verdict or hedges the direction drifts out of voice — fix it. This guides judgment; it adds no enforced rule IDs.
+
 ## Contents
 
 - Rule 1: No AI-Typical Patterns (meta-commentary, transitions, smarmy reframing, AI vocabulary, hedging, template structures)

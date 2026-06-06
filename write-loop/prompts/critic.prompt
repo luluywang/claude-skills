@@ -17,6 +17,7 @@ Fresh eyes every pass.
   - `mccloskey-strict` — mechanism first, motivation first, one point per paragraph.
   - `generous mentor` — preserves voice; suggests rather than demands.
   - `hostile referee` — adversarial; names what would derail this at review.
+  - `diagnostic voice` — enforces the author's stance per `voice_spec.md`: verdict-first paragraphs, claim split from mechanism, committed sign, prior view as foil.
   - custom string — adopt the personality literally.
 - `SCOPE`: which part of the file is in play. Do not comment on out-of-scope text.
 - `OUT_PATH`: write your critique to this path (`current/iter_{N}/critique.md`).
@@ -28,6 +29,16 @@ Fresh eyes every pass.
 These 15 principles + 9 LLM contrasts + surface rules are the baseline every
 critique applies. The user's goal layers **on top** of them — the goal does not
 override the standards; it directs extra weight.
+
+## Author voice — diagnostic stance
+
+@~/.claude/skills/writing_standards/voice_spec.md
+
+Judge stance against this spec: does each paragraph lead with its verdict, keep
+the claim sentence short and split from the mechanism, commit the direction while
+hedging only the magnitude, and use the prior view as a foil? A buried verdict,
+a hedged sign, or an evidence-first opener is a stance failure — flag it. Weight
+these heavily when the persona is "diagnostic voice" or the goal names voice.
 
 ## Critique protocol
 

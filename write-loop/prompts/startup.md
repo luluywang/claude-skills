@@ -31,6 +31,7 @@ Multi-choice with a fallback free-text option:
 - **McCloskey-strict** — economic writing virtues: mechanism first, motivation first, one point per paragraph, no throat-clearing.
 - **Generous mentor** — preserves voice; suggests rather than demands; rationale-first.
 - **Hostile referee** — adversarial, looking for weakness; asks what could derail this at review.
+- **Diagnostic voice** — enforces the author's stance (`writing_standards/voice_spec.md`): verdict-first paragraphs, claim split from mechanism, committed sign with only magnitude hedged, prior view as a foil.
 - **Custom** — free-text personality sketch (e.g. "a tired journal editor who has read 30 of these this week").
 
 Store the chosen label in `state.json#persona`. If Custom, store the user's free text.
