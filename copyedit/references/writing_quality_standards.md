@@ -30,6 +30,7 @@ Each rule below has a stable ID (`R-*`), a `Priority` tag (`high` rules also app
 | R-COINAGE | Novel hyphenated coinages need definition or replacement | standard | flag | apply, proposal |
 | R-BANNED | Match against project banned-phrases list — Critical | standard | block | apply, proposal |
 | R-NOVEL-COMPOUND | New `X-vs-Y`/`X-only`/`X-Y-Z` compounds need definition or replacement | standard | flag | apply, proposal |
+| R-NOUN-STACK | Unstack 3+ noun piles / buried nominalizations into prose; spare terms of art | standard | flag | apply, proposal |
 | R-METAPHOR-VERB | Metaphor verbs (`tilts`, `hinges`, `lands`, `speaks to`, `flows from`) without referent | standard | flag | apply, proposal |
 | R-VAGUE-QUALIFIER | `bounded/limited/nontrivial/meaningful [vague noun]` needs a number | standard | flag | apply, proposal |
 | R-INTENSITY | No added `collapses`/`dramatically`/`paradigm shift`/etc. | high (within Self-Critic) | block | proposal |
@@ -419,6 +420,31 @@ Any multi-word hyphenated coinage matching the pattern `X-vs-Y`, `X-only`, or `X
 
 ---
 
+### R-NOUN-STACK: De-stack compound nouns
+
+**Priority:** standard | **Enforcement:** flag | **Context:** apply, proposal
+
+A noun phrase that stacks 3+ nouns/modifiers ("reward response decomposition"), or a nominalized phrase that buries an action in a noun ("feedback from the movement of cohort *k*'s spending shares"), should be unstacked into prose: turn the pile into a prepositional phrase or short clause, de-nominalize the buried verb, or relabel. **Favor a few more words over the stack.**
+
+**Distinct from R-NOVEL-COMPOUND.** That rule fires only on hyphenated `X-vs-Y`/`X-only`/`X-Y-Z` patterns and its remedy is define-or-replace (which can produce a *shorter* phrase). R-NOUN-STACK fires on bare noun-piles and nominalizations (no hyphen needed), fires even when the compound recurs or is defined, and its remedy is the opposite — add words to unstack. See also R-COINAGE.
+
+**Exception:** leave intact (a) load-bearing terms per R-LOADBEARING, and (b) established field terms of art — "income semi-elasticities," "dominant diagonal," assumption names, "fixed effects," etc. When unsure whether a term is art or jargon, **flag — do not rewrite** (the second layer of protection for terms of art that R-LOADBEARING may miss).
+
+| Stacked compound | Unstacked |
+|---|---|
+| Step B: Reward response decomposition | Step B: The reward response |
+| direct network-balance rebate | direct rebate: every dollar the network collects from the rate hike on method *l* is returned to method-*l* users |
+| reward feedback from the movement of cohort *k*'s spending shares | feedback from the movement in cohort *k*'s spending shares *(de-nominalize only)* |
+| the share-feedback term | the spending-share term |
+| recentered composition feedback / composition feedback | drop the modifier; relabel (e.g. underbrace label → feedback) |
+| centered merchant/cohort fee gap | fee gaps taken relative to the average |
+| a cohort spending-weighted sum is a revenue-weighted moment | summing over merchants with cohort spending weights is the same as a revenue-weighted average |
+| spending-share envelope formula | the envelope formula in spending shares |
+
+**Leave intact:** income semi-elasticities, dominant diagonal, assumption names. See surface_critic P2 and the canonical principle in `writing_standards/vocabulary_ban_list.md` § Compound Noun Stacking. Unstacking is exempt from the R-LENGTH-DELTA word-count cap (clause d).
+
+---
+
 ### R-METAPHOR-VERB: Metaphor verb flag
 
 **Priority:** standard | **Enforcement:** flag | **Context:** apply, proposal
@@ -644,7 +670,7 @@ A load-bearing term is a hyphenated multi-word phrase that appears 3 or more tim
 
 **Priority:** standard | **Enforcement:** block | **Context:** proposal
 
-When rewriting a passage: `word_count(rewrite) ≤ max(1.2 × word_count(original), word_count(original) + 5)`. Excess is allowed only if the rewrite (a) reduces hedge density, (b) replaces a vague noun with a concrete noun or number, or (c) cannot be shortened without losing meaning. Otherwise downgrade to flag-only.
+When rewriting a passage: `word_count(rewrite) ≤ max(1.2 × word_count(original), word_count(original) + 5)`. Excess is allowed only if the rewrite (a) reduces hedge density, (b) replaces a vague noun with a concrete noun or number, (c) cannot be shortened without losing meaning, or (d) unstacks a compound noun per R-NOUN-STACK (adding words to de-stack is the intended fix, so it does not count against the cap). Otherwise downgrade to flag-only.
 
 ---
 

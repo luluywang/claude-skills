@@ -102,6 +102,25 @@ Find the action hiding in the noun. Make it the verb.
 
 ---
 
+## Compound Noun Stacking (Unstack into Prose)
+
+A noun phrase that stacks 3+ nouns/modifiers ("reward response decomposition"), or a nominalized phrase that buries an action in a noun ("feedback from the movement of cohort *k*'s spending shares"), reads as compressed jargon and forces the reader to unpack it. Unstack it into prose: turn the pile into a prepositional phrase or short clause, de-nominalize the buried verb, or relabel. **Favor a few more words over the stack** — this is the one place where adding words is the fix.
+
+| Stacked compound | Unstacked |
+|---|---|
+| Step B: Reward response decomposition | Step B: The reward response |
+| direct network-balance rebate | direct rebate: every dollar the network collects from the rate hike on method *l* is returned to method-*l* users |
+| reward feedback from the movement of cohort *k*'s spending shares | feedback from the movement in cohort *k*'s spending shares *(de-nominalize only)* |
+| the share-feedback term | the spending-share term |
+| recentered composition feedback / composition feedback | drop the modifier; relabel (e.g. underbrace label → feedback) |
+| centered merchant/cohort fee gap | fee gaps taken relative to the average |
+| a cohort spending-weighted sum is a revenue-weighted moment | summing over merchants with cohort spending weights is the same as a revenue-weighted average |
+| spending-share envelope formula | the envelope formula in spending shares |
+
+**Exception — leave terms of art intact.** Established field terms with a fixed technical meaning are not stacks to unpack: "income semi-elasticities," "dominant diagonal," assumption names, "fixed effects," and the like. Load-bearing terms that recur with a specific meaning in the document also stay. When unsure whether a phrase is a term of art or invented compression, flag it — do not rewrite.
+
+---
+
 ## Useless Modifiers to Cut
 
 ### Adjectives

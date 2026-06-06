@@ -21,6 +21,7 @@ Use this file when:
   - Transitions That Scream LLM
   - Formulaic Openers
   - Hedging
+  - Compound Noun Stacking
   - Over-Explanation
 - Part C: Rhetorical and Argument Tells
   - Results-First Openings
@@ -116,6 +117,12 @@ One hedge per claim maximum. Never stack hedges.
 - Overuse of "arguably," "potentially," "plausibly"
 - Non-load-bearing hedges: "roughly" when not a true approximation, "appears" when not genuinely uncertain
 - Reflexive softening: "unlikely to be sufficient," "may not fully capture"
+
+### Compound Noun Stacking
+
+- **LLM pattern:** Piles 3+ nouns/modifiers into one phrase ("reward response decomposition," "spending-share envelope formula") or buries an action in a noun ("feedback from the movement of cohort *k*'s spending shares"). Reads as compressed jargon the reader must unpack.
+- **Human pattern:** Unstacks the pile into a prepositional phrase or short clause, de-nominalizes the buried verb, or relabels — favoring a few more words over the stack. Genuine terms of art ("income semi-elasticities," "dominant diagonal") are left intact.
+- See `vocabulary_ban_list.md` § Compound Noun Stacking for the full before/after table and the terms-of-art exception.
 
 ### Over-Explanation
 - Explaining Econ 101 to field experts (what fixed effects do, what IV means, definitions of common terms)

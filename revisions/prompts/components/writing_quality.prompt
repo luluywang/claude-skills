@@ -5,7 +5,7 @@
 ## Contents
 
 - Rule 1: No AI-Typical Patterns (meta-commentary, transitions, smarmy reframing, AI vocabulary, hedging, template structures)
-- Rule 2: Plain Language (Anglo-Saxon over Latin, concrete over abstract, kill nominalizations)
+- Rule 2: Plain Language (Anglo-Saxon over Latin, concrete over abstract, kill nominalizations, unstack compound nouns)
 - Rule 3: Sentence Construction (S-V-O, active voice, vary length)
 - Rule 4: Economics-Specific (verbose patterns, every number must argue, word precision, useless modifiers)
 - Rule 5: Match the Author's Voice
@@ -77,6 +77,11 @@ Never use: align, crucial, delve, elaborate, emphasize, enhance, enduring, foste
 - "make a calculation" → "calculate"
 - "conduct an analysis" → "analyze"
 - Find the action hiding in the noun. Make it the verb.
+
+### Unstack Compound Nouns
+- A noun phrase that stacks 3+ nouns/modifiers ("reward response decomposition," "spending-share envelope formula"), or a nominalization that buries an action in a noun, reads as compressed jargon. Unstack it into prose: turn the pile into a prepositional phrase or short clause, de-nominalize the buried verb, or relabel. "reward response decomposition" → "the reward response"; "spending-share envelope formula" → "the envelope formula in spending shares."
+- Favor a few more words over the stack — this is the one place where a longer phrasing is the fix.
+- **Exception:** leave established terms of art intact ("income semi-elasticities," "dominant diagonal," assumption names, "fixed effects"). When unsure whether a phrase is a term of art or invented compression, flag it — do not rewrite.
 
 ---
 

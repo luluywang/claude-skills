@@ -104,9 +104,9 @@ If the FIRST sentence of any new/changed paragraph starts with a meta-opener AND
 
 Reporting (apply context): if a colon was removed, log `Surface fix: colon construction in sentence [N].`
 
-### P2: Enforce R-NOVEL-COMPOUND, R-METAPHOR-VERB, R-VAGUE-QUALIFIER
+### P2: Enforce R-NOVEL-COMPOUND, R-NOUN-STACK, R-METAPHOR-VERB, R-VAGUE-QUALIFIER
 
-Apply the three rules listed by ID. Bodies are in `writing_quality_standards.md`. Fix in-place when the rule's enforcement is auto-fix; flag for human review otherwise.
+Apply the four rules listed by ID. Bodies are in `writing_quality_standards.md`. Fix in-place when the rule's enforcement is auto-fix; flag for human review otherwise. R-NOUN-STACK is **flag only** — flag a rewrite that introduces or keeps a stacked compound, but do not auto-rewrite it here (a term of art that R-LOADBEARING missed must not be clobbered).
 
 ### When a violation is found
 
