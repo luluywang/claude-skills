@@ -56,6 +56,22 @@ Task-first editing in the orchestrator context. No subagents, no notes files, no
 
 Rewrites a section directly in the orchestrator context. No subagents, no notes files, no pipeline. Applies the 15 writing principles plus surface fixes (colons, em-dashes, transitions, hedging). Shows annotated diff, applies on approval.
 
+### Implement Review — Apply With Judgment (No Subagents)
+
+```
+/copyedit implement                       # Implement the whole review across all proposed files
+/copyedit implement intro.tex             # Implement only proposals for one file
+/copyedit implement --dry-run             # Print the apply/adapt/skip/defer plan; change nothing
+/copyedit implement --min-severity=High   # Only act on High and Critical items
+/copyedit implement intro.tex "Model"     # Implement within a named section
+```
+
+Second half of a decoupled workflow: run `review` (or `full`) to **find and propose** (writes `notes/*.md`), then `implement` to **apply with judgment**. Implement runs in the orchestrator (active session model — not a Haiku/Sonnet subagent) so the strongest available model reads the consolidated proposals plus the source and decides what and how to apply: it follows the project voice, honors load-bearing terms, resolves conflicts between overlapping suggestions, adapts proposed wording rather than pasting it, revisits flag-only items, and skips suggestions that do not improve the text. Every changed sentence passes the surface-critic gate before it is written. **Applies directly** — review the result with `git diff`, revert with `git restore <file>`.
+
+Reads `notes/review_digest.md` (preferred) or the individual proposal files (fallback). If no review has been run, it stops and asks you to run `/copyedit review` first. Does **not** touch grammar from `copy_edits.md` (already auto-applied during review).
+
+**Distinct from `apply`:** `/copyedit apply` (Haiku) mechanically applies only items you pre-marked `[x]`, verbatim. `implement` requires no pre-marking and uses editorial judgment.
+
 ### Single Task
 
 ```
@@ -89,7 +105,8 @@ Rewrites a section directly in the orchestrator context. No subagents, no notes 
 ### Utility Commands
 
 ```
-/copyedit apply                     # Apply all marked [x] changes
+/copyedit apply                     # Apply all marked [x] changes (mechanical, verbatim)
+/copyedit implement                 # Apply the review with judgment (active model — see above)
 /copyedit interactive notes/simplifications.md  # Walk through suggestions
 /copyedit continue                  # Resume interrupted review
 /copyedit ban "phrase"              # Add phrase to project banned list
@@ -137,6 +154,7 @@ The bootstrap auto-detects hyphenated multi-word phrases appearing 3+ times in s
 |------|--------|-------------|
 | `task_edit` | Direct file edits | Execute any free-form task, then apply principle guardrails to new/changed text. Catch-all route. |
 | `rewrite` | Direct file edits | Apply 15 writing principles + surface fixes to a specific section. No notes files. |
+| `implement` | Direct file edits + digest markings | Read a prior review's proposals and apply them with editorial judgment (apply/adapt/skip/defer). Active model, not a subagent. Applies directly; review via `git diff`. |
 
 ### File-Level Tasks (Parallel, Haiku)
 
@@ -220,6 +238,7 @@ To force a full re-run from scratch, start a new session: `/copyedit review` wil
 |-----------|---------------|
 | any free-form task + file (not a known keyword) | task_edit (catch-all fast-path, no subagents) |
 | "rewrite this section", "rewrite lines" | rewrite (fast-path, no subagents) |
+| "implement the review", "apply the suggestions with judgment", "implement" | implement (fast-path, active model, no subagents) |
 | "fix grammar", "check for errors" | grammar |
 | "check for AI tells", "sound less AI" | ai_detection |
 | "improve word choice", "make it punchier" | word_choice |
@@ -240,6 +259,7 @@ To force a full re-run from scratch, start a new session: `/copyedit review` wil
 |-------|------------|
 | `<any task>` | task_edit catch-all (no subagents) — when not a known keyword |
 | `rewrite` | Targeted principle rewrite (no subagents) |
+| `implement` | Judgment-based apply of a prior review's proposals (active model, no subagents) |
 | `review` | grammar + ai_detection + word_choice + sentence + orality |
 | `full` | All tasks including paper-level **except** `flow` (flow is opt-in only — `relevance` replaces it in the default pipeline) |
 | `quick` | grammar + ai_detection |
@@ -376,6 +396,8 @@ Then apply accepted changes:
 /copyedit apply
 ```
 
+To skip the marking step entirely and let the active model apply the whole review with editorial judgment, use `/copyedit implement` instead (see *Implement Review* above).
+
 ---
 
 ## Quality Standards
@@ -414,6 +436,7 @@ Individual task prompts are located at:
 
 - `prompts/tasks/task_edit.prompt` **(catch-all fast-path, no subagents)**
 - `prompts/tasks/rewrite.prompt` **(fast-path, no subagents)**
+- `prompts/tasks/implement.prompt` **(fast-path, active model, no subagents)** — judgment-based apply of a prior review's proposals
 - `prompts/tasks/grammar.prompt`
 - `prompts/tasks/ai_detection.prompt`
 - `prompts/tasks/word_choice.prompt`

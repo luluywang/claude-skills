@@ -288,9 +288,48 @@ IF request matches "number_fix" pattern:
 
 ---
 
+### Fast-Path: implement (Judgment-Based Apply)
+
+**After checking rewrite and number_fix**, check if the request is `implement`:
+
+```
+IF request matches "implement" pattern:
+    GOTO Implement Path (runs in orchestrator, no analysis subagents)
+    DO NOT proceed to Step 3 or beyond
+```
+
+**Implement Path** runs entirely in the orchestrator (active session model) so the
+strongest available model applies the review with editorial judgment. **Do not spawn
+subagents to do the editing** — that discards the judgment this path exists for.
+
+1. Read `prompts/tasks/implement.prompt` for full instructions
+2. Strip flags: `--dry-run`, `--min-severity=<tier>`. Parse optional scope (file / range / section)
+3. Locate proposals: `notes/review_digest.md` (preferred) → individual `notes/*.md` proposal files (fallback). If none exist, stop and tell the user to run `/copyedit review` first
+4. Load author context: voice (`.copyedit_status`), load-bearing terms, banned phrases, `llm_tagging`
+5. Group proposals by source file; implement one file at a time with judgment (apply / adapt / skip / defer / stale), running the surface-critic gate on every changed sentence before writing
+6. Apply directly via Edit (descending line order). Under `--dry-run`, print the plan and write nothing
+7. Mark each digest item applied/adapted/skipped/deferred/stale; print the summary table and point the user to `git diff`
+8. Done. No wrapup, no new notes files, no tasks.json.
+
+**Request patterns that trigger Implement Path:**
+
+| Pattern | Example |
+|---------|---------|
+| "implement" (whole review) | `/copyedit implement` |
+| "implement" + file | `/copyedit implement intro.tex` |
+| "implement" + dry-run | `/copyedit implement --dry-run` |
+| "implement" + severity floor | `/copyedit implement --min-severity=High` |
+| "implement" + section | `/copyedit implement intro.tex "Model"` |
+
+**Distinct from `apply`:** `/copyedit apply` (apply_marked, Haiku) mechanically applies only
+items the user pre-marked `[x]`, verbatim. `implement` reads everything and decides what and
+how to apply, with no pre-marking required.
+
+---
+
 ### Fast-Path: task_edit (Catch-All)
 
-**After checking rewrite and number_fix**, but **before** the full pipeline, check if the request is a free-form task edit:
+**After checking rewrite, number_fix, and implement**, but **before** the full pipeline, check if the request is a free-form task edit:
 
 ```
 IF request does NOT match:
@@ -298,7 +337,7 @@ IF request does NOT match:
     - "number_fix" keyword → already handled above
     - Known task names: grammar, ai_detection, word_choice, sentence_analysis,
       orality, structure, flow_extraction, relevance, writing_quality, methodology,
-      strip_llm, reflow, apply, interactive, continue
+      strip_llm, reflow, apply, implement, interactive, continue
     - "review" / "full" / "comprehensive" / "quick" → pipeline routes
 THEN:
     GOTO Task Edit Path (no subagents, no pipeline)
@@ -374,6 +413,7 @@ IF ai_detection_pending is non-empty AND user did NOT explicitly request a new a
 | "Strip llm tags" / "Remove llm wrappers" / "Finalize" | strip_llm |
 | "Grade writing quality" / "Improve writing" | writing_quality |
 | "Rewrite section" / "Rewrite lines" / "rewrite" | rewrite (Fast-Path — no subagents) |
+| "implement the review" / "apply the suggestions with judgment" / "implement" | implement (Fast-Path — orchestrator/active model, no subagents) |
 | "Reflow sentences" / "One sentence per line" / "reflow" | reflow (Phase 0 — pre-processing) |
 | "number_fix" / "Fix numbers" / "Update numbers" / "Annotate numbers" | number_fix (Opt-In — not in review/full) |
 | `ban "phrase"` / `/copyedit ban "phrase"` | Append phrase to `notes/copyedit_banned_phrases.md` (create if absent). File-append only — not a prose-emitting task. Confirm: "Added 'phrase' to banned list." |

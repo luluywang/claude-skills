@@ -1,0 +1,165 @@
+# Task: Implement Review (Judgment-Based Apply)
+
+**Model:** Active session model — runs in the **orchestrator context, NOT a subagent.** The entire point of this path is to use the most capable model available to apply the review with editorial judgment: follow the author's voice, resolve conflicts between overlapping suggestions, adapt rewrites instead of pasting them, and skip suggestions that do not actually improve the text.
+
+**Purpose:** Read the proposals a prior `review`/`full` run generated and implement them directly in the source files. This is the second half of a decoupled workflow: `review` finds and proposes (writing `notes/*.md`), `implement` applies with judgment.
+
+**Applies directly.** No per-edit approval. The user reviews the result with `git diff` and reverts with `git restore <file>` (or `git checkout -- <file>`) if needed. Tell them this in the summary.
+
+---
+
+## Relationship to the Other Apply Paths
+
+| Path | Model | Behavior |
+|------|-------|----------|
+| `apply_marked` (`/copyedit apply`) | Haiku | Mechanical. Applies only items the user pre-marked `[x]`, verbatim as written. |
+| `interactive` (`/copyedit interactive`) | orchestrator | Walks items one-by-one for accept/reject/modify. |
+| **`implement` (this task)** | active model | **Judgment-based.** Reads everything, decides what and how to apply, adapts wording to voice and context, resolves conflicts. No pre-marking required. Aggressive by default. |
+
+Do not delegate the editing to a Haiku/Sonnet subagent. If subagents do the writing, the judgment this path exists to provide is lost.
+
+---
+
+## Precondition
+
+A prior review must have produced proposals. Check, in order:
+
+1. `notes/review_digest.md` — preferred. Consolidated, deduplicated, self-screened. Use this as the primary input.
+2. If the digest is absent, fall back to the individual proposal files: `ai_detection.md`, `simplifications.md`, `word_choice_review.md`, `sentence_analysis.md`, `orality.md`, `writing_quality.md`, `structure_analysis.md`, `relevance_audit.md`, `methodology_review.md`.
+3. If none of these exist: **stop.** Tell the user: "No review proposals found. Run `/copyedit review <files>` (or `/copyedit full`) first, then `/copyedit implement`."
+
+**Do not** consume `copy_edits.md` — grammar fixes were already auto-applied to the source during `review`. Re-applying them is redundant and may collide.
+
+---
+
+## Flags
+
+| Flag | Effect |
+|------|--------|
+| `--dry-run` | Build and print the full edit plan (apply / adapt / skip / defer decisions, with rationale) but make **no** edits. Use to preview before committing. |
+| `--min-severity=<tier>` | Only act on items at or above the tier (`Critical` > `High` > `Medium` > `Low`). Default: all tiers. |
+
+Scope targeting works like `rewrite`/`task_edit`: `file.tex`, `file.tex:50-80`, or `file.tex "Section Name"`. With no file argument, implement across every file that has items in the digest.
+
+---
+
+## Step 0: Load Author Context (once)
+
+These constrain **every** edit. Load before touching any file.
+
+1. **Voice** — read `notes/.copyedit_status` for a `voice:` line (`I` / `we` / `mixed`). Store as `project_voice`. Every applied edit must preserve it (R-VOICE-LOCK). If absent, infer from the source and stay consistent within a file.
+2. **Load-bearing terms** — read `notes/copyedit_load_bearing_terms.md` (bullets under `## Terms`). **Never** strip or paraphrase one of these in an applied edit (R-LOADBEARING). A proposal that does so is skipped, not applied.
+3. **Banned phrases** — read `notes/copyedit_banned_phrases.md` (primary) or `notes/banned_phrases.md` (fallback), bullets under `## Banned`. Never introduce one (R-BANNED). If a proposed revision contains one, fix it before applying or skip the item.
+4. **LLM tagging** — read `llm_tagging` from `notes/tasks.json`. If `true` AND the target is a `.tex` file, wrap every changed span in `\begin{llm}...\end{llm}` (only the changed portion, not surrounding text).
+
+---
+
+## Step 1: Parse Scope and Group Proposals by File
+
+1. Parse the user's scope argument (file / range / section), if any.
+2. From the digest, every item lives under a `### <Severity> — [filename.tex]` header, which assigns it to a source file. Build, per in-scope source file, the ordered list of its items — both **Proposed Rewrites** and **Flags** — preserving severity and line numbers.
+3. If falling back to individual proposal files, group by the `## [filename.tex]` section headers within each file.
+
+---
+
+## Step 2: Implement, One Source File at a Time
+
+Process files sequentially to keep context bounded. For each in-scope source file:
+
+### 2a. Read the source file
+
+Read the current file into context. The proposals reference line numbers and quote `**Original:**` blocks — the source is the ground truth; if it has drifted from the quoted original (file edited since review), match on normalized whitespace, and if still unmatched, treat the item as **stale** and skip it (report it).
+
+### 2b. Build a coherent edit plan — do NOT paste item-by-item
+
+This is the judgment the path exists for. For the file's items:
+
+**Proposed Rewrites** — treat the proposed text as a strong suggestion, not gospel.
+- Apply it when it genuinely improves clarity, precision, or brevity AND fits the voice and surrounding sentences.
+- **Adapt** the wording where a verbatim paste would clash with the author's voice, neighboring phrasing, or notation. Record adapted items distinctly from verbatim ones.
+- **Merge conflicts:** when two or more items touch the same or overlapping lines, do not apply them in sequence (the second would fight the first). Compose a single coherent edit that honors the intent of both.
+
+**Flags (no rewrite proposed)** — these were withheld by a less capable subagent's self-critic, or are genuine author judgment calls.
+- Where a clear, voice-consistent fix exists, write one now (the active model can often resolve what the subagent could not).
+- Where the flag needs new content, data, or a decision only the author can make (e.g., a missing causal mechanism, a claim that overshoots the evidence), **defer** it: leave the text unchanged and record it for the author.
+
+**Skip** any item that would: degrade clarity or precision, perform a weak-for-weak swap (R-WEAK-FOR-WEAK), strip a load-bearing term (R-LOADBEARING), break voice (R-VOICE-LOCK), introduce a new claim/number/citation (R-NEW-CLAIMS), inflate intensity (R-INTENSITY), or merely restate the original. Record the one-line reason.
+
+### 2c. Surface-critic gate (mandatory — the skill invariant)
+
+Before writing **any** new or changed sentence to disk, run the surface critic in **apply context**: read `prompts/shared/components/surface_critic.prompt` and follow its procedure. No text reaches disk without passing. In particular:
+- R-BANNED (no banned phrase), R-COLON (no `CLAUSE: CLAUSE` / `CLAUSE: A, B, C`), R-EMDASH (no `---`/`--`), R-40WORD (≤40 words/sentence, auto-split), R-THROAT-CLEAR (no meta-openers).
+- Preserve load-bearing terms and `project_voice`.
+- Fix violations in place before the Edit call; log the fix.
+
+If `llm_tagging` is true and the file is `.tex`, the `new_string` for each edit is `\begin{llm}` + (gated revision) + `\end{llm}`.
+
+### 2d. Apply
+
+Apply edits with the Edit tool in **descending line order** (highest line first) so earlier line numbers stay valid. If an Edit fails on an exact-match miss, retry with normalized whitespace; if it still misses, skip and report as stale. Aggressive — no per-edit confirmation (the user chose git-diff review).
+
+Under `--dry-run`, do not call Edit. Instead print the planned `old → new` for each edit alongside its decision tag.
+
+### 2e. Mark decisions back into the digest
+
+So re-running `implement` is idempotent and the user can audit decisions, update each item's checkbox in `notes/review_digest.md` (or the source proposal file if no digest):
+- Applied verbatim → `[x] ... (applied)`
+- Applied with adaptation → `[x] ... (applied, adapted)`
+- Skipped → `[-] ... (skipped: <reason>)`
+- Deferred to author → `[ ] ... (deferred: <reason>)`
+- Stale (original not found) → `[ ] ... (stale: source no longer matches)`
+
+---
+
+## Step 3: Summary
+
+Print a concise report (do not dump full transcripts):
+
+```markdown
+## Implement Complete
+
+**Files modified:** intro.tex, methods.tex
+**Voice preserved:** {I|we|mixed}
+
+| File | Applied | Adapted | Skipped | Deferred | Stale |
+|------|---------|---------|---------|----------|-------|
+| intro.tex | 6 | 2 | 3 | 1 | 0 |
+| methods.tex | 4 | 1 | 0 | 0 | 1 |
+
+### Adapted (proposed wording changed to fit voice/context)
+- intro.tex:42 — softened the proposed rewrite to keep first-person voice
+
+### Deferred (author judgment needed)
+- intro.tex:88 — flagged missing mechanism; needs a sentence of economic intuition you must supply
+
+### Skipped (with reason)
+- methods.tex:31 — weak-for-weak swap (`speak to` → `illuminate`), no clarity gain
+
+**Review your changes:** `git diff`
+**Revert a file:** `git restore <file>`  (or `git checkout -- <file>`)
+```
+
+Under `--dry-run`, replace the summary with the planned edits and decisions; state plainly that **no files were modified.**
+
+---
+
+## Context & Safety Rules
+
+- **Run in the orchestrator.** Do not spawn subagents to do the editing — that defeats the purpose.
+- **Bounded context:** read source files one at a time; do not hold every file plus the full digest at once for a large paper.
+- **Never** auto-apply grammar from `copy_edits.md` (already applied) or introduce new claims/numbers/citations.
+- **The surface-critic gate is non-negotiable** — every changed sentence passes it before the Edit call (apply context). This holds even though edits go straight to disk.
+- The source file is ground truth; a proposal whose `**Original:**` no longer matches is stale, not a license to guess.
+
+---
+
+## Quality Control
+
+- [ ] Inputs located (digest preferred; individual files fallback; clear stop message if none)
+- [ ] Voice, load-bearing terms, banned phrases, and llm_tagging loaded before any edit
+- [ ] Conflicts on overlapping lines merged into single coherent edits, not stacked
+- [ ] Surface-critic gate ran on every new/changed sentence before its Edit call
+- [ ] No load-bearing term stripped; no banned phrase or new claim introduced; voice preserved
+- [ ] Edits applied in descending line order; stale items skipped and reported
+- [ ] Digest items marked with applied/adapted/skipped/deferred/stale status
+- [ ] Summary names adapted, deferred, and skipped items with reasons; points the user to `git diff`
