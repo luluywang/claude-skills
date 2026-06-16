@@ -24,6 +24,8 @@ Comprehensive copyediting system for academic writing, following McCloskey and C
 /copyedit review paper/             # All tex/md files in directory
 ```
 
+**Review proposes; it never edits in-line.** `review`/`full` write findings to `notes/*.md` and leave your source untouched. Applying is a separate, explicit step you run when ready: `/copyedit implement` (apply with judgment) or `/copyedit apply` (apply marked items). A request that asks to review **and** apply in-line at once (e.g. "full review … aggressively edit in-line") is **loudly refused** on the apply half — the skill runs the review-only pass and tells you to run `implement` next. This decoupling is intentional: you see the proposals before the manuscript changes.
+
 ### Task Edit — Catch-All (No Subagents)
 
 ```

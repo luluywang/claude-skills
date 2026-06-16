@@ -213,9 +213,53 @@ interpretation logic.
 | `--aggressive` | `rewrite`, `task_edit` | boolean |
 | `--level=<list>` | `relevance` only | comma-separated subset of `section,subsection,subsubsection,paragraph` |
 
-If `--aggressive` is set and the request is not a `rewrite` or `task_edit`, the flag
-is ignored. **Note:** `--aggressive` is NOT supported for `relevance` — the user
-reviews and applies relevance rewrites by hand, from `notes/relevance_audit.md`.
+If `--aggressive` is set on a pipeline route (`review`/`full`/`comprehensive`/`quick`),
+do **not** silently ignore it — the request is **rejected**, not run; see the Hard Guard
+below. For any other non-`rewrite`/`task_edit` route the flag is ignored. **Note:**
+`--aggressive` is NOT supported for `relevance` — the user reviews and applies relevance
+rewrites by hand, from `notes/relevance_audit.md`.
+
+### Hard Guard: Review Proposes, Implement Applies — Reject the Combination
+
+`review`/`full` (and `comprehensive`/`quick`) are **propose-only by design**: their
+subagents write findings to `notes/*.md` and **never edit the source**. Applying changes
+to `.tex` is a **separate, explicit step** the user runs when ready — `/copyedit implement`
+(judgment-based apply) or `/copyedit apply` (marked items). This decoupling is intentional:
+the author reviews the proposals before anything touches the manuscript.
+
+**If a single request asks for BOTH a review AND in-line application, loudly refuse the
+apply half. Do not improvise a combined route, and do not auto-apply.**
+
+**Trigger:** the request maps to a pipeline alias (`review`, `full`, `comprehensive`,
+`quick`) AND also carries apply intent:
+- the `--aggressive` flag, OR
+- in-line apply phrasing: "edit in-line" / "inline" / "in line" / "apply directly" /
+  "aggressively edit" / "just apply" / "make the changes" / "apply the edits".
+
+**Do NOT trigger** for `rewrite`, `task_edit`, or `relevance --aggressive` — those are
+single-target apply routes with their own defined `--aggressive` behavior. Do NOT trigger
+for `implement`, `apply`, or `interactive` (those ARE the apply step).
+
+**On trigger:**
+
+1. Emit a loud refusal (this shape):
+
+   > **I won't apply edits in-line as part of a review.** `review`/`full` only writes
+   > proposals to `notes/`; it never edits your `.tex`. Applying is a separate step you run
+   > when you're ready: `/copyedit implement` (apply with judgment) or `/copyedit apply`
+   > (apply marked items). This split is intentional — you see the proposals before the
+   > manuscript changes.
+
+2. Strip the apply intent (drop `--aggressive` and the in-line phrasing) and continue with
+   the **review-only** pass for the requested files — review was legitimately requested and
+   produces the proposals `implement` will need.
+3. End by handing off — do **not** apply and do **not** run `implement` yourself:
+   "Review complete. When you've looked over `notes/review_digest.md`, run
+   `/copyedit implement` to apply with judgment."
+
+**Never** ask the user to choose an "edit intensity" (Conservative/Moderate/Heavy) or an
+"execution mode" (orchestrator/subagents/hybrid). No such interview exists in this skill;
+inventing one is the failure this guard prevents.
 
 If `--level` is set and the request does NOT include `relevance`, the flag is ignored.
 Default when unset: audit all levels.
