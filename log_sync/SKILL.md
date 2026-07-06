@@ -1,8 +1,10 @@
 ---
 name: log_sync
 description: |
-  Session transcript export and cross-machine log sync. The SessionEnd hook
-  copies each transcript to ~/Dropbox/claude-logs/<project>/ automatically.
+  Session transcript export and cross-machine log sync. A jq-free logger runs
+  on both the Stop hook (every turn) and SessionEnd, copying each transcript to
+  ~/claude-logs/<project>/ continuously — so sessions that are killed rather
+  than exited cleanly are still captured.
   The /log_sync command bulk-syncs raw Claude logs via rsync.
   scripts/archive_logs.py compacts the log corpus (zstd archive plus a
   readable .condensed.md digest per session).
@@ -11,26 +13,43 @@ description: |
 
 # Log Sync
 
-## 1. Automatic session export (SessionEnd hook)
+## 1. Automatic session export (continuous)
 
-Every time a Claude Code session ends, `hooks/session_end.sh` runs automatically:
+`hooks/session_log.sh` is wired to **two** hooks in `settings.json`:
 
-1. Reads the transcript path and session ID from the hook input
-2. Extracts the project name (git root basename, or working directory basename)
-3. Copies the transcript to `~/Dropbox/claude-logs/<project>/<host>_<date>_<session>.jsonl`
-4. On laptops, pulls any new HPC logs via rsync in the background
+- **`Stop`** — fires at the end of every assistant turn, so logging is
+  continuous. If a session is later *killed* (e.g. a `/remote-control` bridge
+  whose login-node connection drops), its transcript is already captured up to
+  the last completed turn instead of being lost.
+- **`SessionEnd`** — fires on graceful exit as a final snapshot.
+
+Each run:
+
+1. Reads `transcript_path`, `session_id`, and `cwd` from the hook input using
+   **pure bash — no `jq`**. (On the HPC `jq` is module-only and absent from the
+   default PATH; the old jq-based hook silently logged nothing whenever it
+   wasn't loaded.)
+2. Derives the project name (git root basename → cwd basename → encoded-dir tail).
+3. Copies the transcript to `<dest>/<project>/<host>_<session>.jsonl`.
+
+The filename is **keyed on the session id** (no copy-time in the name), so the
+repeated Stop writes overwrite the same file in place rather than piling up one
+duplicate per turn.
 
 ### Configuration
 
-Edit `~/.claude/hooks/log_sync.conf` (falls back to `export-session.conf`):
+Destination root resolution: `CLAUDE_LOG_DIR` (if set) → `~/Library/CloudStorage/Dropbox/claude-logs`
+(if Dropbox exists) → `~/claude-logs`. Config is read from
+`~/.claude/hooks/log_sync.conf` (falls back to `export-session.conf`):
 
 ```
-HPC_HOST=username@cluster.university.edu
-HPC_LOG_DIR=~/claude-logs
-HPC_SSH_TIMEOUT=3
+CLAUDE_LOG_DIR=/path/to/logs   # override destination root
 ```
 
-Set `CLAUDE_LOG_DIR` in the environment to override the destination root.
+`hooks/session_end.sh` remains as a deprecated shim that delegates to
+`session_log.sh`, so any lingering reference keeps working. The old hook's
+laptop-side background HPC pull (`HPC_HOST`/`HPC_LOG_DIR`/`HPC_SSH_TIMEOUT`)
+was dropped with it — use `/log_sync` for cross-machine sync.
 
 ## 2. Manual bulk sync (`/log_sync`)
 
@@ -108,11 +127,12 @@ For first-time setup on a new machine, see [`references/setup.md`](references/se
 ```
 log_sync/
 ├── SKILL.md                    # This document
-├── install.sh                  # Installer (copies + symlinks + settings.json)
+├── install.sh                  # Installer (copies + symlinks + wires Stop & SessionEnd)
 ├── references/
 │   └── setup.md                # Cross-machine setup guide (Mac, HPC, manual)
 ├── hooks/
-│   └── session_end.sh          # SessionEnd hook (transcript export + HPC pull)
+│   ├── session_log.sh          # Active jq-free logger (wired to Stop + SessionEnd)
+│   └── session_end.sh          # Deprecated shim -> delegates to session_log.sh
 └── scripts/
     ├── detect_machine.sh       # Sets LOG_SOURCE_DIR; prints install command when run directly
     ├── sync.sh                 # Rsyncs raw logs, writes sync.log entry
