@@ -80,7 +80,8 @@ def main():
         sys.exit(0)
 
     all_files = []
-    for p in sorted(LOGS_DIR.rglob("*.jsonl")) + sorted(LOGS_DIR.rglob("*.jsonl.gz")):
+    patterns = ("*.jsonl", "*.jsonl.gz", "*.jsonl.zst")
+    for p in sorted(q for pat in patterns for q in LOGS_DIR.rglob(pat)):
         top = p.relative_to(LOGS_DIR).parts[0]
         if top in EXCLUDE_DIRS:
             continue

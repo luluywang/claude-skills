@@ -11,9 +11,23 @@ Used to pre-filter large sessions before LLM analysis (reduces cost + context).
 
 import argparse
 import gzip
+import io
 import json
+import subprocess
 import sys
 from pathlib import Path
+
+
+def open_transcript(path: Path):
+    """Open .jsonl, .jsonl.gz, or .jsonl.zst as a text stream."""
+    if path.suffix == ".gz":
+        return gzip.open(path, "rt", encoding="utf-8", errors="replace")
+    if path.suffix == ".zst":
+        proc = subprocess.Popen(
+            ["zstd", "-dc", "--long=31", str(path)], stdout=subprocess.PIPE
+        )
+        return io.TextIOWrapper(proc.stdout, encoding="utf-8", errors="replace")
+    return open(path, encoding="utf-8", errors="replace")
 
 
 def extract_text_content(content):
@@ -39,14 +53,11 @@ def main():
     path = Path(args.path)
     max_bytes = args.max_kb * 1024
 
-    opener = gzip.open if path.suffix == ".gz" else open
-    mode = "rt"
-
     output_parts = []
     total_bytes = 0
 
     try:
-        with opener(path, mode, encoding="utf-8", errors="replace") as f:
+        with open_transcript(path) as f:
             for line in f:
                 line = line.strip()
                 if not line:

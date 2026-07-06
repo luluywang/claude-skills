@@ -19,8 +19,10 @@ Also usable as a module: extract_turns(jsonl_path) → list[dict].
 
 import argparse
 import gzip
+import io
 import json
 import re
+import subprocess
 import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -53,8 +55,14 @@ EDIT_PATH_RE = re.compile(r'"(file_path|path)"\s*:\s*"([^"]+)"')
 
 
 def _open(path: Path):
-    opener = gzip.open if path.suffix == ".gz" else open
-    return opener(path, "rt", encoding="utf-8", errors="replace")
+    if path.suffix == ".gz":
+        return gzip.open(path, "rt", encoding="utf-8", errors="replace")
+    if path.suffix == ".zst":
+        proc = subprocess.Popen(
+            ["zstd", "-dc", "--long=31", str(path)], stdout=subprocess.PIPE
+        )
+        return io.TextIOWrapper(proc.stdout, encoding="utf-8", errors="replace")
+    return open(path, "rt", encoding="utf-8", errors="replace")
 
 
 def _text_of(content) -> str:
@@ -169,7 +177,7 @@ def iter_project_files(project: str, since: datetime | None):
     proj_dir = LOGS_DIR / project
     if not proj_dir.exists():
         raise SystemExit(f"[error] no logs dir: {proj_dir}")
-    for pattern in ("*.jsonl", "*.jsonl.gz"):
+    for pattern in ("*.jsonl", "*.jsonl.gz", "*.jsonl.zst"):
         for p in sorted(proj_dir.rglob(pattern)):
             size_kb = p.stat().st_size / 1024
             if size_kb < MIN_SIZE_KB:
