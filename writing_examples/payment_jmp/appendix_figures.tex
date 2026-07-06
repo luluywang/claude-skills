@@ -1,0 +1,54 @@
+\documentclass[main.tex]{subfiles}
+
+\begin{document}
+
+\section{Descriptive Figures}
+\label{sec:oa-descriptive-figures}
+
+\begin{figure}[ht!]
+    \caption{Australian credit card market after interchange regulation}
+    \label{fig:aus-interchange-event-study}
+
+    \begin{center}
+        \includegraphics[width=2in]{../output/graphs/aus_reward_plot.pdf}
+        \includegraphics[width=2in]{../output/graphs/aus_fee_plot.pdf}
+        \includegraphics[width=2in]{../output/graphs/aus_rate_plot.pdf}
+    \end{center}
+    \tablenote{Vertical line marks 2003, when interchange regulation began.
+`Gold Rewards': highest-tier rewards cards. `Rewards': basic-tier rewards cards. `Standard': cards without rewards.
+Rewards data from \textcite{Chan.etal2012}; annual fees from ``Banking Fees in Australia'' reports; interest rates from the Reserve Bank of Australia's F05 publication.}
+
+\end{figure}
+
+\begin{figure}[ht!]
+    \caption{Share of debit card spending on primary debit card}
+    \label{fig:debit-primary}
+    \begin{center}
+    \includegraphics[width=3in]{../output/graphs/debit_cards_most_used.pdf}
+    \end{center}
+    \tablenote{DCPC data, 2017--2019.
+The primary debit card is the card with the plurality of a consumer's debit transactions by count.}
+
+\end{figure}
+
+\begin{figure}[ht!]
+    \caption{Model fit of market shares by primary--secondary card combination}
+    \label{fig:market-share-fit}
+    \begin{center}
+    \includegraphics[width=0.9\linewidth]{../output/graphs/model_share_fit_baseline.pdf}
+    \end{center}
+    \tablenote{Each point plots a card combination's model share against the data share.
+Facets correspond to primary card choices. Points are labeled by secondary card.
+The dashed 45-degree line marks perfect fit.}
+
+\end{figure}
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=\linewidth]{../output/graphs/kilts_trips_share_cards.pdf}
+\caption{Payment mix distribution across merchants in the Homescan data}
+    \label{fig:homescan-merch-payment-distn}
+    \tablenote{Homescan panel, 2013--2023. Each observation is a merchant-year. The figure shows the distribution of payment shares across merchants for Visa, MC, AmEx, and Discover credit cards.}
+\end{figure}
+
+\end{document}

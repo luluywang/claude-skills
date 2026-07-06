@@ -1,0 +1,314 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+
+I use the estimated model to show that equilibrium fees and rewards are too high, but that increasing network competition without breaking the competitive bottleneck makes the problem worse.
+I simulate five counterfactual policies: capping credit card fees, repealing the Durbin Amendment, merging all three networks, increasing consumer multi-homing through dual-routing mandates, and introducing a central bank digital currency.
+All counterfactuals fix consumers' preferences $\beta_i$, baseline income $y$, and merchants' sales benefits to card consumers $\gamma$.
+Consumer adoption, merchant acceptance, retail prices, and network prices adjust endogenously.\footnote{
+    Although merchants' types $\gamma$ are fixed, their incentives to accept cards can change because the effect of card acceptance on total sales depends on $\gamma$ and the share of consumers using each card.
+}
+The baseline is the observed 2019 equilibrium, where networks maximize profits subject to the Durbin Amendment's debit fee cap while credit fees remain unregulated.
+Welfare comparisons are relative to this status quo.
+
+\subsection{Capping Credit Card Merchant Fees}
+\label{subsec:cap-fees-intro}
+
+Capping credit card merchant fees at 120 bp, roughly half their current level, while leaving debit fee caps unchanged corrects the price-coherence adoption externality and raises total welfare by \$27 billion per year.
+% HARDCODED[table: welfare_table_baseline.tex, row: "Total", col: 1] current=27
+Lower merchant fees reduce credit card rewards, correcting excessive adoption driven by price coherence.
+The gains are progressive.
+Low-income consumers benefit from lower retail prices, while high-income consumers lose from reduced rewards.
+
+\subsubsection{Effects on~Prices~and~Shares}
+\label{subsubsec:cf-price-share-effects}
+
+Capping credit card merchant fees reduces rewards and card use, illustrating the see-saw principle in \textcite{Rochet.Tirole2003}.
+% HARDCODED[table: cf_table_baseline.tex, row: "Credit Rewards", col: 1, derived: -110 bps = 1.10 pp] current=-110
+Table \ref{tab:cf-effects} shows that networks respond to the credit fee cap by cutting credit card rewards by around 1.1 pp., largely eliminating rewards.
+Spending on credit falls by nearly half as consumers substitute toward debit and cash (Table \ref{tab:cf-effects}).
+% HARDCODED[table: cf_table_baseline.tex, row: "Credit", col: 1] current=-19
+Price and quantity changes together reduce total merchant fees and rewards by roughly equal amounts.
+I normalize total model income to the \$10 trillion in 2019 consumer spending \parencite{Nilson2020a}, so each bp corresponds to \$1 billion.
+% CONSTANT: normalization from Nilson (2020a), not updated by pipeline
+Hence fees and rewards fall by around \$58 billion each.
+% HARDCODED[table: cf_table_baseline.tex, row: "Total Fees", col: 1] current=-58
+% HARDCODED[table: cf_table_baseline.tex, row: "Total Rewards", col: 1] current=-57
+
+\begin{table}
+    \caption{Counterfactual Effects on Prices and Shares}
+    \label{tab:cf-effects}
+    \begin{center}
+        \small{
+        \input{../output/tables/cf_table_baseline}
+        }
+    \end{center}
+    \tablenote{Bootstrap standard errors are in parentheses.
+    The "cap fees" scenario caps credit card merchant fees at 120 bp.
+    The "uncap debit" scenario raises the cap on debit card merchant fees by $25$ bps.
+    Monopoly refers to merging all three networks.
+    Dual routing increases the multi-homing parameter by the equivalent of 20 bps in rewards for the median consumer.
+    CBDC introduces a zero-fee public payment option.
+    Its own market share is the residual of the changes in the shares of the other payment methods.
+    Dollar values are computed by normalizing to \$10 trillion of total consumer purchases \parencite{Nilson2020a}.}
+\end{table}
+
+\subsubsection{Welfare}
+\label{subsubsec:counterfactual-welfare}
+
+\begin{table}[t]
+    \caption{Welfare Effects of Counterfactual Policies}
+    \label{tab:welfare-decomp}
+    \begin{center}
+        \small{
+        \input{../output/tables/welfare_table_baseline}
+        }
+    \end{center}
+    \tablenote{Bootstrap standard errors in parentheses.
+    Cap Fees caps credit card merchant fees at 120 bp.
+    Uncap Debit raises the debit fee cap by 25 bps.
+    Monopoly merges all three networks.
+    Dual Routing increases the multi-homing parameter by the equivalent of 20 bps in rewards for the median consumer.
+    CBDC introduces a zero-fee public payment option.
+    Low (high) income consumers have log income at $-2$ ($+2$) standard deviations relative to the median.
+    Dollar values are computed by normalizing to \$10 trillion of total consumer purchases \parencite{Nilson2020a}.}
+\end{table}
+
+\begin{table}[t]
+    \caption{Welfare Decomposition by Channel: 120 Bps Cap}
+    \label{tab:cap-credit-channel-decomp}
+    \begin{center}
+        \small{
+        \input{../output/tables/cap_credit_channel_decomp_baseline}
+        }
+    \end{center}
+    \tablenote{Bootstrap standard errors in parentheses.
+    Network Effect freezes merchant retail prices and acceptance at baseline while networks re-optimize fees and rewards.
+    Price Passthrough then allows merchants to re-optimize retail prices, holding acceptance fixed.
+    Merchant Adoption allows merchants to adjust acceptance decisions.
+    All values in \$Bn, normalized to \$10 trillion of total consumer purchases \parencite{Nilson2020a}.}
+\end{table}
+
+The gains from the credit fee cap stem from correcting excessive adoption, not from reducing market power.
+I measure consumer welfare by compensating variation:
+\begin{equation}
+    \text{CS}=\int\E\left[\max_{w}\log V^w_i\left(y\right)\right]\times y\d F\left( y\right)\label{eq:cons-surplus-integral}
+\end{equation}
+The inner expectation computes surplus for households at a given income as a share of baseline income. The outer integral weights by baseline income to yield aggregate welfare.
+% HARDCODED[table: welfare_table_baseline.tex, row: "Total", col: 1] current=27
+Most gains accrue to consumers (\$28 billion), not merchants (\$0.4 billion).
+% HARDCODED[table: welfare_table_baseline.tex, row: "Consumers", col: 1] current=28
+% HARDCODED[table: welfare_table_baseline.tex, row: "Merchants", col: 1] current=0.4
+Networks lose only \$1.5 billion---around 6\% of baseline profits.
+% HARDCODED[table: welfare_table_baseline.tex, row: "Networks", col: 1] current=-1.5
+% HARDCODED[table: baseline_network_profits.tex, row: "Baseline", col: 1] current=26; 1.5/26 ≈ 0.058
+The total gain is roughly double the \$12 billion consumer welfare gain from the CARD Act \parencite{Agarwal.etal2015}, highlighting the importance of regulating networks in addition to issuers.
+% CONSTANT: from Agarwal et al. (2015), external paper result
+
+Table~\ref{tab:cap-credit-channel-decomp} isolates the welfare sources by holding different margins fixed.
+The first row holds merchant prices and acceptance at their baseline while networks re-optimize fees and rewards and consumers adopt new payment methods.
+The second row additionally allows merchant retail prices to adjust, holding acceptance fixed.
+The third row allows acceptance to adjust as well.
+
+Even though the credit fee cap targets merchants, merchants benefit little in equilibrium.
+The first row shows that merchants benefit from lower fees, but the second row shows that they dissipate these profits by lowering retail prices to compete for consumers.
+
+The harm to networks is also modest.
+The first row shows that lower rewards reduce profits as networks lose consumers.
+The third row shows that networks recover a substantial share when merchants increase card acceptance in response to lower fees.
+Profits decline by only \$1.5 billion, or around 6\% of baseline profits.
+% HARDCODED[table: appendix_cap_welfare_table_baseline.tex, row: "Networks", col: 1] current=-1.5
+% HARDCODED[the profit decline divided by table: baseline_network_profits.tex, row 1] current=-1.5 / 26
+
+Consumers gain \$28 billion even though Table~\ref{tab:cf-effects} shows fees and rewards falling by roughly equal amounts.
+The reason is that the credit fee cap moderates excessive adoption of credit cards.
+By revealed preference, the marginal credit card user is indifferent between credit and debit or cash.
+Rewards compensate for non-pecuniary costs of credit card use, including budget control, debt aversion, and account-management hassle.
+I refer to these costs as ``credit aversion'' (Online Appendix~\ref{subsec:oa-survey-consumer-pref}).
+Lower rewards cause this marginal consumer to switch away from credit.
+But while lost rewards are merely transfers, the credit aversion that switchers avoid is a real social benefit.
+The full total welfare gain of reduced credit aversion materializes only across the first two rows of Table~\ref{tab:cap-credit-channel-decomp}.\footnote{
+    The first row of Table~\ref{tab:cap-credit-channel-decomp} conflates two offsetting forces: a large gain from reduced credit aversion and a loss from reduced consumption when rewards fall but retail prices remain fixed.
+    Positive retail markups mean that reducing total consumption increases deadweight loss.
+    However, this welfare channel is reversed in the second row as merchant price cuts then expand consumption.
+}
+
+Credit card adoption is socially excessive because of price coherence.
+Because merchants do not surcharge, each new cardholder raises retail prices for everyone else.
+Consumers collectively prefer lower retail prices and lower credit card use, but individually face incentives to defect to earn cross-subsidies.
+The credit fee cap corrects this prisoner's dilemma by reducing the rewards that drive excessive adoption.
+
+\subsubsection{Distributional Effects}
+\label{subsubsec:counterfactual-distributional}
+
+Fee and reward cuts redistribute consumption toward lower-income consumers.
+Consumer surplus rises by 48 bp of consumption for low-income consumers (log income at $-2$ SD),
+% HARDCODED[table: welfare_table_baseline.tex, row: "Low Income", col: 1] current=48
+37 bp for median-income consumers,
+% HARDCODED[table: welfare_table_baseline.tex, row: "Median Income", col: 1] current=37
+and 15 bp for high-income consumers (log income at $+2$ SD).
+% HARDCODED[table: welfare_table_baseline.tex, row: "High Income", col: 1] current=15
+Lower retail prices benefit everyone, while reward reductions fall disproportionately on higher-income consumers who are more likely to use credit.
+All groups gain on net because reduced credit aversion is spread across the income distribution.
+To the extent that one believes revealed preference does not apply in payment markets, the average gain in consumer surplus can be subtracted from each group.
+Such a correction would still leave gains for low- and median-income consumers, but losses for high-income consumers.
+
+\subsection{Repealing the Durbin Amendment}
+\label{subsec:repeal}
+
+The credit fee cap raises welfare by correcting adoption distortions, not by reducing market power.
+If they did, capping fees on any payment instrument should help.
+The Durbin Amendment provides a direct test, since it caps debit but not credit card fees.
+I study repealing the Durbin Amendment by raising the cap on debit card fees by $25$ bps, matching the share of the 75 bp interchange decline that flowed through to rewards \parencite{Hayashi2012}.\footnote{
+    Durbin reduced debit interchange by roughly 75 bps, but not all of this flowed through to debit rewards.
+    \label{foot:durbin-icg-vs-rewards}
+    Banks also absorbed the loss through higher checking account fees \parencite{Kay.etal2018, Mukharlyamov.Sarin2025}.
+    I ignore the increase in checking account fees since they do not influence the relative costs and benefits of different payment methods.
+}
+% CONSTANT: policy parameter, matches model scenario definition; empirical estimate from Mukharlyamov-Sarin (2025)
+
+Repealing the Durbin Amendment moderates the rewards race.
+If the debit fee cap were lifted by 25 bps, merchant fees would rise and networks would increase debit rewards.
+Consumers would switch to debit, especially reward-sensitive ones.
+As the marginal credit consumer becomes less reward-sensitive, networks pull back on rewards competition, triggering the see-saw principle and lowering credit merchant fees.
+Credit rewards fall 6 bps and credit fees fall 3.3 bps as credit networks pull back.
+% HARDCODED[table: cf_table_baseline.tex, row: "Credit Rewards", col: 3] current=-6
+% HARDCODED[table: cf_table_baseline.tex, row: "Credit Fees", col: 3] current=-3.3
+Net of the debit increase, total merchant fees rise by \$4.4 billion but rewards rise by only \$0.5 billion, reflecting substitution toward lower-reward debit.
+% HARDCODED[table: cf_table_baseline.tex, row: "Total Fees", col: 3] current=4.4
+% HARDCODED[table: cf_table_baseline.tex, row: "Total Rewards", col: 3] current=0.5
+
+Repealing the Durbin Amendment generates large welfare gains.
+Consumers gain \$4.3 billion as higher debit rewards draw consumers away from credit cards.
+% HARDCODED[table: welfare_table_baseline.tex, row: "Consumers", col: 3] current=4.3
+Total welfare rises by \$7 billion.
+% HARDCODED[table: welfare_table_baseline.tex, row: "Total", col: 3] current=7
+These gains are progressive: low-income consumers gain 7 bps of consumption, versus 2.4 bps for high-income consumers.
+% HARDCODED[table: welfare_table_baseline.tex, row: "Low Income", col: 3] current=7
+% HARDCODED[table: welfare_table_baseline.tex, row: "High Income", col: 3] current=2.4
+The current regime, capping debit but not credit, is worse than both laissez-faire and capping both.
+Uniform regulation benefits consumers \parencite{Rochet.Tirole2011}. Asymmetric regulation does not.
+
+\subsection{Welfare Effects of Reducing Network Competition}
+\label{subsec:competition}
+
+One might expect that increasing competition among networks would substitute for fee regulation.
+In payment markets, the opposite holds.
+Competition fuels the rewards arms race that amplifies distortions from price coherence.
+I test this by modeling a merger to monopoly, with fees and rewards set to maximize industry profits.
+
+Without competitive pressure to fund rewards, a monopolist cuts credit card rewards by 90 bps.
+% HARDCODED[table: cf_table_baseline.tex, row: "Credit Rewards", col: 6] current=-90
+Because rewards are the primary reason consumers carry credit cards, spending on credit collapses. The credit share falls 23 pp.
+% HARDCODED[table: cf_table_baseline.tex, row: "Credit", col: 6] current=-23
+The merger reduces aggregate merchant fees by \$40 billion despite a 36 bps rise in per-transaction fees, because far fewer transactions clear on high-fee credit cards.
+% HARDCODED[table: cf_table_baseline.tex, row: "Credit Fees", col: 6] current=36
+% HARDCODED[table: cf_table_baseline.tex, row: "Total Fees", col: 6] current=-40
+% HARDCODED[table: cf_table_baseline.tex, row: "Total Rewards", col: 6] current=-66
+Unlike in \textcite{Armstrong2006}, where competition raises per-transaction merchant fees, here it raises the total fee burden by shifting payment composition toward high-fee credit cards.
+
+The merger increases total welfare by \$15 billion because eliminating rewards competition more than offsets the consumer losses.
+% HARDCODED[table: welfare_table_baseline.tex, row: "Total", col: 6] current=15
+Consumers lose \$11 billion (though imprecisely estimated)
+% HARDCODED[table: welfare_table_baseline.tex, row: "Consumers", col: 6] current=-11
+while networks gain \$31 billion.
+% HARDCODED[table: welfare_table_baseline.tex, row: "Networks", col: 6] current=31
+Lower credit card use reduces retail prices for all consumers, but lower rewards mainly harm high-income cardholders.
+Low-income consumers gain 13 bps in consumption
+% HARDCODED[table: welfare_table_baseline.tex, row: "Low Income", col: 6] current=13
+while high-income consumers lose 29 bps.
+% HARDCODED[table: welfare_table_baseline.tex, row: "High Income", col: 6] current=-29
+These results do not support mergers, since the consumer losses are large and imprecisely estimated.
+They do show that rewards competition is so harmful that increases in market power can raise total welfare.
+
+\subsection{Consumer Multi-Homing and Dual Routing}
+\label{subsec:dual-routing}
+
+Rather than regulating fees directly, policy can redirect the locus of network competition.
+Routing requirements, like those in the Credit Card Competition Act, would force banks to issue cards that are compatible on multiple networks \parencite{Andriotis2022}.
+This increases effective multi-homing rates and allows merchants to route payments to cheaper networks, shifting the locus of competition from the consumer side toward merchant fees \parencite{Teh.etal2022}.
+I model this by raising the $\chi^{22}$ parameter, which captures the complementarity of holding two credit cards, thereby increasing consumer multi-homing.
+For the median consumer, this is equivalent to a 20 bps reward increase for those bundles.
+Credit card multihoming then rises by \scalarinput{dual_routing_cc_multihome_change_baseline} pp. from a baseline level of around \scalarinput{kilts_top_two_many_cc}\%.
+% CONSTANT: 20 bps reward increase is policy parameter for this counterfactual scenario
+Credit card fees fall 13 bps
+% HARDCODED[table: cf_table_baseline.tex, row: "Credit Fees", col: 8] current=-13
+and rewards fall 15 bps.
+% HARDCODED[table: cf_table_baseline.tex, row: "Credit Rewards", col: 8] current=-15
+Consumer welfare, excluding the mechanical impact of increasing $\chi^{22}$, still rises \$3.3 billion, and total welfare rises \$3.8 billion.\footnote{
+% HARDCODED[table: welfare_table_baseline.tex, row: "Consumers", col: Dual Routing] current=3.3
+% HARDCODED[table: welfare_table_baseline.tex, row: "Total", col: Dual Routing] current=3.8
+Because dual routing directly modifies $\chi^{22}$, it mechanically raises consumer surplus even at unchanged prices and portfolios. I net this mechanical component---around \$4.5 billion---out of the reported consumer surplus so that the \$3.3 billion figure reflects only the equilibrium response. Online Appendix~\ref{subsec:oa-mechanical-dr} derives the adjustment.
+To the extent that changing preferences complicates the interpretation of welfare, the effects on fees and rewards are more robust as they are a consequence of how merchant acceptance depends on consumer multi-homing across networks.}
+% HARDCODED[table: mechanical_dual_routing_baseline.tex, row: Aggregate] current=4.5
+
+The intuition for these effects follows from the merchant acceptance condition in Section \ref{subsubsec:model-merch-accept}.
+A merchant's fee cost from accepting card $j$ depends on all consumers who use it, but the incremental sales gain comes only from single-homers who would otherwise pay cash.
+When consumers single-home on one credit network, merchants must accept that network to capture those sales---what trial testimony in Ohio v.\ American Express called ``cardholder insistence'' \parencite{Conrath2014}.
+When a consumer carries credit cards from multiple networks, the merchant can decline the expensive network's card without losing the sale---the consumer simply pays with the cheaper alternative.
+The incremental sales gain from accepting the expensive network shrinks.
+Networks must then compete on merchant fees rather than relying on consumer lock-in to extract rents from the merchant side.
+
+Current proposed dual-routing legislation often requires that the secondary network not be a large established network.
+This exclusion is unnecessary. 
+The power of the dual-routing mechanism stems from increasing multi-homing, not from reducing the size of the largest networks.
+The exclusion may even be counterproductive if merchants are unwilling to invest in accepting smaller networks.
+
+\subsection{Central Bank Digital Currencies and Public Entry}
+\label{subsec:cf-cbdc}
+Proposals for central bank digital currencies (CBDC) and faster payments \parencite{Shin2021,FederalReserve2022,Berg.etal2024a} motivate the possibility that government entry could discipline network pricing.
+I simulate a public debit network with MC debit's demand and cost characteristics that sets merchant fees at cost and offers zero consumer rewards, earning zero profit.
+Because the entrant offers no consumer-side subsidies, its resulting market share is small.
+Consumer welfare gains are roughly \$3.7 billion and total welfare gains are roughly \$1.6 billion, both smaller than repealing Durbin caps and smaller than the \$3.8 billion total welfare gain under dual routing.
+% HARDCODED[table: welfare_table_baseline.tex, row: "Consumers", col: CBDC] current=3.7
+% HARDCODED[table: welfare_table_baseline.tex, row: "Total", col: CBDC] current=1.6
+% HARDCODED[table: welfare_table_baseline.tex, row: "Total", col: Dual Routing] current=3.8
+These results depend on modeling the entrant as a debit product that does not substitute for credit at the point of sale.
+The segmentation assumption (Section~\ref{subsec:model-assumptions}) limits the competitive pressure a new payment method can exert on incumbent merchant fees.
+A public product that also displaced credit could generate larger inroads, but is beyond the scope of most of the current proposals for public options.
+The estimated welfare gains do not include any fixed costs of setting up the public network.
+Directly regulating fees or mandating multi-homing is thus likely more effective than introducing a public option.
+
+\subsection{Discussion}
+\label{subsec:cf-discussion}
+
+Online Appendix \ref{sec:oa-alternative-specifications} re-estimates the model under alternative assumptions about consumer constraints, pass-through, and reward sensitivity.
+
+\paragraph{Constraints vs Preferences}
+\label{subsec:revealed-pref-approx}
+Consumer payment choices in the model reflect preferences, not constraints.
+Some consumers' choice to primarily use debit over credit is evidence of ``credit aversion.''
+Survey evidence documents concrete motives, including budget control, debt aversion, and account-management hassle (Online Appendix \ref{subsec:oa-survey-consumer-pref}).
+
+An alternative interpretation is that some consumers cannot obtain credit cards.
+The presence of exogenous constraints does not affect the estimated welfare effects.
+Online Appendix~\ref{subsec:oa-credit-constrained} uses credit score data from the DCPC to estimate a model in which some consumers are credit-constrained, with the extent of the constraint varying with income.
+The alternative specification predicts smaller credit aversion for the median consumer (lower $\Xi$ for credit and a weaker income gradient $\beta_y^L$).
+Because constrained consumers do not respond on the credit margin, the unconstrained subset must be more reward-sensitive to rationalize the same Durbin moment.
+The estimated consumer and total welfare results are similar to the baseline model.
+
+
+\paragraph{Pass-through}
+\label{subsubsec:passthrough-theory}
+The CES functional form implies full pass-through from merchant fees to retail prices.
+One reason full pass-through is a reasonable baseline for interchange is because interchange is an aggregate shock to all merchants \parencite{Amiti.etal2019}.
+I also lack the required merchant-level interchange data matched to retail prices to test pass-through.
+Online Appendix \ref{subsec:oa-no-passthrough} compares the full pass-through baseline against zero pass-through, in which retail prices are unresponsive to merchant fees in either direction.
+The alternative shifts the consumer-merchant welfare split but yields similar equilibrium fees and rewards.
+% HARDCODED[table: welfare_table_no_passthrough.tex vs welfare_table_baseline.tex, row: Total, col: Cap Fees, (27-17)/27 ≈ 1/3] current=one-third
+
+\paragraph{Reward Sensitivity}
+\label{subsubsec:reward-sensitivity}
+A more conservative specification targets only half the observed Durbin decline, attributing the remainder to non-price steering.
+Online Appendix~\ref{subsec:oa-debit-robustness} re-estimates the model against this lower-bound target.
+The halved target produces negative marginal costs for Visa, which conflict with accounting data on issuer, acquirer, and network costs.
+The credit fee cap remains welfare-improving in this specification.
+The monopoly counterfactual is the most sensitive to this calibration: its welfare gain reverses sign under the halved target.
+If non-rewards steering imposes real costs without direct consumer benefits, these estimates understate the true losses from high merchant fees.
+
+\paragraph{Choice of Credit Fee Cap}
+The 120 bp cap keeps the counterfactual close to observed fee levels, avoiding the large out-of-sample extrapolation required by more aggressive caps.
+Online Appendix~\ref{subsec:oa-cost-of-cash-cap} compares this cap to a 30 bps cap modeled after the tourist test of \textcite{Rochet.Tirole2011} and to the Ramsey planner's solution.
+The 120 bps cap achieves roughly 93\% and 77\% of the respective welfare gains with less out-of-sample extrapolation.
+% HARDCODED[table: appendix_cap_welfare_table_baseline.tex, row: "Total", cols: Cap Credit=27, Tourist Test=29, Ramsey Planner=35] current=93% (27/29), 77% (27/35)
+
+\end{document}

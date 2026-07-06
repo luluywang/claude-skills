@@ -1,0 +1,26 @@
+{
+  "created": "2026-02-11",
+  "paper_type": "B",
+  "llm_tagging": false,
+  "tasks": [
+    {"id": 1, "file": "intro.tex", "task": "all", "model": "haiku", "status": "complete"},
+    {"id": 2, "file": "institutional_details.tex", "task": "all", "model": "haiku", "status": "complete"},
+    {"id": 3, "file": "data.tex", "task": "all", "model": "haiku", "status": "complete"},
+    {"id": 4, "file": "reducedform.tex", "task": "all", "model": "haiku", "status": "complete"},
+    {"id": 5, "file": "model.tex", "task": "all", "model": "haiku", "status": "complete"},
+    {"id": 6, "file": "estimation.tex", "task": "all", "model": "haiku", "status": "complete"},
+    {"id": 7, "file": "counterfactuals.tex", "task": "all", "model": "haiku", "status": "complete"},
+    {"id": 8, "file": "conclusion.tex", "task": "all", "model": "haiku", "status": "complete"},
+    {"id": 9, "file": "appendix_data.tex", "task": "all", "model": "haiku", "status": "complete"},
+    {"id": 10, "file": "appendix_model.tex", "task": "all", "model": "haiku", "status": "complete"},
+    {"id": 11, "file": "appendix_estimation.tex", "task": "all", "model": "haiku", "status": "complete"},
+    {"id": 12, "file": "appendix_model_oa.tex", "task": "all", "model": "haiku", "status": "complete"},
+    {"id": 13, "file": "appendix_mri.tex", "task": "all", "model": "haiku", "status": "complete"},
+    {"id": 14, "file": "appendix_reduced.tex", "task": "all", "model": "haiku", "status": "complete"},
+    {"id": 15, "file": "appendix_surcharging.tex", "task": "all", "model": "haiku", "status": "complete"},
+    {"id": 16, "file": "appendix_sorting.tex", "task": "all", "model": "haiku", "status": "complete"},
+    {"id": 17, "file": "appendix_robustness.tex", "task": "all", "model": "haiku", "status": "complete"},
+    {"id": 18, "file": "appendix_tables.tex", "task": "all", "model": "haiku", "status": "complete"},
+    {"id": 19, "file": "appendix_figures.tex", "task": "all", "model": "haiku", "status": "complete"}
+  ]
+}

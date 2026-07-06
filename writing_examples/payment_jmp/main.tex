@@ -1,0 +1,225 @@
+\documentclass[12pt]{article}
+
+\input{../writing_preamble}
+\input{preamble}
+
+% Theorem naming
+\newtheorem{theorem}{Theorem}
+
+% Bibliography
+\addbibresource{Payments.bib}
+\AtBeginBibliography{\emergencystretch=3em}
+
+\usepackage[nodayofweek]{datetime}
+\date{\monthname~\the\year}
+
+\begin{document}
+
+\title{Regulating Competing Payment Networks}
+\author{Lulu Wang\thanks{Wang: Kellogg School of Management.
+Email: \href{mailto:lulu.wang@kellogg.northwestern.edu}{lulu.wang@kellogg.northwestern.edu}.
+This is a revised version of my job market paper.
+I am extremely grateful to my advisors, Amit Seru, Darrell Duffie, Ali Yurukoglu, and Claudia Robles-Garcia.
+I thank my discussants, Daniel Goetz, Devesh Raval, Jean-Charles Rochet, Alex Shcherbakov, and Tommaso Valetti, as well as Lanier Benkard, Jacob Conway, Jos\'e Ignacio Cuesta, Liran Einav, Joseph Hall, Ben Hebert, and Peter Reiss for their comments.
+Rodrigo Surraco and Lucia Bertoletti provided excellent research assistance.
+I acknowledge support from the National Science Foundation Graduate Research Fellowship under Grant Number 1656518, the Asset Management Practicum, and the William and Mary Breen Fund at the Kellogg School of Management at Northwestern University.
+Portions of this paper use data derived from a confidential, proprietary syndicated product owned by GfK US MRI, LLC, which is \copyright MRI-Simmons 2022.
+Researcher(s)' own analyses calculated (or derived) based in part on data from Nielsen Consumer LLC and marketing databases provided through the NielsenIQ Datasets at the Kilts Center for Marketing Data Center at The University of Chicago Booth School of Business.
+The conclusions drawn from the NielsenIQ data are those of the researcher and do not reflect the views of NielsenIQ.
+NielsenIQ is not responsible for, had no role in, and was not involved in analyzing and preparing the results reported herein.
+The project described in this paper relies on data from survey(s) administered by the Understanding America Study, which is maintained by the Center for Economic and Social Research (CESR) at the University of Southern California. 
+The content of this paper is solely the responsibility of the authors and does not necessarily represent the official views of USC or UAS.}}
+
+\pagenumbering{roman}
+\begin{NoHyper}
+\maketitle
+\end{NoHyper}
+
+\begin{center}
+\href{https://luluywang.github.io/PaperRepository/payment_jmp.pdf}{Click for Most Recent Version}
+
+\end{center}
+
+\thispagestyle{empty}
+
+\begin{abstract}
+\begin{singlespace}
+    \footnotesize
+% TARGET: 100 words
+Payment networks fund consumer rewards through merchant fees.
+Because merchants rarely surcharge, consumers fail to internalize costs and overuse credit cards relative to the social optimum.
+I develop a quantitative model of platform competition to compare policy solutions.
+Capping merchant fees reduces rewards and credit card use, increasing total welfare by \$27 billion.
+% HARDCODED[table: welfare_table_baseline.tex, row: "Total", col: 1] current=27
+Because consumers are sensitive to rewards but merchants are insensitive to fees, network competition inflates rewards and exacerbates the costs of over-adoption.
+Dual-routing mandates that increase consumer multi-homing redirect competition from rewards toward merchant fees, increasing welfare.
+The direction of competition matters, not just its intensity.
+
+\end{singlespace}
+\end{abstract}
+
+\clearpage
+
+\newpage{}
+
+\pagenumbering{arabic}
+
+\begin{refsection}
+\section{Introduction}
+
+\subfile{intro}
+
+\section{Institutional Details and Data}
+\label{sec:institutional-data}
+
+Networks charge merchants fees and pay the revenue to issuers, who return most of it to consumers as rewards.
+The first subsection traces this fee flow, showing how merchant fees and rewards are linked.
+The second subsection describes the data sources used to identify how sensitive consumers and merchants are to rewards and fees.
+
+\subsection{Network Pricing: Merchant Fees and Consumer Rewards}
+
+\subfile{institutional_details}
+
+\subsection{Data}
+
+\subfile{data}
+
+\section{Reduced-Form Facts}
+\label{sec:reduced-form}
+
+\subfile{reducedform}
+
+\section{Model}
+\label{sec:model}
+
+\subfile{model}
+
+\section{Estimation}
+\label{sec:estimation}
+\subfile{estimation}
+
+\section{Counterfactuals}
+\label{sec:counterfactuals}
+
+\subfile{counterfactuals}
+
+\section{Conclusion}
+
+\subfile{conclusion}
+
+\clearpage
+
+\begin{singlespace}
+    \printbibliography
+\end{singlespace}
+\end{refsection}
+
+\clearpage
+\appendix
+
+% Reset page counter with A- prefix (unique prefix avoids duplicate hyperref anchors)
+\setcounter{page}{1}
+\renewcommand{\thepage}{A-\arabic{page}}
+\renewcommand{\thetable}{A.\arabic{table}}
+\renewcommand{\thefigure}{A.\arabic{figure}}
+\setcounter{table}{0}  % Reset table counter
+\setcounter{figure}{0}  % Reset figure counter
+
+\begin{refsection}
+
+\renewcommand\thesection{\Alph{section}}
+\renewcommand\thesubsection{\Alph{section}.\arabic{subsection}}
+\renewcommand\thesubsubsection{\Alph{section}.\arabic{subsection}.\arabic{subsubsection}}
+
+% ============================================
+% MAIN APPENDICES (A, B, C)
+% ============================================
+\subfile{appendix_data}       % Appendix A: Data
+\clearpage
+\subfile{appendix_model}      % Appendix B: Model Derivation
+\clearpage
+\subfile{appendix_estimation} % Appendix C: Estimation
+\clearpage
+
+% ============================================
+% ONLINE APPENDICES: NOT FOR PUBLICATION
+% ============================================
+
+% OA numbering: use a dedicated counter to avoid hyperref anchor clashes
+\newcounter{oasection}
+\newcounter{oasubsection}[oasection]
+\newcounter{oasubsubsection}[oasubsection]
+\makeatletter
+\let\c@section\c@oasection
+\let\c@subsection\c@oasubsection
+\let\c@subsubsection\c@oasubsubsection
+\makeatother
+\renewcommand\thesection{O\Alph{section}}
+\renewcommand\thesubsection{O\Alph{section}.\arabic{subsection}}
+\renewcommand\thesubsubsection{O\Alph{section}.\arabic{subsection}.\arabic{subsubsection}}
+\newcounter{oatable}
+\newcounter{oafigure}
+\makeatletter
+\let\c@table\c@oatable
+\let\c@figure\c@oafigure
+\makeatother
+\makeatletter
+\@addtoreset{table}{section}
+\@addtoreset{figure}{section}
+\makeatother
+\renewcommand{\thetable}{O\Alph{section}.\arabic{table}}
+\renewcommand{\thefigure}{O\Alph{section}.\arabic{figure}}
+% Reset page counter with OA- prefix
+\setcounter{page}{1}
+\renewcommand{\thepage}{OA-\arabic{page}}
+
+{\color{white}\fontsize{1}{1}\selectfont Online Appendices Start Marker}
+
+\begin{center}
+    \begin{Large}
+\textbf{Online Appendices: Not for Publication}
+
+    \end{Large}
+\end{center}
+
+\clearpage
+
+% ============================================
+% ONLINE APPENDICES (OA, OB, ...)
+% ============================================
+\subfile{appendix_tables}        % OA: Additional Tables
+\clearpage
+\subfile{appendix_figures}       % OB: Descriptive Figures
+\clearpage
+\subfile{appendix_data_oa}       % OC: Additional Data Details (MRI-Simmons, Yelp, Second-Choice Survey)
+\clearpage
+\subfile{appendix_reduced}       % OD: Additional Reduced-Form Results
+\clearpage
+\subfile{appendix_model_oa}      % OE: Additional Model Details
+\clearpage
+\subfile{appendix_credit_debit}  % OF: Credit-Debit Segmentation
+\clearpage
+\subfile{appendix_robustness}    % OG: Alternative Specifications
+\clearpage
+\subfile{appendix_surcharging}   % OH: Price Coherence
+\clearpage
+\subfile{appendix_sorting}       % OI: Merchant Sorting
+
+\clearpage
+\gdef\thepage{OA-\arabic{page}}% Reassert OA- prefix before bibliography
+\printbibliography
+\end{refsection}
+
+\clearpage
+% Do not call \appendix again — it resets counters and creates duplicate hyperref anchors
+
+% Reset page counter for response letter to avoid clashing with appendix A- pages
+\setcounter{page}{1}
+\renewcommand{\thepage}{R4-\arabic{page}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+
+\subfile{response_round2.tex}
+
+\end{document}

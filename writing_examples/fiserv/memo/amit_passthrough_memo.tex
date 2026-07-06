@@ -1,0 +1,174 @@
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{mathpazo}
+\usepackage{charter}
+\usepackage[margin=1.125in]{geometry}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{bbm}
+\usepackage{natbib}
+\usepackage[final]{microtype}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{parskip}
+\usepackage[hidelinks]{hyperref}
+
+\title{Thinking Harder on Incidence}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+\vspace{-3em}
+
+\paragraph{Bottom line.}
+Reviewers find it strange that interchange-fee incidence in the paper falls almost entirely on different \emph{consumer groups} when, statutorily, merchants pay the fees and banks collect the rewards.
+It's straightforward to extend our estimates to show aggregate consumer welfare, merchant profits, and network (which includes Visa/MC and the issuers) profits.
+The key inputs are then how much retailers pass-through interchange into prices ($\rho^P$) and how much issuers pass-through interchange into rewards ($\rho^R$).
+Sales-tax pass-through evidence puts $\rho^P \approx 1$, and retail-banking evidence puts $\rho^R$ high but below one.
+Our current estimates thus likely understate the reduction in aggregate consumer welfare due to high interchange fees.
+
+\paragraph{The formula.}
+Recall that the generalized welfare formula is
+\[
+  \frac{1}{\lambda_k}\frac{dV_k}{dx_l}
+  \;\approx\;
+  \mu_k^{-1}\!\left(
+    -\,\rho^{P}\,\mathbb{E}_R\!\left[\mu_{jk}\mu_{jl}\,\tfrac{\partial \tau_{jl}}{\partial x_l}\right]
+    \;+\;
+    \rho^{R}\,\mathbbm{1}\{k=l\}\,\mathbb{E}_R\!\left[\mu_{jk}\,\tfrac{\partial \tau_{jk}}{\partial x_k}\right]
+  \right).
+\]
+The formula tracks consumer $k$'s welfare; the rest of each interchange dollar goes elsewhere.
+Of each dollar of merchant fee revenue, $\rho^P$ is passed through to prices (the first term) and the remaining $(1-\rho^P)$ stays with merchants as absorbed margin.
+Of each dollar of issuer interchange revenue, $\rho^R$ flows out to cardholders as rewards (the second term) and the remaining $(1-\rho^R)$ stays with banks as profit.
+
+Summing the consumer formula across $k$ (weighted by spending share $\mu_k$) collapses the $\mu_{jk}$ weights via $\sum_k \mu_{jk} = 1$.
+Per dollar of total economy revenue, the three aggregate dollar flows from a change $dx_l$ are
+\[
+\begin{aligned}
+\text{merchants:} \quad & -(1-\rho^P)\,\mathbb{E}_R\!\left[\mu_{jl}\,\tfrac{\partial \tau_{jl}}{\partial x_l}\right], \\
+\text{banks:} \quad & +(1-\rho^R)\,\mathbb{E}_R\!\left[\mu_{jl}\,\tfrac{\partial \tau_{jl}}{\partial x_l}\right], \\
+\text{consumers (summed):} \quad & -(\rho^P-\rho^R)\,\mathbb{E}_R\!\left[\mu_{jl}\,\tfrac{\partial \tau_{jl}}{\partial x_l}\right],
+\end{aligned}
+\]
+and the three rows sum to zero.
+If in reality $\rho^P\approx 1$ but $\rho^R < 1$, then these formulas suggest that we are undercounting the welfare gain of payment networks from high interchange fees and thus undercounting the aggregate loss borne by consumers.
+
+\paragraph{The case for $\rho^P \approx 1$ (prices).}
+
+\textit{Sales taxes are the right analogue.}
+Interchange is an ad-valorem fee paid by merchants on every card transaction.
+The closest empirical literature is sales-tax pass-through.
+\citet{Butters.etal2022} use national-firm scanner data and find that retailers respond to local cost shocks roughly one-for-one, the relevant pass-through margin for a sector-wide ad-valorem shock like interchange.
+
+\textit{``Pricing in levels'' still implies $\rho^P \approx 1$ for small shocks.}
+The most influential recent finding of \emph{incomplete} cost pass-through is \citet{Sangani2026}, who documents that retailers pass cost shocks into prices roughly one-for-one in dollar terms rather than in percent terms.
+For interchange differentials of a few tens of basis points, the levels and percent frames coincide arithmetically.
+
+\textit{Avoidance attenuation does not apply here.}
+The other large class of incomplete pass-through, exemplified by \citet{Harding.etal2012} on cigarette taxes near state borders, operates through consumers shifting where they shop in response to the implicit tax.
+The avoidance margin is essentially absent for interchange.
+Virtually every brick-and-mortar merchant accepts cards and pays interchange, so consumers cannot duck the wedge by changing stores.
+
+\textit{Direct evidence in our paper.}
+The Durbin pass-through estimates (Section on Fact~4) deliver the same conclusion for interchange itself.
+A 1pp change in interchange moves retail prices roughly one-for-one within two years.
+
+\paragraph{The case for $\rho^R \lesssim 1$ (rewards).}
+
+\textit{RBA evidence.}
+\citet{Chang.etal2005} study the 2003 Reserve Bank of Australia interchange cap, a sharp exogenous reduction in issuer interchange revenue.
+They document that issuers offset roughly half the lost revenue through higher annual fees and roughly half through lower rewards generosity.
+The net consumer-incidence offset is close to full pass-through, consistent with $\rho^R$ near one.
+
+\textit{U.S.\ Durbin evidence is mixed but, on net, high.}
+The published version of \citet{Mukharlyamov.Sarin2025} reports pass-through to debit cardholders around $20\%$, while earlier working-paper versions found it closer to $100\%$.
+\citet{Kay.etal2018} find that issuers offset roughly $90\%$ of the lost interchange revenue through changes in deposit account terms.
+The estimates have not converged, but the modal point is high.
+We should report that honestly rather than pin down $\rho^R = 1$.
+
+\textit{Accounting bound.}
+Industry data put credit-card rewards at roughly $80\%$ of total interchange revenue.
+With any positive operational cost of running a card program, the $80\%$ ratio implies near break-even economics on the marginal interchange dollar, consistent with marginal $\rho^R$ near one even when average issuer margins are positive.
+
+\textit{Marginal versus average is the right distinction.}
+The sufficient statistic depends on \emph{marginal} pass-through, not average bank profitability.
+If Chase always retains a fixed $30$\,bps spread between interchange and rewards, the constant wedge cancels in $dV_k/d\tau_c$.
+What matters is whether the next dollar of interchange revenue is paid out as rewards.
+Competitive issuer markets, the $80\%$ rewards-to-interchange ratio, and the RBA and Kay et al.\ quasi-experimental evidence all point to a marginal pass-through near one.
+
+\paragraph{Implication for the framing.}
+With $\rho^P \approx 1$ and $\rho^R$ modestly below one, the cash- and debit-user loss stays around $\mathbb{E}_R[\mu_{jk}\mu_{jc}]$ and is unchanged from the baseline.
+The credit-user gain shrinks in proportion to $\rho^R$, and banks pocket the rest.
+The headline transfer to credit users therefore \emph{understates} the loss to cash and debit users relative to a more realistic world where banks part of interchange fees as higher profits.
+
+\paragraph{Endogenous payment choice.}
+The formula above takes the share matrix $\mu_{jk}$ as fixed.
+The companion appendix derives the analog when consumers re-optimize their payment method in response to reward changes (Theorems~1--2 there, replicated here for reference).
+The per-cohort formula picks up a third term --- a pecuniary externality from how cohort $l$'s method-switching tilts merchant-level interchange composition:
+\begin{equation}
+\frac{1}{\lambda_k}\frac{dV_k}{dx_l}
+\;\approx\;
+\mu_k^{-1}\!\left(
+\underbrace{-\,\rho^{P}\,\mathbb{E}_R\!\left[\mu_{jk}\mu_{jl}\,\tfrac{\partial\tau_{jl}}{\partial x_l}\right]}_{\text{price channel}}
+\,+\,
+\underbrace{\rho^{R}\,\mathbbm{1}\{k=l\}\,\mathbb{E}_R\!\left[\mu_{jk}\,\tfrac{\partial\tau_{jk}}{\partial x_k}\right]}_{\text{rewards channel}}
+\,\underbrace{-\,\rho^{P}\,\mathbb{E}_R\!\left[\mu_{jk}\sum_m(\tau_{jm}-\hat\tau_j)\,\tfrac{d\mu_{jm}}{dx_l}\right]}_{\text{endogenous-choice externality}}
+\right).
+\label{eq:per-cohort-endo}
+\end{equation}
+The externality has the natural sign.
+When $x_l$ raises credit interchange, cohort credit's rewards rise, so $d\mu_{j,\text{credit}}/dx_l > 0$ at the merchants where cohort credit shops; the deviation $\tau_{j,\text{credit}}-\hat\tau_j > 0$ on average (credit is above-average fee), so the bracket inside $\mathbb{E}_R[\cdot]$ is positive.
+With the negative sign in front, the externality is a welfare \emph{loss} that scales with $\rho^P$ (pass-through to prices is what makes merchant-side composition shifts hit consumer prices).
+
+\paragraph{Aggregate dollar flows under endogenous choice.}
+Summing \eqref{eq:per-cohort-endo} across $k$ (weighted by $\mu_k$) and rearranging on the same template as the exogenous-choice memo gives the four dollar flows per dollar of total economy revenue.
+Define the two cost objects:
+\begin{align*}
+\mathcal{R}_{\text{rate}} &\equiv \mathbb{E}_R\!\left[\mu_{jl}\,\tfrac{\partial\tau_{jl}}{\partial x_l}\right]
+\quad\text{(direct rate channel: original memo)},\\
+\mathcal{R}_{\text{shift}} &\equiv \mathbb{E}_R\!\left[\sum_m(\tau_{jm}-\hat\tau_j)\,\tfrac{d\mu_{jm}}{dx_l}\right]
+\quad\text{(method-shift channel: new under endogenous choice)}.
+\end{align*}
+$\mathcal{R}_{\text{rate}}$ is the original memo's mechanical fee revenue change; $\mathcal{R}_{\text{shift}}$ is the additional fee revenue networks collect when consumers reshuffle methods toward higher-fee payment methods at affected merchants.
+Both pass through merchants ($\rho^P$) and rewards ($\rho^R$) according to the same accounting:
+\[
+\begin{aligned}
+\text{merchants:} \quad & -(1-\rho^P)\,\bigl[\mathcal{R}_{\text{rate}} + \mathcal{R}_{\text{shift}}\bigr], \\
+\text{banks/networks:} \quad & +(1-\rho^R)\,\bigl[\mathcal{R}_{\text{rate}} + \mathcal{R}_{\text{shift}}\bigr], \\
+\text{consumers (transfer-side):} \quad & -(\rho^P-\rho^R)\,\bigl[\mathcal{R}_{\text{rate}} + \mathcal{R}_{\text{shift}}\bigr], \\
+\text{consumers (deadweight loss):} \quad & -\rho^P \cdot \mathcal{R}_{\text{shift}}.
+\end{aligned}
+\]
+The first three rows sum to zero: they are pure transfers.
+The fourth row is a genuine deadweight loss --- consumer welfare cost that nobody else collects --- arising from the gap between the private incentive to switch methods (driven by individual rewards) and the social cost of higher merchant-level interchange composition that all consumers shopping at affected merchants pay.
+Under full pass-through ($\rho^P=\rho^R=1$), only the fourth row survives, so the entire welfare effect of an interchange reform reduces to the externality $\mathcal{R}_{\text{shift}}$ (Theorem~2 of the appendix).
+
+\paragraph{Magnitudes: when does endogenous choice matter?}
+The companion appendix shows $\mathcal{R}_{\text{shift}}$ is bounded by the cross-method reward elasticity $\|\mathcal{E}^c\|_\infty=\partial\log\mu_k/\partial f_m$.
+Two regimes:
+\begin{itemize}
+\item \textit{Bounded substitution} ($\|\mathcal{E}^c\|_\infty=O(1)$): $\mathcal{R}_{\text{shift}}=O(\tau_{\max})$ and the endogenous-choice deadweight loss is second order.
+The original memo's accounting captures the first-order story.
+\item \textit{Large substitution} ($\|\mathcal{E}^c\|_\infty\cdot\tau_{\max}=O(1)$, i.e., $\|\mathcal{E}^c\|_\infty$ is allowed to scale as $\tau_{\max}^{-1}$): $\mathcal{R}_{\text{shift}}=O(1)$, the same order as the rate channel.
+The endogenous-choice deadweight loss is leading.
+\end{itemize}
+Empirically, the relevant question is whether marginal cardholders re-optimize payment method in response to a regulatory cap that moves rewards by 1\,pp.
+The Australian RBA reform reduced credit interchange and saw modest debit-share increases consistent with $\|\mathcal{E}^c\|_\infty$ in the moderate range; U.S.\ Durbin shifted consumers \emph{toward} credit (because debit rewards fell), with similar moderate magnitudes.
+Both put us closer to bounded substitution than to the large-substitution limit.
+We can read $d\mu_{jm}/dx_l$ directly off pre-/post-reform merchant-level interchange composition, so $\mathcal{R}_{\text{shift}}$ is empirically tractable from Fiserv data spanning Durbin.
+
+\section*{Other Thoughts I Couldn't Make Tight}
+
+If consumer payment choice and merchant acceptance are endogenous, networks actually don't lose much profit on the margin from a small reduction in interchange fees. That is because networks are already at an envelope condition with respect to the interchange fee. 
+The only first-order forces are again on consumers and merchants. I think we can exploit this in some broader sufficient statistic to reason about small, marginal changes in interchange. This could be combined with the sufficient statistic above to make even stronger statements about small refors to interchange.
+
+Fraud is covered by issuer banks if it's in-person, covered by merchants if it's online. But no matter the costs, no obvious reason to make the merchant pay for it. If the card is creating benefits for the consumer, we should have the consumer pay.
+
+Even if consumers get benefits due to expanding credit access from interchange, there's not a clear reason why merchants need to pay for that. Consumers should be willing to pay.
+
+\bibliographystyle{aer}
+\bibliography{fiserv-interchange}
+
+\end{document}

@@ -1,0 +1,95 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+
+\label{subsec:data}
+
+I combine five data sources to measure consumer reward sensitivity, how card acceptance affects sales, and multi-homing rates.
+Appendix \ref{sec:appendix-data} provides data construction details.
+
+\vspace{0.05in}
+
+\noindent \textbf{Aggregate Prices and Shares (2019)}: I use the Nilson Report's aggregate payment volumes and merchant fees in 2019.
+I collect average rewards data from the annual reports of the $6$ largest banks,
+% CONSTANT: data collection method, count of banks scraped
+whose cards cover 80\% of credit card purchase volumes.
+% CONSTANT: top banks cover ~80% of credit card purchase volumes, from Nilson Report
+These data pin down baseline market shares and fee levels in the model.
+Figure \ref{fig:aggregate-shares} shows payment volumes, merchant fees, and rewards.
+Visa, MC, and AmEx process $90\%$ of all card payments.
+% CONSTANT: Visa/MC/AmEx process ~90% of card payments, from Nilson Report
+All three major credit card networks charge merchant fees of around $2.25\%$,
+% CONSTANT: average credit card MDR ~2.25%, from Nilson Report
+whereas debit networks charge around $0.7\%$ due to the Durbin Amendment.
+% CONSTANT: average debit MDR ~0.7%, from Nilson Report
+Credit cards pay rewards around 1.4\%, whereas aggregate debit rewards are effectively zero.
+% CONSTANT: average credit card reward rate from bank annual reports, external data
+
+\begin{figure}
+    \small
+    \caption{Aggregate payment volumes, merchant fees, and rewards in 2019}
+    \label{fig:aggregate-shares}
+    \begin{center}
+        \includegraphics[width=2.5in]{../output/graphs/volume_plot.pdf}
+        \includegraphics[width=2.5in]{../output/graphs/price_plot.pdf}
+    \end{center}
+    \tablenote{The left chart shows payment volumes measured in trillions from \textcite{Nilson2020a,Nilson2020b}.
+Visa and MC operate credit and debit card networks, whereas AmEx primarily offers credit and charge cards.
+Discover is much smaller than the other three networks.
+The right chart shows merchant fees from \textcite{Nilson2020} and rewards from banks' annual financial reports.
+Aggregate debit rewards fell to effectively zero after the Durbin Amendment, though some small, exempt issuers continued to offer them \parencite{Hayashi2012}.
+The cost of cash is from \textcite{Felt.etal2020}.}
+
+\end{figure}
+
+\vspace{0.05in}
+
+\noindent \textbf{Issuer Payment Volumes (2007--2014).} I construct an annual panel of 39 issuers from the Nilson Report covering 2007--2014 to study how the Durbin Amendment affected payment volumes.
+The issuers include both banks and large credit unions.
+% HARDCODED[scalar: nilson_num] current=39
+I merge this data with NCUA call reports for credit unions and Y-9C reports for bank holding companies to get issuer-level financial data.
+
+\vspace{0.05in}
+
+\noindent \textbf{Homescan (2013--2023).} The NielsenIQ Homescan panel tracks the payment decisions of around $100,000$ households at large consumer packaged goods stores from 2013--2023.
+% CONSTANT: Homescan panel size, from Nielsen data documentation
+I use this panel to measure how consumers split spending across the cards in their wallets and how card acceptance affects sales.
+Appendix Table~\ref{tab:nielsen-summary} reports summary statistics.
+Appendix Table~\ref{tab:nielsen-compare} compares Homescan payment shares to aggregate shares.
+The Homescan sample is broadly representative except for AmEx, which is underrepresented at 4\% versus 10\% aggregate share. This reflects Homescan's exclusion of sectors like travel where AmEx dominates.
+% HARDCODED[scalar: amex_uncond_share] current=4
+% CONSTANT: 10% is AmEx aggregate Nilson share, external data source
+For this reason, AmEx-specific calibration moments (merchant fees, rewards) are sourced externally rather than from Homescan.
+
+\vspace{0.05in}
+
+\noindent \textbf{Consumer Payment Surveys.} I combine the 2017--2019 waves of the Atlanta Federal Reserve's Diary of Consumer Payment Choice (DCPC) and its companion Survey (SCPC) to build a transaction-level dataset over three-day windows \parencite{Greene.Stavins2021}.
+The rich demographic detail in these surveys identifies income gradients in payment preferences.
+The diary and survey share a common panel of respondents. 
+Whereas Homescan oversamples large retailers, the DCPC captures transactions at small stores, allowing me to better estimate overall card acceptance rates.
+Table \ref{tab:dcpc-summary} shows summary statistics on consumers' payment preferences.
+Cards are accepted for around 95\% of transactions.\footnote{
+    Online Appendix Table~\ref{tab:yelp-dcpc-comparison} shows that diary-based acceptance rates closely match those from Yelp business listings.
+}
+% HARDCODED[scalar: share_card_cons] current=95
+Debit cards are the most popular payment method.
+Credit card users have higher incomes than cash or debit card users, and around one-quarter of transactions are online.
+% Cash-only merchants account for the remaining 5\% of transaction volume, concentrated in small service providers and informal sellers. Around 25\% of consumers prefer cash as their primary payment method (Table~\ref{tab:dcpc-summary}). The model treats online and in-person transactions symmetrically; because virtually all online merchants accept cards, the 25\% online share reinforces the high baseline acceptance rate.
+I also conduct a second-choice survey in 2024 to estimate substitution patterns across payment methods \parencite{Berry.etal2004}.
+
+\begin{table}
+    \small
+        \caption{Summary statistics by consumer type in the Diary of Consumer Payment Choice (DCPC)}
+        \label{tab:dcpc-summary}
+        \footnotesize
+        \begin{center}
+        \input{../output/tables/cc_balances_by_pref.tex}
+    \end{center}
+    \tablenote{Consumers are split into three groups by preferred non-bill payment instrument.
+Share reports the fraction of the sample in each column.
+Card acceptance is the expenditure share at merchants that accept cards.
+All other variables report consumer-level averages.
+Online transaction reports the share of transactions done online.}
+
+\end{table}
+
+\end{document}

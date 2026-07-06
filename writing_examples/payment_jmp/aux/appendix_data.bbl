@@ -1,0 +1,127 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{cms/global//global/global/global}
+    \entry{Adams.Bord2020}{report}{}{}
+      \name{author}{2}{}{%
+        {{hash=89ff76ff08fd3a10e7a6ab9b40401bfe}{%
+           family={Adams},
+           familyi={A\bibinitperiod},
+           given={Robert},
+           giveni={R\bibinitperiod}}}%
+        {{hash=c33490a8b379549396fa5c459d1e33fa}{%
+           family={Bord},
+           familyi={B\bibinitperiod},
+           given={Vitaly},
+           giveni={V\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Federal Reserve Board of Governors}%
+      }
+      \strng{namehash}{2fbb9c0659bc39c8374650835f36a396}
+      \strng{fullhash}{2fbb9c0659bc39c8374650835f36a396}
+      \strng{fullhashraw}{2fbb9c0659bc39c8374650835f36a396}
+      \strng{bibnamehash}{2fbb9c0659bc39c8374650835f36a396}
+      \strng{authorbibnamehash}{2fbb9c0659bc39c8374650835f36a396}
+      \strng{authornamehash}{2fbb9c0659bc39c8374650835f36a396}
+      \strng{authorfullhash}{2fbb9c0659bc39c8374650835f36a396}
+      \strng{authorfullhashraw}{2fbb9c0659bc39c8374650835f36a396}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{21}
+      \field{month}{10}
+      \field{title}{The {{Effects}} of the {{COVID-19 Shutdown}} on the {{Consumer Credit Card Market}}: {{Revolvers}} versus {{Transactors}}}
+      \field{type}{FEDS Notes}
+      \field{year}{2020}
+      \field{dateera}{ce}
+      \verb{doi}
+      \verb 10.17016/2380-7172.2792
+      \endverb
+    \endentry
+    \entry{CFPB2021}{report}{}{}
+      \name{author}{1}{}{%
+        {{hash=5629aefafd19f07af135964ee11217d9}{%
+           family={CFPB},
+           familyi={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{5629aefafd19f07af135964ee11217d9}
+      \strng{fullhash}{5629aefafd19f07af135964ee11217d9}
+      \strng{fullhashraw}{5629aefafd19f07af135964ee11217d9}
+      \strng{bibnamehash}{5629aefafd19f07af135964ee11217d9}
+      \strng{authorbibnamehash}{5629aefafd19f07af135964ee11217d9}
+      \strng{authornamehash}{5629aefafd19f07af135964ee11217d9}
+      \strng{authorfullhash}{5629aefafd19f07af135964ee11217d9}
+      \strng{authorfullhashraw}{5629aefafd19f07af135964ee11217d9}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{9}
+      \field{title}{The {{Consumer Credit Card Market}}}
+      \field{year}{2021}
+      \field{dateera}{ce}
+    \endentry
+    \entry{CUToday2016}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=c15120c93ba69e7e0c5f9bdc59f5f135}{%
+           family={{CU Today}},
+           familyi={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{c15120c93ba69e7e0c5f9bdc59f5f135}
+      \strng{fullhash}{c15120c93ba69e7e0c5f9bdc59f5f135}
+      \strng{fullhashraw}{c15120c93ba69e7e0c5f9bdc59f5f135}
+      \strng{bibnamehash}{c15120c93ba69e7e0c5f9bdc59f5f135}
+      \strng{authorbibnamehash}{c15120c93ba69e7e0c5f9bdc59f5f135}
+      \strng{authornamehash}{c15120c93ba69e7e0c5f9bdc59f5f135}
+      \strng{authorfullhash}{c15120c93ba69e7e0c5f9bdc59f5f135}
+      \strng{authorfullhashraw}{c15120c93ba69e7e0c5f9bdc59f5f135}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{day}{1}
+      \field{journaltitle}{CU Today}
+      \field{month}{9}
+      \field{title}{An {{Updated Look At Where Interchange Fits In CU Non-Interest Income}}}
+      \field{urlday}{30}
+      \field{urlmonth}{9}
+      \field{urlyear}{2024}
+      \field{year}{2016}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.cutoday.info/THE-news/An-Updated-Look-At-Where-Interchange-Fits-In-CU-Non-Interest-Income
+      \endverb
+      \verb{url}
+      \verb https://www.cutoday.info/THE-news/An-Updated-Look-At-Where-Interchange-Fits-In-CU-Non-Interest-Income
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

@@ -1,0 +1,574 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+
+\section{Additional Reduced Form Results}\label{sec:oa-reduced-form}
+
+\subsection{Durbin Amendment Robustness Checks}
+\label{subsec:oa-durbin-robustness}
+
+This section checks sensitivity of the main specification and identifies the mechanism behind the debit volume decline.
+
+\subsubsection{Sensitivity of the Main Specification}
+
+\paragraph{Treatment and control issuers had similar pre-policy payment mixes.}
+The percentage decline estimate is sensitive to functional form only if treatment and control issuers have different baseline debit-versus-credit mixes.
+Figure \ref{fig:covariate-overlap} shows the pre-policy distributions of signature debit shares overlap closely across treatment and control banks.
+
+\begin{figure}[ht]
+    \caption{Comparing debit versus credit shares at treatment and control banks\label{fig:covariate-overlap}}
+    \begin{center}
+    \includegraphics[width=5in]{../output/graphs/debit_compare_plot.pdf}
+    \end{center}
+    \tablenote{Each panel shows the distribution of signature debit as a share of signature debit plus credit card volumes by value for control (<\$$10$ billion in assets in 2010) and treatment banks (>\$$10$ billion) in the pre- and post-periods.
+Dashed lines mark the 25th, 50th, and 75th percentiles.}
+
+\end{figure}
+
+\paragraph{Plausibility of the effect of Durbin on interchange revenue.}
+The estimated interchange decline (Table \ref{tab:durbin-event-study}) matches Durbin's expected effect.
+Debit interchange at regulated issuers fell by roughly half while credit interchange was unaffected.
+Given that debit accounted for about two-thirds of total interchange revenue before the policy, this reduction in debit interchange is consistent with the policy \parencite{CUToday2016}.
+
+\begin{table}
+\small
+\caption{Event study estimates for the effect of the Durbin Amendment on interchange fees, signature debit payment volumes, and deposits\label{tab:durbin-event-study}}
+
+\centering \input{../output/tables/durbin_table}
+\tablenote{Difference-in-differences estimates comparing financial institutions above and below the \$$10$ billion Durbin asset threshold. The dependent variable in each column is stated in the column header. Institutions involved in large mergers or divestitures are excluded. Standard errors clustered at the issuer level.}
+\end{table}
+
+The estimates are somewhat sensitive to whether we use total debit or signature debit volumes.
+I focus on signature debit because of better data coverage in the early sample (Figure \ref{fig:durbin-missing}), which is essential for evaluating pre-trends.
+Total debit volumes also fall after Durbin, albeit by a smaller amount (17\% versus 25\% for signature debit, Table \ref{tab:durbin-event-study}).
+% HARDCODED[table: durbin_table.tex, rows: total debit vol / sig debit vol coefficients, but exp(.) - 1] current=17, 25
+
+\begin{figure}
+    \caption{Share of panel observations with missing data by year and card type}
+    \label{fig:durbin-missing}
+        \centering
+        \includegraphics[width=3in]{../output/graphs/durbin_perc_of_missing.pdf}
+    \tablenote{Data are from the Nilson Report. The figure plots the fraction of issuers in the analysis sample with missing volume data, by year and card type (signature debit, total debit, and credit). The Nilson Report reported the signature debit volumes for the top 200 issuers in earlier years, which improved data coverage for signature debit early on.}
+\end{figure}
+
+\paragraph{The estimates are not driven by outliers or the asset size cutoff.}
+The Nilson sample contains \scalarinput{nilson_num.tex} institutions (\scalarinput{nilson_num_treat.tex} treated, \scalarinput{nilson_num_control.tex} control).
+Figure \ref{fig:bank-estimate-distn} shows the treatment group distribution shifted left throughout its support, not just at a few outliers.
+Figure \ref{fig:cutoff-robust} shows stable estimates as asset size cutoffs vary toward the \$10 billion threshold.
+
+\begin{figure}
+    \caption{Distribution of institution-level estimates in the Nilson analysis\label{fig:bank-estimate-distn}}
+    \begin{center}
+        \includegraphics[width=5in]{../output/graphs/durbin_robust_event_study.pdf}
+    \end{center}
+    \tablenote{Density plots of institution-level pre-post changes in signature debit volumes for treated and control groups, from which the difference-in-differences estimate of Durbin's effect is derived.
+Each observation is a financial institution.
+The main text coefficient roughly equals the difference between the treated and control group means.}
+
+\end{figure}
+
+\begin{figure}
+    \caption{Robustness of the effect of the Durbin Amendment on debit card volumes to varying asset size cutoffs\label{fig:cutoff-robust}}
+    \begin{center}
+        \includegraphics[width=3in]{../output/graphs/durbin_robust_lower} \includegraphics[width=3in]{../output/graphs/durbin_robust_upper}
+    \end{center}
+    \tablenote{Difference-in-difference estimates of Durbin's effect on signature debit volumes as the minimum asset requirement increases toward \$$10$ billion (control group) or the maximum decreases toward \$$10$ billion (treatment group).
+The x-axis reports the number of remaining units in the sample, so tighter asset cutoffs correspond to fewer units---i.e., right-to-left on the graph.
+Dots are point estimates. Error bars are 95\% confidence intervals.}
+
+\end{figure}
+
+\paragraph{Results are robust to including mergers.}
+The baseline excludes issuers with large acquisitions or divestitures (target assets exceeding half the acquirer's), whose volume changes reflect portfolio transactions rather than consumer payment choices.
+Including these issuers does not change the estimates (Figures \ref{fig:merger-robust-debit} and \ref{fig:merger-robust-deposits}).
+
+\begin{figure}
+\caption{Robustness of signature debit volume estimates to including merger banks\label{fig:merger-robust-debit}}
+    \begin{minipage}{0.45\textwidth}
+    \subcaption{Restricted sample}
+    \centering
+        \includegraphics[width=\linewidth]{../output/graphs/log_debit_sig.pdf}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.45\textwidth}
+    \subcaption{Full sample}
+    \centering
+        \includegraphics[width=\linewidth]{../output/graphs/log_debit_sig_with_mergers.pdf}
+    \end{minipage}
+    \tablenote{Same difference-in-differences design as Figure~\ref{fig:volumes}. The restricted sample (left) excludes issuers with acquisitions or divestitures exceeding half the acquirer's assets. The full sample (right) includes all issuers.}
+\end{figure}
+
+\begin{figure}
+\caption{Robustness of deposit estimates to including merger banks\label{fig:merger-robust-deposits}}
+    \begin{minipage}{0.45\textwidth}
+    \subcaption{Restricted sample}
+    \centering
+        \includegraphics[width=\linewidth]{../output/graphs/log_deposits.pdf}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.45\textwidth}
+    \subcaption{Full sample}
+    \centering
+        \includegraphics[width=\linewidth]{../output/graphs/log_deposits_with_mergers.pdf}
+    \end{minipage}
+    \tablenote{Same design as Figure~\ref{fig:merger-robust-debit}, with log deposits as the dependent variable.}
+\end{figure}
+
+\paragraph{Results extend to total debit and credit card volumes.}
+The main text focuses on signature debit because coverage in the Nilson Report is most complete.
+Figures \ref{fig:debit-test} and \ref{fig:credit-test} apply the same design to total debit volumes, credit card volumes, and signature debit's share of total debit.
+The panel conditions on banks with pre- and post-Durbin observations for both signature debit and credit, but not for the PIN-inclusive total, so the total-debit and compositional panels reflect a different and smaller set of reporting banks (Figure \ref{fig:durbin-missing}).
+Total debit volumes decline after Durbin, although by less than signature debit and with noisier estimates.
+Among banks that report both signature and total debit, the compositional panel shows little shift between signature and PIN debit, suggesting the decline was broad-based rather than driven by substitution across debit types.
+Credit card volumes at large banks appear to rise relative to small banks after Durbin (Table \ref{tab:durbin-event-study}, Figure \ref{fig:credit-test}), although pre-trends in the credit column are not cleanly zero, so this result should be interpreted with caution.
+
+\begin{figure}[ht!]
+\caption{The effect of the Durbin Amendment on~overall~debit~volumes\label{fig:debit-test}}
+
+\begin{center}
+    \includegraphics[width=3in]{../output/graphs/log_debit_vol.pdf}
+    \includegraphics[width=3in]{../output/graphs/sig_share_of_debit.pdf}
+\end{center}
+\tablenote{Data are from the Nilson Report. Both panels use the same difference-in-differences design as Figure \ref{fig:volumes}, comparing issuers above and below the \$$10$ billion Durbin threshold. Left: log total debit volumes (signature plus PIN). Right: signature debit as a share of total debit volumes. The vertical line marks $2010$, the year before the policy began to be implemented.}
+\end{figure}
+
+\begin{figure}[ht!]
+\caption{The effect of the Durbin Amendment on~credit~card~volumes\label{fig:credit-test}}
+
+\begin{center}
+    \includegraphics[width=5in]{../output/graphs/log_credit_vol.pdf}
+\end{center}
+\tablenote{Data are from the Nilson Report. The design is identical to Figure \ref{fig:volumes}, comparing issuers above and below the \$$10$ billion Durbin threshold. The vertical line marks $2010$, the year before the policy began to be implemented.}
+\end{figure}
+
+\subsubsection{Mechanism}
+\label{subsubsec:oa-durbin-rewards}
+The debit volume decline could reflect three mechanisms: bank switching by consumers fleeing Durbin-exposed institutions, a pull toward credit from improved large-bank rewards, or within-bank substitution driven by loss of debit rewards.
+Banks that ended debit rewards lost volumes comparable to the full treatment effect.
+Deposits did not shift from large to small banks, ruling out bank switching.
+And credit card rewards did not differentially improve at large banks, ruling out a pull toward credit at large banks.
+
+\paragraph{Evidence on the rewards channel.}
+\label{par:oa-durbin-rewards-robustness}
+
+Large banks changed multiple debit card program features after Durbin, including rewards, advertising, and employee incentives.
+To assess how much rewards contributed to the decline, I collect bank-level data on which institutions paid debit rewards before and after Durbin from archived bank websites via the Wayback Machine.
+Of the \scalarinput{nilson_num.tex} institutions in my baseline panel, only 15 paid debit rewards before Durbin.
+% CONSTANT: 15 institutions paid debit rewards pre-Durbin, from internet scraping of bank reward programs
+Among these 15 institutions, 7 ended rewards after Durbin
+% CONSTANT: 7 institutions ended debit rewards post-Durbin, from internet scraping of bank reward programs
+while 8 continued.
+% CONSTANT: 8 institutions continued debit rewards post-Durbin (=15-7), from internet scraping of bank reward programs
+I compare debit volume changes between these groups:
+
+\begin{equation}
+    y_{jt} = \sum_{k\neq-1}\beta_k I\left\{t=k\right\} \times T_{j} + \delta_j + \delta_t + \epsilon_{jt}
+\end{equation}
+where $y_{jt}$ is the log of debit card payment volumes, $T_{j}$ is an indicator that institution $j$ ended its rewards program after Durbin, $\beta_k$ are the dynamic difference-in-difference estimates, $\delta_j$ are bank fixed effects, and $\delta_t$ are time fixed effects.
+
+Figure \ref{fig:durbin-direct-rewards} shows the difference-in-difference estimates.
+On this restricted sample, banks that ended rewards experience debit volume growth about 25\% slower than banks that kept rewards, a gap that matches the aggregate estimate and motivates the calibration choice in Section~\ref{subsec:estimation-procedure}.
+% HARDCODED[figure: durbin_sig_debit_rewards.pdf, vision-read] current=25
+
+A Roy-model interpretation connects the 25\% to the rewards channel specifically.
+Banks fund debit promotion from interchange revenue, allocating across rewards, advertising, and teller incentives.
+If banks differ in their productivity across these levers and each chooses the mix that maximizes consumer response per dollar, non-price steering at reward-paying banks would then be small to begin with. 
+The within-subsample comparison then reflects mainly the rewards change.
+
+I do not run a horse race between being above the cutoff and terminating rewards.
+A regression that controls for rewards and being above or below the cutoff would be misspecified.
+It assumes equal non-price baselines across banks, whereas the Roy model described above implies the opposite.
+
+\begin{figure}[ht]
+    \caption{Direct effect of rewards on signature debit card volumes}
+    \label{fig:durbin-direct-rewards}
+    \centering
+        \includegraphics[width=4in]{../output/graphs/durbin_sig_debit_rewards.pdf}
+    \tablenote{Point estimates from a regression of log debit volumes on an indicator for not paying rewards, with bank and time fixed effects. Sample: 15 banks and credit unions that paid debit rewards before Durbin. Standard errors clustered at the issuer level.}
+\end{figure}
+
+\paragraph{The decline reflects within-bank payment switching, not bank switching.}
+An alternative explanation for the debit volume decline is that consumers switched from large banks to small banks after Durbin, taking their debit volumes with them.
+If this were the case, deposits at large banks should have fallen relative to small banks, and consumers at small banks should report higher rates of recent bank switching.
+
+Figure \ref{fig:balance} tests both predictions.
+The left panel uses the same Nilson Report panel and difference-in-differences design as the main specification, with log deposits as the outcome.
+Deposit growth at large banks tracked deposit growth at small banks closely throughout the post-Durbin period, with no evidence of differential outflows.
+The right panel uses MRI-Simmons survey data, which asks consumers whether they recently changed their primary financial institution.
+Consumers at small banks did not report higher bank switching rates.
+The evidence rules out bank switching as the driver: deposit flows and consumer behavior both stay stable across bank sizes.
+Debit volumes fall without customers leaving. They must be substituting toward other payment methods within their current banks.
+The importance of within-issuer substitution is also why I focus on issuers with both debit and credit franchises, which provide a more representative picture of aggregate switching behavior than single-product issuers.
+
+\begin{figure}[ht!]
+\caption{The effect of the Durbin Amendment on deposits and bank switching behavior\label{fig:balance}}
+
+\begin{center}
+    \includegraphics[width=3in]{../output/graphs/log_deposits.pdf}
+    \includegraphics[width=3in]{../output/graphs/mri_changing_SB_BB.pdf}
+\end{center}
+\tablenote{Left: estimated effect of Durbin on deposits at large banks, using the Nilson Report panel and the same difference-in-differences design as Figure~\ref{fig:volumes}. The vertical line marks $2010$, the year before implementation.
+Right: MRI-Simmons data (2009--2022) showing consumers at small banks (credit unions or community banks, largely exempt from Durbin) did not report higher rates of recent bank switching compared to consumers at large banks.}
+
+\end{figure}
+
+\paragraph{Credit card rewards did not differentially change at large banks.}
+An alternative explanation for why consumers decreased their use of debit cards at large banks is because those banks increased credit card rewards.
+If so, the debit volume decline could reflect consumers being pulled toward credit by improved rewards rather than being pushed away from debit by the loss of debit rewards.
+This story predicts that credit card reward availability or credit card holding rates should have increased differentially at large banks after Durbin.
+
+Figure \ref{fig:big-small-credit} does not support this alternative.
+Around 40\% of small-bank customers also hold credit cards from large issuers (left panel), so even if large banks did improve rewards differentially, small-bank customers would benefit too and the cross-bank gap in debit usage would be dampened.
+% HARDCODED[figure: mri_credit_by_checking.pdf, left panel, vision-read] current=40
+More directly, credit card reward receipt rates did not differentially increase at large banks after Durbin (right panel), so the predicted reward differential is not in the data.
+The debit volume decline at large banks thus reflects the loss of debit promotion, not a pull toward improved credit rewards.
+
+\begin{figure}[ht!]
+    \caption{Credit card rewards for consumers who use large and small deposit institutions after the Durbin Amendment\label{fig:big-small-credit}}
+
+    \begin{center}
+        \includegraphics[width=3in]{../output/graphs/mri_credit_by_checking.pdf}
+        \includegraphics[width=3in]{../output/graphs/mri_rewards_by_checking.pdf}
+    \end{center}
+    \tablenote{Left: probability of holding a credit card from a large issuer, by deposit institution size. Right: probability of receiving credit card rewards, by deposit institution size.
+Small deposit institutions: credit unions or community banks only. Large deposit institutions: Chase, Bank of America, Citibank, Wells Fargo, or U.S. Bank.
+Large credit card issuers: Chase, Bank of America, Citibank, Wells Fargo, Capital One, Discover, and AmEx.}
+
+\end{figure}
+
+\subsection{Evidence on Whether Rewards Shift Shopping Behavior}
+\label{subsec:oa-discover-rewards}
+
+Discover's 5\% Cashback Bonus program provides a natural experiment for whether rewards affect store choice.
+The rewards apply at grocery stores but not discount or warehouse stores.
+Consumers do not change where they shop during reward quarters, but they do shift payments toward Discover.
+Most of the Discover gain comes from other credit cards.
+The remaining gain comes from debit and cash in equal amounts ($-0.7$ pp.\ each; Table~\ref{tab:discover-triple-diff}), so debit and cash appear equally good substitutes for credit at the point of sale.\footnote{For analysis of credit-debit substitution margins, see Online Appendix~\ref{sec:oa-credit-debit}.}
+Rewards thus affect payment choice but not shopping location, even when consumers are aware of the rewards.
+
+The Discover program rotates reward categories quarterly.
+Grocery stores have appeared once a year since 2018 (Table \ref{tab:cashback_categories}).
+I compare shopping and payment behavior at grocery versus discount and warehouse stores during quarters with and without Discover grocery cashback.
+I focus on these store categories because they are substitutes for consumers \parencite{Ellickson.etal2020}.
+
+For the graphical evidence, I restrict to households whose primary or secondary card is Discover.\footnote{Primary and secondary cards are defined by trip counts, with spending as a tiebreaker. See Appendix \ref{sec:appendix-data}.}
+The triple-difference regressions below use the full panel of Homescan households, with Discover cardholders as the treated group, so that the Discover treatment indicator is not absorbed by the store-type-by-time fixed effects.
+I exclude merchants not accepting Discover and household-years without trips to both store categories.
+
+\begin{table}
+    \centering
+    \footnotesize
+    \caption{Discover 5\% Cashback Bonus Categories (2017-2022)}
+        \vspace{10pt}
+
+    \label{tab:cashback_categories}
+    \begin{tabular}{lll}
+        \toprule
+        Year & Quarter & Reward category \\
+        \midrule
+        2017 & Q1 & Gas stations, ground transportation, wholesale clubs. \\
+                     & Q2 & Home improvement stores, wholesale clubs. \\
+                     & Q3 & Restaurants. \\
+                     & Q4 & [redacted], [redacted]. \\
+        \midrule
+        2018 & Q1 & Gas stations and wholesale clubs. \\
+        \rowcolor[gray]{0.95}  & Q2 & \textbf{Grocery stores}. \\
+                     & Q3 & Restaurants. \\
+                     & Q4 & [redacted] and wholesale clubs. \\
+        \midrule
+        \rowcolor[gray]{0.95} 2019 & Q1 & \textbf{Grocery stores}. \\
+                     & Q2 & Gas stations; Uber and Lyft. \\
+                     & Q3 & Restaurants; PayPal. \\
+                     & Q4 & [redacted]; [redacted] (in-store and online); [redacted]. \\
+        \midrule
+        \rowcolor[gray]{0.95} 2020 & Q1 & \textbf{Grocery stores}; [redacted] and [redacted]. \\
+                     & Q2 & Gas stations; Uber and Lyft; wholesale clubs; [redacted]. \\
+                     & Q3 & Restaurants; PayPal. \\
+                     & Q4 & [redacted], [redacted] \& [redacted]. \\
+        \midrule
+        \rowcolor[gray]{0.95} 2021 & Q1 & \textbf{Grocery stores}, [redacted] \& [redacted]. \\
+                     & Q2 & Gas stations, wholesale clubs \& select streaming services. \\
+                     & Q3 & Restaurants \& PayPal. \\
+                     & Q4 & [redacted], [redacted] \& [redacted]. \\
+        \midrule
+        \rowcolor[gray]{0.95} 2022 & Q1 & \textbf{Grocery stores}; fitness clubs; gym memberships. \\
+                     & Q2 & Gas stations; [redacted]. \\
+                     & Q3 & Restaurants; PayPal. \\
+                     & Q4 & [redacted]; digital wallets. \\
+        \bottomrule
+    \end{tabular}
+
+    \vspace{5pt}
+    \begin{minipage}{0.85\textwidth}
+    \footnotesize
+    \textit{Note}: Retailer names have been redacted. General retailer types include a major e-commerce platform, a large online store, a large discount store, two large drugstores, and a home improvement store.
+    \end{minipage}
+\end{table}
+
+\subsubsection{Graphical Evidence}
+
+Figure \ref{fig:discover-spending} shows the effects on payment and shopping behavior.
+The top panel shows grocery spending shares are flat for Discover cardholders during reward quarters (grey shaded areas).
+The bottom left panel shows Discover cardholders shift their spending share toward Discover during reward quarters, roughly a 7.6 pp.\ increase (Table~\ref{tab:discover-triple-diff}).
+% HARDCODED[table: discover_triple_diff_spend.tex, row: Discover HH x Grocery x Reward Month, col: Discover] current=0.076
+Consumers respond to rewards without changing where they shop.
+The bottom right panel shows no change in payment composition at discount and warehouse stores, so time-varying confounds are unlikely to explain the pattern.
+
+\begin{figure}
+    \caption{Effects of Discover's quarterly reward program at grocery stores on consumer spending on different payment methods across retailer types}
+    \label{fig:discover-spending}
+    \centering
+    \begin{subfigure}[b]{0.7\textwidth}
+        \centering
+        \caption{Share of dollars spent at grocery stores}
+        \label{fig:discover-spending-share-retailers}
+        \begin{center}
+            \includegraphics[width=\textwidth]{../output/graphs/kilts_spending_discover_nondiscover.pdf}
+        \end{center}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.5\textwidth}
+        \centering
+        \caption{Payment mix at grocery stores}
+        \label{fig:discover-spending-share-grocery}
+        \includegraphics[width=\textwidth]{../output/graphs/kilts_grocery_spent.pdf}
+    \end{subfigure}%
+    \hfill
+    \begin{subfigure}[b]{0.5\textwidth}
+        \centering
+        \caption{Payment mix at warehouse/discount stores}
+        \label{fig:discover-spending-share-warehouse}
+        \includegraphics[width=\textwidth]{../output/graphs/kilts_warehouse_discount_spent.pdf}
+    \end{subfigure}
+
+    \tablenote{Grey areas mark quarters when Discover offers 5\% cash back at grocery stores but not discount, warehouse, or other retailers. The first panel shows shopping decisions across retailer types. The second and third panels show payment composition at grocery stores (treated) and discount/warehouse stores (control). All samples condition on Discover cardholders.}
+\end{figure}
+
+\subsubsection{Regression Evidence}
+
+I supplement the graphical evidence with regression estimates.
+I first confirm that consumers do not shift between grocery and discount/warehouse stores during reward quarters.
+Column 1 of Table \ref{tab:discover-triple-diff} reports a difference-in-differences specification:
+\begin{equation}
+    y_{it} = \alpha \cdot \mathbf{1}\{\text{Reward Qtr}\}_t \times \mathbf{1}\{\text{Discover HH}\}_i + \delta_i + \delta_t + \epsilon_{it}
+\end{equation}
+where $y_{it}$ is the grocery spending share for household $i$ in month $t$, and $\delta_i$ and $\delta_t$ are household and time fixed effects.
+The grocery spending share coefficient is noisy and economically marginal, confirming that consumers do not systematically change where they shop.
+
+I then show that these same consumers do respond to rewards on the payment margin, ruling out inattention.
+Using a triple-difference design, I estimate for each payment method $m$ (columns 2--5):
+\begin{equation}
+    y^m_{igt} = \beta \cdot \mathbf{1}\{\text{Reward Qtr}\}_t \times \mathbf{1}\{\text{Discover HH}\}_i \times \mathbf{1}\{\text{Grocery}\}_g + \delta_{ig} + \delta_{it} + \delta_{gt} + \epsilon_{igt}
+\end{equation}
+where $y^m_{igt}$ is the spending share of payment method $m$ for household $i$ at store type $g$ (grocery or discount/warehouse) in month $t$.
+The specification includes three sets of two-way fixed effects. Household-by-store-type ($\delta_{ig}$) absorbs time-invariant differences in a household's payment mix across store types. Household-by-time ($\delta_{it}$) absorbs household-level trends in payment behavior common to both store types. Store-type-by-time ($\delta_{gt}$) absorbs aggregate shocks to payment composition at grocery versus discount/warehouse stores.
+Standard errors are clustered at the household level throughout.
+
+The Discover spending share at grocery stores rises by 7.6 pp.\ during reward quarters ($p < 0.001$), offset by declines in other credit ($-6.0$ pp), debit ($-0.7$ pp), and cash ($-0.7$ pp).
+% HARDCODED[table: discover_triple_diff_spend.tex, row: Discover HH x Grocery x Reward Month, cols] current=0.076, -0.060, -0.007, -0.007
+Consumers are clearly aware of reward timing and actively shift which card they use, yet they do not change where they shop.
+
+The relative magnitudes of the credit, debit, and cash responses are informative of how consumers substitute between different payment methods at the point of sale. 
+The strong response for other credit cards suggests that credit cards are good substitutes for each other. 
+The fact that both cash and debit respond also indicates that, contrary to the segmentation assumption made in the baseline model, consumers are willing to substitute between credit and debit at the point of sale.
+In Online Appendix \ref{sec:oa-credit-debit} I discuss how to incorporate this information on credit-debit substitution into the model estimates.
+
+\begin{table}[ht!]
+\small
+\caption{Effect of Discover cashback rewards on payment composition\label{tab:discover-triple-diff}}
+\scriptsize
+\centering \resizebox{\textwidth}{!}{\input{../output/tables/discover_triple_diff_spend}}
+\tablenote{Column 1: grocery spending share (difference-in-differences with household and time FE). Columns 2--5: spending share by payment method at grocery versus discount/warehouse stores (triple-difference with household $\times$ store-type, household $\times$ time, and store-type $\times$ time FE). Standard errors clustered at the household level.}
+\end{table}
+
+\subsection{Hierarchical Card Acceptance}
+\label{subsec:oa-yelp-card-acceptance}
+
+In the main text, I show that the number of merchants that accepts AmEx is similar to the number of merchants that accepts Visa. 
+However, aggregate acceptance counts alone cannot prove that merchants maintain relationships with multiple networks.
+This section uses Yelp reviews to show that when AmEx and Visa charged different fees, acceptance patterns were hierarchical.
+Merchants add payment methods sequentially---cash, then debit, then Visa/MC, then AmEx---rather than specializing in one network at the expense of another.
+This provides evidence of multi-homing behavior.
+
+I collect around 1,500 Yelp reviews that mention at least two payment methods by name (see Online Appendix \ref{subsec:appendix-yelp-data} for details on the sample construction).
+% CONSTANT: count of Yelp reviews, from dataset
+The reviews come primarily from the period 2010--2018, before AmEx's acceptance gap with Visa had fully closed, so they capture merchant acceptance decisions during a period of meaningful variation across networks.
+
+Figure \ref{fig:merchant-multihoming} shows a clear hierarchy in which payment methods co-occur in reviews.
+The most common combinations are debit and credit together, Visa with MC, Visa without AmEx, and debit without credit.
+Almost no reviews mention credit without debit, AmEx without Visa, or only one of Visa or MC.
+This pattern indicates that merchants add payment methods sequentially---cash, then debit, then Visa/MC, then AmEx---rather than specializing in one network at the expense of another.
+
+The pattern contrasts sharply with platform markets such as food delivery, where merchants often operate on one platform but not another \parencite{Sullivan2025}.
+In payment networks, multi-homing is nearly universal among merchants who accept cards at all.
+
+\begin{figure}
+    \caption{Hierarchical card acceptance patterns in Yelp reviews}
+    \label{fig:merchant-multihoming}
+    \begin{center}
+        \includegraphics[width=5in]{../output/graphs/yelp_verticality_bar}
+    \end{center}
+    \tablenote{Each bar shows the frequency of a particular combination of payment methods mentioned in Yelp reviews. The sample contains around 1,500 reviews that mention at least two payment methods by name, primarily from 2010--2018. The bars exclude reviews that reference credit cards generically (e.g., ``all major credit cards'') without naming individual networks. See Online Appendix \ref{subsec:appendix-yelp-data} for sample construction details.}
+\end{figure}
+
+\subsection{Consumer Multi-homing Behavior}
+\label{subsec:oa-consumer-multihoming-history}
+
+Consumer multi-homing across credit card networks reflects differences in rewards and card features, not insurance against acceptance gaps.
+This section tests whether AmEx cardholders reduced multi-homing as AmEx's acceptance gap with Visa closed. AmEx provides the sharpest test because it historically had the largest gap among major networks, so acceptance-driven multi-homing should be most visible there.
+If consumers held multiple credit cards mainly as insurance against acceptance gaps, the share of AmEx cardholders who also hold cards from other networks should have fallen as AmEx became accepted nearly everywhere.
+
+Figure \ref{fig:amex-multihoming} plots the share of AmEx cardholders who also hold a credit card from another network, using data from MRI-Simmons (2009--2022) and NielsenIQ Homescan.
+Despite the substantial closing of the AmEx--Visa acceptance gap documented in Figure \ref{fig:merchant-amex-visa}, the AmEx multi-homing rate has been flat throughout the sample period.
+Consumers multi-home because cards differ in rewards and features, not to hedge acceptance risk.
+This finding supports the model's treatment of consumer card choice as driven by card attributes rather than acceptance coverage.
+
+\begin{figure}[ht!]
+    \centering
+    \caption{AmEx Consumer Multi-homing Over Time}
+    \label{fig:merchant-consumer-multihoming-history}
+    \label{fig:amex-multihoming}
+    \includegraphics[width=0.5\textwidth]{../output/graphs/mri_hs_amex_multiple.pdf}
+    \tablenote{Data from MRI-Simmons (2009--2022) and NielsenIQ Homescan. The figure plots the share of AmEx cardholders who also hold a credit card from another network over time.}
+\end{figure}
+
+\subsection{Consumer Substitution Patterns from a Second Choice Survey}
+\label{subsec:oa-estim-cons-sub}
+
+A second-choice survey confirms that credit and debit are distinct product categories and that higher-income consumers are more reward-sensitive.
+
+\subsubsection{Distinct Product Categories}
+
+Debit cards are closer substitutes to cash than credit cards are, but credit and debit remain distinct product categories.
+Table \ref{tab:second-choice-survey} shows the results.
+When asked what they would use if credit cards did not exist, most credit users would switch to debit. Only \scalarpctinput{survey_credit_cash_diversion}\% would switch to cash.
+Among primary debit users, \scalarpctinput{survey_debit_cash_diversion}\% would switch to cash---consistent with cash and debit being closer substitutes.
+When asked how they would pay if their bank stopped offering their primary card type, \scalarpctinput{second_choice_credit_divert}\% of credit users and \scalarpctinput{second_choice_debit_divert}\% of debit users would switch to another bank's card of the same type.
+These high same-type diversion rates support modeling credit and debit as distinct categories.
+
+\begin{table}[ht!]
+
+    \caption{Substitution patterns from a second choice survey}
+    \label{tab:second-choice-survey}
+
+    \small{%
+
+    \begin{center}
+        \begin{tabular}{>{\centering}p{1in}>{\centering}p{2in}>{\centering}p{2.5in}}
+            Current Card & Choice Set & Share\tabularnewline
+            \hline
+            Credit & \{Cash, DC\} & P(Cash) = \scalarinput{survey_credit_cash_diversion}\tabularnewline
+            Debit & \{Cash, CC\} & P(Cash) = \scalarinput{survey_debit_cash_diversion}\tabularnewline
+            Credit & \{Cash, DC, Other Banks' CC\} & P(Other Banks' CC) = \scalarinput{second_choice_credit_divert}\tabularnewline
+            Debit & \{Cash, Other Banks' DC, CC\} & P(Other Banks' DC) = \scalarinput{second_choice_debit_divert}\tabularnewline
+        \end{tabular}
+    \end{center}
+    }
+
+    \tablenote{How consumers would pay under counterfactual choice sets. The first column is the consumer's current primary payment method, the second is a hypothetical choice set, and the third is the probability of adopting a given method. The sample contains \scalarinput{survey_num_credit} primary credit and \scalarinput{survey_num_debit} primary debit users. See Online Appendix \ref{subsec:appendix-second-choice-details} for survey design details.}
+\end{table}
+
+\subsubsection{Heterogeneity in Reward Sensitivity by Income}
+
+High-income individuals are more reward-sensitive: the elasticity of switching propensity with respect to income is \scalarinput{survey_income_elast}, equivalent to a 0.14 pp increase in switching probability from a baseline of 0.71 (Table~\ref{tab:income-sens}).
+MRI data from 2009--2022 show the same pattern: higher-income individuals are more likely to cite rewards as important for financial services choice.
+
+\begin{table}
+    \caption{Income heterogeneity in rewards sensitivity}
+    \label{tab:income-sens}
+
+    \begin{center}
+        \begin{small}
+            \input{../output/tables/survey_income_price_sens.tex}
+        \end{small}
+    \end{center}
+
+    \tablenote{Model 1 uses second-choice survey data. The dependent variable indicates willingness to switch if current credit card rewards were halved. Model 2 uses MRI-Simmons data. The dependent variable indicates the consumer cites rewards as important for financial institution choice. Both regressions use log household income as the independent variable.}
+
+\end{table}
+
+\subsubsection{Technical Details of Constructing Network Diversion}
+\label{subsec:oa-network-diversion-construction}
+
+The survey asks how consumers would switch if their bank stopped offering their preferred payment type.
+The model requires diversion between networks (e.g., Visa to MC), but the survey measures diversion between banks (e.g., Chase to Bank of America).
+I designed the question this way because consumers often do not know which cards are Visa or MC.
+The survey therefore overstates true network switching: a Visa consumer switching from Chase to Bank of America might stay on Visa if both banks offer it.
+
+To correct this, I adjust responses by removing the expected ``within-network'' bank switches:
+
+\begin{enumerate}
+    \item From the Nilson Report, I collect the share of Visa and MC cards at each major bank.
+    \item For each respondent, I define a choice set of alternative banks: (i) banks where they already hold cards, plus (ii) banks they researched when last shopping for a card.
+    \item For each alternative bank, I calculate the probability a switch keeps the consumer on the same network, using network composition at the current and alternative banks.
+    \item I reduce the reported diversion ratio by subtracting the expected fraction of bank switches that keep consumers on the same network.
+\end{enumerate}
+
+Formally, let $r_{i}\in\left\{ \text{CC},\text{DC}\right\}$ denote the primary card of survey respondent $i$.
+Let $N_{c}=\sum_{i}I\left\{ r_{i}=\text{CC}\right\}$ be the number of primary credit card consumers, $N_{d}=\sum_{i}I\left\{ r_{i}=\text{DC}\right\}$ be the number of debit card consumers, and $N=N_d + N_c$.
+Primary cash consumers have already been dropped from the sample.
+
+Let $S_{i,1}$ be an indicator for switching to cash if credit cards did not exist, $S_{i,2}$ an indicator for switching to cash if debit cards did not exist, and $S_{i,3}$ an indicator for switching to the same card type if their bank stopped offering their primary payment type.
+
+For survey respondent $i$, let the imputed choice set of alternative banks be $\mathcal{C}_i$, the current bank be $b_i$, and the customer's card type be $t_i$ (credit or debit).
+For each bank $j$ and network $k \in \{\text{Visa}, \text{MC}\}$, let $n_{j}^{k,t}$ denote the share of type-$t$ cards (credit/debit) on network $k$ offered by bank $j$.
+
+The adjustment term~$\iota$ is the expected number of respondents who report switching to the same card type but remain on the same network:
+
+\[
+\iota = \sum_{i=1}^{N}S_{i,3}\times\sum_{k\in\{\text{Visa,MC}\}}n_{b_{i}}^{k,t_{i}}\times\left(\frac{1}{|\mathcal{C}_{i}|}\sum_{j\in\mathcal{C}_{i}}n_{j}^{k,t_{i}}\right)
+\]
+
+The inner sum is the probability that the consumer's current network and a randomly drawn alternative bank's network coincide, treating both as independent draws from their respective bank-level network mixes. The sum of products of shares takes the same form as a Herfindahl index for two independent draws.
+
+The data moments for the second-choice survey are then:
+\begin{align}
+\hat{g}_{1} &= \begin{pmatrix}N_{c}^{-1}\sum_{i,r_{i}=\text{CC}}S_{i,1}\\
+        N_{d}^{-1}\sum_{i,r_{i}=\text{DC}}S_{i,2}\\
+        \frac{\sum_{i}S_{i,3}-\iota}{N-\iota}\end{pmatrix}
+\end{align}
+
+In practice, diversion to credit cards does not depend on how within-network moves are modeled.
+Table \ref{tab:diversion-assumptions} shows diversion to the same type under varying assumptions about the share of between-bank moves that also involve network switching.
+
+\begin{table}
+    \caption{Share switching to the same card type on a different network, under alternative assumptions about whether a bank switch (e.g., Chase to Bank of America) also changes the network (Visa to MC)}
+    \label{tab:diversion-assumptions}
+    \centering
+    \input{../output/tables/second_choice_diversion_assumptions}
+\end{table}
+
+\subsection{Survey Evidence on Credit Aversion}
+\label{subsec:oa-survey-consumer-pref}
+
+SCPC and marketing surveys show that many consumers actively prefer debit over credit for substantive reasons, not because they are unaware of credit card rewards.
+Debit-preferring consumers cite budget control and debt aversion as their primary motivations.
+The model captures these motivations as higher non-pecuniary utility for debit.
+
+\begin{table}[ht!]
+\small
+\caption{Most important characteristic of preferred payment instrument, by payment preference}
+\label{tab:survey-why}
+
+\begin{center} \input{../output/tables/why_by_pref.tex} \par\end{center}
+\tablenote{Three consumer groups defined by preferred non-bill payment instrument: cash, debit, or credit. Each cell reports the share of consumers in that group who cite the row feature as the ``most important characteristic'' of their preferred payment instrument. Source: SCPC 2017--2019. All statistics use individual-level sampling weights.}
+\end{table}
+
+Table \ref{tab:survey-why} shows \scalarinput{dcpc_cash_budget_control}$\%$ and \scalarinput{dcpc_debit_budget_control}$\%$ of cash and debit users in the SCPC cite budget control as most important, versus \scalarinput{dcpc_credit_budget_control}$\%$ of credit users.
+Debit consumers are about 27 pp.\ more likely to cite convenience (Table \ref{tab:survey-why}), perhaps because debit cards come bundled with checking accounts and require no monthly bill.
+% HARDCODED[table: why_by_pref.tex, row: convenience, debit vs credit difference] current=0.27
+By contrast, \scalarinput{dcpc_credit_rewards}$\%$ of credit card consumers say rewards are the most important reason they pay with credit.
+Among card owners who hold both products, \scalarinput{dcpc_debit_owns_credit_card}\% nonetheless make debit their primary instrument, showing that budget control and debt aversion keep many consumers on debit even when credit would pay them more.
+% HARDCODED[scalar: dcpc_debit_owns_credit_card] current=79
+
+These results are consistent with findings from marketing surveys.
+About a quarter of consumers feel ``impulsive,'' ``anxious,'' or ``overwhelmed'' with credit cards, twice the rate for debit \parencite{Issa2017}.
+% CONSTANT: from Issa (2017), external marketing survey
+Among consumers without credit cards, 37\% cite debt aversion (``prefer not to carry any debt''), versus only 26\% who do not qualify \parencite{Boehm2018}.
+% CONSTANT: from Boehm (2018), external survey
+
+Behavioral research finds some consumers prefer immediate payment to avoid carrying balances \parencite{Prelec.Loewenstein1998}.
+\textcite{Zinman2004} finds that around 30\% of debit card users show spending-control motives.
+% CONSTANT: from Zinman (2004), external estimate
+Australia banned unsolicited credit limit increases in 2018 after finding they caused ``significant consumer detriment'' \parencite{RetailBankerInternational2018}.
+
+\end{document}

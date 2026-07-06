@@ -1,0 +1,32 @@
+{
+  "created": "2026-04-27T15:01:00Z",
+  "llm_tagging": false,
+  "tasks": [
+    {"id": 1, "file": "main.tex", "task": "file_bundle", "model": "haiku", "status": "pending"},
+    {"id": 2, "file": "intro.tex", "task": "file_bundle", "model": "haiku", "status": "pending"},
+    {"id": 3, "file": "institutional_details.tex", "task": "file_bundle", "model": "haiku", "status": "pending"},
+    {"id": 4, "file": "data.tex", "task": "file_bundle", "model": "haiku", "status": "pending"},
+    {"id": 5, "file": "reducedform.tex", "task": "file_bundle", "model": "haiku", "status": "pending"},
+    {"id": 6, "file": "model.tex", "task": "file_bundle", "model": "haiku", "status": "pending"},
+    {"id": 7, "file": "estimation.tex", "task": "file_bundle", "model": "haiku", "status": "pending"},
+    {"id": 8, "file": "counterfactuals.tex", "task": "file_bundle", "model": "haiku", "status": "pending"},
+    {"id": 9, "file": "conclusion.tex", "task": "file_bundle", "model": "haiku", "status": "pending"},
+    {"id": 10, "file": "appendix_data.tex", "task": "file_bundle", "model": "haiku", "status": "pending"},
+    {"id": 11, "file": "appendix_model.tex", "task": "file_bundle", "model": "haiku", "status": "pending"},
+    {"id": 12, "file": "appendix_estimation.tex", "task": "file_bundle", "model": "haiku", "status": "pending"},
+    {"id": 13, "file": "appendix_tables.tex", "task": "file_bundle", "model": "haiku", "status": "pending"},
+    {"id": 14, "file": "appendix_figures.tex", "task": "file_bundle", "model": "haiku", "status": "pending"},
+    {"id": 15, "file": "appendix_data_oa.tex", "task": "file_bundle", "model": "haiku", "status": "pending"},
+    {"id": 16, "file": "appendix_reduced.tex", "task": "file_bundle", "model": "haiku", "status": "pending"},
+    {"id": 17, "file": "appendix_model_oa.tex", "task": "file_bundle", "model": "haiku", "status": "pending"},
+    {"id": 18, "file": "appendix_credit_debit.tex", "task": "file_bundle", "model": "haiku", "status": "pending"},
+    {"id": 19, "file": "appendix_robustness.tex", "task": "file_bundle", "model": "haiku", "status": "pending"},
+    {"id": 20, "file": "appendix_surcharging.tex", "task": "file_bundle", "model": "haiku", "status": "pending"},
+    {"id": 21, "file": "appendix_sorting.tex", "task": "file_bundle", "model": "haiku", "status": "pending"}
+  ],
+  "paper_tasks": [
+    {"id": 100, "task": "structure", "model": "sonnet", "status": "pending"},
+    {"id": 101, "task": "relevance", "model": "sonnet", "status": "pending"},
+    {"id": 102, "task": "writing_quality", "model": "sonnet", "status": "pending"}
+  ]
+}

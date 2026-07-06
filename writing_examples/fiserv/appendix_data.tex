@@ -1,0 +1,151 @@
+\documentclass[main.tex]{subfiles}
+
+\begin{document}
+
+\section{Data Cleaning and Construction of Core Datasets}
+
+This section describes the cleaning procedures applied to five key datasets that form the backbone of our empirical analysis: (1) the aggregate time series, (2) the Clover merchant data, (3) the merchant cross-section from the settlement dataset, (4) the Diary of Consumer Payment Choice, and (5) the MRI survey data.
+
+\subsection{Aggregate Payment Time Series}
+
+We aggregate Fiserv settlement data from 2006--2022 to provide aggregate measures of payment instrument usage over time.
+We construct this data by aggregating the raw merchant-level information over time into a transaction code by month panel.
+When showing time series, we drop transaction codes associated with negotiated fees (e.g., large merchants).
+By dropping large firms, we remove the influence of entry and exit of large merchants over time, which can create mechanical changes in average fees and volumes.
+We also drop transaction codes with less than zero net interchange in a given month.
+Interchange codes can be negative for a month due to refunds or adjustments.
+
+\subsection{Clover Dataset}
+
+The Clover data provide establishment-level records from a sample of merchants spanning 2019--2022 that includes both card and cash transactions.
+We first aggregate establishment-level transactions into annual cash, check, debit, and credit card volumes.
+We then drop any merchants with negative sales, as those reflect the influence of net refunds and chargebacks.
+The Clover data provide our only measure of cash usage at the merchant level.
+
+\subsection{Settlement Dataset}
+
+The settlement cross-section provides establishment-level aggregates of card transactions and interchange fees for 2022.
+We focus on 2022 to ensure comparability with the Clover data.
+We construct a cross-section of merchants that can be consistently classified by sector and linked to firm identifiers.
+Cleaning proceeds in several steps:
+
+\begin{enumerate}
+    \item Merchants with missing or inconsistent MCC codes are dropped.
+    \item Financial transactions (such as payment app transfers and ATM withdrawals) are removed to focus on true retail purchases.
+    \item We then collapse the payment volumes and interchange fees to the establishment level. Note that multiple establishments may belong to the same firm.
+    \item For the sufficient statistics analysis, we further collapse the payment volumes and fees to the firm level by aggregating across all establishments belonging to the same firm.
+\end{enumerate}
+
+We group MCC codes into six broad sectors: (i) Grocery, (ii) Dining, (iii) Gas Stations, (iv) General Retail, (v) Travel, and (vi) Other.
+We choose these categories because they are the largest broad categories of merchants that are also present in the Diary of Consumer Payment Choice.
+Grocery includes warehouse stores, discount stores, and supermarkets.
+Dining includes full-service and quick-service restaurants, as well as bars.
+General Retail includes department stores, specialty retailers, discount stores, pharmacies, and convenience stores.
+Travel includes airlines, hotels, car rentals, and travel agencies.
+Other includes all remaining MCC codes, such as healthcare, utilities, and entertainment.
+
+Because the settlement dataset contains only card transactions, we impute cash usage using a statistical model estimated on the Clover data.
+The modeling approach, validation of the extrapolation procedure, and detailed results are described in Appendix~\ref{sec:appendix-cash-model}.
+
+\subsection{Consumer Surveys: Diary of Consumer Payment Choice (DCPC) and MRI}
+
+We use two consumer survey datasets to analyze household payment preferences and card ownership patterns.
+This allows us to move beyond redistribution across consumers of different payment methods and instead study how interchange fees redistribute across households with different income levels.
+
+The Diary of Consumer Payment Choice collects individual information on demographics, payment preferences, and transaction diaries.
+We pool the 2022--2023 panels to maximize the sample size for our analysis.
+The data on demographics and payment preferences allow us to model the correlation between household income and preferred payment method.
+We define preferred payment methods as consumers' preferred method for in-person transactions.
+We focus on those who report cash, debit, or credit, which essentially captures all consumers.
+We also use the DCPC transaction diaries to measure the distribution of payment methods across different sectors.
+This helps us validate the sector-level payment patterns observed in the settlement data in Figure \ref{fig:data-representative-sector}.
+
+The MRI survey is a large, nationally representative consumer survey that links demographics and brand preferences.
+Among the many variables it collects are household demographics, card ownership, and bank use.
+This allows us to separate households into using exempt versus regulated debit, and also premium versus regular credit cards.
+We use the 2022 wave which covered around 50,000 households.
+
+\begin{itemize}
+    \item We code a household as owning a credit (or debit) card if it reports owning at least one of that type. We also track multiple ownership and identify network-level ownership (Visa, Mastercard, Amex, Discover). We exclude households reporting neither credit nor debit spending and not preferring cash (17\% of the MRI households), as they provide no information on payment preferences.
+    \item To identify regulated versus exempt debit, we group financial institutions into two categories. \emph{Small banks} include credit unions, community banks, and Chime. \emph{Big banks} include large national and regional banks (Chase, Citi, U.S. Bank, Wells Fargo, Bank of America, Ally, BB\&T, BBVA, Capital One, Citizens, Fifth Third, HSBC, Key, PNC, Regions, SunTrust, TD). We split debit into exempt and regulated in proportion to the number of institutions of each type reported. For example, if a household reports using two small and one big bank, 2/3 of debit spend is assigned to exempt and 1/3 to regulated.
+    \item We define premium credit cards based on the types of cards people hold. We classify Visa/Mastercard Standard, Gold, and Platinum as \emph{regular} cards. We classify Visa Signature, Mastercard World Elite, and American Express as \emph{premium} cards. If a household owns any premium card, all credit spending is assigned to the premium category; otherwise, spending is assigned entirely to regular cards.
+\end{itemize}
+
+With these two datasets, for discrete income bin categories, we can compute the distribution of payment preferences across debit, credit, and cash from the DCPC, and then we split debit into regulated versus exempt and credit into premium versus regular using the MRI data.
+Table~\ref{tab:dcpc-summary-stats} shows the summary statistics for both datasets.
+
+\begin{table}[H]
+
+  \centering
+  \caption{Summary Statistics: Diary of Consumer Payment Choice (DCPC) and MRI Survey}
+  \label{tab:dcpc-summary-stats}
+  \input{../output/tables/dcpc_mri_summary_stats.tex}
+
+  \tablenote{The table shows summary statistics for respondents in the DCPC and MRI survey. Panel A shows demographics and payment preferences from the DCPC. Payment preferences are defined by consumers' responses to their preferred in-person payment method. Panel B shows card ownership and bank use from the MRI survey. Cash preference is defined by whether consumers report that they use cash whenever possible. Conditional on not reporting a cash preference, consumers are assigned to credit or debit based on whether they spend more on each card type. Regulated versus exempt debit is defined based on the types of financial institutions used by the household (see text for details). Premium versus regular credit is defined based on the types of credit cards owned by the household (see text for details). Statistics are reported with sampling weights.}
+\end{table}
+
+Relative to the aggregate payment patterns in the settlement data (approximately 11\% cash, 45\% debit, 44\% credit), consumers in the DCPC report a higher preference for cash (around 20\% in the survey), and consumers in the MRI survey report a higher preference for debit cards from large banks and for regular credit cards.
+To address this bias, we proportionally re-weight shares of payment methods within each income bin to match the aggregate shares observed in the settlement data.
+This re-weighting preserves the correlation between income and payment preferences observed in the surveys while ensuring that the overall payment method shares align with the settlement data.
+This proportional rescaling is equivalent to a logit adjustment: we solve for method-specific constants that shift aggregate predicted shares to match the settlement data while preserving relative preferences across income bins.
+
+% \subsection*{Summary of Exclusions}
+
+% Across datasets, our exclusions primarily remove (i) mechanically unusable records (e.g., missing identifiers, voids, refunds, or non-purchase transactions), (ii) observations that cannot be reliably classified (e.g., missing or inconsistent MCC codes), and (iii) very low-volume or extreme outlier observations. In each case, the excluded observations represent a small share of the underlying transaction volume, and the resulting samples are designed to capture stable, economically meaningful patterns in payment behavior.
+
+\subsection{Validation Against External Industry Benchmarks}
+
+To assess the external validity of our datasets, we compare key metrics from the Fiserv data against independent measures from the Nilson Report, a leading industry trade publication that compiles payment statistics across the U.S. payment system.
+Figure~\ref{fig:fiserv-nilson-representativeness} compares transaction sizes, credit card shares, average fees, and paper payment shares.
+The Fiserv data closely track the Nilson benchmarks across all four dimensions.
+Credit card transaction sizes in Fiserv are approximately 20\% lower than the Nilson Report, reflecting our exclusion of business credit cards; debit card transaction sizes are only about 5\% lower.
+The credit-debit mix, fee levels, and cash shares all align closely with external estimates, validating both our settlement data and our Clover-based extrapolation procedure for cash usage.
+
+\clearpage
+
+\begin{figure}[H]
+  \centering
+  \caption{Representativeness of Fiserv Data: Validation Against Nilson Report Industry Benchmarks}
+  \label{fig:fiserv-nilson-representativeness}
+
+  % Row 1
+  \begin{subfigure}[t]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../fiserv_output/graphs/fiserv_representativeness_tx_size.pdf}
+    \caption{Average Transaction Size}
+    \label{fig:fiserv-nilson-tx-size}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../fiserv_output/graphs/fiserv_representativeness_credit_share.pdf}
+    \caption{Credit Card Share of Card Payments}
+    \label{fig:fiserv-nilson-credit-share}
+  \end{subfigure}
+
+  \vspace{0.6em}
+  \begin{subfigure}[t]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../fiserv_output/graphs/fiserv_representativeness_avg_fee.pdf}
+    \caption{Average Interchange Fee}
+    \label{fig:fiserv-nilson-avg-fee}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../fiserv_output/graphs/fiserv_representativeness_paper_share.pdf}
+    \caption{Share of Paper-Based Payments}
+    \label{fig:fiserv-nilson-paper-share}
+  \end{subfigure}
+
+  \captionsetup{font=small}
+  \captionnotes{\textit{Notes:} Validation of Fiserv data representativeness against Nilson Report industry benchmarks. Panel (a): Average transaction size in the Fiserv data is measured as total dollar volume divided by number of transactions.
+Panel (b) compares the dollar share of V/MC volume on credit cards.
+Panel (c): Fees in the Nilson report represent interchange fees as well as additional acquirer fees.
+Interchange in the Fiserv data excludes acquirer fees.
+Panel (d) plots the share of all transactions via cash/checks in the Clover data against cash as a share of cash + card transactions from the Nilson Report.
+We exclude checks in the Nilson report because they are mainly for non-retail sectors that are not well represented in the Fiserv data.}
+
+\end{figure}
+
+\clearpage
+
+\end{document}

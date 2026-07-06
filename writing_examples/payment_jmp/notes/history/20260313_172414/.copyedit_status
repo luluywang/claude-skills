@@ -1,0 +1,3 @@
+complete
+ai_detection_complete: [main.tex, intro.tex, institutional_details.tex, data.tex, reducedform.tex, model.tex, estimation.tex, counterfactuals.tex, conclusion.tex, appendix_data.tex, appendix_model.tex, appendix_estimation.tex, appendix_model_oa.tex, appendix_mri.tex, appendix_reduced.tex, appendix_surcharging.tex, appendix_sorting.tex, appendix_robustness.tex]
+ai_detection_pending: []

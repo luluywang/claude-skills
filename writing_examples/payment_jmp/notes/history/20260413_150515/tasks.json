@@ -1,0 +1,9 @@
+{
+  "created": "2026-04-13T13:47:00Z",
+  "paper_type": "D",
+  "llm_tagging": true,
+  "tasks": [],
+  "paper_tasks": [
+    {"id": 1, "task": "relevance", "model": "sonnet", "level_filter": "section,subsection", "status": "pending"}
+  ]
+}

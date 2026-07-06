@@ -1,0 +1,383 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+
+\section{Alternative Specifications and Additional Counterfactuals}
+\label{sec:oa-alternative-specifications}
+
+Sections~\ref{subsec:oa-no-passthrough}--\ref{subsec:oa-debit-robustness} re-estimate under three alternative specifications: no merchant fee pass-through, credit constraints, and lower reward sensitivity. Online Appendix~\ref{sec:oa-credit-debit} addresses credit-debit substitution. Section~\ref{subsec:oa-cost-of-cash-cap} compares the 120 bps cap to a tighter cost-of-cash cap and the constrained social optimum.
+
+%% ============================================================================
+%% SECTION 1: NO PASSTHROUGH
+%% ============================================================================
+
+\subsection{No Merchant Fee Pass-Through}
+\label{subsec:oa-no-passthrough}
+
+The main counterfactuals assume merchants pass merchant-fee changes into retail prices one-for-one.
+Without pass-through, fee savings accrue to merchants instead of consumers.
+Total welfare gains keep their sign under every policy.
+Small counterfactuals are nearly unchanged, while credit fee cap and monopoly gains shrink by a third or more.
+The credit fee cap's distributional story also reverses, with merchants gaining at consumers' expense.
+
+\paragraph{Model modification.} This specification modifies the merchant pricing equation (Eq.~\ref{eq:optimal-price}).
+Merchants set the standard CES markup $\hat{p} = \frac{\sigma}{\sigma-1}$ without the $\frac{1}{1-\hat{\tau}}$ pass-through term, so retail prices no longer respond to merchant fees. 
+This applies symmetrically to fee increases and decreases: under the credit fee cap, all merchant-fee savings accrue to merchants rather than passing to consumers through lower retail prices. 
+The optimal acceptance decision is unchanged because first-order price changes have second-order profit effects. 
+All other equations (consumer demand, merchant acceptance, network conduct) are unchanged.
+
+\begin{table}[ht!]
+    \small
+    \caption{Estimated parameters: No merchant fee pass-through}
+    \label{tab:param-no-passthrough}
+\begin{center}\setlength{\tabcolsep}{4pt} \begin{minipage}[t]{0.5\columnwidth}%
+\centering \textbf{Panel A: Consumer Preference Parameters} \par\medskip \input{../output/tables/param_tab_cons_no_passthrough.tex}
+\end{minipage}%
+\begin{minipage}[t]{0.5\columnwidth}%
+\centering \textbf{Panel B: Consumer Heterogeneity Parameters} \par\medskip \input{../output/tables/param_tab_cons_het_no_passthrough.tex}
+\end{minipage}
+
+\vspace{0.5em}
+
+\begin{minipage}[t]{0.5\columnwidth}%
+\centering \textbf{Panel C: Merchant Parameters} \par\medskip \input{../output/tables/param_tab_merch_no_passthrough.tex}
+\end{minipage}%
+\begin{minipage}[t]{0.5\columnwidth}%
+\centering \textbf{Panel D: Network Cost Parameters (bps)} \par\medskip \input{../output/tables/param_tab_network_no_passthrough.tex}
+\end{minipage}
+\end{center}
+    \tablenote{S.D.\ refers to the standard deviation, and R.C.\ refers to the random coefficients.
+The $\Xi$ are the unobserved characteristics, and the $\chi^{lm}$ is the complementarity parameter.
+In Panel B, volatility parameters are the standard deviations of the random coefficients.
+Merchant types $\gamma$ are distributed according to a Gamma distribution.
+Standard errors computed by bootstrap.}
+\end{table}
+
+\paragraph{Results.} Estimated parameters change little from the baseline (Table~\ref{tab:param-no-passthrough}), as expected since none of the merchant acceptance decisions depend on the pricing strategy.
+Counterfactuals with small fee and reward changes are robust: uncapping debit raises total welfare by \$8B (versus \$7B at baseline), dual routing raises \$2.9B (versus \$3.8B, both net of the mechanical $\chi^{22}$ adjustment described in Online Appendix~\ref{subsec:oa-mechanical-dr}), and CBDC raises \$1.4B (versus \$1.6B).
+% HARDCODED[table: welfare_table_no_passthrough.tex, row: Total, cols: Uncap Debit=8, Dual Routing=2.9, CBDC=1.4]
+% HARDCODED[table: welfare_table_baseline.tex, row: Total, cols: Uncap Debit=7, Dual Routing=3.8, CBDC=1.6]
+
+Counterfactuals with large net fee changes are the exception.
+The credit fee cap welfare gain falls to \$17B from \$27B, and the monopoly gain falls to \$8B from \$15B.
+% HARDCODED[table: welfare_table_no_passthrough.tex, row: Total, col: Cap Fees] current=17
+% HARDCODED[table: welfare_table_baseline.tex, row: Total, col: Cap Fees] current=27
+% HARDCODED[table: welfare_table_no_passthrough.tex, row: Total, col: Monopoly] current=8
+% HARDCODED[table: welfare_table_baseline.tex, row: Total, col: Monopoly] current=15
+This gap reflects deadweight loss from under-consumption under zero pass-through.
+Under full pass-through, lower rewards reduce consumption while merchant price cuts stimulate it, so total consumption is roughly unchanged and deadweight loss is essentially flat. 
+The welfare gain comes from the credit-aversion channel and redistribution.
+Under zero pass-through, merchant prices do not adjust, so the rewards-driven reduction in consumption from a fee cap or monopoly is not offset. 
+Deadweight loss rises, and total welfare gains shrink.
+
+The surplus distribution also shifts under the credit fee cap: merchants retain the fee savings rather than passing them to consumers, so merchant surplus rises by \$49B while consumer surplus falls by \$31B (versus gains for both groups under full pass-through).
+% HARDCODED[table: welfare_table_no_passthrough.tex, row: Merchants, col: Cap Fees] current=49
+% HARDCODED[table: welfare_table_no_passthrough.tex, row: Consumers, col: Cap Fees] current=-31
+
+\begin{table}[ht!]
+    \caption{Counterfactual effects on prices and shares: No merchant fee pass-through}
+    \label{tab:cf-prices-nopass}
+    \centering
+    \small{
+    \input{../output/tables/cf_table_no_passthrough.tex}
+    }
+    \tablenote{Bootstrap standard errors in parentheses.
+    Counterfactual scenarios are defined in Table~\ref{tab:cf-effects}.
+    Dollar values are computed by normalizing to \$10 trillion of total consumer purchases \parencite{Nilson2020a}.}
+\end{table}
+
+\begin{table}[ht!]
+    \caption{Counterfactual welfare effects: No merchant fee pass-through}
+    \label{tab:cf-effects-nopass}
+    \centering
+    \small{
+    \input{../output/tables/welfare_table_no_passthrough.tex}
+    }
+    \tablenote{Bootstrap standard errors in parentheses.
+    Counterfactual scenarios are defined in Table~\ref{tab:welfare-decomp}.
+    Dollar values are computed by normalizing to \$10 trillion of total consumer purchases \parencite{Nilson2020a}.
+    Totals may not sum due to independent rounding.}
+\end{table}
+
+\clearpage
+
+%% ============================================================================
+%% SECTION 2: CREDIT CONSTRAINED
+%% ============================================================================
+
+\subsection{Credit Constraints}
+\label{subsec:oa-credit-constrained}
+
+The baseline model attributes low-income credit avoidance to preferences.
+Some of that gap may instead reflect access, since subprime consumers cannot obtain a credit card at all.
+Both specifications must match the same estimated Durbin Amendment effect, so reclassifying some credit avoidance from preference to access just reallocates reward sensitivity across consumers.
+The main counterfactual conclusions hold, with credit fee cap and monopoly welfare gains similar to baseline, if anything slightly larger.
+
+\paragraph{Model modification.} This specification modifies the consumer adoption stage.
+Before evaluating choice probabilities (Eq.~\ref{eq:person-market-share}), some consumers are blocked from holding credit cards.
+Constrained customers cannot have a credit card as a primary or secondary card.
+All other equations are unchanged.
+
+Credit access follows a logistic function of demeaned log income: $P(\text{access} \mid y) = \Lambda(\gamma_0 + \gamma_y \log \tilde{y})$, adding two parameters ($\gamma_0, \gamma_y$) estimated from DCPC credit score data and held fixed in the structural step.
+Table~\ref{tab:credit-access-logit} reports the logistic regression.
+Combining these estimates with the structural income distribution ($\nu_y = 0.75$), the access probability is 79\% at median income, 93\% at the 90th percentile, and 52\% at the 10th percentile.
+% HARDCODED[table: dcpc_credit_income_reg.tex; intercept 1.33, slope 1.32; ν_y = 0.75; Φ⁻¹(0.9) ≈ 1.2816] current=79, 93, 52
+On an income-weighted basis, around 15\% of consumers are credit-constrained.
+% HARDCODED[income-weighted constrained share; pop-weighted access ≈ Φ(γ₀/√(1.7²+(γ_y ν_y)²))=Φ(1.33/1.97)=Φ(0.68)≈75%; income-weighting shifts log-income mean by ν_y²=0.5625, giving Φ((γ₀+γ_y ν_y²)/1.97)=Φ(2.07/1.97)=Φ(1.05)≈85% access; constrained=100%-85%=15%] current=15
+
+\begin{table}[ht!]
+    \small
+    \caption{Logistic regression: Credit card access on income}
+    \label{tab:credit-access-logit}
+    \centering
+    \input{../output/tables/dcpc_credit_income_reg.tex}
+    \tablenote{Dependent variable is an indicator for credit score above 650.
+Income is log-transformed and demeaned.
+Standard errors in parentheses.}
+\end{table}
+\paragraph{Results.} Constraints now partly explain low-income consumers' credit avoidance, so the income gradient in credit preference weakens: $\beta_y^L$ falls from $0.63$ to $0.15$ (Table~\ref{tab:param-credit-constrained}).
+% HARDCODED[table: param_tab_cons_het_credit_constrained.tex vs param_tab_cons_het_baseline.tex, row: income gradient] current=0.63 -> 0.15
+The median consumer's credit aversion also falls: indifference between Visa debit and credit requires \scalarinput{param_est_credit_penalty_pass_credit_constrained}\% in rewards (SE \scalarinput{param_est_credit_penalty_pass_credit_constrained_se}\%), versus \scalarinput{param_est_credit_penalty_pass_baseline}\% at baseline.
+
+\begin{table}[ht!]
+    \small
+    \caption{Estimated parameters: Credit constraints}
+    \label{tab:param-credit-constrained}
+\begin{center}\setlength{\tabcolsep}{4pt} \begin{minipage}[t]{0.5\columnwidth}%
+\centering \textbf{Panel A: Consumer Preference Parameters} \par\medskip \input{../output/tables/param_tab_cons_credit_constrained.tex}
+\end{minipage}%
+\begin{minipage}[t]{0.5\columnwidth}%
+\centering \textbf{Panel B: Consumer Heterogeneity Parameters} \par\medskip \input{../output/tables/param_tab_cons_het_credit_constrained.tex}
+\end{minipage}
+
+\vspace{0.5em}
+
+\begin{minipage}[t]{0.5\columnwidth}%
+\centering \textbf{Panel C: Merchant Parameters} \par\medskip \input{../output/tables/param_tab_merch_credit_constrained.tex}
+\end{minipage}%
+\begin{minipage}[t]{0.5\columnwidth}%
+\centering \textbf{Panel D: Network Cost Parameters (bps)} \par\medskip \input{../output/tables/param_tab_network_credit_constrained.tex}
+\end{minipage}
+\end{center}
+    \tablenote{S.D.\ refers to the standard deviation, and R.C.\ refers to the random coefficients.
+The $\Xi$ are the unobserved characteristics, and the $\chi^{lm}$ is the complementarity parameter.
+In Panel B, volatility parameters are the standard deviations of the random coefficients. Constraint intercept and slope are the logistic parameters $\gamma_0$ and $\gamma_y$ governing credit card access probability.
+Merchant types $\gamma$ are distributed according to a Gamma distribution.
+Standard errors computed by bootstrap.}
+\end{table}
+
+Adding the access constraint raises credit fee cap welfare gains to \$32B (SE \$4B) from \$27B at baseline, and monopoly gains to \$24B from \$15B (Table~\ref{tab:welfare-credit-constrained}).
+% HARDCODED[table: welfare_table_credit_constrained.tex, row: Total, col: Cap Fees] current=32
+% HARDCODED[table: welfare_table_credit_constrained.tex, row: Total SE, col: Cap Fees] current=4
+% HARDCODED[table: welfare_table_baseline.tex, row: Total, col: Cap Fees] current=27
+% HARDCODED[table: welfare_table_credit_constrained.tex, row: Total, col: Monopoly] current=24
+% HARDCODED[table: welfare_table_baseline.tex, row: Total, col: Monopoly] current=15
+Constrained consumers respond less elastically to credit-rewards changes, so the moment-matching constraint forces unconstrained consumers to be more reward-sensitive than in the baseline.
+The credit fee cap then acts on fewer consumers but provokes a larger response from each.
+The same logic amplifies the monopoly counterfactual, since more reward-sensitive consumers face bigger distortions from the competitive rewards arms race, so eliminating competition delivers larger gains.
+Price and share responses stay close to baseline, because the cap forces similar fee cuts regardless of why consumers avoid credit (Table~\ref{tab:cf-prices-credit-constrained}).
+Other counterfactuals are close to baseline.
+
+\begin{table}[ht!]
+    \caption{Counterfactual effects on prices and shares: Credit constraints}
+    \label{tab:cf-prices-credit-constrained}
+    \centering
+    \small{
+    \input{../output/tables/cf_table_credit_constrained.tex}
+    }
+    \tablenote{Bootstrap standard errors in parentheses.
+    Counterfactual scenarios are defined in Table~\ref{tab:cf-effects}.
+    Dollar values are computed by normalizing to \$10 trillion of total consumer purchases \parencite{Nilson2020a}.}
+\end{table}
+
+\begin{table}[ht!]
+    \caption{Counterfactual welfare effects: Credit constraints}
+    \label{tab:welfare-credit-constrained}
+    \centering
+    \small{
+    \input{../output/tables/welfare_table_credit_constrained.tex}
+    }
+    \tablenote{Bootstrap standard errors in parentheses.
+    Counterfactual scenarios are defined in Table~\ref{tab:welfare-decomp}.
+    Dollar values are computed by normalizing to \$10 trillion of total consumer purchases \parencite{Nilson2020a}.}
+\end{table}
+
+\clearpage
+
+%% ============================================================================
+%% SECTION 3: DEBIT ROBUSTNESS (REDUCED DURBIN AMENDMENT MOMENT)
+%% ============================================================================
+
+\subsection{Lower Reward Sensitivity}
+\label{subsec:oa-debit-robustness}
+
+The Durbin Amendment event-study coefficient pins down reward sensitivity in the estimation.
+If that coefficient overstates how aggressively consumers switch when rewards change, every counterfactual inherits the error.
+Halving the target moment does change the bottom-line conclusions for the credit fee cap and merger policies.
+The monopoly counterfactual flips sign, credit fee cap welfare gains fall by roughly half, and only dual routing stays close to baseline.
+This specification is not the preferred one, since it also drives Visa Debit and Visa Credit marginal costs into implausibly negative territory.
+
+\paragraph{Model modification.} No model equations change.
+Instead, the Durbin regression coefficient that the model targets is halved.
+
+\paragraph{Results.} Halving the target lowers estimated reward sensitivity from 6.75 to 5.92 and raises mean unobserved disutility to compensate (Table~\ref{tab:param-robustness-debit}).
+% HARDCODED[table: param_tab_cons_het_robustness_debit.tex vs param_tab_cons_het_baseline.tex, row: reward sensitivity] current=6.75 -> 5.92
+The estimated network costs are less plausible: Visa Debit and Visa Credit both have negative marginal costs ($-6$ and $-8$ bps, respectively), well below the baseline estimates that match accounting data \parencite{Lowe2005, Mukharlyamov.Sarin2025, NACHA2017, Visa2020}.
+% HARDCODED[table: param_tab_network_robustness_debit.tex, rows: Visa Debit, Visa Credit] current=-6, -8
+
+\begin{table}[ht!]
+    \small
+    \caption{Estimated parameters: Lower reward sensitivity}
+    \label{tab:param-robustness-debit}
+\begin{center}\setlength{\tabcolsep}{4pt} \begin{minipage}[t]{0.5\columnwidth}%
+\centering \textbf{Panel A: Consumer Preference Parameters} \par\medskip \input{../output/tables/param_tab_cons_robustness_debit.tex}
+\end{minipage}%
+\begin{minipage}[t]{0.5\columnwidth}%
+\centering \textbf{Panel B: Consumer Heterogeneity Parameters} \par\medskip \input{../output/tables/param_tab_cons_het_robustness_debit.tex}
+\end{minipage}
+
+\vspace{0.5em}
+
+\begin{minipage}[t]{0.5\columnwidth}%
+\centering \textbf{Panel C: Merchant Parameters} \par\medskip \input{../output/tables/param_tab_merch_robustness_debit.tex}
+\end{minipage}%
+\begin{minipage}[t]{0.5\columnwidth}%
+\centering \textbf{Panel D: Network Cost Parameters (bps)} \par\medskip \input{../output/tables/param_tab_network_robustness_debit.tex}
+\end{minipage}
+\end{center}
+    \tablenote{S.D.\ refers to the standard deviation, and R.C.\ refers to the random coefficients.
+The $\Xi$ are the unobserved characteristics, and the $\chi^{lm}$ is the complementarity parameter.
+In Panel B, volatility parameters are the standard deviations of the random coefficients.
+Merchant types $\gamma$ are distributed according to a Gamma distribution.
+Standard errors computed by bootstrap.}
+\end{table}
+
+The monopoly counterfactual reverses sign, from $+$\$15B at baseline to $-$\$19B (SE \$10B) here (Table~\ref{tab:welfare-robustness-debit}).
+% HARDCODED[table: welfare_table_robustness_debit.tex, row: Total, col: Monopoly] current=-19
+% HARDCODED[table: welfare_table_robustness_debit.tex, row: Total SE, col: Monopoly] current=10
+% HARDCODED[table: welfare_table_baseline.tex, row: Total, col: Monopoly] current=15
+At baseline, a monopolist raises welfare by eliminating the competitive rewards arms race.
+With less reward-responsive consumers, that arms race is smaller, so there is less distortion for the monopolist to correct.
+At the same time, less responsive consumers do not switch away from a merged network, leaving its market power unchecked.
+The net effect is a large welfare loss.
+
+Fee cap gains are attenuated (\$15B versus \$27B) for the opposite reason: less responsive consumers face less distortion from the current fee structure, so there is less to correct (Table~\ref{tab:cf-prices-robustness-debit}).
+% HARDCODED[table: welfare_table_robustness_debit.tex, row: Total, col: Cap Fees] current=15
+% HARDCODED[table: welfare_table_baseline.tex, row: Total, col: Cap Fees] current=27
+Uncapping debit fees raises welfare by \$3.7B (SE \$0.5B), versus \$7B at baseline, attenuated for the same reason.
+% HARDCODED[table: welfare_table_robustness_debit.tex, row: Total, col: Uncap Debit] current=3.7
+% HARDCODED[table: welfare_table_robustness_debit.tex, row: Total SE, col: Uncap Debit] current=0.5
+% HARDCODED[table: welfare_table_baseline.tex, row: Total, col: Uncap Debit] current=7
+Dual routing still raises welfare by \$1.1B (SE \$0.2B), versus the \$3.8B baseline gain (both net of the mechanical $\chi^{22}$ adjustment), because it operates through merchant-side competition rather than consumer switching.
+% HARDCODED[table: welfare_table_robustness_debit.tex, row: Total, col: Dual Routing] current=1.1
+% HARDCODED[table: welfare_table_robustness_debit.tex, row: Total SE, col: Dual Routing] current=0.2
+% HARDCODED[table: welfare_table_baseline.tex, row: Total, col: Dual Routing] current=3.8
+The public debit network raises welfare by \$4.1B (SE \$0.8B), versus \$1.6B at baseline, because incumbent networks exert more market power over consumers when they are less reward-sensitive.
+% HARDCODED[table: welfare_table_robustness_debit.tex, row: Total, col: CBDC] current=4.1
+% HARDCODED[table: welfare_table_robustness_debit.tex, row: Total SE, col: CBDC] current=0.8
+% HARDCODED[table: welfare_table_baseline.tex, row: Total, col: CBDC] current=1.6
+
+\begin{table}[ht!]
+    \caption{Counterfactual effects on prices and shares: Lower reward sensitivity}
+    \label{tab:cf-prices-robustness-debit}
+    \centering
+    \small{
+    \input{../output/tables/cf_table_robustness_debit.tex}
+    }
+    \tablenote{Bootstrap standard errors in parentheses.
+    Counterfactual scenarios are defined in Table~\ref{tab:cf-effects}.
+    Dollar values are computed by normalizing to \$10 trillion of total consumer purchases \parencite{Nilson2020a}.}
+\end{table}
+
+\begin{table}[ht!]
+    \caption{Counterfactual welfare effects: Lower reward sensitivity}
+    \label{tab:welfare-robustness-debit}
+    \centering
+    \small{
+    \input{../output/tables/welfare_table_robustness_debit.tex}
+    }
+    \tablenote{Bootstrap standard errors in parentheses.
+    Counterfactual scenarios are defined in Table~\ref{tab:welfare-decomp}.
+    Dollar values are computed by normalizing to \$10 trillion of total consumer purchases \parencite{Nilson2020a}. Totals may not sum due to independent rounding.}
+\end{table}
+
+
+\clearpage
+
+% %% ============================================================================
+% %% CROSS-SPECIFICATION COMPARISON
+% %% ============================================================================
+
+% \subsection{Cross-Specification Comparison}
+% \label{subsec:oa-cross-spec-comparison}
+
+% Table~\ref{tab:welfare-comparison-all} summarizes welfare effects across specifications.
+% Fee caps raise total welfare under every specification.
+
+% \begin{table}[ht!]
+%     \caption{Welfare effects across all model specifications}
+%     \label{tab:welfare-comparison-all}
+%     \centering
+%     \small{
+%     \input{../output/tables/welfare_comparison_all_configs.tex}
+%     }
+%     \tablenote{Bootstrap standard errors in parentheses. Each entry reports the change in the indicated welfare measure relative to the baseline equilibrium under the given model specification. Dollar values in billions.}
+% \end{table}
+
+% \clearpage
+
+%% ============================================================================
+%% SECTION 5: COST-OF-CASH CAP AND SOCIAL OPTIMUM
+%% ============================================================================
+
+\subsection{Comparison to Other Credit Fee Caps and the Social Optimum}
+\label{subsec:oa-cost-of-cash-cap}
+\label{subsec:oa-optimal-prices}
+
+The main text caps credit card merchant fees at 120 bps.
+% CONSTANT: statutory cap level set by policy design
+This section compares that cap to a tighter cap at the cost of cash and to the constrained social optimum.
+
+The cost-of-cash cap sets fees at \scalarinput{param_est_cashcost_pass_baseline} bps, matching the Rochet-Tirole tourist test \parencite{Rochet.Tirole2006} and the benchmark behind European interchange regulation \parencite{EuropeanCommission2015}.
+At this level, the cap also replicates perfect merchant surcharging \parencite{Zenger2011}.
+It delivers \$29 billion in total welfare gains versus \$27 billion under the 120 bps cap, roughly 7\% more (Table~\ref{tab:appendix-cap-welfare}).
+% HARDCODED[table: appendix_cap_welfare_table_baseline.tex, row: "Total", cols: Tourist Test=29, Cap Credit=27]
+The extra gains come from deeper credit card reward cuts.
+The cost-of-cash cap also requires far greater out-of-sample extrapolation, eliminating roughly 87\% of credit card merchant fees versus about half under the 120 bps cap.
+% HARDCODED[table: appendix_cap_table_baseline.tex, row: "Credit Fees", col: Tourist Test] current=87% (195/225)
+
+The constrained social optimum provides an upper bound.
+The planner chooses merchant fees $\tau^l$ and consumer rewards $f^l$ for each card type $l$ to maximize total welfare subject to non-negative network profits.
+A break-even constraint is necessary because, under elastic labor supply, an unconstrained planner would subsidize merchants indefinitely to reduce the CES markup distortion.
+The planner's main lever is eliminating network markups on merchant fees. It also sets negative rewards, though less negative than under the tourist test. The planner jointly optimizes fees and rewards, whereas the tourist test leaves reward-setting to profit-maximizing networks (Table~\ref{tab:appendix-cap-prices}).
+Total welfare under the social optimum is \$35B, versus \$27B under the 120 bps cap (Table~\ref{tab:appendix-cap-welfare}).
+% HARDCODED[table: appendix_cap_welfare_table_baseline.tex, row: "Total", cols: Ramsey Planner=35, Cap Credit=27]
+The 120 bps cap captures roughly 77\% of the planner's gains without directly regulating rewards, because the dominant distortion is over-adoption of credit cards rather than network market power.
+% HARDCODED[table: appendix_cap_welfare_table_baseline.tex, row: "Total", cols: Cap Credit / Ramsey Planner] current=77% (27/35) rounded=77%
+
+\begin{table}[ht!]
+    \caption{Effects of Fee Caps on Prices and Shares}
+    \label{tab:appendix-cap-prices}
+    \centering
+    \small{
+    \input{../output/tables/appendix_cap_table_baseline.tex}
+    }
+    \tablenote{Bootstrap standard errors in parentheses.
+Cap Credit caps credit card merchant fees at 120 bps.
+Tourist Test caps both credit and debit fees at the estimated cost of cash (\scalarinput{param_est_cashcost_pass_baseline} bps).
+Ramsey Planner maximizes total welfare over merchant fees and consumer rewards, subject to equilibrium conditions and the network break-even constraint.}
+\end{table}
+
+\begin{table}[ht!]
+    \caption{Welfare Effects of Fee Caps}
+    \label{tab:appendix-cap-welfare}
+    \centering
+    \small{
+    \input{../output/tables/appendix_cap_welfare_table_baseline.tex}
+    }
+    \tablenote{Bootstrap standard errors in parentheses.
+Columns correspond to the same scenarios as Table~\ref{tab:appendix-cap-prices}.
+Low (high) income consumers have log income at $-2$ ($+2$) standard deviations relative to the median.
+Dollar values are computed by normalizing to \$10 trillion of total consumer purchases \parencite{Nilson2020a}.}
+\end{table}
+
+\end{document}

@@ -1,0 +1,273 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+
+\section{Merchant Sorting}
+\label{sec:oa-merchant-sorting}
+
+\subsection{Sorting Concern and Main Finding}
+
+Card fees may not redistribute across consumer types if consumers with different payment preferences shop at different merchants.
+Under perfect sorting, credit card users shop only at high-end merchants while cash/debit users shop at discount retailers, eliminating cross-consumer redistribution.
+This would undermine the redistributive channel central to the welfare analysis, since fee changes would affect only consumers who already use the relevant payment method.
+
+We measure payment shares across hundreds of merchants using NielsenIQ Homescan and MRI-Simmons data.
+Some sorting exists, but no large merchant serves only one payment type.
+Even merchants at the 90th percentile of credit card use receive 15\% of transactions from debit/cash.
+% HARDCODED[source: unknown, from Homescan/MRI payment share distribution] current=15
+
+We derive a sufficient statistic linking sorting patterns to redistribution magnitude.
+With no sorting (uniform payment shares across merchants), merchant fees redistribute across consumer types because all consumers face the same price increases regardless of payment choice.
+Empirical sorting reduces this baseline redistribution by only 4--9 pp., leaving 91--96\% intact.
+% HARDCODED[table: mri_appendix_welfare_ratio.tex + kilts_appendix_welfare_ratio.tex, off-diagonal entries] current=4-9pp, 91-96%
+This validates the main-text treatment of payment markets as integrated economies.
+
+\subsection{Structure of Analysis}
+
+The analysis has three steps.
+First, we measure payment share distributions across stores in Homescan and MRI, computing both unweighted and revenue-weighted covariance matrices.
+Second, we derive a sufficient statistic linking sorting to redistribution magnitude, valid to first order under local fee changes.
+Third, we apply this statistic and show sorting attenuates baseline redistribution by at most 10\%.
+% HARDCODED[table: mri_appendix_welfare_ratio.tex, maximum off-diagonal attenuation] current=10
+
+\subsection{Measuring Payment Shares}
+
+\paragraph{Homescan: } Homescan provides transaction-level data with value-weighted shares of credit, debit, and cash spending across stores, but covers only grocery.
+
+\paragraph{MRI: } MRI-Simmons provides consumer-level data on payment choices and shopping across 214 large merchants: grocery, department stores, apparel, restaurants, electronics, and other retail sectors.
+% CONSTANT: MRI survey design, 214 merchant chains
+These merchants cover a large share of U.S. consumer retail spending.
+The data include credit and debit spending amounts but not cash expenditures.
+
+I classify each consumer by primary payment preference.
+A consumer is cash-preferring if they agree with ``I prefer to pay cash for things I buy, whenever I can.''
+Among non-cash consumers, I classify by whether they spend more on credit or debit cards.
+This classification captures real variation: most credit-preferring consumers put over 80\% of card spending on their preferred method (Figure \ref{fig:distribution_cc}).
+
+To build payment shares at each merchant, I assume consumers use their preferred payment method at every store, equating a store's payment composition with the preference mix among its shoppers.
+This assumption fits the large national merchants in MRI, where all major payment methods are accepted.
+Consumers may vary methods across purchases (e.g., using credit for large transactions). Imputation assigns each consumer a single method, which has ambiguous effects on measured sorting: within-store, it overstates sorting by sharpening merchant-level shares; across diverse sectors, it can understate sorting by suppressing cross-sector variation in transaction-size composition.
+Homescan provides an empirical bound on this bias: it records actual payment choices (not imputed), and its covariance estimates are similar to MRI, suggesting imputation bias is small in practice.
+
+\begin{figure}[ht!]
+    \centering
+    \caption{Distribution of Credit Card Expenditure Share Across Consumers with Cards}
+    \label{fig:distribution_cc}
+    \includegraphics[width=0.5\linewidth]{../output/graphs/mri_appendix_credit_consumers_wgt.pdf}
+\end{figure}
+
+\paragraph{Summary of Results: } Both datasets show wide dispersion in payment shares across stores, but no store has only one payment method (Figures \ref{fig:kilts_hist} and \ref{fig:mri_hist}).
+In Homescan, credit sales average 40\% of total sales but range from 10\% to 80\%.
+% HARDCODED[source: unknown, from Homescan payment share distribution] current=40, 10, 80
+
+\begin{figure}[ht!]
+    \centering
+    \caption{Share of Spending on Different Payment Methods Across Merchants}
+    \label{fig:payment-share-dist}
+
+    \begin{subfigure}[b]{0.5\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../output/graphs/kilts_appendix_payment_type_hist.pdf}
+        \caption{Homescan}
+        \label{fig:kilts_hist}
+    \end{subfigure}%
+    \hfill
+    \begin{subfigure}[b]{0.5\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../output/graphs/mri_appendix_payment_type_hist.pdf}
+        \caption{MRI}
+        \label{fig:mri_hist}
+    \end{subfigure}
+\end{figure}
+
+Larger stores have less dispersed payment mixes (Figures \ref{fig:kilts_scatter} and \ref{fig:mri_scatter}).
+This firm size relationship matters because stores with the most sorting represent a small share of the economy.
+Since many consumers shop at the largest stores, substantial redistribution occurs across consumer types.
+
+\begin{figure}[ht!]
+    \centering
+    \caption{Credit card share and firm size}
+    \label{fig:payment-share-scatter}
+
+    \begin{subfigure}[b]{0.5\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../output/graphs/kilts_appendix_credit_share_consumers.pdf}
+        \caption{Homescan}
+        \label{fig:kilts_scatter}
+    \end{subfigure}%
+    \hfill
+    \begin{subfigure}[b]{0.5\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../output/graphs/mri_appendix_credit_share_consumers.pdf}
+        \caption{MRI}
+        \label{fig:mri_scatter}
+    \end{subfigure}
+\end{figure}
+
+Table \ref{tab:covariances} shows weighted and unweighted covariances between payment shares (revenue weights in Homescan, customer weights in MRI).
+Cash-credit and credit-debit covariances are negative; the cash-debit covariance is slightly negative when unweighted but positive when revenue-weighted, reflecting that cash and debit users shop at more similar large stores than cash and credit users.
+Weighted variances are smaller than unweighted ones, consistent with larger stores having less dispersed payment mixes.
+
+\begin{table}[ht!]
+    \caption{Covariances}
+    \label{tab:covariances}
+    \centering
+        \begin{minipage}{0.5\textwidth}
+        \centering
+        \subcaption{Homescan - Unweighted}
+        %\vspace{2pt}
+        \input{../output/tables/kilts_appendix_unweighted_cov_matrix}
+        \vspace{4pt}
+        \subcaption{Homescan - Weighted}
+        %\vspace{2pt}
+        \input{../output/tables/kilts_appendix_weighted_cov_matrix}
+        \end{minipage}\hfill
+        \begin{minipage}{0.5\textwidth}
+        \centering
+        \subcaption{MRI - Unweighted}
+        %\vspace{2pt}
+        \input{../output/tables/mri_appendix_unweighted_cov_matrix}
+        \vspace{4pt}
+        \subcaption{MRI - Weighted}
+        %\vspace{2pt}
+        \input{../output/tables/mri_appendix_weighted_cov_matrix_cons}
+        \end{minipage}
+\end{table}
+
+These negative covariances reduce redistribution from merchant fees, but the effect is small.
+
+\subsection{Sufficient Statistics for Redistribution}
+
+I derive a sufficient statistic relating the revenue-weighted covariance matrix of payment shares to redistribution magnitude.
+The intuition is simple.
+Under uniform pricing, merchant fee increases hit all consumers at a given store regardless of payment method.
+Redistribution depends on the overlap between where different consumer types shop: if credit and debit consumers visit the same merchants, credit fee increases burden both groups.
+The covariance between payment shares across merchants summarizes this overlap.
+
+Suppose prices are log-linear in fees:
+
+\[
+\log p_{j}=\log\overline{p}+\sum_{k}\mu_{jk}\tau_{k}
+\]
+where $\mu_{jk}=\frac{q_{jk}}{\sum_{l}q_{jl}}$ is the share of spending on card $k$ at merchant $j$, and $\tau_{k}$ is the merchant fee for card $k$ (expressed as a decimal, e.g.\ $0.02 = 2\%$).
+This log-linear form approximates the main-text CES pricing formula: with elasticity $\sigma$ and ad valorem merchant fees, the exact price is $p_j = \frac{\sigma}{\sigma-1}\frac{1}{1-\hat{\tau}_j}$ where $\hat{\tau}_j = \sum_k \mu_{jk}\tau_k$, yielding the log-linear form $\log p_j \approx \log\overline{p} + \hat{\tau}_j$ for small fees.
+
+Define $Q_{j}=\sum_{l}q_{jl}$ as total sales at merchant $j$.
+We measure welfare using compensating variation.
+For consumers spending on payment method $l$, the welfare effect of a marginal change in fee $m$ is
+
+\begin{align*}
+\int_{j}q_{jl}\frac{\partial p_{j}}{\partial\tau_{m}} & =\int_{j}q_{jl}p_{j}\left(\mu_{jm}+\sum_{k}\frac{\partial\mu_{jk}}{\partial\tau_{m}}\tau_{k}\right)\\
+ & =\int_{j}p_{j}Q_{j}\mu_{jl}\mu_{jm}+\int_{j}p_{j}Q_{j}\mu_{jl}\times\left(\sum_{k}\frac{\partial\mu_{jk}}{\partial\tau_{m}}\tau_{k}\right)\\
+ & \propto\mathbb{E}_{R}\left[\mu_{jl}\mu_{jm}\right]+\mathbb{E}_{R}\left[\mu_{jl}\times\sum_{k}\frac{\partial\mu_{jk}}{\partial\tau_{m}}\tau_{k}\right]
+\end{align*}
+where $\mathbb{E}_R[\cdot]$ denotes the revenue-weighted expectation across merchants.
+
+The welfare effect has two parts. The first is the revenue-weighted cross-moment $\mathbb{E}_{R}[\mu_{jl}\mu_{jm}]$ of spending shares on $l$ and $m$. The second captures how payment shares respond to fees.
+The second term involves $\sum_k (\partial\mu_{jk}/\partial\tau_m) \tau_k$, which is $O(\tau)$ because share derivatives $\partial\mu_{jk}/\partial\tau_m$ are $O(1)$ while baseline fees $\tau_k$ are small (1--3 pp.).
+For a fee change $\Delta\tau_m$ that is itself $O(\tau)$, this term contributes $O(\tau^2)$, while the first term contributes $O(\tau)$.
+The second term is second-order for the fee changes relevant to policy analysis, so we focus on $\mathbb{E}_{R}\left[\mu_{jl}\mu_{jm}\right]$.
+
+Normalize by the total spending of method-$l$ users, which is $\int_{j}q_{jl}p_{j}=\int_{j}p_{j}Q_{j}\mu_{jl}\propto\mathbb{E}_{R}\left[\mu_{jl}\right]$.
+The proportionality constant (aggregate revenue $\int_j p_j Q_j$) cancels in the ratio defining $w_{lm}$.
+The complete welfare matrix is
+
+\begin{align*}
+w_{lm} & =\text{\% welfare lost by }l\text{ from fee }m\\
+ & =\frac{\mathbb{E}_{R}\left[\mu_{jl}\mu_{jm}\right]}{\mathbb{E}_{R}\left[\mu_{jl}\right]}\\
+ & =\frac{\text{Cov}_{R}\left(\mu_{jl},\mu_{jm}\right)}{\mathbb{E}_{R}\left[\mu_{jl}\right]}+\mathbb{E}_{R}\left[\mu_{jm}\right]
+\end{align*}
+
+Here $w_{lm}$ is the compensating variation for consumers using payment method $l$ from a 1 pp.\ increase in fees for method $m$, expressed as a \% of baseline consumption.
+
+The formula has a clear interpretation.
+If all stores have identical payment mixes (zero covariance), a debit consumer's burden from a 1 pp.\ credit fee increase equals the economy-wide credit share $\mathbb{E}_R[\mu_{jm}]$: payment choice offers no shelter.
+With perfect segmentation, credit and debit consumers shop at disjoint stores ($\mu_{jm} \times \mu_{jl} = 0$ for all $j$), yielding $w_{lm}=0$: debit consumers bear no burden from credit fee increases.
+The revenue-weighted covariance $\text{Cov}_R(\mu_{jl},\mu_{jm})$ measures the degree of merchant segmentation. Negative covariances mean high-credit stores serve few debit consumers, reducing redistribution.
+
+\subsection{Implementing the Sufficient Statistic}
+
+Table \ref{tab:sorting-welfare} shows the \% of welfare lost for consumers of the row payment method from a 1 pp.\ change in fees of the column payment.
+Credit card consumers are more exposed to credit card fees than the average credit share would imply, because stores where credit consumers shop have high credit transaction shares and hence prices more affected by credit fees.
+Both datasets show similar patterns.
+
+The derivation calls for revenue-weighted covariances because the welfare integrand $\int_j q_{jl}\, \partial p_j / \partial \tau_m$ weights each store by consumer spending.
+Revenue-weighting gives large stores with many shoppers appropriate weight.
+Unweighted covariances treat all merchants equally, giving outsized influence to small stores with idiosyncratic payment mixes.
+
+Sorting effects are small.
+Table \ref{tab:welfare_ratio} shows the ratio of welfare loss under actual sorting to the homogeneous-merchant baseline. Most ratios are close to 1.
+Diagonal cells (row $l$ = column $m$) exceed 1, meaning sorting amplifies own-fee exposure.
+For example, the Credit/Credit cell in the MRI weighted panel is 1.023: credit consumers face 2.3\% more welfare loss from a 1 pp.\ credit fee increase than under homogeneous merchants, because sorting concentrates them at high-credit-share stores.
+% HARDCODED[table: mri_appendix_welfare_ratio.tex, row: Credit, col: Credit, weighted panel] current=1.023
+Most off-diagonal cells fall below 1, meaning sorting attenuates cross-consumer redistribution.
+The Debit/Credit cell in the same panel is 0.986: debit consumers face 1.4\% less burden from a credit fee increase, because sorting places them at stores with lower credit shares.
+% HARDCODED[table: mri_appendix_welfare_ratio.tex, row: Debit, col: Credit, weighted panel] current=0.986
+These signs match the negative cross-covariances in Table~\ref{tab:covariances}.
+With weighted covariances, sorting reduces redistribution from cash to credit users by only 4.1\%, our preferred estimate given the theoretical case for revenue-weighting.
+% HARDCODED[table: kilts_appendix_welfare_ratio.tex, row: Cash, col: Credit, weighted] current=0.959
+With unweighted covariances, the reduction reaches 8.6\%, an upper bound that overweights small merchants.
+% HARDCODED[table: kilts_appendix_unweighted_welfare_ratio.tex, row: Cash, col: Credit, unweighted] current=0.914
+Thus 91--96\% of baseline redistribution remains intact: no large merchant serves only one payment type, so consumers cannot avoid card fee exposure through store choice.
+These calculations use the full MRI and Homescan samples, so standard errors are negligible given the large sample sizes.
+
+\begin{table}[ht!]
+\caption{Percentage of welfare lost from fee increases}
+\label{tab:sorting-welfare}
+\centering
+    \begin{minipage}{0.5\textwidth}
+    \centering
+    \subcaption{Homescan}
+    \vspace{2pt}
+    \input{../output/tables/kilts_appendix_actual_cov_avg_exp_share}
+    \end{minipage}\hfill
+    \begin{minipage}{0.5\textwidth}
+    \centering
+    \subcaption{MRI}
+    \vspace{2pt}
+    \input{../output/tables/mri_appendix_actual_cov_avg_exp_share}
+    \end{minipage}
+\end{table}
+
+\begin{table}[ht!]
+\caption{Ratio of welfare lost with actual sorting to homogeneous-merchant baseline.
+Rows indicate the consumer type bearing the welfare loss, and columns indicate the fee increased by 1 pp.
+Diagonal cells (Debit/Debit, Credit/Credit) measure own-type amplification from sorting. Off-diagonal cells measure cross-consumer redistribution attenuation.
+Cash has no interchange fee and therefore no diagonal entry.}
+\centering
+    \begin{minipage}{0.5\textwidth}
+    \label{tab:welfare_ratio}
+    \centering
+    \subcaption{Homescan - Unweighted}
+    %\vspace{2pt}
+    \input{../output/tables/kilts_appendix_unweighted_welfare_ratio}
+    \vspace{4pt}
+    \subcaption{Homescan - Weighted}
+    %\vspace{2pt}
+    \input{../output/tables/kilts_appendix_welfare_ratio}
+    \end{minipage}\hfill
+    \begin{minipage}{0.5\textwidth}
+    \centering
+    \subcaption{MRI - Unweighted}
+    %\vspace{2pt}
+    \input{../output/tables/mri_appendix_unweighted_welfare_ratio}
+    \vspace{4pt}
+    \subcaption{MRI - Weighted}
+    %\vspace{2pt}
+    \input{../output/tables/mri_appendix_welfare_ratio}
+    \end{minipage}
+\end{table}
+
+\subsection{Implications for the Integrated Economy Assumption}
+
+The evidence validates the main text's ``integrated'' market assumption: consumers of all types shop at overlapping merchants, so uniform pricing passes through the average cost of every accepted method.
+In a ``segmented economy'' where credit consumers shopped only at high-credit stores and cash consumers at low-credit stores, fee increases would affect only credit users, eliminating redistribution.
+The data reject this scenario: no large merchant serves only one payment type.
+
+Sorting reduces redistribution by only 4--9 pp., leaving 91--96\% intact.
+% HARDCODED[table: mri_appendix_welfare_ratio.tex + mri_appendix_unweighted_welfare_ratio.tex] current=4-9pp, 91-96%
+This directly supports the counterfactual policy analysis.
+The model assumes price changes from altered fees affect all consumers at a given merchant, creating cross-consumer transfers.
+The 91--96\% figure validates this assumption: sorting does not meaningfully segment the market, so policy-induced fee changes generate the cross-consumer redistribution that the integrated economy framework predicts.
+Consumers cannot avoid card acceptance costs through store choice, making uniform pricing the empirically relevant regime for welfare analysis.
+
+\end{document}

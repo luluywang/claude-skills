@@ -1,0 +1,117 @@
+\usepackage[default]{lato}
+
+\usepackage{changepage}
+\usepackage{appendixnumberbeamer}
+
+% A beige for transition slides
+\definecolor{MyBackground}{RGB}{255,253,218}
+
+\setbeamercolor{frametitle}{fg=blue}
+\setbeamercolor{title}{fg=blue}
+\setbeamercolor{block title}{fg=blue, bg = MyBackground}
+\setbeamercolor{block body}{bg = MyBackground}
+% \setbeamertemplate{footline}[frame number]
+
+\setbeamertemplate{footline}{
+  \leavevmode %
+  \hbox{%
+    \hfill
+    \makebox[1\paperwidth][l]{%
+      \grey{\hspace{0.2cm} Wang, Regulating Competing Payment Networks 
+      \hfill 
+      % \insertbackfindforwardnavigationsymbol
+      % \hspace{0.3cm}
+      \insertframenumber}
+    }%
+    \hfill %
+  }%
+  \vspace{0.1cm}
+}
+
+% \setbeamertemplate{navigation symbols}{\insertbackfindforwardnavigationsymbol} 
+\setbeamertemplate{navigation symbols}{} 
+\setbeamertemplate{itemize items}{-}
+\setbeamercolor{itemize item}{fg=blue}
+\setbeamercolor{itemize subitem}{fg=blue}
+\setbeamercolor{enumerate item}{fg=blue}
+\setbeamercolor{enumerate subitem}{fg=blue}
+\setbeamercolor{button}{bg=white,fg=darkgrey,}
+
+% If you like road maps, rather than having clutter at the top, have a roadmap show up at the end of each section 
+% (and after your introduction)
+% Uncomment this is if you want the roadmap!
+\AtBeginSection[]
+{
+   \begin{frame}
+       \frametitle{Roadmap of Talk}
+       \tableofcontents[currentsection]
+   \end{frame}
+}
+\setbeamercolor{section in toc}{fg=blue}
+\setbeamercolor{subsection in toc}{fg=red}
+\setbeamersize{text margin left=1em,text margin right=1em} 
+
+% References
+\hypersetup{colorlinks=true, citecolor=blue, linkcolor=blue, urlcolor=blue}
+
+% Fixing itemize
+\usepackage{xpatch}
+
+\xpatchcmd{\itemize}
+  {\def\makelabel}
+  {\setlength{\itemsep}{10pt}\def\makelabel}
+  {}
+  {}
+
+\xpatchcmd{\enumerate}
+  {\def\makelabel}
+  {\setlength{\itemsep}{10pt}\def\makelabel}
+  {}
+  {}
+
+% \pdfminorversion=5
+% \pdfobjcompresslevel=3 
+% \pdfcompresslevel=9
+
+% Some covering options
+\newcommand{\flashblue}[3]{\only<#1>{\blue{#3}}\only<#2->{#3}}
+\newcommand{\button}[2]{\hyperlink{frame:#1}{\beamergotobutton{#2}}}
+
+% Vestigial Lyx title
+% \newcommand\makebeamertitle{\frame{\maketitle}}
+
+%% Change the bg color to adjust your transition slide background color!
+\newenvironment{transitionframe}{
+  \setbeamercolor{background canvas}{bg=MyBackground}
+  \begin{frame}}{
+    \end{frame}
+}
+
+\usepackage[nobeamer]{graphbox}
+
+\renewcommand{\scalarinput}[1]{$\input{../output/tables/scalars/#1}$} % Keep minus signs
+\renewcommand{\absinput}[1]{%
+    \CatchFileDef{\filecontents}{../output/tables/scalars/#1}{}% Read the file contents into \filecontents
+    \IfBeginWith{\filecontents}{-}{% Check if the first character is a minus sign
+        \StrGobbleLeft{\filecontents}{1}[\filecontents]% Remove the first character
+    }{}%
+    $\filecontents$% Output the processed contents
+}
+\renewcommand{\scalarpctinput}[1]{%
+  \CatchFileDef{\filecontents}{../output/tables/scalars/#1}{}% Read the file contents into \filecontents
+  \IfBeginWith{\filecontents}{0.}{% Check if the first character is a minus sign
+      \StrGobbleLeft{\filecontents}{2}[\filecontents]% Remove the first character
+  }{}%
+  $\filecontents$% Output the processed contents
+}
+
+% Pull in the existing cite macro…
+\renewbibmacro*{cite}{%
+  % Print author names but wrap them in a link…
+  \bibhyperref{%
+    \printnames{labelname}%
+    \setunit{\nameyeardelim}%
+    \printfield{labelyear}%
+    \printfield{extrayear}}%
+  \setunit{\multicitedelim}}
+\makeatother

@@ -1,0 +1,159 @@
+% \usepackage{footnote}
+\usepackage{float}
+\usepackage{url}
+
+% High quality fonts
+\usepackage[T1]{fontenc}
+
+% Underlining text
+\usepackage[normalem]{ulem}
+
+% Math options
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{nicefrac}
+
+% Theorem naming
+\newtheorem{lem}{Lemma}
+\newtheorem{proposition}{Proposition}
+
+% Special tikz drawings
+\usepackage{tikz}
+\def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}
+
+% Caption options
+\usepackage{caption}
+\captionsetup{labelfont=bf, margin=1cm, tableposition=top, figurewithin=none, tablewithin=none}
+
+\raggedbottom
+
+% For tables
+\usepackage{booktabs}
+\usepackage{siunitx}
+\usepackage{makecell}
+
+% For graphs
+\usepackage[all,cmtip]{xy}
+
+\usepackage{xstring}
+\usepackage{ifthen}
+\usepackage{catchfile}
+
+\newcommand{\scalarinput}[1]{$\input{../output/tables/scalars/#1}$} % Keep minus signs
+\newcommand{\absinput}[1]{%
+    \CatchFileDef{\filecontents}{../output/tables/scalars/#1}{}% Read the file contents into \filecontents
+    \IfBeginWith{\filecontents}{-}{% Check if the first character is a minus sign
+        \StrGobbleLeft{\filecontents}{1}[\filecontents]% Remove the first character
+    }{}%
+    $\filecontents$% Output the processed contents
+}
+\newcommand{\scalarpctinput}[1]{%
+  \CatchFileDef{\filecontents}{../output/tables/scalars/#1}{}% Read the file contents into \filecontents
+  \IfBeginWith{\filecontents}{0.}{% Check if the first character is a minus sign
+      \StrGobbleLeft{\filecontents}{2}[\filecontents]% Remove the first character
+  }{}%
+  $\filecontents$% Output the processed contents
+}
+% For xmark
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\newcommand{\xmark}{\text{\ding{55}}}
+
+% Columns
+\usepackage{multicol}
+
+% No figures below footnote
+\usepackage[bottom]{footmisc}
+
+% Adding notes to table
+\newcommand{\tablenote}[1]  {\par\vspace{3pt}{\raggedright \scriptsize \emph{Notes: }#1\par}\vspace{2pt}}
+
+% Colors
+% These are my colors -- there are many like them, but these ones are mine.
+\definecolor{blue}{RGB}{0,92,216}
+\definecolor{red}{RGB}{213,40,0}
+\definecolor{yellow}{RGB}{240,228,66}
+\definecolor{green}{RGB}{0,158,115}
+\definecolor{grey}{RGB}{180,180,180}
+\definecolor{darkgrey}{RGB}{105,105,105}
+\definecolor{white}{RGB}{255,255,255}
+\definecolor{purple}{RGB}{199,124,255}
+\definecolor{orange}{RGB}{197,90,17}
+
+\newcommand{\grey}[1]{\textcolor{grey}{#1}}
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\green}[1]{\textcolor{green}{#1}}
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+\newcommand{\purple}[1]{\textcolor{purple}{#1}}
+\newcommand{\orange}[1]{\textcolor{orange}{#1}}
+
+% Useful math commands
+\newcommand{\argmax}[0]{\operatornamewithlimits{argmax}}
+\newcommand{\argmin}[0]{\operatornamewithlimits{argmin}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\R}{\mathbb{R}}
+\renewcommand{\d}{\mbox{ d}}
+\newcommand{\Var}{\mbox{Var}}
+
+% Font -- seems to need to be after things
+\usepackage[sc]{mathpazo}
+
+% Bibliography
+\usepackage[authordate, backend=biber, maxcitenames=2, mincitenames=1, maxbibnames=99, uniquelist=false, uniquename=false]{biblatex-chicago}
+\makeatletter
+\renewcommand{\@makefntext}[1]{%
+  \setlength{\parindent}{0pt}%
+  \makebox[1.5em][r]{\textsuperscript{\@thefnmark}}#1}
+\makeatother
+
+% Remove extraneous fields
+\AtEveryBibitem{%
+  \clearfield{doi}%
+  \clearfield{issn}%
+  \clearfield{isbn}%
+  \clearfield{url}%
+  \clearfield{urldate}%
+  \clearfield{eprint}%
+  \clearfield{note}%
+}
+
+% Subfiles -- needs to be near end
+\usepackage{subfiles}
+
+% For crossing things out
+\usepackage{centernot}
+\newcommand{\notimplies}{\centernot\implies}
+
+% Math commands
+\renewcommand{\lvert}[1]{\left.#1\right|}
+\renewcommand{\rvert}[1]{\left|#1\right.}
+
+% For separating out referee comments
+\newenvironment{refcomment}
+  {\clearpage\begin{quotation}\color{blue}\singlespacing\small}
+{\end{quotation}}
+
+\newenvironment{refcommentnoclear}
+  {\begin{quotation}\color{blue}\singlespacing\small}
+{\end{quotation}}
+
+% For marking LLM-generated text (displays in red for review)
+\newenvironment{llm}
+  {\color{red}}
+  {}
+
+% For side by side graphs
+\usepackage{subcaption}
+
+% Coloring tables
+\usepackage{colortbl}
+
+% For inputting specific things about the counterfactuals
+\newcommand{\passval}[1]{\scalarinput{#1_1}}
+\newcommand{\passabs}[1]{\absinput{#1_1}}
+\newcommand{\passse}[1]{(\scalarinput{#1_1_se})}
+\newcommand{\passsetext}[1]{\scalarinput{#1_1_se}}
+
+\newcommand{\nopassval}[1]{\scalarinput{#1_0}}
+\newcommand{\nopassabs}[1]{\absinput{#1_0}}
+\newcommand{\nopassse}[1]{(\scalarinput{#1_0_se})}
+\newcommand{\nopasssetext}[1]{\scalarinput{#1_0_se}}

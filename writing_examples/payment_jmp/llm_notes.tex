@@ -1,0 +1,250 @@
+% \begin{llm}
+% \section*{Comprehensive Response to All Reviewer Concerns}
+
+% This revision addresses the 80 distinct concerns raised by Editor Seim and four referees. The table below summarizes how each concern has been addressed, organized by reviewer. Detailed responses follow in subsequent sections.
+
+% \subsection*{Overview of Revisions}
+
+% \begin{center}
+% \begin{tabular}{lcccc}
+% \toprule
+% \textbf{Reviewer} & \textbf{Total Concerns} & \textbf{Fully Addressed} & \textbf{Partially Addressed} & \textbf{Acknowledged} \\
+% \midrule
+% Editor (E1--E7) & 24 & 19 & 4 & 1 \\
+% Referee 1 (R1) & 24 & 20 & 3 & 1 \\
+% Referee 2 (R2) & 13 & 10 & 3 & 0 \\
+% Referee 3 (R3) & 12 & 12 & 0 & 0 \\
+% Referee 4 (R4) & 7 & 5 & 2 & 0 \\
+% \midrule
+% \textbf{Total} & \textbf{80} & \textbf{66} & \textbf{12} & \textbf{2} \\
+% \bottomrule
+% \end{tabular}
+% \end{center}
+
+% \subsection*{Key Manuscript Changes by Category}
+
+% \textbf{1. Transparency on Data Limitations (E3a--c, E6b)}
+% \begin{itemize}
+%     \item Added ``Merchant Data Limitations'' paragraph in Model Section (Section IV, Discussion of Key Assumptions) explicitly naming data constraints: no merchant-level prices, no transaction volumes, no within-firm variation
+%     \item Added calibration vs.\ estimation discussion for $\sigma$ parameter in Estimation Section (Section V.B)
+%     \item Added fixed cost non-identification acknowledgment with E.U./Australia evidence (Section IV)
+%     \item Added upfront data capabilities statement in Introduction (lines 49--51)
+% \end{itemize}
+
+% \textbf{2. Durbin Amendment Interpretation (E1b, R4-1, R4-3)}
+% \begin{itemize}
+%     \item Revised Section III.A to explicitly state DD identifies \emph{relative} effect (regulated vs.\ exempt issuers), not absolute consumer response
+%     \item Added three convergent evidence sources: (1) within-institution reward comparison ($\sim$30\% decline), (2) Discover 5\% cashback experiment (10pp increase from other credit, not debit), (3) second-choice survey (64\% debit-to-cash vs.\ 8\% debit-to-credit)
+%     \item Revised footnote on steering from defensive to substantive engagement
+%     \item Added sensitivity analysis: halved reward sensitivity yields \$8B welfare gain (vs.\ \$34B baseline); policy ranking unchanged
+% \end{itemize}
+
+% \textbf{3. Consumer-Side Model Improvements (E4a--c, R1-7, R1-8, R2-1c--d)}
+% \begin{itemize}
+%     \item Added merchant incentive explanation for multi-card consumers (transaction-level segmentation) in Model Section
+%     \item Added rewards microfoundation derivation in Appendix B.1.1 with explicit budget constraint algebra
+%     \item Added Information Structure and Timing paragraphs in Consumer Adoption section explaining what consumers know at adoption vs.\ POS
+%     \item Extended model to allow credit-debit substitution at POS with robustness check ($\kappa=0$): welfare \$28B vs.\ \$30B, policy ranking unchanged
+% \end{itemize}
+
+% \textbf{4. Counterfactual Enhancements (E5a--e, R2-2a--c, R4-4--6)}
+% \begin{itemize}
+%     \item Added welfare decomposition table with four channels: retail prices (+\$97B), rewards (-\$83B), merchant acceptance (+\$6B), credit aversion (+\$15B)
+%     \item Added socially optimal benchmark discussion with Rochet-Tirole tourist test derivation
+%     \item Added extreme counterfactual discussion (credit card elimination) noting fee cap already reduces credit market share by 90\%
+%     \item Added intermediate fee cap scenario (95 bps Canadian level) with \$15B vs.\ \$30B welfare comparison
+%     \item Clarified baseline as 2019 competitive equilibrium under current regulation
+% \end{itemize}
+
+% \textbf{5. Lucas Critique and Model Assumptions (R4-7, R2-2b)}
+% \begin{itemize}
+%     \item Added comprehensive Lucas critique acknowledgment in counterfactuals section
+%     \item Listed potential issuer responses: interest rates, annual fees, credit limits, fraud protection, product innovation
+%     \item Cited Australian evidence showing no short-run effect on card characteristics
+%     \item Framed counterfactuals as short-run predictions
+% \end{itemize}
+
+% \textbf{6. Exposition and Accessibility (E6a--f)}
+% \begin{itemize}
+%     \item Added early Durbin context in Introduction (lines 7--9) explaining 2010 regulation and paper's use
+%     \item Added roadmap paragraph before Related Literature outlining Sections II--VII
+%     \item Added ``Key Assumptions at a Glance'' paragraph at start of Model section
+%     \item Condensed four appendix sections (reduced $\sim$130 lines total)
+%     \item Shortened footnotes on rewards and steering
+%     \item Verified Knittel-Stango (2003) collusion discussion already present
+% \end{itemize}
+
+% \subsection*{Systematic Response by Concern Identifier}
+
+% The following table maps each concern to its manuscript location and response status.
+
+% \vspace{0.5em}
+% \noindent\textbf{Editor Concerns (E1--E7):}
+% \begin{small}
+% \begin{longtable}{p{1.2cm}p{5cm}p{4cm}p{2.5cm}}
+% \toprule
+% \textbf{ID} & \textbf{Concern} & \textbf{Manuscript Location} & \textbf{Status} \\
+% \midrule
+% \endfirsthead
+% \toprule
+% \textbf{ID} & \textbf{Concern} & \textbf{Manuscript Location} & \textbf{Status} \\
+% \midrule
+% \endhead
+% E1a & Sample selection sensitivity & reducedform.tex:24 & Fully addressed \\
+% E1b & DD cannot isolate rewards & reducedform.tex:49--83 & Fully addressed \\
+% E2a & Retailer acceptance rates upfront & reducedform.tex:89--92 & Fully addressed \\
+% E2b & Nielsen/Kilts compliance & main.tex:23--25 & Verified compliant \\
+% E2c & Debit-credit substitution interpretation & reducedform.tex:127 & Fully addressed \\
+% E3a & Merchant data transparency & model.tex:258--263 & Fully addressed \\
+% E3b & Calibration vs.\ estimation & estimation.tex:45--52 & Fully addressed \\
+% E3c & Fixed cost non-identification & model.tex:269--275 & Fully addressed \\
+% E3d & Non-rewards abstraction & model.tex (new paragraph) & Fully addressed \\
+% E4a & Credit-debit no-substitution & model.tex:273--280, appendix\_substitution.tex & Fully addressed \\
+% E4b & Credit card access constraints & appendix.tex:650--680 & Fully addressed \\
+% E4c & Information environment & model.tex:145--160 & Fully addressed \\
+% E5a & Fee reduction realism & counterfactuals.tex:10--20 & Fully addressed \\
+% E5b & Channel decomposition & counterfactuals.tex:49--59 & Fully addressed \\
+% E5c & New payment methods & counterfactuals.tex:139--141 & Fully addressed \\
+% E5d & Consumer multihoming & counterfactuals.tex:122--127 & Fully addressed \\
+% E5e & Baseline clarity & counterfactuals.tex:20--25 & Fully addressed \\
+% E6a & General accessibility & intro.tex:7--9, 92--94 & Fully addressed \\
+% E6b & Data capabilities upfront & intro.tex:49--51 & Fully addressed \\
+% E6c & Model focus & model.tex (Key Assumptions) & Fully addressed \\
+% E6d & Appendix condensation & Multiple appendix files & Partially addressed \\
+% E6e & Footnote reduction & model.tex, reducedform.tex & Fully addressed \\
+% E6f & Knittel-Stango collusion & counterfactuals.tex:148 & Already present \\
+% E7 & AEA replication policy & -- & Flagged for completion \\
+% \bottomrule
+% \end{longtable}
+% \end{small}
+
+% \vspace{0.5em}
+% \noindent\textbf{Referee 1 Concerns (R1-1--R1-24):}
+% \begin{small}
+% \begin{longtable}{p{1.2cm}p{5cm}p{4cm}p{2.5cm}}
+% \toprule
+% \textbf{ID} & \textbf{Concern} & \textbf{Manuscript Location} & \textbf{Status} \\
+% \midrule
+% \endfirsthead
+% \toprule
+% \textbf{ID} & \textbf{Concern} & \textbf{Manuscript Location} & \textbf{Status} \\
+% \midrule
+% \endhead
+% R1-1 & Sample selection robustness & appendix\_data.tex:21--23 & Fully addressed \\
+% R1-2 & Payment diary representativeness & appendix\_data.tex:218--223 & Fully addressed \\
+% R1-3 & Merchant data credibility & appendix\_data.tex (A.3) & Partially addressed \\
+% R1-4 & Signature vs.\ all debit & reducedform.tex:43--45 & Fully addressed \\
+% R1-5 & Control group validity & reducedform.tex:63--76 & Fully addressed \\
+% R1-6 & Model-data consistency & model.tex (CES paragraph) & Fully addressed \\
+% R1-7 & Fixed gamma multi-card & model.tex:81--83 & Fully addressed \\
+% R1-8 & Rewards microfoundation & appendix\_model.tex B.1.1 & Fully addressed \\
+% R1-9 & Pass-through claims & Verified: no ``arbitrary'' claim & Fully addressed \\
+% R1-10 & Primary/secondary specification & appendix.tex A.3.1 & Fully addressed \\
+% R1-11 & Consumer optimality & appendix.tex F.7 & Fully addressed \\
+% R1-12 & Durbin matching equilibrium & estimation.tex:20--24 & Fully addressed \\
+% R1-13 & AmEx fee cap & counterfactuals.tex:9--22 & Fully addressed \\
+% R1-14 & Standard errors & Tables 6, 7 & Fully addressed \\
+% R1-15 & Debit cap level & Footnote 34 & Fully addressed \\
+% R1-16 & Logit shocks welfare & counterfactuals.tex (monopoly) & Partially addressed \\
+% R1-17 & Retailer selection criteria & reducedform.tex:94 & Fully addressed \\
+% R1-18 & Trips vs.\ revenue outcome & reducedform.tex:103--105 & Fully addressed \\
+% R1-19 & Poisson model justification & reducedform.tex:61--62 & Fully addressed \\
+% R1-20 & Measurement error Figure 4a & reducedform.tex (after figure) & Fully addressed \\
+% R1-21 & Flexibility vs.\ rewards & reducedform.tex:131--136 & Fully addressed \\
+% R1-22 & Discover store choice regression & reducedform.tex (formal coefficients) & Fully addressed \\
+% R1-23 & OptBlue line in Figure 6 & reducedform.tex:171--173 & Fully addressed \\
+% R1-24 & Hierarchical acceptance statement & reducedform.tex:166--175 & Fully addressed \\
+% \bottomrule
+% \end{longtable}
+% \end{small}
+
+% \vspace{0.5em}
+% \noindent\textbf{Referee 2 Concerns (R2-1a--R2-3c):}
+% \begin{small}
+% \begin{longtable}{p{1.2cm}p{5cm}p{4cm}p{2.5cm}}
+% \toprule
+% \textbf{ID} & \textbf{Concern} & \textbf{Manuscript Location} & \textbf{Status} \\
+% \midrule
+% \endfirsthead
+% \toprule
+% \textbf{ID} & \textbf{Concern} & \textbf{Manuscript Location} & \textbf{Status} \\
+% \midrule
+% \endhead
+% R2-1a & Merchant acceptance costs & model.tex (new paragraph) & Fully addressed \\
+% R2-1b & Unobserved utility invariance & model.tex (new paragraph) & Fully addressed \\
+% R2-1c & Information structure & model.tex:145--160 & Fully addressed \\
+% R2-1d & Debit-credit substitution & model.tex:273--277, appendix & Fully addressed \\
+% R2-1e & 3-party vs.\ 4-party & model.tex (new paragraph) & Fully addressed \\
+% R2-1f & Chi heterogeneity & model.tex (new paragraph) & Fully addressed \\
+% R2-2a & Credit card elimination & counterfactuals.tex (new) & Fully addressed \\
+% R2-2b & Endogenous quality & counterfactuals.tex (Lucas) & Fully addressed \\
+% R2-2c & Gradual fee trajectory & 95 bps intermediate only & Partially addressed \\
+% R2-2d & Substitution in counterfactual & counterfactuals.tex (caveat) & Fully addressed \\
+% R2-3a & Cash cost assumption & model.tex (new paragraph) & Fully addressed \\
+% R2-3b & Data time periods & data.tex (summary) & Fully addressed \\
+% R2-3c & Merchant competition mechanism & model.tex (new paragraph) & Fully addressed \\
+% \bottomrule
+% \end{longtable}
+% \end{small}
+
+% \vspace{0.5em}
+% \noindent\textbf{Referee 3 Concerns (R3-1--R3-12):}
+% \begin{small}
+% \begin{longtable}{p{1.2cm}p{5cm}p{4cm}p{2.5cm}}
+% \toprule
+% \textbf{ID} & \textbf{Concern} & \textbf{Manuscript Location} & \textbf{Status} \\
+% \midrule
+% \endfirsthead
+% \toprule
+% \textbf{ID} & \textbf{Concern} & \textbf{Manuscript Location} & \textbf{Status} \\
+% \midrule
+% \endhead
+% R3-1 & Survey interpretation & reducedform.tex:49--89 & Fully addressed \\
+% R3-2 & Consumer sorting & model.tex:256, OA.3 & Fully addressed \\
+% R3-3 & Credit/debit wallets & reducedform.tex:131--156 & Fully addressed \\
+% R3-4 & Surcharging incentives & model.tex:252--253, OA.2 & Fully addressed \\
+% R3-5 & Basic facts & data.tex:61--66 & Fully addressed \\
+% R3-6 & Second-choice modeling & model.tex:39--47, 144--190 & Fully addressed \\
+% R3-7 & Pass-through assumption & model.tex:247--249, appendix & Fully addressed \\
+% R3-8 & Rochet \& Tirole theory & counterfactuals.tex:9--15 & Fully addressed \\
+% R3-9 & Merchant internalization & model.tex:87--95 & Fully addressed \\
+% R3-10 & Network fee dimensions & counterfactuals.tex:22 & Fully addressed \\
+% R3-11 & Utility function notation & model.tex:146--148 & Fully addressed \\
+% R3-12 & Market share definitions & model.tex:93--109 & Fully addressed \\
+% \bottomrule
+% \end{longtable}
+% \end{small}
+
+% \vspace{0.5em}
+% \noindent\textbf{Referee 4 Concerns (R4-1--R4-7):}
+% \begin{small}
+% \begin{longtable}{p{1.2cm}p{5cm}p{4cm}p{2.5cm}}
+% \toprule
+% \textbf{ID} & \textbf{Concern} & \textbf{Manuscript Location} & \textbf{Status} \\
+% \midrule
+% \endfirsthead
+% \toprule
+% \textbf{ID} & \textbf{Concern} & \textbf{Manuscript Location} & \textbf{Status} \\
+% \midrule
+% \endhead
+% R4-1 & Durbin interpretation & reducedform.tex:49--83 & Fully addressed \\
+% R4-2 & Debit-credit substitutability & model.tex:273--280 & Fully addressed \\
+% R4-3 & Model misspecification risk & counterfactuals.tex (bounds) & Fully addressed \\
+% R4-4 & Social optimum benchmark & counterfactuals.tex, OA B.8 & Fully addressed \\
+% R4-5 & Incomplete counterfactuals & Partially explored & Partially addressed \\
+% R4-6 & Extreme monopoly scenario & counterfactuals.tex:126--137 & Fully addressed \\
+% R4-7 & Lucas critique & counterfactuals.tex:150--152 & Fully addressed \\
+% \bottomrule
+% \end{longtable}
+% \end{small}
+
+% \subsection*{Remaining Items}
+
+% \textbf{Acknowledged but Not Fully Addressed:}
+% \begin{itemize}
+%     \item \textbf{E7 (AEA Replication Policy):} Code directory exists with 100+ files. Missing formal Data Availability Statement and repository URL. Will complete before final submission.
+%     \item \textbf{R2-2c (Gradual Fee Trajectory):} Computed one intermediate point (95 bps). Full trajectory (200$\to$150$\to$100$\to$75$\to$50$\to$30 bps) is computationally intensive; left for future work but noted that E.U./Australia evidence suggests smooth adjustment.
+%     \item \textbf{R4-5 (Optimal Cap Level):} Fee cap at cost-of-cash is theoretically justified as Rochet-Tirole benchmark. Systematic exploration of cap levels left for future work.
+% \end{itemize}
+
+% \end{llm}

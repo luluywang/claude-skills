@@ -1,0 +1,411 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{cms/global//global/global/global}
+    \entry{Adams.etal2022a}{report}{}{}
+      \name{author}{3}{}{%
+        {{hash=89ff76ff08fd3a10e7a6ab9b40401bfe}{%
+           family={Adams},
+           familyi={A\bibinitperiod},
+           given={Robert},
+           giveni={R\bibinitperiod}}}%
+        {{hash=cb620cd0d6f7e9ebd893a1c7b03d76ad}{%
+           family={Bord},
+           familyi={B\bibinitperiod},
+           given={Vitaly\bibnamedelima M},
+           giveni={V\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+        {{hash=53d182c17a0afaa09b4b5e7352fbae04}{%
+           family={Katcher},
+           familyi={K\bibinitperiod},
+           given={Bradley},
+           giveni={B\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Federal Reserve Board of Governors}%
+      }
+      \strng{namehash}{5a77d15f72d91941d3a6fb16584e6d7e}
+      \strng{fullhash}{704294c354b0b0e270ff2d9863281835}
+      \strng{fullhashraw}{704294c354b0b0e270ff2d9863281835}
+      \strng{bibnamehash}{704294c354b0b0e270ff2d9863281835}
+      \strng{authorbibnamehash}{704294c354b0b0e270ff2d9863281835}
+      \strng{authornamehash}{5a77d15f72d91941d3a6fb16584e6d7e}
+      \strng{authorfullhash}{704294c354b0b0e270ff2d9863281835}
+      \strng{authorfullhashraw}{704294c354b0b0e270ff2d9863281835}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{9}
+      \field{month}{9}
+      \field{title}{Credit {{Card Profitability}}}
+      \field{type}{FEDS Notes}
+      \field{year}{2022}
+      \field{dateera}{ce}
+      \verb{doi}
+      \verb 10.17016/2380-7172.3100
+      \endverb
+    \endentry
+    \entry{Benson.etal2017}{book}{}{}
+      \name{author}{3}{}{%
+        {{hash=7fa220b1ba980c10759bef217c7aa03f}{%
+           family={Benson},
+           familyi={B\bibinitperiod},
+           given={Carol},
+           giveni={C\bibinitperiod}}}%
+        {{hash=00207e73e89e72c3eda6f106e012c1aa}{%
+           family={Loftesness},
+           familyi={L\bibinitperiod},
+           given={Scott},
+           giveni={S\bibinitperiod}}}%
+        {{hash=cf5d18ab74f2a293e1be7bc929b92fb9}{%
+           family={Jones},
+           familyi={J\bibinitperiod},
+           given={Russ},
+           giveni={R\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Glenbrook Press}%
+      }
+      \strng{namehash}{09c3f57452269340f761e7719af48ede}
+      \strng{fullhash}{69c0de7ff13128fd4e394d0c59fcf0fa}
+      \strng{fullhashraw}{69c0de7ff13128fd4e394d0c59fcf0fa}
+      \strng{bibnamehash}{69c0de7ff13128fd4e394d0c59fcf0fa}
+      \strng{authorbibnamehash}{69c0de7ff13128fd4e394d0c59fcf0fa}
+      \strng{authornamehash}{09c3f57452269340f761e7719af48ede}
+      \strng{authorfullhash}{69c0de7ff13128fd4e394d0c59fcf0fa}
+      \strng{authorfullhashraw}{69c0de7ff13128fd4e394d0c59fcf0fa}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{3rd Editiion}
+      \field{month}{8}
+      \field{title}{Payments {{Systems}} in the {{U}}.{{S}}.: {{A Guide}} for the {{Payments Professional}}}
+      \field{year}{2017}
+      \field{dateera}{ce}
+    \endentry
+    \entry{Drechsler.etal2025}{report}{}{}
+      \name{author}{5}{}{%
+        {{hash=8259acb148983897bf0f637d3a6dae29}{%
+           family={Drechsler},
+           familyi={D\bibinitperiod},
+           given={Itamar},
+           giveni={I\bibinitperiod}}}%
+        {{hash=f7ac3ce65f96ec2f17e1b507dcb9067b}{%
+           family={Jung},
+           familyi={J\bibinitperiod},
+           given={Hyeyoon},
+           giveni={H\bibinitperiod}}}%
+        {{hash=683dc64e9cba0f43a18c4024a83bb93c}{%
+           family={Peng},
+           familyi={P\bibinitperiod},
+           given={Weiyu},
+           giveni={W\bibinitperiod}}}%
+        {{hash=8af5fc70ae8265c9607c364c719df2b3}{%
+           family={Supera},
+           familyi={S\bibinitperiod},
+           given={Dominik},
+           giveni={D\bibinitperiod}}}%
+        {{hash=ad4e6d288a786dc05c134166e2196c59}{%
+           family={Zhou},
+           familyi={Z\bibinitperiod},
+           given={Guanyu},
+           giveni={G\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Federal Reserve Bank of New York}%
+      }
+      \strng{namehash}{37cee1ed5645aa56ff98666ccf460bb9}
+      \strng{fullhash}{4561e5b5617e7a6eb4a09163ab6615fd}
+      \strng{fullhashraw}{4561e5b5617e7a6eb4a09163ab6615fd}
+      \strng{bibnamehash}{4561e5b5617e7a6eb4a09163ab6615fd}
+      \strng{authorbibnamehash}{4561e5b5617e7a6eb4a09163ab6615fd}
+      \strng{authornamehash}{37cee1ed5645aa56ff98666ccf460bb9}
+      \strng{authorfullhash}{4561e5b5617e7a6eb4a09163ab6615fd}
+      \strng{authorfullhashraw}{4561e5b5617e7a6eb4a09163ab6615fd}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{10}
+      \field{number}{1143}
+      \field{title}{Credit {{Card Banking}}}
+      \field{type}{Staff Report}
+      \field{year}{2025}
+      \field{dateera}{ce}
+    \endentry
+    \entry{EuropeanCommission2020}{report}{}{}
+      \name{author}{1}{}{%
+        {{hash=4e1819faa3a2892b0bf676644d631c53}{%
+           family={European\bibnamedelima Commission},
+           familyi={E\bibinitperiod\bibinitdelim C\bibinitperiod},
+           given={DG\bibnamedelima Comp},
+           giveni={D\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Publications Office}%
+      }
+      \list{location}{1}{%
+        {LU}%
+      }
+      \strng{namehash}{4e1819faa3a2892b0bf676644d631c53}
+      \strng{fullhash}{4e1819faa3a2892b0bf676644d631c53}
+      \strng{fullhashraw}{4e1819faa3a2892b0bf676644d631c53}
+      \strng{bibnamehash}{4e1819faa3a2892b0bf676644d631c53}
+      \strng{authorbibnamehash}{4e1819faa3a2892b0bf676644d631c53}
+      \strng{authornamehash}{4e1819faa3a2892b0bf676644d631c53}
+      \strng{authorfullhash}{4e1819faa3a2892b0bf676644d631c53}
+      \strng{authorfullhashraw}{4e1819faa3a2892b0bf676644d631c53}
+      \field{sortinit}{E}
+      \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{D}
+      \field{langid}{english}
+      \field{shorttitle}{Study on the Application of the {{Interchange Fee Regulation}}}
+      \field{title}{Study on the Application of the {{Interchange Fee Regulation}}: {{Final}} Report.}
+      \field{year}{2020}
+      \field{dateera}{ce}
+    \endentry
+    \entry{FederalReserve2010}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=2a90e616fa34f39a1afad8b2839357d7}{%
+           family={Federal\bibnamedelima Reserve},
+           familyi={F\bibinitperiod\bibinitdelim R\bibinitperiod},
+           given={Board\bibnamedelimb of\bibnamedelima Governors},
+           giveni={B\bibinitperiod\bibinitdelim o\bibinitperiod\bibinitdelim G\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Federal Register}%
+      }
+      \strng{namehash}{2a90e616fa34f39a1afad8b2839357d7}
+      \strng{fullhash}{2a90e616fa34f39a1afad8b2839357d7}
+      \strng{fullhashraw}{2a90e616fa34f39a1afad8b2839357d7}
+      \strng{bibnamehash}{2a90e616fa34f39a1afad8b2839357d7}
+      \strng{authorbibnamehash}{2a90e616fa34f39a1afad8b2839357d7}
+      \strng{authornamehash}{2a90e616fa34f39a1afad8b2839357d7}
+      \strng{authorfullhash}{2a90e616fa34f39a1afad8b2839357d7}
+      \strng{authorfullhashraw}{2a90e616fa34f39a1afad8b2839357d7}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{month}{12}
+      \field{shorttitle}{Notice of Proposed Rulemaking}
+      \field{title}{Debit {{Card Interchange Fees}} and {{Routing}}}
+      \field{year}{2010}
+      \field{dateera}{ce}
+    \endentry
+    \entry{Gans2007}{report}{}{}
+      \name{author}{1}{}{%
+        {{hash=6baa1e85fa462ca9f0ba833b611bc4e4}{%
+           family={Gans},
+           familyi={G\bibinitperiod},
+           given={Joshua\bibnamedelima S.},
+           giveni={J\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+      }
+      \strng{namehash}{6baa1e85fa462ca9f0ba833b611bc4e4}
+      \strng{fullhash}{6baa1e85fa462ca9f0ba833b611bc4e4}
+      \strng{fullhashraw}{6baa1e85fa462ca9f0ba833b611bc4e4}
+      \strng{bibnamehash}{6baa1e85fa462ca9f0ba833b611bc4e4}
+      \strng{authorbibnamehash}{6baa1e85fa462ca9f0ba833b611bc4e4}
+      \strng{authornamehash}{6baa1e85fa462ca9f0ba833b611bc4e4}
+      \strng{authorfullhash}{6baa1e85fa462ca9f0ba833b611bc4e4}
+      \strng{authorfullhashraw}{6baa1e85fa462ca9f0ba833b611bc4e4}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{month}{1}
+      \field{title}{Evaluating the {{Impact}} of the {{Payment System Reforms}}}
+      \field{year}{2007}
+      \field{dateera}{ce}
+    \endentry
+    \entry{Helcim2021}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=a235d1d47168b63edf12fa24a2460d01}{%
+           family={{Helcim}},
+           familyi={H\bibinitperiod}}}%
+      }
+      \strng{namehash}{a235d1d47168b63edf12fa24a2460d01}
+      \strng{fullhash}{a235d1d47168b63edf12fa24a2460d01}
+      \strng{fullhashraw}{a235d1d47168b63edf12fa24a2460d01}
+      \strng{bibnamehash}{a235d1d47168b63edf12fa24a2460d01}
+      \strng{authorbibnamehash}{a235d1d47168b63edf12fa24a2460d01}
+      \strng{authornamehash}{a235d1d47168b63edf12fa24a2460d01}
+      \strng{authorfullhash}{a235d1d47168b63edf12fa24a2460d01}
+      \strng{authorfullhashraw}{a235d1d47168b63edf12fa24a2460d01}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Visa {{USA Interchange Rates}}}
+      \field{year}{2021}
+      \field{dateera}{ce}
+    \endentry
+    \entry{Nilson2020}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=16ff1774c04145dc94208696ada628d8}{%
+           family={Nilson},
+           familyi={N\bibinitperiod},
+           given={Report},
+           giveni={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{16ff1774c04145dc94208696ada628d8}
+      \strng{fullhash}{16ff1774c04145dc94208696ada628d8}
+      \strng{fullhashraw}{16ff1774c04145dc94208696ada628d8}
+      \strng{bibnamehash}{16ff1774c04145dc94208696ada628d8}
+      \strng{authorbibnamehash}{16ff1774c04145dc94208696ada628d8}
+      \strng{authornamehash}{16ff1774c04145dc94208696ada628d8}
+      \strng{authorfullhash}{16ff1774c04145dc94208696ada628d8}
+      \strng{authorfullhashraw}{16ff1774c04145dc94208696ada628d8}
+      \field{sortinit}{N}
+      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{journaltitle}{Nilson Report}
+      \field{month}{5}
+      \field{title}{Merchant {{Processing Fees}} in the {{United States}}}
+      \field{volume}{1176}
+      \field{year}{2020}
+      \field{dateera}{ce}
+    \endentry
+    \entry{Valverde.etal2016}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=fbd2de3186ba9efca498dcbf6c01d55a}{%
+           family={Valverde},
+           familyi={V\bibinitperiod},
+           given={Santiago\bibnamedelima Carbó},
+           giveni={S\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+        {{hash=e4d607c268112fe77430f4875f90e78a}{%
+           family={Chakravorti},
+           familyi={C\bibinitperiod},
+           given={Sujit},
+           giveni={S\bibinitperiod}}}%
+        {{hash=06bd95c1d11145a62934bb2fa7f73e66}{%
+           family={Fernández},
+           familyi={F\bibinitperiod},
+           given={Francisco\bibnamedelima Rodríguez},
+           giveni={F\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+      }
+      \strng{namehash}{fde0cba737487e248058664a3d743e7b}
+      \strng{fullhash}{ff06bf2645302450a60087f251c17707}
+      \strng{fullhashraw}{ff06bf2645302450a60087f251c17707}
+      \strng{bibnamehash}{ff06bf2645302450a60087f251c17707}
+      \strng{authorbibnamehash}{ff06bf2645302450a60087f251c17707}
+      \strng{authornamehash}{fde0cba737487e248058664a3d743e7b}
+      \strng{authorfullhash}{ff06bf2645302450a60087f251c17707}
+      \strng{authorfullhashraw}{ff06bf2645302450a60087f251c17707}
+      \field{sortinit}{V}
+      \field{sortinithash}{afb52128e5b4dc4b843768c0113d673b}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{abstract}{We study the impact of reductions in interchange fees on payment card services. We find that consumer and merchant acceptance and transaction volumes increased when interchange fees were reduced. Our results suggest that a 10\% reduction in the rate of decline per quarter in the average interchange fee by an acquirer resulted in a rate of increase in merchant acceptance per quarter of up to 1.4\%. In addition, a 10\% increase in the rate of interaction of merchant acceptance and the total number of cards increased the rate of quarterly issuer transaction volumes up to 1.7\%.}
+      \field{issn}{0034-6535, 1530-9142}
+      \field{journaltitle}{Review of Economics and Statistics}
+      \field{langid}{english}
+      \field{month}{5}
+      \field{number}{2}
+      \field{shorttitle}{The {{Role}} of {{Interchange Fees}} in {{Two-Sided Markets}}}
+      \field{title}{The {{Role}} of {{Interchange Fees}} in {{Two-Sided Markets}}: {{An Empirical Investigation}} on {{Payment Cards}}}
+      \field{volume}{98}
+      \field{year}{2016}
+      \field{dateera}{ce}
+      \field{pages}{367\bibrangedash 381}
+      \range{pages}{15}
+      \verb{doi}
+      \verb 10.1162/REST_a_00502
+      \endverb
+    \endentry
+    \entry{Visa2019}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=89fc0d6fe12b0e0c1af5c7a0373435a6}{%
+           family={{Visa}},
+           familyi={V\bibinitperiod}}}%
+      }
+      \strng{namehash}{89fc0d6fe12b0e0c1af5c7a0373435a6}
+      \strng{fullhash}{89fc0d6fe12b0e0c1af5c7a0373435a6}
+      \strng{fullhashraw}{89fc0d6fe12b0e0c1af5c7a0373435a6}
+      \strng{bibnamehash}{89fc0d6fe12b0e0c1af5c7a0373435a6}
+      \strng{authorbibnamehash}{89fc0d6fe12b0e0c1af5c7a0373435a6}
+      \strng{authornamehash}{89fc0d6fe12b0e0c1af5c7a0373435a6}
+      \strng{authorfullhash}{89fc0d6fe12b0e0c1af5c7a0373435a6}
+      \strng{authorfullhashraw}{89fc0d6fe12b0e0c1af5c7a0373435a6}
+      \field{extraname}{1}
+      \field{sortinit}{V}
+      \field{sortinithash}{afb52128e5b4dc4b843768c0113d673b}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{4}
+      \field{title}{Visa {{USA Interchange Reimbursement Fees}}}
+      \field{year}{2019}
+      \field{dateera}{ce}
+    \endentry
+    \entry{Visa2020}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=89fc0d6fe12b0e0c1af5c7a0373435a6}{%
+           family={{Visa}},
+           familyi={V\bibinitperiod}}}%
+      }
+      \strng{namehash}{89fc0d6fe12b0e0c1af5c7a0373435a6}
+      \strng{fullhash}{89fc0d6fe12b0e0c1af5c7a0373435a6}
+      \strng{fullhashraw}{89fc0d6fe12b0e0c1af5c7a0373435a6}
+      \strng{bibnamehash}{89fc0d6fe12b0e0c1af5c7a0373435a6}
+      \strng{authorbibnamehash}{89fc0d6fe12b0e0c1af5c7a0373435a6}
+      \strng{authornamehash}{89fc0d6fe12b0e0c1af5c7a0373435a6}
+      \strng{authorfullhash}{89fc0d6fe12b0e0c1af5c7a0373435a6}
+      \strng{authorfullhashraw}{89fc0d6fe12b0e0c1af5c7a0373435a6}
+      \field{extraname}{2}
+      \field{sortinit}{V}
+      \field{sortinithash}{afb52128e5b4dc4b843768c0113d673b}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{9}
+      \field{title}{Annual {{Report}} 2020}
+      \field{year}{2020}
+      \field{dateera}{ce}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

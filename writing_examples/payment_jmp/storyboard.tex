@@ -1,0 +1,170 @@
+\documentclass[main.tex]{subfiles}
+
+\begin{document}
+
+\section{Reduced Form}
+
+\subsection{Merchants Accept Cards to Increase Sales}
+
+\begin{figure}
+\begin{centering}
+\includegraphics[width=3in]{../output/graphs/kilts_main_agg_payment_24_nearby_unweighted.pdf}\includegraphics[width=3in]{../output/graphs/kilts_triple_diff_data_zip_2015_total_trips_weighted.pdf}
+\par\end{centering}
+\caption{Sales Effects from Switching to Accepting Credit Cards.
+Todo: \textquotedblleft Aggregate Payment Shares at Large Grocer that Started Accepting Credit Cards\textquotedblright .
+Todo: use linestyles to differentiate the categories.
+Too hard to read different shades of grey.}
+\end{figure}
+
+\begin{figure}
+\begin{centering}
+\includegraphics[width=3in]{../output/graphs/kilts_210_main_agg_payment_all_unweighted}\includegraphics[width=3in]{../output/graphs/plot_dd_210_all_2018_Visa_Non_Credit}
+\par\end{centering}
+\caption{Effects of dropping one network's credit cards.
+Todo: change the title from \textquotedblleft Visa, Non-Credit\textquotedblright{} to something informative about the shock.
+Change the aggregate payment shares to \textquotedblleft Aggregate Payment Shares at Small Grocer that Dropped Visa Credit Cards\textquotedblright{} Todo: use linestyles to differentiate the categories.
+Too hard to read different shades of grey.}
+\end{figure}
+
+
+\subsection{Consumers' Payment Choice is Sensitive to Rewards}
+
+\begin{figure}
+\begin{centering}
+% \includegraphics[width=3in]{../output/graphs/log_interchange}
+\includegraphics[width=3in]{../output/graphs/log_debit_sig_yield}
+\includegraphics[width=3in]{../output/graphs/log_credit_vol_yield}
+\par\end{centering}
+\caption{Effects of the Durbin Amendment on Banks}
+\end{figure}
+
+\begin{table}
+
+\begin{centering}
+\small{%
+\begin{tabular}{>{\centering}p{1in}>{\centering}p{1.5in}>{\centering}p{1.5in}}
+Current Card & Choice Set & Share\tabularnewline
+\hline
+Credit & \{Cash, DC\} & P(Cash) = \scalarinput{survey_credit_cash_diversion}\tabularnewline
+Debit & \{Cash, CC\} & P(Cash) = \scalarinput{survey_debit_cash_diversion}\tabularnewline
+Credit & \{Cash, DC, Other Banks' CC\} & P(Other Network's CC) = \scalarinput{second_choice_credit_divert}\tabularnewline
+Debit & \{Cash, Other Banks DC, CC\} & P(Other Network's DC) = \scalarinput{second_choice_debit_divert}\tabularnewline
+\end{tabular}}
+\par\end{centering}
+\caption{Substitution patterns}
+
+\end{table}
+
+\begin{table}
+\caption{Heterogeneity With Respect to Income}
+\end{table}
+
+Common elasticity wrt income: \scalarinput{survey_income_elast}.
+
+\subsection{Consumers and Merchants Both Multihome}
+
+\begin{figure}
+\begin{centering}
+\small{\input{../output/tables/condl_share.tex}}
+\par\end{centering}
+\caption{Patterns of consumer multihoming}
+\end{figure}
+
+Around \scalarinput{visa_cc_second_choice} percent of primary Visa credit card holders carry a secondary credit card.
+In contrast \scalarinput{amex_cc_second_choice} percent of primary Amex holders carry a secondary credit card.
+
+\begin{figure}
+\begin{centering}
+\includegraphics[width=3in]{../output/graphs/yelp_verticality_bar}
+\par\end{centering}
+\caption{Patterns of merchant multihoming}
+\end{figure}
+
+
+\subsubsection{Drivers of consumer and merchant multihoming}
+\begin{itemize}
+\item Durbin case study -> Relative debit vs credit is not that important for merchant relative acceptance.
+\item Amex OptBlue case study -> Relative credit card fees very important for merchant relative acceptance.
+\item Relative acceptance not that important for consumer multihoming
+\item \uline{Todo}: adjust the merchant fee chart to start from zero.
+Adjust the bottom right chart on multihoming to have similar fonts, size as the other charts
+\end{itemize}
+\begin{figure}
+\begin{centering}
+\includegraphics[width=3in]{../output/graphs/amex_visa_accept_gap}\includegraphics[width=3in]{../output/graphs/yelp_verticality_bar}
+\par\end{centering}
+\begin{centering}
+\includegraphics[width=3in]{../output/graphs/amex_visa_fee_gap}\includegraphics[width=3in]{../output/graphs/debit_credit_accept_text.pdf}
+% \includegraphics[width=3in]{../output/graphs/mri_hs_amex_multiple}
+\par\end{centering}
+\caption{Fees, merchant acceptance, and consumer multihoming}
+\end{figure}
+
+
+\appendix
+
+\section{Additional Figures}
+
+\begin{figure}
+\begin{centering}
+\includegraphics[width=3in]{../output/graphs/kilts_paper_triple_diff_data_2015_total_trips_dd_unweighted_24}\includegraphics[width=3in]{../output/graphs/kilts_paper_triple_diff_data_2015_total_trips_dd_unweighted_non_24}
+\par\end{centering}
+\caption{Double diff for large grocer}
+\end{figure}
+
+\begin{figure}
+\begin{centering}
+\includegraphics[width=5in]{../output/graphs/kilts_triple_diff_data_2015_total_spend_weighted}
+\par\end{centering}
+\caption{Spending instead of trips}
+\end{figure}
+
+\begin{figure}
+\begin{centering}
+\includegraphics[width=3in]{../output/graphs/plot_dd_210_all_2018_Primary_Visa_Secondary_Non_Credit}\includegraphics[width=3in]{../output/graphs/plot_dd_210_all_2018_Primary_Visa_Secondary_Credit}
+\par\end{centering}
+\caption{Double diffs for small grocer}
+\end{figure}
+
+\begin{figure}
+\begin{centering}
+\includegraphics[width=3in]{../output/graphs/log_deposits}
+\includegraphics[width=3in]{../output/graphs/mri_changing_SB_BB}
+\par\end{centering}
+\caption{Switching behavior between small and large banks after Durbin}
+\end{figure}
+
+\begin{figure}
+\begin{centering}
+\includegraphics[width=3in]{../output/graphs/log_debit_vol_yield}
+\includegraphics[width=3in]{../output/graphs/sig_share_of_debit}
+\par\end{centering}
+\caption{Debit and credit card volumes after Durbin}
+\end{figure}
+
+\begin{figure}
+\begin{centering}
+\includegraphics[width=3in]{../output/graphs/durbin_robust_lower}\includegraphics[width=3in]{../output/graphs/durbin_robust_upper}
+\par\end{centering}
+\caption{Varying cutoffs}
+\end{figure}
+
+\begin{figure}
+\begin{centering}
+\includegraphics[width=3in]{../output/graphs/debit_compare_plot}
+\par\end{centering}
+\caption{Covariate overlap}
+\end{figure}
+
+\begin{figure}
+\begin{centering}
+\includegraphics[width=3in]{../output/graphs/debit_credit_accept_text_ungroup}\includegraphics[width=3in]{../output/graphs/yelp_debit_visa_series}
+\par\end{centering}
+\caption{Evidence on the relative acceptance of credit and debit cards post-Durbin.}
+\end{figure}
+
+\begin{figure}
+\caption{Double diff for large grocer}
+\end{figure}
+
+\end{document}

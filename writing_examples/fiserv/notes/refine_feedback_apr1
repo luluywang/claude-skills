@@ -1,0 +1,616 @@
+# Who Pays for Payments?
+
+**Date**: 4/1/2026, 1:30:28 PM
+**Domain**: social_sciences/economics
+**Taxonomy**: academic/research_paper
+**Filter**: Active comments
+
+---
+
+## Overall Feedback
+
+**Cash imputation and overlap moments**
+
+A core component of the incidence analysis involves extrapolating cash moments from Clover using the two-part model in Appendix C. Because settlement data do not observe cash, readers will focus closely on how these imputed overlap moments are validated, particularly for the large firms that drive the attenuation results through negotiated discounts.
+
+Appendix C.2.3 explicitly states that the sufficient-statistics exercise depends on second moments, but the current validation focuses on the mean cash share, overall standard deviation, and the fit of the conditional cash distribution. There appears to be a gap regarding revenue-weighted cash-card overlap moments by sector and firm size. This becomes highly relevant given that Table 1 shows Clover merchants have median annual sales of 0.09 million dollars, while Section III.B.3 emphasizes firms above 1 billion dollars, and Appendix C caps firm size at the Clover 99th percentile when predicting settlement cash shares. Unpacking direct validation or establishing bounds for these overlap moments across sectors and firm sizes would help secure the estimated 13.9 billion dollars cash loss and the 8.6 billion dollars sorting attenuation.
+
+**Pass-through parameters**
+
+The headline welfare estimates naturally depend on the assumptions governing price and reward pass-through. Section IV.A.2 applies full retail price pass-through, and Section IV.A.3 hard-codes full rewards pass-through, though Section I.A cites evidence pointing closer to 86% for rewards pass-through.
+
+Table A.6 demonstrates that the precise pass-through values significantly alter the welfare distribution. For example, premium-credit gains shift from 18.2 billion dollars in the baseline to 0.5 billion dollars under a 70% reward pass-through, and branch to 30.4 billion dollars if price pass-through is 70% while rewards remain full. Given that incomplete pass-through exercises in the structural model still impose full rewards pass-through, and Appendix E relies on average ticket size as a noisy proxy for prices at restaurants, readers may scrutinize the centrality of these parameters. Since the paper's primary focus is consumer-to-consumer transfers rather than just aggregate merchant costs, elevating the partition between prices, consumer rewards, and issuer retention from an appendix sensitivity check to a foregrounded dynamic would clarify the paper's core mechanical bounds.
+
+**The payment-to-income bridge**
+
+The translation of payment-type incidence into income-group transfers involves a sequence of inference steps in Section V.B.3 and Appendix B.4. The current mapping integrates preferred in-person payment methods from the DCPC, ownership-based splits from MRI, reweighting to settlement shares, and a common purchases-to-income assumption to yield dollar magnitudes.
+
+Several structural coding choices do significant work in this bridge: assigning all credit spending to premium if a household owns any premium card, splitting debit into regulated versus exempt strictly by the reported count of institutions, and substituting payment preference for actual expenditure shares. While the merchant data cleanly identifies transfers across payment instruments (as in Table 4), the transfer of 9.2 billion dollars from households below 150,000 dollars to those above relies heavily on these bridging assumptions. Modifying the text to either fortify the robustness of this income mapping or to center the analysis more firmly on the well-identified payment-type incidence could forestall concerns about how the regressivity claims are constructed.
+
+**Framing the policy counterfactuals**
+
+The transition from the sufficient-statistics framework to the evaluation of policy counterfactuals introduces a tension worth clarifying. The theorem is shown to be exact for small fee changes and is derived for fixed payment preferences (Sections IV.A.1 and IV.B; footnote 14), with the structural model allowing consumer reallocation across merchants but not across payment instruments.
+
+Sections V.B-V.D apply this framework to evaluate discrete, large-scale changes: zero interchange, the Durbin Amendment, and premiumization. The introduction and conclusion distinctly frame the Durbin Amendment and premiumization as regressive. Because these specific policy environments are highly likely to trigger endogenous adjustments in card adoption, rewards menus, free-checking offsets, merchant acceptance, and steering, readers might question whether the model margins can hold fixed under such weight. Reframing these counterfactual exercises as partial-incidence decompositions isolating the mechanics holding payment mix fixed, rather than equilibrium policy evaluations, might be more defensible.
+
+**Status**: [Pending]
+
+---
+
+## Detailed Comments (45)
+
+### 1. Incorrect description of strategic complementarities
+
+**Status**: [Pending]
+
+**Quote**:
+> Second, it generates strategic complementarities in pricing: when one merchant raises prices in response to higher interchange fees, this partially shifts demand to competitors, dampening their incentive to also raise prices.
+
+**Feedback**:
+In Section IV.C.2, the text incorrectly describes the mechanism of strategic complementarities. It states that when a merchant raises prices and demand shifts to competitors, this dampens "their incentive to also raise prices." However, in the specified CES oligopoly model (e.g., following Amiti et al., 2019), an increase in competitors' market share decreases their perceived demand elasticity, which increases their optimal markup and thus *amplifies* their incentive to raise prices. The current phrasing describes strategic substitutability, or perhaps confuses the competitor's response with the originating firm's incomplete pass-through. This intuition should be revised to accurately match the model's mechanics.
+
+---
+
+### 2. Mathematical error in estimating the increase in total interchange fees
+
+**Status**: [Pending]
+
+**Quote**:
+> Since the average interchange rate on premium cards is $2.1 \%$, compared to $1.7 \%$ for basic cards, this shift has raised total credit card interchange fees by roughly 20%.
+
+**Feedback**:
+The claim that the shift to premium cards has raised total credit card interchange fees by "roughly 20%" appears to contain a mathematical error regarding aggregate costs. As established in the text, the shift in premium card share was from 15% in 2006 to 60% in 2022. Assuming stable underlying rates of 1.7% for basic and 2.1% for premium cards, the initial average rate would be $0.15(2.1\%) + 0.85(1.7\%) = 1.76\%$, and the final average rate would be $0.60(2.1\%) + 0.40(1.7\%) = 1.94\%$. The percentage increase in the average credit card interchange fee (and thus total fees holding volume constant) is therefore $(1.94 - 1.76) / 1.76 \approx 10.2\%$. The \~20% figure presented in the text likely reflects the raw difference between the premium and basic rate tiers themselves $(2.1 - 1.7)/1.7 \approx 23.5\%$, but applying this growth factor to "total credit card interchange fees" overlooks the underlying baseline shares. Please adjust the phrasing so it accurately reflects either the aggregate effect ($\sim 10\%$) or clarifies that the 20% increase pertains strictly to the transaction volume that underwent the shift.
+
+---
+
+### 3. Matrix dimension and ordering mismatch in Lemma 4
+
+**Status**: [Pending]
+
+**Quote**:
+> Using the quotient rule for $d \mu_{j k}$, the indirect effect equals $\sum_{k}\left(\tau_{j k}-\hat{\tau}_{j}\right) \mu_{j k} d \log q_{j}^{k}$. Combined with the demand system $d \log q= E d \log p+G d y$, this yields the fixed-point equation $d \log p=F E d \log p+F G d y+d \hat{\tau}$.
+
+**Feedback**:
+In the proof of Lemma 4, the formal matrix definitions from Section A.1 lead to dimension and ordering inconsistencies in the matrix equations, even though the intended summations are clear. The stacked elasticity matrix $E$ (ordered by payment method $k$, then merchant $j$) and the block-diagonal composition matrix $F$ (ordered by $j$, then $k$) are incompatible for direct matrix multiplication $FE$ without applying a permutation matrix. Additionally, the definition of $G \in \mathbb{R}^{J \times K}$ implies $G dy$ yields a $J \times 1$ vector, which is dimensionally mismatched and cannot be mathematically added to the $JK \times 1$ vector $E d \log p$ in the demand system $d \log q = E d \log p + G d y$. Adjusting the stated block structure of $G$ and the stacking order of $E$ in Section A.1 will ensure the matrix notation is rigorously consistent.
+
+---
+
+### 4. Dimensional inconsistency in the definition of rewards
+
+**Status**: [Pending]
+
+**Quote**:
+> We assume that card networks pass-through merchant fees, net of costs, to lump-sum consumer rewards. ${ }^{12}$ We interpret rewards broadly to include any subsidy for card use (e.g., cash back, free checking).
+
+Rewards are then determined by:
+
+$$
+f_{k}=\frac{\sum_{j} p_{j} q_{j k}^{*}\left(\tau_{j k}-c_{k}\right)}{\sum_{j^{\prime}} p_{j^{\prime}} q_{j^{\prime} k}^{*}}
+$$
+
+**Feedback**:
+In Section IV.A.3, the formula for $f_k$ divides the total net interchange fees by total spending, making $f_k$ a unitless reward rate per dollar spent. However, in Section IV.A.1, the consumer's budget constraint is written as $\sum_{j} p_{j} q_{j k} \leq 1+f_{k}$, which treats $f_k$ as a lump-sum amount added to the normalized base income of 1. You cannot add a unitless rate to a base income amount. If the network provides a lump-sum reward, the denominator in the equation for $f_k$ should be removed so it matches the numerator (total net fees). If it provides a reward rate, the budget constraint should reflect that the total reward scales with total spending.
+
+---
+
+### 5. Misleading attenuation figure for merchant fee heterogeneity
+
+**Status**: [Pending]
+
+**Quote**:
+> These sector and negotiated discounts lead to a progressive redistribution of approximately \$1.7 billion per year to cash and regulated debit card users, thereby attenuating the overall transfer.
+
+**Feedback**:
+In the third paragraph, the text states that merchant fee heterogeneity leads to a "progressive redistribution of approximately \$1.7 billion per year to cash and regulated debit card users, thereby attenuating the overall transfer." While the \$1.7 billion figure accurately matches the combined benefit to these groups in Table 4 Panel B, phrasing it this way may unintentionally suggest that the entire \$30 billion macro cross-subsidy to credit cards is actually reduced by \$1.7 billion. Table 4 Panel B shows that the actual attenuation of the net transfer to credit users is only about \$0.6 billion, while the rest of the \$1.7 billion benefit to cash and regulated debit is funded internally by exempt debit users (who lose \$1.2 billion). Consider briefly clarifying that this progressive redistribution is largely funded by exempt debit users rather than representing a full \$1.7 billion reduction in the aggregate transfer to credit cards.
+
+---
+
+### 6. Mismatched regression coefficients in Section III.A.3
+
+**Status**: [Pending]
+
+**Quote**:
+> In contrast, a 100 log-point increase in average transaction value is associated with a 5.55 percentage point (50\%) decline in cash usage. Cash usage is negatively correlated with ecommerce: a 10 percentage point increase in a firm's e-commerce share is associated with a 0.38 percentage point decline in cash usage.
+
+Consistent with the income gradient documented in Figure 4, local demographics systematically influence cash usage across merchants. Consumers are more likely to pay in cash in less wealthy, less educated, and less densely populated regions. Column (2) shows that a one standard deviation increase in median household income is associated with a 0.14 percentage point decline in cash usage. Similarly, a one standard deviation increase in the share of college-educated households corresponds to a 1.07 percentage point decline in cash usage.
+
+**Feedback**:
+In Section III.A.3, the text discussing the regression results systematically deviates from the coefficients reported in Table 2. For example, the text states that a 100 log-point increase in average transaction value is associated with a 5.55 percentage point decline in cash usage, whereas Column (1) reports a coefficient of -5.39. Similarly, the text reports a 0.14 percentage point decline for median household income and a 1.07 percentage point decline for college-educated households, whereas Column (2) reports coefficients of -0.11 and -1.05, respectively. Additionally, the referenced 0.38 percentage point decline for e-commerce share does not align with the -4.58 coefficient in Column (1). It appears the exposition may reflect an earlier iteration of the analysis and needs to be synchronized with the finalized Table 2.
+
+---
+
+### 7. Inaccurate reference to premium card acceptance
+
+**Status**: [Pending]
+
+**Quote**:
+> Consumer sorting also explains most of the difference between our full model and the model that assumes merchant homogeneity. For example, for premium card consumers, the homogeneous model overestimates gains by \$8.8 billion relative to the heterogeneous benchmark; consumer sorting accounts for \$8.1 billion of this difference. Intuitively, premium cardholders disproportionately shop at premium card-accepting merchants, whereas the reverse is true for cash and debit consumers.
+
+**Feedback**:
+In the subsection "V.B.2 The Effects of Consumer Sorting and Negotiation on Redistribution Estimates," the phrase "premium card-accepting merchants" contradicts the "honor all cards" rule discussed earlier in the paper. Since merchants cannot selectively decline premium cards within a network, sorting is driven by the intensive margin of transaction shares rather than an extensive margin of acceptance.
+
+---
+
+### 8. Inaccurate claim about cash users under 70% rewards pass-through
+
+**Status**: [Pending]
+
+**Quote**:
+> When rewards pass-through is low ( $70 \%$ ), but price pass-through remains full, the pattern reverses: Premium credit users gain only \$0.5 billion because they face full price increases while receiving only partial rewards. Cash and regulated debit users are hurt by more than in the baseline.
+
+**Feedback**:
+In the "Imperfect rewards and price pass-through" subsection, the text states that under 70% rewards pass-through and full price pass-through, "Cash and regulated debit users are hurt by more than in the baseline." However, Appendix Table A.6 shows that cash users are hurt by exactly the same amount (-\res13.9 billion) in both the baseline and the 70% rewards pass-through scenarios. This makes economic sense: cash users do not receive rewards, so a reduction in the rewards pass-through rate does not affect them directly, as long as the price pass-through remains full. Please adjust the text to reflect that only card users who receive rewards (such as regulated and exempt debit users) are hurt more than in the baseline, while cash users' losses are unchanged.
+
+---
+
+### 9. Contradiction regarding who bears the cost of the Durbin Amendment
+
+**Status**: [Pending]
+
+**Quote**:
+> We next use a counterfactual to show that the Durbin Amendment, the major regulation of U.S. interchange fees, results in regressive redistribution across consumers, benefiting higherincome households at the expense of lower-income ones.
+
+**Feedback**:
+Statement 'benefiting higherincome households at the expense of lower-income ones' in the introduction to Section V seemed to imply that the absolute lowest-income households bore the core costs of the Durbin Amendment, but after reading Section V.C, I understood that low-income consumers were actually 'relatively unaffected,' and the transfer was primarily captured from middle-income consumers. While 'lower-income' is factually accurate as a relative comparison against high-income households, updating the introductory summary to explicitly designate middle-income households would align the reader's expectation directly with the paper's highly nuanced findings.
+
+---
+
+### 10. Impossible sum of percentages in Table A.1
+
+**Status**: [Pending]
+
+**Quote**:
+> | Panel B: MRI |  |  |  |
+| Household income (\$) | 51,697 | 93,369 | 76,509 |
+| Prefers debit (\%) | 51,697 | 31 |  |
+| Prefers credit (\%) | 51,697 | 42 |  |
+| Prefers cash (\%) | 51,697 | 29 |  |
+
+**Feedback**:
+In Table A.1, Panel B, the percentages for preferred payment methods (31% debit, 42% credit, and 29% cash) sum to 102%. Since the table notes indicate these categories are constructed sequentially and are mutually exclusive and exhaustive for the included sample, the rounded percentages must mathematically sum to 99%, 100%, or 101%. Please verify the data processing code or transcription to identify the source of this discrepancy and ensure the shares accurately reflect the distribution.
+
+---
+
+### 11. Contradiction regarding who bears the cost of the Durbin Amendment
+
+**Status**: [Pending]
+
+**Quote**:
+> Our results also indicate that the Durbin Amendment was a regressive policy, benefiting wealthier households on net at the expense of lower-income households.
+
+**Feedback**:
+In the final paragraph, the text states that the Durbin Amendment was regressive, benefiting wealthier households "at the expense of lower-income households." However, this broad summary statement creates tension with the detailed analysis in Section V.C, which explicitly separates these groups and finds that "low-income consumers were relatively unaffected" (due to cash usage) while "middle-income consumers who primarily use debit cards bore the brunt." To align the summary with the precise distributional findings regarding the policy's nuanced incidence, consider replacing "lower-income" with "middle-income" or "middle- and lower-income" in this concluding text.
+
+---
+
+### 12. Contradiction regarding the welfare effect of price increases
+
+**Status**: [Pending]
+
+**Quote**:
+> When interchange fees on payment method $l$ increase, retail prices rise at merchants where method-$l$ users shop. The size of the mechanical price change, holding fixed the composition of payments, is precisely $\mu_{j l} \frac{\partial \tau_{j l}}{\partial x_{l}}$. Consumers using payment method $k$ benefit in proportion to their overlap with method-$l$ users, which then yields the product $\mu_{j k} \mu_{j l} \frac{\partial \tau_{j l}}{\partial x_{l}}$.
+
+**Feedback**:
+In Section IV.B.1, the text states that consumers 'benefit in proportion to their overlap' when retail prices rise due to an increase in interchange fees. This contradicts standard economic logic. Consumers are harmed, not benefited, by retail price increases. The formula in Theorem 1 correctly applies a negative sign to this term to properly reflect a loss in welfare, but the prose incorrectly describes it as a benefit. The word 'benefit' should be replaced with 'are harmed' or a similar phrase.
+
+---
+
+### 13. Missing target moments for \Sigma_s^*
+
+**Status**: [Pending]
+
+**Quote**:
+> We set $\bar{z}_{s}^{*}$ and \Sigma_{s}^{*}$ to match the revenue-weighted average composition of payments of firms with more than \$1 billion in revenue in those sectors.
+
+**Feedback**:
+In the bulleted list detailing the calibration targets (Section IV.C.5 and Appendix D.3), the text states that both $\bar{z}_{s}^{*}$ and $\Sigma_{s}^{*}$ are calibrated to match the "revenue-weighted average composition of payments" for large firms. Since $\Sigma_{s}^{*}$ is a covariance matrix, it requires second moments for identification. While Appendix D.5 confirms that the covariance matrix of payment shares is correctly targeted in your actual procedure, consider updating the bullet point in the text to explicitly indicate that $\Sigma_{s}^{*}$ targets the second-moment matrices (analogous to the preceding bullet for $\Sigma_s$) to avoid reader confusion.
+
+---
+
+### 14. Contradictory parameter value in Figure A.5
+
+**Status**: [Pending]
+
+**Quote**:
+> Figure A.5: Goodness of Fit: Model Calibration Results
+![](/documents/17a1361d-6fc4-4f07-8eec-d54e7fc43303/images/image_016.jpg)
+
+Notes: Figure A. 5 demonstrates that the model calibration successfully matches the targeted moments from the data.
+
+**Feedback**:
+In Figure A.5, the right-hand facet label for the bottom row of Panel (a) reads 'Incomplete Passthrough (j*=1)'. However, the main text in Section IV.C, the notes for Table 5, and the legend in Panel (c) of this same figure all specify that the incomplete pass-through calibration uses $j^*=2$ large firms per market. The facet label in Panel (a) appears to be a typo and should be updated to '$j^*=2$' to ensure consistency.
+
+---
+
+### 15. Contradiction regarding the level of fee parameter regressions
+
+**Status**: [Pending]
+
+**Quote**:
+> For the fee parameters, we account for the fact that although our transaction-level regressions contain millions of observations, the effective sample size is much smaller due to the skewed firm size distribution.
+
+**Feedback**:
+In Appendix D.5, you refer to the fee parameter estimates as coming from 'transaction-level regressions.' However, in Section IV.B.3, you state that you recover the fee parameters by 'regressing firm-level interchange fees... on sector dummies.' This creates a minor contradiction regarding the unit of observation. If the regressions are indeed firm-level but weighted by transaction volume or revenue, it would be clearer to describe them consistently as such in the appendix to perfectly align with the methodology described in the main text.
+
+---
+
+### 16. Incorrect relationship between elasticities and fees
+
+**Status**: [Pending]
+
+**Quote**:
+> These assumptions rule out perfect substitutes and ensure that demand functions are continuously differentiable almost everywhere. We assume own-price elasticities dominate cross-price elasticities (Assumption 1 in Appendix A) and are not too large relative to the level of merchant fees.
+
+**Feedback**:
+In Footnote 9, the text states that elasticities are assumed to be "not too large relative to the level of merchant fees." However, as shown in Lemma 4 (Appendix A.4), the formal condition for convergence requires $2(1+m)M\tau_{\max} < 1$, which bounds the product of elasticity and the maximum fee. This means the elasticities must not be too large relative to the *inverse* of the merchant fees (i.e., $M \propto 1/\tau_{\max}$), rather than the fees themselves. Updating this phrasing will help ensure the intuitive explanation in the footnote cleanly aligns with the proper mathematical derivation in the appendix.
+
+---
+
+### 17. Contradictory explanation of consumer sorting
+
+**Status**: [Pending]
+
+**Quote**:
+> The distribution is also bimodal: some stores have almost all credit card shoppers, while others have few. This reflects consumer sorting, as consumers with different payment preferences tend to shop at a broad range of merchants.
+
+**Feedback**:
+The phrase "tend to shop at a broad range of merchants" appears to contradict the premise of a bimodal distribution and consumer sorting. If consumers with different payment preferences each shopped at a "broad range" of merchants, one would expect a mixed, unimodal distribution of payment types across stores due to highly overlapping customer bases. The bimodal distribution instead implies that consumers sort into *distinct* or *different* sets of merchants. Consider rephrasing to clarify that consumers sort themselves across a broad landscape of available merchants, rather than each group shopping broadly.
+
+---
+
+### 18. Contradictory description of approximation
+
+**Status**: [Pending]
+
+**Quote**:
+> It maps observed heterogeneity directly into redistribution without strong functional-form assumptions on demand. Under these assumptions, our sufficient statistic approach is a first-order approximation and holds exactly for small fee changes.
+
+**Feedback**:
+In the Introduction, the phrase "is a first-order approximation and holds exactly for small fee changes" is mathematically contradictory and slightly misrepresents the actual theoretical result. By definition, a first-order approximation omits higher-order terms and therefore cannot hold "exactly" for finite small changes. Furthermore, the paper's own formal statement in Theorem 1 establishes that even the marginal welfare effect (the exact derivative) contains an $O(\tau_{\max})$ error term due to composition feedback effects. Because of this, the sufficient statistic formula is an approximation of the first-order effect, meaning it does not hold exactly even for infinitesimal fee changes (unless evaluated from a zero-fee baseline). I recommend rephrasing this sentence to simply state that it provides a valid first-order approximation, removing the claim that it "holds exactly."
+
+---
+
+### 19. Inaccurate description of payment-specific revenue share
+
+**Status**: [Pending]
+
+**Quote**:
+> Large firms thus exert market power, charge higher markups, and feature incomplete pass-through of interchange fees. Define $\rho_{j k s}$ to be the revenue-share of firm $j$ among all firms in that sector:
+
+$$
+\rho_{j k s}=\frac{q_{j k s} p_{j s}}{\sum_{i} q_{i k s} p_{i s}}
+$$
+
+**Feedback**:
+In Section IV.C.2, the text defines $\rho_{jks}$ as 'the revenue-share of firm $j$ among all firms in that sector.' However, the mathematical formulation $\rho_{j k s}=\frac{q_{j k s} p_{j s}}{\sum_{i} q_{i k s} p_{i s}}$ calculates the revenue share of firm $j$ specifically among consumers using payment method $k$. The textual description does not fully reflect that this parameter represents a payment-method-specific market share.
+
+---
+
+### 20. Mapping regression coefficients to normalized parameters
+
+**Status**: [Pending]
+
+**Quote**:
+> The regression constant yields the baseline fee $\bar{\tau}_{k}$; the sector dummy coefficients yield the sector adjustments $\tau_{s k}$; and the bargaining dummy coefficient yields the negotiated discount $\delta_{k}$.
+
+**Feedback**:
+In Section IV.B.3, the text states that the regression constant yields the baseline fee $\bar{\tau}_k$ and the sector dummy coefficients yield the sector adjustments $\tau_{sk}$. Because standard OLS with a constant requires omitting one sector dummy, the raw regression coefficients will reflect differences relative to the omitted sector and will not naturally satisfy the normalization $\sum_s \omega_s \mu_{sl} \tau_{sl} = 0$ required by the theory in Appendix A.6. While this standard re-centering procedure is implied and mentioned later in Section V.C, it would be helpful to briefly clarify here in Section IV.B.3 how the raw regression estimates are transformed to satisfy the theoretical normalization.
+
+---
+
+### 21. Discrepancy between claimed and visual model fit in Figure A.4
+
+**Status**: [Pending]
+
+**Quote**:
+> The intensive margin model achieves a correlation of 0.52 between predicted and actual log conditional cash shares. Figure A. 4 shows the fit of the predicted conditional cash share distribution to the actual distribution in the Clover data, validating that the model captures the relevant variation in cash usage.
+
+**Feedback**:
+In Appendix C.2.2 and the notes for Figure A.4, the text describes the plot as showing a 'close fit' of the predicted conditional cash share distribution to the actual distribution. Because the predicted values of an OLS model naturally have less variance than the actual values, the plotted predicted distribution is inherently much narrower and more concentrated. Presenting this visual variance compression as a 'close fit' could inadvertently cause confusion or invite methodological criticism. It may be helpful to revise the language to avoid overclaiming the visual distributional fit, perhaps instead highlighting that the model adequately captures the required conditional means.
+
+---
+
+### 22. Mismatched citations for financial market transfers
+
+**Status**: [Pending]
+
+**Quote**:
+> For credit cards, the consumer losses from shrouded credit card fees are estimated at \$10 billion (Agarwal et al., 2015; Hurst et al., 2016); transfers arising from credit card interest rates are estimated to redistribute \$18 billion from low credit score consumers to high credit score consumers (Agarwal et al., 2025). Inter-regional transfers due to the GSEs' lack of risk-based pricing amount to \$15 billion, and consumers' losses from high-fee index funds amount to \$20 billion (Agarwal et al., 2015; Hurst et al., 2016).
+
+**Feedback**:
+The citations for the \$10 billion and \$20 billion figures appear to be mismatched, likely due to a copy-paste error. The text cites Hurst et al. (2016) for shrouded credit card fees, and both Agarwal et al. (2015) and Hurst et al. (2016) for high-fee index funds. This omits Brown et al. (2024), which was correctly cited for the index fund finding earlier in the Introduction. Please review and align the citations in this paragraph with their respective claims.
+
+---
+
+### 23. Algebraic contradiction in Lemma 3 proof
+
+**Status**: [Pending]
+
+**Quote**:
+> Proof. By definition, $f_{k}=\frac{\sum_{j} p_{j} q_{j k}^{*}\left(\tau_{j k}-c_{k}\right)}{\mu_{k}\left(1+f_{k}\right)}$, where we used that type- $k$ consumers spend $\mu_{k}\left(1+f_{k}\right)$. Using $p_{j} q_{j k}^{*}=\mu_{k}^{-1} \omega_{j} \mu_{j k}$ gives $f_{k}\left(1+f_{k}\right)=\mu_{k}^{-1} \mathbb{E}_{R}\left[\mu_{j k}\left(\tau_{j k}-c_{k}\right)\right]$.
+
+**Feedback**:
+In the proof of Lemma 3, there is an algebraic inconsistency in the initial definition of $f_k$. The first equation includes $\mu_k$ in the denominator to reflect aggregate spending, but the numerator uses the per-capita quantity $q_{jk}^*$. This implies the denominator should simply be the per-capita spending $1+f_k$. Retaining $\mu_k$ in the denominator introduces an erroneous factor of $\mu_k^{-1}$. The subsequent substitution step $f_k(1+f_k) = \mu_k^{-1} \mathbb{E}_R[\mu_{jk}(\tau_{jk} - c_k)]$ arrives at the correct final expression only by effectively ignoring the extra $\mu_k$ from the previous step. Dropping $\mu_k$ from the denominator of the initial equation will perfectly resolve this typo.
+
+---
+
+### 24. Misleading y-axis label in Figure A.1 Panel (c)
+
+**Status**: [Pending]
+
+**Quote**:
+> Figure A.1: Representativeness of Fiserv Data: Validation Against Nilson Report Industry Benchmarks
+![](/documents/17a1361d-6fc4-4f07-8eec-d54e7fc43303/images/image_012.jpg)
+
+Notes: Validation of Fiserv data representativeness against Nilson Report industry benchmarks. Panel (a): Average transaction size in the Fiserv data is measured as total dollar volume divided by number of transactions.
+
+**Feedback**:
+In Figure A.1, the title of Panel (c) is "Average Fee per Transaction," which typically implies an absolute dollar amount charged per swipe. However, the values plotted on the y-axis (ranging from roughly 0.7 to 2.2) represent percentage rates. Given the paper's careful distinction between fixed-dollar and variable fee components, this wording could cause momentary confusion. Consider updating the panel title or axis labels to clarify that these are percentage rates (e.g., "Average Effective Fee Rate (%)").
+
+---
+
+### 25. Reversed variables in regression description in D.4
+
+**Status**: [Pending]
+
+**Quote**:
+> Finally, Panel A.5c regresses the change in each firm's average fees as a result of capping fees to zero in the counterfactual against the change in the firm's average price with market fixed effects.
+
+**Feedback**:
+In Section D.4, the text states that Panel A.5c 'regresses the change in each firm's average fees... against the change in the firm's average price.' However, estimating pass-through requires measuring the effect of cost changes on prices, and Panel A.5c correctly plots the change in average fee on the x-axis and the change in log price on the y-axis. The text's phrasing technically reverses the dependent and independent variables; it would be clearer and more exact to state that the change in price is regressed on the change in fees.
+
+---
+
+### 26. Undefined variable $d_j$ in instrument
+
+**Status**: [Pending]
+
+**Quote**:
+> \begin{aligned}
+\widetilde{\Delta \tau_{j}} & =r_{z(j)} \times d_{j} \times\left(\tau^{\text {Reg Debit,Post }}\left(t_{j}\right)-\tau^{\text {Exempt Debit,Post }}\left(t_{j}\right)\right) \\
+\tau^{\text {Reg Debit,Post }}\left(t_{j}\right) & =0.0005+\frac{0.22}{t_{j}} \\
+\tau^{\text {Exempt Debit,Post }}\left(t_{j}\right) & =0.0119+\frac{0.10}{t_{j}}
+\end{aligned}
+
+**Feedback**:
+In Section E.2, the variable $d_j$ is introduced in the formula for the instrument $\widetilde{\Delta \tau_{j}}$ and listed as a control, but it is not explicitly defined in the surrounding text. The notes in Table A.3 imply $d_j$ is the pre-Durbin debit share; explicitly defining it where it is first introduced would improve readability and prevent readers from having to deduce its meaning from the tables.
+
+---
+
+### 27. Mischaracterization of conditional cash share
+
+**Status**: [Pending]
+
+**Quote**:
+> In contrast, for the one-third of merchants for which cash represents at least $2 \%$ of sales, it accounts for more than $30 \%$ of their transactions-and for merchants in the 90th percentile, over $80 \%$, highlighting the concentration of cash usage among a subset of merchants.
+
+**Feedback**:
+In Section III.A, the text states that for the one-third of merchants where cash is at least $2\%$ of sales, cash 'accounts for more than $30\%$ of their transactions.' However, Table 1(b) reports that the mean conditional cash share for this group is 0.30, and the median is 0.25. The current phrasing could be misread to imply a lower bound of 30% rather than a group average, which seems contradictory given the median. Consider explicitly specifying that cash accounts for an *average* of 30% of transactions for this subset to ensure perfect clarity and alignment with the summary statistics in Table 1.
+
+---
+
+### 28. Contradiction between text and Figure A.3d on debit share effect
+
+**Status**: [Pending]
+
+**Quote**:
+> Debit Share. For most of the sample, higher debit share is associated with higher cash usage on both margins. This is intuitive given that debit cards are a closer substitute for cash than they are for credit cards. This pattern reverses at very high debit shares (above roughly $80 \%$ ), where cash usage declines with debit share. This non-linear relationship is captured by including both debit share and its square in the regression. Figures A.2d and A.3d illustrate this relationship.
+
+**Feedback**:
+In Appendix C.2.1, the text states that the positive relationship between debit share and cash usage reverses at very high debit shares on 'both margins,' citing Figure A.3d to illustrate this pattern for the intensive margin. However, Figure A.3d essentially shows a monotonically increasing relationship without a clear visual reversal at the high end. The text could be adjusted to accurately reflect what is visually prominent in the cited figure.
+
+---
+
+### 29. Mischaracterization of CES firms as "price-takers"
+
+**Status**: [Pending]
+
+**Quote**:
+> The first version features perfect pass-through ( $j^{*}=50$ firms per market, each with revenue share set near zero so that they behave as price-takers) and validates the accuracy of our first-order approximation.
+
+**Feedback**:
+In Section IV.C, the text states that firms with near-zero revenue shares "behave as price-takers." While the mathematical setup clearly indicates they take the aggregate price index as given, in a CES framework with finite elasticity they still act as monopolistic competitors charging a markup over marginal cost. Refining the terminology to "price-index takers" or "monopolistic competitors" would improve precision and accurately reflect the model mechanics.
+
+---
+
+### 30. Contradictory grouping of debit card users
+
+**Status**: [Pending]
+
+**Quote**:
+> Consumer sorting reduces redistribution across all segments, as shown in the fourth rows of panels (a) and (b) of Table 4. Losses to cash and debit card users are reduced, as are gains to all card consumers.
+
+**Feedback**:
+In the subsection "V.B.2 The Effects of Consumer Sorting and Negotiation on Redistribution Estimates," the text states that sorting reduces "gains to all card consumers." Since debit cards are payment cards, this phrasing inadvertently includes debit card users, contradicting the first half of the sentence (which correctly notes they experience losses, not gains) and the results in Table 4. The grouping of consumers here appears to conflate card users generally with credit card users specifically.
+
+---
+
+### 31. Incorrect distribution name for shares on a simplex
+
+**Status**: [Pending]
+
+**Quote**:
+> To match the distribution of payment shares within each sector, we draw firm-level payment shares from a multivariate distribution calibrated to match the observed mean shares and their full covariance structure. We do this by following the log-normal specification used in the structural calibration, which allows us to model the covariance matrix of shares while ensuring that the shares lie on the simplex.
+
+**Feedback**:
+The text in Appendix D.5 mentions drawing payment shares 'by following the log-normal specification...' This phrasing might briefly confuse readers into thinking the shares themselves follow a log-normal distribution, which has support over the positive orthant and cannot mathematically lie on the simplex. Clarifying that you are drawing the underlying taste shifters from a multivariate log-normal distribution and then normalizing them into shares (as described in the structural calibration) would resolve this ambiguity and improve precision without losing the connection to the underlying model.
+
+---
+
+### 32. Ambiguous reference in fee examples
+
+**Status**: [Pending]
+
+**Quote**:
+> For a \$100 transaction, this would amount to \$2.07. The same transaction on a regulated debit card would cost just 27 cents. If the \$100 transaction occurred at a gas station, the cost would be \$1.10, while at a large grocery store, it would be \$1.45.
+
+**Feedback**:
+In Section II.A, the examples of interchange fees at a gas station (\$1.10) and a large grocery store (\$1.45) refer back to the premium credit card transaction. However, because the regulated debit card example (\$0.27) is placed immediately before this sentence, it initially reads as though the gas station and large grocery fees apply to the regulated debit card. Grouping the premium credit card examples together before introducing the regulated debit card comparison would prevent momentary confusion about which card type is being discussed.
+
+---
+
+### 33. Inconsistent figure for regulated debit losses
+
+**Status**: [Pending]
+
+**Quote**:
+> While these debit card holders can earn rewards, these are very small, especially compared to those of credit cards. The higher retail prices they face far exceed the modest rewards they receive. For this group, average consumer surplus decreases by about 0.4 percentage points of consumption, corresponding to approximately \$13.1 billion in lost annual consumption.
+
+**Feedback**:
+In the text, the loss for regulated debit card users is described as 'about 0.4 percentage points' of consumption. However, Table 4 reports this loss as 47 basis points, which is 0.47 percentage points. Consider updating the text to align with the table (e.g., 'about 0.5' or '0.47') for internal consistency.
+
+---
+
+### 34. Imprecise use of 'regressivity' for total transfer
+
+**Status**: [Pending]
+
+**Quote**:
+> We estimate that interchange fees transfer approximately \$30 billion every year from cash and debit users to credit card users. Consumer sorting and merchant fee heterogeneity reduce regressivity by $25 \%$, but do not eliminate it.
+
+**Feedback**:
+In the abstract, the phrase 'reduce regressivity by $25 \%$' conflates the total magnitude of the transfer with a formal measure of regressivity. Based on the results in Section V.B.2, the 25% figure refers to the reduction in the total aggregate transfer (specifically, the difference between the full model and the homogeneous benchmark), rather than a change in a distributional index. Because scaling down a regressive transfer proportionally does not necessarily change its regressivity, consider replacing 'regressivity' with 'this regressive transfer' or 'the magnitude of redistribution' for greater precision.
+
+---
+
+### 35. Ambiguous phrasing regarding effective sales tax differences
+
+**Status**: [Pending]
+
+**Quote**:
+> Our results highlight the magnitude and limits of redistribution through the payment system. We estimate that interchange fees generate approximately \$30 billion in annual transfers from cash and debit card users to credit card users. Overall, cash users pay the equivalent of $26 \%$ higher sales taxes than premium credit card users.
+
+**Feedback**:
+In the introduction, the statement that 'cash users pay the equivalent of $26 \%$ higher sales taxes than premium credit card users' can be read in two ways. The $26 \%$ figure appears to represent the difference between the two groups' effective tax burdens as a percentage of the base $6 \%$ sales tax (16% + 9.8% = 25.8%). However, phrasing it as paying '26% higher sales taxes than...' naturally invites a direct ratio comparison of the two effective rates (6.96% vs. 5.41%), which would be roughly 29% higher. To avoid any potential confusion for careful readers trying to tie this introductory framing back to the detailed basis-point estimates later in the paper, consider lightly adjusting the phrasing to clarify the exact base of comparison.
+
+---
+
+### 36. Comparison of transfer magnitudes to government programs
+
+**Status**: [Pending]
+
+**Quote**:
+> Because credit card use increases with income, this represents a \$9.2 billion annual transfer from low- and middle-income households earning less than \$150,000 in annual income to higher-income households. These transfers are economically significant, comparable in size (but opposite in direction) to major government programs such as SNAP (\$120bn), the Earned Income Tax Credit (\$57bn), and unemployment insurance ( $\$ 40 \mathrm{bn}$ ).
+
+**Feedback**:
+The comparison of the estimated transfers to major government programs in the introduction is a conceptually excellent way to highlight the 'opposite in direction' regressive nature of these fees. However, stating that these transfers are 'comparable in size' to programs like SNAP (\$120bn) may feel slightly stretched, especially regarding the \$9.2 billion regressive transfer, which is an order of magnitude smaller. Because the paper is otherwise incredibly precise, this slight numerical dissonance stands out. You might consider adjusting the framing slightly (e.g., noting that the transfers represent a 'meaningful fraction' of these programs) to preserve the strong thematic contrast without risking any perception of exaggeration.
+
+---
+
+### 37. Conflation of sector and good preference parameters
+
+**Status**: [Pending]
+
+**Quote**:
+> The expression is standard and intuitive. For a given price, goods and sectors with higher $\alpha$ have higher demand. Higher relative prices lower demand, and higher price elasticity ( $\sigma$ ) results in larger declines in demand given a price increase.
+
+**Feedback**:
+Statement 'goods and sectors with higher $\alpha$ have higher demand' seemed to conflate the sector-level and good-level parameters, but after reading the preceding equations, I understood it is likely a simple typo. The mathematical model clearly uses $a_{jks}$ for goods and $\alpha_{ks}$ for sectors. I recommend clarifying the sentence to read 'goods with higher $a$ and sectors with higher $\alpha$' to match the formal notation.
+
+---
+
+### 38. Notation clash with index m
+
+**Status**: [Pending]
+
+**Quote**:
+> $$
+\begin{aligned}
+p_{j s} & =\frac{\sum_{k} \mu_{j k s} \varepsilon_{j k s}}{\sum_{k} \mu_{j k s}\left(\varepsilon_{j k s}-1\right)\left(1-\tau_{j k s}\right)} \\
+\varepsilon_{j k s} & =\sigma\left(1-\rho_{j k s}\right)+\rho_{j k s} \\
+\mu_{j k s} & =\frac{\mu_{k} q_{j k s}}{\sum_{m} \mu_{m} q_{j m s}}
+\end{aligned}
+$$
+
+**Feedback**:
+In the definition of $\mu_{jks}$, the letter $m$ is used in the denominator as a dummy index to sum over payment methods. However, $m$ is explicitly defined earlier in Section IV.C.1 as the index for markets (and used as such in the Appendix, e.g., $a_{jksm}$), creating a minor notation clash.
+
+---
+
+### 39. Inconsistent terminology in Figure 4 legend
+
+**Status**: [Pending]
+
+**Quote**:
+> Notes: Figure 4 shows the share of consumers preferring each payment method-cash, regulated debit, exempt debit, basic credit, and premium credit-by household income bin. Payment preferences are from the DCPC (2022-2023), which records consumers' preferred in-person payment method.
+
+**Feedback**:
+There appears to be a slight terminology discrepancy in the labeling of Figure 4. While the figure's notes and the main text consistently refer to the specific debit card category as "exempt debit," the visual legend embedded in Figure 4 uses the term "Unregulated debit." For consistency across the manuscript, consider updating the figure's visual legend to "Exempt debit" so it perfectly aligns with the text.
+
+---
+
+### 40. Line style mismatch in Figure 9 notes
+
+**Status**: [Pending]
+
+**Quote**:
+> ![](/documents/17a1361d-6fc4-4f07-8eec-d54e7fc43303/images/image_009.jpg)
+
+Notes: Figure 9 shows the distribution of average interchange fees across merchants (solid blue) and the distribution of predicted fees from progressively richer models. The dashed red line predicts fees from each merchant's card type composition alone (regulated debit, exempt debit, basic credit, premium credit). The dashed green line adds merchant sector. The dashed orange line further adds firm characteristics, including merchant size and average transaction size.
+
+**Feedback**:
+The notes for Figure 9 describe the predicted fee series as a "dashed red line," "dashed green line," and "dashed orange line." However, according to the visual representation in the figure, it appears the red line is dotted and the orange line is dash-dotted. While the explicit color coding makes the mapping to the corresponding models unmistakable, aligning the text descriptions of the specific line styles with their actual visual appearance would provide a minor improvement to the figure's exactitude.
+
+---
+
+### 41. Unexplained series in Figure 10 notes
+
+**Status**: [Pending]
+
+**Quote**:
+> ![](/documents/17a1361d-6fc4-4f07-8eec-d54e7fc43303/images/image_010.jpg)
+
+Notes: Figure 10 shows the share of interchange fees paid and rewards received by consumers across different payment methods (cash, regulated debit, exempt debit, basic credit, premium credit). The figure incorporates merchant heterogeneity in both payment composition and interchange fees and assumes all merchants pass through interchange fees into prices on a one-to-one basis.
+
+**Feedback**:
+The notes for Figure 10 describe showing the share of interchange fees paid and rewards received, but the figure legend includes two distinct fee series: "Fees (Homogenous Merchants)" and "Fees (Heterogeneous Merchants)." While a careful reader might recall these benchmarks from Section V.B.2, it would be helpful to explicitly explain this distinction in the notes to make the figure fully self-contained. Additionally, standardizing the spelling in the legend ("Homogenous" to "Homogeneous") to match the main text would improve the polish of the manuscript.
+
+---
+
+### 42. Misplaced justification for matching revenue shares
+
+**Status**: [Pending]
+
+**Quote**:
+> We set $j^{*}$ to equal the same value across all sectors. In the complete pass-through calibration we set $j^{*}=50$, whereas for incomplete pass-through, we set $j^{*}=2$. Intuitively, $j^{*}$ governs the number of firms with strategic complementarities in each market. It is important to match the share of revenue at firms with more than \$1 billion in sales in grocery and merchandise because that determines the fee discounts given by the networks.
+
+**Feedback**:
+In the calibration section, the final sentence of the bullet point for $j^*$ reads: "It is important to match the share of revenue at firms with more than \$1 billion in sales in grocery and merchandise because that determines the fee discounts given by the networks." Because the parameter directly calibrated to match this revenue share is $\bar{a}$ (as established in the immediately preceding bullet point), whereas $j^*$ is fixed to set values, consider moving this justification up to the bullet point for $\bar{a}$ to improve logical flow.
+
+---
+
+### 43. Mismatch between variable definition and coefficient scaling
+
+**Status**: [Pending]
+
+**Quote**:
+> where $\Delta y_{j}$ is the change in log sales at merchant $j$ in the year following the Durbin Amendment (October 2011 to October 2012), $\Delta \tau_{j}$ measures the average change in credit and debit interchange fees (expressed as percentage points)
+
+**Feedback**:
+The text defines $\Delta y_j$ as the "change in log sales", but the interpretation of the results ("a $6.9\%$ decrease in sales" for a 1-percentage-point increase in fees) and the IV coefficient of -6.93 in Table A.3 indicate that the dependent variable has been scaled by 100 ($100 \times \Delta \log y_j$). While scaling log differences by 100 is a highly standard convention in empirical economics to yield percentage coefficients, explicitly indicating that the variable is scaled by 100 (or defining it as the percentage change) would resolve the technical discrepancy between the definitions and the numeric estimates.
+
+---
+
+### 44. Overstatement of the inflation of cash losses
+
+**Status**: [Pending]
+
+**Quote**:
+> We decompose the effects of consumer sorting and fee heterogeneity across merchants in Table 4. Assuming homogeneous shopping behavior and homogeneous fees across merchants inflates redistribution losses to cash consumers by about one-third and overestimates gains to premium credit card users by about one-half.
+
+**Feedback**:
+The text states that assuming homogeneous shopping behavior inflates redistribution losses to cash consumers by 'about one-third.' However, based on Table 4, the loss to cash consumers increases from \$13.9 billion (96 bps) in the full model to \$17.7 billion (123 bps) under homogeneity. This is an inflation of approximately 27-28%. Because 27-28% is quantitatively closer to one-quarter than one-third, consider slightly revising the text for precision regarding the cash subgroup, even though the aggregate redistribution across all groups is indeed inflated by roughly one-third (32.4%).
+
+---
+
+### 45. Maximum fee bound does not ensure average profitability
+
+**Status**: [Pending]
+
+**Quote**:
+> ${ }^{17}$ The bound $c_{k} \leq \tau_{\text {max }}$ captures the requirement that networks are profitable on average-if processing costs exceeded interchange fees, networks would exit the market.
+
+**Feedback**:
+At first, the wording of Footnote 17 made me think that the mathematical bound $c_k \leq \tau_{\max}$ was intended to guarantee average profitability across the network, which seemed slightly confusing since average profitability would actually require bounding the marginal processing cost by the lower *average* fee, $\mathbb{E}[\tau_{jk}]$. Then I understood that the stronger real-world necessity of average profitability strictly implies your weaker bound ($c_k \leq \mathbb{E}[\tau_{jk}] \leq \tau_{\max}$), which is why the bound "captures" the requirement without needing to be a sufficient condition for it. Since the mathematical bound is only a necessary condition for average profitability, slightly tightening the language (for instance, stating it is "a necessary condition for networks to be profitable on average") might prevent overly literal misreadings.
+
+---

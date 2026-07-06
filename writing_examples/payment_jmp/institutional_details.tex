@@ -1,0 +1,49 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+
+Payment networks are two-sided platforms that simultaneously set prices for merchants and consumers.
+While AmEx sets merchant fees and consumer rewards directly, "open-loop" networks like Visa and MC do so indirectly, through the \emph{interchange fee} and~\emph{network~fee}.
+
+\begin{figure}
+\caption{Payment flows in a payment network. \label{fig:payment-flow}}
+\footnotesize
+\[
+% CONSTANT: all numbers in this diagram are representative illustrative prices from Nilson/Visa sources, not updated by pipeline
+\xymatrix{ & *+++++[F:<5pt>]{\text{Network}}\\
+*+++++[F:<5pt>]{\text{Acquirer}}\ar@(u,l)[ru]_{0.07}^{\text{Network\ }}\ar[rr]_{2.00}^{\text{Interchange}} &  & *+++++[F:<5pt>]{\text{Issuer}}\ar@(u,r)[lu]_{\text{\ Network}}^{0.07}\ar[d]_{\text{Rewards}}^{1.45}\\
+*+++++[F:<5pt>]{\text{Merchant}}\ar[u]_{2.25}^{\text{Merchant Discount}} &  & *+++++[F:<5pt>]{\text{Consumer}}\ar[ll]_{\text{Purchase}}^{100} }
+\]
+\tablenote{Representative credit card fees in 2019.
+The merchant discount fee comes from \textcite{Nilson2020}.
+The average network fee comes from example rate sheets from acquirers and from dividing the non-foreign exchange fees from Visa's 10k by the total payment volumes \parencite{Visa2020, Helcim2021}.
+I split the network fees evenly between the two sides as in \parencite{FederalReserve2010}.
+The interchange is derived from Visa's interchange schedule as the average of the rates for Visa Signature and Visa Infinite cards at a large retailer \parencite{Visa2019}.
+The rewards are from large banks' annual reports in 2019.}
+
+\end{figure}
+
+Visa and MC connect four parties: merchants, acquirers (merchants' banks), issuers (consumers' banks), and consumers \parencite{Benson.etal2017}.
+Figure \ref{fig:payment-flow} shows the payment flows with representative prices.
+When a consumer uses her credit card to buy $\$100$ of products at a large retailer,
+% CONSTANT: round illustrative transaction amount
+the merchant pays a $\$2.25$ merchant discount fee to her acquiring bank to process the transaction.
+% CONSTANT: illustrative price, from Nilson (2020)
+The acquirer can be a bank like Wells Fargo or a fintech firm like Square.
+Of the merchant discount, around $\$2$ goes to the issuing bank (e.g., Chase) as interchange.
+% CONSTANT: illustrative price, from Visa interchange schedule
+The issuer and the acquirer collectively pay around $\$0.14$ in network fees to Visa.
+% CONSTANT: illustrative price, from Visa 10k / Helcim rate sheets
+Financial reports show that cardholder rewards average around $\$1.45$ per \$100 of transaction value.
+% CONSTANT: illustrative price, from large banks' annual reports 2019
+\footnote{These figures are similar to the regulatory numbers reported in \textcite{Drechsler.etal2025}, which finds that banks' interchange income averages 1.82\% of purchase volume while rewards costs average 1.57\%.}
+% CONSTANT: illustrative price, from large banks' annual reports 2019
+
+Regulatory shocks confirm that interchange strongly affects merchant fees and rewards, but not borrowing costs.
+When the E.U. and Australia reduced interchange by regulation, merchant fees declined roughly one-for-one \parencite{Gans2007, Valverde.etal2016, EuropeanCommission2020}.
+Appendix Figure \ref{fig:aus-interchange-event-study} shows that after Australia capped credit card interchange, rewards fell and consumer annual fees on rewards cards rose, while annual fees on non-reward cards and interest rates were unchanged.
+Interchange has little effect on interest rates because balance-carriers pay 70\% of interest but generate only 10\% of purchase volume \parencite{Adams.etal2022a}.
+% CONSTANT: from Adams et al. (2022), external research finding
+
+% \footnote{The history of regulatory arbitrage around interchange regulations in Australia also highlights the importance of interchange in funding rewards. Because the original interchange regulations did not limit the merchant fees charged by American Express, banks started issuing American Express cards. They continued to offer high rewards on those cards \parencite{Chan.etal2012}. When Australia closed this regulatory loophole in $2017$, the same large banks substantially devalued their rewards programs and stopped issuing American Express cards \parencite{Emmerton2017, ReserveBankofAustralia2021}.}
+
+\end{document}

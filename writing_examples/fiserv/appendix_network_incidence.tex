@@ -1,0 +1,88 @@
+\documentclass[main.tex]{subfiles}
+
+\begin{document}
+
+\section{Rewards Pass-Through and Network Incidence}\label{sec:appendix-network-incidence}
+
+In this appendix we make a narrow point within the original two-sided framework of \citet{Rochet.Tirole2003}: when the network prices optimally, the rate at which interchange passes through to rewards is orthogonal to whether the network bears the incidence of an interchange-fee cut.
+A natural intuition holds that if networks do not fully pass interchange through to rewards, they must retain part of any cut and so absorb some of its incidence.
+The envelope theorem refutes this: because the network was already balancing merchant acceptance against rewards optimally, a small forced reduction in the merchant fee changes its profit only at second order, no matter how aggressively it re-optimizes rewards.
+The pass-through rate governs how the cut is split between cardholders and merchants; it says nothing about the network's own (zero) first-order incidence.
+
+\subsection{Setup}\label{subsec:netinc-setup}
+
+The monopoly network is a combined entity (network, issuers, acquirers) that sets two per-transaction prices: $p_s$ charged to merchants and $p_b$ charged to cardholders.
+Rewards correspond to $p_b<0$.
+
+Payment volumes depend on both consumer and merchant adoption. We model this with a standard two-sided demand structure.
+A share $D_b(p_b)$ of consumers adopt, and a share $D_s(p_s)$ of merchants accept the card.
+Card transactions only occur when both consumers want to use the card and merchants accept, and so total payment volume equals $Q=D_b D_s$.
+Profit is
+\begin{equation}
+\pi(p_b,p_s)\;=\;(p_b+p_s-c)\,D_b(p_b)\,D_s(p_s).
+\label{eq:netinc-profit}
+\end{equation}
+
+In the unconstrained equilibrium, the network sets optimal prices $(p_b^*,p_s^*)$ to maximize~\eqref{eq:netinc-profit}.
+Writing the markup as $\phi\equiv p_b^*+p_s^*-c$, the interior FOCs $\partial\pi/\partial p_b=D_b D_s+\phi\,D_b'D_s=0$ and $\partial\pi/\partial p_s=D_b D_s+\phi\,D_b D_s'=0$ yield the slope identities
+\begin{equation}
+D_b\;=\;-\phi\,D_b',\qquad D_s\;=\;-\phi\,D_s'\qquad\text{at }(p_b^*,p_s^*).
+\label{eq:netinc-foc-identities}
+\end{equation}
+
+\subsection{The Network's Reward Response}\label{subsec:netinc-envelope}
+
+Suppose a regulator caps $p_s\leq p_s^*-\varepsilon$ for $\varepsilon>0$ small.
+The network re-optimizes $p_b$ subject to the constrained merchant price, yielding $p_b^*(\varepsilon)$ defined by the residual buyer-side FOC
+\begin{equation}
+D_b(p_b^*)\;+\;(p_b^*+p_s^*-\varepsilon-c)\,D_b'(p_b^*)\;=\;0.
+\label{eq:netinc-constrained-foc}
+\end{equation}
+Implicitly differentiating~\eqref{eq:netinc-constrained-foc} at $\varepsilon=0$ pins down the cardholder-side response,
+\begin{equation}
+\rho^R\;\equiv\;\frac{dp_b^*}{d\varepsilon}\bigg|_{\varepsilon=0}\;=\;\frac{D_b'(p_b^*)}{2D_b'(p_b^*)+\phi\,D_b''(p_b^*)}.
+\label{eq:netinc-alpha}
+\end{equation}
+$\rho^R$ measures how much of a merchant-fee cut the network claws back by raising the cardholder price (i.e., cutting rewards).
+We use the same symbol $\rho^R$ as in Appendix~\ref{sec:appendix-theory}: both measure the fraction of a merchant-fee change that reaches cardholders.
+There the parameter enters a reduced-form rebate rule; here it is microfounded as the network's profit-maximizing response.
+
+Under log-concave demand, $\rho^R$ lies strictly between zero and one, so the network generically offsets only part of a merchant-fee cut with lower rewards.
+Log-concavity captures most common demand curves, including linear and isoelastic, and is standard in the literature on imperfect pass-through \citep{Weyl.Fabinger2013}.
+
+\begin{lemma}[Range of $\rho^R$]\label{lem:alpha-range}
+Under log-concavity of cardholder demand at the monopoly point, $\rho^R\in(0,1)$.
+\end{lemma}
+
+\begin{proof}
+The denominator in~\eqref{eq:netinc-alpha} equals $\partial^2\pi/\partial p_b^2\,/\,D_s$, which is negative by the unconstrained second-order condition. With $D_b'<0$, this gives $\rho^R>0$. The upper bound $\rho^R<1$ requires $D_b'+\phi\,D_b''<0$; substituting the FOC identity $D_b=-\phi\,D_b'$ rewrites this as $D_b\,D_b''\leq(D_b')^2$, equivalently $(\log D_b)''\leq 0$.
+\end{proof}
+
+\subsection{Zero Network Incidence}
+
+That the network re-optimizes rewards is precisely why the cap leaves its profit untouched to first order. The network was already balancing merchant acceptance against cardholder rewards optimally, so a small forced perturbation has no first-order profit effect by the envelope theorem.
+
+\begin{theorem}[Zero Network Incidence]\label{thm:network-incidence}
+Suppose the network's pre-cap prices satisfy the unconstrained FOCs with negative-definite Hessian and $D_b$ is log-concave at $p_b^*$. Then $d\pi^*/d\varepsilon\big|_{\varepsilon=0}=0$.
+\end{theorem}
+
+\begin{proof}
+Let $\pi^*(\varepsilon)\equiv\pi(p_b^*(\varepsilon),p_s^*-\varepsilon)$. Differentiating,
+\[
+\frac{d\pi^*}{d\varepsilon}\;=\;\frac{\partial\pi}{\partial p_b}\bigg|_*\cdot\frac{dp_b^*}{d\varepsilon}\;+\;\frac{\partial\pi}{\partial p_s}\bigg|_*\cdot(-1).
+\]
+At $\varepsilon=0$ both partials vanish by the unconstrained FOCs, so $d\pi^*/d\varepsilon|_{\varepsilon=0}=0$. \qed
+\end{proof}
+
+The pass-through rate $\rho^R$ appears nowhere in this result, and the reason is visible in the derivative itself.
+Writing $d\pi^*/d\varepsilon=(\partial\pi/\partial p_b)\,\rho^R-\partial\pi/\partial p_s$, the reward response enters only as the coefficient on the buyer-side margin $\partial\pi/\partial p_b$---a margin the network has already driven to zero.
+However aggressively the network claws back rewards, that response multiplies a vanishing margin and cannot move first-order profit.
+Equivalently, $\rho^R$ is a curvature object: \eqref{eq:netinc-alpha} depends on $D_b''$, a feature of the second-order condition, whereas network incidence is a statement about the gradient, which is zero by construction at the optimum.
+The extent of rewards pass-through and the incidence of the cap are different questions about the same optimum.
+The local result also survives in estimated structural models: even large caps deliver only modest changes in network profits \citep{Wang2025}.
+
+To leading order the cut therefore redistributes between the network's two sides without touching the network itself: cardholders lose $\rho^R\varepsilon$ per inframarginal transaction (the clawed-back rewards), merchants gain the full $\varepsilon$, and $\Delta_{\text{network}}=0$.
+The pass-through rate fixes how this surplus divides between cardholders and merchants---the redistribution studied in Appendix~\ref{sec:appendix-theory}, which carries the same accounting through to consumers via retail pass-through $\rho^P$---but it never reaches the network.
+The orthogonality is therefore specific to network incidence: $\rho^R$ remains first-order for cardholder welfare and for the efficiency gain the cap delivers, and the network's slice is the one quantity it leaves untouched.
+
+\end{document}

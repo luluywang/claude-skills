@@ -1,0 +1,353 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+
+To quantify how network competition shapes fees, rewards, and welfare, I build a model with two-sided multi-homing, merchant competition, and price coherence.
+
+\subsection{Structure of the Game}
+
+I model competition between card networks as a static game with three stages between networks, consumers, and merchants.
+In the first stage, profit-maximizing networks set per-transaction fees for merchants and promised adoption utility for consumers.
+In the second stage, consumers and merchants make adoption and pricing decisions.
+In the third stage, consumers make consumption decisions over merchants.
+The second and third stages micro-found demand for payments.
+Section~\ref{subsec:model-assumptions} discusses key assumptions.
+
+\subsection{Stage 3: Consumer~Shopping~and~Payments}
+
+Consumers' payment decisions depend on merchants' acceptance decisions, and their shopping decisions depend on their ability to use preferred payment methods.
+These choices give merchants incentives to accept cards in the second stage.
+
+\subsubsection{Payment Behavior at the~Point~of~Sale}
+\label{subsubsec:payment-tree}
+
+\newcommand{\smallcheck}{\scalebox{0.7}{\checkmark}}
+\newcommand{\smallxmark}{\scalebox{0.7}{\xmark}}
+
+\begin{figure}
+\caption{Illustration of how multi-homing consumers choose payment methods at the point of sale.}
+\label{fig:payment-pos-illustration}
+\[
+\begin{array}{r@{\quad}cc}
+ & \text{w.p. } \pi & \text{w.p. } 1-\pi \\[0.8em]
+\text{(a) Primary V / Secondary MC} & \text{V} \to \text{MC} \to \text{Cash} & \text{MC} \to \text{V} \to \text{Cash} \\[0.5em]
+\text{(b) Primary V / Secondary D} & \text{V} \to \text{Cash} & \text{D} \to \text{Cash}
+\end{array}
+\]
+\tablenote{With probability $\pi$, a consumer tries their primary card first. With probability $1-\pi$, they try their secondary card first. Consumers who multi-home on two credit cards substitute between them when one is declined. Consumers who multi-home on credit and debit do not substitute between them.}
+\end{figure}
+
+At the point of sale, consumers' primary and secondary cards and merchant acceptance determine payment behavior.
+Consumers may use zero, one, or two cards.
+Those without cards pay cash.
+Those with one card pay with it if the merchant accepts it and otherwise pay cash.
+
+Consumers with two cards can substitute between them (Figure \ref{fig:payment-pos-illustration}).
+One card is the primary.
+With probability $\pi$, the consumer tries the primary card first, then the secondary if it is the same card type as the first, and then cash.
+With probability $1-\pi$, the roles reverse.\footnote{Consumers may switch between the two cards due to transaction-level shocks that I do not model.
+For example, a credit card consumer may use the card with the best reward for the merchant.\label{foot:reward-pos-switch}}
+Credit and debit cards are segmented.
+A consumer who wishes to use credit does not substitute to debit if her credit card is declined (and vice versa).
+
+Formally, define the set of all inside payment methods (i.e., cards) as $\mathcal{J}_{1}=\left\{ 1,\dots,J\right\} $, and the set of all payment methods as $\mathcal{J}=\left\{ 0\right\} \cup\mathcal{J}_{1}$, where $0$ refers to cash.
+A wallet $w=\left(w_{1},w_{2}\right)$ has primary and secondary payment methods, $w_{1}$ and $w_{2}$.
+Let $\mathcal{W}$ denote the set of all possible wallets.
+It is
+\[
+\mathcal{W} = 
+\underbrace{\left(0, 0\right)}_{\text{Cash}} 
+\cup 
+\underbrace{\left\{\left(w_1, 0\right) : w_1 \in \mathcal{J}_1 \right\}}_{\text{One Card}} 
+\cup 
+\underbrace{\left\{\left(w_1, w_2\right) : w_1, w_2 \in \mathcal{J}_1, w_1 \neq w_2\right\}}_{\text{Two Cards}}
+\]
+For $j\in\mathcal{J}_{1}$, let $\pi_{M,j}^{w}$ be the probability that a consumer with wallet $w$ pays with card $j$ when the merchant accepts $M\subset\mathcal{J}_{1}$, with $\pi^w_{M,0}=0$. The cash share is the residual $1-\sum_{j=1}^J\pi^w_{M,j}$.\footnote{Online Appendix~\ref{subsec:oa-payment-probs} explicitly works out these probabilities in a simplified model with two credit cards and one debit card.}
+
+% Allowing some consumers to carry one card and others to carry multiple cards is crucial to accurately predicting the effects of competition on prices. When consumers only hold one card, networks are ex-post monopolists in their consumers, and network competition fails to restrain merchant fees \parencite{Armstrong2006}. When consumers hold all the cards, competition lowers merchant fees \parencite{Teh.etal2022}. In reality, only some consumers carry multiple cards. My model matches this aspect of reality and enables more accurate predictions for the price effects of competition.
+
+\subsubsection{Consumption~Decisions~Over~Merchants}
+\label{subsubsec:consumption-over-merchants}
+
+Consumers have constant elasticity of substitution (CES) preferences over a continuum of merchants, each selling a differentiated variety.
+Consumers observe merchants' acceptance decisions and prices before choosing where to shop.
+Merchants are vertically differentiated by a type $\gamma \sim G$ that governs the importance of card acceptance.
+
+A consumer with wallet $w$ that consumes $q^w\left(\omega\right)$ of each variety $\omega$ has utility
+\begin{equation}
+\left(\int\left(1+\gamma\left(\omega\right)v_{M^{*}\left(\omega\right)}^{w}\right)^{\frac{1}{\sigma}}q^{w}\left(\omega\right)^{\frac{\sigma-1}{\sigma}}\d\omega\right)^{\frac{\sigma}{\sigma-1}}\label{eq:ces-utility}
+\end{equation}
+where $\sigma$ is the elasticity of substitution between merchants, $v^{w}_{M}=\sum_{j=1}^{2} \pi^{w}_{M,w_{j}}$ is the payment surplus from wallet $w$ at a merchant accepting cards $M$, and $\left(1+\gamma v^{w}_{M}\right)$ is the quality of merchant $\omega$ for consumer $w$.
+Consumers maximize utility by spending their income $y\left(1+f^{w}\right)$, where $f^{w}$ is the percentage reward from adopting wallet $w$.
+Card acceptance raises quality, reallocating spending toward card-accepting merchants rather than increasing total spending.
+Rewards increase income but do not affect relative consumption across merchants.\footnote{
+  This is consistent with the Discover evidence in Online Appendix \ref{subsec:oa-discover-rewards}
+}
+
+Let all other merchants charge prices $p^{*}\left(\gamma\right)$ and accept payment methods $M^{*}\left(\gamma\right)\subset\mathcal{J}_{1}$.
+Standard CES results yield that a type $\gamma$ merchant who sets price $p$ and accepts $M\subset\mathcal{J}_{1}$ sells $q^{w}$ to a consumer with wallet $w$:
+\begin{align}
+q^{w}\left(\gamma,p,M,P^{w},y,f^{w}\right) & =\left(1+\gamma v_{M}^{w}\right)\times\frac{p^{-\sigma}}{\left(P^{w}\right)^{1-\sigma}}\times y\left(1+f^{w}\right)\label{eq:consumer-demand-merchant}\\
+\left(P^{w}\right)^{1-\sigma} & =\int\left(1+\gamma v_{M^{*}\left(\gamma\right)}^{w}\right)p^{*}\left(\gamma\right)^{1-\sigma}\d G\left(\gamma\right)\label{eq:price-index-integral-gamma}
+\end{align}
+where $P^{w}$ is a CES price index that depends on other merchants' actions and on the consumer's wallet.
+
+Consumers spend more at merchants that accept their most-used cards.
+This distinction between ownership and active use helps explain why credit card acceptance can increase sales even when all credit cardholders also own debit cards.
+
+In equilibrium, a consumer with income $y$ optimally consumes $y \times q^{w*}\left(\gamma\right)$ from each merchant type $\gamma$, given equilibrium pricing $p^{*}$ and acceptance $M^{*}$:
+\begin{equation}
+  q^{w}\left(\gamma,p^{*}\left(\gamma\right),M^{*}\left(\gamma\right),y\right)=y \times q^{w*}\left(\gamma\right)\label{eq:optimal-consumption}
+\end{equation}
+
+\subsection{Stage 2: Pricing,~Acceptance,~and~Adoption}
+
+Merchants maximize profits by choosing prices and payment acceptance.
+Under price coherence, merchants set uniform prices for all consumers and thus create the externality that makes credit card use socially excessive.
+
+Profits equal per-dollar quantities $q^w$ times margins, weighted by spending power across consumer payment types.
+Appendix \ref{subsec:appendix-merch-profits} shows that profits equal
+\begin{align}
+\Pi\left(\gamma,p,M\right) & =\sum_{w\in\mathcal{W}}\tilde{\mu}^{w}\times q^{w}\left(\gamma,p,M,1\right)\times\left[p\left(1-\frac{\left(1+\gamma\right)\tau_{M}^{w}}{1+\gamma v_{M}^{w}}\right)-1\right]\label{eq:merch-profit-defn}\\
+\tilde{\mu}^{w} & =\int\tilde{\mu}_{y}^{w}y\d F\left(y\right)\nonumber 
+\end{align}
+where $\tilde{\mu}^w_y$ is the market share of wallet $w$ among consumers with income $y$, $F$ is the income distribution, $\tau_j$ is the per-dollar fee on card $j$, and $\tau^w_M=\sum_{j=1}^{J} \pi^w_{M,j} \tau_j$ is the average fee incurred by wallet $w$ when the merchant accepts $M$.
+Because I normalize $\tau_0 = 0$ for cash, fees $\tau_j$ represent the cost of card $j$ relative to cash.
+The income-weighted market share $\tilde{\mu}^w$ weights payment choices by income.
+
+\subsubsection{Merchant Pricing}
+\label{subsubsec:merch-pricing}
+
+Conditional on acceptance $M$, merchants pass fees into prices.
+Appendix \ref{subsec:appendix-merch-pricing} shows the optimal uniform price is
+\begin{equation}
+\hat{p}\left(\gamma,M, \tau\right) =\frac{\sigma}{\sigma-1}\times\frac{1}{1-\hat{\tau}}, \hat{\tau} = \frac{\sum_{w}\mu^{w}\tau_{M}^{w}\left(1+\gamma\right)}{\sum_{w}\mu^{w}\left(1+\gamma v_{M}^{w}\right)} \label{eq:optimal-price}
+\end{equation}
+where the average fee uses \emph{demand shares} $\mu^w$, normalized weighted sums of $\tilde{\mu}^w$:
+\begin{equation}
+\mu^{w} = \frac{1+f^{w}}{\left(P^{w}\right)^{1-\sigma}} \times \frac{\tilde{\mu}^w}{C}, C =\sum_{w}\frac{1+f^{w}}{\left(P^{w}\right)^{1-\sigma}} \times \tilde{\mu}^{w}\label{eq:insulated-share-defn}
+\end{equation}
+Demand shares reflect how other merchants' acceptance decisions affect consumer composition at each merchant through $P^w$.
+
+% The demand share summarizes the share of demand at a cash-only merchant coming from consumers with wallet $w$. It differs from the income-weighted market share $\tilde{\mu}^w$ both because it depends on the adoption decisions of other merchants through $P^w$ and because it includes the effect of rewards on increasing spending. 
+% The merchant type $\gamma$ also affects the optimal price by changing the composition of consumers. When high $\gamma$ merchants accept cards, they attract more card consumers when compared to a low $\gamma$ merchant that accepts cards. Retail prices differ as a result.
+
+In equilibrium, merchants set optimal prices $p^*\left(\gamma\right)$ given other merchants' pricing and adoption strategies:
+\begin{equation} \hat{p}\left(\gamma,M^{*}\left(\gamma\right),\tau\right)=p^{*}\left(\gamma\right)\label{eq:pricing-eqm} 
+\end{equation}
+% transaction fees. The realized transaction fee $\hat{\tau}$ averages over all the payments at the store and is equal to
+
+\subsubsection{Merchant Acceptance}
+\label{subsubsec:model-merch-accept}
+Acceptance decisions trade off higher sales against higher fees.
+Let $\widehat{\Pi}\left(\gamma,M\right)$ be profits from accepting $M\subset\mathcal{J}_{1}$ at the optimal price.
+Appendix \ref{subsec:appendix-quasiprofits} derives a fast approximate algorithm for optimizing $\widehat{\Pi}$ over $M$, yielding optimal acceptance $\widehat{M}$:
+\begin{align}
+  \widehat{M}\left(\gamma, \tau\right) & =\argmax_{M\subset\mathcal{J}_{1}}-a_{M}+b_{M}\gamma \label{eq:merch-accept} \\
+  a_{M} & =\sum_{w\in\mathcal{W}}\mu^{w}\tau_{M}^{w},\ b_{M}=\frac{1}{\sigma}\sum_{w\in\mathcal{W}}\mu^{w}\left(v_{M}^{w}-\sigma\tau_{M}^{w}\right)
+\end{align}
+
+Adding a more expensive card incurs fees from all consumers who use it but raises sales only among single-homers.
+The incremental fee cost $a_M$ covers all consumers who use the card, whereas the incremental volume gain (the $v_M^w$ component of $b_M$) comes from single-homers who cannot substitute.
+If all consumers who use credit cards multi-home across credit networks, this incremental sales gain vanishes and merchants accept only the lowest-fee network.
+Online Appendix~\ref{subsec:oa-credit-multihoming} verifies these intuitions in a two-card economy.
+Merchants' fee sensitivity therefore depends on the type distribution $G$ and consumer behavior.
+
+In equilibrium, merchants adopt optimal bundles given other merchants' behavior:
+\begin{equation} 
+\widehat{M}\left(\gamma,\tau\right)=M^{*}\left(\gamma\right)\label{eq:adoption-eqm} 
+\end{equation}
+
+\subsubsection{Consumer Adoption}
+\label{subsubsec:cons-adopt}
+
+Consumers choose up to two cards to maximize utility.
+The utility from a wallet $w$ for a consumer $i$ is
+\begin{equation}
+  \log V_{i}^{w}=\log U^w +\frac{1}{\alpha_{i}}\left(\Gamma_{i}^{w}+\epsilon_{i}^{w}\right)\label{eq:wallet-utility}
+\end{equation}
+where $U^w$ is pecuniary utility, $\alpha_i$ is rewards-sensitivity, $\Gamma_i^w$ is mean non-pecuniary utility, and $\epsilon_i^w$ are wallet-level T1EV shocks.
+
+\vspace{0.1in}
+
+\noindent \textbf{Pecuniary Utility: }\hspace{0.2in}
+Consumers prefer cards with high rewards and wide acceptance.
+The pecuniary utility for single-homing consumers is:
+\begin{equation}
+  \log U^{w}=f^{j}-\log P^{w},w = (j,0),j\in\mathcal{J}_1 \label{eq:pecuniary-definition}
+\end{equation}
+where $f^j$ is the reward rate per dollar of income and $P^w$ is the CES price index from Equation~\ref{eq:price-index-integral-gamma}.
+At adoption, consumers are fully informed about merchant acceptance, and greater acceptance lowers $P^w$.
+This expression can be derived from the log indirect utility of the CES problem (\ref{eq:ces-utility}) by dropping baseline income and using the approximation $\log\left(1+f\right)\approx f$.
+
+Because pecuniary utility is derived from the CES problem, a 1 pp.\ increase in rewards exactly offsets a 1\% increase in retail prices, so higher rewards and fees do not mechanically reduce welfare.
+By not normalizing the pecuniary utility of the outside option to zero, the model allows for externalities in which one consumer's payment choice affects the prices paid and thus welfare of other consumers.
+
+For multi-homing agents, pecuniary utility is the weighted average of single-homing utilities:
+\begin{equation}
+  \log U^w = \pi \log U^{(w_1,0)} + (1 - \pi) \log U^{(w_2,0)}, w = (w_1,w_2)\in\mathcal{J}_1 \times \mathcal{J}_1, w_1 \neq w_2 \label{eq:pecuniary-definition-multihome}
+\end{equation}
+This specification implies consumers do not multi-home to increase acceptance coverage.
+I adopt this because even as AmEx acceptance has converged with Visa Credit, multi-homing rates between them have not changed (Online Appendix \ref{subsec:oa-consumer-multihoming-history}).
+The expression closely approximates one that directly uses the CES price index of wallet $w$ whenever merchant acceptance depends only on card type (credit or debit) rather than network identity (Online Appendix~\ref{subsec:oa-ces-price-index}).
+
+\noindent \textbf{Non-pecuniary Utility:}\hspace{0.2in} Non-pecuniary utility captures within-wallet complementarities and adoption costs.
+Let card $j$ have characteristics $X^j=\left(X^j_k\right)_{k=1}^{K}\in\mathbb{R}^K$.
+Mean non-pecuniary utility for consumer $i$ is
+\begin{equation}
+  \Gamma_{i}^{w}=\omega\left(\Xi^{w_{1}}+\beta_{i}X^{w_{1}}\right)+\left(1-\omega\right)\left(\Xi^{w_{2}}+\beta_{i}X^{w_{2}}\right)+\sum_{l=1}^{K}\sum_{m=1}^{K}\chi^{lm}_{i}X_{l}^{w_{1}}X_{m}^{w_{2}} \label{eq:nonpecuniary-definition}
+\end{equation}
+% The parenthetical maps l,m indices to card types: X^1=inside-good (fires for all cards), X^2=credit.
+% chi^{11}: fires for ALL two-card wallets (X^1=1 always) -- normalized to 0. Identification:
+%   only (debit,debit) wallets have chi^{11} but not chi^{12}/chi^{21}/chi^{22}, so without
+%   debit-debit data, chi^{11} is not separately identified from (chi^{12},chi^{21},chi^{22}).
+%   Setting chi^{11}=0 is an untestable normalization justified by negligible debit-debit shares.
+% chi^{12}: any primary + credit secondary (debit,credit) and (credit,credit)
+% chi^{21}: credit primary + any secondary (credit,debit) and (credit,credit)
+% chi^{22}: additional term only when both are credit (credit,credit)
+where $\Xi^{j}$ is mean unobserved utility for card $j$, $\beta_i$ is consumer $i$'s value from characteristics, $\omega$ is the weight on primary-card characteristics, and $\chi^{lm}_{i}$ are consumer-specific interaction terms capturing within-wallet complementarity or substitution motives.\footnote{
+  $l$ and $m$ index the two characteristics of the primary and secondary card: whether it is an inside good and whether it is credit.
+  Thus $\chi^{12}$ measures the interaction between any primary card and a credit secondary. $\chi^{21}$ measures the interaction between a credit primary and any secondary. $\chi^{22}$ measures an additional interaction specific to credit in both positions.
+  Online Appendix \ref{subsec:oa-usage-microfoundation} microfounds these parameters in a two-stage adoption-and-usage model.
+  % , in which $\beta_i$ and $\Xi$ capture average usage benefits net of adoption costs.
+  % Positive $\chi^{12}$ or $\chi^{21}$ capture the benefit of holding a credit card alongside another card, e.g., because credit and debit serve distinct transaction types.
+  % Positive $\chi^{22}$ captures additional complementarity for two credit cards.
+  % Negative values capture adoption costs such as managing multiple accounts or substitution between cards with similar purposes.
+}
+
+\vspace{0.1in}
+\noindent \textbf{Consumer Heterogeneity:}\hspace{0.2in} Preferences vary with income and exhibit unobserved heterogeneity.
+Let $\log \tilde{y} \equiv \log y - \E[\log y]$ denote demeaned log income.
+The consumer-specific parameters are:
+\begin{align}
+  \log \alpha_i &= \log \alpha_0 + \alpha_y \log \tilde{y} \label{eq:alpha-income}\\
+  \beta_i &= \beta_y \log \tilde{y} + \tilde{\beta}_i, \quad \tilde{\beta}_i \sim N\left(0, \Sigma\right) \label{eq:beta-income}\\
+  \chi^{lm}_i &= \chi^{lm} + \chi^{lm}_y \log \tilde{y} \label{eq:chi-income}
+\end{align}
+Demeaning ensures that $\alpha_0$, $\Xi$, and $\chi^{lm}$ represent preferences at median income.
+Here $\alpha_y$ is the income elasticity of reward-sensitivity, $\beta_y$ captures how card preferences vary with income, $\Sigma$ is the covariance of unobserved preference heterogeneity, and $\chi^{lm}_y$ governs how within-wallet complementarities vary with income.
+Income dependence in $\chi^{lm}_i$ allows higher-income consumers to derive greater value from holding both a rewards credit card and a debit card for distinct transaction types.
+
+\noindent \textbf{Choice Probabilities}\hspace{0.2in} The logit choice probability gives that
+\begin{align}
+  \tilde{\mu}_{i}^{w} & =\frac{\exp\left(\alpha_{i}\log U^{w}+\Gamma_{i}^{w}\right)}{\sum_{m\in\mathcal{W}}\exp\left(\alpha_{i}\log U^{m}+\Gamma_{i}^{m}\right)}\label{eq:person-market-share}\\
+  \tilde{\mu}_{y}^{w} & =\int\tilde{\mu}_{i}^{w}\d H\left(\beta_{i}\right), \quad \beta_i \sim N\left(\beta_y \log \tilde{y}, \Sigma\right)\label{eq:income-market-share}
+\end{align}
+
+\subsection{Stage 1: Network Competition}
+
+Multiproduct payment networks maximize profits, anticipating consumer and merchant actions.
+
+\subsubsection{Profits}
+
+Network profits equal transaction fees minus costs and rewards.
+Fee profits $T_j$ equal the transaction margin times total dollar volume.
+\begin{align}
+  T_{j} & =\left(\tau_{j}-c_{j}\right) d_j  \label{eq:transaction-fee-profit} \\
+  d_j & = \sum_{w\in\mathcal{W}} \tilde{\mu}^w \times\int\frac{\left(1 + \gamma\right)\pi^w_{M^*\left(\gamma\right), j}}{1 + \gamma v^w_{M^*\left(\gamma\right)}}q^{w*}\left(\gamma\right)p^{*}\left(\gamma\right)\d G\left(\gamma\right) \label{eq:dollars}
+\end{align}
+where $c_{j}$ is the cost of processing $\$1$ on method $j$.
+
+Total reward costs equal
+\begin{align}
+  S_{j} & =f^{j}\left(\tilde{\mu}^{\left(j,0\right)}+\sum_{k>0,k\neq j}\pi\tilde{\mu}^{\left(j,k\right)}+\left(1-\pi\right)\tilde{\mu}^{\left(k,j\right)}\right)\label{eq:subsidy-bill}
+  \end{align}
+where $f^{j}$ is the reward paid to a consumer single-homing on $j$.
+The three terms count single-homers on $j$, multi-homers who primarily use $j$, and multi-homers who use $j$ as a secondary card.
+
+For a network $n$ that owns cards $\mathcal{O}_{n}\subset\mathcal{J}_{1}$,~it~earns~profits:
+\begin{equation} \Psi_{n}=\sum_{j\in\mathcal{O}_{n}}\left(T_{j}-S_{j}\right)\label{eq:profit-sum} 
+\end{equation}
+
+\subsubsection{Conduct~and~Equilibrium~Determinacy}
+\label{subsubsec:conduct-eqm}
+
+Networks set transaction fees $\tau_j$ and pecuniary adoption benefits $A_j$, taking other networks' actions as given.
+Equivalently, networks set consumers' expectations about network acceptance, fees, and rewards, given expectations for rivals.
+The adoption benefit $A_j$ compares rewards and payment convenience relative to cash.
+
+\begin{equation}
+  A_{j}=\log U^{\left(j,0\right)}-\log U^{\left(0,0\right)}=f^{j}-\left(\log P^{\left(j,0\right)}-\log P^{0}\right)\label{eq:adoption-pecuniary-gain}
+\end{equation}
+Networks set $A^*_{j}$ and $\tau_{j}^{*}$ for their cards $\mathcal{O}_{n}$ to maximize expected profits under small trembles in all actions:
+\begin{align} 
+  \left(A_{j}^{*},\tau_{j}^{*}\right)_{j\in\mathcal{O}_{n}} & =\argmax_{\left(\overline{A}_{j},\overline{\tau}_{j}\right)_{j\in\mathcal{O}_{n}}}\E\left[\Psi_{n}\left(\left(A_{j},\tau_{j}\right)_{j\in\mathcal{O}_{n}},\left(A_{k},\tau_{k}\right)_{k\notin\mathcal{O}_{n}}\right)\right]\label{eq:network-conduct-argmax}
+\end{align}
+\[
+X_{k}\sim N\left(\overline{X}_{k},\nu_{x}^{2}\right)\quad\text{for }X\in\{A,\tau\},\ k\in\mathcal{J}_{1},
+\]
+where $\overline{X}_{k}$ is the network's choice for $k\in\mathcal{O}_{n}$ and the equilibrium value $X^{*}_{k}$ for $k\notin\mathcal{O}_{n}$.
+Small trembles select a unique equilibrium when profits are not differentiable in fees \parencite{Teh.etal2022}.
+I set $\nu_x = 10^{-4}$.
+The trembles can be interpreted as small fee heterogeneity across merchants.
+Online Appendix \ref{subsec:oa-conduct} discusses the conduct assumption.
+
+\subsection{Equilibrium}
+An equilibrium is a tuple $\left(\tau^{*}, A^{*}, \tilde{\mu}^w_y, p^{*}\left(\gamma\right), M^{*}\left(\gamma\right), q^{w*}\left(\gamma\right)\right)$ satisfying: consumption is optimal (\ref{eq:optimal-consumption}); merchant pricing and acceptance maximize profits (\ref{eq:pricing-eqm}, \ref{eq:adoption-eqm}); consumers choose optimal wallets (\ref{eq:person-market-share}); and networks maximize profits (\ref{eq:network-conduct-argmax}).
+Online Appendix \ref{subsec:oa-model-solution} details the solution algorithm.
+
+\subsection{Discussion~of~Key~Assumptions\label{subsec:model-assumptions}}
+
+The welfare results depend on several modeling assumptions, of which credit-debit segmentation at the point of sale is the most consequential.
+This section defends that assumption and addresses a set of smaller ones that matter for interpretation.
+
+\paragraph{Segmentation Between Debit and Credit}
+\label{subsubsec:model-credit-debit-segmentation}
+
+The baseline treats credit and debit as segmented at the point of sale.
+Intuitively, some transactions are best served by credit cards, e.g., large transactions, and others by debit cards, e.g., routine purchases.
+Appendix \ref{subsec:oa-usage-microfoundation} shows that this segmentation at the transaction level can still be consistent with the Durbin evidence that rewards matter if consumers choose which payment methods to adopt in a first stage and how to use them in a second stage.
+
+Although the segmentation assumption has mixed support on the consumer side, it is more consistent with certain aspects of merchant behavior.
+Antitrust testimony and consumer surveys support segmentation, but Discover's rewards experiment shows some substitution at the margin (Appendix~\ref{subsec:oa-discover-rewards}).
+However, under substitution, merchant credit card acceptance would depend on credit-debit multi-homing rates, and debit fee caps would discipline credit fees.
+Antitrust testimony in \emph{Ohio v.\ AmEx} contradicts the first, and Durbin halved debit interchange without moving credit interchange.
+
+Allowing for credit-debit substitution does not significantly change welfare results for most counterfactuals.
+Online Appendix~\ref{sec:oa-credit-debit} estimates two alternatives that incorporate credit-debit substitution.
+Welfare results are close to the baseline for every counterfactual other than uncapping debit fees.
+For the Durbin counterfactual, the baseline model is the most credible since the alternatives make counterfactual predictions for how credit card fees and acceptance should have responded to the Durbin Amendment.
+
+\paragraph{Two-Card Restriction}
+Consumers choose up to two cards and treat cards of the same type (e.g., both credit cards) as interchangeable at the point of sale.
+In the data, consumers put around 95\% of their card spending on just two networks (Online Appendix Table~\ref{tab:top-two}).
+% HARDCODED[scalar: share_card_cons] current=95
+This setup understates consumer flexibility by excluding a potential third fallback option, but potentially overstates the willingness to substitute among the top-two cards.
+A consumer who puts 99\% of their spending on one card and 1\% on another may be less willing to substitute than the model implies.
+\textcite{Sullivan2025} takes an alternative approach and infers substitution patterns from within-consumer persistence in platform choice.
+
+\paragraph{Fixed Costs}
+\label{subsubsec:fixed-costs}
+I omit fixed costs of card acceptance because they cannot be separately identified from heterogeneity in sales benefits $\gamma$ without exogenous shocks to consumer adoption as in \textcite{Higgins2022}.
+The absence of fixed costs rules out a feedback loop in which lower consumer adoption reduces merchant acceptance.
+I therefore focus on an intermediate credit fee cap resembling Canadian levels, well within the range that has not triggered acceptance cascades elsewhere.
+
+\paragraph{Merchant Types}
+Merchants differ only in the sales benefit~$\gamma$.
+This one-dimensional type rationalizes hierarchical acceptance but predicts identical relative shares among accepted card networks at all card-accepting stores.
+If consumers with heterogeneous payment preferences sort across stores, the redistributive effects of fees would be dampened \parencite{Gans2018}.
+Online Appendix~\ref{sec:oa-merchant-sorting} shows such sorting is quantitatively small in retail.
+
+\paragraph{Non-Rewards Credit Card Characteristics}
+The data lack non-rewards credit card characteristics such as interest rates, credit limits, or annual fees.
+I assume these do not change when rewards change.
+Counterfactuals are best interpreted as short-run predictions holding these characteristics fixed.
+Australia's interchange caps did not raise non-rewards annual fees, and the spread between credit card rates and term loans was unchanged (Online Appendix Figure~\ref{fig:aus-interchange-event-study}), consistent with high-volume transactors accounting for little credit card borrowing \parencite{Adams.etal2022a}.
+
+\paragraph{Price Coherence}
+\label{subsec:surcharging-institutional}
+Merchants charge the same price regardless of payment method (price coherence).
+This friction causes merchant fees and rewards to distort consumer payment choices.
+Online Appendix \ref{sec:oa-price-coherence} discusses the history and theory.
+Only about 5\% of U.S. transactions feature payment-specific pricing despite legal permission \parencite{Stavins2018}.
+% CONSTANT: from Stavins (2018), external survey finding
+Merchants with the strongest gains from card acceptance are those whose consumers value card payments highly and respond little to surcharges, so even small menu costs deter surcharging.
+% More fundamentally, when a merchant raises prices on card payments to save on fees, card-paying consumers reduce spending, which eliminates the fee savings at the margin.
+% By the envelope theorem, this means uniform pricing loses only second-order profits, easily overwhelmed by menu costs.
+
+\paragraph{Issuers and Acquirers}
+The model combines issuers, acquirers, and networks into a single entity that maximizes joint profits.
+This is a valid assumption so long as the contracting space between these parties is rich enough.
+The DOJ's 2024 antitrust suit against Visa alleges payments to issuers and potential competitors to maintain dominance, evidence consistent with this view of the contracting environment.
+Double marginalization and other vertical frictions within the payment chain are left to future work.
+
+\end{document}

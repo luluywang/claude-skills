@@ -1,0 +1,91 @@
+\documentclass[main.tex]{subfiles}
+
+\begin{document}
+
+\section{Institutional Setting and Data\label{sec:institutional-data}}
+
+In this section, we outline the institutional details and describe our data.
+We explain how credit and debit card payment systems operate, focusing on key participants, costs, benefits, and transfers.
+We then introduce our two primary merchant-level payment datasets from Fiserv, which allow us to observe how the types and costs of payment methods vary across merchants.
+These data show which payments merchants receive and what fees they pay.
+Together, these data allow us to link merchant-level payment composition and costs to redistribution across consumers.
+
+\subsection{Payment Processing and Interchange Fees}
+
+A typical card payment involves the customer making a purchase, the merchant accepting the payment, and three key financial intermediaries: the merchant acquirer, the issuer, and the card network.
+The issuer, effectively the consumer's bank (e.g., Chase), facilitates the transaction from the consumer's perspective by providing the card and processing the payment.
+Merchants, in turn, accept card payments by contracting with a merchant acquirer.
+This can be a bank (e.g., Wells Fargo) or a fintech firm (e.g., Fiserv, Square), which supplies payment terminals and facilitates settlement and fund transfers.
+The card network (e.g., Visa, Mastercard) is an intermediary between the issuer and the acquirer, routing transaction data, collecting and distributing fees, and coordinating settlement.\footnote{American Express and Discover primarily operate as closed-loop (three-party) systems where the network also serves as the issuer, though they have expanded into open-loop arrangements. Our interchange fee analysis focuses on Visa and Mastercard's four-party model.}
+
+Merchants pay transaction fees to accept cards. These fees vary by payment method due to the involvement of different financial intermediaries and the services bundled with each method (e.g., credit card rewards).
+The merchant discount fee is split among the intermediaries, with the primary component being the interchange fee.
+The interchange fee is remitted to the issuer and is a primary determinant of both the merchant's cost and the consumer's rewards.
+As a result, variation in interchange fees is central to understanding cross-subsidization within the payment system.
+
+Figure \ref{fig:payment-flow} illustrates how fees flow among these parties.
+When a consumer makes a card payment, the merchant pays a merchant discount fee to its acquirer.
+While the acquirer retains a portion of this fee, it passes most of the fee to the issuer as an interchange fee.
+Additionally, both the issuer and the acquirer pay network fees to the card network.
+The interchange fee is typically the largest component of the merchant discount fee and funds consumer rewards; consequently, it is the focus of much of our analysis.
+
+The typical merchant discount fee for a credit card transaction in the U.S. is 2.25\%, of which the average interchange fee accounts for about 1.90\%; issuers use most of this interchange revenue to fund consumer rewards averaging around 1.40\%-1.57\% \citep{Nilson2023,Drechsler.etal2025}.
+In contrast, network fees average only 0.14\% of the transaction value and do not vary with card type or merchant sector.
+
+Our analysis connects the level and heterogeneity of interchange fees across payment methods and merchants to redistribution across consumers.
+Interchange fees vary based on the type of card used, the sector and size of the merchant, and ticket size.
+Appendix Table \ref{tab:visa-interchange-public} presents an excerpt from Visa's 2022 public interchange schedule, illustrating variation along these dimensions.
+For example, a premium credit card transaction at a small grocery store incurs an interchange fee of 7 cents plus $2\%$ of the transaction value.
+For a $\$100$ transaction, this would amount to $\$2.07$.
+If the same premium credit card transaction occurred at a gas station, the cost would be $\$1.10$, while at a large grocery store, it would be $\$1.45$.
+In contrast, the same $\$100$ transaction on a regulated debit card would cost just 27 cents.
+While public schedules illustrate potential fee variation, to the best of our knowledge, we are the first to use data on the actual fees merchants pay to quantify how this heterogeneity shapes redistribution.
+
+\subsection{Data}
+
+We use two proprietary datasets from Fiserv, one of the largest U.S. merchant acquirers, to examine how interchange fees vary across merchants and their impact on consumer welfare.
+A key feature of these data is that we observe both the composition and price of transactions at the merchant level, which is critical for measuring heterogeneity in payment costs and its implications for redistribution.
+
+\subsubsection{Sources}
+
+Our primary dataset comes from Fiserv's payment settlement records, which cover one-fifth of all U.S. card volume.
+Fiserv is a merchant acquirer responsible for processing transactions and calculating the interchange fees owed to issuers, making it an ideal source for studying how the composition and cost of payments vary across merchants.
+The data include both in-person and online transactions.
+
+Our data enable us to observe total payment values, payment counts, and interchange fees paid for each card type by each establishment, which we define as the combination of the merchant, sector, and location.
+All sales and interchange values are measured net of returns and chargebacks. We observe data over the period 2006-2022. In our cross-sectional analysis, we focus on the most recent cross-section of data (2022), which reflects current pricing structures and consumer behavior.\footnote{We use 2022 as our primary cross-section because it represents the most recent year with complete overlap between our Fiserv settlement data and Clover point-of-sale data. This overlap is essential for observing cash transactions, which are only available in the Clover data.} 
+We use merchants' MCC codes to classify establishments into sectors (e.g., grocery stores, gas stations, restaurants).
+
+We study the data at two levels of aggregation. We first aggregate to the establishment-by-sector level to study the geography of payments.
+This also allows us to split large multi-sector and multi-location merchants (e.g., those selling gas and retail goods under different MCC codes).
+However, because interchange fees are set at the firm level, we aggregate to the firm level for the redistribution analysis, ensuring that fee variation reflects the relevant pricing unit.
+
+Our second dataset comes from Clover, a Fiserv-owned point-of-sale (POS) system, covering approximately 800,000 merchants from 2019 to 2022.
+The Clover data uniquely includes cash and check transactions, which are typically unavailable in settlement data.
+These additional observations allow us to capture the complete set of transactions at the merchant level, including payment methods that do not incur interchange fees.
+
+Like the settlement data, the Clover dataset contains information on payment values, counts, and interchange fees across card types at the establishment level.
+We also observe each merchant's location, sector, and firm size.
+While the Clover sample skews toward smaller merchants, it provides valuable insight into cash usage and variation in payment composition that informs redistribution, particularly for merchants where cash remains a meaningful share of transactions.
+Table \ref{tab:fiserv-summary} presents summary statistics for both datasets.
+
+We supplement our data from Fiserv with survey data on consumers' preferred payment methods from the Federal Reserve Bank of Atlanta's DCPC and the MRI-Simmons Ultimate Survey of Americans (USA).
+The Diary of Consumer Payment Choice records the transactions of around 4,000 respondents each year and tracks their payments over a three-day window in October.
+Crucially for our study, it provides us with data on consumers' incomes and their preferred payment methods.
+The MRI-Simmons USA surveys around $50,000$ respondents each year on their brand preferences, including for financial products.
+The data on bank choice and credit card type allow us to group consumers by more granular payment preferences that are relevant for the rewards they receive and the interchange fees they impose on merchants, allowing us to map payment choices to income and reward structures.
+
+\subsubsection{Data Coverage and Representativeness}
+
+The Fiserv data are highly representative of the broader U.S. economy in terms of sectoral coverage, firm size (based on card sales), and geographic distribution.
+Appendix Figure \ref{fig:data-representative-sector} compares the sector composition of card transactions in the Fiserv data to that reported in the Diary of Consumer Payment Choice.
+We observe close alignment across major retail categories, such as restaurants, grocery stores, merchandise retailers, gas stations, and travel.
+Appendix Figure \ref{fig:data-representative-geo} compares the state-level distribution of card transactions in the Fiserv data with states' shares of GDP.
+Most points lie along the 45-degree line, indicating strong geographic representativeness.
+Appendix Figure \ref{fig:data-representative-size} compares firm size distributions in the Fiserv dataset with those reported by the IRS Statistics of Income, again showing close correspondence across revenue categories.
+
+The Fiserv payment data are also representative of external measures of average transaction size, merchant fees, and the composition of payments.
+Appendix Figure \ref{fig:fiserv-nilson-representativeness} compares the Fiserv data with aggregate benchmarks from the Nilson Report along four dimensions: transaction size, average fees by card type, the share of card transactions on credit cards, and the share of consumer purchases on cash.
+We find a close correspondence along all four dimensions, supporting the external validity of our measures of payment composition and costs.
+
+\end{document}

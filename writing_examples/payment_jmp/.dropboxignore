@@ -1,0 +1,4 @@
+# Ignore LaTeX compilation output directory
+# Each collaborator compiles locally; syncing aux/ causes Dropbox conflicts
+aux/
+aux 2/

@@ -1,0 +1,212 @@
+\documentclass[main.tex]{subfiles}
+
+\begin{document}
+
+\section{Variation in Payment Mix and Payment Costs\label{sec:costs}}
+
+Redistribution in the payment system requires consumers who use different payment methods to shop at the same stores.
+The magnitude of redistribution at each merchant depends on the differences in the fees for these payment methods.
+In this section, we document novel facts about the variation in payment composition and costs across merchants.
+We show that payment methods vary significantly in their fees, which generates the potential for redistribution.
+However, we also document two forces---consumer sorting and merchant fee heterogeneity---that cause aggregate data to overstate the extent of redistribution in the payment system, by limiting the overlap between consumers using different payment methods and compressing fee differences where such overlap occurs.
+
+\subsection{Variation in Payment Mix\label{subsec:payment-mix}}
+
+One notable feature of the data is that payment composition varies significantly across merchants. Figure \ref{fig:pmt_merchant} shows four dimensions of this heterogeneity.
+Figure \ref{fig:cash_share} displays the distribution of the share of cash payments across merchants, focusing on those merchants where cash accounts for at least 2\% of sales.
+Observations are at the merchant-by-year level using our Clover data, which includes information on cash payments.
+We measure the cash share based on the dollar-weighted share of cash and check payments relative to the total transaction value.
+We group cash and check payments into a single category, labeled as ``cash'' because they are distinct from card payments in that they do not incur interchange fees for merchants and do not generate explicit rewards for users.
+On average, cash accounts for around 11\% of transaction dollars (dollar-weighted across merchants; Figure \ref{fig:cash_share_ts}).
+However, this masks substantial heterogeneity.
+For approximately two thirds of merchant-year observations, cash accounts for less than 2\% of transactions.
+In contrast, for the one-third of merchants for which cash represents at least 2\% of sales, it accounts for an average of 30\% of their transactions---and for merchants in the 90th percentile, over 80\%, highlighting the concentration of cash usage among a subset of merchants.
+
+This heterogeneity shapes redistribution.
+For the two thirds of firms where cash use is almost nonexistent, there is little scope for redistribution between cash and card users.
+Similarly, at firms where cash is the predominant payment method, redistribution is limited.
+Redistribution inherently requires a mixed payment environment, so dispersion in payment composition directly constrains the scope for cross-subsidization.
+
+The remaining 89\% of sales occur via debit and credit card payments.
+Here, too, the payment mix varies across merchants.
+Figure \ref{fig:credit_share} displays the share of credit card payments relative to total card payments (i.e., debit plus credit) in card settlement data.
+Observations are at the merchant-by-month level.
+On average, credit card sales account for 53\% of card transactions at the typical merchant in our sample.
+Moreover, the share of credit card transactions has remained relatively constant over time (Figure \ref{fig:credit_share_ts}).
+
+The distribution of credit card sales is bimodal, with peaks at approximately 25\% and 70\%.
+This bimodality suggests that although credit cards account for 53\% of card transactions on average, merchants tend to fall into two distinct groups: those where credit accounts for around 25\% of card transactions and those where it accounts for about 75\%.
+This pattern has implications for cross-subsidization.
+Debit cards carry lower interchange fees and rewards relative to credit cards.
+Just as cash transactions can subsidize credit card rewards, debit card transactions also potentially play a subsidizing role.
+The bimodal nature of the distribution suggests that variation in card payment mix is significant at the merchant level---again limiting the potential for cross-subsidization, as many merchants are dominated by a single payment type.
+
+\subsubsection{Variation Across and Within Sectors}
+
+Part of this heterogeneity in the merchant payment mix stems from sector-specific characteristics.
+Figure \ref{fig:pmt_sectors_across} shows the payment shares, weighted by transaction value, across sectors, for merchants in the Clover data.
+Although cash accounts for only 11\% of transactions at the average merchant, it plays a more significant role in sectors such as grocery, restaurants, and gas stations.
+For instance, cash accounts for 23\% of sales in the grocery sector, slightly less than the share for credit cards.
+By contrast, in the travel sector, credit cards account for 70\% of sales, with debit and cash representing 27\% and 3\%, respectively.
+These summary statistics suggest that, in the travel sector, there is limited scope for redistribution between credit and cash users, and any residual redistribution is likely minimal and occurs primarily between credit and debit users, given the limited presence of cash transactions.
+
+We also find substantial dispersion in the composition of payments within sectors.
+Figure \ref{fig:sector_densities} plots kernel densities of the share of card transactions on credit cards across merchants in each of the major sectors in the settlement data.
+Although grocery stores tend to have a relatively low share of credit card transactions, and travel merchants tend to have a higher share, there remains substantial dispersion within these sectors.
+This dispersion is important, as it implies that even within a given sector, consumers with different payment preferences tend to shop at different merchants, reinforcing the role of sorting in shaping redistribution.
+
+% Within the merchandise sector, we find that sectors that correspond to luxury consumption have a higher share of credit card payments. 
+
+\subsubsection{Variation Across Regions and Income Levels}
+\label{subsubsec:regional-income-variation}
+
+Beyond sector-level differences, payment methods vary systematically with consumer income, which implies that transfers from cash and debit consumers to credit consumers are regressive.
+We combine data from the DCPC and the MRI-Simmons USA to document how payment method preferences vary across the income distribution.
+The DCPC provides information on consumer preferences between cash, debit, and credit by income level, while MRI-Simmons USA offers supplementary data on whether debit card users have accounts at small or large banks (relevant for distinguishing exempt versus regulated debit) and whether credit card users hold premium cards (such as Visa Signature or Mastercard World).
+Figure \ref{fig:payment_income} illustrates the key pattern: at low levels of income, consumers prefer using debit cards and cash, while at higher levels of income, consumers increasingly use credit cards, and in particular, premium credit cards with higher interchange fees, linking payment choice directly to the distribution of rewards and fees.
+
+Geographic variation in payment mix also reflects these underlying income differences.
+Appendix Figure \ref{fig:cash_map} displays the county-level share of cash payments.
+Light green and yellow regions correspond to higher cash usage, while dark blue areas reflect lower usage.
+In some counties (highlighted in yellow), cash accounts for more than 23\% of transactions.
+Cash usage is higher in the Midwest and the South, while card usage is more prevalent along the East and West Coasts, as well as in metropolitan areas. In contrast, Appendix Figure \ref{fig:credit_map} displays the county-level share of credit card transactions relative to all card payments.
+Areas shaded in yellow and light green correspond to higher credit card usage, whereas areas shaded in dark green and blue reflect higher debit card usage.
+The results indicate that debit card usage is especially prevalent in the Deep South relative to other U.S. regions.
+Conversely, credit card usage is higher in the coastal areas.
+These income gradients in payment choices mean that transfers from cash and debit card consumers---driven by interchange fees and rewards---also represent transfers from relatively lower-income consumers to higher-income consumers.
+
+\subsubsection{Decomposing the Variation in Payment Methods}
+To better understand what drives the variation in payment methods, we estimate regressions of the following form:
+\begin{equation}
+Payment\,Share_{jt}=X_{jt}'\beta+\mu_{l(j)}+\mu_t+\mu_{c(j)}+\epsilon_{jt}.
+\label{eq:payment_type}
+\end{equation}
+Observations are at the establishment $(j)$-by-year $(t)$ level.
+The dependent variable $Payment\,Share_{jt}$ measures the dollar-share of a given transaction type relative to other payment methods.
+We control for merchant characteristics in the vector $X_{jt},$ including average transaction size and total transaction volume.
+We also include industry $(l)$, time ($t$), and county $(c)$ fixed effects.
+
+We study two main shares: the share of cash versus all transactions in the Clover data, and the share of credit card transactions versus all transactions in the settlement data. 
+We report the corresponding estimates in Table \ref{tab:payment_type}.
+Columns (1)--(3) examine cash and check as a share of all payment volumes in the Clover data, while columns (4)--(6) analyze the share of credit card usage within card transactions.
+In all columns, the dependent variable is scaled by 100, so coefficients are interpreted in percentage points.
+
+Table \ref{tab:payment_type} shows that consumers are more likely to use cash at merchants with higher sales volumes but lower average transaction values.
+In column (1), a 100 log-point increase in total sales is associated with a 1.37 percentage point (12\%) increase in the share of cash transactions.
+In contrast, a 100 log-point increase in average transaction value is associated with a 5.55 percentage point (50\%) decline in cash usage.
+Cash usage is negatively correlated with e-commerce: a 10 percentage point increase in a firm's e-commerce share is associated with a 0.38 percentage point decline in cash usage.
+
+Consistent with the income gradient documented in Figure \ref{fig:payment_income}, local demographics systematically influence cash usage across merchants. Consumers are more likely to pay in cash in less wealthy, less educated, and less densely populated regions.
+Column (2) shows that a one standard deviation increase in median household income is associated with a 0.14 percentage point decline in cash usage.
+Similarly, a one standard deviation increase in the share of college-educated households corresponds to a 1.07 percentage point decline in cash usage.
+
+In contrast, consumers are more likely to use credit cards (relative to debit cards) at merchants with lower sales volumes and higher average transaction values.
+Column (4) indicates that a 100 log-point increase in transaction value is associated with a 9.11 percentage point (17\%) increase in credit card usage.
+Reinforcing the individual-level income patterns we showed earlier, credit card usage is more prevalent in wealthier, older, more educated, and more urban areas, mirroring the distribution of rewards tied to high-fee payment instruments.
+
+Overall, these results suggest that the payment mix varies substantially across merchants, depending on characteristics such as sector and region.
+As shown below, this heterogeneity has important implications for both the cost and redistributive aspects of payments, by shaping where cross-subsidization can occur.
+
+\subsection{Variation in Payment Costs}
+Payment mix heterogeneity creates substantial variation in merchant transaction costs.
+Figure \ref{fig:interchange_dist_card} displays the distribution of average card interchange fees across merchants in our sample.
+On average, merchants pay around \absinput{icg_summary_mean}\% of sales to accept cards, but this average masks considerable variation.
+At the 10th percentile, interchange fees are \absinput{icg_summary_p10}\% of sales, while at the 90th percentile, they rise to \absinput{icg_summary_p90}\% of sales, implying large differences in effective costs across otherwise similar transactions.
+
+Part of the variation in average transaction costs is driven by the mix of cash versus card payments across firms, as cash transactions incur zero interchange fees, while card interchange fees can exceed 2\%.
+However, there is still substantial variation in card interchange fees across merchants, even conditional on payment method.
+Figure \ref{fig:interchange_dist_card} displays the average card interchange fee across merchants in our sample with more than \sizecutoff in annual sales.
+The average fee is \absinput{icg_summary_mean}\%, with a standard deviation of 0.5\%.
+We next demonstrate that a large part of this variation in fees arises from differences in payment composition, sector-level fee differences, negotiated fees, and ticket size.
+
+% The overall payment mix---including the types of debit cards (regulated versus exempt) and credit cards (basic versus premium) used---has a first-order impact on merchant costs.
+% Additionally, even within a given payment type, cost variation arises due to merchant-specific characteristics, such as industry, firm size, and the average transaction size at a merchant.
+% We begin by documenting the variation in transaction costs and conclude by decomposing this variation into its key components.
+
+\subsubsection{Card Types\label{subsec:card-types}}
+Cards vary significantly in their interchange fees.
+These differences generate the scope for redistribution, as users of low-fee payment methods cross-subsidize the users of high-fee methods.
+
+We classify card payments into four categories: regulated debit, exempt debit, basic credit, and premium credit.
+Figure \ref{fig:price-disc-card} displays average interchange rates for each of these categories.
+Regulated debit cards earn around \absinput{fees_nobargain_regulated_debit}\% of transaction value in interchange, while exempt debit cards earn higher rates around \absinput{fees_nobargain_unregulated_debit}\%.
+Basic credit cards carry higher interchange rates, around \absinput{fees_nobargain_basic_credit}\%, and premium credit cards have even higher rates, averaging approximately \absinput{fees_nobargain_premium_credit}\%.
+Table \ref{tab:icg-summary} shows summary statistics on the distribution of these fees by card type across merchants.
+
+Interchange fees on debit cards depend on whether the issuing bank has more than \$10 billion in assets.
+The 2011 Durbin Amendment capped interchange fees for debit cards issued by large banks (regulated debit) but not for those issued by smaller institutions (exempt debit), creating two distinct debit card categories.
+Appendix Table \ref{tab:public-icg-sector} shows that the regulation reduced debit interchange fees from having a large linear component to a flat rate of around 5 basis points of transaction value plus 22 cents.
+Figure \ref{fig:interchange_ts} displays average interchange fees over time, with the drop in debit fees in 2011 reflecting the Durbin Amendment.
+Figure \ref{fig:interchange_debit_ts} shows fees separately for regulated and exempt debit cards.
+
+Credit card interchange fees depend on whether the credit card is a premium card targeted at high creditworthiness borrowers.
+Premium cards are those in higher interchange tiers, such as Visa Signature, Visa Infinite, Visa Signature Preferred, Mastercard World, and Mastercard World Elite.
+These cards offer enhanced rewards and carry higher interchange fees but require consumers to have either higher credit limits or higher levels of spending \citep{Visa2022}.\footnote{Rewards can still vary within card type because the exact structure of rewards is determined by issuers. Visa and Mastercard influence the set of rewards primarily by changing the interchange fees that issuing banks can earn for different card types.}
+Basic credit cards include all other credit cards.
+Appendix Table \ref{tab:public-icg-sector} shows that premium credit cards have publicly reported interchange rates that are higher than those for basic cards.
+The increase in average credit card fees shown in Figure \ref{fig:interchange_ts} reflects the growing prevalence of premium credit cards, as the average interchange fees for basic and premium cards have remained relatively stable over this period (Figure \ref{fig:interchange_credit_ts}).
+Figure \ref{fig:premium_credit_ts} illustrates the rising dominance of premium cards, which grew from around 15\% of credit card volume in 2006 to 60\% in 2022.\footnote{Historically, card networks such as Visa and Mastercard have required that merchants accepting their cards must accept all cards issued under their respective brands.
+In other words, merchants cannot selectively accept certain Visa cards---they must accept all Visa cards or none at all.
+This policy has been the subject of ongoing ``honor-all-cards'' litigation \citep{Andriotis2025}.
+}
+
+We assess how much differences in payment mix can explain variation in merchant-level interchange fees.
+Specifically, we predict each merchant's average interchange fees based on their payment mix across these four types of cards.
+Variation in payment mix accounts for approximately \absinput{icg_r2_shares}\% of the overall variation.
+The dashed red line in Figure~\ref{fig:interchange_decomp} shows the density of predicted interchange fees based on each merchant's observed payment mix.
+This variation in fees can generate variation in retail prices, thereby redistributing consumption across consumers who choose different payment methods.
+
+\subsubsection{Merchant Sectors}
+
+Interchange rates also vary across sectors, with travel and retail typically paying higher fees.
+Figure \ref{fig:price-disc-merch} plots average interchange rates in the Fiserv data across five major spending categories: travel, restaurants, merchandise, grocery stores, and gas stations.
+These five categories account for approximately \absinput{share_sector}\% of card sales.
+We focus on rates for credit cards and exempt debit cards, as the Durbin Amendment cap limits variation in regulated debit card fees.
+
+Fees are highest in the travel and retail sectors, which generally serve more affluent customers compared to other sectors.
+In contrast, grocery stores and gas stations, which serve a broader swath of the income distribution, pay interchange fees that are approximately one-third, or \absinput{grocery_discount} basis points, lower.
+% One natural explanation for why high margin merchants are more willing to accept cards is that interchange fees are charged as a percentage of sales.
+% Even if accepting credit cards has the same impact on sales across sectors, card acceptance would increase profits at high-margin businesses by a greater amount.
+Fee variation across sectors reflects Visa's and Mastercard's attempts to balance merchant acceptance versus issuer incentives, trading off participation on both sides of the platform.
+Historically, Visa and Mastercard had lower acceptance at supermarkets until they offered discounts starting in the 1990s \citep{Stearns2011}.
+
+Accounting for the merchant sector, in addition to the payment mix, explains roughly \absinput{icg_r2_sector}\% of the overall variation in transaction costs.
+The dashed green line in Figure \ref{fig:interchange_decomp} shows the distribution of predicted transaction costs based on each merchant's observed payment mix and sector. 
+
+\subsubsection{Merchant Size and Other Characteristics}
+
+The data show that interchange fees are generally lower for larger firms.
+Figure \ref{fig:price-disc-size} plots average interchange rates in the merchandise and grocery store sectors for large firms (with more than \$1 billion in sales) and smaller firms (with less than \$1 billion in sales).
+Larger firms pay approximately \absinput{bargain_discount} basis points less in fees on their credit card and exempt debit card transactions.
+For credit cards, this pattern aligns with public data from Visa's interchange schedule, shown in Appendix Table \ref{tab:public-icg-firm-size}, and likely reflects both publicly posted volume discounts and private negotiations, consistent with greater bargaining power among larger merchants.
+
+A key mechanism underlying these size-based discounts is that large merchants can influence consumer payment behavior by choosing not to accept specific payment methods.
+In response, networks offer lower interchange rates to large merchants to keep them on the platform.
+Historically, large department stores were slow to accept Visa and Mastercard credit cards because they had their in-house alternatives, such as store credit.
+Only after Visa made concessions did JC Penney become the first large department store to accept credit cards, and Sears held out until the mid-1990s \citep{Nocera1995}.
+
+In addition to merchant size, transaction size also plays an important role in determining interchange fees.
+Visa's public interchange schedules, as shown in Appendix Table \ref{tab:visa-interchange-public}, indicate that interchange fee schedules include a fixed component that does not vary with the transaction size, as well as a variable component that scales linearly with the transaction size.
+
+Accounting for firm characteristics, such as total sales and the average transaction size, in addition to payment mix and sector, explains approximately \absinput{icg_r2_full}\% of the overall variation in transaction costs.
+The dashed orange line in Figure \ref{fig:interchange_decomp} shows the distribution of predicted transaction costs based on each merchant's observed payment mix, sector, and firm characteristics.
+
+\subsection{Real Effects}
+
+In Appendix \ref{sec:appendix_durbin}, we present novel evidence that interchange fees have real effects on merchant sales. To do this, we exploit variation in the effects of the 2011 Durbin Amendment across merchants, which has been exploited in other work such as \citet{Mukharlyamov.Sarin2025}. The Durbin Amendment capped interchange fees only on debit cards issued by large banks, but not on debit cards issued by small banks, nor on credit cards. It also inadvertently increased debit card interchange fees for merchants with small average transaction sizes, while creating significant savings for merchants with large transaction sizes. We implement an instrumental variables design that compares sales growth across merchants with different predicted savings from the Durbin Amendment, using variation in local exposure to large banks to isolate causal effects. We find evidence suggesting that the Durbin Amendment led to a decline in prices and, ultimately, find that every one percentage point in interchange expense saved causes around a \absinput{durbin_iv_2Y_Sales_IV}\% increase in card sales. \footnote{Using zip-code level data on retail gasoline prices, \citet{Mukharlyamov.Sarin2025} find that they lack sufficient power to identify the effects of interchange fees on retail prices. In our setting, we are able to use the Fiserv data to show that merchant-level shocks to interchange fees do affect merchant-level sales.}
+
+Two assumptions underpin the interpretation of the IV estimate as a pass-through to retail prices.
+First, the instrument uses the ZIP-code-level share of Durbin-regulated banks rather than the merchant-level share.
+Customer composition at individual merchants is endogenous to the price relief itself: shoppers exposed to the largest predicted fee declines may re-sort across stores, so a merchant-level instrument would conflate pass-through with selection.
+ZIP-level shares capture the same Durbin treatment intensity while remaining exogenous to merchant-specific pricing.
+Second, we recover prices from average transaction size, which proxies for retail price only when the within-trip intensive margin is small relative to the extensive-margin visit response.
+Appendix~\ref{subsec:transaction-size-proxy} formalizes this in a simple logit model of shopping, where the proxy is exact when per-trip quantity carries no dispersion and breaks down when basket size responds to price.
+The assumption is plausible for restaurants---a single meal is satiation-bounded and cannot be smoothed across venues---but implausible for grocery and merchandise retail, where consumers stockpile or split baskets across stores.
+We therefore restrict the price regression to restaurants; the sales response is identified across sectors and reported above.
+
+
+\subsection{Summarizing the Facts}
+
+Our reduced-form analysis highlights one fact that suggests substantial redistribution between consumers who use different payment methods, and two facts that moderate this redistribution. First, card types vary substantially in their interchange fees. By itself, this raises the potential for substantial redistribution through the payment system. However, redistribution only happens when consumers who choose different payment methods shop at the same stores. Thus, dispersion in payment composition across merchants limits the extent of cross-subsidization. Moreover, at the merchants where consumers with different payment preferences overlap, interchange fees are often lower due to sector discounts and negotiation, further attenuating the magnitude of redistribution.
+
+\end{document}

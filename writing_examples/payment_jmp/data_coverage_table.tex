@@ -1,0 +1,35 @@
+\begin{table}[ht]
+\centering
+\caption{Data sources and parameters identified\label{tab:data-coverage}}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{llll}
+\toprule
+Data Source & Years & Moments & Parameters Identified \\
+\midrule
+\multicolumn{4}{l}{\textit{Panel A: Identification}} \\[3pt]
+Second-choice survey & 2024 & Substitution patterns when & Random coefficient \\
+ & & card types unavailable & distribution ($\Sigma$) \\[3pt]
+ & & Switching probability when & Income gradient of reward \\
+ & & rewards cut in half & sensitivity ($\alpha_y$) \\[3pt]
+ Durbin event study & 2007--2014 & Change in debit spending & Reward sensitivity \\
+(Nilson Report) & & following fee cap & ($\alpha_0$) \\[3pt]
+DCPC & 2017--2019 & Log income differences by & Income gradients in base \\
+ & & primary payment method & preferences ($\beta_y$) \\[3pt]
+Homescan & 2017--2019 & Conditional probabilities of & Multi-homing complementarity \\
+ & & carrying card pairs & ($\chi^{lm}$, $\chi^{lm}_y$), weights ($\omega$, $\pi$) \\[3pt]
+Nilson Report & 2019 & Dollar spending shares & Mean unobserved \\
+ & & by payment network & characteristics ($\bar{\xi}$) \\[3pt]
+Merchant event study & 2013--2023 & Sales effect of credit & CES elasticity \\
+ & & card acceptance at grocer & ($\sigma$) \\[3pt]
+Aggregate pricing & 2019 & Merchant fee/acceptance & Merchant benefit \\
+ & & FOCs & distribution ($\bar{\gamma}$, $\nu_\gamma$) \\[3pt]
+\midrule
+\multicolumn{4}{l}{\textit{Panel B: Validation}} \\[3pt]
+MRI-Simmons & 2009--2022 & Payment shares across merchants; & Merchant sorting \\
+ & & bank switching after Durbin & (Appendix OE) \\[3pt]
+Yelp Reviews & 2010--2018 & Merchant card acceptance & Acceptance rate \\
+ & & by sector & cross-check \\
+\bottomrule
+\end{tabular}
+\end{table}

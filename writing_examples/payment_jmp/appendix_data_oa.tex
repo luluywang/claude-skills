@@ -1,0 +1,110 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+
+\section{Additional Data Details}
+\label{sec:oa-data-additional}
+
+\subsection{MRI-Simmons}\label{sec:oa-data}
+
+MRI-Simmons USA is a nationally representative panel that merges two surveys: MRI's Survey of the American Consumer and Simmons Research's National Consumer Study.
+The survey covers roughly 25,000 consumers per year from 2009--2020 and 50,000 from 2021 onward.
+% CONSTANT: MRI-Simmons panel design
+I draw on 2009--2022 data for financial institutions, payment method ownership, income, and bank switching; the 2022 wave adds shopping behavior across 214 merchant chains.
+% CONSTANT: MRI-Simmons survey design, 214 merchant chains
+These data support robustness checks throughout the online appendices but do not enter the structural estimation.
+Table \ref{tab:mri-summary} reports summary statistics.
+
+\subsubsection{Payment method}
+
+The data report credit and debit spending by bank and network but not cash spending.
+The survey asks ``Which of the following best describes your attitude toward using cash?'' with responses including ``I prefer to use cash whenever possible.''
+I classify respondents who choose this answer as cash users.
+Among the rest, I assign each consumer to credit or debit based on whichever card carries higher spending.
+
+\subsubsection{Bank type}\label{subsubsec:oa-mri-bank-type}
+
+The MRI data lists each consumer's deposit institutions, which I use to sort consumers into small or large banks.
+Small bank customers hold deposit accounts only at community banks and credit unions. These institutions are largely exempt from the Durbin Amendment because they hold less than \$10 billion in assets.
+% CONSTANT: Durbin Amendment statutory threshold
+Large bank customers hold deposit accounts only at the four largest banks (Chase, Bank of America, Citibank, Wells Fargo) plus U.S. Bank.
+Online Appendix~\ref{subsec:oa-durbin-robustness} uses this split to test whether consumers switched banks or gained credit card rewards after Durbin.
+
+\subsubsection{Share of consumers across merchants}
+
+The 2022 wave records whether each respondent shopped at 214 merchant chains: grocery stores, department stores, restaurants, and other sectors.
+For each merchant, I compute the survey-weighted share of customers preferring each payment method.
+The average customer base is 48\% credit, 38\% debit, and 14\% cash, with standard deviations of 8--10 pp.
+% HARDCODED[source: MRI 2022 merchant-level payment shares, computed from consumer preferences] current=48, 38, 14, 8-10
+Table \ref{tab:mri-summary} reports consumer-level summary statistics from the MRI survey.
+
+\begin{table}[ht!]
+    \small
+    \caption{Payment preferences and bank choice in the MRI survey\label{tab:mri-summary}}
+
+    \begin{center}
+        \input{../output/tables/mri_summary_statistics.tex}
+    \end{center}
+    \tablenote{\textit{Has Debit Card} and \textit{Has Credit Card} indicate ownership of each card type.
+\textit{Debit User}: non-cash user who either holds only debit or whose debit expenditure share exceeds credit.
+\textit{Credit User}: non-cash user who either holds only credit or whose credit expenditure share exceeds debit.
+\textit{Cash User}: agrees completely with ``I prefer to pay cash for things I buy, whenever I can.''
+\textit{Multiple Networks}: owns credit cards from multiple networks.
+\textit{Multiple Credit Cards}: owns more than one credit card.
+\textit{Factor Rewards}: rated rewards as very important when choosing a bank.
+\textit{Rewards}: receives credit card rewards.
+\textit{Big Banks}: uses Chase, Citibank, Wells Fargo, Bank of America, or U.S. Bank.
+\textit{Small Banks}: uses community banks or credit unions.
+\textit{Switch Banks}: changed banks in the last 12 months (not defined for 2009).
+\textit{Share of Debit Exp} and \textit{Share of Credit Exp}: debit and credit shares of card expenditure.
+\textit{Income}: household income in dollars, made continuous using the geometric mean of each category's bounds.}
+\end{table}
+
+\subsection{Yelp Open Dataset}
+\label{subsec:appendix-yelp-data}
+
+I use the Yelp Open Dataset (reviews mainly from 2010--2018) to document which payment methods merchants accept and which they refuse.
+I identify cash-only mentions with regular expressions (``cash only'' or ``only...cash''), then flag card-acceptance discussions with keywords such as ``accept,'' ``take,'' ``took,'' and ``bring.''
+Among these, I search for specific payment methods (Visa, MC, AmEx, Discover, credit, debit).
+
+I classify acceptance reviews with the ChatGPT-4o API.
+The prompt instructs the model to determine which payment methods each review indicates are accepted, keeping networks separate (accepting Visa does not imply MC) and keeping types separate (accepting credit does not imply debit).
+Table \ref{tab:yelp_examples} shows representative review snippets for each acceptance category.
+
+\begin{table}[ht!]
+\caption{Examples of Yelp reviews}
+\label{tab:yelp_examples}
+    \centering
+    \input{../output/tables/yelp_examples.tex}
+\end{table}
+
+Yelp business profiles also report whether merchants accept credit cards.
+Table~\ref{tab:yelp-dcpc-comparison} compares DCPC acceptance rates to Yelp business attributes by sector.
+The two sources match in aggregate: 95.8\% vs.\ 96.3\%.
+% HARDCODED[table: yelp_dcpc_comparison.tex, aggregate acceptance rates] current=95.8, 96.3
+% The DCPC reports lower acceptance in general services and entertainment, consistent with its sales-weighting: consumers visit cash-only service providers less often than their share of businesses would suggest.
+
+\begin{table}[htbp]
+\centering
+\caption{DCPC and Yelp acceptance rates by sector \label{tab:yelp-dcpc-comparison}}
+\input{../output/tables/yelp_dcpc_comparison.tex}
+\tablenote{DCPC Accept is the share of transactions at merchants accepting cards, from the 2017--2019 Diary of Consumer Payment Choice. Because respondents record acceptance at each transaction, DCPC rates are sales-weighted across merchants visited. Yelp (raw) is the unweighted share of Yelp business profiles reporting credit card acceptance. Yelp (wtd) reweights Yelp businesses by estimated transaction volume within each sector. $N$ columns report the number of transactions (DCPC) or businesses (Yelp) in each sector.}
+\end{table}
+
+\subsection{Second-Choice Survey Design Details}
+\label{subsec:appendix-second-choice-details}
+
+Appendix \ref{sec:appendix-data} describes the sample and summary statistics.
+This section provides additional design details.
+
+The survey included an attention check; I drop 47 respondents who failed it and 12 who completed the survey outside the collection window.
+% HARDCODED[source: unknown, from second-choice survey data cleaning] current=47, 12
+Household income was collected in eight brackets and made continuous with geometric means of bracket bounds.
+
+The survey instrument first asked respondents to identify their primary payment method for in-person transactions.
+Respondents then answered three hypothetical questions.
+(i) Which method they would use if their primary payment type (credit or debit) did not exist?
+(ii) Which method they would use if their bank stopped offering their primary card?
+(iii) Whether they would switch cards if rewards changed (halving for credit users, doubling for debit users)?
+For question (ii), the survey also asked respondents to name the banks they would consider switching to, which I use to construct network diversion ratios (Online Appendix \ref{subsec:oa-network-diversion-construction}).
+
+\end{document}

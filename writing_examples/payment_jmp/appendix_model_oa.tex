@@ -1,0 +1,304 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+
+\section{Additional Model Details}
+
+\label{sec:oa-model}
+
+\subsection{Consumer Payment Probabilities}\label{subsec:oa-payment-probs}
+
+This section derives the payment probabilities $\pi^w_{M,j}$ from Section~\ref{subsubsec:consumption-over-merchants} for a model with two credit cards and one debit card, with results collected in Table~\ref{tab:consumer-payment-probs-baseline}.
+
+Single-homers are straightforward: a consumer uses her card if the merchant accepts it and pays cash otherwise.
+For multi-homers carrying two credit cards, substitution is also simple.
+Both cards serve the same function, so if only one is accepted the consumer switches to it with probability~$1$ (middle panel of Table~\ref{tab:consumer-payment-probs-baseline}).
+
+For a multi-homer carrying one credit and one debit card, credit and debit are segmented: each card is used only for its intended transaction type.
+When both are accepted, the consumer uses credit with probability~$\pi$ and debit with probability~$1-\pi$.
+When only one card is accepted, the consumer uses it for the share of transactions assigned to that type and pays cash for the rest.
+A consumer whose credit card is accepted but whose debit card is not still uses credit with probability~$\pi$---she does not redirect debit transactions to the credit card.
+
+\begin{table}[ht]
+    \centering
+    \caption{Consumer Payment Probabilities $\pi^w_M$ (Baseline)}
+    \label{tab:consumer-payment-probs-baseline}
+    \small
+    \begin{tabular}{lll cc}
+        \toprule
+        \textbf{Primary Card} & \textbf{Secondary Card} & \textbf{Merchant Accepts} & $\pi^w_{M,w_1}$ & $\pi^w_{M,w_2}$ \\
+        \midrule
+        Any Card & None  & Primary card accepted      & 1 & 0 \\
+        Any Card & None  & Primary card not accepted  & 0 & 0 \\
+        \midrule
+        Visa & MC  & Both Visa and MC  & $\pi$ & $1-\pi$ \\
+        Visa & MC  & Only Visa         & 1 & 0 \\
+        Visa & MC  & Only MC           & 0 & 1 \\
+        Visa & MC  & Neither           & 0 & 0 \\
+        \midrule
+        Credit  & Debit & Both Credit and Debit  & $\pi$ & $1-\pi$ \\
+        Credit  & Debit & Only Credit           & $\pi$ & 0 \\
+        Credit  & Debit & Only Debit          & 0 & $1-\pi$ \\
+        Credit  & Debit & Neither             & 0 & 0 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Acceptance Thresholds}\label{subsec:oa-credit-multihoming}
+
+Every acceptance decision hinges on the same two forces: consumer multi-homing patterns and the fee spread across networks.
+Consider two cards with fees $\tau_1 \leq \tau_2$.
+Every payment method generates the same incremental sales per dollar.
+A merchant already accepting card~$1$ decides whether to also accept card~$2$.
+The incremental quasi-profit (Theorem~\ref{thm:quasiprofit-approx}) depends on two consumer groups:
+\begin{itemize}
+\item \textbf{New transactions} ($N$): single-homers on card~$2$ who would otherwise pay cash, generating incremental fees and sales.
+\item \textbf{Diverted transactions} ($D$): multi-homers who switch from card~$1$ to card~$2$, changing the fee without generating new card transactions.
+\end{itemize}
+Both $N$ and $D$ are weighted sums of wallet shares $\mu^{(\cdot)}$, with weights depending on $\pi$ and card holdings.
+The incremental quasi-profit coefficients are:
+\begin{align}
+\Delta a &= N\tau_2 + D(\tau_2 - \tau_1) \label{eq:a12-decomp}\\
+\Delta b &= \tfrac{1}{\sigma}\bigl[N(1-\sigma\tau_2) - D\sigma(\tau_2-\tau_1)\bigr] \label{eq:b12-decomp}
+\end{align}
+The merchant accepts card~$2$ if and only if $\gamma \geq \underline{\gamma}_2$, where
+\begin{equation}
+\underline{\gamma}_2 = \frac{\sigma\bigl[N\tau_2 + D(\tau_2 - \tau_1)\bigr]}{N(1-\sigma\tau_2) - D\sigma(\tau_2-\tau_1)} \label{eq:general-accept-threshold}
+\end{equation}
+This threshold rule applies whenever $\Delta b > 0$, i.e., the incremental sales gain from accepting card~$2$ is positive; in the empirical setting $\Delta b > 0$ holds for all observed networks at baseline parameters. When $\Delta b \leq 0$, accepting the card destroys value for every type and the merchant declines unconditionally.
+
+\subsubsection{Two Credit Cards}\label{subsubsec:oa-two-credit}
+
+Multi-homing across credit cards affects acceptance, and relative fees matter.
+Since both are credit cards, multi-homers switch to whichever is accepted (Table~\ref{tab:consumer-payment-probs-baseline}, middle panel), so all divert: $D = (1-\pi)\mu^{(1,2)} + \pi\mu^{(2,1)}$.
+The new-transaction mass is $N = \mu^{(2,0)}$ (single-homers on card~$2$).
+Substituting into~\eqref{eq:general-accept-threshold}:
+
+\begin{equation}
+\underline{\gamma}_2 = \frac{\sigma\mu^{(2,0)}\tau_2 + \sigma\left[(1-\pi)\mu^{(1,2)} + \pi\mu^{(2,1)}\right](\tau_2-\tau_1)}{\mu^{(2,0)}\left(1-\sigma\tau_2\right) - \sigma\left[(1-\pi)\mu^{(1,2)} + \pi\mu^{(2,1)}\right](\tau_2-\tau_1)} \label{eq:amex-accept-threshold}
+\end{equation}
+
+By inspection, cutting $\tau_1$ raises $\underline{\gamma}_2$ by widening $\tau_2 - \tau_1$, which increases diversion drag without changing incremental sales. Three special cases follow: $D = 0$ (no multi-homers) gives $\underline{\gamma}_2 = \sigma\tau_2/(1-\sigma\tau_2)$; $N \to 0$ (no single-homers) sends $\underline{\gamma}_2 \to \infty$; and $\tau_2 = \tau_1$ collapses the threshold to $\underline{\gamma}_1$.
+This is consistent with Figures~\ref{fig:fees-history} and~\ref{fig:merchant-amex-visa}: AmEx acceptance responded sharply to its fee relative to Visa.
+
+
+\subsubsection{Credit and Debit (Baseline)}\label{subsubsec:oa-credit-debit-baseline}
+
+Multi-homing across credit and debit does not affect credit acceptance, and relative fees do not matter.
+Credit and debit are segmented at the point of sale (Table~\ref{tab:consumer-payment-probs-baseline}, bottom panel): adding credit does not divert any spending from debit, so $D = 0$.
+The threshold reduces to
+\[
+\underline{\gamma}_c = \frac{\sigma\tau_c}{1-\sigma\tau_c}
+\]
+independent of the debit fee.
+Segmentation ensures $\Delta a$ and $\Delta b$ share the same wallet-share weights, so the threshold depends only on credit's own fee.
+This is consistent with the Durbin evidence: after debit interchange fees fell by roughly half, credit interchange fees did not change (Figure~\ref{fig:merchant-fees-acceptance}) and yet credit card acceptance was unchanged (Figure~\ref{fig:scpc-debit-credit-acceptance}).
+
+\subsection{CES Price Index and Multi-Homing Pecuniary Utility}\label{subsec:oa-ces-price-index}
+
+A more natural pecuniary utility for multi-homers would use the CES price index directly:
+\begin{equation*}
+\log U^w = \pi f^{w_1} + (1-\pi) f^{w_2} - \log P^{(w_1,w_2)}.
+\end{equation*}
+I do not use the CES-index definition because it counterfactually predicts that Visa-AmEx multi-homing rates fall as AmEx acceptance rises (Appendix~\ref{subsec:oa-consumer-multihoming-history}).
+
+When $w_1$ and $w_2$ are different types (credit and debit), the card-payment probability decomposes linearly: $v^w_M = \pi \cdot \mathbf{1}[w_1 \in M] + (1-\pi) \cdot \mathbf{1}[w_2 \in M]$, and $(P^w)^{1-\sigma} = \pi (P^{(w_1,0)})^{1-\sigma} + (1-\pi) (P^{(w_2,0)})^{1-\sigma}$.
+The only remaining gap is a Jensen correction in the log price index, second-order in the difference between credit and debit price indices.
+
+For same-type multi-homers (e.g., two credit cards), there is an additional first-order gap from union acceptance: the consumer pays by card whenever \emph{either} card is accepted, so $\pi \log P^{(w_1,0)} + (1 - \pi) \log P^{(w_2,0)} \geq \log P^{(w_1, w_2)}$, with equality when $w_1$ and $w_2$ have identical acceptance sets.
+Since credit card acceptance is symmetric across networks in the estimated model and all counterfactuals, the same-type multi-homer first-order gap vanishes. 
+For different-type multi-homers, the second-order Jensen wedge above remains.
+
+\subsection{Details on the Conduct Assumption}\label{subsec:oa-conduct}
+
+\paragraph{Why networks compete in gains $A_j$ rather than utilities or rewards.}
+\textcite{Weyl2010} shows that guaranteeing utility gains captures penetration pricing when merchant acceptance is low, giving consumers a dominant adoption strategy and pinning down a unique subgame equilibrium.
+
+\paragraph{Non-differentiability with multiple networks.}
+Network profits are non-differentiable in merchant fees when more than two networks compete.
+A network raising its fee competes with acceptance of all other networks, while a network cutting its fee competes with cash.
+These regions have different marginal revenues, creating non-differentiability at the symmetric equilibrium.
+\textcite{Rochet.Tirole2003}'s two-network model avoids this issue. \textcite{Teh.etal2022} show the problem arises with three or more networks.
+
+\paragraph{Trembles for equilibrium selection.}
+To select a unique equilibrium, I introduce small trembles $\nu_x$ in networks' fee choices, smoothing the profit function and ensuring equal profit loss from marginal fee increases or decreases (following \textcite{Bilal.Lhuillier2021}).
+This convolution smooths the profit function, making $\Psi$ differentiable, and as the perturbation vanishes, the smoothed objective converges uniformly to the original.
+To assess approximation error, Figure \ref{fig:max-compare} plots pairwise heatmaps of Visa's profit (without trembles) across all control-variable pairs, comparing the perturbed-FOC solution with a grid search over the original profit function.
+The match is almost exact.
+
+\begin{figure}[ht]
+    \caption{Comparing the maximum from solving the FOCs of the perturbed profit function with the maximum of the original profit function}
+    \label{fig:max-compare}
+    \begin{center}
+        \includegraphics*[width=5in]{../output/graphs/pairwise/baseline_1/baseline_visa}
+    \end{center}
+\end{figure}
+
+\subsection{Model Solution Algorithm}
+\label{subsec:oa-model-solution}
+
+The algorithm has two layers.
+An inner fixed point solves for the allocation (consumer wallet shares and merchant acceptance) given network fees $A_j$ and $\tau_j$.
+An outer loop then jointly solves networks' first-order conditions over fees, taking the inner equilibrium as given.
+
+\subsubsection{Fixed Point Iteration}
+
+The inner fixed point iterates on wallet-specific price indices $P^w$.
+Given a conjecture for these price indices, the algorithm recovers the implied uniform reward rates by inversion and proceeds through the following steps:
+\begin{enumerate}
+    \item Compute consumer wallet shares $\tilde{\mu}^w_y$ for each income level.
+    \item Solve merchant acceptance: each merchant type $\gamma$ maximizes quasi-profit to determine the optimal card bundle $M^*(\gamma)$.
+    \item Update price indices $P^w$ by integrating the price-index integrand over the merchant type distribution.
+    \item Check convergence: if $\max_{w,s} |P^{w,\text{new}} - P^{w,\text{old}}| < \epsilon$, stop. Otherwise, apply damping and return to step 1.
+\end{enumerate}
+Profits for each network follow from Equations \ref{eq:transaction-fee-profit} and \ref{eq:subsidy-bill}.
+Demand integration uses $2{,}000$ Monte Carlo draws jointly over unobserved preference heterogeneity and log-normal income.
+% CONSTANT: simulation draw count, design choice
+
+The outer loop solves networks' first-order conditions jointly, respecting the ownership matrix that accounts for Visa's co-ownership of credit and debit products.
+Capped fees (e.g., under Durbin or counterfactual caps) bypass the first-order condition and are instead confirmed binding via Lagrange multiplier checks.
+For the normal expectations in the trembles, $N$-dimensional Gauss-Hermite quadrature with 2 points per dimension ensures equal profit loss from raising or lowering fees.
+% CONSTANT: 2 quadrature points per dimension, design choice
+Second-order conditions for local maxima are verified numerically at every solution.
+
+\subsection{Numerical Validation of the Quasi-Profit Approximation}
+\label{subsec:oa-quasiprofit-validation}
+
+The quasi-profit functions match true profits closely.
+Figure \ref{fig:quasiprofit-approx} compares exact and approximate profits for all $32$ potential payment bundles in the baseline equilibrium.
+% CONSTANT: 32 = 2^5 payment bundles from 5 payment methods
+The fit holds across all values of $\gamma$.
+Figure \ref{fig:quasiprofit-approx-envelope-example} plots the upper envelopes of true and approximate profit functions.
+Slope changes in the envelope mark where the merchant's optimal acceptance strategy shifts.
+The close fit confirms that the approximation accurately captures how optimal acceptance varies with merchant type.
+
+\begin{figure}[ht!]
+\caption{Comparison of exact profits (which factor in price changes) and quasi-profits (which do not) in the baseline equilibrium for every possible subset of accepted cards. \label{fig:quasiprofit-approx}}
+\centering \includegraphics[width=0.8\linewidth]{../output/graphs/linear_approx_example.pdf}
+\end{figure}
+
+\begin{figure}[ht!]
+    \caption{Comparison of the upper envelope of profits computed with the exact profit formula versus the quasi-profit approximation. \label{fig:quasiprofit-approx-envelope-example}}
+
+    \centering \includegraphics[width=0.8\linewidth]{../output/graphs/linear_approx_envelope_example.pdf}
+\end{figure}
+
+\subsection{Mechanical Welfare Adjustment for Dual Routing}
+\label{subsec:oa-mechanical-dr}
+
+The dual routing counterfactual in Section~\ref{subsec:dual-routing} differs from the other counterfactuals because it directly perturbs preferences rather than fees, ownership, or the set of products. 
+I raise $\chi^{22}$, the credit--credit complementarity parameter in the consumer's portfolio choice, by $\Delta \chi = 0.0020 \cdot \alpha_0$, equivalent to a 20 bp reward increase on credit--credit bundles for the median consumer.
+% CONSTANT: Δχ is the policy magnitude defining this counterfactual scenario
+A direct preference perturbation mechanically raises the consumer surplus in Equation~\ref{eq:cons-surplus-integral} through the logit log-sum, even if prices, portfolios, and merchant acceptance were held fixed.
+To keep the dual routing results comparable with the other counterfactuals in the welfare tables, I subtract this mechanical component so that the reported consumer surplus reflects only the equilibrium response.
+
+\paragraph{Income-specific adjustment.}
+Let $\mathcal{W}_{CC} = \{w = (w_1, w_2) \in \mathcal{W} : w_1, w_2 \text{ are both credit cards}\}$ denote the set of credit--credit wallets.
+For a consumer of type $i$ with reward-sensitivity $\alpha_i$, the boost $\Delta \chi$ on credit--credit wallets raises consumption-equivalent welfare, to first order, by
+\begin{equation}
+    w^{\text{mech}}_i(\tilde{\mu}) = \frac{\Delta \chi}{\alpha_i} \cdot P(\mathcal{W}_{CC}\mid i; \tilde{\mu}),
+    \label{eq:mech-welfare-i}
+\end{equation}
+where $P(\mathcal{W}_{CC}\mid i; \tilde{\mu}) = \sum_{w\in\mathcal{W}_{CC}} \tilde{\mu}^{w}_i$ is $i$'s probability of holding a wallet in $\mathcal{W}_{CC}$, i.e., two credit cards.
+By the Envelope theorem, evaluating $w^{\text{mech}}_i$ at the baseline portfolio shares $\tilde{\mu}^{\text{base}}$ is sufficient: the equilibrium change in shares enters welfare only at second order.
+In practice, evaluating at counterfactual shares gives an answer indistinguishable from the baseline-shares value, consistent with this prediction.
+Dividing by $\alpha_i$ converts utils to equivalent consumption, and weighting by $P(\mathcal{W}_{CC}\mid i; \tilde{\mu})$ accounts for the fact that only credit--credit wallets receive the boost.
+
+The adjustment is larger for higher-income consumers: the consumption-equivalent adjustment averages 1.7 bps at low income, 3.9 bps at median, and 6.0 bps at high income in the baseline specification (Table~\ref{tab:mechanical-dual-routing-baseline}).
+% HARDCODED[table: mechanical_dual_routing_baseline.tex, row: Low] current=1.7
+% HARDCODED[table: mechanical_dual_routing_baseline.tex, row: Median] current=3.9
+% HARDCODED[table: mechanical_dual_routing_baseline.tex, row: High] current=6.0
+The pattern reflects higher credit--credit holding rates among high-income consumers, which more than offsets their higher reward-sensitivity.
+
+\paragraph{Aggregate adjustment.}
+The aggregate dollar gain scales the income-specific term \eqref{eq:mech-welfare-i} by income $y$ and integrates against the baseline income distribution $F$, mirroring Equation~\ref{eq:cons-surplus-integral}:
+\begin{equation}
+    W^{\text{mech}}(\tilde{\mu}) = \int \E\bigl[w^{\text{mech}}_i(\tilde{\mu}) \bigm| y\bigr] \cdot y \, dF(y).
+    \label{eq:mech-welfare}
+\end{equation}
+Both integrals are computed by Monte Carlo over 500 joint draws of income and preference shocks per bootstrap sample.
+% CONSTANT: 500 Monte Carlo draws for the mechanical welfare integral, design choice
+The welfare tables subtract the mechanical effect on consumer surplus before reporting, so the \$3.3 billion consumer-surplus figure in Section~\ref{subsec:dual-routing} is net of this adjustment. The mechanical component is roughly \$4.5 billion in the baseline specification (Table~\ref{tab:mechanical-dual-routing-baseline}).
+% HARDCODED[table: welfare_table_baseline.tex, row: "Consumers", col: Dual Routing] current=3.3
+% HARDCODED[table: mechanical_dual_routing_baseline.tex, row: Aggregate] current=4.5
+
+\begin{table}[ht!]
+    \centering
+    \caption{Mechanical dual routing welfare adjustment}
+    \label{tab:mechanical-dual-routing-baseline}
+    \input{../output/tables/mechanical_dual_routing_baseline.tex}
+    \tablenote{Bootstrap standard errors in parentheses. The aggregate is in dollars, normalizing to \$10 trillion of total consumer purchases \parencite{Nilson2020a}. By-income values are the consumption-equivalent adjustment $w^{\text{mech}}_i$ in Equation~\eqref{eq:mech-welfare-i}, averaged across consumers within each income group, in basis points.}
+\end{table}
+
+\clearpage
+
+\subsection{A Microfoundation for Segmentation Between Credit and Debit at the Point of Sale}
+\label{subsec:oa-usage-microfoundation}
+
+Payment methods can be substitutes at adoption yet poor substitutes at the point of sale.
+A microfoundation building on \textcite{Koulayev.etal2016} and \textcite{Huynh.etal2022} separates usage from adoption to show that the two stages are independent.
+It also gives a natural origin for the complementarity parameters $\chi^{lm}$ in the main text: carrying two different card types generates option value, while carrying two cards of the same type generates diminishing returns.
+Rewards shift consumers between debit and credit at adoption even when the two are segmented at usage.
+
+\subsubsection{Utility at the Point of Sale}
+
+At the point of sale, the consumer picks one card from her wallet. Let $\mathcal{J} = \{0, 1, 2, \ldots, J\}$ denote the set of payment methods, where $j = 0$ is cash, and let $W$ denote the cards in consumer $i$'s wallet. Let $X_j \in \mathbb{R}^k$ be the characteristics of method $j$ (e.g., whether $j$ is a credit card), and $f_j$ the reward for using $j$.
+For transaction $t$, the utility of method $j$ is:
+
+\begin{align*}
+u_{ijt} &= \alpha f_j + \gamma_{it}' X_j + \epsilon_{ijt} \\
+\gamma_{it} &\sim \mathcal{N}(\gamma_i, \Sigma) \\
+\epsilon_{ijt} &\sim \text{T1EV}
+\end{align*}
+The random shocks $\gamma_{it} \in \mathbb{R}^k$ capture transaction-specific preferences over card types: for a given transaction, a consumer may strongly prefer credit over debit, or cards over cash.
+The mean $\gamma_i \in \mathbb{R}^k$ is consumer-specific, so some consumers prefer credit cards in general.
+The idiosyncratic shocks $\epsilon_{ijt}$ capture why different cards of the same type (e.g., different credit cards) vary in value across transactions.
+
+These assumptions yield the expected utility from wallet $W_i$:
+
+\[
+V_i(W_i) = \int \log\!\left(\sum_{j \in W_i} \exp\!\left(\alpha f_j + \gamma_{it}' X_j\right)\right) dH(\gamma_{it})
+\]
+where $H$ captures the distribution of $\gamma_{it}$.
+
+\subsubsection{Utility at Adoption}
+
+At adoption, consumers choose a wallet to maximize expected point-of-sale utility less adoption costs:
+
+\begin{align*}
+W_i^* &= \argmax_{W \subseteq \mathcal{J}} V_i(W) - \sum_{j \in W} c' X_j + \phi a_i^W \\
+a_i^W &\sim \mathcal{N}(0, \nu^2)
+\end{align*}
+where $c \in \mathbb{R}^k$ captures adoption costs by payment-method characteristics.
+
+\subsubsection{Mapping to the Model in the Main Text}
+
+The microfounded model clarifies two points: how segmentation at the point of sale differs from segmentation at adoption, and how payment methods can complement or substitute for each other in a wallet.
+
+
+\paragraph{Usage-stage vs.\ adoption-stage segmentation.} The main text assumes consumers use credit and debit for distinct transaction types, yet those carrying two credit cards freely substitute between them.
+This is consistent with strong transaction-level preferences over credit versus debit but low heterogeneity in adoption costs across cards.
+Strong usage-stage preferences arise when $\Sigma$ is large: a consumer wanting a credit feature for a given transaction gets little utility from a debit card.
+This corresponds to certain transactions (e.g., large purchases) being better suited to credit than debit.
+
+Strong adoption-stage substitution is compatible with $\nu^2 \to 0$.
+Large $\Sigma$ does not induce segmentation at adoption because the consumer values the expected utility $V_i$, which integrates over the transaction-specific shocks $\gamma_{it}$.
+If adoption costs are similar across instruments, consumers remain sensitive to rewards in choosing what to adopt.
+
+As an extreme example, suppose a consumer has 50 large-ticket and 50 small-ticket transactions, strongly preferring credit for the former and debit for the latter.
+At adoption, credit and debit offer similar expected utilities because each covers half of transactions.
+Her adoption choice is therefore sensitive to rewards even though her transaction-level preferences are sharply bifurcated.
+
+\paragraph{Complements and substitutes at adoption.} The microfounded model also explains why debit holders may want to adopt credit cards.
+At adoption, consumers know their mean preferences $\gamma_i$ but have not yet drawn the transaction shocks $\gamma_{it}$; those shocks are realized only at the point of sale.
+A consumer with high $\Sigma$ faces uncertainty over which card type she will prefer for each future transaction.
+Adopting both types lets her use credit when $\gamma_{it}' X_j$ favors credit and debit when it favors debit, raising $V_i$.
+This option value is positive even though the consumer knows her transaction-level preferences will be sharply bifurcated.
+
+The model also captures incremental adoption costs.
+If all cards of a given type pay the same rewards $f_j$, then $V_i$ is concave in the number of same-type cards, but costs are linear.
+This explains why consumers do not adopt every card on the market, captured in the main text by $\chi^{22} < 0$ for wallets with two credit cards from different networks.
+
+A consumer who highly values credit cards may still want a credit card alongside a debit card to capture more transaction-specific shocks $\gamma_{it}$, which occurs when $\gamma_i' X_j$ is large for credit.
+The main text captures this through $\chi^{12} > 0$ and $\chi^{21} > 0$ for wallets that combine credit and debit.
+
+\end{document}

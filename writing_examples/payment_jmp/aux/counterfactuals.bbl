@@ -1,0 +1,604 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{cms/global//global/global/global}
+    \entry{Agarwal.etal2015}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=3964f94af6a1242304adfe8379ba43fe}{%
+           family={Agarwal},
+           familyi={A\bibinitperiod},
+           given={Sumit},
+           giveni={S\bibinitperiod}}}%
+        {{hash=9df51cd3cede9f6719862cae21d78881}{%
+           family={Chomsisengphet},
+           familyi={C\bibinitperiod},
+           given={Souphala},
+           giveni={S\bibinitperiod}}}%
+        {{hash=642d7c3886ec2648c7b6410bfecee701}{%
+           family={Mahoney},
+           familyi={M\bibinitperiod},
+           given={Neale},
+           giveni={N\bibinitperiod}}}%
+        {{hash=0d747497fdfc615abff3754bedb5bef7}{%
+           family={Stroebel},
+           familyi={S\bibinitperiod},
+           given={Johannes},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{890414969fe23b9f7f8930d1c97d0277}
+      \strng{fullhash}{5609bc4cfcbd7f329caefe3e40405db3}
+      \strng{fullhashraw}{5609bc4cfcbd7f329caefe3e40405db3}
+      \strng{bibnamehash}{5609bc4cfcbd7f329caefe3e40405db3}
+      \strng{authorbibnamehash}{5609bc4cfcbd7f329caefe3e40405db3}
+      \strng{authornamehash}{890414969fe23b9f7f8930d1c97d0277}
+      \strng{authorfullhash}{5609bc4cfcbd7f329caefe3e40405db3}
+      \strng{authorfullhashraw}{5609bc4cfcbd7f329caefe3e40405db3}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{abstract}{We analyze the effectiveness of consumer financial regulation by considering the 2009 Credit Card Accountability Responsibility and Disclosure (CARD) Act. We use a panel data set covering 160 million credit card accounts and a difference-in-differences research design that compares changes in outcomes over time for consumer credit cards, which were subject to the regulations, to changes for small business credit cards, which the law did not cover. We estimate that regulatory limits on credit card fees reduced overall borrowing costs by an annualized 1.6\% of average daily balances, with a decline of more than 5.3\% for consumers with FICO scores below 660. We find no evidence of an offsetting increase in interest charges or a reduction in the volume of credit. Taken together, we estimate that the CARD Act saved consumers \$11.9 billion a year. We also analyze a nudge that disclosed the interest savings from paying off balances in 36 months rather than making minimum payments. We detect a small increase in the share of accounts making the 36-month payment value but no evidence of a change in overall payments.}
+      \field{issn}{0033-5533}
+      \field{journaltitle}{The Quarterly Journal of Economics}
+      \field{month}{2}
+      \field{number}{1}
+      \field{shorttitle}{Regulating {{Consumer Financial Products}}}
+      \field{title}{Regulating {{Consumer Financial Products}}: {{Evidence}} from {{Credit Cards}} *}
+      \field{volume}{130}
+      \field{year}{2015}
+      \field{dateera}{ce}
+      \field{pages}{111\bibrangedash 164}
+      \range{pages}{54}
+      \verb{doi}
+      \verb 10.1093/qje/qju037
+      \endverb
+    \endentry
+    \entry{Amiti.etal2019}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=8bd1ddd490e50f40cdc6e2e2e1ee7a3e}{%
+           family={Amiti},
+           familyi={A\bibinitperiod},
+           given={Mary},
+           giveni={M\bibinitperiod}}}%
+        {{hash=cb5bcd383e6297076d2baaa8b66c8381}{%
+           family={Itskhoki},
+           familyi={I\bibinitperiod},
+           given={Oleg},
+           giveni={O\bibinitperiod}}}%
+        {{hash=4406a33e8c02d9b5126b19ff895a7fd2}{%
+           family={Konings},
+           familyi={K\bibinitperiod},
+           given={Jozef},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{7d1af71c388b3ec60032ca67992e80f1}
+      \strng{fullhash}{2a4c108ac1a396f6406ac10a9aaeef05}
+      \strng{fullhashraw}{2a4c108ac1a396f6406ac10a9aaeef05}
+      \strng{bibnamehash}{2a4c108ac1a396f6406ac10a9aaeef05}
+      \strng{authorbibnamehash}{2a4c108ac1a396f6406ac10a9aaeef05}
+      \strng{authornamehash}{7d1af71c388b3ec60032ca67992e80f1}
+      \strng{authorfullhash}{2a4c108ac1a396f6406ac10a9aaeef05}
+      \strng{authorfullhashraw}{2a4c108ac1a396f6406ac10a9aaeef05}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{journaltitle}{The Review of Economic Studies}
+      \field{month}{11}
+      \field{number}{6}
+      \field{title}{International {{Shocks}}, {{Variable Markups}}, and {{Domestic Prices}}}
+      \field{volume}{86}
+      \field{year}{2019}
+      \field{dateera}{ce}
+    \endentry
+    \entry{Andriotis2022}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=84e5e0a6d1bfe8e6ec0c033925ef8c90}{%
+           family={Andriotis},
+           familyi={A\bibinitperiod},
+           given={AnnaMaria},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{84e5e0a6d1bfe8e6ec0c033925ef8c90}
+      \strng{fullhash}{84e5e0a6d1bfe8e6ec0c033925ef8c90}
+      \strng{fullhashraw}{84e5e0a6d1bfe8e6ec0c033925ef8c90}
+      \strng{bibnamehash}{84e5e0a6d1bfe8e6ec0c033925ef8c90}
+      \strng{authorbibnamehash}{84e5e0a6d1bfe8e6ec0c033925ef8c90}
+      \strng{authornamehash}{84e5e0a6d1bfe8e6ec0c033925ef8c90}
+      \strng{authorfullhash}{84e5e0a6d1bfe8e6ec0c033925ef8c90}
+      \strng{authorfullhashraw}{84e5e0a6d1bfe8e6ec0c033925ef8c90}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{journaltitle}{Wall Street Journal}
+      \field{month}{7}
+      \field{title}{Senate {{Bill Takes Aim}} at {{Visa}}, {{Mastercard Credit-Card Fees}}}
+      \field{year}{2022}
+      \field{dateera}{ce}
+    \endentry
+    \entry{Armstrong2006}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=2e381f0784053652dae51c069503bf47}{%
+           family={Armstrong},
+           familyi={A\bibinitperiod},
+           given={Mark},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{2e381f0784053652dae51c069503bf47}
+      \strng{fullhash}{2e381f0784053652dae51c069503bf47}
+      \strng{fullhashraw}{2e381f0784053652dae51c069503bf47}
+      \strng{bibnamehash}{2e381f0784053652dae51c069503bf47}
+      \strng{authorbibnamehash}{2e381f0784053652dae51c069503bf47}
+      \strng{authornamehash}{2e381f0784053652dae51c069503bf47}
+      \strng{authorfullhash}{2e381f0784053652dae51c069503bf47}
+      \strng{authorfullhashraw}{2e381f0784053652dae51c069503bf47}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{issn}{07416261, 17562171}
+      \field{journaltitle}{The RAND Journal of Economics}
+      \field{langid}{english}
+      \field{month}{9}
+      \field{number}{3}
+      \field{title}{Competition in Two-Sided Markets}
+      \field{volume}{37}
+      \field{year}{2006}
+      \field{dateera}{ce}
+      \field{pages}{668\bibrangedash 691}
+      \range{pages}{24}
+      \verb{doi}
+      \verb 10.1111/j.1756-2171.2006.tb00037.x
+      \endverb
+    \endentry
+    \entry{Berg.etal2024a}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=32903e19f1e02fc9fb4466c14fee18b1}{%
+           family={Berg},
+           familyi={B\bibinitperiod},
+           given={Tobias},
+           giveni={T\bibinitperiod}}}%
+        {{hash=ec3c804f284f805bb9ed3da42dd83480}{%
+           family={Keil},
+           familyi={K\bibinitperiod},
+           given={Jan},
+           giveni={J\bibinitperiod}}}%
+        {{hash=4447c08f4eb59d7c8a2ee250dc16382f}{%
+           family={Martini},
+           familyi={M\bibinitperiod},
+           given={Felix},
+           giveni={F\bibinitperiod}}}%
+        {{hash=fe02778a8368fd1bb53bee5ffc0dd318}{%
+           family={Puri},
+           familyi={P\bibinitperiod},
+           given={Manju},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{34a69f0024cce44cb1db8328d65c3a5a}
+      \strng{fullhash}{094da3d52665e39e44275ffd565a1df2}
+      \strng{fullhashraw}{094da3d52665e39e44275ffd565a1df2}
+      \strng{bibnamehash}{094da3d52665e39e44275ffd565a1df2}
+      \strng{authorbibnamehash}{094da3d52665e39e44275ffd565a1df2}
+      \strng{authornamehash}{34a69f0024cce44cb1db8328d65c3a5a}
+      \strng{authorfullhash}{094da3d52665e39e44275ffd565a1df2}
+      \strng{authorfullhashraw}{094da3d52665e39e44275ffd565a1df2}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{abstract}{We analyze the effect of a major central bank digital currency (CBDC) – the digital euro – on the payment industry to find remarkably heterogeneous effects. Stock prices of U.S. payment firms decrease, while stock prices of European payment firms increase in response to positive announcements on the digital euro. Bank stocks do not react. We estimate a loss in market capitalization of USD 127 billion for U.S. payment firms, vis-a-vis a gain of USD 23 billion for European payment firms. Our results emphasize the medium-of-exchange function of CBDCs and point to a novel geopolitical dimension of CBDCs: enhanced autonomy in payments.}
+      \field{journaltitle}{NBER Working Paper}
+      \field{langid}{english}
+      \field{month}{7}
+      \field{number}{32857}
+      \field{title}{{{CBDCs}}, {{Payment Firms}}, and {{Geopolitics}}}
+      \field{year}{2024}
+      \field{dateera}{ce}
+      \verb{file}
+      \verb /Users/luluywang/Zotero/storage/8P9K45WX/Berg et al. - CBDCs, Payment Firms, and Geopolitics.pdf
+      \endverb
+    \endentry
+    \entry{Conrath2014}{report}{}{}
+      \name{author}{1}{}{%
+        {{hash=8cc2a9ac0789f5a338ac529cb1136320}{%
+           family={Conrath},
+           familyi={C\bibinitperiod},
+           given={Craig\bibnamedelima W.},
+           giveni={C\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {United States District Court Eastern District of New York}%
+      }
+      \strng{namehash}{8cc2a9ac0789f5a338ac529cb1136320}
+      \strng{fullhash}{8cc2a9ac0789f5a338ac529cb1136320}
+      \strng{fullhashraw}{8cc2a9ac0789f5a338ac529cb1136320}
+      \strng{bibnamehash}{8cc2a9ac0789f5a338ac529cb1136320}
+      \strng{authorbibnamehash}{8cc2a9ac0789f5a338ac529cb1136320}
+      \strng{authornamehash}{8cc2a9ac0789f5a338ac529cb1136320}
+      \strng{authorfullhash}{8cc2a9ac0789f5a338ac529cb1136320}
+      \strng{authorfullhashraw}{8cc2a9ac0789f5a338ac529cb1136320}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issue}{1:10-CV-04496-NGG-RER}
+      \field{month}{9}
+      \field{title}{Plaintiff's {{Proposed Findings}} of {{Fact}}}
+      \field{year}{2014}
+      \field{dateera}{ce}
+    \endentry
+    \entry{FederalReserve2022}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=948a58f3d5bc38cc88feddda689408d8}{%
+           family={Federal\bibnamedelima Reserve},
+           familyi={F\bibinitperiod\bibinitdelim R\bibinitperiod},
+           given={Board},
+           giveni={B\bibinitperiod}}}%
+      }
+      \strng{namehash}{948a58f3d5bc38cc88feddda689408d8}
+      \strng{fullhash}{948a58f3d5bc38cc88feddda689408d8}
+      \strng{fullhashraw}{948a58f3d5bc38cc88feddda689408d8}
+      \strng{bibnamehash}{948a58f3d5bc38cc88feddda689408d8}
+      \strng{authorbibnamehash}{948a58f3d5bc38cc88feddda689408d8}
+      \strng{authornamehash}{948a58f3d5bc38cc88feddda689408d8}
+      \strng{authorfullhash}{948a58f3d5bc38cc88feddda689408d8}
+      \strng{authorfullhashraw}{948a58f3d5bc38cc88feddda689408d8}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{journaltitle}{Federal Reserve Discussion Paper}
+      \field{month}{1}
+      \field{title}{Money and {{Payments}}: {{The U}}.{{S}}. {{Dollar}} in the {{Age}} of {{Digital Transformation}}}
+      \field{year}{2022}
+      \field{dateera}{ce}
+    \endentry
+    \entry{Hayashi2012}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=1028fb35f981fcbb07024dc912fc7dca}{%
+           family={Hayashi},
+           familyi={H\bibinitperiod},
+           given={Fumiko},
+           giveni={F\bibinitperiod}}}%
+      }
+      \strng{namehash}{1028fb35f981fcbb07024dc912fc7dca}
+      \strng{fullhash}{1028fb35f981fcbb07024dc912fc7dca}
+      \strng{fullhashraw}{1028fb35f981fcbb07024dc912fc7dca}
+      \strng{bibnamehash}{1028fb35f981fcbb07024dc912fc7dca}
+      \strng{authorbibnamehash}{1028fb35f981fcbb07024dc912fc7dca}
+      \strng{authornamehash}{1028fb35f981fcbb07024dc912fc7dca}
+      \strng{authorfullhash}{1028fb35f981fcbb07024dc912fc7dca}
+      \strng{authorfullhashraw}{1028fb35f981fcbb07024dc912fc7dca}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{journaltitle}{Federal Reserve Bank of Kansas City Economic Review}
+      \field{langid}{english}
+      \field{title}{The {{New Debit Card Regulations}}: {{Initial Effects}} on {{Networks}} and {{Banks}}}
+      \field{year}{2012}
+      \field{dateera}{ce}
+      \field{pages}{38}
+      \range{pages}{1}
+    \endentry
+    \entry{Kay.etal2018}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=1608660825b2825ea9dfc49d8f4dc6cd}{%
+           family={Kay},
+           familyi={K\bibinitperiod},
+           given={Benjamin\bibnamedelima S.},
+           giveni={B\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+        {{hash=d6564f89a5ee520ed60fbcc4c2d60663}{%
+           family={Manuszak},
+           familyi={M\bibinitperiod},
+           given={Mark\bibnamedelima D.},
+           giveni={M\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+        {{hash=6105790e055e0ff2ebfb7c1cf4edd6ac}{%
+           family={Vojtech},
+           familyi={V\bibinitperiod},
+           given={Cindy\bibnamedelima M.},
+           giveni={C\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+      }
+      \strng{namehash}{d82ff6acfcb19defac262888c393712b}
+      \strng{fullhash}{615484c7918e0905eff692b6c9d4a1bb}
+      \strng{fullhashraw}{615484c7918e0905eff692b6c9d4a1bb}
+      \strng{bibnamehash}{615484c7918e0905eff692b6c9d4a1bb}
+      \strng{authorbibnamehash}{615484c7918e0905eff692b6c9d4a1bb}
+      \strng{authornamehash}{d82ff6acfcb19defac262888c393712b}
+      \strng{authorfullhash}{615484c7918e0905eff692b6c9d4a1bb}
+      \strng{authorfullhashraw}{615484c7918e0905eff692b6c9d4a1bb}
+      \field{sortinit}{K}
+      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{abstract}{Retail banking is a complex industry in which depository institutions bundle various services and may have market power. We use a recent regulation as a natural experiment to provide broad evidence about competition and the importance of bundling in retail banking. That regulation, which resulted from the Durbin Amendment to the Dodd–Frank Act, capped debit card interchange fees for banks with over \$10 billion in assets. Using a difference-in-differences identification strategy, we document and quantify the resulting decline in interchange income for treated banks. We further find that treated banks offset more than 90\% of the lost interchange income through increases in deposit fees for account holders. We argue that the ability to adjust deposit fees indicates (i) that treated banks have market power with respect to their account holders and (ii) strong complementarity between debit card transactions and deposit accounts. These results are robust when limiting the sample to banks near the asset threshold or using control banks with low direct competition with treated banks. Treated banks neither reduced costs nor strategically avoided the \$10 billion threshold.}
+      \field{issn}{1042-9573}
+      \field{journaltitle}{Journal of Financial Intermediation}
+      \field{langid}{english}
+      \field{month}{4}
+      \field{series}{Assessing {{Banking Regulation During}} the {{Obama Era}}}
+      \field{shorttitle}{Competition and Complementarities in Retail Banking}
+      \field{title}{Competition and Complementarities in Retail Banking: {{Evidence}} from Debit Card Interchange Regulation}
+      \field{volume}{34}
+      \field{year}{2018}
+      \field{dateera}{ce}
+      \field{pages}{91\bibrangedash 108}
+      \range{pages}{18}
+      \verb{doi}
+      \verb 10.1016/j.jfi.2018.02.001
+      \endverb
+      \keyw{Bank competition,Banks,Debt cards,Dodd-Frank Act,Durbin Amendment,Interchange fees,Payments}
+    \endentry
+    \entry{Mukharlyamov.Sarin2025}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=80abf34e78859401085dde3a545f26b6}{%
+           family={Mukharlyamov},
+           familyi={M\bibinitperiod},
+           given={Vladimir},
+           giveni={V\bibinitperiod}}}%
+        {{hash=c540b33534b899ed6018a64e6ba7372e}{%
+           family={Sarin},
+           familyi={S\bibinitperiod},
+           given={Natasha},
+           giveni={N\bibinitperiod}}}%
+      }
+      \strng{namehash}{862a2852688f76ac7e9691d382b6b742}
+      \strng{fullhash}{862a2852688f76ac7e9691d382b6b742}
+      \strng{fullhashraw}{862a2852688f76ac7e9691d382b6b742}
+      \strng{bibnamehash}{862a2852688f76ac7e9691d382b6b742}
+      \strng{authorbibnamehash}{862a2852688f76ac7e9691d382b6b742}
+      \strng{authornamehash}{862a2852688f76ac7e9691d382b6b742}
+      \strng{authorfullhash}{862a2852688f76ac7e9691d382b6b742}
+      \strng{authorfullhashraw}{862a2852688f76ac7e9691d382b6b742}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{abstract}{This paper studies the impact of price regulation in two-sided markets, where intermediaries must get both sides of the market on board. Since platforms such as debit card networks can only succeed by simultaneously convincing consumers to use cards and merchants to accept them, they often subsidize one side of the market to generate supracompetitive profits from the other side (Rochet and Tirole 2003). Using a novel dataset on card processing fees, we show a regulation restricting banks' ability to charge high processing fees on debit-card transactions (the Durbin Amendment of the 2010 DoddFrank Act) led to higher checking account fees paid by consumers, the previously subsidized side of the market. In addition, the policy has likely accelerated the adoption of credit cards with higher interchange fees, thus diminishing—if not offsetting entirely—merchants' savings. Taken together, these effects impede the regulation's stated objective of enhancing consumers' welfare through lower retail prices. Our evidence adds empirical support to the concern that market failures in two-sided markets are hard to identify, and even harder to correct.}
+      \field{journaltitle}{Journal of Financial Economics}
+      \field{langid}{english}
+      \field{shorttitle}{Price {{Regulation}} in {{Two-Sided Markets}}}
+      \field{title}{Price {{Regulation}} in {{Two-Sided Markets}}: {{Empirical Evidence}} from {{Debit Cards}}}
+      \field{volume}{172}
+      \field{year}{2025}
+      \field{dateera}{ce}
+      \field{pages}{104094}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1016/j.jfineco.2025.104094
+      \endverb
+    \endentry
+    \entry{Nilson2020a}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=16ff1774c04145dc94208696ada628d8}{%
+           family={Nilson},
+           familyi={N\bibinitperiod},
+           given={Report},
+           giveni={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{16ff1774c04145dc94208696ada628d8}
+      \strng{fullhash}{16ff1774c04145dc94208696ada628d8}
+      \strng{fullhashraw}{16ff1774c04145dc94208696ada628d8}
+      \strng{bibnamehash}{16ff1774c04145dc94208696ada628d8}
+      \strng{authorbibnamehash}{16ff1774c04145dc94208696ada628d8}
+      \strng{authornamehash}{16ff1774c04145dc94208696ada628d8}
+      \strng{authorfullhash}{16ff1774c04145dc94208696ada628d8}
+      \strng{authorfullhashraw}{16ff1774c04145dc94208696ada628d8}
+      \field{sortinit}{N}
+      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{journaltitle}{Nilson Report}
+      \field{month}{12}
+      \field{title}{U.{{S}}. {{Consumer Payment Systems}}}
+      \field{volume}{1188}
+      \field{year}{2020}
+      \field{dateera}{ce}
+    \endentry
+    \entry{Rochet.Tirole2003}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=c774e33c3153ef9db1c5d50a7f69799d}{%
+           family={Rochet},
+           familyi={R\bibinitperiod},
+           given={Jean-Charles},
+           giveni={J\bibinithyphendelim C\bibinitperiod}}}%
+        {{hash=00e537376470e49a45c05eab98111caa}{%
+           family={Tirole},
+           familyi={T\bibinitperiod},
+           given={Jean},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{c07e4308d805a2d585fcfabf9ba4ca1d}
+      \strng{fullhash}{c07e4308d805a2d585fcfabf9ba4ca1d}
+      \strng{fullhashraw}{c07e4308d805a2d585fcfabf9ba4ca1d}
+      \strng{bibnamehash}{c07e4308d805a2d585fcfabf9ba4ca1d}
+      \strng{authorbibnamehash}{c07e4308d805a2d585fcfabf9ba4ca1d}
+      \strng{authornamehash}{c07e4308d805a2d585fcfabf9ba4ca1d}
+      \strng{authorfullhash}{c07e4308d805a2d585fcfabf9ba4ca1d}
+      \strng{authorfullhashraw}{c07e4308d805a2d585fcfabf9ba4ca1d}
+      \field{extraname}{1}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{issn}{1542-4766, 1542-4774}
+      \field{journaltitle}{Journal of the European Economic Association}
+      \field{langid}{english}
+      \field{month}{6}
+      \field{number}{4}
+      \field{title}{Platform {{Competition}} in {{Two-Sided Markets}}}
+      \field{volume}{1}
+      \field{year}{2003}
+      \field{dateera}{ce}
+      \field{pages}{990\bibrangedash 1029}
+      \range{pages}{40}
+      \verb{doi}
+      \verb 10.1162/154247603322493212
+      \endverb
+    \endentry
+    \entry{Rochet.Tirole2011}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=c774e33c3153ef9db1c5d50a7f69799d}{%
+           family={Rochet},
+           familyi={R\bibinitperiod},
+           given={Jean-Charles},
+           giveni={J\bibinithyphendelim C\bibinitperiod}}}%
+        {{hash=00e537376470e49a45c05eab98111caa}{%
+           family={Tirole},
+           familyi={T\bibinitperiod},
+           given={Jean},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{c07e4308d805a2d585fcfabf9ba4ca1d}
+      \strng{fullhash}{c07e4308d805a2d585fcfabf9ba4ca1d}
+      \strng{fullhashraw}{c07e4308d805a2d585fcfabf9ba4ca1d}
+      \strng{bibnamehash}{c07e4308d805a2d585fcfabf9ba4ca1d}
+      \strng{authorbibnamehash}{c07e4308d805a2d585fcfabf9ba4ca1d}
+      \strng{authornamehash}{c07e4308d805a2d585fcfabf9ba4ca1d}
+      \strng{authorfullhash}{c07e4308d805a2d585fcfabf9ba4ca1d}
+      \strng{authorfullhashraw}{c07e4308d805a2d585fcfabf9ba4ca1d}
+      \field{extraname}{2}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{issn}{15424766}
+      \field{journaltitle}{Journal of the European Economic Association}
+      \field{langid}{english}
+      \field{month}{6}
+      \field{number}{3}
+      \field{shorttitle}{Must-Take Cards}
+      \field{title}{Must-{{Take Cards}}: {{Merchant Discounts}} and {{Avoided Costs}}}
+      \field{volume}{9}
+      \field{year}{2011}
+      \field{dateera}{ce}
+      \field{pages}{462\bibrangedash 495}
+      \range{pages}{34}
+      \verb{doi}
+      \verb 10.1111/j.1542-4774.2011.01020.x
+      \endverb
+    \endentry
+    \entry{Shin2021}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=a29fd41bcb587cecd4a815b1a48ef69d}{%
+           family={Shin},
+           familyi={S\bibinitperiod},
+           given={Hyun\bibnamedelima Song},
+           giveni={H\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+      }
+      \strng{namehash}{a29fd41bcb587cecd4a815b1a48ef69d}
+      \strng{fullhash}{a29fd41bcb587cecd4a815b1a48ef69d}
+      \strng{fullhashraw}{a29fd41bcb587cecd4a815b1a48ef69d}
+      \strng{bibnamehash}{a29fd41bcb587cecd4a815b1a48ef69d}
+      \strng{authorbibnamehash}{a29fd41bcb587cecd4a815b1a48ef69d}
+      \strng{authornamehash}{a29fd41bcb587cecd4a815b1a48ef69d}
+      \strng{authorfullhash}{a29fd41bcb587cecd4a815b1a48ef69d}
+      \strng{authorfullhashraw}{a29fd41bcb587cecd4a815b1a48ef69d}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{journaltitle}{BIS Annual Economic Report}
+      \field{month}{6}
+      \field{title}{{{CBDCs}}: {{An Opportunity}} for the {{Monetary System}}}
+      \field{year}{2021}
+      \field{dateera}{ce}
+    \endentry
+    \entry{Teh.etal2022}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=e9004b40c06a6ff15f100824aeb84750}{%
+           family={Teh},
+           familyi={T\bibinitperiod},
+           given={Tat-How},
+           giveni={T\bibinithyphendelim H\bibinitperiod}}}%
+        {{hash=020bb7a8e18c0e0e75073e2232f4b3a0}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Chunchun},
+           giveni={C\bibinitperiod}}}%
+        {{hash=1022f600ae81af5a9aab3562b89da5ae}{%
+           family={Wright},
+           familyi={W\bibinitperiod},
+           given={Julian},
+           giveni={J\bibinitperiod}}}%
+        {{hash=3eb4b1e1420aae333b742b16f79d3eeb}{%
+           family={Zhou},
+           familyi={Z\bibinitperiod},
+           given={Junjie},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{34865102fe5db5e30d17556cae0bded1}
+      \strng{fullhash}{af2ce26eab6d80fad491dec7de139cbf}
+      \strng{fullhashraw}{af2ce26eab6d80fad491dec7de139cbf}
+      \strng{bibnamehash}{af2ce26eab6d80fad491dec7de139cbf}
+      \strng{authorbibnamehash}{af2ce26eab6d80fad491dec7de139cbf}
+      \strng{authornamehash}{34865102fe5db5e30d17556cae0bded1}
+      \strng{authorfullhash}{af2ce26eab6d80fad491dec7de139cbf}
+      \strng{authorfullhashraw}{af2ce26eab6d80fad491dec7de139cbf}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{abstract}{We provide a general framework to analyze competition between any number of two-sided platforms, in which buyers and sellers can multihome, and platforms compete on transaction fees charged on both sides. The framework allows buyers and sellers to have heterogenous benefits from using platforms for transactions, and additionally, buyers to have idiosyncratic preferences over using the different platforms. We highlight that multihoming in participation is not the only thing driving market outcomes; one has to also take into account buyers' preferences over which platform they transact on. We show how key primitives such as the number of platforms, the fraction of buyers that find multihoming costly, the value of transactions for buyers and sellers, and the degree of buyer heterogeneity jointly determine the level and structure of platform fees.}
+      \field{journaltitle}{American Economic Journal: Microeconomics}
+      \field{langid}{english}
+      \field{number}{4}
+      \field{title}{Multihoming and Oligopolistic Platform Competition}
+      \field{volume}{15}
+      \field{year}{2023}
+      \field{dateera}{ce}
+      \field{pages}{68\bibrangedash 113}
+      \range{pages}{46}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

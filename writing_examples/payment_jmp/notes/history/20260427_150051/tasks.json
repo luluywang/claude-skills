@@ -1,0 +1,9 @@
+{
+  "created": "2026-04-13",
+  "paper_type": "A",
+  "llm_tagging": false,
+  "tasks": [],
+  "paper_tasks": [
+    {"id": 100, "task": "relevance", "model": "sonnet", "status": "in_progress", "level_filter": "all", "include_appendix": true}
+  ]
+}

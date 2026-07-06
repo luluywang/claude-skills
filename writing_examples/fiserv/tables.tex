@@ -1,0 +1,146 @@
+\documentclass[main.tex]{subfiles}
+
+\begin{document}
+
+\begin{table}[H]
+  \centering
+  \caption{Summary of Fiserv Data}
+  \label{tab:fiserv-summary}
+
+  \begin{subtable}[t]{0.95\textwidth}
+    \centering
+    \caption{Settlement Data Cross Section from 2022}
+    \label{tab:settlement-summary}
+    \small
+    \input{../fiserv_output/tables/settlement_summary.tex}
+  \end{subtable}
+
+  \vspace{0.8em}
+
+  \begin{subtable}[t]{0.95\textwidth}
+    \centering
+    \caption{Summary of Clover Data}
+    \label{tab:clover-summary}
+    \small
+    \input{../fiserv_output/tables/clover_summary.tex}
+  \end{subtable}
+
+  \captionsetup{font=small}
+  \vspace{0.4em}
+  \begin{minipage}{\linewidth}
+    \small\textit{Notes:} Panel (a) shows summary statistics from the 2022 cross-section at the
+    merchant-sector level. The payment-method variables refer to the share of card sales at the merchant
+    on each payment method. Regulated debit cards are issued by large banks and exempt debit cards are issued
+    by small banks. Premium credit refers to high-interchange credit cards in the Visa Signature and Visa
+    Infinite (and the Mastercard equivalent) interchange tiers. Average interchange is calculated as total
+    interchange paid divided by total card sales. Transaction size is the total card dollar volume divided by the
+    number of transactions. Panel (b) shows summary statistics of the Clover data from 2019--2022 at the merchant-year
+    level. The cash and check share is defined as the dollar value of cash and check transactions divided
+    by the total value of transactions for the merchant in that year.
+  \end{minipage}
+\end{table}
+
+\clearpage
+
+\begin{table}[H]
+\caption{Spatial and Firm Determinants of Payment Mix \label{tab:payment_type}}
+
+\begin{centering}
+\small\resizebox{\textwidth}{!}{%
+  \input{../fiserv_output/tables/geo_tables.tex}
+}
+\par\end{centering}
+\captionnotes{\textit{Notes:} Dependent variables are firm-level transaction shares. Columns (1)--(3): Cash and check share, estimated on Clover data. Columns (4)--(6): Credit card share of card transactions, estimated on Fiserv settlement data. Independent variables include firm characteristics (sector, size), and local demographics. All regressions are estimated at the establishment level.}
+\end{table}
+
+\clearpage
+
+\begin{table}[H]
+\caption{Summary Statistics on Interchange Rates by Card Type Across Firms
+\label{tab:icg-summary}}
+
+\centering
+
+\input{../fiserv_output/tables/settlement_summary_rates}
+
+\captionnotes{\textit{Notes:} Data source: Fiserv settlement data, 2022. Interchange rates calculated as total net interchange divided by total net sales for each card type. Rates are missing if a payment method had no transactions for that merchant. Merchants are equally weighted (not dollar-weighted), which explains the differences in dollar-weighted averages in Figure \ref{fig:price-disc}.}
+\end{table}
+
+\clearpage
+
+\begin{table}[H]
+  \centering
+  \caption{Net Transfers from Interchange Fees}
+  \label{tab:redist}
+
+  \input{../output/tables/redistribution_main_se.tex}
+
+  \captionsetup{font=small}
+  \captionnotes{\textit{Notes:} This table shows the estimated net transfers from interchange fees relative to a world with zero interchange fees. Panel (a) presents effects as basis points of baseline consumption. Panel (b) shows effects in dollar terms (normalized to \$12 trillion in total purchases, from the Nilson Report). ``Full Model'' incorporates heterogeneity in both payment composition and costs across merchants. ``Homogeneous'' merchants assumes uniform payment composition and costs. ``Difference'' shows the combined attenuation effect of heterogeneity in payment composition and fees. ``Consumer Sorting'' and ``Merchant Fee Heterogeneity'' are additive components that together equal the ``Difference'' row. Standard errors for all entries are computed via a parametric bootstrap, described in Appendix \ref{subsec:appendix-bootstrap}.}
+\end{table}
+
+\clearpage
+
+\begin{table}[H]
+\caption{Comparison of Sufficient Statistic and Structural Approaches\label{tab:compare-ss-model}}
+
+\begin{subtable}[t]{0.9\textwidth}
+\caption{Effects in Basis Points}
+
+\input{../output/tables/calibration_comparison_table}
+\end{subtable}
+
+\vspace{0.5cm}
+
+\begin{subtable}[t]{0.9\textwidth}
+\caption{Effects in Dollars}
+
+\input{../output/tables/calibration_comparison_table_dollars.tex}
+\end{subtable}
+
+\captionsetup{font=small}
+\captionnotes{\textit{Notes:} Table \ref{tab:compare-ss-model} compares welfare estimates from the sufficient-statistics approach to the exact equilibrium effects from the structural model. Row 1 reports baseline sufficient-statistic estimates from the Fiserv data. Row 2 applies the sufficient-statistic formula to synthetic data from the calibrated model with perfect pass-through ($j^*=50$ firms per market). Row 3 reports exact equilibrium welfare effects from the structural model with perfect pass-through, allowing consumers to fully re-optimize. Row 4 reports exact equilibrium effects with incomplete pass-through ($j^*=2$ large firms in each sector).
+The similarity of results across rows shows that the sufficient-statistics approach accurately captures the welfare effects of interchange fees, even when accounting for consumer re-optimization and incomplete pass-through.
+% The close similarity across rows validates the sufficient-statistics approach: consumer reallocation effects are negligible (comparing rows 2-3), and incomplete pass-through has minimal impact on welfare effects for common shocks like interchange fees (comparing rows 3-5).
+}
+\end{table}
+
+\clearpage
+
+\begin{table}[H]
+  \centering
+  \caption{Sensitivity Analysis: Data Aggregation and Pass-Through Rates}
+  \label{tab:sensitivity-analysis}
+  \small
+
+  \input{../output/tables/sensitivity_analysis.tex}
+
+  \captionsetup{font=small}
+  \captionnotes{\textit{Notes:} Table \ref{tab:sensitivity-analysis} presents sensitivity analysis examining how baseline results vary under alternative assumptions. ``Baseline'' replicates our main estimates with full pass-through. ``70\% Price Pass-Through'' reduces only price pass-through to 70\% while maintaining full rewards pass-through. ``70\% Rewards Pass-Through'' maintains full price pass-through but reduces rewards pass-through to 70\%. ``Establishment-Level Data'' uses establishment-level rather than firm-level aggregation.}
+\end{table}
+
+\clearpage
+
+\begin{table}[H]
+  \centering
+  \caption{Welfare Effects of Interchange Fee Policies}
+  \label{tab:welfare_policies}
+
+  \vspace{0.5em}
+  Panel A: Effects of the Durbin Amendment
+  \label{tab:durbin}
+
+  \vspace{0.3em}
+  \input{../output/tables/durbin_effects.tex}
+
+  \vspace{1.5em}
+  Panel B: The Rise of Premium Credit Cards
+  \label{tab:premiumization}
+
+  \vspace{0.3em}
+  \input{../output/tables/premiumization_effects.tex}
+
+  \captionnotes{\textit{Notes:} Table \ref{tab:welfare_policies} shows estimated consumer welfare effects of two features of the interchange system. Panel A shows effects of the Durbin Amendment, which capped interchange fees on regulated debit cards; welfare effects account for both capping baseline interchange fees and eliminating fee heterogeneity. Panel B shows effects of the increase in interchange fees on premium credit cards relative to a world in which premium cards charged the same interchange fees as basic cards; welfare effects account for both the increase in overall fees and different levels of sector and size discounts for premium credit interchange fees. Standard errors for all entries are computed via a parametric bootstrap, described in Appendix \ref{subsec:appendix-bootstrap}.}
+\end{table}
+
+\end{document}

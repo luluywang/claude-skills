@@ -1,0 +1,41 @@
+\ifx\undefined\bysame
+\newcommand{\bysame}{\leavevmode\hbox to\leftmargin{\hrulefill\,\,}}
+\fi
+\begin{thebibliography}{xx}
+
+\harvarditem[Butters et al.]{Butters, Sacks and Seo}{2022}{Butters.etal2022}
+{\bf Butters, R.~Andrew, Daniel~W. Sacks, and Boyoung Seo}, ``How {{Do National
+  Firms Respond}} to {{Local Cost Shocks}}?,'' {\it American Economic Review},
+  May 2022, {\it 112} (5), 1737--1772.
+
+\harvarditem[Chang et al.]{Chang, Evans and {Garcia
+  Swartz}}{2005}{Chang.etal2005}
+{\bf Chang, Howard, David~S. Evans, and Daniel~D. {Garcia Swartz}}, ``The
+  Effect of Regulatory Intervention in Two-Sided Markets: {{An}} Assessment of
+  Interchange-Fee Capping in {{Australia}},'' {\it Review of Network
+  Economics}, 2005, {\it 4} (4), 328--358.
+
+\harvarditem[Harding et al.]{Harding, Leibtag and
+  Lovenheim}{2012}{Harding.etal2012}
+{\bf Harding, Matthew, Ephraim Leibtag, and Michael~F. Lovenheim}, ``The
+  Heterogeneous Geographic and Socioeconomic Incidence of Cigarette Taxes:
+  {{Evidence}} from {{Nielsen Homescan}} Data,'' {\it American Economic
+  Journal: Economic Policy}, 2012, {\it 4} (4), 169--198.
+
+\harvarditem[Kay et al.]{Kay, Manuszak and Vojtech}{2018}{Kay.etal2018}
+{\bf Kay, Benjamin~S., Mark~D. Manuszak, and Cindy~M. Vojtech}, ``Competition
+  and Complementarities in Retail Banking: {{Evidence}} from Debit Card
+  Interchange Regulation,'' {\it Journal of Financial Intermediation}, April
+  2018, {\it 34}, 91--108.
+
+\harvarditem[Mukharlyamov and Sarin]{Mukharlyamov and
+  Sarin}{2025}{Mukharlyamov.Sarin2025}
+{\bf Mukharlyamov, Vladimir and Natasha Sarin}, ``Price {{Regulation}} in
+  {{Two-Sided Markets}}: {{Empirical Evidence}} from {{Debit Cards}},'' {\it
+  Journal of Financial Economics}, April 2025, {\it Forthcoming.}
+
+\harvarditem[Sangani]{Sangani}{2026}{Sangani2026}
+{\bf Sangani, Kunal}, ``Complete Pass-Through in Levels,'' {\it Quarterly
+  Journal of Economics}, 2026, {\it 141} (2), 1077--1135.
+
+\end{thebibliography}

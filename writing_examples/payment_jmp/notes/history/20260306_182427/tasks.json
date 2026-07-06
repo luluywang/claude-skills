@@ -1,0 +1,12 @@
+{
+  "created": "2026-03-01T22:18:00Z",
+  "paper_type": "B",
+  "llm_tagging": true,
+  "tasks": [
+    {"id": 1, "file": "appendix_model_oa.tex", "task": "grammar", "model": "haiku", "status": "complete"},
+    {"id": 2, "file": "appendix_model_oa.tex", "task": "ai_detection", "model": "haiku", "status": "complete"},
+    {"id": 3, "file": "appendix_model_oa.tex", "task": "word_choice", "model": "haiku", "status": "complete"},
+    {"id": 4, "file": "appendix_model_oa.tex", "task": "sentence_analysis", "model": "haiku", "status": "complete"}
+  ],
+  "paper_tasks": []
+}

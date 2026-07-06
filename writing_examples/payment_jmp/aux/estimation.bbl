@@ -1,0 +1,589 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{cms/global//global/global/global}
+    \entry{Berg.etal2024}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=32903e19f1e02fc9fb4466c14fee18b1}{%
+           family={Berg},
+           familyi={B\bibinitperiod},
+           given={Tobias},
+           giveni={T\bibinitperiod}}}%
+        {{hash=b85abed4d000a991a17cb4b6f9e2a4cb}{%
+           family={Burg},
+           familyi={B\bibinitperiod},
+           given={Valentin},
+           giveni={V\bibinitperiod}}}%
+        {{hash=ec3c804f284f805bb9ed3da42dd83480}{%
+           family={Keil},
+           familyi={K\bibinitperiod},
+           given={Jan},
+           giveni={J\bibinitperiod}}}%
+        {{hash=fe02778a8368fd1bb53bee5ffc0dd318}{%
+           family={Puri},
+           familyi={P\bibinitperiod},
+           given={Manju},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{34a69f0024cce44cb1db8328d65c3a5a}
+      \strng{fullhash}{cc795e8984ff678589bc533c24c3aa60}
+      \strng{fullhashraw}{cc795e8984ff678589bc533c24c3aa60}
+      \strng{bibnamehash}{cc795e8984ff678589bc533c24c3aa60}
+      \strng{authorbibnamehash}{cc795e8984ff678589bc533c24c3aa60}
+      \strng{authornamehash}{34a69f0024cce44cb1db8328d65c3a5a}
+      \strng{authorfullhash}{cc795e8984ff678589bc533c24c3aa60}
+      \strng{authorfullhashraw}{cc795e8984ff678589bc533c24c3aa60}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{journaltitle}{Journal of Financial Economics}
+      \field{langid}{english}
+      \field{title}{The {{Economics}} of “{{Buy Now}}, {{Pay Later}}”: {{A Merchant}}’s {{Perspective}}}
+      \field{volume}{171}
+      \field{year}{2025}
+      \field{dateera}{ce}
+      \field{pages}{104093}
+      \range{pages}{1}
+      \verb{file}
+      \verb /Users/luluywang/Zotero/storage/AZ3T2DK3/Berg et al. - The Economics of “Buy Now, Pay Later” A Merchant’.pdf
+      \endverb
+    \endentry
+    \entry{Berry.etal2004}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=cb5bb70f75321fd27d7160c5224b258d}{%
+           family={Berry},
+           familyi={B\bibinitperiod},
+           given={Steven},
+           giveni={S\bibinitperiod}}}%
+        {{hash=482d9b8712705a27fa4e150cb662cfeb}{%
+           family={Levinsohn},
+           familyi={L\bibinitperiod},
+           given={James},
+           giveni={J\bibinitperiod}}}%
+        {{hash=e5ca2972929372ecfef828a3c1eba9d7}{%
+           family={Pakes},
+           familyi={P\bibinitperiod},
+           given={Ariel},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{581e8f69bc7c66a1f20e47717e02f7be}
+      \strng{fullhash}{2fae5796c89fce0684591a3d53c243a7}
+      \strng{fullhashraw}{2fae5796c89fce0684591a3d53c243a7}
+      \strng{bibnamehash}{2fae5796c89fce0684591a3d53c243a7}
+      \strng{authorbibnamehash}{2fae5796c89fce0684591a3d53c243a7}
+      \strng{authornamehash}{581e8f69bc7c66a1f20e47717e02f7be}
+      \strng{authorfullhash}{2fae5796c89fce0684591a3d53c243a7}
+      \strng{authorfullhashraw}{2fae5796c89fce0684591a3d53c243a7}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{issn}{0022-3808, 1537-534X}
+      \field{journaltitle}{Journal of Political Economy}
+      \field{langid}{english}
+      \field{month}{2}
+      \field{number}{1}
+      \field{shorttitle}{Differentiated {{Products Demand Systems}} from a {{Combination}} of {{Micro}} and {{Macro Data}}}
+      \field{title}{Differentiated {{Products Demand Systems}} from a {{Combination}} of {{Micro}} and {{Macro Data}}: {{The New Car Market}}}
+      \field{volume}{112}
+      \field{year}{2004}
+      \field{dateera}{ce}
+      \field{pages}{68\bibrangedash 105}
+      \range{pages}{38}
+      \verb{doi}
+      \verb 10.1086/379939
+      \endverb
+    \endentry
+    \entry{Edmond.etal2022}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=c6a3b8b535370a45581c4611bf3b9cce}{%
+           family={Edmond},
+           familyi={E\bibinitperiod},
+           given={Chris},
+           giveni={C\bibinitperiod}}}%
+        {{hash=57d889381dd812cd52ac02658e69a7be}{%
+           family={Midrigan},
+           familyi={M\bibinitperiod},
+           given={Virgiliu},
+           giveni={V\bibinitperiod}}}%
+        {{hash=bb59aa3b4e241c8c5c8182cf65e14dc9}{%
+           family={Xu},
+           familyi={X\bibinitperiod},
+           given={Daniel\bibnamedelima Yi},
+           giveni={D\bibinitperiod\bibinitdelim Y\bibinitperiod}}}%
+      }
+      \strng{namehash}{0d0e6b0b65c0f8d69dbd0cc0cb0ad5bc}
+      \strng{fullhash}{a073e41a7e1559940abb7106e9240ac2}
+      \strng{fullhashraw}{a073e41a7e1559940abb7106e9240ac2}
+      \strng{bibnamehash}{a073e41a7e1559940abb7106e9240ac2}
+      \strng{authorbibnamehash}{a073e41a7e1559940abb7106e9240ac2}
+      \strng{authornamehash}{0d0e6b0b65c0f8d69dbd0cc0cb0ad5bc}
+      \strng{authorfullhash}{a073e41a7e1559940abb7106e9240ac2}
+      \strng{authorfullhashraw}{a073e41a7e1559940abb7106e9240ac2}
+      \field{sortinit}{E}
+      \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{abstract}{We study the welfare costs of markups in a dynamic model with heterogeneous firms and endogenously variable markups. Our general framework encompasses a range of popular market structures. We provide aggregation results showing how the macro implications of micro-level markup heterogeneity can be summarized by a few key statistics. We calibrate our model to match US Census of Manufactures firm-level data and find that the welfare costs of markups can be large. We decompose the costs of markups into three channels: (i) an aggregate markup that acts like a uniform output tax, (ii) misallocation of factors of production, and (iii) inefficient entry. Across all specifications, we find that the aggregate markup and misallocation channels account for the bulk of the costs of markups and that the entry channel is much less important. Subsidizing entry is not an effective tool in our model. While an increase in competition reduces incumbents' markups, it also reallocates market shares towards larger incumbent firms and the net effect is that the aggregate markup changes little.}
+      \field{journaltitle}{Journal of Political Economy}
+      \field{langid}{english}
+      \field{number}{7}
+      \field{title}{How {{Costly Are Markups}}?}
+      \field{volume}{131}
+      \field{year}{2023}
+      \field{dateera}{ce}
+      \field{pages}{1619\bibrangedash 1675}
+      \range{pages}{57}
+      \verb{doi}
+      \verb 10.1086/722986
+      \endverb
+    \endentry
+    \entry{Felt.etal2020}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=904db1ddf1826f92b549e85476d89324}{%
+           family={Felt},
+           familyi={F\bibinitperiod},
+           given={Marie-Hélène},
+           giveni={M\bibinithyphendelim H\bibinitperiod}}}%
+        {{hash=1028fb35f981fcbb07024dc912fc7dca}{%
+           family={Hayashi},
+           familyi={H\bibinitperiod},
+           given={Fumiko},
+           giveni={F\bibinitperiod}}}%
+        {{hash=79c1709cf0d4e0492fb48d4b8f52e297}{%
+           family={Stavins},
+           familyi={S\bibinitperiod},
+           given={Joanna},
+           giveni={J\bibinitperiod}}}%
+        {{hash=89fc7d8cb69ee7b12aff9d2c515066c4}{%
+           family={Welte},
+           familyi={W\bibinitperiod},
+           given={Angelika},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{cf18ce63a0a23ca1df0ddff2ffe602ec}
+      \strng{fullhash}{cc9e2c3142d6708d60ce94879017550e}
+      \strng{fullhashraw}{cc9e2c3142d6708d60ce94879017550e}
+      \strng{bibnamehash}{cc9e2c3142d6708d60ce94879017550e}
+      \strng{authorbibnamehash}{cc9e2c3142d6708d60ce94879017550e}
+      \strng{authornamehash}{cf18ce63a0a23ca1df0ddff2ffe602ec}
+      \strng{authorfullhash}{cc9e2c3142d6708d60ce94879017550e}
+      \strng{authorfullhashraw}{cc9e2c3142d6708d60ce94879017550e}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{abstract}{Using data from the United States and Canada, we quantify consumers' net pecuniary cost of using cash, credit cards, and debit cards for purchases across income cohorts. The net cost includes fees paid to financial institutions, rewards received from credit or debit card issuers, and the merchant cost of accepting payments that is passed on to consumers as higher retail prices. Even though credit cards are more expensive for merchants to accept compared with other payment methods, merchants typically do not differentiate prices at checkout, but instead pass through their costs to all consumers. As a result, credit card transactions are crosssubsidized by cheaper debit and cash payments. Card rewards and consumer fees paid to financial institutions are additional sources of cross-subsidies. We find that consumers in the lowest-income cohort pay the highest net pecuniary cost as a percentage of transaction value, while consumers in the highest-income cohort pay the lowest. This result is robust under various scenarios and assumptions, suggesting payment card pricing and merchant cost pass-through have regressive distributional effects in the United States and Canada.}
+      \field{issn}{0378-4266}
+      \field{journaltitle}{Journal of Banking \& Finance}
+      \field{langid}{english}
+      \field{month}{9}
+      \field{title}{Regressive {{Effects}} of {{Payment Card Pricing}} and {{Merchant Cost Pass-through}} in the {{United States}} and {{Canada}}}
+      \field{volume}{154}
+      \field{year}{2023}
+      \field{dateera}{ce}
+      \field{pages}{106968}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1016/j.jbankfin.2023.106968
+      \endverb
+    \endentry
+    \entry{Hastings.etal2017}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=5eda248b84717a540b06ce69e5774cde}{%
+           family={Hastings},
+           familyi={H\bibinitperiod},
+           given={Justine\bibnamedelima S.},
+           giveni={J\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+        {{hash=6fc88c6bae8c9f898c876dbb9c822fff}{%
+           family={Hortaçsu},
+           familyi={H\bibinitperiod},
+           given={Ali},
+           giveni={A\bibinitperiod}}}%
+        {{hash=f8d0c78db178b90df829e979334025a4}{%
+           family={Syverson},
+           familyi={S\bibinitperiod},
+           given={Chad},
+           giveni={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{5c4ed39e23bdd9af2f0d25c22ac70a59}
+      \strng{fullhash}{af3b18b9f35d9a5ddfc374f059cc1d26}
+      \strng{fullhashraw}{af3b18b9f35d9a5ddfc374f059cc1d26}
+      \strng{bibnamehash}{af3b18b9f35d9a5ddfc374f059cc1d26}
+      \strng{authorbibnamehash}{af3b18b9f35d9a5ddfc374f059cc1d26}
+      \strng{authornamehash}{5c4ed39e23bdd9af2f0d25c22ac70a59}
+      \strng{authorfullhash}{af3b18b9f35d9a5ddfc374f059cc1d26}
+      \strng{authorfullhashraw}{af3b18b9f35d9a5ddfc374f059cc1d26}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{journaltitle}{Econometrica}
+      \field{langid}{english}
+      \field{number}{6}
+      \field{title}{Sales Force and Competition in Financial Product Markets: The Case of {{Mexico}}'s Social Security Privatization}
+      \field{volume}{85}
+      \field{year}{2017}
+      \field{dateera}{ce}
+      \field{pages}{1723\bibrangedash 1761}
+      \range{pages}{39}
+      \verb{doi}
+      \verb 10.3982/ECTA12302
+      \endverb
+    \endentry
+    \entry{Hayashi2012}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=1028fb35f981fcbb07024dc912fc7dca}{%
+           family={Hayashi},
+           familyi={H\bibinitperiod},
+           given={Fumiko},
+           giveni={F\bibinitperiod}}}%
+      }
+      \strng{namehash}{1028fb35f981fcbb07024dc912fc7dca}
+      \strng{fullhash}{1028fb35f981fcbb07024dc912fc7dca}
+      \strng{fullhashraw}{1028fb35f981fcbb07024dc912fc7dca}
+      \strng{bibnamehash}{1028fb35f981fcbb07024dc912fc7dca}
+      \strng{authorbibnamehash}{1028fb35f981fcbb07024dc912fc7dca}
+      \strng{authornamehash}{1028fb35f981fcbb07024dc912fc7dca}
+      \strng{authorfullhash}{1028fb35f981fcbb07024dc912fc7dca}
+      \strng{authorfullhashraw}{1028fb35f981fcbb07024dc912fc7dca}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{journaltitle}{Federal Reserve Bank of Kansas City Economic Review}
+      \field{langid}{english}
+      \field{title}{The {{New Debit Card Regulations}}: {{Initial Effects}} on {{Networks}} and {{Banks}}}
+      \field{year}{2012}
+      \field{dateera}{ce}
+      \field{pages}{38}
+      \range{pages}{1}
+    \endentry
+    \entry{Higgins2022}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=c8583451eb6fb2fdacca3269a23372b1}{%
+           family={Higgins},
+           familyi={H\bibinitperiod},
+           given={Sean},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{c8583451eb6fb2fdacca3269a23372b1}
+      \strng{fullhash}{c8583451eb6fb2fdacca3269a23372b1}
+      \strng{fullhashraw}{c8583451eb6fb2fdacca3269a23372b1}
+      \strng{bibnamehash}{c8583451eb6fb2fdacca3269a23372b1}
+      \strng{authorbibnamehash}{c8583451eb6fb2fdacca3269a23372b1}
+      \strng{authornamehash}{c8583451eb6fb2fdacca3269a23372b1}
+      \strng{authorfullhash}{c8583451eb6fb2fdacca3269a23372b1}
+      \strng{authorfullhashraw}{c8583451eb6fb2fdacca3269a23372b1}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{abstract}{Do coordination failures constrain financial technology adoption? Exploiting the Mexican government's rollout of one million debit cards to poor households from 2009–2012, I examine responses on both sides of the market, and find important spillovers and distributional impacts. On the supply side, small retail firms adopted point-of-sale terminals to accept card payments. On the demand side, this led to a 21\% increase in other consumers' card adoption. The supply-side technology adoption response had positive effects on both richer consumers and small retail firms: richer consumers shifted 13\% of their supermarket consumption to small retailers, whose sales and profits increased.}
+      \field{journaltitle}{American Economic Review}
+      \field{month}{11}
+      \field{number}{11}
+      \field{title}{Financial {{Technology Adoption}}: {{Network Externalities}} of {{Cashless Payments}} in {{Mexico}}}
+      \field{volume}{114}
+      \field{year}{2024}
+      \field{dateera}{ce}
+      \field{pages}{3469\bibrangedash 3512}
+      \range{pages}{44}
+    \endentry
+    \entry{Lowe2005}{inproceedings}{}{}
+      \name{author}{1}{}{%
+        {{hash=26f158f73c135b7918a4bbdc43cf2b3a}{%
+           family={Lowe},
+           familyi={L\bibinitperiod},
+           given={Philip},
+           giveni={P\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Santa Fe, New Mexico}%
+      }
+      \list{publisher}{1}{%
+        {Kansas City Federal Reserve}%
+      }
+      \strng{namehash}{26f158f73c135b7918a4bbdc43cf2b3a}
+      \strng{fullhash}{26f158f73c135b7918a4bbdc43cf2b3a}
+      \strng{fullhashraw}{26f158f73c135b7918a4bbdc43cf2b3a}
+      \strng{bibnamehash}{26f158f73c135b7918a4bbdc43cf2b3a}
+      \strng{authorbibnamehash}{26f158f73c135b7918a4bbdc43cf2b3a}
+      \strng{authornamehash}{26f158f73c135b7918a4bbdc43cf2b3a}
+      \strng{authorfullhash}{26f158f73c135b7918a4bbdc43cf2b3a}
+      \strng{authorfullhashraw}{26f158f73c135b7918a4bbdc43cf2b3a}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Payments {{System Research Conferences}}}
+      \field{month}{5}
+      \field{title}{Payments System Reform: {{The Australian}} Experience}
+      \field{year}{2005}
+      \field{dateera}{ce}
+    \endentry
+    \entry{Mukharlyamov.Sarin2025}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=80abf34e78859401085dde3a545f26b6}{%
+           family={Mukharlyamov},
+           familyi={M\bibinitperiod},
+           given={Vladimir},
+           giveni={V\bibinitperiod}}}%
+        {{hash=c540b33534b899ed6018a64e6ba7372e}{%
+           family={Sarin},
+           familyi={S\bibinitperiod},
+           given={Natasha},
+           giveni={N\bibinitperiod}}}%
+      }
+      \strng{namehash}{862a2852688f76ac7e9691d382b6b742}
+      \strng{fullhash}{862a2852688f76ac7e9691d382b6b742}
+      \strng{fullhashraw}{862a2852688f76ac7e9691d382b6b742}
+      \strng{bibnamehash}{862a2852688f76ac7e9691d382b6b742}
+      \strng{authorbibnamehash}{862a2852688f76ac7e9691d382b6b742}
+      \strng{authornamehash}{862a2852688f76ac7e9691d382b6b742}
+      \strng{authorfullhash}{862a2852688f76ac7e9691d382b6b742}
+      \strng{authorfullhashraw}{862a2852688f76ac7e9691d382b6b742}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{abstract}{This paper studies the impact of price regulation in two-sided markets, where intermediaries must get both sides of the market on board. Since platforms such as debit card networks can only succeed by simultaneously convincing consumers to use cards and merchants to accept them, they often subsidize one side of the market to generate supracompetitive profits from the other side (Rochet and Tirole 2003). Using a novel dataset on card processing fees, we show a regulation restricting banks' ability to charge high processing fees on debit-card transactions (the Durbin Amendment of the 2010 DoddFrank Act) led to higher checking account fees paid by consumers, the previously subsidized side of the market. In addition, the policy has likely accelerated the adoption of credit cards with higher interchange fees, thus diminishing—if not offsetting entirely—merchants' savings. Taken together, these effects impede the regulation's stated objective of enhancing consumers' welfare through lower retail prices. Our evidence adds empirical support to the concern that market failures in two-sided markets are hard to identify, and even harder to correct.}
+      \field{journaltitle}{Journal of Financial Economics}
+      \field{langid}{english}
+      \field{shorttitle}{Price {{Regulation}} in {{Two-Sided Markets}}}
+      \field{title}{Price {{Regulation}} in {{Two-Sided Markets}}: {{Empirical Evidence}} from {{Debit Cards}}}
+      \field{volume}{172}
+      \field{year}{2025}
+      \field{dateera}{ce}
+      \field{pages}{104094}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1016/j.jfineco.2025.104094
+      \endverb
+    \endentry
+    \entry{NACHA2017}{report}{}{}
+      \name{author}{1}{}{%
+        {{hash=2df150b605d33d7d0cfc25ec94f8a1e4}{%
+           family={{NACHA}},
+           familyi={N\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Optimized Payments Consulting}%
+      }
+      \strng{namehash}{2df150b605d33d7d0cfc25ec94f8a1e4}
+      \strng{fullhash}{2df150b605d33d7d0cfc25ec94f8a1e4}
+      \strng{fullhashraw}{2df150b605d33d7d0cfc25ec94f8a1e4}
+      \strng{bibnamehash}{2df150b605d33d7d0cfc25ec94f8a1e4}
+      \strng{authorbibnamehash}{2df150b605d33d7d0cfc25ec94f8a1e4}
+      \strng{authornamehash}{2df150b605d33d7d0cfc25ec94f8a1e4}
+      \strng{authorfullhash}{2df150b605d33d7d0cfc25ec94f8a1e4}
+      \strng{authorfullhashraw}{2df150b605d33d7d0cfc25ec94f8a1e4}
+      \field{sortinit}{N}
+      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{title}{Understanding the {{Cost}} of {{Processing Card Payments}}}
+      \field{year}{2017}
+      \field{dateera}{ce}
+      \field{pages}{8}
+      \range{pages}{1}
+    \endentry
+    \entry{Nilson2020d}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=16ff1774c04145dc94208696ada628d8}{%
+           family={Nilson},
+           familyi={N\bibinitperiod},
+           given={Report},
+           giveni={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{16ff1774c04145dc94208696ada628d8}
+      \strng{fullhash}{16ff1774c04145dc94208696ada628d8}
+      \strng{fullhashraw}{16ff1774c04145dc94208696ada628d8}
+      \strng{bibnamehash}{16ff1774c04145dc94208696ada628d8}
+      \strng{authorbibnamehash}{16ff1774c04145dc94208696ada628d8}
+      \strng{authornamehash}{16ff1774c04145dc94208696ada628d8}
+      \strng{authorfullhash}{16ff1774c04145dc94208696ada628d8}
+      \strng{authorfullhashraw}{16ff1774c04145dc94208696ada628d8}
+      \field{sortinit}{N}
+      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{journaltitle}{Nilson Report}
+      \field{month}{2}
+      \field{title}{General {{Purpose Cards}} – {{U}}.{{S}}. 2019}
+      \field{volume}{1169}
+      \field{year}{2020}
+      \field{dateera}{ce}
+    \endentry
+    \entry{Petrin2002}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=dd3b05febc0efc314cb149250e5eebbf}{%
+           family={Petrin},
+           familyi={P\bibinitperiod},
+           given={Amil},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{dd3b05febc0efc314cb149250e5eebbf}
+      \strng{fullhash}{dd3b05febc0efc314cb149250e5eebbf}
+      \strng{fullhashraw}{dd3b05febc0efc314cb149250e5eebbf}
+      \strng{bibnamehash}{dd3b05febc0efc314cb149250e5eebbf}
+      \strng{authorbibnamehash}{dd3b05febc0efc314cb149250e5eebbf}
+      \strng{authornamehash}{dd3b05febc0efc314cb149250e5eebbf}
+      \strng{authorfullhash}{dd3b05febc0efc314cb149250e5eebbf}
+      \strng{authorfullhashraw}{dd3b05febc0efc314cb149250e5eebbf}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{journaltitle}{Journal of Political Economy}
+      \field{langid}{english}
+      \field{number}{4}
+      \field{title}{Quantifying the {{Benefits}} of {{New Products}}: {{The Case}} of the {{Minivan}}}
+      \field{volume}{110}
+      \field{year}{2002}
+      \field{dateera}{ce}
+    \endentry
+    \entry{Sangani2024}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=6d3425f6f84d8a0cf71716c3ff272e4a}{%
+           family={Sangani},
+           familyi={S\bibinitperiod},
+           given={Kunal},
+           giveni={K\bibinitperiod}}}%
+      }
+      \strng{namehash}{6d3425f6f84d8a0cf71716c3ff272e4a}
+      \strng{fullhash}{6d3425f6f84d8a0cf71716c3ff272e4a}
+      \strng{fullhashraw}{6d3425f6f84d8a0cf71716c3ff272e4a}
+      \strng{bibnamehash}{6d3425f6f84d8a0cf71716c3ff272e4a}
+      \strng{authorbibnamehash}{6d3425f6f84d8a0cf71716c3ff272e4a}
+      \strng{authornamehash}{6d3425f6f84d8a0cf71716c3ff272e4a}
+      \strng{authorfullhash}{6d3425f6f84d8a0cf71716c3ff272e4a}
+      \strng{authorfullhashraw}{6d3425f6f84d8a0cf71716c3ff272e4a}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{journaltitle}{Working Paper}
+      \field{langid}{english}
+      \field{title}{Markups Across the Income Distribution: Measurement and Implications}
+      \field{year}{2024}
+      \field{dateera}{ce}
+    \endentry
+    \entry{Sraer.Thesmar2023a}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=15330422c233ccbd1acdb9417917efe0}{%
+           family={Sraer},
+           familyi={S\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod}}}%
+        {{hash=2745c40357948ef4893843286a1021e3}{%
+           family={Thesmar},
+           familyi={T\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{f8f0b216898319775c01c8c4d8d99924}
+      \strng{fullhash}{f8f0b216898319775c01c8c4d8d99924}
+      \strng{fullhashraw}{f8f0b216898319775c01c8c4d8d99924}
+      \strng{bibnamehash}{f8f0b216898319775c01c8c4d8d99924}
+      \strng{authorbibnamehash}{f8f0b216898319775c01c8c4d8d99924}
+      \strng{authornamehash}{f8f0b216898319775c01c8c4d8d99924}
+      \strng{authorfullhash}{f8f0b216898319775c01c8c4d8d99924}
+      \strng{authorfullhashraw}{f8f0b216898319775c01c8c4d8d99924}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{abstract}{We propose a method to estimate the effect of firm policies (e.g., bankruptcy laws) on allocative efficiency using (quasi-)experimental evidence. Our approach takes general equilibrium effects into account and requires neither a structural estimation nor a precise assumption on how the experiment affects firms. Our aggregation formula relies on treatment effects of the policy on the distribution of output-to-capital ratios, which are easily estimated. We show this method is valid for a large class of commonly used models in macrofinance. We apply it to the French banking deregulation episode of the mid-1980s and find an increase in aggregate TFP of 5 percent.}
+      \field{issn}{0002-8282}
+      \field{journaltitle}{American Economic Review}
+      \field{langid}{english}
+      \field{month}{4}
+      \field{number}{4}
+      \field{title}{How to {{Use Natural Experiments}} to {{Estimate Misallocation}}}
+      \field{volume}{113}
+      \field{year}{2023}
+      \field{dateera}{ce}
+      \field{pages}{906\bibrangedash 938}
+      \range{pages}{33}
+      \verb{doi}
+      \verb 10.1257/aer.20190609
+      \endverb
+      \keyw{Banks,Brokerage,Capacity Financing Policy,Capital and Ownership Structure,Depository Institutions,Financial Risk and Risk Management,Fixed Investment and Inventory Studies,Goodwill Business Taxes and Subsidies including sales and value-added (VAT),Micro Finance Institutions,Mortgages Investment Banking,Ratings and Ratings Agencies Financial Institutions and Services: Government Policy and Regulation Capital Budgeting,Value of Firms,Venture Capital}
+    \endentry
+    \entry{Visa2020}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=89fc0d6fe12b0e0c1af5c7a0373435a6}{%
+           family={{Visa}},
+           familyi={V\bibinitperiod}}}%
+      }
+      \strng{namehash}{89fc0d6fe12b0e0c1af5c7a0373435a6}
+      \strng{fullhash}{89fc0d6fe12b0e0c1af5c7a0373435a6}
+      \strng{fullhashraw}{89fc0d6fe12b0e0c1af5c7a0373435a6}
+      \strng{bibnamehash}{89fc0d6fe12b0e0c1af5c7a0373435a6}
+      \strng{authorbibnamehash}{89fc0d6fe12b0e0c1af5c7a0373435a6}
+      \strng{authornamehash}{89fc0d6fe12b0e0c1af5c7a0373435a6}
+      \strng{authorfullhash}{89fc0d6fe12b0e0c1af5c7a0373435a6}
+      \strng{authorfullhashraw}{89fc0d6fe12b0e0c1af5c7a0373435a6}
+      \field{sortinit}{V}
+      \field{sortinithash}{afb52128e5b4dc4b843768c0113d673b}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{9}
+      \field{title}{Annual {{Report}} 2020}
+      \field{year}{2020}
+      \field{dateera}{ce}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

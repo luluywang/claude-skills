@@ -1,0 +1,30 @@
+{
+  "created": "2026-02-27T09:11:00Z",
+  "paper_type": null,
+  "llm_tagging": false,
+  "tasks": [],
+  "reflow_tasks": [
+    {"id": 1, "file": "main.tex", "task": "reflow", "status": "in_progress"},
+    {"id": 2, "file": "intro.tex", "task": "reflow", "status": "in_progress"},
+    {"id": 3, "file": "institutional_details.tex", "task": "reflow", "status": "in_progress"},
+    {"id": 4, "file": "data.tex", "task": "reflow", "status": "in_progress"},
+    {"id": 5, "file": "reducedform.tex", "task": "reflow", "status": "in_progress"},
+    {"id": 6, "file": "model.tex", "task": "reflow", "status": "in_progress"},
+    {"id": 7, "file": "estimation.tex", "task": "reflow", "status": "in_progress"},
+    {"id": 8, "file": "counterfactuals.tex", "task": "reflow", "status": "in_progress"},
+    {"id": 9, "file": "conclusion.tex", "task": "reflow", "status": "in_progress"},
+    {"id": 10, "file": "appendix_data.tex", "task": "reflow", "status": "in_progress"},
+    {"id": 11, "file": "appendix_model.tex", "task": "reflow", "status": "in_progress"},
+    {"id": 12, "file": "appendix_estimation.tex", "task": "reflow", "status": "in_progress"},
+    {"id": 13, "file": "appendix_model_oa.tex", "task": "reflow", "status": "in_progress"},
+    {"id": 14, "file": "appendix_mri.tex", "task": "reflow", "status": "in_progress"},
+    {"id": 15, "file": "appendix_reduced.tex", "task": "reflow", "status": "in_progress"},
+    {"id": 16, "file": "appendix_surcharging.tex", "task": "reflow", "status": "in_progress"},
+    {"id": 17, "file": "appendix_sorting.tex", "task": "reflow", "status": "in_progress"},
+    {"id": 18, "file": "appendix_robustness.tex", "task": "reflow", "status": "in_progress"},
+    {"id": 19, "file": "appendix_tables.tex", "task": "reflow", "status": "in_progress"},
+    {"id": 20, "file": "appendix_figures.tex", "task": "reflow", "status": "in_progress"},
+    {"id": 21, "file": "response_round2.tex", "task": "reflow", "status": "in_progress"}
+  ],
+  "paper_tasks": []
+}

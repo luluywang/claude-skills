@@ -1,0 +1,210 @@
+\documentclass[main.tex]{subfiles}
+
+\begin{document}
+
+\section{Causal Evidence on Interchange Fee Pass-Through\label{sec:appendix_durbin}}
+
+This appendix provides empirical evidence that small restaurants pass interchange fees through to higher retail prices.
+We use the 2011 Durbin Amendment as a natural experiment to estimate the causal effects of interchange fees on merchant prices and sales among restaurants.
+We focus on restaurants because the Durbin Amendment created econometrically convenient cross-sectional variation in this sector.\footnote{ Other sectors experienced more uniform fee changes under the Durbin Amendment.
+According to Visa's public interchange fee schedules \citep{Visa2010}, the change in fixed fees was much smaller for retailers and gas stations (from 15 cents to 22 cents), whereas there was no change in the linear fee for grocers.
+The restaurant sector thus represents one of the few settings with substantial heterogeneity in treatment intensity. } These findings help support our assumption that firms pass on interchange fees into retail prices and complement the findings from \citet{Amiti.etal2019} that sector-level shocks like interchange fees are passed into retail prices.
+
+\subsection{The Heterogeneous Effects of the Durbin Amendment}
+
+One challenge in studying the real effects of interchange fees is that it requires both granular data---at the merchant level---on interchange fees and merchant outcomes and exogenous variation in interchange fees.
+Using our detailed merchant-level data, we exploit heterogeneity in the impact of the Durbin Amendment across merchants to show that interchange fees affect the allocation of consumption and retail prices.
+
+The 2011 Durbin Amendment, passed as part of the Dodd-Frank Act, imposed a binding cap on debit card interchange fees for banks with over \$10 billion in assets, a policy that had highly heterogeneous effects across merchants.
+As illustrated in Figure \ref{fig:interchange_ts}, the Durbin Amendment had a substantial impact on debit interchange fees while having no effect on credit interchange.
+
+The amendment created sharp, plausibly exogenous variation in interchange fee savings across merchants, which was driven by three forces.
+First, only merchants with substantial sales via debit cards saw cost savings.
+Second, because the cap includes a fixed 22-cent component, the percentage reduction in fees was larger for merchants with larger average transaction sizes.\footnote{ An inspection of Visa's public interchange fee schedules before and after implementation of the policy suggests that most regulated debit fees bunched at the cap.
+In principle, the Durbin Amendment could have forced the networks to cut debit fees for the largest merchants even more to incentivize these merchants to stay on the Visa and Mastercard networks.
+However, Figure \ref{fig:price-disc-size} shows regulated debit fees are similar at both large and small firms, suggesting this additional negotiation channel was not a major force. } Third, the amendment's impact varied by region: Only merchants in areas with large, regulated banks experienced fee changes, while merchants in areas without such banks were unaffected, providing a natural control group.
+We use our detailed merchant-level data to measure these forces precisely.
+
+We then construct a panel of annual restaurant card sales from October 2009 to October 2012.
+Table \ref{tab:durbin-summary} characterizes this sample, showing substantial variation in transaction sizes and regulated bank exposure---the two key sources of identification.
+
+We can then use this panel to illustrate the heterogeneous effects of the Durbin Amendment across restaurants.
+Figure \ref{fig:durbin-het-ticket} binscatters average firm-level debit interchange rates, $\tau_j$, against the average pre-regulation transaction size of debit cards, $t_j$.
+We measure firm-level interchange fees as the dollar value of interchange fees divided by the total dollar volume of transactions, and we measure transaction size as the total dollar volume of debit transactions divided by the total number of debit transactions.
+By comparing the two curves, we see that the regulation increased interchange fees for restaurants with low ticket sizes and decreased them for restaurants with large ticket sizes.
+This change occurred because the Durbin Amendment modified the structure of debit interchange for restaurants from a large linear fee with a low fixed fee ($1.19\%$ of transaction value + $10$ cents) to a low linear fee with a high fixed fee ($0.05\%$ of transaction value + $22$ cents) \citep{Visa2010}.
+
+Figure \ref{fig:durbin-het-regulated} binscatters average debit interchange fees against the post-Durbin share of debit transactions on regulated cards at the ZIP code level, $r_{z(j)}$, both before and after the regulation.
+Using post-Durbin data, we calculate the share of debit card transactions at restaurants in each ZIP code conducted on regulated cards.\footnote{ We measure the regulated bank share at the ZIP-code level rather than merchant level to address endogeneity concerns: merchant-level bank shares measured after the regulation may reflect endogenous changes in merchant customer composition, while ZIP-code level variation provides plausibly exogenous geographic variation in treatment intensity. } After the Durbin Amendment, average interchange rates declined sharply in areas with a higher share of regulated banks.
+
+\subsection{Estimation}
+
+We implement an instrumental variables design that compares restaurants that vary in their expected gains from the Durbin Amendment based on their pre-regulation characteristics across areas with differential exposure to regulated banks.
+We estimate the following:
+
+\begin{equation}
+\Delta y_{j}=\beta\Delta\tau_{j} + \gamma X_j + \delta_{z(j)} + \epsilon_{j}\label{eq:durbin}
+\end{equation}
+where $\Delta y_{j}$ is the change in log sales at merchant $j$ in the year following the Durbin Amendment (October 2011 to October 2012), $\Delta\tau_{j}$ measures the average change in credit and debit interchange fees (expressed as percentage points) at merchant $j$ following the Durbin Amendment, $X_j$ are firm-level controls, and $\delta_{z(j)}$ are ZIP-code fixed effects.
+The coefficient $\beta$ measures the percentage change in sales for each percentage-point change in fees.\footnote{ We model pass-through using a standard log-linear specification common in the tax literature.
+The standard log-log pass-through regression regresses $\log P\left(1+\tau\right)$ on $\log\left(1+\tau\right)$ \citep{Butters.etal2022}.
+Since interchange fees are small relative to prices, this is nearly identical to our specification on the right-hand side, except where we replace log price with log sales in some regressions.} If the elasticity of demand is $\sigma$, then $\beta = -\sigma + 1$.
+
+The raw change in fees $\Delta \tau_j$ is mechanically related to changes in consumer composition at the firm level (e.g., if growing firms attract more debit users).
+Therefore, we construct an instrument for $\Delta \tau_j$ based on pre-Durbin merchant characteristics and post-Durbin geographic characteristics.
+Formally, we construct the instrument as follows:
+
+\begin{align}\widetilde{\Delta\tau_{j}} & = r_{z(j)}\times d_{j}\times\left(\tau^{\text{Reg Debit,Post}}(t_{j})-\tau^{\text{Exempt Debit,Post}}(t_{j})\right) \\
+    \tau^{\text{Reg Debit,Post}}(t_{j}) & = 0.0005 + \frac{0.22}{t_j} \\
+    \tau^{\text{Exempt Debit,Post}}(t_{j}) & = 0.0119 + \frac{0.10}{t_j}
+\end{align}
+where $d_j$ denotes merchant $j$'s pre-Durbin debit card share of total card transactions. Given this design, we include $\tau^{\text{Reg Debit,Post}}(t_{j}) - \tau^{\text{Exempt Debit,Post}}(t_{j})$ and $d_j$ as controls in $X_j$.
+
+One potential concern is that the Durbin Amendment may have shifted aggregate payment behavior toward debit cards, since regulated debit became cheaper for merchants.
+If so, pre-Durbin payment composition would be less predictive of post-Durbin fee changes, weakening the instrument.
+In practice, this is not a major issue: our first-stage F-statistics exceed 20,000, indicating that pre-Durbin characteristics remain highly predictive of fee changes.
+
+We report results for the one-year change in sales in columns (1)-(2) of Table \ref{tab:durbin-iv}.
+Column (1) presents OLS estimates, while column (2) presents our IV estimates.
+The OLS results indicate that a one-percentage-point increase in average interchange fees leads to approximately a \absinput{durbin_iv_1Y_Sales_OLS}\% decrease in sales.
+However, as discussed previously, there are many reasons why increases in interchange rates are mechanically associated with lower sales.
+Column (2) then presents IV estimates that a one-percentage-point increase in average interchange fees causes a \absinput{durbin_iv_1Y_Sales_IV}\% decrease in sales.
+Columns (3) and (4) show the two-year effects.
+Assuming full pass-through of interchange fees to prices, these estimates imply a demand elasticity of around \absinput{durbin_iv_avg_elast}.
+This elasticity is large---higher than the elasticity of around $5$ found in \citet{Sullivan2024}'s study of restaurants using detailed transaction data.
+
+One explanation is that merchants respond to interchange fee changes not only by adjusting posted prices but also by imposing cash discounts or card surcharges that steer customers across payment methods, thereby amplifying the measured sales response.
+To test this explanation, we re-estimate our Durbin-Amendment effects using only the ten states that prohibit any form of card surcharging (Table \ref{tab:durbin-iv-nosurcharge}).\footnote{These states are California, Colorado, Connecticut, Florida, Kansas, Massachusetts, Maine, New York, Oklahoma, and Texas.}
+If payment-method steering were driving the sales responses, we would expect these effects to dissipate where surcharges are illegal.
+The implied elasticity in the no-surcharge subsample is \absinput{durbin_iv_nosurcharge_avg_elast}---smaller than the full-sample estimate, suggesting that surcharging does contribute to the large elasticities.
+However, the core result remains: Interchange fee changes cause economically meaningful changes in restaurant sales even where surcharging is prohibited.
+
+This decline in sales could reflect either a price increase or a decline in product quality (e.g., a rise in the quality-adjusted price).
+Although we do not observe the prices set by the restaurants, we do observe average transaction sizes as a proxy for price.
+Average transaction size proxies for price when consumers respond to price changes mostly through visit frequency rather than basket size; we formalize this condition in Section \ref{subsec:transaction-size-proxy} below and argue that it is plausible in the restaurant setting.
+Column (5) shows that increases in interchange are strong negative predictors of average transaction size.
+This reflects the mechanical negative correlation between transaction size and percentage interchange rates that arises when interchange fees have fixed components.
+Column (6) shows that our IV estimate instead finds that a one-percentage-point increase in interchange causes a roughly one-for-one increase in prices, but with substantial standard errors.
+These results align with the predictions of \citet{Amiti.etal2019}, who show that small firms tend to pass through cost shocks one-for-one to prices.
+
+\subsection{Average Transaction Size as a Price Proxy\label{subsec:transaction-size-proxy}}
+
+The interpretation of column (6) rests on the claim that average transaction size moves one-for-one with the underlying retail price.
+Whether it does depends on \emph{how} a consumer absorbs a price change: by adjusting how often she buys (the number of trips) or by adjusting how much she buys on each trip (the basket size).
+We first show that the proxy is valid precisely when the entire response runs through trips rather than basket size, and we then use a simple logit model of shopping to argue that this is the relevant case for restaurants but not for retailers.
+
+\emph{A decomposition.} A consumer makes a sequence of shopping occasions; let $\pi(p)$ be the probability she visits the merchant on a given occasion and $\bar{q}(p)$ the expected quantity she buys conditional on visiting, both functions of the retail price $p$.
+Over a window of $T$ occasions, the three objects our regressions speak to are
+\begin{align}
+\text{trips:} \quad & N(p) \;=\; T\,\pi(p), \\
+\text{average transaction size:} \quad & \bar{t}(p) \;=\; p\,\bar{q}(p), \\
+\text{total sales:} \quad & Y(p) \;=\; N(p)\,\bar{t}(p) \;=\; T\,p\,\pi(p)\,\bar{q}(p).
+\end{align}
+Taking logs and differentiating yields the identity
+\begin{equation}
+\underbrace{\frac{d \log Y}{d \log p}}_{\text{sales}}
+\;=\; \underbrace{\frac{d \log \pi}{d \log p}}_{\text{trips}}
+\;+\; \underbrace{1 + \frac{d \log \bar{q}}{d \log p}}_{\text{transaction size}},
+\end{equation}
+so the elasticity of average transaction size is $d \log \bar{t} / d \log p = 1 + d \log \bar{q} / d \log p$.
+Average transaction size is therefore a valid proxy for price---it moves one-for-one with $p$---exactly when per-trip quantity $\bar{q}(p)$ is price-inelastic, so that the demand response runs entirely through the number of trips rather than the basket size.
+This is a statement about which margin clears the market, and it need not hold in every setting.
+
+\emph{A logit model of shopping.} To see what governs the split between the two margins, consider a simple discrete-choice model.
+On each occasion the consumer chooses a quantity $q \in \{0, 1, 2, \ldots\}$, where $q = 0$ denotes not visiting, to maximize
+\begin{equation}
+v(q) - p\,q + \lambda\,\epsilon_{q},
+\end{equation}
+where $v(q)$ is a deterministic gross utility ($v(0) = 0$, increasing and concave, and absorbing any fixed cost of a trip), the $\epsilon_{q}$ are i.i.d.\ Type-I extreme value taste shocks, and $\lambda > 0$ scales their dispersion.
+This replaces the unspecified occasion-level shock with an explicit functional form: the consumer's idiosyncratic reasons for buying more, less, or nothing at all on a given occasion are the draws $\epsilon_{q}$.
+The choice probabilities are logit,
+\begin{equation}
+P(q \mid p) \;=\; \frac{\exp\!\big((v(q) - p q)/\lambda\big)}{\sum_{q' \geq 0} \exp\!\big((v(q') - p q')/\lambda\big)},
+\end{equation}
+the visit probability is $\pi(p) = 1 - P(0 \mid p)$, and per-trip quantity is $\bar{q}(p) = E[q \mid q \geq 1]$.
+Standard logit algebra delivers the two margins in closed form:
+\begin{align}
+\text{intensive (basket size):} \quad & \frac{d \log \bar{q}}{d \log p} \;=\; -\,\frac{p}{\lambda}\,\frac{\operatorname{Var}(q \mid q \geq 1)}{E[q \mid q \geq 1]}, \label{eq:proxy-intensive} \\
+\text{extensive (trips):} \quad & \frac{d \log \pi}{d \log p} \;=\; -\,\frac{p}{\lambda}\,\big(1 - \pi(p)\big)\,\bar{q}(p). \label{eq:proxy-extensive}
+\end{align}
+The intensive margin in~\eqref{eq:proxy-intensive} is governed by a single object: the dispersion of per-trip quantity, $\operatorname{Var}(q \mid q \geq 1)$, which measures how much the consumer reshuffles her basket across quantities when the price moves.
+When a trip almost always involves the same quantity this variance is near zero, the intensive margin vanishes, and average transaction size tracks price one-for-one; the entire response then loads on the extensive margin~\eqref{eq:proxy-extensive}, i.e., on how often the consumer visits.
+When per-trip quantity is dispersed and price-responsive the intensive margin is large and average transaction size confounds price with quantity.
+The two sectors in our data sit at opposite ends of this spectrum.
+
+\emph{Restaurants.} A restaurant visit is close to an indivisible unit: a consumer eats one meal, satiation within the meal is sharp, and a meal cannot be split across competing venues, so the choice set collapses to ``dine out'' or not, $q \in \{0, 1\}$.
+The model then reduces to a binary logit for the trip decision, in which the occasion-level shock $\xi_{t} \equiv \epsilon_{1t} - \epsilon_{0t}$ is logistic and the consumer dines out whenever $v(1) - p + \lambda\,\xi_{t} \geq 0$.
+Per-trip quantity is fixed at $q = 1$, so $\operatorname{Var}(q \mid q \geq 1) = 0$, the intensive margin in~\eqref{eq:proxy-intensive} is exactly zero, and $\bar{t}(p) = p$.
+A price change is absorbed entirely through how often the realized taste shock pushes the consumer over the threshold to dine out, and average ticket size cleanly tracks $p$.
+
+\emph{Retailers.} Groceries and household goods are stockable and can be sourced across several stores in a given week, so a trip can be large or small and units bought on one trip substitute closely for units bought on another trip or at another store.
+The conditional quantity distribution is then dispersed, $\operatorname{Var}(q \mid q \geq 1)$ is large, and the intensive margin in~\eqref{eq:proxy-intensive} dominates: when prices fall the consumer buys more eggs or more paper towels per visit, and when they rise she runs down inventory or shifts purchases elsewhere.
+Visit frequency, by contrast, is largely pinned down by inventory and habit rather than by price, so the extensive margin~\eqref{eq:proxy-extensive} is muted.
+Average transaction size now confounds price movements with quantity adjustments, and the proxy breaks down.
+This is why we run the transaction-size regression only on restaurants; the analogous regression at retailers or grocers should not be read as evidence on pass-through.
+
+\begin{figure}[H]
+  \centering
+  \caption{Explaining the Heterogeneous Impact of the Durbin Amendment Across Restaurants}
+  \label{fig:durbin-het-inputs}
+
+  \begin{subfigure}[t]{0.7\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../fiserv_output/graphs/durbin_ticket_size_effect.pdf}
+    \caption{Variation by Ticket Size}
+    \label{fig:durbin-het-ticket}
+  \end{subfigure}
+
+  \vspace{0.6em}
+
+  \begin{subfigure}[t]{0.7\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../fiserv_output/graphs/durbin_regulated_share_effect_zip.pdf}
+    \caption{Variation by Share of Regulated Debit Cards}
+    \label{fig:durbin-het-regulated}
+  \end{subfigure}
+
+  \captionsetup{font=small}
+  \captionnotes{\textit{Notes:} Figure \ref{fig:durbin-het-inputs} illustrates the heterogeneous impact of the Durbin Amendment across merchants in the restaurant sector (MCC codes 5812 and 5814) and across regions.
+Panel \ref{fig:durbin-het-ticket} shows a binscatter of pre-Durbin average ticket size against pre- and post-Durbin debit interchange rates.
+Ticket size is calculated as the total dollar value of debit card transactions divided by the total count of debit card transactions in the October 2010--September 2011 window preceding the Durbin Amendment; observations are at the merchant-year level.
+Panel \ref{fig:durbin-het-regulated} shows a binscatter of the ZIP-code-level post-Durbin share of debit cards that earn regulated interchange against pre- and post-Durbin debit interchange rates.}
+
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Summary Statistics: Restaurant Settlement Panel 2010--2013}
+\label{tab:durbin-summary}
+\small
+\input{../fiserv_output/tables/durbin_summary.tex}
+
+\captionsetup{font=small}
+\captionnotes{\textit{Notes:} Table shows summary statistics at the merchant-year level from our 2010--2013 panel of restaurant sales. Regulated debit statistics are computed for 2011 and onward, for merchant-years with valid ZIP codes and positive debit transaction volume. Interchange rates are calculated as total interchange within a category divided by total sales in that category.}
+\end{table}
+
+\clearpage
+
+\begin{table}[H]
+\caption{The Effects of Changes in Interchange Fees on Sales and Prices\label{tab:durbin-iv}}
+
+\begin{centering}
+{\tiny\input{../fiserv_output/tables/durbin_iv}}
+\par\end{centering}
+\captionnotes{\emph{Notes: }Table \ref{tab:durbin-iv}
+presents instrumental variables estimates of the effects of interchange fee changes on restaurant sales and prices in the one- and two-year windows after the Durbin Amendment. The specification compares merchants in areas with and without large, regulated banks. Key controls for the instrumental variables strategy include (1) the predicted change in debit fees based on the fee schedule and pre-Durbin transaction size and (2) the pre-Durbin debit share. Log ticket size is measured as the log of the ratio of sales to number of transactions and serves as a proxy for prices.}
+\end{table}
+
+\clearpage
+
+\begin{table}[H]
+\caption{The Effects of Changes in Interchange Fees on Sales and Prices\label{tab:durbin-iv-nosurcharge}}
+
+\begin{centering}
+{\tiny\input{../fiserv_output/tables/durbin_iv_nosurcharge.tex}}
+\par\end{centering}
+\captionnotes{\emph{Notes: }Table \ref{tab:durbin-iv-nosurcharge}
+presents instrumental variables estimates of the effects of interchange fee changes on restaurant sales and prices in the one- and two-year windows after the Durbin Amendment on a subset of states that prohibit card surcharging.}
+\end{table}
+
+\end{document}

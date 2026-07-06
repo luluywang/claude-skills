@@ -1,0 +1,94 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+
+% Income notation: y denotes income level (baseline income).
+% Income is lognormal: y ~ Lognormal, normalized so E[y]=1.
+% Equivalently, log y ~ N(-σ_y²/2, σ_y²) where σ_y² is the variance of log income.
+
+\section{Model Details}
+
+\label{sec:appendix-model}
+
+\subsection{Merchant Profits and Optimal Pricing}
+\label{subsec:appendix-merch-profits}
+\label{subsec:appendix-merch-pricing}
+
+Merchant profits equal the integral of per-unit margins times quantities across consumer types:
+
+\begin{equation}
+\Pi\left(\gamma,p,M\right)=\int\sum_{w\in\mathcal{W}}\tilde{\mu}_{y}^{w}\times q^{w}\left(\gamma,p,M,y\right)\times L_{M}^{w}\left(\gamma,p\right)\,\mathrm{d}F\left(y\right)
+\end{equation}
+where $\tilde{\mu}_y^w$ is the mass of consumers at income level $y$ with wallet $w$.
+
+\paragraph{Per-unit margins.} The average margin $L_M^w$ weights each instrument by its share of sales:
+\begin{align}
+L_{M}^{w}\left(p\right)
+&= \underbrace{\frac{1-\pi_{M,w_{1}}^{w}-\pi_{M,w_{2}}^{w}}{1+\gamma v_{M}^{w}}}_{\text{share on cash}}\times\left(p-1\right)+\sum_{j=1}^{2}\underbrace{\frac{\pi_{M,w_{j}}^{w}\left(1+\gamma\right)}{1+\gamma v_{M}^{w}}}_{\text{share on card }w_{j}}\times\left(p\left(1-\tau_{w_{j}}\right)-1\right)
+\end{align}
+Collecting terms yields
+\begin{equation}
+L_{M}^{w}\left(p\right) = p\left(1-\frac{(1+\gamma)\tau_{M}^{w}}{1+\gamma v_{M}^{w}}\right)-1
+\end{equation}
+where $\tau_M^w = \sum_{j=1}^{J}\pi^w_{M,j}\tau_j$ is the wallet-average fee.
+
+\paragraph{Profits.} CES preferences are homothetic, so $q^w(\gamma,p,M,y) = q^w(\gamma,p,M,1)\cdot y$; the income distribution then integrates out of $\Pi$.
+Using $\tilde{\mu}^w q^w(\gamma,p,M,1)=C\mu^{w}p^{-\sigma}\left(1+\gamma v_{M}^{w}\right)$
+(with $C$ the aggregate demand constant and $\mu^w$ the demand shares from Equation~\ref{eq:insulated-share-defn}), merchant profits become:
+\begin{equation}
+\Pi\left(\gamma,p,M\right) = C \times \sum_{w\in\mathcal{W}}\mu^{w}\left(1+\gamma v_{M}^{w}\right)p^{-\sigma}\times\left[p\left(1-\frac{(1+\gamma)\tau_{M}^{w}}{1+\gamma v_{M}^{w}}\right)-1\right]
+\end{equation}
+This matches Equation~\ref{eq:merch-profit-defn} in the main text.
+
+\paragraph{Optimal price.} Setting $\partial\Pi/\partial p=0$:
+\begin{align}
+\sum_{w\in\mathcal{W}}\mu^{w}\left(1+\gamma v_{M}^{w}\right)\left[\left(1-\sigma\right)p\left(1-\frac{(1+\gamma)\tau_{M}^{w}}{1+\gamma v_{M}^{w}}\right)+\sigma\right] & =0
+\end{align}
+Solving for $p$ gives the optimal price in Equation~\ref{eq:optimal-price}.
+
+% \begin{equation}
+% p^{*}=\frac{\sigma}{\sigma-1}\times\frac{1}{1-\hat{\tau}}, \qquad
+% \hat{\tau}=\frac{(1+\gamma)\sum_{w\in\mathcal{W}}\mu^{w}\tau_{M}^{w}}{\sum_{w\in\mathcal{W}}\mu^{w}\left(1+\gamma v_{M}^{w}\right)}
+% \end{equation}
+% The effective fee rate $\hat{\tau}$ is the demand-weighted average merchant fee across wallets.
+
+% \paragraph{Dollar volume.} The total dollar volume on card $j$ (Equation~\ref{eq:dollars}) is
+% \begin{equation}
+% d_j = \sum_{w\in\mathcal{W}} \tilde{\mu}^w \times \int \frac{(1+\gamma)\,\pi^w_{M^*(\gamma),j}}{1+\gamma v_M^w}\, q^{w*}(\gamma)\, p^*(\gamma) \,\mathrm{d}G(\gamma)
+% \end{equation}
+% where the numerator $(1+\gamma)$ reflects the demand boost from card acceptance.
+
+\subsection{Linearizing Merchant Profits}
+\label{subsec:appendix-quasiprofits}
+
+Define quasi-profits $\overline{\Pi}$ by:
+
+\begin{equation}
+    \overline{\Pi}\left(\gamma,M,\tau\right) \equiv C \times \left(\frac{\sigma}{\sigma-1}\right)^{1-\sigma}\left\{ -a_{M}+b_{M}\gamma+\frac{1}{\sigma}\right\} \label{eq:quasiprofit-definition}
+\end{equation}
+where $C$ is the aggregate demand constant from Equation~\ref{eq:insulated-share-defn}, and
+\begin{align}
+a_M &= \sum_{w\in\mathcal{W}} \mu^w \tau_M^w, &
+b_M &= \frac{1}{\sigma}\sum_{w\in\mathcal{W}} \mu^w \bigl(v_M^w - \sigma\tau_M^w\bigr)
+\end{align}
+recovering the coefficients in Equation~\ref{eq:merch-accept}.
+The $v_M^w$ component captures incremental volume; the $-\sigma\tau_M^w$ captures lost margin due to fees.
+
+\begin{theorem} \label{thm:quasiprofit-approx} For any $\gamma$, $M$, and $\tau$ with $\tau^{\max}\equiv\max_{j}\tau_{j}$,
+\[
+\widehat{\Pi}\left(\gamma,M,\tau\right)-\overline{\Pi}\left(\gamma,M,\tau\right)=\left(1+\gamma\right)O\left(\left(\tau^{\max}\right)^{2}\right)
+\]
+\end{theorem}
+
+\begin{proof}
+The optimal payment-specific prices are $p_{j}=\frac{\sigma}{\sigma-1}\frac{1}{1-\tau_{j}}$ for each payment method $j$.
+By the envelope theorem, any price within $O(\tau_j)$ of $p_j$ delivers the same profit up to second-order terms in $\tau_j$.
+Setting $\overline{p}=\frac{\sigma}{\sigma-1}$ and collecting terms recovers the linear approximation.
+Collecting terms in $\gamma$:
+
+\[
+\Pi\left(\gamma,\overline{p},M\right) =C\times\left(\frac{\sigma}{\sigma-1}\right)^{1-\sigma}\left(-a_{M}+b_{M}\gamma+\frac{1}{\sigma}\right) = \overline{\Pi}\left(\gamma,M,\tau\right)
+\]
+\end{proof}
+Online Appendix~\ref{subsec:oa-quasiprofit-validation} confirms that $\overline{\Pi}$ is numerically accurate.
+
+\end{document}

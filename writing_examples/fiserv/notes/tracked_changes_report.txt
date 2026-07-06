@@ -1,0 +1,2658 @@
+====================================================================================================
+TRACKED CHANGES REPORT
+Document: /Users/luluwang/Library/CloudStorage/Dropbox/Overleaf/Fiserv_Interchange/draft_202511/notes/fiserv_payments_word_AS_march22.docx
+Total changes found: 330
+====================================================================================================
+
+SUMMARY BY TYPE:
+  INSERTION: 142
+  DELETION: 117
+  FORMAT_CHANGE: 68
+  PARAGRAPH_PROPERTY_CHANGE: 3
+
+SUMMARY BY AUTHOR:
+  Amit Seru: 325
+  Unknown: 5
+
+====================================================================================================
+DETAILED CHANGES (in document order):
+====================================================================================================
+
+--- Change #1 ---
+  Type:   INSERTION
+  ID:     2
+  Author: Amit Seru
+  Date:   2026-03-22T09:14:00Z
+
+--- Change #2 ---
+  Type:   INSERTION
+  ID:     3
+  Author: Amit Seru
+  Date:   2026-03-22T09:21:00Z
+  Text:   "Consistent with merchants raising prices in response to these costs, users of low-cost payment methods (e.g., cash and debit) cross-subsidize high-reward credit card users who shop at the same merchant. "
+  Context: ...nt system. Cards charge interchange fees to merchants to fund consumer rewards. [>>CHANGE HERE<<]When merchants respond by raising prices for all consumers, users of low-cost pa...
+
+--- Change #3 ---
+  Type:   FORMAT_CHANGE
+  ID:     4
+  Author: Amit Seru
+  Date:   2026-03-22T09:21:00Z
+  Text:   " "
+  Details: Old props: [rPr] | New props: [rStyle]
+  Paragraph: "We use novel data on the composition and cost of payments across U.S. merchants to quantify consumer redistribution in the payment system. Cards charge interchange fees to merchants to fund consumer r..."
+
+--- Change #4 ---
+  Type:   FORMAT_CHANGE
+  ID:     5
+  Author: Amit Seru
+  Date:   2026-03-22T09:21:00Z
+  Text:   "users of low-cost payment methods (e.g., cash and debit) cross-subsidize high-reward credit card users who shop at the same merchant."
+  Details: Old props: [rPr] | New props: [rStyle]
+  Paragraph: "We use novel data on the composition and cost of payments across U.S. merchants to quantify consumer redistribution in the payment system. Cards charge interchange fees to merchants to fund consumer r..."
+
+--- Change #5 ---
+  Type:   FORMAT_CHANGE
+  ID:     6
+  Author: Amit Seru
+  Date:   2026-03-22T09:21:00Z
+  Text:   " "
+  Details: Old props: [rPr] | New props: [rStyle]
+  Paragraph: "We use novel data on the composition and cost of payments across U.S. merchants to quantify consumer redistribution in the payment system. Cards charge interchange fees to merchants to fund consumer r..."
+
+--- Change #6 ---
+  Type:   DELETION
+  ID:     7
+  Author: Amit Seru
+  Date:   2026-03-22T09:21:00Z
+  Text:   "When merchants respond by raising prices for all consumers, users of low-cost payment methods (e.g., cash and debit) cross-subsidize high-reward credit card users who shop at the same merchant."
+  Context: ...t) cross-subsidize high-reward credit card users who shop at the same merchant. [>>CHANGE HERE<<] This standard mechanism implicitly assumes that consumers using different payme...
+
+--- Change #7 ---
+  Type:   FORMAT_CHANGE
+  ID:     8
+  Author: Amit Seru
+  Date:   2026-03-22T09:21:00Z
+  Text:   "When merchants respond by raising prices for all consumers, users of low-cost payment methods (e.g., cash and debit) cross-subsidize high-reward credit card users who shop at the same merchant."
+  Details: Old props: [rPr] | New props: [rStyle, color]
+  Paragraph: "We use novel data on the composition and cost of payments across U.S. merchants to quantify consumer redistribution in the payment system. Cards charge interchange fees to merchants to fund consumer r..."
+
+--- Change #8 ---
+  Type:   FORMAT_CHANGE
+  ID:     9
+  Author: Amit Seru
+  Date:   2026-03-22T09:21:00Z
+  Text:   " "
+  Details: Old props: [rPr] | New props: [rStyle, color]
+  Paragraph: "We use novel data on the composition and cost of payments across U.S. merchants to quantify consumer redistribution in the payment system. Cards charge interchange fees to merchants to fund consumer r..."
+
+--- Change #9 ---
+  Type:   INSERTION
+  ID:     10
+  Author: Amit Seru
+  Date:   2026-03-22T09:14:00Z
+  Text:   "This standard mechanism implicitly assumes that consumers using different payment methods shop at the same merchants and that merchants face similar fees.  We show instead that incidence depends on the joint distribution of payment choices across merchants.In practice, however, both assumptions fail, and the incidence of interchange fees depends on the joint distribution of payment choices across merchants."
+  Context: ...t) cross-subsidize high-reward credit card users who shop at the same merchant. [>>CHANGE HERE<<] We document two key forces that shape this distribution.First, consumer sorting...
+
+--- Change #10 ---
+  Type:   FORMAT_CHANGE
+  ID:     11
+  Author: Amit Seru
+  Date:   2026-03-22T09:21:00Z
+  Text:   " "
+  Details: Old props: [rPr] | New props: [rStyle]
+  Paragraph: "We use novel data on the composition and cost of payments across U.S. merchants to quantify consumer redistribution in the payment system. Cards charge interchange fees to merchants to fund consumer r..."
+
+--- Change #11 ---
+  Type:   DELETION
+  ID:     12
+  Author: Unknown
+  Date:   Unknown
+  Text:   "In practice, however, both assumptions fail, and the incidence of interchange fees depends on the joint distribution of payment choices across merchants."
+  Context: ...ayment methods shop at the same merchants and that merchants face similar fees. [>>CHANGE HERE<<] We show instead that incidence depends on the joint distribution of payment cho...
+
+--- Change #12 ---
+  Type:   FORMAT_CHANGE
+  ID:     13
+  Author: Amit Seru
+  Date:   2026-03-22T09:21:00Z
+  Text:   "In practice, however, both assumptions fail, and the incidence of interchange fees depends on the joint distribution of payment choices across merchants."
+  Details: Old props: [rPr] | New props: [rStyle]
+  Paragraph: "We use novel data on the composition and cost of payments across U.S. merchants to quantify consumer redistribution in the payment system. Cards charge interchange fees to merchants to fund consumer r..."
+
+--- Change #13 ---
+  Type:   FORMAT_CHANGE
+  ID:     14
+  Author: Amit Seru
+  Date:   2026-03-22T09:21:00Z
+  Text:   " "
+  Details: Old props: [rPr] | New props: [rStyle]
+  Paragraph: "We use novel data on the composition and cost of payments across U.S. merchants to quantify consumer redistribution in the payment system. Cards charge interchange fees to merchants to fund consumer r..."
+
+--- Change #14 ---
+  Type:   INSERTION
+  ID:     15
+  Author: Amit Seru
+  Date:   2026-03-22T09:15:00Z
+  Text:   " "
+  Context: ...ange fees depends on the joint distribution of payment choices across merchants.[>>CHANGE HERE<<]We document two key forces that shape this distribution.First, consumer sorting—...
+
+--- Change #15 ---
+  Type:   FORMAT_CHANGE
+  ID:     16
+  Author: Amit Seru
+  Date:   2026-03-22T09:21:00Z
+  Text:   " "
+  Details: Old props: [rPr] | New props: [rStyle, color]
+  Paragraph: "We use novel data on the composition and cost of payments across U.S. merchants to quantify consumer redistribution in the payment system. Cards charge interchange fees to merchants to fund consumer r..."
+
+--- Change #16 ---
+  Type:   INSERTION
+  ID:     17
+  Author: Amit Seru
+  Date:   2026-03-22T09:21:00Z
+  Text:   "We document two key forces that shape this distribution."
+  Context: ...nge fees depends on the joint distribution of payment choices across merchants. [>>CHANGE HERE<<]First, consumer sorting—where consumers who use different payment methods shop a...
+
+--- Change #17 ---
+  Type:   INSERTION
+  ID:     18
+  Author: Amit Seru
+  Date:   2026-03-22T09:15:00Z
+  Text:   "First, consumer sorting—where consumers who use different payment methods shop at different merchants—limits the exposure of cash and debit users to high interchange fees. Second, interchange fees vary across merchants: where users overlap, such as at large grocery stores, fees are lower due to sector discounts and private negotiations. We embed these forces in a sufficient-statistics framework that maps observed heterogeneity directly into redistribution. "
+  Context: ...oices across merchants. We document two key forces that shape this distribution.[>>CHANGE HERE<<]We estimate that interchange fees transfer approximately $30 billion annually fr...
+
+--- Change #18 ---
+  Type:   FORMAT_CHANGE
+  ID:     19
+  Author: Amit Seru
+  Date:   2026-03-22T09:21:00Z
+  Text:   "First"
+  Details: Old props: [rPr] | New props: [rStyle, color]
+  Paragraph: "We use novel data on the composition and cost of payments across U.S. merchants to quantify consumer redistribution in the payment system. Cards charge interchange fees to merchants to fund consumer r..."
+
+--- Change #19 ---
+  Type:   FORMAT_CHANGE
+  ID:     20
+  Author: Amit Seru
+  Date:   2026-03-22T09:21:00Z
+  Text:   ", consumer sorting—where consumers who use different payment methods shop at different merchants—limits the exposure of cash and debit users to high interchange fees. Second, interchange fees vary across merchants: where users overlap, such as at large grocery stores, fees are lower due to sector discounts and private negotiations. "
+  Details: Old props: [rPr] | New props: [rStyle, color]
+  Paragraph: "We use novel data on the composition and cost of payments across U.S. merchants to quantify consumer redistribution in the payment system. Cards charge interchange fees to merchants to fund consumer r..."
+
+--- Change #20 ---
+  Type:   INSERTION
+  ID:     21
+  Author: Amit Seru
+  Date:   2026-03-22T09:16:00Z
+  Text:   "We estimate that interchange fees transfer approximately $30 billion annually from cash and debit users to credit card users. Consumer sorting and fee heterogeneity reduce regressivity by 25%, but do not eliminate it. Finally, we show that both the Durbin Amendment and the rise of premium credit cards have been regressive, highlighting how policy and innovation reshape the incidence of platform fees."
+  Context: ...istics framework that maps observed heterogeneity directly into redistribution. [>>CHANGE HERE<<]...
+
+--- Change #21 ---
+  Type:   DELETION
+  ID:     22
+  Author: Amit Seru
+  Date:   2026-03-22T09:16:00Z
+
+--- Change #22 ---
+  Type:   DELETION
+  ID:     23
+  Author: Amit Seru
+  Date:   2026-03-22T09:16:00Z
+  Text:   "Large differences in interchange fees across payment methods imply that these cross-subsidies can be substantial. However, two mechanisms substantially limit cross-subsidization in practice. First, consumer sorting—where consumers who use different payment methods shop at different merchants—limits the exposure of cash and debit users to the effects of high interchange fees. Where users of different payment methods do overlap, such as at large grocery stores, interchange fees are 50% lower due to a combination of sector discounts and private negotiations. We embed these facts in a sufficient-statistics framework to quantify the welfare effects of interchange fees across consumer groups. We estimate that interchange fees transfer approximately $30 billion every year from cash and debit users (who pay higher retail prices) to credit card users (who receive rewards). These transfers are comparable in scale but opposite in direction to major government transfer programs. Consumer sorting and merchant fee heterogeneity reduce regressivity by 25 %, but do not eliminate it. Finally, we show that both the Durbin Amendment and the recent rise of premium credit cards have been regressive, with significant implications for competition, regulation, and the distributional impact of financial innovation."
+
+--- Change #23 ---
+  Type:   INSERTION
+  ID:     25
+  Author: Amit Seru
+  Date:   2026-03-22T07:08:00Z
+
+--- Change #24 ---
+  Type:   PARAGRAPH_PROPERTY_CHANGE
+  ID:     26
+  Author: Amit Seru
+  Date:   2026-03-22T07:08:00Z
+  Details: Old paragraph props: [pPr]
+  Paragraph: "This standard view implicitly assumes that consumers using different payment methods shop at the same merchants and that merchants face similar acceptance costs. In practice, however, both assumptions..."
+
+--- Change #25 ---
+  Type:   INSERTION
+  ID:     27
+  Author: Amit Seru
+  Date:   2026-03-22T07:08:00Z
+  Text:   "This standard view implicitly assumes that consumers using different payment methods shop at the same merchants and that merchants face similar acceptance costs. In practice, however, both assumptions fail: consumers sort across merchants based on payment preferences, and merchants face substantial heterogeneity in interchange fees across sectors, sizes, and negotiated contracts. As a result, the incidence of interchange fees cannot be inferred from average fees or representative consumers, but instead depends on the joint distribution of payment choices across merchants."
+
+--- Change #26 ---
+  Type:   INSERTION
+  ID:     28
+  Author: Amit Seru
+  Date:   2026-03-22T07:09:00Z
+
+--- Change #27 ---
+  Type:   INSERTION
+  ID:     29
+  Author: Amit Seru
+  Date:   2026-03-22T07:40:00Z
+  Text:   ", highlighting the wide variation in regulatory approaches across jurisdictions."
+  Context: ... interchange fees at less than one-sixth of the highest fees charged in the U.S.[>>CHANGE HERE<<]...
+
+--- Change #28 ---
+  Type:   FORMAT_CHANGE
+  ID:     30
+  Author: Amit Seru
+  Date:   2026-03-22T09:23:00Z
+  Text:   " "
+  Details: Old props: [rPr] | New props: []
+  Paragraph: "In recent years, merchants and policymakers have fought against rising interchange fees through both litigation and legislation. In 2025, a pending settlement against Visa would allow merchants to sel..."
+
+--- Change #29 ---
+  Type:   FORMAT_CHANGE
+  ID:     31
+  Author: Amit Seru
+  Date:   2026-03-22T09:23:00Z
+  Text:   "highlighting the wide variation in regulatory approaches across jurisdictions."
+  Details: Old props: [rPr] | New props: [rFonts, sz, szCs]
+  Paragraph: "In recent years, merchants and policymakers have fought against rising interchange fees through both litigation and legislation. In 2025, a pending settlement against Visa would allow merchants to sel..."
+
+--- Change #30 ---
+  Type:   INSERTION
+  ID:     32
+  Author: Amit Seru
+  Date:   2026-03-22T07:09:00Z
+  Text:   "Despite this policy attention, there is little consensus on who ultimately bears the cost of interchange fees. Existing debates often frame interchange as either a “tax” on merchants or a mechanism to fund consumer rewards. Both views overlook that interchange fees primarily redistribute consumption across consumers, and that the magnitude and direction of this redistribution depend on how consumers and merchants are matched in equilibrium."
+
+--- Change #31 ---
+  Type:   INSERTION
+  ID:     33
+  Author: Amit Seru
+  Date:   2026-03-22T07:55:00Z
+
+--- Change #32 ---
+  Type:   INSERTION
+  ID:     34
+  Author: Amit Seru
+  Date:   2026-03-22T07:55:00Z
+  Text:   "This lack of consensus reflects a fundamental measurement challenge. Redistribution arises only when consumers using different payment methods shop at the same merchants (Gans 2018). Many existing studies rely on consumer-level data that lack information on where consumers shop, implicitly assuming homogeneous merchants and common shopping patterns across consumers (Felt et al. 2023)."
+
+--- Change #33 ---
+  Type:   FORMAT_CHANGE
+  ID:     35
+  Author: Amit Seru
+  Date:   2026-03-22T09:23:00Z
+  Text:   "This lack of consensus reflects a fundamental measurement challenge."
+  Details: Old props: [rPr] | New props: [rFonts, sz, szCs]
+  Paragraph: "This lack of consensus reflects a fundamental measurement challenge. Redistribution arises only when consumers using different payment methods shop at the same merchants (Gans 2018). Many existing stu..."
+
+--- Change #34 ---
+  Type:   FORMAT_CHANGE
+  ID:     36
+  Author: Amit Seru
+  Date:   2026-03-22T09:23:00Z
+  Text:   " "
+  Details: Old props: [rPr] | New props: []
+  Paragraph: "This lack of consensus reflects a fundamental measurement challenge. Redistribution arises only when consumers using different payment methods shop at the same merchants (Gans 2018). Many existing stu..."
+
+--- Change #35 ---
+  Type:   INSERTION
+  ID:     37
+  Author: Amit Seru
+  Date:   2026-03-22T07:12:00Z
+
+--- Change #36 ---
+  Type:   DELETION
+  ID:     38
+  Author: Amit Seru
+  Date:   2026-03-22T07:11:00Z
+  Text:   "Despite their policy relevance, the redistributive effects of interchange fees remain poorly understood due to a lack of merchant-level data on payment composition and acceptance costs. Redistribution arises only when different consumers use payment methods with different interchange fees at the same merchant (Gans 2018). Many past studies of redistribution have relied on consumer survey data that lack information on where consumers shop (Felt et al. 2023). While card networks publish headline interchange fee schedules, the actual fees incurred are highly merchant-specific, shaped by factors such as sector, merchant size, and ticket size."
+  Context: ...[>>CHANGE HERE<<]More broadly, the existing literature treats the incidence of interchange fees a...
+
+--- Change #37 ---
+  Type:   INSERTION
+  ID:     39
+  Author: Amit Seru
+  Date:   2026-03-22T07:11:00Z
+  Text:   "More broadly, the existing literature treats the incidence of interchange fees as a representative-agent problem, abstracting from heterogeneity in both merchant characteristics and consumer sorting. This abstraction is consequential: if consumers using different payment methods sort into different merchants, or if merchants face heterogeneous fees, then average fee differences are no longer sufficient to determine redistribution. Instead, incidence depends on the covariance between payment choices and merchant characteristics—a dimension that has been largely unobserved in prior work"
+  Context: ...hant-specific, shaped by factors such as sector, merchant size, and ticket size.[>>CHANGE HERE<<], and one that is central to determining the direction and magnitude of transfer...
+
+--- Change #38 ---
+  Type:   INSERTION
+  ID:     40
+  Author: Amit Seru
+  Date:   2026-03-22T07:42:00Z
+  Text:   ", and one that is central to determining the direction and magnitude of transfer"
+  Context: ...chant characteristics—a dimension that has been largely unobserved in prior work[>>CHANGE HERE<<] , and therefore to understanding who ultimately bears the cost of interchange f...
+
+--- Change #39 ---
+  Type:   FORMAT_CHANGE
+  ID:     41
+  Author: Amit Seru
+  Date:   2026-03-22T09:23:00Z
+  Text:   " "
+  Details: Old props: [rPr] | New props: []
+  Paragraph: "More broadly, the existing literature treats the incidence of interchange fees as a representative-agent problem, abstracting from heterogeneity in both merchant characteristics and consumer sorting. ..."
+
+--- Change #40 ---
+  Type:   FORMAT_CHANGE
+  ID:     42
+  Author: Amit Seru
+  Date:   2026-03-22T09:23:00Z
+  Text:   "and one that is central to determining the direction and magnitude of transfer"
+  Details: Old props: [rPr] | New props: [rFonts, sz, szCs]
+  Paragraph: "More broadly, the existing literature treats the incidence of interchange fees as a representative-agent problem, abstracting from heterogeneity in both merchant characteristics and consumer sorting. ..."
+
+--- Change #41 ---
+  Type:   INSERTION
+  ID:     43
+  Author: Amit Seru
+  Date:   2026-03-22T07:45:00Z
+  Text:   " , and therefore to understanding who ultimately bears the cost of interchange fees."
+  Context: ..., and one that is central to determining the direction and magnitude of transfer[>>CHANGE HERE<<]...
+
+--- Change #42 ---
+  Type:   FORMAT_CHANGE
+  ID:     44
+  Author: Amit Seru
+  Date:   2026-03-22T09:23:00Z
+  Text:   " "
+  Details: Old props: [rPr] | New props: []
+  Paragraph: "More broadly, the existing literature treats the incidence of interchange fees as a representative-agent problem, abstracting from heterogeneity in both merchant characteristics and consumer sorting. ..."
+
+--- Change #43 ---
+  Type:   FORMAT_CHANGE
+  ID:     45
+  Author: Amit Seru
+  Date:   2026-03-22T09:23:00Z
+  Text:   "and therefore to understanding who ultimately bears the cost of interchange fees."
+  Details: Old props: [rPr] | New props: [rFonts, sz, szCs]
+  Paragraph: "More broadly, the existing literature treats the incidence of interchange fees as a representative-agent problem, abstracting from heterogeneity in both merchant characteristics and consumer sorting. ..."
+
+--- Change #44 ---
+  Type:   INSERTION
+  ID:     46
+  Author: Amit Seru
+  Date:   2026-03-22T07:12:00Z
+
+--- Change #45 ---
+  Type:   FORMAT_CHANGE
+  ID:     47
+  Author: Amit Seru
+  Date:   2026-03-22T07:46:00Z
+  Details: Old props: [rPr] | New props: [ins, rStyle, rFonts, i, iCs, color, sz, szCs]
+  Paragraph: "In this paper, we use novel merchant-level data from Fiserv to quantify how the payment system redistributes among consumers with different payment preferences. Our central contribution is to show tha..."
+
+--- Change #46 ---
+  Type:   INSERTION
+  ID:     48
+  Author: Amit Seru
+  Date:   2026-03-22T07:12:00Z
+
+--- Change #47 ---
+  Type:   INSERTION
+  ID:     49
+  Author: Amit Seru
+  Date:   2026-03-22T07:12:00Z
+  Text:   "In this paper, we use novel merchant-level data from Fiserv to quantify how the payment system redistributes among consumers with different payment preferences. "
+  Context: ...[>>CHANGE HERE<<]Our central contribution is to show that the incidence of interchange fees is go...
+
+--- Change #48 ---
+  Type:   FORMAT_CHANGE
+  ID:     50
+  Author: Amit Seru
+  Date:   2026-03-22T09:24:00Z
+  Text:   " "
+  Details: Old props: [rPr] | New props: []
+  Paragraph: "In this paper, we use novel merchant-level data from Fiserv to quantify how the payment system redistributes among consumers with different payment preferences. Our central contribution is to show tha..."
+
+--- Change #49 ---
+  Type:   INSERTION
+  ID:     51
+  Author: Amit Seru
+  Date:   2026-03-22T07:42:00Z
+  Text:   "Our central contribution is to show that the incidence of interchange fees is governed by the joint distribution of payment choices and merchant characteristics, "
+  Context: ...ayment system redistributes among consumers with different payment preferences. [>>CHANGE HERE<<]rather than by average fee differences across payment methods....
+
+--- Change #50 ---
+  Type:   FORMAT_CHANGE
+  ID:     52
+  Author: Amit Seru
+  Date:   2026-03-22T09:24:00Z
+  Text:   "Our central contribution is to show that the incidence of interchange fees is governed by the joint distribution of payment choices and merchant characteristics,"
+  Details: Old props: [rPr] | New props: [rFonts, sz, szCs]
+  Paragraph: "In this paper, we use novel merchant-level data from Fiserv to quantify how the payment system redistributes among consumers with different payment preferences. Our central contribution is to show tha..."
+
+--- Change #51 ---
+  Type:   FORMAT_CHANGE
+  ID:     53
+  Author: Amit Seru
+  Date:   2026-03-22T09:24:00Z
+  Text:   " "
+  Details: Old props: [rPr] | New props: []
+  Paragraph: "In this paper, we use novel merchant-level data from Fiserv to quantify how the payment system redistributes among consumers with different payment preferences. Our central contribution is to show tha..."
+
+--- Change #52 ---
+  Type:   INSERTION
+  ID:     54
+  Author: Amit Seru
+  Date:   2026-03-22T07:46:00Z
+  Text:   "rather than by average fee differences across payment methods"
+  Context: ...rned by the joint distribution of payment choices and merchant characteristics, [>>CHANGE HERE<<]....
+
+--- Change #53 ---
+  Type:   FORMAT_CHANGE
+  ID:     55
+  Author: Amit Seru
+  Date:   2026-03-22T09:24:00Z
+  Text:   "rather than by average fee differences across payment methods"
+  Details: Old props: [rPr] | New props: [rFonts, sz, szCs]
+  Paragraph: "In this paper, we use novel merchant-level data from Fiserv to quantify how the payment system redistributes among consumers with different payment preferences. Our central contribution is to show tha..."
+
+--- Change #54 ---
+  Type:   INSERTION
+  ID:     56
+  Author: Amit Seru
+  Date:   2026-03-22T09:24:00Z
+  Text:   "."
+  Context: ...t characteristics, rather than by average fee differences across payment methods[>>CHANGE HERE<<]...
+
+--- Change #55 ---
+  Type:   FORMAT_CHANGE
+  ID:     57
+  Author: Amit Seru
+  Date:   2026-03-22T07:23:00Z
+  Details: Old props: [rPr] | New props: [rFonts, color, sz, szCs]
+  Paragraph: "We proceed in three parts. First, we document substantial heterogeneity in both payment composition and interchange fees across merchants. Second, we show that this heterogeneity reflects systematic c..."
+
+--- Change #56 ---
+  Type:   INSERTION
+  ID:     58
+  Author: Amit Seru
+  Date:   2026-03-22T07:12:00Z
+  Text:   "We proceed in three parts. First, we document substantial heterogeneity in both payment composition and interchange fees across merchants. Second, we show that this heterogeneity reflects systematic consumer sorting across merchants and variation in merchant-level bargaining power and sectoral pricing. Third, we develop a sufficient-statistics framework that maps these empirical moments into welfare and redistribution across consumer groups."
+  Context: ...[>>CHANGE HERE<<] This approach allows us to quantify redistribution without estimating a full de...
+
+--- Change #57 ---
+  Type:   INSERTION
+  ID:     59
+  Author: Amit Seru
+  Date:   2026-03-22T07:23:00Z
+  Text:   " This approach allows us to quantify redistribution without estimating a full demand system, and to isolate the role of sorting and fee heterogeneity in shaping incidence"
+  Context: ... these empirical moments into welfare and redistribution across consumer groups.[>>CHANGE HERE<<], under empirically plausible pass-through assumptions that we examine in the da...
+
+--- Change #58 ---
+  Type:   INSERTION
+  ID:     60
+  Author: Amit Seru
+  Date:   2026-03-22T07:46:00Z
+  Text:   ", under empirically plausible pass-through assumptions that we examine in the data and in a structural model."
+  Context: ...m, and to isolate the role of sorting and fee heterogeneity in shaping incidence[>>CHANGE HERE<<]...
+
+--- Change #59 ---
+  Type:   FORMAT_CHANGE
+  ID:     61
+  Author: Amit Seru
+  Date:   2026-03-22T09:24:00Z
+  Text:   " "
+  Details: Old props: [rPr] | New props: []
+  Paragraph: "We proceed in three parts. First, we document substantial heterogeneity in both payment composition and interchange fees across merchants. Second, we show that this heterogeneity reflects systematic c..."
+
+--- Change #60 ---
+  Type:   FORMAT_CHANGE
+  ID:     62
+  Author: Amit Seru
+  Date:   2026-03-22T09:24:00Z
+  Text:   "under empirically plausible pass-through assumptions that we examine in the data and in a structural model."
+  Details: Old props: [rPr] | New props: [rFonts, sz, szCs]
+  Paragraph: "We proceed in three parts. First, we document substantial heterogeneity in both payment composition and interchange fees across merchants. Second, we show that this heterogeneity reflects systematic c..."
+
+--- Change #61 ---
+  Type:   INSERTION
+  ID:     63
+  Author: Amit Seru
+  Date:   2026-03-22T07:26:00Z
+
+--- Change #62 ---
+  Type:   INSERTION
+  ID:     64
+  Author: Amit Seru
+  Date:   2026-03-22T07:24:00Z
+  Text:   "Our results highlight both the magnitude and the structure of redistribution in the payment system. We estimate that interchange fees generate approximately $30 billion in annual transfers from cash and debit card users to credit card users. "
+  Context: ...[>>CHANGE HERE<<]Overall, cash users face an effective increase in sales taxes equivalent to 26% ...
+
+--- Change #63 ---
+  Type:   FORMAT_CHANGE
+  ID:     65
+  Author: Amit Seru
+  Date:   2026-03-22T09:25:00Z
+  Text:   " "
+  Details: Old props: [rPr] | New props: []
+  Paragraph: "Our results highlight both the magnitude and the structure of redistribution in the payment system. We estimate that interchange fees generate approximately $30 billion in annual transfers from cash a..."
+
+--- Change #64 ---
+  Type:   INSERTION
+  ID:     66
+  Author: Amit Seru
+  Date:   2026-03-22T07:47:00Z
+  Text:   "Overall, cash users face an effective increase in sales taxes equivalent to 26% relative to premium credit card users. "
+  Context: ...illion in annual transfers from cash and debit card users to credit card users. [>>CHANGE HERE<<]Because credit card use increases with income, this represents a $9.2 billion an...
+
+--- Change #65 ---
+  Type:   FORMAT_CHANGE
+  ID:     67
+  Author: Amit Seru
+  Date:   2026-03-22T09:25:00Z
+  Text:   "Overall, cash users face an effective increase in sales taxes equivalent to 26% relative to premium credit card users. "
+  Details: Old props: [rPr] | New props: [rFonts, sz, szCs]
+  Paragraph: "Our results highlight both the magnitude and the structure of redistribution in the payment system. We estimate that interchange fees generate approximately $30 billion in annual transfers from cash a..."
+
+--- Change #66 ---
+  Type:   INSERTION
+  ID:     68
+  Author: Amit Seru
+  Date:   2026-03-22T07:26:00Z
+  Text:   "Because credit card use increases with income, this represents a $9.2 billion annual transfer from low- and middle-income households earning less than $150,000 in annual income to higher-income households. \footnote{These transfers are economically significant, comparable in size (but opposite in direction) to major government programs such as SNAP ($120bn), the Earned Income Tax Credit ($57bn), and unemployment insurance ($40bn). The transfers here are also large relative to other transfers in consumer financial markets, such as the inter-regional transfer due to the GSE’s lack of risk-based pricing ($15 billion), consumer losses from shrouded credit card fees ($10 billion), and consumer losses from high-fee index funds ($20 billion) (Hurst et al. 2016; Agarwal et al. 2015; Brown et al. 2024).}"
+  Context: ...ncrease in sales taxes equivalent to 26% relative to premium credit card users. [>>CHANGE HERE<<]...
+
+--- Change #67 ---
+  Type:   FORMAT_CHANGE
+  ID:     69
+  Author: Amit Seru
+  Date:   2026-03-22T09:25:00Z
+  Text:   "Because credit card use increases with income, this represents a $9.2 billion annual transfer from low- and middle-income households earning less than $150,000 in annual income to higher-income households."
+  Details: Old props: [rPr] | New props: [rFonts, color, sz, szCs]
+  Paragraph: "Our results highlight both the magnitude and the structure of redistribution in the payment system. We estimate that interchange fees generate approximately $30 billion in annual transfers from cash a..."
+
+--- Change #68 ---
+  Type:   FORMAT_CHANGE
+  ID:     70
+  Author: Amit Seru
+  Date:   2026-03-22T09:25:00Z
+  Text:   " "
+  Details: Old props: [rPr] | New props: [rFonts, color, sz, szCs]
+  Paragraph: "Our results highlight both the magnitude and the structure of redistribution in the payment system. We estimate that interchange fees generate approximately $30 billion in annual transfers from cash a..."
+
+--- Change #69 ---
+  Type:   FORMAT_CHANGE
+  ID:     71
+  Author: Amit Seru
+  Date:   2026-03-22T09:25:00Z
+  Text:   "\footnote{These transfers are economically significant, comparable in size (but opposite in direction) to major government programs such as SNAP ($120bn), the Earned Income Tax Credit ($57bn), and unemployment insurance ($40bn). The transfers here are also large relative to other transfers in consumer financial markets, such as the inter-regional transfer due to the GSE’s lack of risk-based pricing ($15 billion), consumer losses from shrouded credit card fees ($10 billion), and consumer losses from high-fee index funds ($20 billion) (Hurst et al. 2016; Agarwal et al. 2015; Brown et al. 2024).}"
+  Details: Old props: [rPr] | New props: [rFonts, color, sz, szCs]
+  Paragraph: "Our results highlight both the magnitude and the structure of redistribution in the payment system. We estimate that interchange fees generate approximately $30 billion in annual transfers from cash a..."
+
+--- Change #70 ---
+  Type:   DELETION
+  ID:     72
+  Author: Amit Seru
+  Date:   2026-03-22T07:13:00Z
+
+--- Change #71 ---
+  Type:   DELETION
+  ID:     73
+  Author: Amit Seru
+  Date:   2026-03-22T07:13:00Z
+  Text:   "In this paper, we use novel merchant-level data from Fiserv to quantify how the payment system redistributes among consumers with different payment preferences. These data capture both payment composition and interchange fees at the merchant level. This paper proceeds in three parts. First, we document striking heterogeneity in both payment mix and interchange fees across merchants. While some merchants predominantly receive low-cost payments, such as cash and debit, others are heavily skewed toward accepting high-cost premium credit cards. Second, we explore what determines this variation and its implications for merchant-level acceptance costs. Third, we develop two complementary approaches based on a sufficient statistic and a structural model to measure how the payment system redistributes consumption through retail prices and card rewards."
+
+--- Change #72 ---
+  Type:   DELETION
+  ID:     74
+  Author: Amit Seru
+  Date:   2026-03-22T07:26:00Z
+
+--- Change #73 ---
+  Type:   DELETION
+  ID:     75
+  Author: Amit Seru
+  Date:   2026-03-22T07:26:00Z
+  Text:   "Our results highlight the magnitude and limits of redistribution through the payment system. We estimate that interchange fees generate approximately $30 billion in annual transfers from cash and debit card users to credit card users. Overall, cash users pay the equivalent of -26 % higher sales taxes than premium credit card users. Because credit card use increases with income, this represents a $9.2 billion annual transfer from low- and middle-income households earning less than $150,000 in annual income to higher-income households. These transfers are economically significant, comparable in size (but opposite in direction) to major government programs such as SNAP ($120bn), the Earned Income Tax Credit ($57bn), and unemployment insurance ($40bn). The transfers here are also large relative to other transfers in consumer financial markets, such as the inter-regional transfer due to the GSE’s lack of risk-based pricing ($15 billion), consumer losses from shrouded credit card fees ($10 billion), and consumer losses from high-fee index funds ($20 billion) (Hurst et al. 2016; Agarwal et al. 2015; Brown et al. 2024)."
+
+--- Change #74 ---
+  Type:   DELETION
+  ID:     76
+  Author: Amit Seru
+  Date:   2026-03-22T07:26:00Z
+
+--- Change #75 ---
+  Type:   DELETION
+  ID:     77
+  Author: Amit Seru
+  Date:   2026-03-22T07:26:00Z
+  Text:   "Critically, however, two mechanisms attenuate these transfers relative to estimates that ignore merchant heterogeneity. First, consumers who use different payment methods shop at different types of merchants, reducing the scale of cross-subsidization by approximately $-8.6 billion. Second, for the merchants at which both cash and card users tend to shop—and thus where the potential for redistribution is greatest, such as large firms and grocery stores—interchange fees are typically lower and often negotiated. While the direction of redistribution aligns with theory, the magnitude of the transfer is substantially mitigated by consumer sorting and fee heterogeneity across merchants."
+
+--- Change #76 ---
+  Type:   DELETION
+  ID:     78
+  Author: Amit Seru
+  Date:   2026-03-22T07:47:00Z
+  Text:   "constrains the extent to which"
+  Context: ...mers using different payment methods shop at the same merchants, this variation [>>CHANGE HERE<<]limits credit card interchange fees redistribute consumption from cash and debit...
+
+--- Change #77 ---
+  Type:   INSERTION
+  ID:     79
+  Author: Amit Seru
+  Date:   2026-03-22T07:47:00Z
+  Text:   "limits"
+  Context: ...ethods shop at the same merchants, this variation constrains the extent to which[>>CHANGE HERE<<] credit card interchange fees redistribute consumption from cash and debit card ...
+
+--- Change #78 ---
+  Type:   INSERTION
+  ID:     80
+  Author: Amit Seru
+  Date:   2026-03-22T07:27:00Z
+
+--- Change #79 ---
+  Type:   INSERTION
+  ID:     81
+  Author: Amit Seru
+  Date:   2026-03-22T08:24:00Z
+  Text:   "Evaluating the welfare effects of interchange fees would typically require estimating a full demand system across consumers, merchants, and payment methods, along with modeling strategic pricing by firms. This quickly becomes intractable in settings with rich heterogeneity. We show that this complexity is unnecessary. Under mild conditions on consumer demand and firms’ pricing responses to cost shocks, the first-order welfare effects of interchange fees can be summarized by simple moments of the joint distribution of payment shares across merchants and the corresponding fee schedule. These statistics remain valid even when consumers’ payment and shopping preferences are arbitrarily correlated. Importantly, this approach avoids the need to estimate a full demand system or explicitly model strategic interactions among firms, allowing us to map observed heterogeneity directly into redistribution without imposing strong functional-form assumptions on demand."
+
+--- Change #80 ---
+  Type:   FORMAT_CHANGE
+  ID:     82
+  Author: Amit Seru
+  Date:   2026-03-22T09:26:00Z
+  Text:   " "
+  Details: Old props: [rPr] | New props: []
+  Paragraph: "Evaluating the welfare effects of interchange fees would typically require estimating a full demand system across consumers, merchants, and payment methods, along with modeling strategic pricing by fi..."
+
+--- Change #81 ---
+  Type:   FORMAT_CHANGE
+  ID:     83
+  Author: Amit Seru
+  Date:   2026-03-22T09:26:00Z
+  Text:   "Under mild conditions on consumer demand and firms’ pricing responses to cost shocks,"
+  Details: Old props: [rPr] | New props: [rFonts, sz, szCs]
+  Paragraph: "Evaluating the welfare effects of interchange fees would typically require estimating a full demand system across consumers, merchants, and payment methods, along with modeling strategic pricing by fi..."
+
+--- Change #82 ---
+  Type:   FORMAT_CHANGE
+  ID:     84
+  Author: Amit Seru
+  Date:   2026-03-22T09:26:00Z
+  Text:   " "
+  Details: Old props: [rPr] | New props: []
+  Paragraph: "Evaluating the welfare effects of interchange fees would typically require estimating a full demand system across consumers, merchants, and payment methods, along with modeling strategic pricing by fi..."
+
+--- Change #83 ---
+  Type:   FORMAT_CHANGE
+  ID:     85
+  Author: Amit Seru
+  Date:   2026-03-22T09:26:00Z
+  Text:   " "
+  Details: Old props: [rPr] | New props: []
+  Paragraph: "Evaluating the welfare effects of interchange fees would typically require estimating a full demand system across consumers, merchants, and payment methods, along with modeling strategic pricing by fi..."
+
+--- Change #84 ---
+  Type:   FORMAT_CHANGE
+  ID:     86
+  Author: Amit Seru
+  Date:   2026-03-22T09:26:00Z
+  Text:   "Importantly, this approach avoids the need to estimate a full demand system or explicitly model strategic interactions among firms,"
+  Details: Old props: [rPr] | New props: [rFonts, sz, szCs]
+  Paragraph: "Evaluating the welfare effects of interchange fees would typically require estimating a full demand system across consumers, merchants, and payment methods, along with modeling strategic pricing by fi..."
+
+--- Change #85 ---
+  Type:   FORMAT_CHANGE
+  ID:     87
+  Author: Amit Seru
+  Date:   2026-03-22T09:26:00Z
+  Text:   " "
+  Details: Old props: [rPr] | New props: []
+  Paragraph: "Evaluating the welfare effects of interchange fees would typically require estimating a full demand system across consumers, merchants, and payment methods, along with modeling strategic pricing by fi..."
+
+--- Change #86 ---
+  Type:   DELETION
+  ID:     88
+  Author: Amit Seru
+  Date:   2026-03-22T07:32:00Z
+
+--- Change #87 ---
+  Type:   DELETION
+  ID:     89
+  Author: Amit Seru
+  Date:   2026-03-22T07:28:00Z
+  Text:   "We incorporate these facts about merchant heterogeneity into a sufficient statistic framework to quantify redistribution in the payment system. "
+  Context: ...[>>CHANGE HERE<<]Our framework shows how consumer welfare changes when merchants adjust prices in...
+
+--- Change #88 ---
+  Type:   DELETION
+  ID:     90
+  Author: Amit Seru
+  Date:   2026-03-22T07:32:00Z
+  Text:   "Our framework shows how consumer welfare changes when merchants adjust prices in response to changes in interchange fees, and consumers reallocate their consumption in response to these price changes. Under these assumptions, we show that "
+  Context: ...ufficient statistic framework to quantify redistribution in the payment system. [>>CHANGE HERE<<]Under these assumptions,the welfare effects of interchange fees can be fully sum...
+
+--- Change #89 ---
+  Type:   DELETION
+  ID:     91
+  Author: Amit Seru
+  Date:   2026-03-22T07:28:00Z
+  Text:   "Under these assumptions,"
+  Context: ...ption in response to these price changes. Under these assumptions, we show that [>>CHANGE HERE<<]the welfare effects of interchange fees can be fully summarized by simple moment...
+
+--- Change #90 ---
+  Type:   DELETION
+  ID:     92
+  Author: Amit Seru
+  Date:   2026-03-22T07:32:00Z
+  Text:   "the welfare effects of interchange fees can be fully summarized by simple moments of the distribution of payment shares across merchants by sector and firm size, as well as the fees for these different groups of merchants. These statistics remain valid even when consumers’ payment and shopping preferences are arbitrarily correlated."
+  Context: ...se price changes. Under these assumptions, we show that Under these assumptions,[>>CHANGE HERE<<]...
+
+--- Change #91 ---
+  Type:   FORMAT_CHANGE
+  ID:     93
+  Author: Amit Seru
+  Date:   2026-03-22T09:26:00Z
+  Details: Old props: [rPr] | New props: [rFonts, color, sz, szCs]
+  Paragraph: "Our sufficient-statistics approach is a first-order approximation and holds exactly for small fee changes. To assess its performance in richer environments, we calibrate a structural model to evaluate..."
+
+--- Change #92 ---
+  Type:   DELETION
+  ID:     94
+  Author: Amit Seru
+  Date:   2026-03-22T08:26:00Z
+  Text:   "Our sufficient statistic approach is a first-order approximation and holds exactly for small fee changes. We also calibrate a structural model to evaluate how well our sufficient statistic approximates the welfare effects of interchange under alternative assumptions. We find that our sufficient-statistics framework closely approximates the full structural model, suggesting that our main results are robust to these additional considerations."
+  Context: ...[>>CHANGE HERE<<]Our sufficient-statistics approach is a first-order approximation and holds exac...
+
+--- Change #93 ---
+  Type:   INSERTION
+  ID:     95
+  Author: Amit Seru
+  Date:   2026-03-22T08:26:00Z
+  Text:   "Our sufficient-statistics approach is a first-order approximation and holds exactly for small fee changes. To assess its performance in richer environments, we calibrate a structural model to evaluate how well the sufficient-statistics approximation captures the welfare effects of interchange under alternative assumptions about demand and pricing. We find that our sufficient-statistics framework closely approximates the full structural model, indicating that the key forces driving redistribution are well captured by the empirical moments we use, and suggesting that our main results are robust."
+  Context: ... suggesting that our main results are robust to these additional considerations.[>>CHANGE HERE<<]...
+
+--- Change #94 ---
+  Type:   FORMAT_CHANGE
+  ID:     96
+  Author: Amit Seru
+  Date:   2026-03-22T09:26:00Z
+  Text:   " "
+  Details: Old props: [rPr] | New props: []
+  Paragraph: "Our sufficient-statistics approach is a first-order approximation and holds exactly for small fee changes. To assess its performance in richer environments, we calibrate a structural model to evaluate..."
+
+--- Change #95 ---
+  Type:   FORMAT_CHANGE
+  ID:     97
+  Author: Amit Seru
+  Date:   2026-03-22T09:26:00Z
+  Text:   "To assess its performance in richer environments,"
+  Details: Old props: [rPr] | New props: [rFonts, sz, szCs]
+  Paragraph: "Our sufficient-statistics approach is a first-order approximation and holds exactly for small fee changes. To assess its performance in richer environments, we calibrate a structural model to evaluate..."
+
+--- Change #96 ---
+  Type:   FORMAT_CHANGE
+  ID:     98
+  Author: Amit Seru
+  Date:   2026-03-22T09:26:00Z
+  Text:   " "
+  Details: Old props: [rPr] | New props: []
+  Paragraph: "Our sufficient-statistics approach is a first-order approximation and holds exactly for small fee changes. To assess its performance in richer environments, we calibrate a structural model to evaluate..."
+
+--- Change #97 ---
+  Type:   FORMAT_CHANGE
+  ID:     99
+  Author: Amit Seru
+  Date:   2026-03-22T09:26:00Z
+  Text:   " "
+  Details: Old props: [rPr] | New props: []
+  Paragraph: "Our sufficient-statistics approach is a first-order approximation and holds exactly for small fee changes. To assess its performance in richer environments, we calibrate a structural model to evaluate..."
+
+--- Change #98 ---
+  Type:   FORMAT_CHANGE
+  ID:     100
+  Author: Amit Seru
+  Date:   2026-03-22T09:26:00Z
+  Text:   "indicating that the key forces driving redistribution are well captured by the empirical moments we use,"
+  Details: Old props: [rPr] | New props: [rFonts, sz, szCs]
+  Paragraph: "Our sufficient-statistics approach is a first-order approximation and holds exactly for small fee changes. To assess its performance in richer environments, we calibrate a structural model to evaluate..."
+
+--- Change #99 ---
+  Type:   FORMAT_CHANGE
+  ID:     101
+  Author: Amit Seru
+  Date:   2026-03-22T09:26:00Z
+  Text:   " "
+  Details: Old props: [rPr] | New props: []
+  Paragraph: "Our sufficient-statistics approach is a first-order approximation and holds exactly for small fee changes. To assess its performance in richer environments, we calibrate a structural model to evaluate..."
+
+--- Change #100 ---
+  Type:   INSERTION
+  ID:     102
+  Author: Amit Seru
+  Date:   2026-03-22T08:27:00Z
+  Text:   "Having incorporated merchant heterogeneity, consumer sorting, and the structure of interchange fees,"
+  Context: ...[>>CHANGE HERE<<]Even after accounting for the complexities of the interchange schedule and the v...
+
+--- Change #101 ---
+  Type:   FORMAT_CHANGE
+  ID:     103
+  Author: Amit Seru
+  Date:   2026-03-22T09:26:00Z
+  Text:   "Having incorporated merchant heterogeneity, consumer sorting, and the structure of interchange fees,"
+  Details: Old props: [rPr] | New props: [rFonts, sz, szCs]
+  Paragraph: "Having incorporated merchant heterogeneity, consumer sorting, and the structure of interchange fees, we find that the payment system generates large transfers from cash and debit card users to credit ..."
+
+--- Change #102 ---
+  Type:   DELETION
+  ID:     104
+  Author: Amit Seru
+  Date:   2026-03-22T08:28:00Z
+  Text:   "Even after accounting for the complexities of the interchange schedule and the variation in payment composition across merchants,"
+  Context: ...merchant heterogeneity, consumer sorting, and the structure of interchange fees,[>>CHANGE HERE<<] we find that the payment system generates large transfers from cash and debit c...
+
+--- Change #103 ---
+  Type:   FORMAT_CHANGE
+  ID:     105
+  Author: Amit Seru
+  Date:   2026-03-22T09:26:00Z
+  Text:   "Even after accounting for the complexities of the interchange schedule and the variation in payment composition across merchants,"
+  Details: Old props: [rPr] | New props: [rFonts, color, sz, szCs]
+  Paragraph: "Having incorporated merchant heterogeneity, consumer sorting, and the structure of interchange fees, we find that the payment system generates large transfers from cash and debit card users to credit ..."
+
+--- Change #104 ---
+  Type:   FORMAT_CHANGE
+  ID:     106
+  Author: Amit Seru
+  Date:   2026-03-22T09:26:00Z
+  Text:   " "
+  Details: Old props: [rPr] | New props: [rFonts, color, sz, szCs]
+  Paragraph: "Having incorporated merchant heterogeneity, consumer sorting, and the structure of interchange fees, we find that the payment system generates large transfers from cash and debit card users to credit ..."
+
+--- Change #105 ---
+  Type:   INSERTION
+  ID:     107
+  Author: Amit Seru
+  Date:   2026-03-22T08:56:00Z
+  Text:   ", highlighting how equilibrium pricing both reflects and mitigates cross-subsidization."
+  Context: ...to cash and regulated debit card users, thereby attenuating the overall transfer[>>CHANGE HERE<<]....
+
+--- Change #106 ---
+  Type:   FORMAT_CHANGE
+  ID:     108
+  Author: Amit Seru
+  Date:   2026-03-22T09:26:00Z
+  Text:   " "
+  Details: Old props: [rPr] | New props: []
+  Paragraph: "Variation in interchange fees across merchants, driven by a combination of sector discounts and the bargaining power of large merchants, also shapes the redistributive effects of interchange fees. Red..."
+
+--- Change #107 ---
+  Type:   FORMAT_CHANGE
+  ID:     109
+  Author: Amit Seru
+  Date:   2026-03-22T09:26:00Z
+  Text:   "highlighting how equilibrium pricing both reflects and mitigates cross-subsidization."
+  Details: Old props: [rPr] | New props: [rFonts, sz, szCs]
+  Paragraph: "Variation in interchange fees across merchants, driven by a combination of sector discounts and the bargaining power of large merchants, also shapes the redistributive effects of interchange fees. Red..."
+
+--- Change #108 ---
+  Type:   DELETION
+  ID:     110
+  Author: Amit Seru
+  Date:   2026-03-22T08:57:00Z
+  Text:   "."
+  Context: ...ighting how equilibrium pricing both reflects and mitigates cross-subsidization.[>>CHANGE HERE<<]...
+
+--- Change #109 ---
+  Type:   INSERTION
+  ID:     111
+  Author: Amit Seru
+  Date:   2026-03-22T08:57:00Z
+  Text:   ", and more broadly how policy and innovation can reshape the incidence of platform fees."
+  Context: ... essential to understanding the effects of interchange in modern payment systems[>>CHANGE HERE<<]....
+
+--- Change #110 ---
+  Type:   FORMAT_CHANGE
+  ID:     112
+  Author: Amit Seru
+  Date:   2026-03-22T09:26:00Z
+  Text:   " "
+  Details: Old props: [rPr] | New props: []
+  Paragraph: "We also use our framework to examine how two recent industry shifts, the Durbin Amendment and the rise in card premiumization, have affected redistribution. Although cash users benefited from the Durb..."
+
+--- Change #111 ---
+  Type:   FORMAT_CHANGE
+  ID:     113
+  Author: Amit Seru
+  Date:   2026-03-22T09:26:00Z
+  Text:   "and more broadly how policy and innovation can reshape the incidence of platform fees."
+  Details: Old props: [rPr] | New props: [rFonts, sz, szCs]
+  Paragraph: "We also use our framework to examine how two recent industry shifts, the Durbin Amendment and the rise in card premiumization, have affected redistribution. Although cash users benefited from the Durb..."
+
+--- Change #112 ---
+  Type:   DELETION
+  ID:     114
+  Author: Amit Seru
+  Date:   2026-03-22T08:57:00Z
+  Text:   "."
+  Context: ...re broadly how policy and innovation can reshape the incidence of platform fees.[>>CHANGE HERE<<]...
+
+--- Change #113 ---
+  Type:   INSERTION
+  ID:     116
+  Author: Amit Seru
+  Date:   2026-03-22T08:57:00Z
+  Text:   ", implying that incidence cannot be characterized using representative consumers or average fees."
+  Context: ...nd show that this has important implications for redistribution across consumers[>>CHANGE HERE<<]....
+
+--- Change #114 ---
+  Type:   DELETION
+  ID:     117
+  Author: Amit Seru
+  Date:   2026-03-22T08:57:00Z
+  Text:   "."
+  Context: ...ncidence cannot be characterized using representative consumers or average fees.[>>CHANGE HERE<<]...
+
+--- Change #115 ---
+  Type:   INSERTION
+  ID:     118
+  Author: Amit Seru
+  Date:   2026-03-22T08:57:00Z
+  Text:   ", and in environments with rich heterogeneity across both consumers and firms."
+  Context: ...plied to quantify redistribution in an industry model with imperfect competition[>>CHANGE HERE<<]....
+
+--- Change #116 ---
+  Type:   DELETION
+  ID:     119
+  Author: Amit Seru
+  Date:   2026-03-22T08:57:00Z
+  Text:   "."
+  Context: ...on, and in environments with rich heterogeneity across both consumers and firms.[>>CHANGE HERE<<]...
+
+--- Change #117 ---
+  Type:   INSERTION
+  ID:     120
+  Author: Amit Seru
+  Date:   2026-03-22T08:58:00Z
+  Text:   "because they benefit from existing reward structures, they have limited incentives to switch to lower-cost alternatives."
+  Context: ...ations, such as FedNow or central bank digital currencies (Whited et al. 2022): [>>CHANGE HERE<<]Because they benefit from current reward structures, they have weak incentives t...
+
+--- Change #118 ---
+  Type:   DELETION
+  ID:     121
+  Author: Amit Seru
+  Date:   2026-03-22T08:58:00Z
+  Text:   "Because they benefit from current reward structures, they have weak incentives to switch to low-cost alternatives."
+  Context: ...d structures, they have limited incentives to switch to lower-cost alternatives.[>>CHANGE HERE<<]...
+
+--- Change #119 ---
+  Type:   INSERTION
+  ID:     122
+  Author: Amit Seru
+  Date:   2026-03-22T08:58:00Z
+  Text:   ", shifting attention from contract design to the interaction between consumer sorting and merchant pricing."
+  Context: ... across financial instruments (i.e., payment methods) that drives redistribution[>>CHANGE HERE<<]....
+
+--- Change #120 ---
+  Type:   DELETION
+  ID:     123
+  Author: Amit Seru
+  Date:   2026-03-22T08:58:00Z
+  Text:   "."
+  Context: ...ontract design to the interaction between consumer sorting and merchant pricing.[>>CHANGE HERE<<]...
+
+--- Change #121 ---
+  Type:   INSERTION
+  ID:     124
+  Author: Amit Seru
+  Date:   2026-03-22T08:58:00Z
+  Text:   " "
+  Context: ... Durbin Amendment’s redistributive effects builds on Manuszak and Wozniak (2017)[>>CHANGE HERE<<]and Mukharlyamov and Sarin (2025), who document how banks recouped lost intercha...
+
+--- Change #122 ---
+  Type:   INSERTION
+  ID:     125
+  Author: Amit Seru
+  Date:   2026-03-22T08:59:00Z
+  Text:   ", linking changes in pricing on the bank side to changes in incidence across consumers."
+  Context: ...m our estimates of how the Durbin Amendment redistributed across consumer groups[>>CHANGE HERE<<]....
+
+--- Change #123 ---
+  Type:   DELETION
+  ID:     126
+  Author: Amit Seru
+  Date:   2026-03-22T08:59:00Z
+  Text:   "."
+  Context: ...ng changes in pricing on the bank side to changes in incidence across consumers.[>>CHANGE HERE<<]...
+
+--- Change #124 ---
+  Type:   DELETION
+  ID:     129
+  Author: Amit Seru
+  Date:   2026-03-22T09:31:00Z
+  Text:   "Combining these facts enables us to assess how much the payment system redistributes consumption among consumers."
+  Context: ...hants. These data show which payments merchants receive and what fees they pay. [>>CHANGE HERE<<]Together, these data allow us to link merchant-level payment composition and cos...
+
+--- Change #125 ---
+  Type:   INSERTION
+  ID:     130
+  Author: Amit Seru
+  Date:   2026-03-22T09:30:00Z
+  Text:   "Together, these data allow us to link merchant-level payment composition and costs to redistribution across consumers."
+  Context: ...to assess how much the payment system redistributes consumption among consumers.[>>CHANGE HERE<<]...
+
+--- Change #126 ---
+  Type:   DELETION
+  ID:     132
+  Author: Amit Seru
+  Date:   2026-03-22T09:33:00Z
+  Text:   "Therefore, interchange fee data are essential to understanding cross-subsidization within the payment system."
+  Context: ...s a primary determinant of both the merchant’s cost and the consumer’s rewards. [>>CHANGE HERE<<]As a result, variation in interchange fees is central to understanding cross-sub...
+
+--- Change #127 ---
+  Type:   INSERTION
+  ID:     133
+  Author: Amit Seru
+  Date:   2026-03-22T09:33:00Z
+  Text:   "As a result, variation in interchange fees is central to understanding cross-subsidization within the payment system."
+  Context: ...ta are essential to understanding cross-subsidization within the payment system.[>>CHANGE HERE<<]...
+
+--- Change #128 ---
+  Type:   DELETION
+  ID:     134
+  Author: Amit Seru
+  Date:   2026-03-22T09:33:00Z
+  Text:   "Transaction fees vary across merchants, but we are the first to study data on the actual fees they pay."
+  Context: ... gas station, the cost would be , while at a large grocery store, it would be . [>>CHANGE HERE<<]While public schedules illustrate potential fee variation, to the best of our kn...
+
+--- Change #129 ---
+  Type:   INSERTION
+  ID:     135
+  Author: Amit Seru
+  Date:   2026-03-22T09:33:00Z
+  Text:   "While public schedules illustrate potential fee variation, "
+  Context: ...cross merchants, but we are the first to study data on the actual fees they pay.[>>CHANGE HERE<<]to the best of our knowledge, we are the first to use data on the actual fees me...
+
+--- Change #130 ---
+  Type:   INSERTION
+  ID:     136
+  Author: Amit Seru
+  Date:   2026-03-22T09:34:00Z
+  Text:   "to the best of our knowledge, "
+  Context: ...actual fees they pay.While public schedules illustrate potential fee variation, [>>CHANGE HERE<<]we are the first to use data on the actual fees merchants pay to quantify how th...
+
+--- Change #131 ---
+  Type:   INSERTION
+  ID:     137
+  Author: Amit Seru
+  Date:   2026-03-22T09:33:00Z
+  Text:   "we "
+  Context: ...lic schedules illustrate potential fee variation, to the best of our knowledge, [>>CHANGE HERE<<]are the first to use data on the actual fees merchants pay to quantify how this ...
+
+--- Change #132 ---
+  Type:   INSERTION
+  ID:     138
+  Author: Amit Seru
+  Date:   2026-03-22T09:34:00Z
+  Text:   "are the first to "
+  Context: ... schedules illustrate potential fee variation, to the best of our knowledge, we [>>CHANGE HERE<<]use data on the actual fees merchants pay to quantify how this heterogeneity sha...
+
+--- Change #133 ---
+  Type:   INSERTION
+  ID:     139
+  Author: Amit Seru
+  Date:   2026-03-22T09:33:00Z
+  Text:   "use data on the actual fees merchants pay to quantify how this heterogeneity shapes redistribution."
+  Context: ...rate potential fee variation, to the best of our knowledge, we are the first to [>>CHANGE HERE<<]...
+
+--- Change #134 ---
+  Type:   DELETION
+  ID:     141
+  Author: Amit Seru
+  Date:   2026-03-22T09:38:00Z
+  Text:   "A key feature of these data is that we observe both the composition and price of transactions at the merchant level, which, as detailed in Section 5, is critical for understanding the implications for redistribution and capturing heterogeneity in payment costs."
+  Context: ...ow interchange fees vary across merchants and their impact on consumer welfare. [>>CHANGE HERE<<]A key feature of these data is that we observe both the composition and cost of ...
+
+--- Change #135 ---
+  Type:   INSERTION
+  ID:     142
+  Author: Amit Seru
+  Date:   2026-03-22T09:37:00Z
+  Text:   "A key feature of these data is that we observe both the composition and cost of transactions at the merchant level, which is critical for measuring heterogeneity in payment costs and its implications for redistribution."
+  Context: ...he implications for redistribution and capturing heterogeneity in payment costs.[>>CHANGE HERE<<]...
+
+--- Change #136 ---
+  Type:   DELETION
+  ID:     144
+  Author: Amit Seru
+  Date:   2026-03-22T09:38:00Z
+  Text:   "We use merchants’ MCC codes to classify them into sectors (e.g., grocery stores, gas stations, restaurants)."
+  Context: ...f data (2022), which reflects current pricing structures and consumer behavior. [>>CHANGE HERE<<]We use merchants’ MCC codes to classify establishments into sectors (e.g., groce...
+
+--- Change #137 ---
+  Type:   INSERTION
+  ID:     145
+  Author: Amit Seru
+  Date:   2026-03-22T09:38:00Z
+  Text:   "We use merchants’ MCC codes to classify establishments into sectors (e.g., grocery stores, gas stations, restaurants)."
+  Context: ...to classify them into sectors (e.g., grocery stores, gas stations, restaurants).[>>CHANGE HERE<<]...
+
+--- Change #138 ---
+  Type:   INSERTION
+  ID:     146
+  Author: Amit Seru
+  Date:   2026-03-22T09:39:00Z
+  Text:   " , ensuring that fee variation reflects the relevant pricing unit."
+  Context: ...t the firm level, we aggregate to the firm level for the redistribution analysis[>>CHANGE HERE<<]....
+
+--- Change #139 ---
+  Type:   DELETION
+  ID:     147
+  Author: Amit Seru
+  Date:   2026-03-22T09:40:00Z
+  Text:   "."
+  Context: ...tions allow us to capture the complete set of transactions at the merchant level[>>CHANGE HERE<<], including payment methods that do not incur interchange fees....
+
+--- Change #140 ---
+  Type:   INSERTION
+  ID:     148
+  Author: Amit Seru
+  Date:   2026-03-22T09:40:00Z
+  Text:   ", including payment methods that do not incur interchange fees."
+  Context: ...ions allow us to capture the complete set of transactions at the merchant level.[>>CHANGE HERE<<]...
+
+--- Change #141 ---
+  Type:   DELETION
+  ID:     149
+  Author: Amit Seru
+  Date:   2026-03-22T09:41:00Z
+  Text:   "."
+  Context: ...into cash usage and variation in payment composition that informs redistribution[>>CHANGE HERE<<], particularly for merchants where cash remains a meaningful share of transactio...
+
+--- Change #142 ---
+  Type:   INSERTION
+  ID:     150
+  Author: Amit Seru
+  Date:   2026-03-22T09:41:00Z
+  Text:   ", particularly for merchants where cash remains a meaningful share of transactions."
+  Context: ...nto cash usage and variation in payment composition that informs redistribution.[>>CHANGE HERE<<]...
+
+--- Change #143 ---
+  Type:   DELETION
+  ID:     151
+  Author: Amit Seru
+  Date:   2026-03-22T09:42:00Z
+  Text:   "."
+  Context: ...t for the rewards they receive and the interchange fees they impose on merchants[>>CHANGE HERE<<], allowing us to map payment choices to income and reward structures....
+
+--- Change #144 ---
+  Type:   INSERTION
+  ID:     152
+  Author: Amit Seru
+  Date:   2026-03-22T09:42:00Z
+  Text:   ", allowing us to map payment choices to income and reward structures."
+  Context: ... for the rewards they receive and the interchange fees they impose on merchants.[>>CHANGE HERE<<]...
+
+--- Change #145 ---
+  Type:   INSERTION
+  ID:     154
+  Author: Amit Seru
+  Date:   2026-03-22T09:42:00Z
+  Text:   ", supporting the external validity of our measures of payment composition and costs."
+  Context: ...umer purchases on cash. We find a close correspondence along all four dimensions[>>CHANGE HERE<<]....
+
+--- Change #146 ---
+  Type:   DELETION
+  ID:     155
+  Author: Amit Seru
+  Date:   2026-03-22T09:42:00Z
+  Text:   "."
+  Context: ...pporting the external validity of our measures of payment composition and costs.[>>CHANGE HERE<<]...
+
+--- Change #147 ---
+  Type:   DELETION
+  ID:     158
+  Author: Amit Seru
+  Date:   2026-03-22T11:54:00Z
+  Text:   "."
+  Context: ...e aggregate data to overstate the extent of redistribution in the payment system[>>CHANGE HERE<<], by limiting the overlap between consumers using different payment methods and ...
+
+--- Change #148 ---
+  Type:   INSERTION
+  ID:     159
+  Author: Amit Seru
+  Date:   2026-03-22T11:54:00Z
+  Text:   ", by limiting the overlap between consumers using different payment methods and compressing fee differences where such overlap occurs."
+  Context: ... aggregate data to overstate the extent of redistribution in the payment system.[>>CHANGE HERE<<]...
+
+--- Change #149 ---
+  Type:   INSERTION
+  ID:     162
+  Author: Amit Seru
+  Date:   2026-03-22T11:55:00Z
+  Text:   ", highlighting the concentration of cash usage among a subset of merchants."
+  Context: ...han 30% of their transactions—and for merchants in the 90th percentile, over 80%[>>CHANGE HERE<<]....
+
+--- Change #150 ---
+  Type:   DELETION
+  ID:     163
+  Author: Amit Seru
+  Date:   2026-03-22T11:55:00Z
+  Text:   "."
+  Context: ...r 80%, highlighting the concentration of cash usage among a subset of merchants.[>>CHANGE HERE<<]...
+
+--- Change #151 ---
+  Type:   INSERTION
+  ID:     164
+  Author: Amit Seru
+  Date:   2026-03-22T11:55:00Z
+  Text:   ", so dispersion in payment composition directly constrains the scope for cross-subsidization."
+  Context: ...ution is limited. Redistribution inherently requires a mixed payment environment[>>CHANGE HERE<<]....
+
+--- Change #152 ---
+  Type:   DELETION
+  ID:     165
+  Author: Amit Seru
+  Date:   2026-03-22T11:55:00Z
+  Text:   "."
+  Context: ...on in payment composition directly constrains the scope for cross-subsidization.[>>CHANGE HERE<<]...
+
+--- Change #153 ---
+  Type:   INSERTION
+  ID:     166
+  Author: Amit Seru
+  Date:   2026-03-22T11:55:00Z
+  Text:   ", as many merchants are dominated by a single payment type."
+  Context: ...icant at the merchant level—again limiting the potential for cross-subsidization[>>CHANGE HERE<<]....
+
+--- Change #154 ---
+  Type:   DELETION
+  ID:     167
+  Author: Amit Seru
+  Date:   2026-03-22T11:55:00Z
+  Text:   "."
+  Context: ...r cross-subsidization, as many merchants are dominated by a single payment type.[>>CHANGE HERE<<]...
+
+--- Change #155 ---
+  Type:   INSERTION
+  ID:     169
+  Author: Amit Seru
+  Date:   2026-03-22T11:56:00Z
+  Text:   ", given the limited presence of cash transactions."
+  Context: ...stribution is likely minimal and occurs primarily between credit and debit users[>>CHANGE HERE<<]....
+
+--- Change #156 ---
+  Type:   DELETION
+  ID:     170
+  Author: Amit Seru
+  Date:   2026-03-22T11:56:00Z
+  Text:   "."
+  Context: ...between credit and debit users, given the limited presence of cash transactions.[>>CHANGE HERE<<]...
+
+--- Change #157 ---
+  Type:   INSERTION
+  ID:     171
+  Author: Amit Seru
+  Date:   2026-03-22T11:56:00Z
+  Text:   ", reinforcing the role of sorting in shaping redistribution."
+  Context: ...consumers with different payment preferences tend to shop at different merchants[>>CHANGE HERE<<]....
+
+--- Change #158 ---
+  Type:   DELETION
+  ID:     172
+  Author: Amit Seru
+  Date:   2026-03-22T11:56:00Z
+  Text:   "."
+  Context: ... different merchants, reinforcing the role of sorting in shaping redistribution.[>>CHANGE HERE<<]...
+
+--- Change #159 ---
+  Type:   INSERTION
+  ID:     174
+  Author: Amit Seru
+  Date:   2026-03-22T11:56:00Z
+  Text:   ", linking payment choice directly to the distribution of rewards and fees."
+  Context: ...edit cards, and in particular, premium credit cards with higher interchange fees[>>CHANGE HERE<<]....
+
+--- Change #160 ---
+  Type:   DELETION
+  ID:     175
+  Author: Amit Seru
+  Date:   2026-03-22T11:56:00Z
+  Text:   "."
+  Context: ...e fees, linking payment choice directly to the distribution of rewards and fees.[>>CHANGE HERE<<]...
+
+--- Change #161 ---
+  Type:   DELETION
+  ID:     177
+  Author: Amit Seru
+  Date:   2026-03-22T12:18:00Z
+  Text:   "Unsurprisingly, c"
+  Context: ...n value is associated with a 5.55 percentage point (50%) decline in cash usage. [>>CHANGE HERE<<]Cash usage is negatively correlated with e-commerce: a 10 percentage point incre...
+
+--- Change #162 ---
+  Type:   INSERTION
+  ID:     178
+  Author: Amit Seru
+  Date:   2026-03-22T12:18:00Z
+  Text:   "C"
+  Context: ...ated with a 5.55 percentage point (50%) decline in cash usage. Unsurprisingly, c[>>CHANGE HERE<<]ash usage is negatively correlated with e-commerce: a 10 percentage point increa...
+
+--- Change #163 ---
+  Type:   DELETION
+  ID:     179
+  Author: Amit Seru
+  Date:   2026-03-22T12:18:00Z
+  Text:   "In other words, c"
+  Context: ...re 16, local demographics systematically influence cash usage across merchants. [>>CHANGE HERE<<]Consumers are more likely to pay in cash in less wealthy, less educated, and les...
+
+--- Change #164 ---
+  Type:   INSERTION
+  ID:     180
+  Author: Amit Seru
+  Date:   2026-03-22T12:18:00Z
+  Text:   "C"
+  Context: ...graphics systematically influence cash usage across merchants. In other words, c[>>CHANGE HERE<<]onsumers are more likely to pay in cash in less wealthy, less educated, and less...
+
+--- Change #165 ---
+  Type:   INSERTION
+  ID:     181
+  Author: Amit Seru
+  Date:   2026-03-22T12:19:00Z
+  Text:   ", mirroring the distribution of rewards tied to high-fee payment instruments."
+  Context: ...usage is more prevalent in wealthier, older, more educated, and more urban areas[>>CHANGE HERE<<]....
+
+--- Change #166 ---
+  Type:   DELETION
+  ID:     182
+  Author: Amit Seru
+  Date:   2026-03-22T12:19:00Z
+  Text:   "."
+  Context: ...eas, mirroring the distribution of rewards tied to high-fee payment instruments.[>>CHANGE HERE<<]...
+
+--- Change #167 ---
+  Type:   INSERTION
+  ID:     183
+  Author: Amit Seru
+  Date:   2026-03-22T12:19:00Z
+  Text:   ", by shaping where cross-subsidization can occur."
+  Context: ... important implications for both the cost and redistributive aspects of payments[>>CHANGE HERE<<]....
+
+--- Change #168 ---
+  Type:   DELETION
+  ID:     184
+  Author: Amit Seru
+  Date:   2026-03-22T12:19:00Z
+  Text:   "."
+  Context: ...istributive aspects of payments, by shaping where cross-subsidization can occur.[>>CHANGE HERE<<]...
+
+--- Change #169 ---
+  Type:   INSERTION
+  ID:     186
+  Author: Amit Seru
+  Date:   2026-03-22T12:19:00Z
+  Text:   ", implying large differences in effective costs across otherwise similar transactions."
+  Context: ...ees are 0.8% of sales, while at the 90th percentile, they rise to 2.2 % of sales[>>CHANGE HERE<<]....
+
+--- Change #170 ---
+  Type:   DELETION
+  ID:     187
+  Author: Amit Seru
+  Date:   2026-03-22T12:19:00Z
+  Text:   "."
+  Context: ...ying large differences in effective costs across otherwise similar transactions.[>>CHANGE HERE<<]...
+
+--- Change #171 ---
+  Type:   INSERTION
+  ID:     188
+  Author: Amit Seru
+  Date:   2026-03-22T12:21:00Z
+  Text:   ", even conditional on payment method. "
+  Context: ..., there is still substantial variation in card interchange fees across merchants[>>CHANGE HERE<<]. Figure 17 displays the average card interchange fee across merchants in our sa...
+
+--- Change #172 ---
+  Type:   DELETION
+  ID:     189
+  Author: Amit Seru
+  Date:   2026-03-22T12:21:00Z
+  Text:   ". "
+  Context: ... in card interchange fees across merchants, even conditional on payment method. [>>CHANGE HERE<<]Figure 17 displays the average card interchange fee across merchants in our samp...
+
+--- Change #173 ---
+  Type:   DELETION
+  ID:     192
+  Author: Amit Seru
+  Date:   2026-03-22T12:23:00Z
+  Text:   "It is precisely t"
+  Context: ...ty of predicted interchange fees based on each merchant’s observed payment mix. [>>CHANGE HERE<<]This variation in fees that can generate variation in retail prices, thereby red...
+
+--- Change #174 ---
+  Type:   INSERTION
+  ID:     193
+  Author: Amit Seru
+  Date:   2026-03-22T12:23:00Z
+  Text:   "T"
+  Context: ...nterchange fees based on each merchant’s observed payment mix. It is precisely t[>>CHANGE HERE<<]his variation in fees that can generate variation in retail prices, thereby redi...
+
+--- Change #175 ---
+  Type:   INSERTION
+  ID:     195
+  Author: Amit Seru
+  Date:   2026-03-22T12:24:00Z
+  Text:   ", trading off participation on both sides of the platform."
+  Context: ...nd Mastercard’s attempts to balance merchant acceptance versus issuer incentives[>>CHANGE HERE<<]. Historically, Visa and Mastercard had lower acceptance at supermarkets until t...
+
+--- Change #176 ---
+  Type:   DELETION
+  ID:     196
+  Author: Amit Seru
+  Date:   2026-03-22T12:24:00Z
+  Text:   "."
+  Context: ...rsus issuer incentives, trading off participation on both sides of the platform.[>>CHANGE HERE<<] Historically, Visa and Mastercard had lower acceptance at supermarkets until th...
+
+--- Change #177 ---
+  Type:   DELETION
+  ID:     198
+  Author: Amit Seru
+  Date:   2026-03-22T12:30:00Z
+  Text:   "."
+  Context: ...ttern aligns with public data from Visa’s interchange schedule, shown in Table 4[>>CHANGE HERE<<] and likely reflects both publicly posted volume discounts and private negotiati...
+
+--- Change #178 ---
+  Type:   INSERTION
+  ID:     199
+  Author: Amit Seru
+  Date:   2026-03-22T12:30:00Z
+  Text:   " and likely reflects both publicly posted volume discounts and private negotiations, consistent with greater bargaining power among larger merchants."
+  Context: ...tern aligns with public data from Visa’s interchange schedule, shown in Table 4.[>>CHANGE HERE<<]...
+
+--- Change #179 ---
+  Type:   DELETION
+  ID:     200
+  Author: Amit Seru
+  Date:   2026-03-22T12:31:00Z
+  Text:   "One explanation for"
+  Context: ...[>>CHANGE HERE<<] A key mechanism underlying these size-based discounts is that  this size-based ...
+
+--- Change #180 ---
+  Type:   INSERTION
+  ID:     201
+  Author: Amit Seru
+  Date:   2026-03-22T12:31:00Z
+  Text:   " A key mechanism underlying these size-based discounts is that "
+  Context: ...One explanation for[>>CHANGE HERE<<] this size-based discount is that large merchants can influence consumer payment...
+
+--- Change #181 ---
+  Type:   DELETION
+  ID:     202
+  Author: Amit Seru
+  Date:   2026-03-22T12:31:00Z
+  Text:   " this size-based discount is "
+  Context: ...e explanation for A key mechanism underlying these size-based discounts is that [>>CHANGE HERE<<]that large merchants can influence consumer payment behavior by choosing not to ...
+
+--- Change #182 ---
+  Type:   DELETION
+  ID:     203
+  Author: Amit Seru
+  Date:   2026-03-22T12:32:00Z
+  Text:   "that "
+  Context: ...nism underlying these size-based discounts is that  this size-based discount is [>>CHANGE HERE<<]large merchants can influence consumer payment behavior by choosing not to accep...
+
+--- Change #183 ---
+  Type:   INSERTION
+  ID:     204
+  Author: Amit Seru
+  Date:   2026-03-22T12:32:00Z
+  Text:   "In addition to merchant size, transaction size also plays an important role in determining interchange fees. "
+  Context: ...[>>CHANGE HERE<<]Another important factor influencing the average interchange fee is the transact...
+
+--- Change #184 ---
+  Type:   DELETION
+  ID:     205
+  Author: Amit Seru
+  Date:   2026-03-22T12:32:00Z
+  Text:   "Another important factor influencing the average interchange fee is the transaction size. "
+  Context: ... transaction size also plays an important role in determining interchange fees. [>>CHANGE HERE<<]Visa’s public interchange schedules, as shown in Table [tab:visa-interchange-pub...
+
+--- Change #185 ---
+  Type:   INSERTION
+  ID:     207
+  Author: Amit Seru
+  Date:   2026-03-22T12:28:00Z
+
+--- Change #186 ---
+  Type:   DELETION
+  ID:     208
+  Author: Amit Seru
+  Date:   2026-03-22T12:28:00Z
+  Text:   "-"
+  Context: ...nd that every one percentage point in interchange expense saved causes around a [>>CHANGE HERE<<]5.6 % increase in card sales. ...
+
+--- Change #187 ---
+  Type:   DELETION
+  ID:     209
+  Author: Amit Seru
+  Date:   2026-03-22T12:28:00Z
+
+--- Change #188 ---
+  Type:   PARAGRAPH_PROPERTY_CHANGE
+  ID:     210
+  Author: Amit Seru
+  Date:   2026-03-22T12:28:00Z
+  Details: Old paragraph props: [pPr]
+
+--- Change #189 ---
+  Type:   INSERTION
+  ID:     212
+  Author: Amit Seru
+  Date:   2026-03-22T12:34:00Z
+
+--- Change #190 ---
+  Type:   INSERTION
+  ID:     213
+  Author: Amit Seru
+  Date:   2026-03-22T12:34:00Z
+
+--- Change #191 ---
+  Type:   INSERTION
+  ID:     214
+  Author: Amit Seru
+  Date:   2026-03-22T12:34:00Z
+
+--- Change #192 ---
+  Type:   INSERTION
+  ID:     215
+  Author: Amit Seru
+  Date:   2026-03-22T12:34:00Z
+
+--- Change #193 ---
+  Type:   INSERTION
+  ID:     216
+  Author: Amit Seru
+  Date:   2026-03-22T12:34:00Z
+
+--- Change #194 ---
+  Type:   INSERTION
+  ID:     217
+  Author: Amit Seru
+  Date:   2026-03-22T12:34:00Z
+
+--- Change #195 ---
+  Type:   INSERTION
+  ID:     218
+  Author: Amit Seru
+  Date:   2026-03-22T12:34:00Z
+
+--- Change #196 ---
+  Type:   FORMAT_CHANGE
+  ID:     219
+  Author: Amit Seru
+  Date:   2026-03-22T12:36:00Z
+  Details: Old props: [rPr] | New props: [i, iCs, color]
+  Paragraph: "Our reduced-form analysis highlights one fact that suggests substantial redistribution between consumers who use different payment methods, and two facts that moderate this redistribution. First, card..."
+
+--- Change #197 ---
+  Type:   DELETION
+  ID:     220
+  Author: Amit Seru
+  Date:   2026-03-22T12:35:00Z
+  Text:   "Thus, the dispersion in payment composition across merchants moderates this redistribution. "
+  Context: ...ns when consumers who choose different payment methods shop at the same stores. [>>CHANGE HERE<<]Moreover, the merchants where consumers with different payment preferences overl...
+
+--- Change #198 ---
+  Type:   DELETION
+  ID:     221
+  Author: Amit Seru
+  Date:   2026-03-22T12:36:00Z
+  Text:   "Moreover, the merchants where consumers with different payment preferences overlap may also pay substantially lower fees due to both sector discounts and negotiation"
+  Context: ...spersion in payment composition across merchants moderates this redistribution. [>>CHANGE HERE<<].Thus,  dispersion in payment composition across merchants limits the extent of ...
+
+--- Change #199 ---
+  Type:   DELETION
+  ID:     222
+  Author: Amit Seru
+  Date:   2026-03-22T12:29:00Z
+  Text:   "."
+  Context: ...y also pay substantially lower fees due to both sector discounts and negotiation[>>CHANGE HERE<<]Thus,  dispersion in payment composition across merchants limits the extent of c...
+
+--- Change #200 ---
+  Type:   INSERTION
+  ID:     223
+  Author: Amit Seru
+  Date:   2026-03-22T12:35:00Z
+  Text:   "Thus,  dispersion in payment composition across merchants limits the extent of cross-subsidization. Moreover, at the merchants where consumers with different payment preferences overlap, interchange fees are often lower due to sector discounts and negotiation, further attenuating the magnitude of  redistribution.the dispersion in payment composition across merchants moderates this redistributionthe merchants where consumers with different payment preferences overlap may also pay substantially lower fees due to both sector discounts and negotiationcross-subsidization"
+  Context: ... also pay substantially lower fees due to both sector discounts and negotiation.[>>CHANGE HERE<<]...
+
+--- Change #201 ---
+  Type:   FORMAT_CHANGE
+  ID:     224
+  Author: Amit Seru
+  Date:   2026-03-22T12:36:00Z
+  Text:   "Thus,"
+  Details: Old props: [rPr] | New props: []
+  Paragraph: "Our reduced-form analysis highlights one fact that suggests substantial redistribution between consumers who use different payment methods, and two facts that moderate this redistribution. First, card..."
+
+--- Change #202 ---
+  Type:   FORMAT_CHANGE
+  ID:     225
+  Author: Amit Seru
+  Date:   2026-03-22T12:36:00Z
+  Text:   " "
+  Details: Old props: [rPr] | New props: []
+  Paragraph: "Our reduced-form analysis highlights one fact that suggests substantial redistribution between consumers who use different payment methods, and two facts that moderate this redistribution. First, card..."
+
+--- Change #203 ---
+  Type:   DELETION
+  ID:     226
+  Author: Unknown
+  Date:   Unknown
+  Text:   "the dispersion in payment composition across merchants moderates this redistribution"
+  Context: ...Thus, [>>CHANGE HERE<<] dispersion in payment composition across merchants limits the extent of cross-s...
+
+--- Change #204 ---
+  Type:   FORMAT_CHANGE
+  ID:     227
+  Author: Amit Seru
+  Date:   2026-03-22T12:36:00Z
+  Text:   "the dispersion in payment composition across merchants moderates this redistribution"
+  Details: Old props: [rPr] | New props: []
+  Paragraph: "Our reduced-form analysis highlights one fact that suggests substantial redistribution between consumers who use different payment methods, and two facts that moderate this redistribution. First, card..."
+
+--- Change #205 ---
+  Type:   FORMAT_CHANGE
+  ID:     228
+  Author: Amit Seru
+  Date:   2026-03-22T12:36:00Z
+  Text:   " "
+  Details: Old props: [rPr] | New props: []
+  Paragraph: "Our reduced-form analysis highlights one fact that suggests substantial redistribution between consumers who use different payment methods, and two facts that moderate this redistribution. First, card..."
+
+--- Change #206 ---
+  Type:   FORMAT_CHANGE
+  ID:     229
+  Author: Amit Seru
+  Date:   2026-03-22T12:36:00Z
+  Text:   "dispersion in payment composition across merchants limits the extent of cross-subsidization"
+  Details: Old props: [rPr] | New props: []
+  Paragraph: "Our reduced-form analysis highlights one fact that suggests substantial redistribution between consumers who use different payment methods, and two facts that moderate this redistribution. First, card..."
+
+--- Change #207 ---
+  Type:   FORMAT_CHANGE
+  ID:     230
+  Author: Amit Seru
+  Date:   2026-03-22T12:36:00Z
+  Text:   ". Moreover,"
+  Details: Old props: [rPr] | New props: []
+  Paragraph: "Our reduced-form analysis highlights one fact that suggests substantial redistribution between consumers who use different payment methods, and two facts that moderate this redistribution. First, card..."
+
+--- Change #208 ---
+  Type:   FORMAT_CHANGE
+  ID:     231
+  Author: Amit Seru
+  Date:   2026-03-22T12:36:00Z
+  Text:   " "
+  Details: Old props: [rPr] | New props: []
+  Paragraph: "Our reduced-form analysis highlights one fact that suggests substantial redistribution between consumers who use different payment methods, and two facts that moderate this redistribution. First, card..."
+
+--- Change #209 ---
+  Type:   DELETION
+  ID:     232
+  Author: Unknown
+  Date:   Unknown
+  Text:   "the merchants where consumers with different payment preferences overlap may also pay substantially lower fees due to both sector discounts and negotiation"
+  Context: ...omposition across merchants limits the extent of cross-subsidization. Moreover, [>>CHANGE HERE<<]at the merchants where consumers with different payment preferences overlap, int...
+
+--- Change #210 ---
+  Type:   FORMAT_CHANGE
+  ID:     233
+  Author: Amit Seru
+  Date:   2026-03-22T12:36:00Z
+  Text:   "the merchants where consumers with different payment preferences overlap may also pay substantially lower fees due to both sector discounts and negotiation"
+  Details: Old props: [rPr] | New props: []
+  Paragraph: "Our reduced-form analysis highlights one fact that suggests substantial redistribution between consumers who use different payment methods, and two facts that moderate this redistribution. First, card..."
+
+--- Change #211 ---
+  Type:   FORMAT_CHANGE
+  ID:     234
+  Author: Amit Seru
+  Date:   2026-03-22T12:36:00Z
+  Text:   "at the merchants where consumers with different payment preferences overlap, interchange fees are often lower due to sector discounts and negotiation"
+  Details: Old props: [rPr] | New props: []
+  Paragraph: "Our reduced-form analysis highlights one fact that suggests substantial redistribution between consumers who use different payment methods, and two facts that moderate this redistribution. First, card..."
+
+--- Change #212 ---
+  Type:   FORMAT_CHANGE
+  ID:     235
+  Author: Amit Seru
+  Date:   2026-03-22T12:36:00Z
+  Text:   ", further attenuating the magnitude of"
+  Details: Old props: [rPr] | New props: []
+  Paragraph: "Our reduced-form analysis highlights one fact that suggests substantial redistribution between consumers who use different payment methods, and two facts that moderate this redistribution. First, card..."
+
+--- Change #213 ---
+  Type:   FORMAT_CHANGE
+  ID:     236
+  Author: Amit Seru
+  Date:   2026-03-22T12:36:00Z
+  Text:   " "
+  Details: Old props: [rPr] | New props: []
+  Paragraph: "Our reduced-form analysis highlights one fact that suggests substantial redistribution between consumers who use different payment methods, and two facts that moderate this redistribution. First, card..."
+
+--- Change #214 ---
+  Type:   DELETION
+  ID:     237
+  Author: Unknown
+  Date:   Unknown
+  Text:   "cross-subsidization"
+  Context: ...r due to sector discounts and negotiation, further attenuating the magnitude of [>>CHANGE HERE<<] redistribution....
+
+--- Change #215 ---
+  Type:   FORMAT_CHANGE
+  ID:     238
+  Author: Amit Seru
+  Date:   2026-03-22T12:36:00Z
+  Text:   "cross-subsidization"
+  Details: Old props: [rPr] | New props: []
+  Paragraph: "Our reduced-form analysis highlights one fact that suggests substantial redistribution between consumers who use different payment methods, and two facts that moderate this redistribution. First, card..."
+
+--- Change #216 ---
+  Type:   FORMAT_CHANGE
+  ID:     239
+  Author: Amit Seru
+  Date:   2026-03-22T12:36:00Z
+  Text:   " "
+  Details: Old props: [rPr] | New props: []
+  Paragraph: "Our reduced-form analysis highlights one fact that suggests substantial redistribution between consumers who use different payment methods, and two facts that moderate this redistribution. First, card..."
+
+--- Change #217 ---
+  Type:   FORMAT_CHANGE
+  ID:     240
+  Author: Amit Seru
+  Date:   2026-03-22T12:36:00Z
+  Text:   "redistribution"
+  Details: Old props: [rPr] | New props: []
+  Paragraph: "Our reduced-form analysis highlights one fact that suggests substantial redistribution between consumers who use different payment methods, and two facts that moderate this redistribution. First, card..."
+
+--- Change #218 ---
+  Type:   FORMAT_CHANGE
+  ID:     241
+  Author: Amit Seru
+  Date:   2026-03-22T12:36:00Z
+  Text:   "."
+  Details: Old props: [rPr] | New props: []
+  Paragraph: "Our reduced-form analysis highlights one fact that suggests substantial redistribution between consumers who use different payment methods, and two facts that moderate this redistribution. First, card..."
+
+--- Change #219 ---
+  Type:   INSERTION
+  ID:     243
+  Author: Amit Seru
+  Date:   2026-03-22T12:51:00Z
+  Text:   " These approaches allow us to quantify how redistribution changes when accounting for consumer sorting and merchant fee heterogeneity. "
+  Context: ...ces of interchange fees: a sufficient statistic approach and a structural model.[>>CHANGE HERE<<] Through these approaches, we are able to measure how redistribution estimates c...
+
+--- Change #220 ---
+  Type:   DELETION
+  ID:     244
+  Author: Amit Seru
+  Date:   2026-03-22T12:51:00Z
+  Text:   " Through these approaches, we are able to measure how redistribution estimates change when we account for consumer sorting and merchant fee heterogeneity. "
+  Context: ...on changes when accounting for consumer sorting and merchant fee heterogeneity. [>>CHANGE HERE<<]We also evaluate different regulatory counterfactuals: European-style regulation...
+
+--- Change #221 ---
+  Type:   DELETION
+  ID:     245
+  Author: Amit Seru
+  Date:   2026-03-22T12:51:00Z
+  Text:   "as well as the consequences of the Durbin amendment."
+  Context: ...e also evaluate different regulatory counterfactuals: European-style regulation [>>CHANGE HERE<<]and the consequences of the Durbin Amendment....
+
+--- Change #222 ---
+  Type:   INSERTION
+  ID:     246
+  Author: Amit Seru
+  Date:   2026-03-22T12:50:00Z
+  Text:   "and the consequences of the Durbin Amendment."
+  Context: ...: European-style regulation as well as the consequences of the Durbin amendment.[>>CHANGE HERE<<]...
+
+--- Change #223 ---
+  Type:   DELETION
+  ID:     247
+  Author: Amit Seru
+  Date:   2026-03-22T12:52:00Z
+  Text:   "and it clearly illustrates which forces are first-order determinants of redistribution from interchange fees. "
+  Context: ...tistic approach applies broadly across utility functions and market structures, [>>CHANGE HERE<<]and highlights the first-order determinants of redistribution from interchange f...
+
+--- Change #224 ---
+  Type:   INSERTION
+  ID:     248
+  Author: Amit Seru
+  Date:   2026-03-22T12:52:00Z
+  Text:   "and highlights the first-order determinants of redistribution from interchange fees. A key feature of the sufficient statistic approach is that it imposes minimal structure on the problem. it clearly illustrates which forces are first-order determinants of redistribution from interchange fees"
+  Context: ...ch forces are first-order determinants of redistribution from interchange fees. [>>CHANGE HERE<<]Both a feature and a limitation of the sufficient statistic approach is that it ...
+
+--- Change #225 ---
+  Type:   DELETION
+  ID:     249
+  Author: Unknown
+  Date:   Unknown
+  Text:   "it clearly illustrates which forces are first-order determinants of redistribution from interchange fees"
+  Context: ...and [>>CHANGE HERE<<]highlights the first-order determinants of redistribution from interchange fees....
+
+--- Change #226 ---
+  Type:   DELETION
+  ID:     250
+  Author: Amit Seru
+  Date:   2026-03-22T12:53:00Z
+  Text:   "Both a feature and a limitation of the sufficient statistic approach is that it does not impose much structure on the problem. "
+  Context: ...hich forces are first-order determinants of redistribution from interchange fees[>>CHANGE HERE<<]This is a feature because it avoids strong functional-form assumptions; however,...
+
+--- Change #227 ---
+  Type:   INSERTION
+  ID:     251
+  Author: Amit Seru
+  Date:   2026-03-22T12:53:00Z
+  Text:   "We view this as a reasonable approximation for industry-wide cost shocks, but relax it in the structural model.  In the structu"
+  Context: ... statistic approach, we assume full pass-through of interchange fees to prices. [>>CHANGE HERE<<]ral model, While we view this assumption as a reasonable approximation for indus...
+
+--- Change #228 ---
+  Type:   INSERTION
+  ID:     252
+  Author: Amit Seru
+  Date:   2026-03-22T12:54:00Z
+  Text:   "ral model, "
+  Context: ...industry-wide cost shocks, but relax it in the structural model.  In the structu[>>CHANGE HERE<<]While we view this assumption as a reasonable approximation for industry-wide sh...
+
+--- Change #229 ---
+  Type:   DELETION
+  ID:     253
+  Author: Amit Seru
+  Date:   2026-03-22T12:53:00Z
+  Text:   "While we view this assumption as a reasonable approximation for industry-wide shocks, such as interchange fees or inflation, we relax it in the structural model. "
+  Context: ...de cost shocks, but relax it in the structural model.  In the structural model, [>>CHANGE HERE<<]To do so, we impose more parametric assumptions on consumer utility functions an...
+
+--- Change #230 ---
+  Type:   DELETION
+  ID:     254
+  Author: Amit Seru
+  Date:   2026-03-22T12:54:00Z
+  Text:   "To do so, "
+  Context: ...ks, such as interchange fees or inflation, we relax it in the structural model. [>>CHANGE HERE<<]we impose more parametric assumptions on consumer utility functions and the natu...
+
+--- Change #231 ---
+  Type:   DELETION
+  ID:     257
+  Author: Amit Seru
+  Date:   2026-03-22T12:54:00Z
+  Text:   "is "
+  Context: ...ers who use payment method  equal , with . Type- consumers have income , where  [>>CHANGE HERE<<]denotes rewards. Consumers spend their income on goods from  merchants. Let  den...
+
+--- Change #232 ---
+  Type:   INSERTION
+  ID:     258
+  Author: Amit Seru
+  Date:   2026-03-22T12:54:00Z
+  Text:   "denotes "
+  Context: ... who use payment method  equal , with . Type- consumers have income , where  is [>>CHANGE HERE<<]rewards. Consumers spend their income on goods from  merchants. Let  denote the ...
+
+--- Change #233 ---
+  Type:   INSERTION
+  ID:     259
+  Author: Amit Seru
+  Date:   2026-03-22T13:42:00Z
+  Text:   "Allowing utility functions to depend on payment preferences enables the model to capture that "
+  Context: ...sing, strictly concave, and twice-continuously differentiable utility function. [>>CHANGE HERE<<]Because utility functions depend on payment preferences, this allows our model t...
+
+--- Change #234 ---
+  Type:   DELETION
+  ID:     260
+  Author: Amit Seru
+  Date:   2026-03-22T13:42:00Z
+  Text:   "Because utility functions depend on payment preferences, this allows our model to capture the fact that "
+  Context: ...ty functions to depend on payment preferences enables the model to capture that [>>CHANGE HERE<<]credit, debit, and cash consumers may shop at different stores....
+
+--- Change #235 ---
+  Type:   INSERTION
+  ID:     262
+  Author: Amit Seru
+  Date:   2026-03-22T13:42:00Z
+  Text:   "For empirical and expositional convenience, "
+  Context: ...arged to merchant  for card , expressed as a fraction of the transaction value. [>>CHANGE HERE<<]While not strictly required, for empirical and expositional convenience, and to ...
+
+--- Change #236 ---
+  Type:   DELETION
+  ID:     263
+  Author: Amit Seru
+  Date:   2026-03-22T13:42:00Z
+  Text:   "While not strictly required, for empirical and expositional convenience, and to clarify the mechanisms of interest, "
+  Context: ... fraction of the transaction value. For empirical and expositional convenience, [>>CHANGE HERE<<]we assume that interchange fees are a function of merchant sector and size. As d...
+
+--- Change #237 ---
+  Type:   DELETION
+  ID:     264
+  Author: Amit Seru
+  Date:   2026-03-22T13:43:00Z
+  Text:   "instituional "
+  Context: ...titutional-data] and [sec:costs] this assumption is largely consistent with the [>>CHANGE HERE<<]institutional setting and data. Let  denote the sector of merchant , and let  if...
+
+--- Change #238 ---
+  Type:   INSERTION
+  ID:     265
+  Author: Amit Seru
+  Date:   2026-03-22T13:43:00Z
+  Text:   "institutional "
+  Context: ...ta] and [sec:costs] this assumption is largely consistent with the instituional [>>CHANGE HERE<<]setting and data. Let  denote the sector of merchant , and let  if the merchant ...
+
+--- Change #239 ---
+  Type:   DELETION
+  ID:     266
+  Author: Amit Seru
+  Date:   2026-03-22T13:44:00Z
+  Text:   "Critically, t"
+  Context: ...nges represent sector-wide common cost shocks rather than idiosyncratic shocks. [>>CHANGE HERE<<]There are no major retailers unaffected by interchange fees that could constrain...
+
+--- Change #240 ---
+  Type:   INSERTION
+  ID:     267
+  Author: Amit Seru
+  Date:   2026-03-22T13:44:00Z
+  Text:   "T"
+  Context: ...t sector-wide common cost shocks rather than idiosyncratic shocks. Critically, t[>>CHANGE HERE<<]here are no major retailers unaffected by interchange fees that could constrain ...
+
+--- Change #241 ---
+  Type:   DELETION
+  ID:     268
+  Author: Amit Seru
+  Date:   2026-03-22T13:45:00Z
+  Text:   "show how to "
+  Context: ...terchange fees to prices among small firms (Appendix [sec:appendix_durbin]). We [>>CHANGE HERE<<]relax this assumption in Section 6.2.4....
+
+--- Change #242 ---
+  Type:   INSERTION
+  ID:     270
+  Author: Amit Seru
+  Date:   2026-03-22T13:52:00Z
+  Text:   "arise in "
+  Context: ... caps more than one-for-one into reward cuts (Wang 2025). The assumption can be [>>CHANGE HERE<<]an equilibrium outcome if issuers are perfectly competitive, or if they are mono...
+
+--- Change #243 ---
+  Type:   DELETION
+  ID:     271
+  Author: Amit Seru
+  Date:   2026-03-22T13:53:00Z
+  Text:   "an "
+  Context: ...e than one-for-one into reward cuts (Wang 2025). The assumption can be arise in [>>CHANGE HERE<<]equilibrium outcome if issuers are perfectly competitive, or if they are monopol...
+
+--- Change #244 ---
+  Type:   DELETION
+  ID:     272
+  Author: Amit Seru
+  Date:   2026-03-22T13:53:00Z
+  Text:   "outcome "
+  Context: ...one into reward cuts (Wang 2025). The assumption can be arise in an equilibrium [>>CHANGE HERE<<]if issuers are perfectly competitive, or if they are monopolistically competitiv...
+
+--- Change #245 ---
+  Type:   INSERTION
+  ID:     273
+  Author: Amit Seru
+  Date:   2026-03-22T13:53:00Z
+  Text:   "We relax this assumption in "
+  Context: ...y competitive and face logit demand for credit cards with full market coverage. [>>CHANGE HERE<<]In Section 6.2.4 we show how results change when this assumption is relaxed....
+
+--- Change #246 ---
+  Type:   DELETION
+  ID:     274
+  Author: Amit Seru
+  Date:   2026-03-22T13:53:00Z
+  Text:   "In "
+  Context: ... demand for credit cards with full market coverage. We relax this assumption in [>>CHANGE HERE<<]Section 6.2.4 we show how results change when this assumption is relaxed....
+
+--- Change #247 ---
+  Type:   DELETION
+  ID:     275
+  Author: Amit Seru
+  Date:   2026-03-22T13:53:00Z
+  Text:   " we show how results change when this assumption is relaxed"
+  Context: ...it cards with full market coverage. We relax this assumption in In Section 6.2.4[>>CHANGE HERE<<]....
+
+--- Change #248 ---
+  Type:   INSERTION
+  ID:     277
+  Author: Amit Seru
+  Date:   2026-03-22T14:02:00Z
+  Text:   "The key insight is that first-order consumer welfare effects depend on the variation in the composition and cost of payments across merchants, rather than on demand elasticities. "
+  Context: ...roups when payment choices are fixed, but prices and consumption can re-adjust. [>>CHANGE HERE<<]The key insight is that consumer welfare effects do not depend on demand elastic...
+
+--- Change #249 ---
+  Type:   DELETION
+  ID:     278
+  Author: Amit Seru
+  Date:   2026-03-22T14:03:00Z
+  Text:   "The key insight is that consumer welfare effects do not depend on demand elasticities, and instead depend on the variation in the composition and cost of payments across merchants. "
+  Context: ...tion and cost of payments across merchants, rather than on demand elasticities. [>>CHANGE HERE<<]We use this framework to calculate the welfare and redistributive effects of eli...
+
+--- Change #250 ---
+  Type:   DELETION
+  ID:     281
+  Author: Amit Seru
+  Date:   2026-03-22T14:08:00Z
+  Text:   "The sufficient statistic can be thought of as aggregating the welfare effect of the mechanical retail price changes across merchants when the composition of payments at each merchant stays fixed while the fee schedule "
+  Context: ...e in card rewards when their interchange fees rise, affecting only those users. [>>CHANGE HERE<<] changes. However, even though this appears to be a mechanical calculation, it c...
+
+--- Change #251 ---
+  Type:   DELETION
+  ID:     282
+  Author: Amit Seru
+  Date:   2026-03-22T14:08:00Z
+
+--- Change #252 ---
+  Type:   DELETION
+  ID:     283
+  Author: Amit Seru
+  Date:   2026-03-22T14:08:00Z
+  Text:   " changes. However, even though this appears to be a mechanical calculation, it captures the full consumer welfare effects of interchange fees even as retail prices, rewards, and consumption decisions adjust."
+  Context: ...the composition of payments at each merchant stays fixed while the fee schedule [>>CHANGE HERE<<]The sufficient statistic aggregates these price and reward effects across mercha...
+
+--- Change #253 ---
+  Type:   INSERTION
+  ID:     284
+  Author: Amit Seru
+  Date:   2026-03-22T14:06:00Z
+  Text:   "The sufficient statistic aggregates these price and reward effects across merchants. Although it is expressed as a mechanical calculation holding payment composition fixed, it captures the full first-order welfare effects even as prices, rewards, and consumption adjust in equilibrium."
+  Context: ...terchange fees even as retail prices, rewards, and consumption decisions adjust.[>>CHANGE HERE<<]...
+
+--- Change #254 ---
+  Type:   INSERTION
+  ID:     286
+  Author: Amit Seru
+  Date:   2026-03-22T14:09:00Z
+  Text:   "The theorem implies that consumer substitution patterns do not affect first-order redistribution."
+  Context: ...icities, and merchant pricing behavior across all consumer types and merchants. [>>CHANGE HERE<<]The theorem shows that consumer substitution patterns do not affect first-order ...
+
+--- Change #255 ---
+  Type:   DELETION
+  ID:     287
+  Author: Amit Seru
+  Date:   2026-03-22T14:09:00Z
+  Text:   "The theorem shows that consumer substitution patterns do not affect first-order redistribution."
+  Context: ...es that consumer substitution patterns do not affect first-order redistribution.[>>CHANGE HERE<<] To validate this sufficient statistic approach, we next calibrate a structural ...
+
+--- Change #256 ---
+  Type:   DELETION
+  ID:     289
+  Author: Amit Seru
+  Date:   2026-03-22T14:11:00Z
+  Text:   "We focus on large firms in these sectors as Section [sec:costs] shows they have large discounts on their interchange fees. "
+  Context: ...mmy for having more than $1 billion in sales in the grocery and retail sectors. [>>CHANGE HERE<<]We focus on large firms in these sectors, where discounts are most pronounced in...
+
+--- Change #257 ---
+  Type:   INSERTION
+  ID:     290
+  Author: Amit Seru
+  Date:   2026-03-22T14:10:00Z
+  Text:   "We focus on large firms in these sectors, where discounts are most pronounced in the data"
+  Context: ... Section [sec:costs] shows they have large discounts on their interchange fees. [>>CHANGE HERE<<] ( Section [sec:costs]). The regression constant yields the baseline fee ; the s...
+
+--- Change #258 ---
+  Type:   INSERTION
+  ID:     291
+  Author: Amit Seru
+  Date:   2026-03-22T14:11:00Z
+  Text:   " ("
+  Context: ...on large firms in these sectors, where discounts are most pronounced in the data[>>CHANGE HERE<<] Section [sec:costs]). The regression constant yields the baseline fee ; the sec...
+
+--- Change #259 ---
+  Type:   INSERTION
+  ID:     292
+  Author: Amit Seru
+  Date:   2026-03-22T14:10:00Z
+  Text:   " Section [sec:costs]"
+  Context: ... large firms in these sectors, where discounts are most pronounced in the data ([>>CHANGE HERE<<]). The regression constant yields the baseline fee ; the sector dummy coefficien...
+
+--- Change #260 ---
+  Type:   INSERTION
+  ID:     293
+  Author: Amit Seru
+  Date:   2026-03-22T14:11:00Z
+  Text:   ")"
+  Context: ...e sectors, where discounts are most pronounced in the data ( Section [sec:costs][>>CHANGE HERE<<]. The regression constant yields the baseline fee ; the sector dummy coefficient...
+
+--- Change #261 ---
+  Type:   INSERTION
+  ID:     294
+  Author: Amit Seru
+  Date:   2026-03-22T14:10:00Z
+  Text:   "."
+  Context: ... sectors, where discounts are most pronounced in the data ( Section [sec:costs])[>>CHANGE HERE<<] The regression constant yields the baseline fee ; the sector dummy coefficients...
+
+--- Change #262 ---
+  Type:   INSERTION
+  ID:     295
+  Author: Amit Seru
+  Date:   2026-03-22T14:11:00Z
+  Text:   " "
+  Context: ...sectors, where discounts are most pronounced in the data ( Section [sec:costs]).[>>CHANGE HERE<<]The regression constant yields the baseline fee ; the sector dummy coefficients ...
+
+--- Change #263 ---
+  Type:   INSERTION
+  ID:     297
+  Author: Amit Seru
+  Date:   2026-03-22T14:17:00Z
+
+--- Change #264 ---
+  Type:   DELETION
+  ID:     298
+  Author: Amit Seru
+  Date:   2026-03-22T14:22:00Z
+
+--- Change #265 ---
+  Type:   PARAGRAPH_PROPERTY_CHANGE
+  ID:     299
+  Author: Amit Seru
+  Date:   2026-03-22T14:17:00Z
+  Details: Old paragraph props: [pPr]
+
+--- Change #266 ---
+  Type:   INSERTION
+  ID:     300
+  Author: Amit Seru
+  Date:   2026-03-22T14:22:00Z
+  Text:   ", providing a disciplined way to quantify departures from the baseline assumptions."
+  Context: ...mplementarities in merchant pricing, would affect our distributional conclusions[>>CHANGE HERE<<]....
+
+--- Change #267 ---
+  Type:   DELETION
+  ID:     301
+  Author: Amit Seru
+  Date:   2026-03-22T14:22:00Z
+  Text:   "."
+  Context: ...roviding a disciplined way to quantify departures from the baseline assumptions.[>>CHANGE HERE<<]...
+
+--- Change #268 ---
+  Type:   INSERTION
+  ID:     302
+  Author: Amit Seru
+  Date:   2026-03-22T14:27:00Z
+  Text:   ", ensuring that the model reproduces the heterogeneity central to our empirical findings."
+  Context: ...moments from the Fiserv data on payment composition across merchants and sectors[>>CHANGE HERE<<]....
+
+--- Change #269 ---
+  Type:   DELETION
+  ID:     303
+  Author: Amit Seru
+  Date:   2026-03-22T14:27:00Z
+  Text:   "."
+  Context: ...g that the model reproduces the heterogeneity central to our empirical findings.[>>CHANGE HERE<<]...
+
+--- Change #270 ---
+  Type:   INSERTION
+  ID:     305
+  Author: Amit Seru
+  Date:   2026-03-22T14:28:00Z
+  Text:   ", linking the model directly to the empirical dispersion documented in the data."
+  Context: ...y matches the observed variation in the composition of payments across merchants[>>CHANGE HERE<<]....
+
+--- Change #271 ---
+  Type:   DELETION
+  ID:     306
+  Author: Amit Seru
+  Date:   2026-03-22T14:28:00Z
+  Text:   "."
+  Context: ..., linking the model directly to the empirical dispersion documented in the data.[>>CHANGE HERE<<]...
+
+--- Change #272 ---
+  Type:   DELETION
+  ID:     308
+  Author: Amit Seru
+  Date:   2026-03-22T14:29:00Z
+  Text:   "."
+  Context: ... and thereby assess the sensitivity of our redistribution results to this margin[>>CHANGE HERE<<], linking model structure directly to the empirical pass-through question....
+
+--- Change #273 ---
+  Type:   INSERTION
+  ID:     309
+  Author: Amit Seru
+  Date:   2026-03-22T14:29:00Z
+  Text:   ", linking model structure directly to the empirical pass-through question."
+  Context: ...and thereby assess the sensitivity of our redistribution results to this margin.[>>CHANGE HERE<<]...
+
+--- Change #274 ---
+  Type:   INSERTION
+  ID:     310
+  Author: Amit Seru
+  Date:   2026-03-22T14:30:00Z
+  Text:   "For convenience, we normalize marginal costs to 1, as CES models do not separately identify costs and taste shifters and we do not observe cost data"
+  Context: ... maximize profits. Let the measure of consumers who use payment method  equal . [>>CHANGE HERE<<]For convenience, we normalize all merchants’ marginal costs to equal , as CES mo...
+
+--- Change #275 ---
+  Type:   DELETION
+  ID:     311
+  Author: Amit Seru
+  Date:   2026-03-22T14:31:00Z
+  Text:   "For convenience, we normalize all merchants’ marginal costs to equal "
+  Context: ...not separately identify costs and taste shifters and we do not observe cost data[>>CHANGE HERE<<], as CES models do not differentiate between low costs and high taste shifters ,...
+
+--- Change #276 ---
+  Type:   DELETION
+  ID:     312
+  Author: Amit Seru
+  Date:   2026-03-22T14:31:00Z
+
+--- Change #277 ---
+  Type:   DELETION
+  ID:     313
+  Author: Amit Seru
+  Date:   2026-03-22T14:31:00Z
+  Text:   ", as CES models do not differentiate between low costs and high taste shifters "
+  Context: ...e cost dataFor convenience, we normalize all merchants’ marginal costs to equal [>>CHANGE HERE<<], and we do not observe cost data:...
+
+--- Change #278 ---
+  Type:   DELETION
+  ID:     314
+  Author: Amit Seru
+  Date:   2026-03-22T14:31:00Z
+
+--- Change #279 ---
+  Type:   DELETION
+  ID:     315
+  Author: Amit Seru
+  Date:   2026-03-22T14:31:00Z
+  Text:   ", and we do not observe cost data"
+  Context: ... , as CES models do not differentiate between low costs and high taste shifters [>>CHANGE HERE<<]:...
+
+--- Change #280 ---
+  Type:   DELETION
+  ID:     317
+  Author: Amit Seru
+  Date:   2026-03-22T14:32:00Z
+  Text:   "the one"
+  Context: ...The network problem in the structural model is the same as [>>CHANGE HERE<<]that in the sufficient statistics framework. Merchant fees at each firm are base...
+
+--- Change #281 ---
+  Type:   INSERTION
+  ID:     318
+  Author: Amit Seru
+  Date:   2026-03-22T14:32:00Z
+  Text:   "that"
+  Context: ...The network problem in the structural model is the same as the one[>>CHANGE HERE<<] in the sufficient statistics framework. Merchant fees at each firm are based on...
+
+--- Change #282 ---
+  Type:   INSERTION
+  ID:     321
+  Author: Amit Seru
+  Date:   2026-03-22T14:32:00Z
+  Text:   ", showing that the model closely matches the empirical moments."
+  Context: ...rcise. Appendix 11 provides full calibration details and goodness-of-fit figures[>>CHANGE HERE<<]....
+
+--- Change #283 ---
+  Type:   DELETION
+  ID:     322
+  Author: Amit Seru
+  Date:   2026-03-22T14:32:00Z
+  Text:   "."
+  Context: ...ss-of-fit figures, showing that the model closely matches the empirical moments.[>>CHANGE HERE<<]...
+
+--- Change #284 ---
+  Type:   DELETION
+  ID:     324
+  Author: Amit Seru
+  Date:   2026-03-22T15:00:00Z
+  Text:   "use the next"
+  Context: ...We [>>CHANGE HERE<<]next use a counterfactual to illustrate show that the Durbin Amendment, the majo...
+
+--- Change #285 ---
+  Type:   INSERTION
+  ID:     325
+  Author: Amit Seru
+  Date:   2026-03-22T15:00:00Z
+  Text:   "next use a"
+  Context: ...We use the next[>>CHANGE HERE<<] counterfactual to illustrate show that the Durbin Amendment, the major regulati...
+
+--- Change #286 ---
+  Type:   DELETION
+  ID:     326
+  Author: Amit Seru
+  Date:   2026-03-22T15:00:00Z
+  Text:   "illustrate "
+  Context: ...We use the nextnext use a counterfactual to [>>CHANGE HERE<<]show that the Durbin Amendment, the major regulation of U.S. interchange fees, r...
+
+--- Change #287 ---
+  Type:   INSERTION
+  ID:     327
+  Author: Amit Seru
+  Date:   2026-03-22T15:00:00Z
+  Text:   "show "
+  Context: ...We use the nextnext use a counterfactual to illustrate [>>CHANGE HERE<<]that the Durbin Amendment, the major regulation of U.S. interchange fees, result...
+
+--- Change #288 ---
+  Type:   INSERTION
+  ID:     328
+  Author: Amit Seru
+  Date:   2026-03-22T15:00:00Z
+  Text:   "regressive redistribution across consumers, benefiting higher-income households at the expense of lower-income ones"
+  Context: ...the Durbin Amendment, the major regulation of U.S. interchange fees, results in [>>CHANGE HERE<<]a regressive redistribution across consumers, i.e., benefiting higher-income hou...
+
+--- Change #289 ---
+  Type:   DELETION
+  ID:     329
+  Author: Amit Seru
+  Date:   2026-03-22T15:00:00Z
+  Text:   "a regressive redistribution across consumers, i.e., benefiting higher-income households at the expense of lower-income ones"
+  Context: ...nsumers, benefiting higher-income households at the expense of lower-income ones[>>CHANGE HERE<<]. Given the 2025 North Dakota court ruling (Corner Post v. Fed) that declared th...
+
+--- Change #290 ---
+  Type:   DELETION
+  ID:     330
+  Author: Amit Seru
+  Date:   2026-03-22T15:02:00Z
+  Text:   "Finally, we show that the largest losers from the rise of premiumization in the credit card market are debit card users, not cash users, who frequently shop at merchants patronized by premium card users. These results show that merchant-level heterogeneity shapes cross-subsidization."
+  Context: ...[>>CHANGE HERE<<]Finally, we show that the largest losers from the rise of premiumization in the ...
+
+--- Change #291 ---
+  Type:   INSERTION
+  ID:     331
+  Author: Amit Seru
+  Date:   2026-03-22T15:01:00Z
+  Text:   "Finally, we show that the largest losers from the rise of premiumization in the credit card market are debit card users, not cash users, because they frequently shop at the same merchants as premium card users. This highlights how merchant-level heterogeneity shapes cross-subsidization"
+  Context: ...These results show that merchant-level heterogeneity shapes cross-subsidization.[>>CHANGE HERE<<]....
+
+--- Change #292 ---
+  Type:   INSERTION
+  ID:     332
+  Author: Amit Seru
+  Date:   2026-03-22T15:02:00Z
+  Text:   "."
+  Context: ...ers. This highlights how merchant-level heterogeneity shapes cross-subsidization[>>CHANGE HERE<<]...
+
+--- Change #293 ---
+  Type:   DELETION
+  ID:     334
+  Author: Amit Seru
+  Date:   2026-03-22T15:02:00Z
+  Text:   "cross-subsidization"
+  Context: ...rd, consumer sorting across merchants and merchant fee heterogeneity attenuates [>>CHANGE HERE<<]redistribution. As Gans (2018) recognized, consumers do not shop randomly; cash ...
+
+--- Change #294 ---
+  Type:   INSERTION
+  ID:     335
+  Author: Amit Seru
+  Date:   2026-03-22T15:02:00Z
+  Text:   "redistribution"
+  Context: ...g across merchants and merchant fee heterogeneity attenuates cross-subsidization[>>CHANGE HERE<<]. As Gans (2018) recognized, consumers do not shop randomly; cash and credit car...
+
+--- Change #295 ---
+  Type:   INSERTION
+  ID:     338
+  Author: Amit Seru
+  Date:   2026-03-22T15:03:00Z
+  Text:   "using "
+  Context: ...fects of eliminating interchange fees using our sufficient statistics framework [>>CHANGE HERE<<]as per eq. ([eq:sufficient-stat-formula])....
+
+--- Change #296 ---
+  Type:   DELETION
+  ID:     339
+  Author: Amit Seru
+  Date:   2026-03-22T15:03:00Z
+  Text:   "as per "
+  Context: ...of eliminating interchange fees using our sufficient statistics framework using [>>CHANGE HERE<<]eq. ([eq:sufficient-stat-formula])....
+
+--- Change #297 ---
+  Type:   INSERTION
+  ID:     341
+  Author: Amit Seru
+  Date:   2026-03-22T15:03:00Z
+  Text:   "identify which groups bear th"
+  Context: ... allows us to quantify how interchange fees transfer across consumer groups and [>>CHANGE HERE<<]ese costs. to provide more context on who pays for the cost of interchange fees....
+
+--- Change #298 ---
+  Type:   INSERTION
+  ID:     342
+  Author: Amit Seru
+  Date:   2026-03-22T15:04:00Z
+  Text:   "e"
+  Context: ...terchange fees transfer across consumer groups and identify which groups bear th[>>CHANGE HERE<<]se costs. to provide more context on who pays for the cost of interchange fees....
+
+--- Change #299 ---
+  Type:   INSERTION
+  ID:     343
+  Author: Amit Seru
+  Date:   2026-03-22T15:03:00Z
+  Text:   "s"
+  Context: ...erchange fees transfer across consumer groups and identify which groups bear the[>>CHANGE HERE<<]e costs. to provide more context on who pays for the cost of interchange fees....
+
+--- Change #300 ---
+  Type:   INSERTION
+  ID:     344
+  Author: Amit Seru
+  Date:   2026-03-22T15:04:00Z
+  Text:   "e"
+  Context: ...rchange fees transfer across consumer groups and identify which groups bear thes[>>CHANGE HERE<<] costs. to provide more context on who pays for the cost of interchange fees....
+
+--- Change #301 ---
+  Type:   INSERTION
+  ID:     345
+  Author: Amit Seru
+  Date:   2026-03-22T15:03:00Z
+  Text:   " costs. "
+  Context: ...change fees transfer across consumer groups and identify which groups bear these[>>CHANGE HERE<<]to provide more context on who pays for the cost of interchange fees....
+
+--- Change #302 ---
+  Type:   DELETION
+  ID:     346
+  Author: Amit Seru
+  Date:   2026-03-22T15:04:00Z
+  Text:   "to provide more context on who pays for the cost of interchange fees."
+  Context: ...ees transfer across consumer groups and identify which groups bear these costs. [>>CHANGE HERE<<]...
+
+--- Change #303 ---
+  Type:   DELETION
+  ID:     348
+  Author: Amit Seru
+  Date:   2026-03-22T15:04:00Z
+  Text:   "they never receive them in the first place"
+  Context: ...il prices at merchants where they shop. They do not benefit from rewards, since [>>CHANGE HERE<<]they do not receive them. On average, cash-using consumers are worse off by abou...
+
+--- Change #304 ---
+  Type:   INSERTION
+  ID:     349
+  Author: Amit Seru
+  Date:   2026-03-22T15:04:00Z
+  Text:   "they do not receive them"
+  Context: ...ey do not benefit from rewards, since they never receive them in the first place[>>CHANGE HERE<<]. On average, cash-using consumers are worse off by about 1 percentage point of ...
+
+--- Change #305 ---
+  Type:   DELETION
+  ID:     354
+  Author: Amit Seru
+  Date:   2026-03-22T15:08:00Z
+  Text:   "has the predictable effect of reducing"
+  Context: ...Consumer sorting [>>CHANGE HERE<<]reduces redistribution across all segments, as shown in the fourth rows of panel...
+
+--- Change #306 ---
+  Type:   INSERTION
+  ID:     355
+  Author: Amit Seru
+  Date:   2026-03-22T15:08:00Z
+  Text:   "reduces"
+  Context: ...Consumer sorting has the predictable effect of reducing[>>CHANGE HERE<<] redistribution across all segments, as shown in the fourth rows of panels (a) a...
+
+--- Change #307 ---
+  Type:   DELETION
+  ID:     359
+  Author: Amit Seru
+  Date:   2026-03-22T15:12:00Z
+  Text:   "Since "
+  Context: ...s the envelope theorem intuition underlying our sufficient-statistics approach: [>>CHANGE HERE<<]Because consumers are optimizing, the marginal benefit of reallocating consumpti...
+
+--- Change #308 ---
+  Type:   INSERTION
+  ID:     360
+  Author: Amit Seru
+  Date:   2026-03-22T15:12:00Z
+  Text:   "Because "
+  Context: ...envelope theorem intuition underlying our sufficient-statistics approach: Since [>>CHANGE HERE<<]consumers are optimizing, the marginal benefit of reallocating consumption is ze...
+
+--- Change #309 ---
+  Type:   DELETION
+  ID:     361
+  Author: Amit Seru
+  Date:   2026-03-22T15:12:00Z
+  Text:   "In light of the evidence"
+  Context: ...onsistent with the monopolistically competitive fringe in our structural model. [>>CHANGE HERE<<]Taken together, this evidence suggests that the  from restaurants, the structura...
+
+--- Change #310 ---
+  Type:   INSERTION
+  ID:     362
+  Author: Amit Seru
+  Date:   2026-03-22T15:12:00Z
+  Text:   "Taken together"
+  Context: ...olistically competitive fringe in our structural model. In light of the evidence[>>CHANGE HERE<<], this evidence suggests that the  from restaurants, the structural model can co...
+
+--- Change #311 ---
+  Type:   INSERTION
+  ID:     363
+  Author: Amit Seru
+  Date:   2026-03-22T15:13:00Z
+  Text:   ", this evidence suggests that the "
+  Context: ...mpetitive fringe in our structural model. In light of the evidenceTaken together[>>CHANGE HERE<<] from restaurants, the structural model can could be seen as a principled way to...
+
+--- Change #312 ---
+  Type:   DELETION
+  ID:     364
+  Author: Amit Seru
+  Date:   2026-03-22T15:13:00Z
+  Text:   " from restaurants, the"
+  Context: ... model. In light of the evidenceTaken together, this evidence suggests that the [>>CHANGE HERE<<] structural model can could be seen as a principled way to extrapolate from the ...
+
+--- Change #313 ---
+  Type:   DELETION
+  ID:     365
+  Author: Amit Seru
+  Date:   2026-03-22T15:13:00Z
+  Text:   "can "
+  Context: ...gether, this evidence suggests that the  from restaurants, the structural model [>>CHANGE HERE<<]could be seen as a principled way to extrapolate from the pass-through behavior ...
+
+--- Change #314 ---
+  Type:   INSERTION
+  ID:     366
+  Author: Amit Seru
+  Date:   2026-03-22T15:13:00Z
+  Text:   "could "
+  Context: ...er, this evidence suggests that the  from restaurants, the structural model can [>>CHANGE HERE<<]be seen as a principled way to extrapolate from the pass-through behavior of sma...
+
+--- Change #315 ---
+  Type:   DELETION
+  ID:     370
+  Author: Amit Seru
+  Date:   2026-03-22T15:14:00Z
+  Text:   "an estimate"
+  Context: ...t the dollar-weighted average sector adjustment remains zero. Table 10 presents [>>CHANGE HERE<<]estimates of the effects of this regulation. Regulated debit card users were hur...
+
+--- Change #316 ---
+  Type:   INSERTION
+  ID:     371
+  Author: Amit Seru
+  Date:   2026-03-22T15:14:00Z
+  Text:   "estimates"
+  Context: ...r-weighted average sector adjustment remains zero. Table 10 presents an estimate[>>CHANGE HERE<<] of the effects of this regulation. Regulated debit card users were hurt by the ...
+
+--- Change #317 ---
+  Type:   DELETION
+  ID:     372
+  Author: Amit Seru
+  Date:   2026-03-22T15:15:00Z
+  Text:   "Because benefits accrue to consumers whose payments are more prevalent among low-income consumers (e.g., cash), as well as high-income consumers (e.g., premium credit), whether the Durbin Amendment is progressive or regressive is a priori unclear. "
+  Context: ...butes consumer surplus from middle-income to high-income consumers (Figure 33). [>>CHANGE HERE<<]Because benefits accrue to both low-income consumers (who use cash) and high-inc...
+
+--- Change #318 ---
+  Type:   INSERTION
+  ID:     373
+  Author: Amit Seru
+  Date:   2026-03-22T15:14:00Z
+  Text:   "Because benefits accrue to both low-income consumers (who use cash) and high-income consumers (who use credit), the net distributional effect is a priori ambiguous."
+  Context: ... whether the Durbin Amendment is progressive or regressive is a priori unclear. [>>CHANGE HERE<<] However, when we apply the payment shares from Figure 16, we find that low-inco...
+
+--- Change #319 ---
+  Type:   INSERTION
+  ID:     374
+  Author: Amit Seru
+  Date:   2026-03-22T15:15:00Z
+  Text:   " "
+  Context: ...consumers (who use credit), the net distributional effect is a priori ambiguous.[>>CHANGE HERE<<]However, when we apply the payment shares from Figure 16, we find that low-incom...
+
+--- Change #320 ---
+  Type:   DELETION
+  ID:     375
+  Author: Amit Seru
+  Date:   2026-03-22T15:15:00Z
+  Text:   "Cumulatively, this transfer was around $1 billion from middle-income to high-income consumers."
+  Context: ...consumers who primarily use debit cards bore the brunt of the Durbin Amendment. [>>CHANGE HERE<<]This implies a cumulative transfer of around $1 billion from middle-income to hi...
+
+--- Change #321 ---
+  Type:   INSERTION
+  ID:     376
+  Author: Amit Seru
+  Date:   2026-03-22T15:15:00Z
+  Text:   "This implies a cumulative transfer of around $1 billion from middle-income to high-income consumers."
+  Context: ...this transfer was around $1 billion from middle-income to high-income consumers.[>>CHANGE HERE<<]...
+
+--- Change #322 ---
+  Type:   DELETION
+  ID:     378
+  Author: Amit Seru
+  Date:   2026-03-22T15:16:00Z
+  Text:   "Interestingly"
+  Context: ... debit users, and basic cardholders are all hurt by the rise in premiumization. [>>CHANGE HERE<<]Notably, the largest costs in dollar terms accrue not to cash users but to debit...
+
+--- Change #323 ---
+  Type:   INSERTION
+  ID:     379
+  Author: Amit Seru
+  Date:   2026-03-22T15:16:00Z
+  Text:   "Notably"
+  Context: ... and basic cardholders are all hurt by the rise in premiumization. Interestingly[>>CHANGE HERE<<], the largest costs in dollar terms accrue not to cash users but to debit card u...
+
+--- Change #324 ---
+  Type:   INSERTION
+  ID:     380
+  Author: Amit Seru
+  Date:   2026-03-22T15:17:00Z
+  Text:   " "
+  Context: ...ch as premium credit cards, tend to crowd out cheaper ones, such as basic cards,[>>CHANGE HERE<<] which helps to explain the rise of premiumization. helping to explain the rise ...
+
+--- Change #325 ---
+  Type:   DELETION
+  ID:     381
+  Author: Amit Seru
+  Date:   2026-03-22T15:17:00Z
+  Text:   " which helps to explain the rise of premiumization."
+  Context: ...h as premium credit cards, tend to crowd out cheaper ones, such as basic cards, [>>CHANGE HERE<<] helping to explain the rise of premiumization....
+
+--- Change #326 ---
+  Type:   INSERTION
+  ID:     382
+  Author: Amit Seru
+  Date:   2026-03-22T15:16:00Z
+  Text:   " helping to explain the rise of premiumization"
+  Context: ...r ones, such as basic cards,  which helps to explain the rise of premiumization.[>>CHANGE HERE<<]....
+
+--- Change #327 ---
+  Type:   INSERTION
+  ID:     383
+  Author: Amit Seru
+  Date:   2026-03-22T15:17:00Z
+  Text:   "."
+  Context: ...xplain the rise of premiumization. helping to explain the rise of premiumization[>>CHANGE HERE<<]...
+
+--- Change #328 ---
+  Type:   INSERTION
+  ID:     386
+  Author: Amit Seru
+  Date:   2026-03-22T15:17:00Z
+  Text:   "More broadly, "
+  Context: ... funded by higher fees amplifies transfers from low- to high-income households. [>>CHANGE HERE<<]These these results highlight how interchange policies affect not only banks and...
+
+--- Change #329 ---
+  Type:   DELETION
+  ID:     387
+  Author: Amit Seru
+  Date:   2026-03-22T15:17:00Z
+  Text:   "These "
+  Context: ...her fees amplifies transfers from low- to high-income households. More broadly, [>>CHANGE HERE<<]these results highlight how interchange policies affect not only banks and card ...
+
+--- Change #330 ---
+  Type:   INSERTION
+  ID:     388
+  Author: Amit Seru
+  Date:   2026-03-22T15:17:00Z
+  Text:   "these "
+  Context: ...es amplifies transfers from low- to high-income households. More broadly, These [>>CHANGE HERE<<]results highlight how interchange policies affect not only banks and card networ...
+

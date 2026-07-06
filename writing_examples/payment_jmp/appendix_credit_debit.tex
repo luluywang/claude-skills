@@ -1,0 +1,457 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+
+\section{Credit-Debit Segmentation}
+\label{sec:oa-credit-debit}
+
+The baseline model assumes consumers do not substitute between credit and debit at the point of sale.
+Incorporating substitution would make the model more realistic in some dimensions, but it generates predictions about merchant acceptance behavior that are at odds with the empirical evidence. 
+This Appendix presents the case for segmentation and two alternative specifications.
+
+Section~\ref{subsec:oa-credit-debit-evidence} weighs the direct evidence.
+Antitrust testimony and consumer surveys describe credit and debit as distinct products at the point of sale, while the Discover rewards experiment shows some substitution at the margin.
+
+Section~\ref{subsubsec:oa-credit-debit-general} generalizes the model to allow substitution and derives two equilibrium predictions: credit acceptance depending on credit-debit multi-homing rates, and debit fee caps disciplining credit fees.
+\emph{Ohio v.\ AmEx} testimony contradicts the first, and the lack of an effect of the Durbin Amendment on credit interchange contradicts the second.
+
+Section~\ref{subsec:oa-half-kappa} estimates a specification that allows point-of-sale substitution and incremental debit sales relative to cash.
+This matches the consumer-side substitution evidence most closely at the cost of contradicting the merchant-side patterns from \emph{Ohio v.\ AmEx} and Durbin.
+Section~\ref{subsec:oa-extension} estimates a specification that treats debit as generating no incremental sales relative to cash.
+This gives up some fidelity to the consumer-side substitution evidence but matches the merchant-side acceptance pattern in \emph{Ohio v.\ AmEx}. It is also silent on Durbin pricing because debit fees are zero by construction.
+The welfare effect of repealing the Durbin Amendment flips sign across the specifications that can evaluate it.
+Total welfare effects are similar across the three counterfactuals that regulate credit card competition: the credit fee cap, the merger, and dual routing.
+% HARDCODED[table: welfare_table_baseline.tex, row: "Total", col: Cap Fees] current=27
+% HARDCODED[table: welfare_table_extension_half_kappa.tex, row: "Total", col: Cap Fees] current=28
+% HARDCODED[table: welfare_table_extension.tex, row: "Total", col: Cap Fees] current=23
+% HARDCODED[table: welfare_table_baseline.tex, row: "Total", col: Monopoly] current=15
+% HARDCODED[table: welfare_table_extension_half_kappa.tex, row: "Total", col: Monopoly] current=15
+% HARDCODED[table: welfare_table_extension.tex, row: "Total", col: Monopoly] current=8
+
+
+%% ============================================================================
+%% SECTION 0: EMPIRICAL EVIDENCE
+%% ============================================================================
+
+\subsection{Empirical Evidence on Credit-Debit Substitution at the Point of Sale}
+\label{subsec:oa-credit-debit-evidence}\label{subsubsec:oa-credit-debit-evidence}
+
+Antitrust testimony and consumer surveys describe credit and debit as distinct products on many transactions.
+But the Discover rewards experiment finds substitution between credit and debit in response to rewards at the point of sale.
+
+\paragraph{Testimony and surveys consistent with segmentation.}
+Antitrust testimony in \emph{Ohio v.\ American Express} identifies the credit facility as the primary reason credit and debit are not close substitutes at the transaction level \parencite{Conrath2014}.
+Credit cards let consumers defer payment and carry balances. Debit payments are drawn immediately from a checking account.
+Large-ticket merchants rely on this distinction.
+Sears, Southwest Airlines, and Home Depot each testified that their customers expect or require access to a line of credit.
+Hotels and car rental companies use the credit card as a security deposit. Hilton described debit at check-in as ``atrocious'' because holds can take six weeks to clear.
+Alaska Airlines, Crate \& Barrel, and Best Buy called credit and debit ``totally different products that cannot substitute for each other'' and never considered debit-only acceptance.
+
+Consumer-side evidence describes similar compartmentalization.
+AmEx's own analysis finds customers using debit for everyday purchases below a personal threshold of \$20--\$200, with Official Payments putting the switching point closer to \$300.
+An internal AmEx note describes credit and debit as ``not substitutes in the consumer's (or Durbin's) mind.''
+
+Even though credit and debit are not substitutes at the transaction level, that does not imply rewards cannot influence the decision to adopt credit or debit. Online Appendix~\ref{subsec:oa-usage-microfoundation} provides a microfoundation in which payment methods substitute at adoption but segment at usage.
+
+\paragraph{Reward experiments consistent with some substitution.}
+The Discover quarterly rewards program (Online Appendix~\ref{subsec:oa-discover-rewards}) shifts grocery spending onto Discover from both cash and debit when Discover pays higher rewards, not from cash alone.
+Under the segmentation assumption, only the use of cash and other credit cards should decline.
+The fact that debit card volumes also decline suggests that credit and debit are at least partial substitutes for consumers.
+
+\paragraph{Summarizing the evidence.}
+The direct evidence does not cleanly resolve the question.
+Most antitrust testimony and survey responses describe segmentation, but the Discover experiment shows some limited substitution in routine grocery purchases.
+Below, I relax the no-substitution assumption and derive how it changes the model.
+%% ============================================================================
+%% SECTION 1: MODEL GENERALIZATION
+%% ============================================================================
+
+\subsection{Generalizing Credit-Debit Substitution}
+\label{subsubsec:oa-credit-debit-general}
+\label{subsec:oa-credit-debit-segmentation}
+
+The alternative specifications below differ in how much consumers substitute between credit and debit at the point of sale. 
+The model therefore treats segmentation as a continuous parameter. 
+The parameter $\zeta\in[0,1]$ governs how often a consumer holding both card types reaches for the secondary card when a merchant accepts only one. The parameter $\kappa_d\in[0,1]$ governs the demand boost from debit relative to credit.
+
+\paragraph{Generalized payment probabilities.}
+When a consumer multi-homing across credit and debit visits a merchant that accepts only one, she redirects a fraction $\zeta$ of her intended transactions to the accepted type.
+When only the primary card is accepted, the consumer uses it with probability $\pi + \zeta(1-\pi)$: $\pi$ from intended usage, plus a fraction~$\zeta$ of what would have gone to the secondary type.
+Table~\ref{tab:consumer-payment-probs} reports the general probabilities. Setting $\zeta = 0$ recovers Table~\ref{tab:consumer-payment-probs-baseline}.
+
+\begin{table}[ht]
+    \centering
+    \caption{Consumer Payment Probabilities $\pi^w_M$ (General)}
+    \label{tab:consumer-payment-probs}
+    \small
+    \begin{tabular}{lll cc}
+        \toprule
+        \textbf{Primary Card} & \textbf{Secondary Card} & \textbf{Merchant Accepts} & $\pi^w_{M,w_1}$ & $\pi^w_{M,w_2}$ \\
+        \midrule
+        Credit  & Debit & Both Credit and Debit  & $\pi$ & $1-\pi$ \\
+        Credit  & Debit & Only Credit           & $\pi + \zeta(1{-}\pi)$ & 0 \\
+        Credit  & Debit & Only Debit          & 0 & $(1{-}\pi) + \zeta\pi$ \\
+        Credit  & Debit & Neither             & 0 & 0 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\paragraph{Generalized payment surplus.}
+When debit generates fewer incremental sales than credit, we parameterize each payment method with $\kappa_j$ to weight its sales boost relative to credit cards.
+The baseline sets $\kappa_j=1$ for all payment methods.
+With heterogeneous sales benefits $\kappa_j\leq 1$, payment surplus generalizes to
+\begin{equation}
+    v_M^w = \sum_{j=1}^{J} \pi^w_{M,j} \kappa_j \label{eq:payment-value-kappa}
+\end{equation}
+where $\kappa_j\in[0,1]$ governs the demand boost from accepting card $j$.
+
+\paragraph{Merchant problem with heterogeneous $\kappa_j$.}
+Taking the generalized payment surplus $v_M^w$ from Equation~\eqref{eq:payment-value-kappa}, the merchant's per-unit margin becomes
+\begin{align}
+L_{M}^{w}\left(p\right)
+&= \underbrace{\frac{1-\pi_{M,w_{1}}^{w}-\pi_{M,w_{2}}^{w}}{1+\gamma v_{M}^{w}}}_{\text{share on cash}}\times\left(p-1\right)+\sum_{j=1}^{2}\underbrace{\frac{\pi_{M,w_{j}}^{w}\left(1+\gamma\kappa_{w_{j}}\right)}{1+\gamma v_{M}^{w}}}_{\text{share on card }w_{j}}\times\left(p\left(1-\tau_{w_{j}}\right)-1\right)
+\end{align}
+Collecting terms yields
+\begin{equation}
+L_{M}^{w}\left(p\right) = p\left(1-\frac{\tau_{M}^{w}+\gamma\tilde{\tau}_{M}^{w}}{1+\gamma v_{M}^{w}}\right)-1
+\end{equation}
+where the wallet-average fees are $\tau_M^w = \sum_j \pi_{M,w_j}^w \tau_{w_j}$ and $\tilde{\tau}_M^w = \sum_j \pi_{M,w_j}^w \tau_{w_j} \kappa_{w_j}$.
+The $\kappa$-weighted fee $\tilde{\tau}_M^w$ equals $\tau_M^w$ in the baseline.
+
+Profits become
+\begin{equation}
+\Pi\left(\gamma,p,M\right) = C \times \sum_{w\in\mathcal{W}}\mu^{w}\left(1+\gamma v_{M}^{w}\right)p^{-\sigma}\times\left[p\left(1-\frac{\tau_{M}^{w}+\gamma\tilde{\tau}_{M}^{w}}{1+\gamma v_{M}^{w}}\right)-1\right]
+\end{equation}
+and the optimal price is $p^{*}=\frac{\sigma}{\sigma-1}\times\frac{1}{1-\hat{\tau}}$, with effective fee
+$\hat{\tau}=\frac{\sum_w\mu^{w}(\tau_{M}^{w}+\gamma\tilde{\tau}_{M}^{w})}{\sum_w\mu^{w}(1+\gamma v_{M}^{w})}$.
+Dollar volume on card $j$ generalizes to
+\begin{equation}
+d_j = \sum_{w\in\mathcal{W}} \tilde{\mu}^w \times \int \frac{(1+\gamma\kappa_j)\,\pi^w_{M^*(\gamma),j}}{1+\gamma v_M^w}\, q^{w*}(\gamma)\, p^*(\gamma) \,\mathrm{d}G(\gamma) \label{eq:dollars-kappa}
+\end{equation}
+where the numerator $(1+\gamma\kappa_j)$ reflects the demand boost specific to card type $j$.
+In the baseline ($\kappa_j=1$), the numerator reduces to $(1+\gamma)$, matching the main-text expression.
+
+The quasi-profit coefficients (Appendix~\ref{subsec:appendix-quasiprofits}) generalize to
+\begin{align}
+a_M &= \sum_{w\in\mathcal{W}} \mu^w \tau_M^w, &
+b_M &= \frac{1}{\sigma}\sum_{w\in\mathcal{W}} \mu^w \bigl(v_M^w - \sigma\tilde{\tau}_M^w\bigr)
+\end{align}
+In the baseline, $\tilde{\tau}_M^w = \tau_M^w$, recovering the coefficients in Equation~\ref{eq:merch-accept}.
+
+\paragraph{Two-card credit-debit acceptance threshold.}
+With point-of-sale substitution, merchants' credit acceptance decisions depend on the gap between credit and debit fees and on credit-debit multi-homing rates.
+A two-card example demonstrates this dependence.
+Let card~$1$ denote debit (fee $\tau_d$, sales parameter $\kappa_d\leq1$) and card~$2$ denote credit (fee $\tau_c$, sales parameter $\kappa_c = 1$), following Online Appendix~\ref{subsec:oa-credit-multihoming}.
+Let $M \equiv (1-\pi)\mu^{(1,2)} + \pi\mu^{(2,1)}$ denote the multi-homer mass.
+The $N$/$D$ decomposition from Online Appendix~\ref{subsec:oa-credit-multihoming} generalizes to
+\begin{align*}
+N &= \mu^{(2,0)} + (1-\zeta)M \\
+D &= \zeta M
+\end{align*}
+$N$ equals new card transactions---single-homers on credit plus multi-homing spending that remains as cash under partial substitution.
+$D$ captures actual diversion: multi-homer spending redirected from debit to credit.
+When $\zeta = 0$ (baseline), $D = 0$.
+When $\zeta = 1$, $D = M$, the same expression as for two credit cards (Online Appendix~\ref{subsubsec:oa-two-credit}).
+
+The $\Delta a$/$\Delta b$ formulas from~\eqref{eq:a12-decomp}--\eqref{eq:b12-decomp} extend to this setting with one modification.
+Each diverted transaction was generating debit surplus $\kappa_d(1-\sigma\tau_d)$ and now generates credit surplus $(1-\sigma\tau_c)$, so the $D$ component of $\Delta b$ captures the net sales gain from switching:
+\begin{align}
+\Delta a &= N\tau_c + D(\tau_c - \tau_d) \notag\\
+\Delta b &= \tfrac{1}{\sigma}\bigl[N(1-\sigma\tau_c) + D\bigl((1-\sigma\tau_c) - \kappa_d(1-\sigma\tau_d)\bigr)\bigr] \label{eq:general-delta-b}
+\end{align}
+
+The threshold follows immediately:
+\begin{equation}
+\underline{\gamma}_c = \frac{\sigma\bigl[N\tau_c + D\,(\tau_c - \tau_d)\bigr]}{N(1-\sigma\tau_c) + D\bigl[(1-\sigma\tau_c) - \kappa_d(1-\sigma\tau_d)\bigr]} \label{eq:general-credit-debit-threshold}
+\end{equation}
+Setting $\zeta = 0$ gives $D = 0$, and the threshold reduces to $\sigma\tau_c/(1-\sigma\tau_c)$.
+
+By inspection, the acceptance threshold now depends on the gap between credit and debit fees $\tau_c - \tau_d$ and the share of transactions that substitute between credit and debit ($D$).
+The threshold reduces to the standard credit card acceptance threshold from the model in the main text $(\sigma\tau_c/(1-\sigma\tau_c))$ under two situations:
+\begin{itemize}
+\item $\zeta = 0$: $D = 0$, so both channels are off.
+\item $\kappa_d = 0$ and $\tau_d = 0$: the sales channel is off ($\kappa_d = 0$); the fee channel becomes $D\tau_c$, so $(N + D)$ factors out of numerator and denominator.
+\end{itemize}
+
+When $\zeta > 0$ and $\kappa_d > 0$ (intermediate case), both channels are active and the threshold depends on multi-homing shares.
+Table~\ref{tab:threshold-cases} summarizes the three specifications.
+
+\begin{table}[ht]
+    \centering
+    \caption{Credit-Debit Acceptance Threshold Across Specifications}
+    \label{tab:threshold-cases}
+    \small
+    \begin{tabular}{l l p{2.8cm} l}
+        \toprule
+        \textbf{Specification} & \textbf{Assumption} & \textbf{Dep.\ on credit-debit multihoming?} & \textbf{Location} \\
+        \midrule
+        Segmented baseline
+          & $\zeta{=}0$, $\kappa_d{=}1$
+          & No
+          & Main text \\[6pt]
+        Incremental debit sales
+          & $\zeta \in (0,1)$, $\kappa_d \in (0,1)$
+          & Yes
+          & Section~\ref{subsec:oa-half-kappa} \\[6pt]
+        Debit as cash
+          & $\zeta{=}1$, $\kappa_d{=}0$, $\tau_d{=}0$
+          & No
+          & Section~\ref{subsec:oa-extension} \\
+        \bottomrule
+    \end{tabular}
+    \tablenote{``Dep.\ on credit-debit multihoming'' indicates whether the credit acceptance threshold depends on the rate of credit-debit multihoming.
+    When it does, credit acceptance is linked to debit pricing, a prediction the Durbin episode does not support (Section~\ref{subsec:oa-half-kappa}).}
+\end{table}
+
+The generalized threshold yields two testable predictions for the case when there is substitution and debit cards generate incremental sales relative to cash.
+
+\paragraph{Prediction 1: Credit acceptance should depend on credit-debit multi-homing.}
+The threshold~\eqref{eq:general-credit-debit-threshold} contains $D = \zeta M$.
+When $\zeta > 0$, credit-debit multi-homing rates enter the credit acceptance threshold.
+
+Testimony in \emph{Ohio v.\ American Express} is hard to reconcile with this prediction.
+Expert witnesses testified that merchants discipline credit fees by threatening to divert transactions to rival credit cards, not to debit \parencite{Conrath2014}.
+Section~\ref{subsec:oa-credit-debit-evidence} documents merchants treating credit and debit as distinct products.
+
+\paragraph{Prediction 2: Debit fee caps should discipline credit fees.}
+The $(\tau_c - \tau_d)$ term in the threshold implies equilibrium fee co-movement: when credit and debit are substitutes, a lower debit fee allows less aggressive credit pricing before acceptance breaks down.
+
+The Durbin Amendment cut regulated debit interchange fees by roughly half, yet credit interchange fees did not respond (Figure~\ref{fig:merchant-fees-acceptance}).
+``Very little, if anything, happened with credit card prices after Durbin was implemented'' (Katz, in \textcite{Conrath2014}).
+AmEx and Discover both told merchants that they do not price credit off debit, benchmarking instead against rival credit products.
+Alaska Airlines, IKEA, Best Buy, and Hilton all testified to seeing no decrease in credit pricing after Durbin.
+Section~\ref{subsec:oa-half-kappa} quantifies the implied co-movement by estimating a specification with incremental debit sales and confirms the implied gap is large.
+
+The acceptance threshold also predicts that if credit card merchant fees do not respond to the debit fee cap, credit card acceptance should decline.
+Survey data show acceptance ratings for both credit and debit did not decline through the Durbin period (Figure~\ref{fig:scpc-debit-credit-acceptance}), so a decline in credit acceptance cannot rationalize networks holding credit fees fixed.
+Bundling cannot explain either pattern. The 2003 settlement had already ended bundling \parencite{Constantine2012}.
+AmEx, which has no bundling with debit, also faced no competitive pressure from cheaper debit despite about a fifth of AmEx consumers also using debit (Figure~\ref{fig:consumer-multi-homing}).
+
+\begin{figure}[ht!]
+    \centering
+    \caption{Credit and Debit Card Acceptance over Time}
+    \label{fig:scpc-debit-credit-acceptance}
+    \includegraphics[width=4in]{../output/graphs/debit_credit_accept_text_ungroup.pdf}
+    \tablenote{Data from the Survey of Consumer Payment Choice (SCPC). The SCPC asks: ``Please rate how likely each payment method is to be accepted for payment by stores, companies, online merchants, and other people or organizations,'' with separate responses for Credit card and Debit card. The figure plots the distribution of acceptance ratings for each card type over time.}
+\end{figure}
+
+
+
+%% ============================================================================
+%% SECTION 3: ALTERNATIVE SPECIFICATIONS
+%% ============================================================================
+
+\subsection{Alternative Specifications}
+\label{subsec:oa-alternatives}
+
+In the main text, I focus on the baseline model because it most accurately captures the effects of the Durbin Amendment.
+The goal of the model is to study how regulatory changes to interchange fees shape network competition, consumer rewards, and welfare.
+Every counterfactual in the paper revisits margins similar to Durbin's debit fee cap, so a credible model must reproduce Durbin's actual response.
+The two substitution predictions fail this test.
+
+At the same time, the baseline model misses the substitution in response to rewards that the Discover experiment documents.
+Sections~\ref{subsec:oa-half-kappa} and~\ref{subsec:oa-extension} thus estimate two alternatives that navigate this trade-off between the consumer-side substitution evidence and the merchant-side acceptance and pricing evidence differently. 
+Reassuringly, the credit-focused counterfactuals (the credit fee cap, merger, and dual routing) deliver similar welfare across all three specifications.
+
+\subsubsection{Estimating with Incremental Debit Sales}
+\label{subsec:oa-half-kappa}\label{subsubsec:oa-half-kappa}
+
+I estimate a specification that allows point-of-sale substitution between credit and debit and incremental debit sales relative to cash, with $\kappa_d = 0.5$ and $\zeta = 0.5$.
+This is the specification that matches the consumer-side substitution evidence from the Discover rewards shock most closely.
+Because debit still generates incremental sales, credit acceptance depends on the debit fee through the $(\tau_c-\tau_d)$ term in the threshold (Equation~\eqref{eq:general-credit-debit-threshold}).
+
+\paragraph{Model Modification.}
+
+Consumers holding both card types substitute between them at the point of sale half the time ($\zeta = 0.5$) rather than never (baseline) or always (debit as cash). Debit acceptance generates half the demand boost of credit ($\kappa_d = 0.5$; Eq.~\ref{eq:payment-value-kappa}) rather than the full boost ($\kappa_d = 1$) of the baseline or none ($\kappa_d = 0$) of debit as cash.
+
+Two additional adjustments are required.
+First, AmEx is dropped, leaving four products (Visa Debit, Visa Credit, MC Debit, MC Credit).
+With debit-credit substitution active, each network's debit and credit arms interact in the merchant acceptance decision. A merchant considering Visa Credit must account for diversion from Visa Debit holders who can now substitute across card types.
+This linkage exacerbates the non-differentiability problem discussed in Online Appendix~\ref{subsec:oa-conduct} and is moderated by dropping AmEx.
+Similarly, I do not evaluate the CBDC counterfactual as it increases the number of products.
+
+Second, a fixed cost of card acceptance $F$ is added to the merchant's acceptance problem.
+In the baseline, acceptance solves $\argmax_M -a_M + b_M\gamma$ (Equation~\ref{eq:merch-accept}), which is linear in $\gamma$ with no fixed cost.
+The fixed cost modifies this to $\argmax_M -a_M - F\mathbf{1}[|M|>0] + b_M\gamma$: a merchant that accepts any card pays $F$, raising the threshold at which the marginal merchant begins accepting cards.
+The fixed cost is identified by requiring that the first merchant willing to add Visa Credit is indifferent between two bundles: both debit networks plus MC Credit, or the empty bundle.
+Without the fixed cost parameter, merchants should accept MC Credit before Visa Credit because more consumers multi-home across Visa Credit and debit than across MC Credit and debit.
+Accepting Visa Credit therefore diverts more transactions from cheap debit to expensive credit, making it costlier at the margin.
+This acceptance ordering is counterfactual. The fixed cost eliminates it by making the extensive margin (accepting any card) dominate the ordering among credit networks.
+
+\begin{table}[ht!]
+    \small
+    \caption{Estimated parameters: Incremental debit sales}
+    \label{tab:param-half-kappa}
+\begin{center}\setlength{\tabcolsep}{4pt} \begin{minipage}[t]{0.5\columnwidth}%
+\centering \textbf{Panel A: Consumer Preference Parameters} \par\medskip \input{../output/tables/param_tab_cons_extension_half_kappa.tex}
+\end{minipage}%
+\begin{minipage}[t]{0.5\columnwidth}%
+\centering \textbf{Panel B: Consumer Heterogeneity Parameters} \par\medskip \input{../output/tables/param_tab_cons_het_extension_half_kappa.tex}
+\end{minipage}
+
+\vspace{0.5em}
+
+\begin{minipage}[t]{0.5\columnwidth}%
+\centering \textbf{Panel C: Merchant Parameters} \par\medskip \input{../output/tables/param_tab_merch_extension_half_kappa.tex}
+\end{minipage}%
+\begin{minipage}[t]{0.5\columnwidth}%
+\centering \textbf{Panel D: Network Cost Parameters (bps)} \par\medskip \input{../output/tables/param_tab_network_extension_half_kappa.tex}
+\end{minipage}
+\end{center}
+    \tablenote{S.D.\ refers to the standard deviation, and R.C.\ refers to the random coefficients.
+The $\Xi$ are the unobserved characteristics, and the $\chi^{lm}$ is the complementarity parameter.
+In Panel B, volatility parameters are the standard deviations of the random coefficients.
+Merchant types $\gamma$ are distributed according to a Gamma distribution.
+This specification drops AmEx, leaving four products (Visa Debit, Visa Credit, MC Debit, MC Credit).
+Standard errors computed by bootstrap.}
+\end{table}
+
+\paragraph{Parameter Estimates.}
+Table~\ref{tab:param-half-kappa} reports estimated parameters under incremental debit sales.
+Because debit generates incremental sales and consumers substitute between credit and debit at the point of sale, cheap debit becomes a close alternative to expensive credit in the merchant's acceptance decision. 
+The estimator must explain why merchants keep accepting expensive credit anyway. 
+Merchant margins provide the resolution.
+Higher margins favor the incremental-sales channel over the fee channel, forcing down the CES elasticity to $\sigma = 4.98$ from the baseline $5.61$ (Table~\ref{tab:param-half-kappa}).
+% HARDCODED[table: param_tab_merch_extension_half_kappa.tex, row: "Merchant CES", col: Est] current=4.98
+% HARDCODED[table: param_tab_merch_baseline.tex, row: "Merchant CES", col: Est] current=5.61
+Network costs remain positive and plausible for all networks (30--60 bps).
+% HARDCODED[table: param_tab_network_extension_half_kappa.tex, row range: Cash–MC Debit] current=30,60
+
+\subsubsection{Debit as Cash}
+\label{subsec:oa-extension}\label{subsubsec:oa-extension}
+
+I estimate a specification that treats debit as generating no incremental sales relative to cash, with $(\zeta, \kappa_d, \tau_d) = (1, 0, 0)$.
+This admits full point-of-sale substitution between credit and debit while shutting off the multi-homing channel behind Prediction 1, so credit acceptance depends only on the credit fee and multi-homing across credit cards (Table~\ref{tab:threshold-cases}).
+Because fees are measured relative to cash (Section~\ref{subsubsec:payment-tree}), treating debit as cash raises the implied cost of cash to match debit, so $\tau_d = 0$ and targeted credit fees fall by the same amount.
+The specification is therefore silent on Durbin pricing because debit fees are zero by construction.
+
+The $\kappa_d = 0$ assumption is itself an imperfect description of the data.
+Pre-Durbin Visa Debit merchant fees were roughly 160~bps (Figure~\ref{fig:merchant-fees-acceptance}), well above the cost of cash from \textcite{Felt.etal2020}.
+Merchants accepted debit voluntarily at those fees, so revealed preference says debit must generate some incremental sales relative to cash.
+This is why the appendix imposes universal debit acceptance below: with $\kappa_d = 0$, merchants would not voluntarily accept debit at fees above cash costs, and the imposition is required to match observed acceptance rather than derived from primitives.
+
+\paragraph{Parameter Estimates.}
+
+Treating debit as cash lowers every credit card's net cost of acceptance because fees are measured relative to cash and cash's implied cost rises to equal debit's.
+Rationalizing observed acceptance at a lower net cost requires lower merchant margins, which the estimator delivers by raising the CES elasticity to $\sigma = 7.15$ from the baseline $5.61$ (Table~\ref{tab:param-extension}).
+% HARDCODED[table: param_tab_merch_extension.tex, row: "Merchant CES", col: Est] current=7.15
+% HARDCODED[table: param_tab_merch_baseline.tex, row: "Merchant CES", col: Est] current=5.61
+
+\begin{table}[ht!]
+    \small
+    \caption{Estimated parameters: Debit as cash}
+    \label{tab:param-extension}
+\begin{center}\setlength{\tabcolsep}{4pt} \begin{minipage}[t]{0.5\columnwidth}%
+\centering \textbf{Panel A: Consumer Preference Parameters} \par\medskip \input{../output/tables/param_tab_cons_extension.tex}
+\end{minipage}%
+\begin{minipage}[t]{0.5\columnwidth}%
+\centering \textbf{Panel B: Consumer Heterogeneity Parameters} \par\medskip \input{../output/tables/param_tab_cons_het_extension.tex}
+\end{minipage}
+
+\vspace{0.5em}
+
+\begin{minipage}[t]{0.5\columnwidth}%
+\centering \textbf{Panel C: Merchant Parameters} \par\medskip \input{../output/tables/param_tab_merch_extension.tex}
+\end{minipage}%
+\begin{minipage}[t]{0.5\columnwidth}%
+\centering \textbf{Panel D: Network Cost Parameters (bps)} \par\medskip \input{../output/tables/param_tab_network_extension.tex}
+\end{minipage}
+\end{center}
+    \tablenote{S.D.\ refers to the standard deviation, and R.C.\ refers to the random coefficients. The $\Xi$ are the unobserved characteristics, and the $\chi^{lm}$ is the complementarity parameter. In Panel B, volatility parameters are the standard deviations of the random coefficients. Merchant types $\gamma$ are distributed according to a Gamma distribution. Standard errors computed by bootstrap.}
+\end{table}
+
+\subsubsection{Counterfactual Results Under Credit-Debit Substitution}
+\label{subsubsec:oa-alternatives-summary}
+
+\paragraph{Credit-focused counterfactuals.}
+
+Welfare estimates are similar across the baseline and both alternatives for counterfactuals that primarily change competition between credit networks.
+The credit fee cap raises total welfare by \$23--28B and the merger raises total welfare by \$8--15B (Tables~\ref{tab:welfare-half-kappa} and~\ref{tab:welfare-extension}).
+Dual routing reduces credit merchant fees and rewards under all three specifications.
+% HARDCODED[table: welfare_table_baseline.tex, row: "Total", col: Cap Fees] current=27
+% HARDCODED[table: welfare_table_extension_half_kappa.tex, row: "Total", col: Cap Fees] current=28
+% HARDCODED[table: welfare_table_extension.tex, row: "Total", col: Cap Fees] current=23
+% HARDCODED[table: welfare_table_baseline.tex, row: "Total", col: Monopoly] current=15
+% HARDCODED[table: welfare_table_extension_half_kappa.tex, row: "Total", col: Monopoly] current=15
+% HARDCODED[table: welfare_table_extension.tex, row: "Total", col: Monopoly] current=8
+Credit-debit substitution amplifies dual routing: welfare gains rise to \$14B (SE \$3.9B) under incremental debit sales versus \$3.8B at baseline, because point-of-sale substitution makes multi-homing more valuable and pushes the market toward a world where merchants accept only the cheapest card.\footnote{
+    Both figures are reported net of the mechanical $\chi^{22}$ log-sum adjustment (Online Appendix~\ref{subsec:oa-mechanical-dr}), so the comparison isolates the equilibrium response.
+    The gap between \$14B and \$3.8B reflects the stronger fee-spillover channel under incremental debit sales, not a larger mechanical variety contribution.
+}
+% HARDCODED[table: welfare_table_extension_half_kappa.tex, row: Total, col: Dual Routing] current=14
+% HARDCODED[table: welfare_table_baseline.tex, row: Total, col: Dual Routing] current=3.8
+
+\paragraph{Durbin Amendment: opposite predictions.}
+
+Uncapping debit fees raises total welfare by \$7B under the baseline but lowers it by \$10B under incremental debit sales.
+% HARDCODED[table: welfare_table_baseline.tex, row: "Total", col: Uncap Debit] current=7
+% HARDCODED[table: welfare_table_extension_half_kappa.tex, row: "Total", col: Uncap Debit] current=-10
+The debit-as-cash specification cannot evaluate the Durbin counterfactual because debit fees are zero by construction.
+
+The sign reversal follows directly from whether debit disciplines credit pricing.
+In the baseline, credit and debit are segmented at the point of sale, so uncapping debit fees raises debit rewards and attracts consumers to debit without affecting credit network pricing.
+Uncapping debit then raises debit rewards relative to credit rewards, thereby reducing credit card use and increasing welfare.
+
+In the incremental-debit-sales specification, debit competes with credit at the point of sale, so regulated debit fees act as a competitive constraint on credit networks.
+Uncapping debit removes this constraint.
+Credit networks respond by raising both fees (by 33 bps) and rewards (by 32 bps), an escalation on both sides of the credit market.
+% HARDCODED[table: cf_table_extension_half_kappa.tex, row: Credit Fees, col: Uncap Debit] current=33
+% HARDCODED[table: cf_table_extension_half_kappa.tex, row: Credit Rewards, col: Uncap Debit] current=32
+The fee escalation redistributes surplus toward credit networks and high-spending consumers at the expense of merchants and lower-income consumers who rely on debit. Total welfare also falls because more people use credit cards.
+
+The Durbin episode rules out the predicted co-movement.
+Durbin halved regulated debit interchange, yet credit interchange did not respond (Figure~\ref{fig:merchant-fees-acceptance}), and networks, merchants, and expert witnesses all testified to no link between debit and credit pricing.
+This evidence directly contradicts the 33 bps credit fee response that the incremental-debit-sales model predicts, and is the primary reason I focus on the baseline specification with segmentation.
+
+The other counterfactuals do not depend on the substitution assumption because they primarily change credit network competition, so the fee spillover channel is less important.
+The substitution assumption affects how debit competes with credit, so it matters most for counterfactuals that change debit pricing.
+
+\clearpage
+
+\begin{table}[ht!]
+    \caption{Counterfactual effects on prices and shares: Incremental debit sales}
+    \label{tab:cf-prices-half-kappa}
+    \centering
+    \small{
+    \input{../output/tables/cf_table_extension_half_kappa.tex}
+    }
+    \tablenote{Bootstrap standard errors in parentheses.
+    Counterfactual scenarios are defined in Table~\ref{tab:cf-effects}. This specification drops AmEx, leaving four products (Visa Debit, Visa Credit, MC Debit, MC Credit).
+    Dollar values are computed by normalizing to \$10 trillion of total consumer purchases \parencite{Nilson2020a}.}
+\end{table}
+
+\begin{table}[ht!]
+    \caption{Counterfactual welfare effects: Incremental debit sales}
+    \label{tab:welfare-half-kappa}
+    \centering
+    \small{
+    \input{../output/tables/welfare_table_extension_half_kappa.tex}
+    }
+    \tablenote{Bootstrap standard errors in parentheses.
+    Counterfactual scenarios are defined in Table~\ref{tab:welfare-decomp}. This specification drops AmEx, leaving four products (Visa Debit, Visa Credit, MC Debit, MC Credit).
+    Dollar values are computed by normalizing to \$10 trillion of total consumer purchases \parencite{Nilson2020a}.}
+\end{table}
+
+\begin{table}[ht!]
+    \caption{Counterfactual effects on prices and shares: Debit as cash}
+    \label{tab:cf-prices-extension}
+    \centering
+    \small{
+    \input{../output/tables/cf_table_extension.tex}
+    }
+    \tablenote{Bootstrap standard errors in parentheses.
+    Counterfactual scenarios are defined in Table~\ref{tab:cf-effects}.
+    Dollar values are computed by normalizing to \$10 trillion of total consumer purchases \parencite{Nilson2020a}.}
+\end{table}
+
+\begin{table}[ht!]
+    \caption{Counterfactual welfare effects: Debit as cash}
+    \label{tab:welfare-extension}
+    \centering
+    \small{
+    \input{../output/tables/welfare_table_extension.tex}
+    }
+    \tablenote{Bootstrap standard errors in parentheses. Counterfactual scenarios are defined in Table~\ref{tab:welfare-decomp}. Uncap Debit and CBDC counterfactuals are omitted because these scenarios modify debit-specific regulation that interacts with the point-of-sale substitution assumption.
+    Dollar values are computed by normalizing to \$10 trillion of total consumer purchases \parencite{Nilson2020a}.}
+\end{table}
+
+\end{document}

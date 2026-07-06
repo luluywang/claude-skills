@@ -1,0 +1,127 @@
+{
+  "generated": "2026-04-27T00:00:00Z",
+  "paper_type": "D",
+  "rap_seed": {
+    "research_question": "Merchant fees are indeed too high, but weak competition is the wrong diagnosis.",
+    "main_answer": "Networks set rewards for consumers and fees for merchants. Under price coherence, consumers capture rewards while merchant fee costs spread to all consumers through higher retail prices. Consumers are ten times more sensitive to rewards than merchants are to fees. Capping credit merchant fees raises total welfare by $27 billion annually.",
+    "positioning": "Existing theory cannot resolve whether network competition raises or lowers fees and welfare. I build a structural model that relaxes common assumptions (homogeneous merchants, no merchant competition) and lets the data determine whether competition raises or lowers fees and welfare.",
+    "thematic_phrases": [
+      "competitive bottleneck",
+      "price coherence",
+      "rewards competition",
+      "cross-subsidy",
+      "the direction of competition matters",
+      "single-homing / multi-homing",
+      "dual routing",
+      "credit aversion",
+      "excessive credit card adoption",
+      "issuer incentives"
+    ]
+  },
+  "rewrites": [
+    {
+      "id": "F1",
+      "file": "reducedform.tex",
+      "level": "section",
+      "heading": "3 Reduced-Form Facts",
+      "parent_goal": "Deliver the three empirical forces — issuer incentives, card-acceptance sales effect, multi-homing asymmetry — that motivate the competitive bottleneck and the structural model.",
+      "line_range": [4, 7],
+      "original": "Three reduced-form facts characterize the two-sided structure of the payment market.\nIssuers' incentives drive consumer payment choices; card acceptance increases merchant sales; and a mix of single- and multi-homing consumers limits merchants' ability to steer between networks.\nThese facts point toward a partial ``competitive bottleneck'', but the degree of consumer multi-homing leaves the net effect of competition on fees and welfare an empirical question.",
+      "proposed": "Issuer incentives --- not consumer preferences --- drive payment choices.\nCutting issuers' financial stake in debit reduced debit spending by around 25\\%; card acceptance raises merchant sales by around 12\\%; and around half of consumers carry credit cards from only one network, giving merchants little leverage to drop any card.\nTogether, these facts produce a partial competitive bottleneck whose net effect on fees and welfare must be estimated.",
+      "failure": "Sentence 1 is roadmap language ('Three reduced-form facts characterize'). Thematic phrase 'competitive bottleneck' appears only in sentence 3. Criterion B fails on sentence 1; criterion D ends on an open question rather than a deliverable promise.",
+      "severity": "medium",
+      "verdict": "weak"
+    },
+    {
+      "id": "F2",
+      "file": "reducedform.tex",
+      "level": "subsection",
+      "heading": "3.4 The Competitive Bottleneck",
+      "parent_goal": "Synthesize the three facts into the bottleneck framing and hand off to the structural model in §4.",
+      "line_range": [183, 189],
+      "original": "These patterns resemble a ``competitive bottleneck'' \\parencite{Armstrong2006} in which networks compete primarily for consumers, not merchants.\nStandard theoretical models assume either pure single-homing, under which competition unambiguously raises merchant fees, or pure multi-homing, which reverses the result \\parencite{Anderson.etal2018, Bakos.Halaburda2020}.\nGiven that some consumers single-home and others multi-home, neither benchmark applies cleanly, and the net effect of competition on fees and welfare must be estimated.",
+      "proposed": "The three facts above produce a partial competitive bottleneck in which networks compete primarily for consumers, not for merchants.\nBecause neither the pure single-homing nor the pure multi-homing benchmark applies, the net welfare effect of competition must be estimated --- the task of Sections 4--6.",
+      "failure": "Names 'competitive bottleneck' in sentence 1 but criterion D fails: the subsection ends without a forward promise of what §4–6 will deliver. Criterion G (explicit handoff to the structural model) is absent.",
+      "severity": "medium",
+      "verdict": "weak"
+    },
+    {
+      "id": "F3",
+      "file": "model.tex",
+      "level": "subsection",
+      "heading": "4.1 Structure of the Game",
+      "parent_goal": "Build a structural model that quantifies how network competition shapes fees, rewards, and welfare via two-sided multi-homing, merchant competition, and price coherence.",
+      "line_range": [8, 14],
+      "original": "I model competition between card networks as a static game with three stages between networks, consumers, and merchants.",
+      "proposed": "The competitive bottleneck requires a sequential structure: networks move first, setting fees and rewards; consumers and merchants then adopt and price, taking network actions as given; and consumers make final shopping decisions that determine how much card acceptance raises merchant sales.",
+      "failure": "Announces the model's architecture but not why the sequential structure is required to capture the competitive bottleneck. Criterion F fails mildly: reads as a specification, not an argument.",
+      "severity": "medium",
+      "verdict": "weak"
+    },
+    {
+      "id": "F4",
+      "file": "model.tex",
+      "level": "subsection",
+      "heading": "4.3 Stage 2: Pricing, Acceptance, and Adoption",
+      "parent_goal": "Formalize merchant-side behavior (uniform pricing, card acceptance) that generates price coherence, fee pass-through, and the adoption externality central to the welfare results.",
+      "line_range": [101, 103],
+      "original": "Merchants maximize profits by choosing prices and payment acceptance.\nUnder price coherence, merchants set uniform prices, passing fees through to all consumers and creating the externality that makes credit card use socially excessive.",
+      "proposed": "Under price coherence, merchants set uniform prices regardless of payment method, so merchant fees pass through to all consumers and create the externality that makes credit card adoption socially excessive.",
+      "failure": "'Price coherence' (RAP thematic phrase) and the externality appear only in sentence 2. Criterion B fails on sentence 1, which is generic profit-maximization language that could open any IO model section.",
+      "severity": "medium",
+      "verdict": "weak"
+    },
+    {
+      "id": "F5",
+      "file": "model.tex",
+      "level": "subsection",
+      "heading": "4.4 Stage 1: Network Competition",
+      "parent_goal": "Build a structural model that quantifies how network competition shapes fees, rewards, and welfare — specifically the profit-maximizing rationale for taxing merchants to subsidize consumers.",
+      "line_range": [234, 236],
+      "original": "Multiproduct payment networks maximize profits, anticipating consumer and merchant actions.",
+      "proposed": "Networks exploit the bottleneck position: because consumers are far more sensitive to rewards than merchants are to fees, profit-maximizing networks fund generous rewards through high merchant fees.",
+      "failure": "Generic description of profit maximization; does not invoke the bottleneck logic or preview the implication (networks tax merchants to subsidize consumers). Criteria B and D fail.",
+      "severity": "medium",
+      "verdict": "weak"
+    },
+    {
+      "id": "F6",
+      "file": "estimation.tex",
+      "level": "subsection",
+      "heading": "5.3 Goodness of Fit",
+      "parent_goal": "Validate the structural estimates against out-of-sample data so the counterfactual predictions in §6 are credible, with the OptBlue acceptance test as the sharpest check.",
+      "line_range": [182, 188],
+      "original": "I assess fit by examining three sets of untargeted moments: adoption shares, the joint distribution of primary and secondary cards, and merchant acceptance rates.",
+      "proposed": "The model passes three out-of-sample tests.\nMost importantly, it correctly predicts that AmEx's OptBlue fee cut shrank the merchant acceptance gap by around 9 percentage points --- the sharpest test of the model's ability to predict merchant responses to the fee changes the counterfactuals impose.",
+      "failure": "'I assess fit by examining' is roadmap language (criterion B fails). The OptBlue out-of-sample test is buried in §5.3.2, not previewed. Criterion E (quantitative preview) fails for a results subsection.",
+      "severity": "medium",
+      "verdict": "weak"
+    },
+    {
+      "id": "F7",
+      "file": "counterfactuals.tex",
+      "level": "subsection",
+      "heading": "6.1 Capping Credit Card Merchant Fees",
+      "parent_goal": "Show that a credit fee cap corrects the price-coherence adoption externality, raising total welfare $27B.",
+      "line_range": [13, 24],
+      "original": "In my main counterfactual, I cap credit card merchant fees at 120 bp, roughly half their current level.\nDebit fees are unchanged.\nThe cap raises total welfare by \\$27 billion per year.",
+      "proposed": "Capping credit card merchant fees at 120 bp corrects the price-coherence adoption externality.\nThis raises total welfare by \\$27 billion per year --- roughly double the consumer welfare gain from the CARD Act.",
+      "failure": "'In my main counterfactual, I…' is roadmap language; 'price coherence' and 'excessive adoption' appear only in sentence 4; the $27B magnitude appears only in sentence 3. The rewrite with the finding first is clearly better.",
+      "severity": "medium",
+      "verdict": "weak"
+    },
+    {
+      "id": "F8",
+      "file": "counterfactuals.tex",
+      "level": "subsection",
+      "heading": "6.5 Central Bank Digital Currencies and Public Entry",
+      "parent_goal": "Compare CBDC to fee caps and dual routing, showing public entry is weaker because credit-debit segmentation limits its competitive reach.",
+      "line_range": [259, 268],
+      "original": "Proposals for central bank digital currencies (CBDC) and faster payments \\parencite{Shin2021,FederalReserve2022,Berg.etal2024a} motivate the possibility that government entry could discipline network pricing.",
+      "proposed": "Government entry as a public debit network disciplines pricing far less than fee caps or dual routing: consumer welfare rises by only \\$3.7 billion because credit-debit segmentation limits the competitive pressure a new debit product can exert on incumbent credit card fees.",
+      "failure": "States motivation without a finding. Criterion D fails (no forward promise). Criterion E fails: the $3.7B result is not previewed in sentence 1.",
+      "severity": "low",
+      "verdict": "weak"
+    }
+  ]
+}

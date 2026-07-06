@@ -1,0 +1,166 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{cms/global//global/global/global}
+    \entry{Conrath2014}{report}{}{}
+      \name{author}{1}{}{%
+        {{hash=8cc2a9ac0789f5a338ac529cb1136320}{%
+           family={Conrath},
+           familyi={C\bibinitperiod},
+           given={Craig\bibnamedelima W.},
+           giveni={C\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {United States District Court Eastern District of New York}%
+      }
+      \strng{namehash}{8cc2a9ac0789f5a338ac529cb1136320}
+      \strng{fullhash}{8cc2a9ac0789f5a338ac529cb1136320}
+      \strng{fullhashraw}{8cc2a9ac0789f5a338ac529cb1136320}
+      \strng{bibnamehash}{8cc2a9ac0789f5a338ac529cb1136320}
+      \strng{authorbibnamehash}{8cc2a9ac0789f5a338ac529cb1136320}
+      \strng{authornamehash}{8cc2a9ac0789f5a338ac529cb1136320}
+      \strng{authorfullhash}{8cc2a9ac0789f5a338ac529cb1136320}
+      \strng{authorfullhashraw}{8cc2a9ac0789f5a338ac529cb1136320}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issue}{1:10-CV-04496-NGG-RER}
+      \field{month}{9}
+      \field{title}{Plaintiff's {{Proposed Findings}} of {{Fact}}}
+      \field{year}{2014}
+      \field{dateera}{ce}
+    \endentry
+    \entry{Constantine2012}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=0c1d7cc7959350e2eb7fc657b7fdff52}{%
+           family={Constantine},
+           familyi={C\bibinitperiod},
+           given={Lloyd},
+           giveni={L\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Skyhorse Publishing}%
+      }
+      \strng{namehash}{0c1d7cc7959350e2eb7fc657b7fdff52}
+      \strng{fullhash}{0c1d7cc7959350e2eb7fc657b7fdff52}
+      \strng{fullhashraw}{0c1d7cc7959350e2eb7fc657b7fdff52}
+      \strng{bibnamehash}{0c1d7cc7959350e2eb7fc657b7fdff52}
+      \strng{authorbibnamehash}{0c1d7cc7959350e2eb7fc657b7fdff52}
+      \strng{authornamehash}{0c1d7cc7959350e2eb7fc657b7fdff52}
+      \strng{authorfullhash}{0c1d7cc7959350e2eb7fc657b7fdff52}
+      \strng{authorfullhashraw}{0c1d7cc7959350e2eb7fc657b7fdff52}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Priceless: {{The Case That Brought Down}} the {{Visa}}/{{Mastercard Bank Cartel}}}
+      \field{year}{2012}
+      \field{dateera}{ce}
+    \endentry
+    \entry{Felt.etal2020}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=904db1ddf1826f92b549e85476d89324}{%
+           family={Felt},
+           familyi={F\bibinitperiod},
+           given={Marie-Hélène},
+           giveni={M\bibinithyphendelim H\bibinitperiod}}}%
+        {{hash=1028fb35f981fcbb07024dc912fc7dca}{%
+           family={Hayashi},
+           familyi={H\bibinitperiod},
+           given={Fumiko},
+           giveni={F\bibinitperiod}}}%
+        {{hash=79c1709cf0d4e0492fb48d4b8f52e297}{%
+           family={Stavins},
+           familyi={S\bibinitperiod},
+           given={Joanna},
+           giveni={J\bibinitperiod}}}%
+        {{hash=89fc7d8cb69ee7b12aff9d2c515066c4}{%
+           family={Welte},
+           familyi={W\bibinitperiod},
+           given={Angelika},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{cf18ce63a0a23ca1df0ddff2ffe602ec}
+      \strng{fullhash}{cc9e2c3142d6708d60ce94879017550e}
+      \strng{fullhashraw}{cc9e2c3142d6708d60ce94879017550e}
+      \strng{bibnamehash}{cc9e2c3142d6708d60ce94879017550e}
+      \strng{authorbibnamehash}{cc9e2c3142d6708d60ce94879017550e}
+      \strng{authornamehash}{cf18ce63a0a23ca1df0ddff2ffe602ec}
+      \strng{authorfullhash}{cc9e2c3142d6708d60ce94879017550e}
+      \strng{authorfullhashraw}{cc9e2c3142d6708d60ce94879017550e}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{abstract}{Using data from the United States and Canada, we quantify consumers' net pecuniary cost of using cash, credit cards, and debit cards for purchases across income cohorts. The net cost includes fees paid to financial institutions, rewards received from credit or debit card issuers, and the merchant cost of accepting payments that is passed on to consumers as higher retail prices. Even though credit cards are more expensive for merchants to accept compared with other payment methods, merchants typically do not differentiate prices at checkout, but instead pass through their costs to all consumers. As a result, credit card transactions are crosssubsidized by cheaper debit and cash payments. Card rewards and consumer fees paid to financial institutions are additional sources of cross-subsidies. We find that consumers in the lowest-income cohort pay the highest net pecuniary cost as a percentage of transaction value, while consumers in the highest-income cohort pay the lowest. This result is robust under various scenarios and assumptions, suggesting payment card pricing and merchant cost pass-through have regressive distributional effects in the United States and Canada.}
+      \field{issn}{0378-4266}
+      \field{journaltitle}{Journal of Banking \& Finance}
+      \field{langid}{english}
+      \field{month}{9}
+      \field{title}{Regressive {{Effects}} of {{Payment Card Pricing}} and {{Merchant Cost Pass-through}} in the {{United States}} and {{Canada}}}
+      \field{volume}{154}
+      \field{year}{2023}
+      \field{dateera}{ce}
+      \field{pages}{106968}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1016/j.jbankfin.2023.106968
+      \endverb
+    \endentry
+    \entry{Nilson2020a}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=16ff1774c04145dc94208696ada628d8}{%
+           family={Nilson},
+           familyi={N\bibinitperiod},
+           given={Report},
+           giveni={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{16ff1774c04145dc94208696ada628d8}
+      \strng{fullhash}{16ff1774c04145dc94208696ada628d8}
+      \strng{fullhashraw}{16ff1774c04145dc94208696ada628d8}
+      \strng{bibnamehash}{16ff1774c04145dc94208696ada628d8}
+      \strng{authorbibnamehash}{16ff1774c04145dc94208696ada628d8}
+      \strng{authornamehash}{16ff1774c04145dc94208696ada628d8}
+      \strng{authorfullhash}{16ff1774c04145dc94208696ada628d8}
+      \strng{authorfullhashraw}{16ff1774c04145dc94208696ada628d8}
+      \field{sortinit}{N}
+      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{journaltitle}{Nilson Report}
+      \field{month}{12}
+      \field{title}{U.{{S}}. {{Consumer Payment Systems}}}
+      \field{volume}{1188}
+      \field{year}{2020}
+      \field{dateera}{ce}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

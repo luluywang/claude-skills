@@ -1,0 +1,312 @@
+\documentclass[main.tex]{subfiles}
+
+\begin{document}
+
+\section{Theory Appendix: Proofs and Details}\label{sec:appendix-theory}
+
+The sufficient statistic rests on an envelope theorem for the consumer: when interchange fees change, consumers care only about the change in retail prices on the goods they buy and the change in the reward on the method they use.
+The hard part of the proof is to show that those equilibrium price changes are well approximated by functions of equilibrium quantities we can measure at the merchant---the composition of payments and the fee schedule.
+
+\subsection{Setup and Notation}\label{subsec:setup-notation}
+
+We prove Theorem~\ref{thm:sufficient-stat} in the sufficient-statistic environment of Section~\ref{sec:redistribution}.
+Consumers, merchants, and networks behave as in that section: type-$k$ consumers maximize $U_k$ subject to $\sum_j p_j q_{jk}\leq 1+f_k$; interchange fees follow~\eqref{eq:interchange-fee-model}; retail prices follow~\eqref{eq:retail-price-pass}; and rewards follow~\eqref{eq:reward-pass-through}.
+We use stars for equilibrium values and index payment methods by $k$ and $l$.
+
+For the proofs it is convenient to write each merchant's payment-weighted average fee as $\hat\tau_j\equiv\sum_m\mu_{jm}\tau_{jm}$, so~\eqref{eq:retail-price-pass} reads $\log p_j=\log\bar p_j+\rho^P\hat\tau_j$.
+Revenue weights $\omega_j$ and the operator $\mathbb{E}_R[\cdot]\equiv\sum_j\omega_j(\cdot)$ are as in Theorem~\ref{thm:sufficient-stat}; let $\tau_{\max}\equiv\max_{j,k}|\tau_{jk}|$.
+Rewards inflate each cohort's effective budget to $1+f_k$, so aggregate expenditure is $1+O(\tau_{\max})$ (Assumption~\ref{assump:positive-costs}); in all first-order expressions below we treat aggregate expenditure as one and absorb the $O(\tau_{\max})$ correction into the stated remainders.
+The proof uses the following additional notation.
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+\textbf{Symbol} & \textbf{Dimension} & \textbf{Meaning} \\
+\midrule
+$\hat\tau_j$ & scalar & merchant $j$'s payment-weighted average fee, $\sum_m\mu_{jm}\tau_{jm}$ \\
+$\tau_{jk}-\hat\tau_j$ & scalar & price-side ``excess fee'': method $k$'s deviation from merchant $j$'s average \\
+$s^*_{jk}$ & scalar & cohort $k$'s spending share at merchant $j$, $p_jq^*_{jk}/\sum_{j'}p_{j'}q^*_{j'k}$ \\
+$\bar\tau^k$ & scalar & cohort $k$'s spending-weighted average fee, $\sum_j s^*_{jk}\tau_{jk}$ \\
+$E^{k}$ & $\mathbb{R}^{J\times J}$ & price elasticities of cohort $k$: $E^k_{ji}=\partial\log q^k_j/\partial\log p_i$ \\
+$G^{k}$ & $\mathbb{R}^{J\times K}$ & income semi-elasticities of cohort $k$: $G^k_{jm}=\partial\log q^k_j/\partial f_m$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Assumptions}
+
+Let $E^k_{ji}\equiv\partial\log q^k_j/\partial\log p_i$ denote the cross-price elasticity of demand among consumers of type $k$, and let $E$ stack these matrices across types.
+
+\begin{assumption}\label{assump:dominant-diagonal}
+The elasticities $E^k_{ji}$ are finite and satisfy a dominant diagonal condition: there exist $M,m>0$ such that for each $k$ and $j$,
+\[
+|E^k_{jj}|<M\quad\text{and}\quad\sum_{i\neq j}|E^k_{ji}|<m\,|E^k_{jj}|.
+\]
+\end{assumption}
+
+Own-price elasticities are bounded above and dominate the sum of cross-price elasticities for the same good.
+CES demand with $\sigma>1$ satisfies the condition with $M=\sigma$ and $m=1$.
+
+\begin{assumption}[Rewards of Fee Order]\label{assump:positive-costs}
+Observed rewards are the same order of magnitude as interchange fees, $f_k=O(\tau_{\max})$.
+\end{assumption}
+
+The reward pass-through rule itself is part of the environment in Section~\ref{sec:redistribution}.
+The only additional restriction used here is the size condition in Assumption~\ref{assump:positive-costs}: rewards run about $1$--$2\%$ of spend in the data, the same order as interchange fees.
+
+\begin{assumption}[Bounded Income Semi-Elasticities]\label{assump:income-elasticity}
+The demand of a consumer of type $k$ admits finite income semi-elasticities $G^k_{jm}\equiv\partial\log q^k_j/\partial f_m$, with row sums bounded uniformly: $\sum_m|G^k_{jm}|\leq L$ for some finite $L$ and for all $j$ and $k$.
+\end{assumption}
+
+Homothetic demand is a sufficient special case, with $G^k_{jm}=\mathbbm{1}\{m=k\}/(1+f_k)$ and hence $L=1$.
+The three demand bounds $M$, $m$, and $L$ are the only primitives that enter the theorem: $M$ controls how demand responds to retail prices, $m$ controls how demand responds to cross-price elasticities, and $L$ controls how demand responds to rewards (an income change for the cohort).
+All three reappear in the contraction threshold of Step~C.
+
+\subsection{Proof of Theorem~\ref{thm:sufficient-stat}}\label{subsec:proof-theorem1}
+
+The proof has four steps.
+Step~A applies the envelope theorem to reduce welfare to a price term and a reward term.
+Step~B evaluates the reward term from~\eqref{eq:reward-pass-through}.
+Step~C gives an explicit bound showing that equilibrium feedback is small relative to the direct price and reward effects.
+Step~D assembles the pieces.
+
+\paragraph{Step A: Envelope theorem.}
+Roy's identity applied to the consumption problem of a consumer in cohort $k$ gives, using the spending shares $s^*_{jk}$ and total expenditure $1+O(\tau_{\max})$,
+\begin{equation}
+\frac{1}{\lambda_k}\frac{dV_k}{dx_l}=-\sum_j s^*_{jk}\,\frac{d\log p_j}{dx_l}+\frac{df_k}{dx_l}+O(\tau_{\max}).
+\label{eq:cohort-roy}
+\end{equation}
+Because the consumer was already optimizing, reallocating her basket has no first-order welfare effect; she is hit only through retail prices on the goods she buys, weighted by her spending, and through the reward on the method she uses.
+
+We carry out the proof in these cohort spending shares---the natural weights for the envelope and reward steps---and translate the result into the observable revenue-weighted moments of Theorem~\ref{thm:sufficient-stat} only at the end (Step~D).
+The bridge is a spending identity: cohort $k$ spends $\mu_k\,p_j q^*_{jk}$ at merchant $j$, while merchant $j$ draws the share $\omega_j\,\mu_{jk}$ of economy-wide revenue from method $k$; equating the two accounting conventions gives
+\begin{equation}
+\mu_k\,s^*_{jk}=\omega_j\,\mu_{jk}+O(\tau_{\max}),
+\label{eq:spending-identity}
+\end{equation}
+where the remainder collects reward-induced deviations from unit aggregate expenditure.
+Equivalently, a cohort spending-weighted sum is a revenue-weighted moment, $\sum_j s^*_{jk}(\cdot)=\mu_k^{-1}\,\mathbb{E}_R[\mu_{jk}(\cdot)]+O(\tau_{\max})$.
+It remains to characterize the reward response $df_k/dx_l$ (Step~B) and the price response $d\log p_j/dx_l$ (Step~C).
+
+\paragraph{Step B: Reward response decomposition.}
+The reward rule~\eqref{eq:reward-pass-through} is itself a level identity in spending shares, $f_k=\bar f_k+\rho^R\,\bar\tau^k$ with $\bar\tau^k=\sum_j s^*_{jk}\tau_{jk}$: rewards on method $k$ equal the fixed baseline $\bar f_k$ plus the marginal pass-through $\rho^R$ times the average fee that cohort $k$'s spending encounters.
+
+Differentiate in $x_l$.
+By~\eqref{eq:reward-pass-through}, the baseline $\bar f_k$ collects components that do not move with the fee schedule, so $d\bar f_k/dx_l=0$; also $d\tau_{jk}/dx_l=\mathbbm{1}\{k=l\}\,\partial\tau_{jl}/\partial x_l$, so
+\begin{equation}
+\frac{df_k}{dx_l}=\rho^R\!\left(\mathbbm{1}\{k=l\}\sum_j s^*_{jk}\,\frac{\partial\tau_{jl}}{\partial x_l}+\sum_j\tau_{jk}\,\frac{ds^*_{jk}}{dx_l}\right).
+\label{eq:reward-decomp}
+\end{equation}
+The first term is the direct network-balance rebate: every dollar the network collects from the rate hike on method $l$ is rebated to method-$l$ users.
+The second term is the reward feedback from the movement of cohort $k$'s spending shares.
+Step~C bounds this feedback term.
+Because the baseline $\bar f_k$ is fee-invariant, it drops out of the derivative and leaves the reward response---and hence Theorem~\ref{thm:sufficient-stat}---unchanged; the level of network costs and issuer margins never enters.
+
+\paragraph{Step C: Equilibrium feedback (explicit bound).}
+Differentiating~\eqref{eq:retail-price-pass}---equivalently, $\log p_j=\log\bar p_j+\rho^P\hat\tau_j$---and recentering the composition shift with $\sum_m d\mu_{jm}/dx_l=0$ (shares sum to one) gives
+\begin{equation}
+\frac{d\log p_j}{dx_l}=\rho^P\!\left[\underbrace{\mu_{jl}\,\frac{\partial\tau_{jl}}{\partial x_l}}_{\text{direct effect}}+\underbrace{\sum_m(\tau_{jm}-\hat\tau_j)\,\frac{d\mu_{jm}}{dx_l}}_{\text{composition feedback}}\right].
+\label{eq:price-decomp}
+\end{equation}
+The direct term is the mechanical pass-through of the fee into prices.
+The composition feedback is small because it multiplies share movements by centered fee gaps, each of which is at most order $\tau_{\max}$.
+
+Let
+\[
+z=\begin{pmatrix}d\log p\\[2pt] df\end{pmatrix},\qquad
+z_0=\begin{pmatrix}z^p_0\\[2pt] z^f_0\end{pmatrix},
+\]
+where
+\[
+z^{p}_{0,j}=\rho^P\,\mu_{jl}\,\frac{\partial\tau_{jl}}{\partial x_l},
+\qquad
+z^{f}_{0,k}=\rho^R\,\mathbbm{1}\{k=l\}\sum_j s^*_{jl}\,\frac{\partial\tau_{jl}}{\partial x_l}.
+\]
+Thus $z_0$ is the response holding payment shares and spending shares fixed.
+Let
+\begin{equation}
+B_l\equiv\max_j\left|\frac{\partial\tau_{jl}}{\partial x_l}\right|,
+\qquad
+H\equiv(1+m)M+L,
+\qquad
+C\equiv2(1+H).
+\label{eq:direct-effect}
+\end{equation}
+Because $\rho^P,\rho^R\leq1$, $\mu_{jl}\leq1$, and $\sum_j s^*_{jl}=1$, $\|z_0\|_\infty\leq B_l$.
+
+It remains to bound $z-z_0$.
+Demand responds to prices and rewards according to
+\[
+\frac{d\log q^k_j}{dx_l}
+=\sum_i E^k_{ji}\frac{d\log p_i}{dx_l}
++\sum_n G^k_{jn}\frac{df_n}{dx_l}.
+\]
+The row-sum bounds in Assumptions~\ref{assump:dominant-diagonal} and~\ref{assump:income-elasticity} imply, for every $j$ and $k$,
+\begin{equation}
+\left|\frac{d\log q^k_j}{dx_l}\right|
+\leq H\|z\|_\infty .
+\label{eq:demand-response-bound}
+\end{equation}
+
+For prices, the within-merchant payment share $\mu_{jm}=\mu_m q^*_{jm}/\sum_n\mu_n q^*_{jn}$ nets out the common price $p_j$, so the quotient rule gives
+\[
+\frac{d\log\mu_{jm}}{dx_l}
+=\frac{d\log q^m_j}{dx_l}
+-\sum_n\mu_{jn}\frac{d\log q^n_j}{dx_l}.
+\]
+Since $\sum_m(\tau_{jm}-\hat\tau_j)\mu_{jm}=0$, the average term drops out of the recentered composition feedback:
+\[
+\sum_m(\tau_{jm}-\hat\tau_j)\frac{d\mu_{jm}}{dx_l}
+=\sum_m(\tau_{jm}-\hat\tau_j)\mu_{jm}\frac{d\log q^m_j}{dx_l}.
+\]
+The centered merchant fee gap satisfies
+\[
+\sum_m|(\tau_{jm}-\hat\tau_j)\mu_{jm}|\leq 2\tau_{\max}.
+\]
+Combining this inequality with~\eqref{eq:demand-response-bound},
+\begin{equation}
+\left|
+\frac{d\log p_j}{dx_l}
+-\rho^P\,\mu_{jl}\frac{\partial\tau_{jl}}{\partial x_l}
+\right|
+\leq 2H\tau_{\max}\|z\|_\infty .
+\label{eq:price-feedback-bound}
+\end{equation}
+
+For rewards, the feedback comes from the spending-share term left in Step~B.
+The spending share $s^*_{jk}=p_jq^*_{jk}/\sum_{j'}p_{j'}q^*_{j'k}$ has derivative
+\[
+\frac{d\log s^*_{jk}}{dx_l}
+=\left(\frac{d\log p_j}{dx_l}+\frac{d\log q^k_j}{dx_l}\right)
+-\sum_{j'}s^*_{j'k}\left(\frac{d\log p_{j'}}{dx_l}+\frac{d\log q^k_{j'}}{dx_l}\right).
+\]
+Recentering by $\bar\tau^k$ makes the average term vanish:
+\[
+\sum_j\tau_{jk}\frac{ds^*_{jk}}{dx_l}
+=\sum_j s^*_{jk}(\tau_{jk}-\bar\tau^k)
+\left(\frac{d\log p_j}{dx_l}+\frac{d\log q^k_j}{dx_l}\right).
+\]
+The centered cohort fee gap satisfies
+\[
+\sum_j|s^*_{jk}(\tau_{jk}-\bar\tau^k)|\leq2\tau_{\max}.
+\]
+Therefore
+\begin{equation}
+\left|
+\frac{df_k}{dx_l}
+-\rho^R\,\mathbbm{1}\{k=l\}\sum_j s^*_{jl}\frac{\partial\tau_{jl}}{\partial x_l}
+\right|
+\leq 2(1+H)\tau_{\max}\|z\|_\infty .
+\label{eq:reward-feedback-bound}
+\end{equation}
+
+Equations~\eqref{eq:price-feedback-bound} and~\eqref{eq:reward-feedback-bound} together imply
+\begin{equation}
+\|z-z_0\|_\infty\leq C\tau_{\max}\|z\|_\infty,
+\qquad
+C\equiv2\bigl[1+(1+m)M+L\bigr].
+\label{eq:contraction-bound}
+\end{equation}
+Set $\bar\tau\equiv1/C$.
+The same calculation applies to the difference between any two candidate responses, so whenever $\tau_{\max}<\bar\tau$, the feedback map is a contraction.
+For the equilibrium response,
+\[
+\|z\|_\infty
+\leq \|z_0\|_\infty+\|z-z_0\|_\infty
+\leq B_l+C\tau_{\max}\|z\|_\infty,
+\]
+so
+\[
+\|z\|_\infty\leq\frac{B_l}{1-C\tau_{\max}}
+\qquad\text{and}\qquad
+\|z-z_0\|_\infty
+\leq\frac{C\tau_{\max}}{1-C\tau_{\max}}B_l .
+\]
+The coordinate bounds are therefore
+\begin{align}
+\left|
+\frac{d\log p_j}{dx_l}
+-\rho^P\,\mu_{jl}\frac{\partial\tau_{jl}}{\partial x_l}
+\right|
+&\leq
+\frac{2H\tau_{\max}}{1-C\tau_{\max}}B_l,
+\label{eq:price-step-explicit}\\
+\left|
+\frac{df_k}{dx_l}
+-\rho^R\,\mathbbm{1}\{k=l\}\sum_j s^*_{jl}\frac{\partial\tau_{jl}}{\partial x_l}
+\right|
+&\leq
+\frac{2(1+H)\tau_{\max}}{1-C\tau_{\max}}B_l .
+\label{eq:reward-step-explicit}
+\end{align}
+For the fee components used below, $B_l=1$.
+Hence the feedback is $O(\tau_{\max})$ in both coordinates.
+The reward coordinate gives
+\begin{equation}
+\frac{df_k}{dx_l}=\rho^R\,\mathbbm{1}\{k=l\}\sum_j s^*_{jl}\,\frac{\partial\tau_{jl}}{\partial x_l}+O(\tau_{\max}),
+\label{eq:rewards-step}
+\end{equation}
+which confirms that the share-feedback term in~\eqref{eq:reward-decomp} is small.
+The price coordinate gives
+\begin{equation}
+\frac{d\log p_j}{dx_l}=\rho^P\,\mu_{jl}\,\frac{\partial\tau_{jl}}{\partial x_l}+O(\tau_{\max}),
+\label{eq:price-step}
+\end{equation}
+This threshold $\bar\tau=1/C$ is the explicit threshold the theorem promises.
+
+% \begin{remark}[Income effects are first-order, and controlled by the contraction]\label{rem:income-effects}
+% Income effects are not negligible.
+% Rewards track the fee one-for-one, so $df/dx_l=O(1)$, and the income feedback through $G$ contributes $O(\tau_{\max})$ to the welfare derivative---the \emph{same} order as the price feedback through $E$, not smaller.
+% What removes them from the first-order statistic is not that they are higher-order but that the joint contraction~\eqref{eq:contraction-bound} bounds them; this is exactly why the income bound $L$ appears in the threshold $\bar\tau$.
+% Treating the reward change itself as $O(\tau_{\max})$---and hence the income feedback as $O(\tau_{\max}^2)$---would be an error: it is the \emph{derivative} $df/dx_l$ that is $O(1)$, not negligible, even though the reward \emph{level} $f_k$ is $O(\tau_{\max})$.
+% \end{remark}
+
+% \begin{remark}[Why the feedback vanishes from the statistic]\label{rem:feedback}
+% Both feedbacks---price ($E$) and income ($G$)---are $O(\tau_{\max})$ in the welfare \emph{derivative}, and hence $O(\tau_{\max}^2)$ in integrated welfare (an $O(\tau_{\max})$ error in the derivative times a fee of size $O(\tau_{\max})$).
+% This is why the equilibrium reallocation of baskets and the income feedback both drop out of the first-order sufficient statistic, which keeps only the mechanical direct effects.
+% \end{remark}
+
+\paragraph{Step D: Assembly.}
+Substitute the price response~\eqref{eq:price-step} and the reward response~\eqref{eq:rewards-step} into the spending-share envelope formula~\eqref{eq:cohort-roy}:
+\[
+\frac{1}{\lambda_k}\frac{dV_k}{dx_l}=-\rho^P\sum_j s^*_{jk}\,\mu_{jl}\,\frac{\partial\tau_{jl}}{\partial x_l}+\mathbbm{1}\{k=l\}\,\rho^R\sum_j s^*_{jk}\,\frac{\partial\tau_{jk}}{\partial x_k}+O(\tau_{\max}).
+\]
+Now translate the cohort spending-weighted sums into observable revenue-weighted moments with the spending identity~\eqref{eq:spending-identity}, $\sum_j s^*_{jk}(\cdot)=\mu_k^{-1}\mathbb{E}_R[\mu_{jk}(\cdot)]+O(\tau_{\max})$:
+\begin{equation}
+\frac{1}{\lambda_k}\frac{dV_k}{dx_l}=\mu_k^{-1}\!\left(-\rho^P\,\mathbb{E}_R\!\left[\mu_{jk}\mu_{jl}\,\frac{\partial\tau_{jl}}{\partial x_l}\right]+\mathbbm{1}\{k=l\}\,\rho^R\,\mathbb{E}_R\!\left[\mu_{jk}\,\frac{\partial\tau_{jk}}{\partial x_k}\right]\right)+O(\tau_{\max}),
+\end{equation}
+which is equation~\eqref{eq:sufficient-stat-formula} and proves Theorem~\ref{thm:sufficient-stat}.\qed
+
+\subsection{Proof of Fee Component Formulas}\label{subsec:fee-components}
+
+We derive the fee component decomposition by applying Theorem~\ref{thm:sufficient-stat} to specific counterfactual changes in the fee structure.
+We set $\rho^P=\rho^R=1$ throughout for simplicity in writing the expressions.
+The welfare effect of any fee change equals the size of the change multiplied by the derivative from Theorem~\ref{thm:sufficient-stat}, so it is enough to track the derivative for each component.
+
+\paragraph{Baseline Fees.}
+The baseline fee $\overline{\tau}_l$ shifts every interchange rate in~\eqref{eq:interchange-fee-model} by the same amount, so $\partial\tau_{jl}/\partial\overline{\tau}_l=1$ for all merchants.
+Applying Theorem~\ref{thm:sufficient-stat} and using $\mathbb{E}_R[\mu_{jk}]=\mu_k+O(\tau_{\max})$,
+\[
+A_{kl}\equiv\overline{\tau}_l\,\frac{1}{\lambda_k}\frac{dV_k}{d\overline{\tau}_l}=\overline{\tau}_l\,\mu_k^{-1}\!\left(-\mathbb{E}_R[\mu_{jk}\mu_{jl}]+\mathbbm{1}\{k=l\}\,\mu_k\right).
+\]
+
+\paragraph{Sector Adjustments.}
+Sector adjustments shift fees only for merchants in the relevant sector, so $\partial\tau_{jl}/\partial\tau_{sl}=\mathbbm{1}\{s_j=s\}$.
+Write $\omega_s=\sum_{s_j=s}\omega_j$ for sector $s$'s share of total revenue and $\mu_{sl}=\mathbb{E}_R[\mu_{jl}\mid s_j=s]$ for its average share on card $l$.
+The normalization $\sum_s\omega_s\mu_{sl}\tau_{sl}=0$ makes the reward term vanish, because
+\[
+\mathbb{E}_R[\mu_{jl}\,\tau_{s_j,l}]=\sum_s P_R(s_j=s)\,\mathbb{E}_R[\mu_{jl}\mid s_j=s]\,\tau_{sl}=0.
+\]
+Only the price (second-moment) term remains, and the total effect of sector adjustments is
+\[
+\sum_s\tau_{sl}\,\frac{1}{\lambda_k}\frac{dV_k}{d\tau_{sl}}=-\mu_k^{-1}\sum_s\tau_{sl}\,P_R(s_j=s)\,\mathbb{E}_R[\mu_{jk}\mu_{jl}\mid s_j=s].
+\]
+
+\paragraph{Negotiated Rates.}
+The negotiated discount $\delta_l$ shifts the fee only for large merchants, so $\partial\tau_{jl}/\partial\delta_l=b_j$, which equals one for large merchants and zero otherwise.
+Applying Theorem~\ref{thm:sufficient-stat},
+\[
+B_{kl}\equiv\delta_l\,\frac{1}{\lambda_k}\frac{dV_k}{d\delta_l}=\delta_l\,\mu_k^{-1}\,P_R(b_j=1)\!\left(-\mathbb{E}_R[\mu_{jk}\mu_{jl}\mid b_j=1]+\mathbbm{1}\{k=l\}\,\mathbb{E}_R[\mu_{jk}\mid b_j=1]\right).
+\]
+
+\end{document}

@@ -1,0 +1,115 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}\onehalfspacing
+\usepackage{amsmath,amssymb,hyperref}
+\usepackage{enumitem}
+\setlength{\parindent}{0pt}\setlength{\parskip}{0.5em}
+
+\begin{document}
+\title{Referee Report (Methods Focus)\\for ``Regulating Competing Payment Networks''}
+\author{}
+\date{}
+\maketitle
+
+\section{Summary of the Paper}
+
+This paper estimates a structural model of competition between payment networks operating as two-sided platforms. Consumers choose wallets of up to two payment cards, merchants choose which cards to accept and set uniform retail prices, and networks set merchant fees and consumer rewards. The model is estimated using three sources of identification: (1) the Durbin Amendment's effect on debit volumes identifies consumer price sensitivity; (2) grocery chain credit card adoption events identify the merchant sales effect of card acceptance; (3) a second-choice survey identifies consumer substitution patterns. Counterfactual simulations predict welfare effects of fee caps, Durbin repeal, network mergers, and dual-routing mandates.
+
+\section{Research Design Assessment}
+
+This is a structural estimation paper (Type D: theory applied to data). The identification strategy has three separate components, each with distinct assumptions and data sources. I assess each in turn.
+
+\textbf{Consumer reward sensitivity ($\alpha_0$): Durbin Amendment difference-in-differences.} The key identifying assumption is that large and small issuers would have followed parallel debit volume trends absent the Durbin Amendment. The event study in Figure 2 shows reasonably parallel pre-trends, though the pre-period is short (2 years). The paper models Durbin as a ``pure decline in rewards,'' acknowledging this is a simplification. The Durbin Amendment affected debit routing requirements, checking account fees, and bank marketing behavior beyond just rewards. If these other channels affected debit volumes, the estimated reward sensitivity conflates multiple effects.
+
+The control group of small issuers is imperfect, as the paper acknowledges in a footnote: small issuers may have been indirectly affected through competitive spillovers. The direction of bias is ambiguous---the paper argues attenuation, but if small issuers increased debit marketing to exploit large issuers' retreat, the control group volumes would be inflated, biasing the treatment effect toward zero.
+
+The paper uses only signature debit volumes (not total debit) due to data limitations, then applies the estimated sensitivity to all payment methods including credit cards. This extrapolation assumes that consumer sensitivity to rewards is symmetric across debit and credit and across signature and PIN debit.
+
+\textbf{Merchant sales effect ($\sigma$, $\gamma$ distribution): Grocery chain event studies.} The identification comes from ``multiple instances'' of grocery stores beginning or stopping credit card acceptance between 2015 and 2023. The paper uses a triple-difference design comparing credit card users vs.\ non-users, at treated vs.\ control merchants, before vs.\ after acceptance changes. The identifying assumption is that merchants do not differentially target credit card users relative to similar-income consumers.
+
+The critical concern is external validity. The paper acknowledges that ``98\% of all Homescan trips occur at stores with more than 5\% of sales paid by credit card,'' meaning the merchants that change acceptance are highly unusual. The event-study estimates come from a handful of grocery chains, yet they are used to parameterize the merchant type distribution for the entire economy. The paper states that ``the standard errors account for uncertainty in the event-study estimates but not for model error from extrapolating beyond the grocery sector.'' This is a major limitation that is acknowledged but not resolved.
+
+\textbf{Consumer substitution patterns ($\Sigma$, $\chi^{lm}$): Second-choice survey and Homescan moments.} The 2024 second-choice survey identifies the covariance matrix of random coefficients. Multi-homing patterns from Homescan 2017--2019 identify the wallet complementarity parameters. These identification arguments are standard and well-executed. The main concern is that the survey was conducted in 2024 for a model calibrated to 2019, raising questions about temporal stability of preferences.
+
+\textbf{Network costs: Inverted first-order conditions.} Network costs are recovered by inverting profit-maximizing first-order conditions, which assumes Nash-Bertrand conduct. If networks' actual conduct differs from Nash---for example, if there is tacit coordination on interchange (which the paper discusses as a possibility in the context of fee caps)---the recovered costs are biased and all counterfactuals that depend on them are unreliable. The paper provides no conduct test.
+
+\section{Robustness Evaluation}
+
+The paper presents several robustness checks, mostly in online appendices:
+
+\begin{itemize}[leftmargin=*]
+    \item Zero pass-through vs.\ full pass-through (binary comparison, no intermediate values)
+    \item Credit-constrained consumers (alternative interpretation of debit preference)
+    \item Halved Durbin effect (lower reward sensitivity)
+    \item Credit-debit substitution (relaxing segmentation, under restrictive alternative assumptions)
+    \item Durbin event study robustness (pre-trends, merger exclusions, asset cutoffs)
+\end{itemize}
+
+The robustness analysis is more extensive than many structural papers, but several important checks are missing:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{No systematic parameter sensitivity analysis.} The paper does not report how the headline welfare number (\$27 billion) changes as key parameters are varied within their confidence intervals. Given the large standard errors on some parameters (e.g., the retail margin estimate), the implied range of welfare effects could be very wide.
+    \item \textbf{No alternative functional forms.} CES demand, logit adoption, and Gamma merchant types are all assumed. No alternative is tested.
+    \item \textbf{No conduct test.} Nash-Bertrand is assumed. The paper does not test this against alternatives (e.g., collusion, Stackelberg).
+    \item \textbf{No out-of-sample validation of counterfactual predictions.} The AmEx OptBlue acceptance response is a useful validation exercise, but it tests merchant behavior, not welfare. The paper does not validate the welfare machinery against any external benchmark.
+    \item \textbf{Pass-through is not estimated.} The full vs.\ zero comparison is too coarse. The welfare effect ranges from \$27 billion to roughly \$18 billion between these extremes (one-third smaller under zero pass-through), a 33\% range that should be filled in with intermediate values.
+\end{itemize}
+
+\section{Deal Breakers}
+
+\textit{Issues that prevent publication in current form:}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Merchant type distribution estimated from a non-representative sample with no external validation of the extrapolation}
+
+    The entire merchant side of the model is parameterized from grocery chain event studies---a handful of stores that changed credit card acceptance in a market where 98\% of stores already accept credit cards. The paper explicitly acknowledges that ``restaurants, e-commerce, and service providers face different customer mixes and transaction sizes, and the data contain no comparable natural experiments outside grocery.'' Yet the estimated Gamma distribution governs merchant acceptance, pricing, and welfare for all sectors.
+
+    The paper validates the merchant parameter estimates against the AmEx OptBlue acceptance response (an out-of-sample prediction), which is helpful. But the OptBlue validation tests whether the \emph{marginal} merchant type is correctly placed, not whether the entire distribution is correct. The welfare calculations depend on the shape of the distribution away from the margin---specifically, on how many merchants would change acceptance under counterfactual fee levels. These merchants are inframarginal in the data, so the Gamma parametric assumption is doing heavy lifting with no validation.
+
+    The estimated retail margin of 17.1\% is below the 18\% breakeven threshold discussed in the paper and is within one standard error of it. This means the model's prediction about whether merchants benefit or lose from fee caps is essentially on a knife edge.
+
+    \textbf{Why this affects publishability:} The paper makes precise quantitative claims (\$27 billion, \$15 billion, \$8 billion) about policies that redistribute between merchants and consumers. These claims require a credible merchant type distribution, which is calibrated from a tiny, non-representative sample and extrapolated to the entire economy using a two-parameter parametric assumption. The standard errors do not reflect this model uncertainty.
+
+    \item \textbf{Consumer reward sensitivity is identified from a single policy shock under contestable exclusion restrictions}
+
+    The entire consumer side of the model is anchored by $\alpha_0$, estimated from the Durbin Amendment's effect on signature debit volumes. This is a single difference-in-differences estimate from a single policy event, and the paper models the shock as a ``pure decline in rewards.'' But the Durbin Amendment changed debit routing requirements, prompted banks to raise checking account fees, altered bank teller incentives, and affected advertising. If any of these channels affected debit volumes independently of rewards, the estimated $\alpha_0$ is biased.
+
+    The paper's robustness check halves the Durbin effect and shows qualitative results are preserved. But this is an ad hoc sensitivity exercise, not identification. The halved estimate still uses the same event and the same functional form---it just rescales the point estimate.
+
+    The estimated $\alpha_0$ is then applied to credit cards, debit cards, and cash, under the assumption that reward sensitivity is homogeneous across payment instruments. This is a strong assumption: a consumer's response to losing debit rewards may differ fundamentally from her response to losing credit card rewards, because credit cards bundle rewards with credit access, fraud protection, and purchase protection in ways that debit cards do not.
+
+    \textbf{Why this affects publishability:} The headline welfare results are approximately proportional to $\alpha_0$: higher reward sensitivity means more credit card switching under fee caps, which means larger welfare gains. The entire welfare analysis is therefore anchored to a single, potentially contaminated natural experiment. A top journal paper should either provide additional sources of identification for this parameter or demonstrate that the welfare results are robust to a wide range of $\alpha_0$ values calibrated from external evidence.
+
+    \item \textbf{Credit-debit segmentation assumption is strong, acknowledged as ``at odds with intuition,'' and the alternative specification requires equally restrictive assumptions}
+
+    The baseline model assumes that consumers who prefer credit never substitute to debit at the point of sale if their credit card is declined. The paper acknowledges this is ``at odds with the intuition that debit is a closer substitute to credit than cash.'' The alternative specification in the online appendix relaxes segmentation but imposes that debit generates no incremental sales relative to cash and that the cost of cash equals the debit merchant fee.
+
+    Both specifications are restrictive and neither can be tested directly with the available data. The paper argues that stable credit acceptance after the Durbin Amendment rejects a combined specification with both debit sales gains and free substitution, but this test has limited power: credit acceptance may have been stable for reasons unrelated to debit-credit substitution (e.g., long-term contracts, switching costs, reputational concerns).
+
+    This assumption matters for the welfare analysis because it determines how much credit card usage would decline under fee caps. Under segmentation, credit-preferring consumers switch to cash, not debit. Under free substitution, they switch to debit. The welfare implications differ because debit and cash have different social costs.
+
+    \textbf{Why this affects publishability:} A core modeling assumption that the author describes as counterintuitive should be validated with direct evidence, not defended by the failure of a specific alternative. When both the baseline and the alternative require strong, untestable assumptions, the reader is left choosing between two uncomfortable specifications with no empirical basis for the choice.
+
+\end{enumerate}
+
+\section{Other Issues}
+
+\textit{Issues that would improve the paper but are not blocking:}
+
+\begin{itemize}[leftmargin=*]
+    \item The static model ignores dynamic considerations that may matter for welfare analysis. Network investment in fraud prevention, security infrastructure, and innovation are funded in part by merchant fees. Fee caps that reduce network revenue could have dynamic welfare costs not captured by the model.
+
+    \item The model combines issuers, acquirers, and networks into a single entity. The justification (joint profit maximization, citing the DOJ lawsuit against Visa) is plausible but not tested. If double marginalization exists, the effective marginal cost estimates are inflated and the welfare gains from fee caps are overstated.
+
+    \item The Poisson regression for the merchant event study is appropriate for count-like outcomes, but the standard errors are clustered only at the household level. Given that the treatment varies at the retailer-event level, clustering at the retailer or retailer-event level may be more appropriate. The number of treated retailers is small, raising concerns about finite-cluster inference.
+
+    \item The second-choice survey was conducted in 2024 for a model calibrated to 2019. Payment preferences have shifted substantially since COVID-19, with contactless and digital payments gaining share. The temporal mismatch could bias the substitution estimates.
+
+    \item The paper's welfare measure does not account for the value of credit access. Some consumers use credit cards not for rewards but because they need to smooth consumption. Fee caps that reduce credit card availability could have welfare costs for liquidity-constrained consumers that the model does not capture.
+
+    \item The ``trembles'' equilibrium selection mechanism ($\nu_x = 10^{-4}$) is not standard in the literature. The paper should demonstrate that results are robust to alternative values of $\nu_x$ or alternative selection mechanisms.
+
+    \item The paper does not discuss the political economy of fee regulation. The Durbin Amendment's implementation reveals that regulated fee levels can become focal points and that industry responds strategically to regulation. The counterfactual analysis assumes networks respond as Nash competitors to exogenous fee caps, which may be optimistic.
+\end{itemize}
+
+\end{document}

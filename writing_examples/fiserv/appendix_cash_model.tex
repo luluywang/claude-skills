@@ -1,0 +1,203 @@
+\documentclass[main.tex]{subfiles}
+
+\begin{document}
+
+\section{Cash Extrapolation Model: From Clover to Settlement}
+\label{sec:appendix-cash-model}
+
+The Clover dataset sheds light on the distribution of cash usage across merchants, which is not directly observable in the settlement dataset.
+However, Clover merchants are not representative of the composition of the broader economy.
+We therefore build a model to extrapolate cash usage from Clover to the broader settlement sample.
+This section details the modeling approach, estimation results, and validation exercises.
+
+\subsection{Overview}
+
+We use a two-part model to extrapolate cash usage from Clover to the broader settlement sample.
+
+\begin{enumerate}
+    \item A logistic regression for the probability that the share of cash transactions at a merchant exceeds 2\% (extensive margin).
+    \item A linear regression for the log of the conditional cash share among merchants with greater than 2\% share (intensive margin).
+\end{enumerate}
+We use a two-stage model because the distribution of cash use in Clover data has a large mass point at zero and is highly skewed among positive values.
+
+An important motivation for using the regression model is that Clover merchants are very different from the merchants in the broader Fiserv settlement sample.
+They are much smaller and much more likely to be in the restaurant and retail sectors.
+Thus, we cannot simply take the average cash share in Clover and apply it to the settlement data.
+Instead, we need to model how cash usage varies with observable merchant characteristics and then use that model to predict cash usage in the settlement data.
+
+\subsection{Methodology and Results of Cash Prediction Model}
+
+We find that our two-stage approach effectively captures the variation in cash usage across merchants in the Clover data.
+The resulting model matches key features of the distribution of cash use in the Clover data and is consistent with several pieces of external evidence.
+
+\subsubsection{Model Specification and Estimation Results}
+
+We estimate both parts of the cash extrapolation model on the Clover sample.
+The key predictors in both stages include the average ticket size of card transactions, merchant-level share of online transactions, firm size, sector fixed effects, and local demographic controls.
+The strongest predictors of cash usage are average ticket size, e-commerce participation, firm size, and the share of card transactions on debit cards.
+The model also includes demographic controls (population density, median household income, education, age, race/ethnicity) and industry fixed effects.
+
+\paragraph{Ticket Size.} Higher ticket sizes are strongly associated with lower cash usage on both margins. Figures~\ref{fig:cash_prob_ticket} and \ref{fig:cash_condl_ticket} illustrate this univariate relationship in the Clover data: cash usage declines sharply as average ticket size increases.
+
+\paragraph{E-commerce Status.} E-commerce merchants have substantially lower cash usage, as expected. Figures~\ref{fig:cash_prob_ecomm} and \ref{fig:cash_condl_ecomm} show the difference in cash usage on the extensive and intensive margins, respectively, between brick-and-mortar and e-commerce merchants.
+
+\paragraph{Firm Size.} Larger firms tend to have higher probability of accepting cash but lower conditional cash shares. Figures~\ref{fig:cash_prob_size} and \ref{fig:cash_condl_size} display how the extensive and intensive margins of cash usage vary with firm size.
+
+\paragraph{Debit Share.} For most of the sample, higher debit share is associated with higher cash usage on both margins. This is intuitive given that debit cards are a closer substitute for cash than they are for credit cards. This pattern attenuates at very high debit shares (above roughly 80\%). This non-linear relationship is captured by including both debit share and its square in the regression. Figures~\ref{fig:cash_prob_debit} and \ref{fig:cash_condl_debit} illustrate this relationship.
+
+\begin{figure}[ht]
+    \centering
+    \caption{Probability of Positive Cash by Merchant Characteristics (Extensive Margin)}
+    \label{fig:cash_extensive}
+
+    % Row 1
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../fiserv_output/graphs/clover_cash_prob_pos_ticket.pdf}
+        \caption{By Average Ticket Size}
+        \label{fig:cash_prob_ticket}
+    \end{subfigure}\hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../fiserv_output/graphs/clover_cash_prob_pos_ecomm.pdf}
+        \caption{By E-commerce Status}
+        \label{fig:cash_prob_ecomm}
+    \end{subfigure}
+
+    \vspace{0.6em}
+
+    % Row 2
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../fiserv_output/graphs/clover_cash_prob_pos_size.pdf}
+        \caption{By Firm Size}
+        \label{fig:cash_prob_size}
+    \end{subfigure}\hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../fiserv_output/graphs/clover_cash_prob_pos.pdf}
+        \caption{By Debit Share}
+        \label{fig:cash_prob_debit}
+    \end{subfigure}
+
+    \captionnotes{\textit{Notes:} Figure shows the probability that a merchant has more than 2\% of transactions in cash, by merchant characteristics in the Clover data. Panel (a): Higher ticket sizes are associated with lower probability of cash usage. Panel (b): E-commerce merchants are less likely to have positive cash usage. Panel (c): Larger firms are more likely to accept cash. Panel (d): Higher debit share is generally associated with higher probability of cash usage.}
+\end{figure}
+
+\begin{figure}[ht]
+    \centering
+    \caption{Conditional Cash Share by Merchant Characteristics (Intensive Margin)}
+    \label{fig:cash_intensive}
+
+    % Row 1
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../fiserv_output/graphs/clover_cash_condl_share_ticket.pdf}
+        \caption{By Average Ticket Size}
+        \label{fig:cash_condl_ticket}
+    \end{subfigure}\hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../fiserv_output/graphs/clover_cash_condl_share_ecomm.pdf}
+        \caption{By E-commerce Status}
+        \label{fig:cash_condl_ecomm}
+    \end{subfigure}
+
+    \vspace{0.6em}
+
+    % Row 2
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../fiserv_output/graphs/clover_cash_condl_share_size.pdf}
+        \caption{By Firm Size}
+        \label{fig:cash_condl_size}
+    \end{subfigure}\hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../fiserv_output/graphs/clover_cash_condl_share.pdf}
+        \caption{By Debit Share}
+        \label{fig:cash_condl_debit}
+    \end{subfigure}
+
+    \captionnotes{\textit{Notes:} Figure shows the conditional cash share among merchants with more than 2\% cash usage in the Clover data, by merchant characteristics. Panel (a): Higher ticket sizes are associated with lower cash usage. Panel (b): E-commerce merchants have substantially lower cash usage than brick-and-mortar merchants. Panel (c): Larger firms tend to have lower conditional cash shares. Panel (d): Higher debit share is generally associated with higher cash usage.}
+\end{figure}
+
+\subsubsection{Model Performance}
+
+The model does an adequate job of predicting both the extensive and intensive margin of cash use.
+The extensive margin model achieves an AUC of 0.82, indicating good discriminative ability in predicting which merchants have more than 2\% of their transactions on cash.
+
+% The model correctly classifies 76\% of merchants overall, with 63\% sensitivity (true positive rate) and 83\% specificity (true negative rate). 
+The intensive margin model achieves a correlation of 0.52 between predicted and actual log conditional cash shares.
+Figure~\ref{fig:condl_distribution_fit} shows the fit of the predicted conditional cash share distribution to the actual distribution in the Clover data, validating that the model captures the relevant conditional means of cash usage.
+
+\begin{figure}[ht]
+    \centering
+    \caption{Conditional Cash Share: Model Fit vs.\ Actual Distribution}
+    \label{fig:condl_distribution_fit}
+
+    \includegraphics[width=0.7\textwidth]{../fiserv_output/graphs/clover_condl_distribution_fit.pdf}
+
+    \captionnotes{\textit{Notes:} Figure compares the predicted conditional cash share distribution from the model to the actual distribution in the Clover data. The figure validates that the model captures the relevant conditional means of cash usage across merchants.}
+\end{figure}
+
+\subsubsection{Aggregate Validation against Nilson Reports and Homescan Data}
+
+Our sufficient-statistics approach relies on accurately estimating the second moments of payment shares across merchants.
+Therefore, it is important that our cash extrapolation model accurately captures the overall level of cash usage in the economy and its variation across merchants.
+After we fit the cash prediction model on the Clover data, we apply it to the settlement data to predict cash usage across the settlement data. When extrapolating to the settlement data, we cap the log card sales variable at the 99th percentile of the Clover distribution to avoid extreme extrapolations along the firm size dimension.
+
+We find that our model accurately recovers both the overall level of cash usage and its variation across merchants in the settlement data.
+According to the 2022 Nilson Report, the average use of cash in retail transactions is around 10\% \citep{Nilson2023a}.
+Our model predicts an average cash share of 10\% across the settlement data, closely matching the Nilson benchmark.
+Appendix E of \citet{Wang2025} reports the distribution of cash share across Homescan merchants, and finds a standard deviation of approximately 8-10 percentage points.
+Our model predicts a standard deviation of 9 percentage points across the settlement data, again closely matching the Homescan benchmark.
+
+% \subsection{Evidence Supporting the Assumption of a Stable Mapping Between Characteristics and Payment Composition}
+
+% This section compares credit card usage in the Clover data and in the settlement data to support the use of Clover as an appropriate benchmark for the settlement data when studying payment composition. Although the two datasets differ in coverage and merchant identity, they exhibit similar relationships between payment mix and transaction size.
+
+% % In our sufficient-statistics framework, redistribution depends on second moments of payment shares---specifically, the degree of overlap between users of different payment methods at different merchants. Accurately estimating these moments requires observing consumer payment composition across the relevant parts of the merchant distribution. Clover provides information on cash, regulated debit, exempt debit, and card usage at the merchant level. The Settlement data corroborate that Clover's patterns remain valid among the large firms that dominate consumer spending and therefore dominate the aggregate redistribution calculation.
+
+% To assess the representativeness of the Clover data, we compare the correlation between the share of transactions on credit cards and the average ticket size of card transactions in both datasets. Our sample includes all Clover merchants and only large firms in the settlement data (those with total sales $\geq$ \$10,000,000). This focuses the comparison on the upper tail of the firm-size distribution, reducing concerns that similarities might be driven mechanically by firms that appear in both datasets.
+
+% The average credit share of card payments is very similar across the two datasets: 0.48 in Clover and 0.49 in the settlement data. Average card ticket sizes differ more in levels, with Clover at \$297 versus \$413 in the settlement data.
+
+% The relationship between credit intensity and ticket size is very similar in Clover and in the settlement data, indicating that both datasets capture that larger ticket sizes are associated with higher credit shares. This is precisely the relationship that matters for how interchange fees translate into redistribution through payment choices. Figure \ref{fig:binscatter_bigsett} illustrates this relationship.
+
+% \begin{figure}[ht]
+%     \centering
+%     \caption{Credit Share vs.\ Log(Card Ticket), Clover vs.\ Large Settlement Firms}
+%     \label{fig:binscatter_bigsett}
+
+%     \includegraphics[width=0.7\textwidth]{../fiserv_output/graphs/clover_bigsett_credit_ticket_share.pdf}
+
+%     \captionnotes{\textit{Notes:} Figure compares the relationship between credit card share and average card ticket size in Clover merchants versus large firms in the settlement data (those with total sales $\geq$ \$10,000,000). Both datasets show that larger ticket sizes are associated with higher credit shares.}
+% \end{figure}
+
+% To check whether the composition of card payments is similar across Clover and the broader settlement data, we compare average payment patterns for across sectors. Figure \ref{fig:sector_shares_bigsett} displays the payment method shares by sector. Overall, the distribution of payment methods is similar across the two datasets. The main visible difference is in the travel sector, where the settlement data exhibit a higher share of credit card usage than Clover.
+
+% \begin{figure}[ht]
+%     \centering
+%     \caption{Shares of Credit, Debit, and Cash by Sector: Clover vs.\ Settlement}
+%     \label{fig:sector_shares_bigsett}
+
+%     \includegraphics[width=0.8\textwidth]{../fiserv_output/graphs/clover_bigsett_shares.pdf}
+
+%     \captionnotes{\textit{Notes:} Figure compares payment method shares (credit, debit, and cash) by sector across Clover merchants and large firms in the settlement data. The distribution of payment methods is broadly similar across the two datasets. The main visible difference is in the travel sector, where the settlement data exhibit a higher share of credit card usage than Clover.}
+% \end{figure}
+
+% Average card ticket sizes are also broadly similar across datasets within sectors. The most noticeable discrepancy again arises in travel, where ticket sizes differ more between Clover and settlement. For the remaining major sectors, the average card ticket is closely aligned across the two data sources. Figure \ref{fig:sector_card_ticket_bigsett} shows the average card ticket by sector.
+
+% \begin{figure}[ht]
+%     \centering
+%     \caption{Average Card Ticket Size by Sector: Clover vs.\ Large Settlement Firms}
+%     \label{fig:sector_card_ticket_bigsett}
+
+%     \includegraphics[width=0.8\textwidth]{../fiserv_output/graphs/clover_bigsett_card_ticket.pdf}
+
+%     \captionnotes{\textit{Notes:} Figure compares average card ticket sizes by sector across Clover merchants and large firms in the settlement data. Ticket sizes are broadly similar within sectors, with the most noticeable discrepancy in travel where ticket sizes differ more between the two data sources.}
+% \end{figure}
+
+% Clover and settlement data sources are therefore broadly consistent along the main dimensions that matter for our redistribution analysis. In particular, both datasets show similar relationships between credit intensity and ticket size, and similar payment patterns across the major sectors that account for most consumer spending. 
+
+\end{document}

@@ -1,0 +1,265 @@
+\documentclass[main.tex]{subfiles}
+
+\begin{document}
+
+\begin{figure}[H]
+\caption{Illustration of Payment Flows\label{fig:payment-flow}}
+\small
+
+\[
+\xymatrix{ & *+++++[F:<5pt>]{\text{Network}}\\*
+++++[F:<5pt>]{\text{Acquirer}}\ar@(u,l)[ru]_{0.07}^{\text{Assessment\ }}\ar[rr]_{1.90}^{\text{Interchange}} & & *+++++[F:<5pt>]{\text{Issuer}}\ar@(u,r)[lu]_{\text{\ Assessment}}^{0.07}\ar[d]_{\text{Rewards}}^{1.40}\\* +++++[F:<5pt>]{\text{Merchant}}\ar[u]_{2.25}^{\text{Merchant Discount}} & & *+++++[F:<5pt>]{\text{Consumer}}\ar[ll]_{\text{Purchase}}^{100} }
+\]
+
+\captionnotes{\textit{Notes:} Figure \ref{fig:payment-flow} displays average fee levels for a credit card transaction in the U.S., showing how fees flow through the payment system. Merchant fees come from \citet{Nilson2023}. Interchange fees and rewards are calculated from regulatory data on large banks \citep{Drechsler.etal2025}. Network fees are obtained from acquirer disclosures and Visa's financial statements \citep{Visa2020,Helcim2021}.}
+
+\end{figure}
+
+\clearpage{}
+\begin{figure}[H]
+  \centering
+  \caption{Heterogeneity in the Payment Mix Across Merchants}
+  \label{fig:pmt_merchant}
+
+  % Row 1
+  \begin{subfigure}[t]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../fiserv_output/graphs/clover_cash_condl_share_hist.pdf}
+    \caption{Cash Share}
+    \label{fig:cash_share}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../fiserv_output/graphs/clover_cash_share_ts.pdf}
+    \caption{Cash Share over Time}
+    \label{fig:cash_share_ts}
+  \end{subfigure}
+
+  % Row 2
+  \vspace{0.6em}
+  \begin{subfigure}[t]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../fiserv_output/graphs/merchant_cs_credit_share.pdf}
+    \caption{Credit Card Share of Card Payments}
+    \label{fig:credit_share}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../fiserv_output/graphs/credit_share_over_time_annual_sem.pdf}
+    \caption{Credit Card Share over Time}
+    \label{fig:credit_share_ts}
+  \end{subfigure}
+
+  \captionnotes{\textit{Notes:} Panel (a) shows the distribution of cash and check share across merchants in the Clover sample, conditional on at least 2\% cash/check payments; note that two-thirds of merchant-year observations have $\leq$ 2\% cash (nearly all record 0\%), and are excluded from the plot (equally weighted, merchant-year level). Panel (b) displays the dollar-weighted average cash share over time, computed annually. Panel (c) shows the distribution of credit card share of total card transactions in 2022 for merchants with more than \sizecutoff\ in annual card sales in the broader settlement data. Panel (d) displays the dollar-weighted average credit card share over time, excluding large retailers (grocery/retail >\$1 billion) to avoid entry/exit effects on trends.}
+
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \caption{Payment Composition Across and Within Sectors}
+  \label{fig:pmt_sectors}
+
+  \begin{subfigure}[t]{0.80\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../fiserv_output/graphs/payment_share_cash_sector.pdf}
+    \caption{Payment Mix Across Sectors}
+    \label{fig:pmt_sectors_across}
+  \end{subfigure}
+
+  \vspace{0.6em}
+
+  \begin{subfigure}[t]{0.80\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../fiserv_output/graphs/merchant_cs_credit_share_by_sector.pdf}
+    \caption{Credit Card Share Within Sectors}
+    \label{fig:sector_densities}
+  \end{subfigure}
+
+  \captionnotes{\textit{Notes:} Panel (a) shows the dollar share of cash, debit, and credit card transactions across major merchant sectors in the Clover merchant data spanning 2019--2022. Panel (b) shows the distribution of credit card share of total card transactions across merchants in the settlement data in 2022, separately by merchant sector, restricted to merchants with more than \sizecutoff\ in annual card sales.}
+
+\end{figure}
+
+\clearpage{}
+\begin{figure}[H]
+  \centering
+  \caption{Payment Choice and Income}
+  \label{fig:payment_income}
+
+    \includegraphics[width=0.9\linewidth]{../output/graphs/payment_income.pdf}
+
+  \captionsetup{font=small}
+  \captionnotes{\textit{Notes:} Figure \ref{fig:payment_income} shows the share of consumers preferring each payment method---cash, regulated debit, exempt debit, basic credit, and premium credit---by household income bin. Payment preferences are from the DCPC (2022--2023), which records consumers' preferred in-person payment method. The split into regulated versus exempt debit and basic versus premium credit uses card ownership data from the MRI-Simmons survey (2022). Shares are re-weighted within each income bin to match aggregate payment method shares in the settlement data.}
+\end{figure}
+
+\clearpage{}
+
+\begin{figure}[H]
+\centering
+
+\caption{Distribution of Average Transaction Fees (Excluding Cash)} \label{fig:interchange_dist_card}
+
+\includegraphics[width=5in]{../fiserv_output/graphs/merchant_cs_avg_interchange.pdf}
+
+\captionnotes{\textit{Notes:} Figure \ref{fig:interchange_dist_card} shows the distribution of average interchange fees per dollar of card sales across merchants. The sample covers merchants in 2022 with more than \sizecutoff in card sales.}
+
+\end{figure}
+
+\clearpage{}
+
+\begin{figure}[H]
+  \centering
+  \caption{Variation in Interchange Fees by Card Type, Merchant Sector, and Size}
+  \label{fig:price-disc}
+
+  % Row 1
+  \begin{subfigure}[t]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../fiserv_output/graphs/disc_card_type.pdf}
+    \caption{Interchange Fees by Card Type}
+    \label{fig:price-disc-card}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../fiserv_output/graphs/disc_sector.pdf}
+    \caption{Interchange Fees by Sector}
+    \label{fig:price-disc-merch}
+  \end{subfigure}
+
+  % Row 2
+  \vspace{0.6em}
+  \begin{subfigure}[t]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../fiserv_output/graphs/disc_negotiated.pdf}
+    \caption{Interchange Fees by Merchant Size}
+    \label{fig:price-disc-size}
+  \end{subfigure}
+
+  \captionsetup{font=small}
+  \captionnotes{\textit{Notes:} Panel (a) shows dollar-weighted interchange fees by card type in 2022 for merchants with less than \$1 billion in annual card sales. Regulated debit: cards from banks with >\$10 billion assets. Exempt debit: cards from smaller banks. Premium credit: Visa Signature/Infinite and Mastercard equivalents. Basic credit: all other credit products. Panel (b) shows average interchange fees across merchant sectors for credit and exempt debit cards (excluding firms that receive volume discounts). Panel (c) shows evidence of volume discounts by plotting average interchange fees by merchant size in the grocery and merchandise sectors, including both large merchants (with volume discounts) and smaller merchants (size = total card sales across all merchant establishments).}
+
+\end{figure}
+
+\clearpage{}
+
+\begin{figure}[H]
+  \centering
+  \caption{Interchange Fees by Instrument}
+  \label{fig:interchange_dist}
+
+  % Row 1
+  \begin{subfigure}[t]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../fiserv_output/graphs/merchant_cs_icg_distn_by_type.pdf}
+    \caption{Distribution of Fees by Instrument}
+    \label{fig:interchange_by_pmt}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../fiserv_output/graphs/debit_credit_icg_rate_annual_sem.pdf}
+    \caption{Average Debit and Credit Fees over Time}
+    \label{fig:interchange_ts}
+  \end{subfigure}
+
+  % Row 2
+  \vspace{0.6em}
+  \begin{subfigure}[t]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../fiserv_output/graphs/debit_icg_annual_sem.pdf}
+    \caption{Debit Card Fees over Time}
+    \label{fig:interchange_debit_ts}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../fiserv_output/graphs/credit_icg_annual_sem.pdf}
+    \caption{Credit Card Fees over Time}
+    \label{fig:interchange_credit_ts}
+  \end{subfigure}
+
+  \captionsetup{font=small}
+  \captionnotes{\textit{Notes:} Panel (a) shows kernel density plots of average interchange fees by card type in 2022 for merchants with >\sizecutoff in sales: regulated debit (solid blue), exempt debit (dotted red), basic credit (dashed green), and premium credit (peaked orange). Panel (b) shows dollar-weighted average interchange fees over time for debit and credit cards combined. Panel (c) shows dollar-weighted debit fees by type over time; the \textit{Regulated} line reflects the Durbin Amendment cap implemented in 2011. Panel (d) shows dollar-weighted credit fees by type over time with premium cards earning higher fees. All time series exclude large retailers (merchandise/retail >\$1 billion) to eliminate entry/exit effects.}
+
+\end{figure}
+
+\clearpage{}
+
+\begin{figure}[H]
+  \centering
+  \caption{Composition of Card Payments}
+  \label{fig:card_type_ts}
+
+  \begin{subfigure}[t]{0.7\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../fiserv_output/graphs/debit_reg_share_over_time_annual_sem.pdf}
+    \caption{Share of Debit that is Regulated}
+    \label{fig:regulated_debit_ts}
+  \end{subfigure}
+
+  \vspace{0.6em}
+
+  \begin{subfigure}[t]{0.7\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../fiserv_output/graphs/premium_share_over_time_annual_sem.pdf}
+    \caption{Share of Credit that is Premium}
+    \label{fig:premium_credit_ts}
+  \end{subfigure}
+
+  \captionsetup{font=small}
+  \captionnotes{\textit{Notes:} Data source: Fiserv settlement data. Panel (a) shows the dollar-weighted share of debit card transactions that receive capped interchange rates under the Durbin Amendment over time. Panel (b) shows the dollar-weighted share of credit card transactions that are premium tier, over time. Both time series exclude large retailers (merchandise/retail >\$1 billion) to avoid entry/exit effects on trends.}
+
+\end{figure}
+
+\clearpage{}
+
+\begin{figure}[H]
+\centering
+\caption{Variation in Merchant Interchange Fees Explained by Different Factors}
+\label{fig:interchange_decomp}
+
+\includegraphics[width=6in]{../fiserv_output/graphs/merchant_cs_icg_explained.pdf}
+
+\captionnotes{\textit{Notes:} Figure \ref{fig:interchange_decomp} shows the distribution of average interchange fees across merchants (solid blue) and the distribution of predicted fees from progressively richer models. The dashed red line predicts fees from each merchant's card type composition alone (regulated debit, exempt debit, basic credit, premium credit). The dashed green line adds merchant sector. The dashed orange line further adds firm characteristics, including merchant size and average transaction size.}
+
+\end{figure}
+
+
+\begin{figure}[H]
+\caption{Who Pays and Receives Rewards}
+\label{fig:scatter_interchange}
+\centering
+\small
+\includegraphics[width=5in]{../output/graphs/share_scatter_C_all_with_transfer.pdf}
+\captionnotes{\textit{Notes:} Figure \ref{fig:scatter_interchange} shows the share of interchange fees paid and rewards received by consumers across different payment methods (cash, regulated debit, exempt debit, basic credit, premium credit). The figure incorporates merchant heterogeneity in both payment composition and interchange fees and assumes all merchants pass through interchange fees into prices on a one-to-one basis.}
+\end{figure}
+
+\clearpage{}
+\begin{figure}[H]
+  \centering
+  \caption{Redistribution Across Household Income}
+  \label{fig:redistribution}
+
+  \begin{subfigure}[t]{0.9\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../output/graphs/cap_bps.pdf}
+    \caption{Effects of Current Interchange Fees vs Zero Interchange}
+    \label{fig:redistribution_interchange}
+  \end{subfigure}
+
+  \begin{subfigure}[t]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../output/graphs/durbin_bps.pdf}
+    \caption{Durbin Amendment}
+    \label{fig:redistribution_durbin}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../output/graphs/premiumization_bps.pdf}
+    \caption{Rise of Premium Credit Cards}
+    \label{fig:redistribution_premiumization}
+  \end{subfigure}
+
+  \captionsetup{font=small}
+\captionnotes{\textit{Notes:} Each panel shows the net transfer to households from a specific feature of the interchange system, measured as basis points of consumption. Panel (a): current interchange fees vs.\ zero interchange. Panel (b): the Durbin Amendment vs.\ pre-regulation debit interchange fees. Panel (c): current premium credit card interchange fees vs.\ basic credit card interchange fees.}
+
+\end{figure}
+
+\end{document}

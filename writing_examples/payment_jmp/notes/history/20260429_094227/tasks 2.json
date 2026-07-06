@@ -1,0 +1,28 @@
+{
+  "created": "2026-04-28T00:00:00Z",
+  "llm_tagging": false,
+  "tasks": [
+    {"id": 1, "file": "intro.tex", "task": "grammar", "model": "haiku", "status": "pending"},
+    {"id": 2, "file": "institutional_details.tex", "task": "grammar", "model": "haiku", "status": "pending"},
+    {"id": 3, "file": "data.tex", "task": "grammar", "model": "haiku", "status": "pending"},
+    {"id": 4, "file": "reducedform.tex", "task": "grammar", "model": "haiku", "status": "pending"},
+    {"id": 5, "file": "model.tex", "task": "grammar", "model": "haiku", "status": "pending"},
+    {"id": 6, "file": "estimation.tex", "task": "grammar", "model": "haiku", "status": "pending"},
+    {"id": 7, "file": "counterfactuals.tex", "task": "grammar", "model": "haiku", "status": "pending"},
+    {"id": 8, "file": "conclusion.tex", "task": "grammar", "model": "haiku", "status": "pending"},
+    {"id": 9, "file": "appendix_data.tex", "task": "grammar", "model": "haiku", "status": "pending"},
+    {"id": 10, "file": "appendix_model.tex", "task": "grammar", "model": "haiku", "status": "pending"},
+    {"id": 11, "file": "appendix_estimation.tex", "task": "grammar", "model": "haiku", "status": "pending"},
+    {"id": 12, "file": "appendix_tables.tex", "task": "grammar", "model": "haiku", "status": "pending"},
+    {"id": 13, "file": "appendix_figures.tex", "task": "grammar", "model": "haiku", "status": "pending"},
+    {"id": 14, "file": "appendix_data_oa.tex", "task": "grammar", "model": "haiku", "status": "pending"},
+    {"id": 15, "file": "appendix_reduced.tex", "task": "grammar", "model": "haiku", "status": "pending"},
+    {"id": 16, "file": "appendix_model_oa.tex", "task": "grammar", "model": "haiku", "status": "pending"},
+    {"id": 17, "file": "appendix_credit_debit.tex", "task": "grammar", "model": "haiku", "status": "pending"},
+    {"id": 18, "file": "appendix_robustness.tex", "task": "grammar", "model": "haiku", "status": "pending"},
+    {"id": 19, "file": "appendix_surcharging.tex", "task": "grammar", "model": "haiku", "status": "pending"},
+    {"id": 20, "file": "appendix_sorting.tex", "task": "grammar", "model": "haiku", "status": "pending"},
+    {"id": 21, "file": "response_round2.tex", "task": "grammar", "model": "haiku", "status": "pending"},
+    {"id": 22, "file": "main.tex", "task": "grammar", "model": "haiku", "status": "pending"}
+  ]
+}

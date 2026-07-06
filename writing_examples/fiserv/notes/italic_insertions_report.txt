@@ -1,0 +1,376 @@
+==========================================================================================
+SECTION A: TRACKED INSERTIONS (w:ins) CONTAINING ITALIC TEXT
+==========================================================================================
+
+#1  [ins ID=3]  Amit Seru  2026-03-22T09:21:00Z
+  ALL ITALIC: "Consistent with merchants raising prices in response to these costs, users of low-cost payment methods (e.g., cash and debit) cross-subsidize high-reward credit card users who shop at the same merchant."
+
+#2  [ins ID=10]  Amit Seru  2026-03-22T09:14:00Z
+  ALL ITALIC: "This standard mechanism implicitly assumes that consumers using different payment methods shop at the same merchants and that merchants face similar fees.  We show instead that incidence depends on the joint distribution of payment choices across merchants."
+
+#3  [ins ID=17]  Amit Seru  2026-03-22T09:21:00Z
+  ALL ITALIC: "We document two key forces that shape this distribution."
+
+#4  [ins ID=18]  Amit Seru  2026-03-22T09:15:00Z
+  ALL ITALIC: "First, consumer sorting—where consumers who use different payment methods shop at different merchants—limits the exposure of cash and debit users to high interchange fees. Second, interchange fees vary across merchants: where users overlap, such as at large grocery stores, fees are lower due to sector discounts and private negotiations. We embed these forces in a sufficient-statistics framework that maps observed heterogeneity directly into redistribution."
+
+#5  [ins ID=21]  Amit Seru  2026-03-22T09:16:00Z
+  ALL ITALIC: "We estimate that interchange fees transfer approximately $30 billion annually from cash and debit users to credit card users. Consumer sorting and fee heterogeneity reduce regressivity by 25%, but do not eliminate it. Finally, we show that both the Durbin Amendment and the rise of premium credit cards have been regressive, highlighting how policy and innovation reshape the incidence of platform fees."
+
+#6  [ins ID=116]  Amit Seru  2026-03-22T08:57:00Z
+  MIXED formatting:
+    [plain] ","
+    [ITALIC] "implying that incidence cannot be characterized using representative consumers or average fees."
+
+#7  [ins ID=118]  Amit Seru  2026-03-22T08:57:00Z
+  MIXED formatting:
+    [plain] ","
+    [ITALIC] "and in environments with rich heterogeneity across both consumers and firms."
+
+#8  [ins ID=120]  Amit Seru  2026-03-22T08:58:00Z
+  ALL ITALIC: "because they benefit from existing reward structures, they have limited incentives to switch to lower-cost alternatives."
+
+#9  [ins ID=122]  Amit Seru  2026-03-22T08:58:00Z
+  MIXED formatting:
+    [plain] ","
+    [ITALIC] "shifting attention from contract design to the interaction between consumer sorting and merchant pricing."
+
+#10  [ins ID=125]  Amit Seru  2026-03-22T08:59:00Z
+  MIXED formatting:
+    [plain] ","
+    [ITALIC] "linking changes in pricing on the bank side to changes in incidence across consumers."
+
+#11  [ins ID=130]  Amit Seru  2026-03-22T09:30:00Z
+  ALL ITALIC: "Together, these data allow us to link merchant-level payment composition and costs to redistribution across consumers."
+
+#12  [ins ID=133]  Amit Seru  2026-03-22T09:33:00Z
+  ALL ITALIC: "As a result, variation in interchange fees is central to understanding cross-subsidization within the payment system."
+
+#13  [ins ID=135]  Amit Seru  2026-03-22T09:33:00Z
+  ALL ITALIC: "While public schedules illustrate potential fee variation,"
+
+#14  [ins ID=136]  Amit Seru  2026-03-22T09:34:00Z
+  ALL ITALIC: "to the best of our knowledge,"
+
+#15  [ins ID=137]  Amit Seru  2026-03-22T09:33:00Z
+  ALL ITALIC: "we"
+
+#16  [ins ID=138]  Amit Seru  2026-03-22T09:34:00Z
+  ALL ITALIC: "are the first to"
+
+#17  [ins ID=139]  Amit Seru  2026-03-22T09:33:00Z
+  ALL ITALIC: "use data on the actual fees merchants pay to quantify how this heterogeneity shapes redistribution."
+
+#18  [ins ID=142]  Amit Seru  2026-03-22T09:37:00Z
+  ALL ITALIC: "A key feature of these data is that we observe both the composition and cost of transactions at the merchant level, which is critical for measuring heterogeneity in payment costs and its implications for redistribution."
+
+#19  [ins ID=145]  Amit Seru  2026-03-22T09:38:00Z
+  ALL ITALIC: "We use merchants’ MCC codes to classify establishments into sectors (e.g., grocery stores, gas stations, restaurants)."
+
+#20  [ins ID=146]  Amit Seru  2026-03-22T09:39:00Z
+  MIXED formatting:
+    [plain] ","
+    [ITALIC] "ensuring that fee variation reflects the relevant pricing unit."
+
+#21  [ins ID=148]  Amit Seru  2026-03-22T09:40:00Z
+  MIXED formatting:
+    [plain] ","
+    [ITALIC] "including payment methods that do not incur interchange fees."
+
+#22  [ins ID=150]  Amit Seru  2026-03-22T09:41:00Z
+  MIXED formatting:
+    [plain] ","
+    [ITALIC] "particularly for merchants where cash remains a meaningful share of transactions."
+
+#23  [ins ID=152]  Amit Seru  2026-03-22T09:42:00Z
+  MIXED formatting:
+    [plain] ","
+    [ITALIC] "allowing us to map payment choices to income and reward structures."
+
+#24  [ins ID=154]  Amit Seru  2026-03-22T09:42:00Z
+  MIXED formatting:
+    [plain] ","
+    [ITALIC] "supporting the external validity of our measures of payment composition and costs."
+
+#25  [ins ID=159]  Amit Seru  2026-03-22T11:54:00Z
+  MIXED formatting:
+    [plain] ","
+    [ITALIC] "by limiting the overlap between consumers using different payment methods and compressing fee differences where such overlap occurs."
+
+#26  [ins ID=162]  Amit Seru  2026-03-22T11:55:00Z
+  MIXED formatting:
+    [plain] ","
+    [ITALIC] "highlighting the concentration of cash usage among a subset of merchants."
+
+#27  [ins ID=164]  Amit Seru  2026-03-22T11:55:00Z
+  MIXED formatting:
+    [plain] ","
+    [ITALIC] "so dispersion in payment composition directly constrains the scope for cross-subsidization."
+
+#28  [ins ID=166]  Amit Seru  2026-03-22T11:55:00Z
+  MIXED formatting:
+    [plain] ","
+    [ITALIC] "as many merchants are dominated by a single payment type."
+
+#29  [ins ID=169]  Amit Seru  2026-03-22T11:56:00Z
+  MIXED formatting:
+    [plain] ","
+    [ITALIC] "given the limited presence of cash transactions."
+
+#30  [ins ID=171]  Amit Seru  2026-03-22T11:56:00Z
+  MIXED formatting:
+    [plain] ","
+    [ITALIC] "reinforcing the role of sorting in shaping redistribution."
+
+#31  [ins ID=174]  Amit Seru  2026-03-22T11:56:00Z
+  MIXED formatting:
+    [plain] ","
+    [ITALIC] "linking payment choice directly to the distribution of rewards and fees."
+
+#32  [ins ID=181]  Amit Seru  2026-03-22T12:19:00Z
+  MIXED formatting:
+    [plain] ","
+    [ITALIC] "mirroring the distribution of rewards tied to high-fee payment instruments."
+
+#33  [ins ID=183]  Amit Seru  2026-03-22T12:19:00Z
+  MIXED formatting:
+    [plain] ","
+    [ITALIC] "by shaping where cross-subsidization can occur."
+
+#34  [ins ID=186]  Amit Seru  2026-03-22T12:19:00Z
+  MIXED formatting:
+    [plain] ","
+    [ITALIC] "implying large differences in effective costs across otherwise similar transactions."
+
+#35  [ins ID=188]  Amit Seru  2026-03-22T12:21:00Z
+  MIXED formatting:
+    [plain] ","
+    [ITALIC] "even conditional on payment method."
+
+#36  [ins ID=195]  Amit Seru  2026-03-22T12:24:00Z
+  MIXED formatting:
+    [plain] ","
+    [ITALIC] "trading off participation on both sides of the platform."
+
+#37  [ins ID=199]  Amit Seru  2026-03-22T12:30:00Z
+  ALL ITALIC: "and likely reflects both publicly posted volume discounts and private negotiations, consistent with greater bargaining power among larger merchants."
+
+#38  [ins ID=201]  Amit Seru  2026-03-22T12:31:00Z
+  ALL ITALIC: "A key mechanism underlying these size-based discounts is that"
+
+#39  [ins ID=204]  Amit Seru  2026-03-22T12:32:00Z
+  ALL ITALIC: "In addition to merchant size, transaction size also plays an important role in determining interchange fees."
+
+#40  [ins ID=243]  Amit Seru  2026-03-22T12:51:00Z
+  ALL ITALIC: "These approaches allow us to quantify how redistribution changes when accounting for consumer sorting and merchant fee heterogeneity."
+
+#41  [ins ID=246]  Amit Seru  2026-03-22T12:50:00Z
+  ALL ITALIC: "and the consequences of the Durbin Amendment."
+
+#42  [ins ID=248]  Amit Seru  2026-03-22T12:52:00Z
+  MIXED formatting:
+    [plain] "and"
+    [ITALIC] "highlights the first-order determinants of redistribution from interchange fees."
+    [ITALIC] "A key feature of the sufficient statistic approach is that it imposes minimal structure on the problem."
+
+#43  [ins ID=251]  Amit Seru  2026-03-22T12:53:00Z
+  MIXED formatting:
+    [ITALIC] "We view this as a reasonable approximation for industry-wide cost shocks,"
+    [plain] "but relax it in the structural model."
+    [plain] " In the structu"
+
+#44  [ins ID=259]  Amit Seru  2026-03-22T13:42:00Z
+  ALL ITALIC: "Allowing utility functions to depend on payment preferences enables the model to capture that"
+
+#45  [ins ID=262]  Amit Seru  2026-03-22T13:42:00Z
+  ALL ITALIC: "For empirical and expositional convenience,"
+
+#46  [ins ID=277]  Amit Seru  2026-03-22T14:02:00Z
+  ALL ITALIC: "The key insight is that first-order consumer welfare effects depend on the variation in the composition and cost of payments across merchants, rather than on demand elasticities."
+
+#47  [ins ID=284]  Amit Seru  2026-03-22T14:06:00Z
+  ALL ITALIC: "The sufficient statistic aggregates these price and reward effects across merchants. Although it is expressed as a mechanical calculation holding payment composition fixed, it captures the full first-order welfare effects even as prices, rewards, and consumption adjust in equilibrium."
+
+#48  [ins ID=286]  Amit Seru  2026-03-22T14:09:00Z
+  ALL ITALIC: "The theorem implies that consumer substitution patterns do not affect first-order redistribution."
+
+#49  [ins ID=290]  Amit Seru  2026-03-22T14:10:00Z
+  ALL ITALIC: "We focus on large firms in these sectors, where discounts are most pronounced in the data"
+
+#50  [ins ID=291]  Amit Seru  2026-03-22T14:11:00Z
+  ALL ITALIC: "("
+
+#51  [ins ID=292]  Amit Seru  2026-03-22T14:10:00Z
+  MIXED formatting:
+    [plain] "Section "
+    [plain] "["
+    [plain] "sec:costs"
+    [plain] "]"
+
+#52  [ins ID=294]  Amit Seru  2026-03-22T14:10:00Z
+  ALL ITALIC: "."
+
+#53  [ins ID=300]  Amit Seru  2026-03-22T14:22:00Z
+  MIXED formatting:
+    [plain] ","
+    [ITALIC] "providing a disciplined way to quantify departures from the baseline assumptions."
+
+#54  [ins ID=302]  Amit Seru  2026-03-22T14:27:00Z
+  MIXED formatting:
+    [plain] ","
+    [ITALIC] "ensuring that the model reproduces the heterogeneity central to our empirical findings."
+
+#55  [ins ID=305]  Amit Seru  2026-03-22T14:28:00Z
+  MIXED formatting:
+    [plain] ","
+    [ITALIC] "linking the model directly to the empirical dispersion documented in the data."
+
+#56  [ins ID=309]  Amit Seru  2026-03-22T14:29:00Z
+  MIXED formatting:
+    [plain] ","
+    [ITALIC] "linking model structure directly to the empirical pass-through question."
+
+#57  [ins ID=321]  Amit Seru  2026-03-22T14:32:00Z
+  MIXED formatting:
+    [plain] ","
+    [ITALIC] "showing that the model closely matches the empirical moments."
+
+#58  [ins ID=328]  Amit Seru  2026-03-22T15:00:00Z
+  ALL ITALIC: "regressive redistribution across consumers, benefiting higher-income households at the expense of lower-income ones"
+
+#59  [ins ID=373]  Amit Seru  2026-03-22T15:14:00Z
+  ALL ITALIC: "Because benefits accrue to both low-income consumers (who use cash) and high-income consumers (who use credit), the net distributional effect is a priori ambiguous."
+
+#60  [ins ID=376]  Amit Seru  2026-03-22T15:15:00Z
+  MIXED formatting:
+    [ITALIC] "This implies a cumulative transfer of around $1 billion"
+    [plain] "from middle-income to high-income consumers."
+
+#61  [ins ID=382]  Amit Seru  2026-03-22T15:16:00Z
+  ALL ITALIC: "helping to explain the rise of premiumization"
+
+#62  [ins ID=383]  Amit Seru  2026-03-22T15:17:00Z
+  ALL ITALIC: "."
+
+--- Total insertions with italic: 62 ---
+
+==========================================================================================
+SECTION B: FORMAT CHANGES (w:rPrChange) WHERE ITALIC WAS ADDED
+==========================================================================================
+
+#1  [rPrChange ID=4]  Amit Seru  2026-03-22T09:21:00Z
+  Italic via: style=Emphasis
+  Text: (empty/whitespace)
+
+#2  [rPrChange ID=5]  Amit Seru  2026-03-22T09:21:00Z
+  Italic via: style=Emphasis
+  Text: "users of low-cost payment methods (e.g., cash and debit) cross-subsidize high-reward credit card users who shop at the same merchant."
+
+#3  [rPrChange ID=6]  Amit Seru  2026-03-22T09:21:00Z
+  Italic via: style=Emphasis
+  Text: (empty/whitespace)
+
+#4  [rPrChange ID=8]  Amit Seru  2026-03-22T09:21:00Z
+  Italic via: style=Emphasis
+  Text: (empty/whitespace)
+
+#5  [rPrChange ID=9]  Amit Seru  2026-03-22T09:21:00Z
+  Italic via: style=Emphasis
+  Text: (empty/whitespace)
+
+#6  [rPrChange ID=11]  Amit Seru  2026-03-22T09:21:00Z
+  Italic via: style=Emphasis
+  Text: (empty/whitespace)
+
+#7  [rPrChange ID=13]  Amit Seru  2026-03-22T09:21:00Z
+  Italic via: style=Emphasis
+  Text: (empty/whitespace)
+
+#8  [rPrChange ID=14]  Amit Seru  2026-03-22T09:21:00Z
+  Italic via: style=Emphasis
+  Text: (empty/whitespace)
+
+#9  [rPrChange ID=16]  Amit Seru  2026-03-22T09:21:00Z
+  Italic via: style=Emphasis
+  Text: (empty/whitespace)
+
+#10  [rPrChange ID=19]  Amit Seru  2026-03-22T09:21:00Z
+  Italic via: style=Emphasis
+  Text: "First"
+
+#11  [rPrChange ID=20]  Amit Seru  2026-03-22T09:21:00Z
+  Italic via: style=Emphasis
+  Text: ", consumer sorting—where consumers who use different payment methods shop at different merchants—limits the exposure of cash and debit users to high interchange fees. Second, interchange fees vary acr..."
+
+#12  [rPrChange ID=219]  Amit Seru  2026-03-22T12:36:00Z
+  Italic via: direct w:i (paragraph-level format change)
+  Text: "Our reduced-form analysis highlights one fact that suggests substantial redistribution between consumers who use different payment methods, and two facts that moderate this redistribution. First, card..."
+
+--- Total format changes adding italic: 12 ---
+
+==========================================================================================
+SECTION C: FORMAT CHANGES (w:rPrChange) WHERE ITALIC WAS REMOVED
+==========================================================================================
+
+#1  [rPrChange ID=31]  Amit Seru  2026-03-22T09:23:00Z
+  Text (italic REMOVED): "highlighting the wide variation in regulatory approaches across jurisdictions."
+
+#2  [rPrChange ID=35]  Amit Seru  2026-03-22T09:23:00Z
+  Text (italic REMOVED): "This lack of consensus reflects a fundamental measurement challenge."
+
+#3  [rPrChange ID=42]  Amit Seru  2026-03-22T09:23:00Z
+  Text (italic REMOVED): "and one that is central to determining the direction and magnitude of transfer"
+
+#4  [rPrChange ID=45]  Amit Seru  2026-03-22T09:23:00Z
+  Text (italic REMOVED): "and therefore to understanding who ultimately bears the cost of interchange fees."
+
+#5  [rPrChange ID=52]  Amit Seru  2026-03-22T09:24:00Z
+  Text (italic REMOVED): "Our central contribution is to show that the incidence of interchange fees is governed by the joint distribution of payment choices and merchant characteristics,"
+
+#6  [rPrChange ID=55]  Amit Seru  2026-03-22T09:24:00Z
+  Text (italic REMOVED): "rather than by average fee differences across payment methods"
+
+#7  [rPrChange ID=62]  Amit Seru  2026-03-22T09:24:00Z
+  Text (italic REMOVED): "under empirically plausible pass-through assumptions that we examine in the data and in a structural model."
+
+#8  [rPrChange ID=67]  Amit Seru  2026-03-22T09:25:00Z
+  Text (italic REMOVED): "Overall, cash users face an effective increase in sales taxes equivalent to 26% relative to premium credit card users."
+
+#9  [rPrChange ID=83]  Amit Seru  2026-03-22T09:26:00Z
+  Text (italic REMOVED): "Under mild conditions on consumer demand and firms’ pricing responses to cost shocks,"
+
+#10  [rPrChange ID=86]  Amit Seru  2026-03-22T09:26:00Z
+  Text (italic REMOVED): "Importantly, this approach avoids the need to estimate a full demand system or explicitly model strategic interactions among firms,"
+
+#11  [rPrChange ID=97]  Amit Seru  2026-03-22T09:26:00Z
+  Text (italic REMOVED): "To assess its performance in richer environments,"
+
+#12  [rPrChange ID=100]  Amit Seru  2026-03-22T09:26:00Z
+  Text (italic REMOVED): "indicating that the key forces driving redistribution are well captured by the empirical moments we use,"
+
+#13  [rPrChange ID=103]  Amit Seru  2026-03-22T09:26:00Z
+  Text (italic REMOVED): "Having incorporated merchant heterogeneity, consumer sorting, and the structure of interchange fees,"
+
+#14  [rPrChange ID=109]  Amit Seru  2026-03-22T09:26:00Z
+  Text (italic REMOVED): "highlighting how equilibrium pricing both reflects and mitigates cross-subsidization."
+
+#15  [rPrChange ID=113]  Amit Seru  2026-03-22T09:26:00Z
+  Text (italic REMOVED): "and more broadly how policy and innovation can reshape the incidence of platform fees."
+
+#16  [rPrChange ID=229]  Amit Seru  2026-03-22T12:36:00Z
+  Text (italic REMOVED): "dispersion in payment composition across merchants limits the extent of cross-subsidization"
+
+#17  [rPrChange ID=234]  Amit Seru  2026-03-22T12:36:00Z
+  Text (italic REMOVED): "at the merchants where consumers with different payment preferences overlap, interchange fees are often lower due to sector discounts and negotiation"
+
+#18  [rPrChange ID=240]  Amit Seru  2026-03-22T12:36:00Z
+  Text (italic REMOVED): "redistribution"
+
+--- Total format changes removing italic: 18 ---
+
+==========================================================================================
+SUMMARY
+==========================================================================================
+  Tracked insertions with italic text:    62
+  Format changes adding italic:           12
+  Format changes removing italic:         18

@@ -1,0 +1,194 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+
+Three reduced-form facts characterize the two-sided structure of the payment market.
+Issuers' incentives drive consumer payment choices; card acceptance increases merchant sales; and a mix of single- and multi-homing consumers limits merchants' ability to steer between networks.
+These facts point toward a partial competitive bottleneck, but the degree of consumer multi-homing leaves the net effect of competition on fees and welfare an empirical question.
+
+\subsection{Issuer Incentives Drive Consumer Payment Choices\label{subsec:durbin-reduced-form}}
+
+The Durbin Amendment provides quasi-experimental evidence that issuers' incentives strongly affect consumer payment choices.
+Enacted as part of the 2010 Dodd-Frank Act, it capped debit interchange fees for banks and credit unions with over $\$10$ billion in assets starting in October 2011, reducing large issuers' debit interchange revenue by roughly 75 bps, leaving credit interchange untouched.
+% CONSTANT: Durbin revenue impact, cited institutional fact (not computed from model scalars)
+% CONSTANT: Durbin threshold, fixed by law
+Large issuers raised checking account fees \parencite{Kay.etal2018,Mukharlyamov.Sarin2025}, ended debit rewards programs \parencite{Hayashi2012, Schneider.Borra2015}, cut debit card advertising \parencite{Hayashi2012}, and scaled back bank teller sales incentives \parencite{Johnson2010}.
+Many small issuers, by contrast, continued debit rewards programs and increased debit marketing \parencite{CUOnline2012, Orem2016}.
+
+I estimate the effect on payment volumes by comparing debit card volumes at large and small issuers.\footnote{\label{fn:durbin-control-group}Small issuers are an imperfect control group because they may have been indirectly affected by the Durbin Amendment through competitive spillovers. However, such spillovers are likely to attenuate, rather than amplify, the estimated treatment effect. If small issuers also reduced debit promotion in response to competitive pressure from large issuers shifting toward credit, the difference between treated and control groups would understate the true effect of losing debit interchange revenue.}
+
+\begin{equation}
+y_{it}=\sum_{k\neq-1}\beta_{k}I\left\{ t=k\right\} \times T_{i}+\delta_{i}+\delta_{t}+\epsilon_{it}
+\end{equation}
+where $y_{it}$ is the log of signature debit purchase volume at issuer $i$ in year $t$, $T_i$ indicates whether issuer $i$ had more than $\$10$ billion in assets in $2010$, and $\delta_{i}$ and $\delta_{t}$ are issuer and year fixed effects.
+% CONSTANT: Durbin threshold, fixed by law
+I define $t=0$ as $2011$ and focus on institutions with between $2$ and $200$ billion in assets, excluding issuers that made large acquisitions during the sample period.
+% CONSTANT: asset range for sample, study design choice
+This comparison of large and small issuers differences out the effects of the Durbin routing requirements, the CARD Act, and potential changes in merchant acceptance, all of which affect debit and credit card use symmetrically across issuer size.
+
+\begin{figure}
+\caption{The effect of the Durbin Amendment on debit card volumes}
+\label{fig:volumes}
+\begin{center}
+\includegraphics[width=5in]{../output/graphs/log_debit_sig.pdf}
+\end{center}
+\tablenote{Data are from the Nilson Report. The points show the difference-in-differences estimates of the effects of the Durbin Amendment on debit card volumes. Dashed lines show 95\% confidence intervals. The vertical line marks $t=-1$, which is $2010$, the year before the policy took effect in Q3 $2011$. Standard errors are clustered at the~issuer~level.}
+\end{figure}
+
+Weakening large issuers' incentives to promote debit led to around a 25\% relative decline in signature debit volumes.
+Figure \ref{fig:volumes} plots the estimated effects of being above the cutoff on signature debit card volumes.
+% HARDCODED[tab:durbin-event-study: exp(-0.287)-1, rounded] current=25
+To evaluate how much of the decline could be explained by lost debit rewards, Online Appendix \ref{par:oa-durbin-rewards-robustness} restricts the sample to the 15 issuers that paid debit rewards pre-Durbin and compares issuers that cut rewards against those that kept them.
+Debit volumes at the banks that cut rewards grow about 25\% more slowly than at those that kept rewards, a gap that matches the baseline estimate and informs the calibration of the rewards elasticity in Section~\ref{subsec:estimation-procedure}.
+% HARDCODED[figure: durbin_sig_debit_rewards.pdf, vision-read] current=25
+
+Online Appendix \ref{subsec:oa-durbin-robustness} presents robustness checks on the estimate and the mechanism.
+I focus on signature debit because it has the highest coverage in the Nilson Report.
+The relative decline drops to 17\% for total debit volumes, although estimates are noisier because fewer banks report total debit early in the sample.
+% HARDCODED[table: durbin_table.tex, row: total debit, exp(-0.188)-1, rounded] current=17
+Credit card volumes at large banks appear to rise relative to small banks after Durbin, though pre-trends are not cleanly zero.
+Treated and control banks had similar pre-Durbin payment mixes; the estimates are stable across asset cutoffs and merger exclusions; and the effect reflects within-bank payment switching rather than cross-bank switching or a post-Durbin increase in credit card rewards at large issuers.
+
+\subsection{Card Acceptance Increases Merchant Sales}
+\label{subsec:merchant-card-gains}
+
+Merchants face strong incentives to accept cards because doing so increases sales.
+I identify the causal effect of credit card acceptance on sales using changes in merchant acceptance policies.
+Between 2015 and 2023, I identify multiple instances in the Homescan data where a grocery store begins or stops accepting credit cards.
+Homescan does not report acceptance directly. It records the payment method that consumers self-report for each trip.
+I infer acceptance changes from large shifts in credit card payment shares, validated with news sources, and classify a merchant as accepting credit cards only if more than 5\% of its sales are paid by credit card.\footnote{Consumers occasionally misreport signature debit transactions as credit card payments \parencite{Rysman.etal2025}, which can produce a small positive credit share even at non-accepting merchants.
+At grocery chains known not to accept Visa --- identified from stores that switched acceptance during the sample --- the residual measured credit share is around 1.5\%.
+The 5\% threshold lies well above this noise floor while remaining well below the share at any confirmed acceptor.}
+I then compare the shopping behavior of consumers with high and low credit card usage at treated merchants relative to control grocers that did not change their acceptance policy.
+
+The merchants in these event studies are highly selected.
+Around 98\% of all Homescan trips occur at stores that already accept credit cards, so merchants that change acceptance are unusual.
+% CONSTANT: 98% of Homescan trips at credit-accepting stores, from Homescan data
+This pattern is expected if credit card acceptance increases sales for the bulk of merchants.
+When extrapolating these sales gains to the broader merchant population in the model, I account for this selection.
+
+I compare spending by credit card users versus non-users, at merchants that changed acceptance versus those that did not, before versus after the change.
+I estimate
+\begin{align}
+y_{hjte} &\sim \text{Poisson}(\lambda_{hjte}) \\
+\log \lambda_{hjte} &= \delta_{ejtqz} + \phi_{ej} C_h + \sum_{k \neq -1} \beta_{ek} C_h \mathbf{1}\{t=k\} + \sum_{k \neq -1} \gamma_k C_h T_{je} \mathbf{1}\{t=k\}
+\end{align}
+where $y_{hjte}$ is the dollars spent by household $h$ at retailer $j$ in period $t$ relative to the acceptance change in event $e$, $\delta_{ejtqz}$ are event-retailer-period-income quintile-3-digit zip code fixed effects, $T_{je} = 1$ for treated grocers that begin to accept credit cards, $T_{je} = -1$ for those that stop, and $C_h$ is household $h$'s credit card share of payments measured in the year prior to the event.
+The coefficients of interest, $\gamma_k$, capture the dynamic effects of credit card acceptance on sales to credit card users.\footnote{Because the treatment groups are very small relative to the large control group, and treated stores in one event are excluded from the control group of another, the staggered-treatment complications addressed by recent difference-in-differences estimators do not arise here.}
+I use a Poisson specification following \textcite{Cohn.etal2022}, who show that Poisson regression is preferred for difference-in-differences designs with non-negative outcomes that include many zeros.\footnote{A log transform of dollar spending is not feasible here because many household-retailer-period observations have zero spending, so taking logs would require either dropping zeros, which eliminates the extensive margin response, or adding an arbitrary constant, either of which biases the estimate.}
+Standard errors are clustered at the household level.
+
+This strategy allows the focal merchants to experience other unobserved shocks contemporaneous with the acceptance change.
+The event-retailer fixed effects $\phi_{ej}$ absorb baseline spending differences between credit card users and non-users at each store, while the event-period interactions $\beta_{ek}$ allow the credit-user spending gap to evolve over time in a way that is common across treated and control retailers.
+The key identifying assumption is that merchants do not differentially target credit card users relative to other consumers of similar income levels, so the strategy accommodates situations in which merchants target higher-income consumers at the same time that they start accepting credit cards.
+A violation would occur if the acceptance change were accompanied by a co-branded credit card campaign that simultaneously shifts both merchant acceptance and consumer card holdings.
+I verified that no such campaigns accompanied the events I study.\footnote{I excluded events involving warehouse stores for this reason.
+Changes in which credit cards a warehouse store accepts are often accompanied by co-branded card campaigns designed to shift consumers' card holdings along with the acceptance change, a coordinated shift rather than a change in merchant acceptance holding fixed consumer payment behavior.}
+
+\begin{figure}[ht]
+    \caption{Triple-difference estimates of the effect of credit card acceptance on sales to credit card consumers}
+
+    \begin{center}
+        \includegraphics[width=4in]{../output/graphs/main_reg_spend.pdf}
+        \label{fig:grocer-event-sales-effects}
+    \end{center}
+
+    \tablenote{Data are from Homescan. The graph presents estimated coefficients from a triple-difference model of the effect of changes in credit card acceptance on dollar sales to credit card users compared to other consumers, aggregated across retailers. The coefficients reflect percentage changes in sales, and the error bars show 95\% confidence intervals. Periods are six months.}
+
+\end{figure}
+
+Figure \ref{fig:grocer-event-sales-effects} shows that over the first two years of acceptance, sales to credit card users rise by approximately \scalarpctinput{kilts_model_sales_event}\%.
+Online Appendix Table~\ref{tab:event-study-tab} reports the regression coefficients for both trips and spending.
+% HARDCODED[scalar: kilts_model_sales_event (pct)] current=12
+Even though most credit users own debit cards (Table \ref{tab:dcpc-summary}), accepting credit still increases sales.
+The Homescan data do not identify the mechanism directly, but merchant and network testimony from antitrust trials points to the credit line providing additional purchasing power (Online Appendix \ref{subsubsec:oa-credit-debit-evidence}).
+Credit is strongly preferred for larger purchases, and merchants report that debit does not substitute for it.
+
+An alternative explanation is that credit card acceptance increases sales by lowering consumers' effective prices through rewards.
+Online Appendix~\ref{subsec:oa-discover-rewards} studies Discover's quarterly rewards programs and finds that rewards influence which credit card consumers use but not which merchants they visit.
+
+\subsection{Merchants Multi-home More Than Consumers\label{subsec:two-side-multihome}}
+
+Merchants overwhelmingly accept all cards, yet only around \scalarinput{kilts_model_multihome_cc}\% of consumers use credit cards from two or more networks.
+Because declining a network's cards risks losing single-homers, merchants have little incentive to drop any network.
+This asymmetry limits merchants' bargaining power and reduces competitive pressure on merchant fees.
+
+\subsubsection{Almost All Merchants Multi-home}
+\label{subsubsec:merchant-multihoming}
+
+As of 2019, most merchants accept either all credit cards or none at all.
+The most natural margin for selective acceptance is AmEx, given its historically higher merchant fees.
+Figure \ref{fig:fees-history} shows that the gap between AmEx's and Visa's credit card merchant fees fell by around \absinput{amex_visa_fee_diff} bps over the past decade, driven by AmEx's OptBlue program that cut fees for small businesses \parencite{Glasheen2020}.
+Figure \ref{fig:merchant-amex-visa} shows that as AmEx's fees converged with Visa's, so did merchant acceptance.
+By 2019, the number of merchants accepting AmEx approximately equaled the number accepting Visa.\footnote{
+    Similar aggregate acceptance counts could be consistent with merchants specializing in disjoint sets of networks.
+    Historical Yelp reviews, primarily from 2010--2018 before the convergence in Visa and AmEx acceptance, suggest otherwise.
+    Merchants progressively add payment methods rather than specialize in particular networks (Online Appendix \ref{subsec:oa-yelp-card-acceptance}).
+}
+
+\begin{figure}[ht]
+    \caption{Merchant fees and credit card acceptance}
+    \label{fig:merchant-fees-acceptance}
+
+    \begin{centering}
+    \begin{subfigure}[b]{0.49\textwidth}
+        \caption{Merchant fees}
+        \includegraphics[width=\textwidth]{../output/graphs/amex_visa_fee_gap.pdf}
+        \label{fig:fees-history}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.49\textwidth}
+        \caption{Credit card acceptance}
+        \includegraphics[width=\textwidth]{../output/graphs/amex_visa_accept_gap.pdf}
+        \label{fig:merchant-amex-visa}
+    \end{subfigure}
+    \end{centering}
+
+    \tablenote{Data are from the Nilson Report. The left panel plots average merchant fee levels for Visa Debit, Visa Credit, and AmEx. The right panel plots the number of merchants accepting Visa and AmEx. The dotted lines mark the imposition of the Durbin Amendment and the start of AmEx's OptBlue program.}
+
+\end{figure}
+
+\begin{figure}[ht]
+    \caption{Consumer multi-homing behavior}
+    \label{fig:consumer-multi-homing}
+
+    \begin{center}
+        \includegraphics[width=4.5in]{../output/graphs/prob_of_secondary_given_primary_point_dodged.pdf}
+    \end{center}
+
+    \tablenote{Data are from Homescan. The figure shows the probability that consumers use a secondary credit card, secondary debit card, or no secondary card, conditional on different primary cards.}
+
+\end{figure}
+
+\subsubsection{Many Consumers Single-home}\label{subsubsec:consumer-multihoming}
+
+Whether merchants can steer consumers between networks depends on how many consumers carry cards from more than one.
+If most consumers single-home, a merchant that declines a network loses those consumers entirely. If most multi-home, the merchant can redirect them to a rival.
+
+I study consumer multi-homing using the Homescan shopping data, defining a network as Visa credit, MC credit, AmEx, or any debit card.
+I define ``carrying'' a card based on observed usage, not self-reported ownership. A consumer is classified as carrying a card type if they use it during that year.
+I characterize household-years by their primary (most-used) and secondary (second-most-used) networks.
+Consumers put around 95\% of their card spending on these top two networks (Online Appendix Table~\ref{tab:top-two}).
+These usage shares reflect consumer preferences rather than merchant acceptance policies, since most Homescan merchants are large and accept all major payment methods.\footnote{Appendix~\ref{sec:appendix-data} details the sample restrictions, including the exclusion of merchants with a low share of transactions from any network and the aggregation of Visa and MC debit into a single network for the consumer multi-homing moments. \label{foot:homescan-merch-accept}}
+
+Around \scalarinput{kilts_model_multihome_cc}\% of primary credit card consumers carry credit cards from multiple networks.\footnote{
+    This usage-based measure aligns closely with ownership-based data. In the Diary of Consumer Payment Choice, 58\% of credit card users report holding cards from two or more networks (Appendix Table \ref{tab:multihome_comparison}).
+    % HARDCODED[table: multihome_comparison.tex, row: DCPC] current=57.7
+    % HARDCODED[table: multihome_comparison.tex, row: Homescan] current=56.7
+}
+Each group in Figure \ref{fig:consumer-multi-homing} represents a different secondary card, and each point represents a different primary card.
+The first set of dots for Visa credit, MC credit, AmEx, and Discover show the probability that a primary user of each network has a secondary card that is also a credit card.
+Visa credit users multi-home on credit cards the least at 50\%,
+% HARDCODED[scalar: visa_cc_second_choice] current=50
+while AmEx users multi-home most at around \scalarinput{amex_cc_second_choice}\%.
+Those dots also show that around three-quarters of all primary debit users use a secondary credit card, suggesting that credit access is not the reason they opt for debit.
+When a merchant declines a network's cards, it risks losing the remaining consumers who single-home.
+This mix of single- and multi-homing consumers limits but does not eliminate merchants' ability to steer consumers between credit card networks.
+
+\subsection{The Competitive Bottleneck}
+
+These patterns resemble a ``competitive bottleneck'' in which networks compete primarily for consumers, not merchants.
+% Networks should therefore set high merchant fees to fund the issuer rewards that drive consumer adoption \parencite{Rochet.Tirole2003, Edelman.Wright2015}.
+Standard theoretical models assume either pure single-homing, under which competition unambiguously raises merchant fees, or pure multi-homing, which reverses the result \parencite{Anderson.etal2018, Bakos.Halaburda2020}.
+Given that some consumers single-home and others multi-home, neither benchmark applies cleanly, and the net effect of competition on fees and welfare must be estimated.
+
+\end{document}

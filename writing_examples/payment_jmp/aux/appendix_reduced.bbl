@@ -1,0 +1,346 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{cms/global//global/global/global}
+    \entry{Boehm2018}{report}{}{}
+      \name{author}{1}{}{%
+        {{hash=8730b016159fc60337b88a0db654492a}{%
+           family={Boehm},
+           familyi={B\bibinitperiod},
+           given={Jennifer\bibnamedelima White},
+           giveni={J\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Mintel}%
+      }
+      \strng{namehash}{8730b016159fc60337b88a0db654492a}
+      \strng{fullhash}{8730b016159fc60337b88a0db654492a}
+      \strng{fullhashraw}{8730b016159fc60337b88a0db654492a}
+      \strng{bibnamehash}{8730b016159fc60337b88a0db654492a}
+      \strng{authorbibnamehash}{8730b016159fc60337b88a0db654492a}
+      \strng{authornamehash}{8730b016159fc60337b88a0db654492a}
+      \strng{authorfullhash}{8730b016159fc60337b88a0db654492a}
+      \strng{authorfullhashraw}{8730b016159fc60337b88a0db654492a}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{7}
+      \field{title}{Credit {{Cards US}}}
+      \field{year}{2018}
+      \field{dateera}{ce}
+    \endentry
+    \entry{CUToday2016}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=c15120c93ba69e7e0c5f9bdc59f5f135}{%
+           family={{CU Today}},
+           familyi={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{c15120c93ba69e7e0c5f9bdc59f5f135}
+      \strng{fullhash}{c15120c93ba69e7e0c5f9bdc59f5f135}
+      \strng{fullhashraw}{c15120c93ba69e7e0c5f9bdc59f5f135}
+      \strng{bibnamehash}{c15120c93ba69e7e0c5f9bdc59f5f135}
+      \strng{authorbibnamehash}{c15120c93ba69e7e0c5f9bdc59f5f135}
+      \strng{authornamehash}{c15120c93ba69e7e0c5f9bdc59f5f135}
+      \strng{authorfullhash}{c15120c93ba69e7e0c5f9bdc59f5f135}
+      \strng{authorfullhashraw}{c15120c93ba69e7e0c5f9bdc59f5f135}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{day}{1}
+      \field{journaltitle}{CU Today}
+      \field{month}{9}
+      \field{title}{An {{Updated Look At Where Interchange Fits In CU Non-Interest Income}}}
+      \field{urlday}{30}
+      \field{urlmonth}{9}
+      \field{urlyear}{2024}
+      \field{year}{2016}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.cutoday.info/THE-news/An-Updated-Look-At-Where-Interchange-Fits-In-CU-Non-Interest-Income
+      \endverb
+      \verb{url}
+      \verb https://www.cutoday.info/THE-news/An-Updated-Look-At-Where-Interchange-Fits-In-CU-Non-Interest-Income
+      \endverb
+    \endentry
+    \entry{Ellickson.etal2020}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=9c176df36c9fe1f8a0f6ef7f36bbdedf}{%
+           family={Ellickson},
+           familyi={E\bibinitperiod},
+           given={Paul\bibnamedelima B.},
+           giveni={P\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+        {{hash=93f9eac027049dda4bf523dc66aa793b}{%
+           family={Grieco},
+           familyi={G\bibinitperiod},
+           given={Paul\bibnamedelima L.E.},
+           giveni={P\bibinitperiod\bibinitdelim L\bibinitperiod}}}%
+        {{hash=8a03b77c1d0d1e03dbcd41726089f4b9}{%
+           family={Khvastunov},
+           familyi={K\bibinitperiod},
+           given={Oleksii},
+           giveni={O\bibinitperiod}}}%
+      }
+      \strng{namehash}{581582de0de8c89471f65f1158c49ea9}
+      \strng{fullhash}{c3d967481bc01892d32e66781b4d96b9}
+      \strng{fullhashraw}{c3d967481bc01892d32e66781b4d96b9}
+      \strng{bibnamehash}{c3d967481bc01892d32e66781b4d96b9}
+      \strng{authorbibnamehash}{c3d967481bc01892d32e66781b4d96b9}
+      \strng{authornamehash}{581582de0de8c89471f65f1158c49ea9}
+      \strng{authorfullhash}{c3d967481bc01892d32e66781b4d96b9}
+      \strng{authorfullhashraw}{c3d967481bc01892d32e66781b4d96b9}
+      \field{sortinit}{E}
+      \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{abstract}{Abstract We propose and estimate a spatially aggregated discrete‐choice model with overlapping consumer choice sets and demographic‐driven heterogeneity that varies by chain. Our approach avoids the need to define markets ex ante and captures rich substitution patterns, even in the absence of price data. An application to the US grocery industry illustrates the importance of location, format, and the spatial distribution of consumers in shaping the competitive environment. Contrary to conventional wisdom, we find substantial cross‐format competition between supercenters, clubs, and traditional grocers. Finally, we evaluate two representative mergers between supermarket chains to demonstrate how our estimates inform antitrust~policy.}
+      \field{issn}{0741-6261, 1756-2171}
+      \field{journaltitle}{The RAND Journal of Economics}
+      \field{langid}{english}
+      \field{month}{3}
+      \field{number}{1}
+      \field{shortjournal}{The RAND J of Economics}
+      \field{title}{Measuring Competition in Spatial Retail}
+      \field{urlday}{9}
+      \field{urlmonth}{10}
+      \field{urlyear}{2024}
+      \field{volume}{51}
+      \field{year}{2020}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{189\bibrangedash 232}
+      \range{pages}{44}
+      \verb{doi}
+      \verb 10.1111/1756-2171.12310
+      \endverb
+      \verb{file}
+      \verb /Users/luluywang/Zotero/storage/A3PS4YPA/Ellickson et al. - 2020 - Measuring competition in spatial retail.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://onlinelibrary.wiley.com/doi/10.1111/1756-2171.12310
+      \endverb
+      \verb{url}
+      \verb https://onlinelibrary.wiley.com/doi/10.1111/1756-2171.12310
+      \endverb
+    \endentry
+    \entry{RetailBankerInternational2018}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=980797b9585dacf7e2cb41deb5b107ae}{%
+           family={International},
+           familyi={I\bibinitperiod},
+           given={Retail\bibnamedelima Banker},
+           giveni={R\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Retail Banker International}%
+      }
+      \strng{namehash}{980797b9585dacf7e2cb41deb5b107ae}
+      \strng{fullhash}{980797b9585dacf7e2cb41deb5b107ae}
+      \strng{fullhashraw}{980797b9585dacf7e2cb41deb5b107ae}
+      \strng{bibnamehash}{980797b9585dacf7e2cb41deb5b107ae}
+      \strng{authorbibnamehash}{980797b9585dacf7e2cb41deb5b107ae}
+      \strng{authornamehash}{980797b9585dacf7e2cb41deb5b107ae}
+      \strng{authorfullhash}{980797b9585dacf7e2cb41deb5b107ae}
+      \strng{authorfullhashraw}{980797b9585dacf7e2cb41deb5b107ae}
+      \field{sortinit}{I}
+      \field{sortinithash}{8d291c51ee89b6cd86bf5379f0b151d8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Australian parliament has passed a new bill that would crack down credit card providers’ unfair and predatory practices and boost…}
+      \field{day}{16}
+      \field{langid}{american}
+      \field{month}{2}
+      \field{title}{Australia Brings New Law to Ban Unsolicited Credit Card Limit Increases}
+      \field{urlday}{2}
+      \field{urlmonth}{2}
+      \field{urlyear}{2026}
+      \field{year}{2018}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /Users/luluywang/Zotero/storage/RR7Z2387/australia-brings-new-law-ban-unsolicited-credit-card-limit-increases.html
+      \endverb
+      \verb{urlraw}
+      \verb https://www.retailbankerinternational.com/news/australia-brings-new-law-ban-unsolicited-credit-card-limit-increases/
+      \endverb
+      \verb{url}
+      \verb https://www.retailbankerinternational.com/news/australia-brings-new-law-ban-unsolicited-credit-card-limit-increases/
+      \endverb
+    \endentry
+    \entry{Issa2017}{report}{}{}
+      \name{author}{1}{}{%
+        {{hash=f037a07708b2165ae9e686500c2caf97}{%
+           family={Issa},
+           familyi={I\bibinitperiod},
+           given={Erin\bibnamedelima El},
+           giveni={E\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Nerdwallet}%
+      }
+      \strng{namehash}{f037a07708b2165ae9e686500c2caf97}
+      \strng{fullhash}{f037a07708b2165ae9e686500c2caf97}
+      \strng{fullhashraw}{f037a07708b2165ae9e686500c2caf97}
+      \strng{bibnamehash}{f037a07708b2165ae9e686500c2caf97}
+      \strng{authorbibnamehash}{f037a07708b2165ae9e686500c2caf97}
+      \strng{authornamehash}{f037a07708b2165ae9e686500c2caf97}
+      \strng{authorfullhash}{f037a07708b2165ae9e686500c2caf97}
+      \strng{authorfullhashraw}{f037a07708b2165ae9e686500c2caf97}
+      \field{sortinit}{I}
+      \field{sortinithash}{8d291c51ee89b6cd86bf5379f0b151d8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{month}{9}
+      \field{title}{Americans {{Favor Debit Over Credit}} for {{Their Go-To Card}}}
+      \field{year}{2017}
+      \field{dateera}{ce}
+      \field{pages}{5}
+      \range{pages}{1}
+    \endentry
+    \entry{Prelec.Loewenstein1998}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=800d6808102574f9286d6e02bbb4eab7}{%
+           family={Prelec},
+           familyi={P\bibinitperiod},
+           given={Drazen},
+           giveni={D\bibinitperiod}}}%
+        {{hash=898ca02622955fd1ccdcf47220061ed2}{%
+           family={Loewenstein},
+           familyi={L\bibinitperiod},
+           given={George},
+           giveni={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{186e6d4a39dd1c09a5c3e541f69500f2}
+      \strng{fullhash}{186e6d4a39dd1c09a5c3e541f69500f2}
+      \strng{fullhashraw}{186e6d4a39dd1c09a5c3e541f69500f2}
+      \strng{bibnamehash}{186e6d4a39dd1c09a5c3e541f69500f2}
+      \strng{authorbibnamehash}{186e6d4a39dd1c09a5c3e541f69500f2}
+      \strng{authornamehash}{186e6d4a39dd1c09a5c3e541f69500f2}
+      \strng{authorfullhash}{186e6d4a39dd1c09a5c3e541f69500f2}
+      \strng{authorfullhashraw}{186e6d4a39dd1c09a5c3e541f69500f2}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{abstract}{In the standard economic account of consumer behavior the cost of a purchase takes the form of a reduction in future utility when expenditures that otherwise could have been made are forgone. The reality of consumer hedonics is different. When people make purchases, they often experience an immediate pain of paying, which can undermine the pleasure derived from consumption. The ticking of the taxi meter, for example, reduces one's pleasure from the ride. We propose a “double-entry” mental accounting theory that describes the nature of these reciprocal interactions between the pleasure of consumption and the pain of paying and draws out their implications for consumer behavior and hedonics. A central assumption of the model, which we call prospective accounting, is that consumption that has already been paid for can be enjoyed as if it were free and that the pain associated with payments made prior to consumption (but not after) is buffered by thoughts of the benefits that the payments will finance. Another important concept is coupling, which refers to the degree to which consumption calls to mind thoughts of payment, and vice versa. Some financing methods, such as credit cards, tend to weaken coupling, whereas others, such as cash payment, produce tight coupling. Our model makes a variety of predictions that are at variance with economic formulations. Contrary to the standard prediction that people will finance purchases to minimize the present value of payments, our model predicts strong debt aversion—that they should prefer to prepay for consumption or to get paid for work after it is performed. Such pay-before sequences confer hedonic benefits because consumption can be enjoyed without thinking about the need to pay for it in the future. Likewise, when paying beforehand, the pain of paying is mitigated by thoughts of future consumption benefits. Contrary to the economic prediction that consumers should prefer to pay, at the margin, for what they consume, our model predicts that consumers will find it less painful to pay for, and hence will prefer, flat-rate pricing schemes such as unlimited Internet access at a fixed monthly price, even if it involves paying more for the same usage. Other predictions concern spending patterns with cash, charge, or credit cards, and preferences for the earmarking of purchases. We test these predictions in a series of surveys and in a conjoint-like analysis that pitted our double-entry mental accounting model against a standard discounting formulation and another benchmark that did not incorporate hedonic interactions between consumption and payments. Our model provides a better fit of the data for 60\% of the subjects; the discounting formulation provides a better fit for only 29\% of the subjects (even when allowing for positive and negative discount rates). The pain of paying, we argue, plays an important role in consumer self-regulation, but is hedonically costly. From a hedonic perspective the ideal situation is one in which payments are tightly coupled to consumption (so that paying evokes thoughts about the benefits being financed) but consumption is decoupled from payments (so that consumption does not evoke thoughts about payment). From an efficiency perspective, however, it is important for consumers to be aware of what they are paying for consumption. This creates a tension between hedonic efficiency and what we call decision efficiency. Various institutional arrangements, such as financing of public parks through taxes or usage fees, play into this tradeoff. A producer developing a pricing structure for their product or service should be aware of these two conflicting objectives, and should try to devise a structure that reconciles them.}
+      \field{issn}{0732-2399, 1526-548X}
+      \field{journaltitle}{Marketing Science}
+      \field{langid}{english}
+      \field{month}{2}
+      \field{number}{1}
+      \field{shorttitle}{The {{Red}} and the {{Black}}}
+      \field{title}{The {{Red}} and the {{Black}}: {{Mental Accounting}} of {{Savings}} and {{Debt}}}
+      \field{volume}{17}
+      \field{year}{1998}
+      \field{dateera}{ce}
+      \field{pages}{4\bibrangedash 28}
+      \range{pages}{25}
+      \verb{doi}
+      \verb 10.1287/mksc.17.1.4
+      \endverb
+    \endentry
+    \entry{Sullivan2025}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=5dce03837bb424b0109bb4bcb9ade8f7}{%
+           family={Sullivan},
+           familyi={S\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{5dce03837bb424b0109bb4bcb9ade8f7}
+      \strng{fullhash}{5dce03837bb424b0109bb4bcb9ade8f7}
+      \strng{fullhashraw}{5dce03837bb424b0109bb4bcb9ade8f7}
+      \strng{bibnamehash}{5dce03837bb424b0109bb4bcb9ade8f7}
+      \strng{authorbibnamehash}{5dce03837bb424b0109bb4bcb9ade8f7}
+      \strng{authornamehash}{5dce03837bb424b0109bb4bcb9ade8f7}
+      \strng{authorfullhash}{5dce03837bb424b0109bb4bcb9ade8f7}
+      \strng{authorfullhashraw}{5dce03837bb424b0109bb4bcb9ade8f7}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{abstract}{This paper evaluates caps on the commissions that food delivery platforms (e.g., DoorDash) charge to restaurants. Commission caps benefit restaurants that partner with platforms, all else equal. This may entice restaurants to join platforms, thereby benefitting consumers who value variety in platforms' restaurant listings. A reduction in platform commissions may also lead restaurants to lower their prices, further benefitting consumers. But commission caps may lead platforms to raise their consumer fees, thereby reducing consumer ordering on platforms and consequently platforms' value to restaurants. The net effects of caps on restaurant and consumer welfare are thus uncertain. To estimate caps' effects, I assemble data on consumer restaurant orders, restaurants' platform adoption, and platform fees. An initial analysis of the data suggests that caps raise platforms' consumer fees, reduce consumer ordering on platforms, and lead restaurants to join platforms. To analyze these effects and their welfare implications, I develop a model of platform pricing, restaurant pricing, platform adoption by restaurants, and consumer ordering. Counterfactual simulations using the estimated model imply that commission caps bolster restaurant profits, but they do so at the expense of consumers and platforms. I estimate a total welfare reduction of caps equal to 6.2\% of participant surplus from platforms.}
+      \field{day}{3}
+      \field{journaltitle}{Working Paper}
+      \field{langid}{english}
+      \field{month}{7}
+      \field{title}{Price Controls in a Multi-Sided Market}
+      \field{year}{2025}
+      \field{dateera}{ce}
+    \endentry
+    \entry{Zinman2004}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=c8de485c483f3a2698e289da4add5e2d}{%
+           family={Zinman},
+           familyi={Z\bibinitperiod},
+           given={Jonathan},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{c8de485c483f3a2698e289da4add5e2d}
+      \strng{fullhash}{c8de485c483f3a2698e289da4add5e2d}
+      \strng{fullhashraw}{c8de485c483f3a2698e289da4add5e2d}
+      \strng{bibnamehash}{c8de485c483f3a2698e289da4add5e2d}
+      \strng{authorbibnamehash}{c8de485c483f3a2698e289da4add5e2d}
+      \strng{authornamehash}{c8de485c483f3a2698e289da4add5e2d}
+      \strng{authorfullhash}{c8de485c483f3a2698e289da4add5e2d}
+      \strng{authorfullhashraw}{c8de485c483f3a2698e289da4add5e2d}
+      \field{sortinit}{Z}
+      \field{sortinithash}{96892c0b0a36bb8557c40c49813d48b3}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{abstract}{Debit cards are overtaking credit cards as the most prevalent form of electronic payment at the point of sale, yet the determinants of a ubiquitous consumer choice—"debit or credit?"—have received relatively little scrutiny. Several stylized facts suggest that debit-card use is driven by behavioral factors. The popular view is that debit-card use presents a puzzle for canonical economic models. However, we should not overlook standard cost-based motives for using debit cards. Principally, the 50 percent of debit-card users who revolve credit-card balances would pay interest to charge purchases on the margin and hence might rationally choose to use debit rather than credit to minimize transaction costs. Debit-card use might also be rational for consumers lacking access to a credit card or facing a binding credit limit. I document robust effects of these types of credit-card use on debit use and show that such effects are consistent with a canonical model of consumer choice. This paper also shows, however, that it is difficult to distinguish sharply between canonical and behavioral motives for debit-card use in publicly available data. More generally, I develop analytical frameworks for testing competing canonical and behavioral models and find evidence consistent with important roles for both pecuniary and psychological motives.}
+      \field{issn}{0378-4266}
+      \field{journaltitle}{Journal of Banking \& Finance}
+      \field{langid}{english}
+      \field{month}{2}
+      \field{number}{2}
+      \field{title}{Debit or Credit?}
+      \field{volume}{33}
+      \field{year}{2009}
+      \field{dateera}{ce}
+      \field{pages}{358\bibrangedash 366}
+      \range{pages}{9}
+      \verb{doi}
+      \verb 10.1016/j.jbankfin.2008.08.009
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

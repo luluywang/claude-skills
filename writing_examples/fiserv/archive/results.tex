@@ -1,0 +1,289 @@
+\documentclass[main.tex]{subfiles}
+
+\begin{document}
+\section{Results on Interchange Fee Redistribution}
+\label{sec:Results}
+We use the sufficient-statistics approach to quantify redistribution under several scenarios.
+We first quantify the distributional consequences of interchange fees by measuring redistribution relative to a zero-interchange benchmark, which corresponds to the regulatory environment in the E.U.
+We also assess the degree to which the resulting redistribution is progressive or regressive across the income distribution.
+
+We use the next counterfactual to illustrate that the Durbin Amendment, the major regulation of U.S. interchange fees, results in a regressive redistribution across consumers, i.e., benefiting higher-income households at the expense of lower-income ones.
+Given the 2025 North Dakota court ruling (\textit{Corner Post v. Fed}) that declared the implementation of the Durbin Amendment unlawful, this remains a highly relevant policy question.
+
+Finally, we show that the largest losers from the rise of premiumization in the credit card market are debit card users, not cash users, who frequently shop at merchants patronized by premium card users.
+These results show that merchant-level heterogeneity shapes cross-subsidization.
+
+\subsection{Existing Benchmarks}
+
+Before presenting our results, we conceptualize them in the context of existing debates.
+Public discussion of interchange fees is polarized between two extreme views. 
+Merchant groups characterize the fees as a ``hidden tax,'' describing the \$100 billion in annual interchange fees as money siphoned from the economy \citep{MerchantPaymentsCoalition2024}. 
+Bank lobbyists instead frame interchange solely as funding for consumer rewards, ignoring that the fees can inflate retail prices \citep{BPI2024}. 
+Both views fail to recognize that interchange fees transfer consumption, rather than imposing pure costs or providing free benefits.
+
+Academic research has attempted to quantify this transfer. Following the logic of \citet{schuh2010gains}, if we focus on credit card versus cash users and assume homogeneous shopping behavior, the calculation is straightforward. U.S. merchants paid approximately \$80 billion in credit card interchange fees in 2022. With credit cards representing roughly half of payment volume, cash users cross-subsidize credit users by approximately \$40 billion annually.
+
+Our analysis yields a more modest estimate of approximately \$\absinput{combined_dollar_headline} billion, but more importantly, it reveals a richer picture of who pays whom. Three findings stand out. First, within-card distinctions matter: regulated and exempt debit cardholders face very different outcomes, as do basic and premium credit cardholders. Second, debit card users---not just cash users---subsidize credit card rewards. Regulated debit cardholders pay almost as much as cash users, a finding obscured by the traditional credit-versus-cash framing. Third, consumer sorting across merchants and merchant fee heterogeneity attenuates cross-subsidization. As \citet{Gans2018} recognized, consumers do not shop randomly; cash and credit card users patronize somewhat different stores. Neverthelss, because we have access to previously unavailable merchant-level data on payment volumes, we can empirically show that sorting reduces but does not eliminate the regressive transfer.
+
+% The strength of our data and our framework is that we can incorporate heterogeneity in consumer behavior and interchange fees across merchants.
+% We decompose the degree to which consumer sorting across merchants and negotiated interchange fees affect the estimates of redistribution across different consumer groups.
+% We compare our results with existing benchmarks that assume either no consumer sorting across merchants or perfect sorting combined with a uniform fee schedule.
+
+\subsection{The Redistributive Effects of Interchange Fees\label{subsec:eliminate-interchange}}
+
+We study how interchange fees affect retail prices and rewards, and thus redistribution. 
+We apply our framework to the 2022 cross-sectional data on sales and fees by card type.
+In our main exercise, we measure redistribution relative to a zero-interchange benchmark.
+We choose this as a benchmark for two reasons.
+First, it corresponds to the regulatory environment in the European Union, which caps most interchange fees near zero, making this counterfactual directly policy-relevant for comparing U.S. and E.U. payment systems.
+Second, zero interchange is still consistent with positive merchant fees, as merchant acquirers can still charge a separate margin to cover their own costs.
+
+% Second, we set the benchmark to zero rather than the cost of cash because our measure of interchange fees already nets out network fees and acquirer margins, isolating the pure transfer between payment types.
+% This netting approach allows us to focus on the redistributive effect of interchange pricing across consumers using different payment methods.
+
+% Interchange fees have two offsetting effects on consumers as a whole.
+% On one hand, interchange fees fund rewards that consumers earn when paying with debit or credit cards.
+% On the other hand, merchants face higher transaction costs, which leads to higher retail prices that hurt all consumers.
+
+% While these effects cancel out in the aggregate, they generate substantial distributional consequences depending on how consumers sort across merchants.
+% When consumers using low-fee payment methods shop at merchants that primarily serve consumers using high-fee payment methods, the low-fee consumers subsidize the rewards of high-fee consumers.
+% In contrast, if consumers with different payment methods sort perfectly across merchants (when payment methods are used at disjoint set of merchants), then there is no redistribution.
+% This sorting of consumers to merchants is therefore central to understanding who bears the costs of interchange fees.
+
+\subsubsection{Sufficient Statistic Across Fee Components}\label{cor:fee-components}
+
+Interchange fees have broadly three components: (i) the average fee charged for a given payment method (the baseline fee), (ii) sector-level variation in fees (e.g., travel versus groceries), and (iii) whether individual merchants negotiate their fees.
+Our framework allows us to calculate the redistributive effects of these underlying components across consumer groups.
+
+\paragraph{Baseline Fees}
+
+The total effect of the baseline fee $\tau_l$ on consumers who use payment method $k$ is
+\begin{equation}
+A_{kl}=\overline{\tau}_{l}\times\left(- \mu_k^{-1} \mathbb{E}_{R}\left[\mu_{jk}\mu_{jl}\right] + \mathbbm{1}\left\{ k=l\right\}\right)\label{eq:baseline-effect}
+\end{equation}
+
+The two terms illustrate how changes in the overall fee level redistribute surplus across payment types.
+The first term captures the effect of an increase in the baseline fees on card $l$ on retail prices.
+The harm to consumers of card $k$ from retail prices is proportional to how much consumers of card $k$ and card $l$ overlap across merchants, captured by $\mathbb{E}_{R}[\mu_{jk}\mu_{jl}]$.
+The second term captures the benefit to card $l$ consumers through higher rewards.
+
+The formula highlights the importance of second-moments in determining the redistributive effects of payment fees. 
+When consumers with different payment methods shop at disjoint sets of merchants, as in \citet{Gans2018}, we have $\mu_{jk}\mu_{jl}=0$ for all $j$ whenever $k\neq l$, and there is no redistribution.
+Conversely, when merchants are homogeneous with respect to their payment mix, so that $\mu_{jk}=\mu_{k}$ for all merchants $j$, redistribution depends on the aggregate share of each card type, consistent with the intuition in \citet{Felt.etal2023}.
+Thus, the sufficient-statistics framework captures a wide range of economic environments---from perfect merchant homogeneity to full segmentation---allowing us to quantify redistribution in the presence of observed heterogeneity in payment behavior.
+
+\paragraph{Sector discounts $\tau_{sl}$:}
+The effect of the sector discounts $\tau_{sl}$ on the welfare of consumers who use payment method $k$ equals
+\begin{equation}
+S_{kl}=-\sum_{s}\tau_{sl}\times P_{R}\left(s_{j}=s\right)\mathbb{E}_{R}\left[\mu_{jk}\mu_{jl}\rvert s_{j}=s\right]\label{eq:sector-effect}
+\end{equation}
+where $P_R(s_j=s)$ is the revenue-weight of sector $s$ in the overall economy.
+The sector discount formula states that sector-specific discounts are transmitted sector-by-sector, in proportion to the overlap of consumers within each sector.
+Intuitively, if debit card and credit card consumers overlap more in groceries than in travel, then a fee discount for groceries and a higher fee for travel benefits debit card users at the expense of credit card users.
+Sector discounts do not affect rewards because the dollar-weighted average discount is zero by construction.
+
+\paragraph{Negotiated rates $\delta_{l}$:}
+The effects of negotiated fees $\delta_{l}$ on the welfare of consumers who use payment method $k$ equals
+\begin{equation}
+B_{kl}=\delta_{l}\times P_{R}\left(b_{j}=1\right)\left(- \mu_k^{-1} \mathbb{E}_{R}\left[\mu_{jk}\mu_{jl}\rvert b_{j}=1\right] + \mathbbm{1}\left\{ k=l\right\}\right)\label{eq:bargain-effect}
+\end{equation}
+where $P_R$ is the revenue-weight of firms that receive negotiated rates in the overall economy. The intuition behind this formula is the same as the baseline fee component. While the first term captures the effects of negotiated rates on retail prices, the second term captures the effect on rewards. The main difference is that the relevant measure of overlap is not the overlap at a generic merchant, but specifically the overlap at merchants that receive negotiated rates.
+
+\subsubsection{Redistribution Across Payment Types}
+
+The first contribution of our framework is that it allows us to quantify how interchange fees transfer across consumer groups and to provide more context regarding who pays for the cost of interchange fees.
+
+\paragraph{Cash vs. credit redistribution.}
+Table \ref{tab:redist} presents our estimates of redistribution across consumer groups.
+We compute the change in consumer surplus arising from interchange fees, accounting for consumer sorting and merchant fee heterogeneity.
+Effects are measured both as a percentage of each group's baseline expenditures and in dollar terms when scaled to approximately \$12 trillion in consumer retail purchases \citep{Nilson2023a}.\footnote{Consumer purchases are a subset of PCE since they exclude certain services such as imputed rent and investment management fees that are not paid using cards or cash.}
+
+Cash users lose from interchange fees because these fees raise retail prices at the merchants at which they shop.
+They do not benefit from rewards, since they never receive them in the first place.
+On average, cash-using consumers are worse off by about 1 percentage point of consumption.
+Across all cash users, this amounts to approximately \$\absinput{combined_dollar_cash_final} billion in lost annual consumption.
+It is helpful to put these changes in consumption in perspective.
+One natural benchmark is the sales tax, which serves as a tax on consumption.
+As of 2022, the average state sales tax rate in the U.S. was 6\%.\footnote{\url{https://taxfoundation.org/data/all/state/sales-tax-revenue-reliance-breadth/}} The cross-subsidization between cash and credit card users is equivalent to cash users effectively paying a \absinput{effective_tax}\% higher sales tax than premium credit card users.
+
+\paragraph{Regulated debit card users subsidize credit card rewards.}
+Even though much of the literature focuses on transfers between card and cash users, regulated debit card users also lose substantially from interchange fees.
+While these debit card holders can earn rewards, these are very small, especially compared to those of credit cards.
+The higher retail prices they face far exceed the modest rewards they receive. For this group, average consumer surplus decreases by about 0.4 percentage points of consumption, corresponding to approximately \$\absinput{combined_dollar_regulated_debit_final} billion in lost annual consumption.
+These findings indicate that cash users are not the only ones who subsidize credit card rewards.
+Regulated debit card users, who face lower fees and receive lower rewards, collectively contribute a similar order of magnitude in subsidy as cash users.
+
+Whereas cash and regulated debit card users lose from interchange fees, credit card users (basic and premium) gain.
+For this group, the rewards from interchange fees outweigh the costs from higher retail prices.
+On net, basic and premium credit card users gain \absinput{combined_basic_credit_final} and \absinput{combined_premium_credit_final} bps of consumption, respectively, amounting to \$\absinput{combined_dollar_basic_credit_final} and \$\absinput{combined_dollar_premium_credit_final} billion, respectively.
+In other words, the current system of interchange fees generates about \$\absinput{combined_dollar_headline} billion in transfers from cash and regulated debit card users to credit card users.
+
+\paragraph{Who pays for rewards?} 
+We can also quantify who receives and who pays for rewards in Figure \ref{fig:scatter_interchange}.
+We calculate how much each payment type contributes to the change in total card rewards when interchange fees increase from zero.
+These contributions reflect both card usage and reward levels, expressed relative to the overall change in retail prices.
+For example, premium credit card users receive \absinput{premium_credit_rewards}\% of rewards but pay only \absinput{premium_credit_fees_heterogeneous_merchants}\% of total interchange fees.
+This \absinput{premium_diff} percentage point gap represents a transfer to these consumers when they shop at the same merchants with consumers who use other payment methods.
+On the other end of the spectrum are cash users, whose share of rewards is zero but who pay for \absinput{cash_fees_heterogeneous_merchants}\% of interchange fees.
+They implicitly pay for \absinput{cash_fees_heterogeneous_merchants}\% of card rewards, representing a transfer from cash users to card users.
+
+The figure clearly illustrates why regulated debit card users ``pay" for rewards of credit card users under the current system.
+Regulated debit users receive \absinput{regulated_debit_rewards}\% of rewards but pay \absinput{regulated_debit_fees_heterogeneous_merchants}\% of interchange fees.
+Thus regulated debit cards substantially subsidize the rewards programs associated with more expensive payment methods, such as credit cards.
+Exempt debit card users, on the other hand, are almost indifferent to interchange fees as a group.
+Their share of rewards is very similar to the implicit cost they pay.
+In other words, exempt debit card users pay for their own rewards.
+
+\paragraph{Putting the numbers in context}
+
+The transfers from interchange fees that we estimate are at least as large as other transfers in credit card financial markets as well as many government insurance programs.
+For credit cards, the consumer losses from shrouded credit card fees are estimated at \$10 billion \citep{agarwal2015regulating,Hurst.etal2016}; transfers arising from credit card interest rates are estimated to redistribute \$18 billion from low credit score consumers to high credit score consumers \citep{Agarwal.etal2022}.
+Inter-regional transfers due to the GSEs' lack of risk-based pricing amount to \$15 billion, and consumers' losses from high-fee index funds amount to \$20 billion \citep{agarwal2015regulating,Hurst.etal2016}.
+These annual transfers are substantial even when measured relative to the outlays of many government social insurance programs, such as SNAP benefits (\$120 billion), EITC (\$57 billion), and regular unemployment insurance (\$40 billion).
+
+\subsubsection{The Effects of Consumer Sorting and Negotiation on Redistribution Estimates}
+
+The second contribution of our framework is that it allows us to quantify the extent to which consumer sorting and merchant fee heterogeneity reduce the amount of redistribution. Ultimately, we find that ignoring these two forces inflates the amount of redistribution by around one-third.
+
+We define the effects of consumer sorting as equaling the difference between the welfare effect of the baseline fee $A_{kl}$ under the empirical distribution of payment shares $\mu_{kl}$ and the welfare effect of the baseline fee under the assumption that all firms have the same composition of payments.
+The effects of sector discounts and negotiated fees are then precisely $S_{kl}$ and $B_{kl}$, and we group these two terms to describe the overall effects of fee heterogeneity.
+
+We decompose the effect of consumer sorting and the effect of differences in fees across merchants in Table \ref{tab:redist}.
+Assuming homogeneous shopping behavior and homogeneous fees across merchants inflates redistribution losses to cash consumers by about one-third and overestimates gains by premium credit users by about one-half.
+Formally, under the homogeneity assumption, cash users would lose approximately \$\absinput{combined_dollar_cash_naive} billion from interchange fees.
+Similarly, premium credit card users would gain \$\absinput{combined_dollar_premium_credit_naive} billion.
+The homogeneity assumption also significantly overstates the effect on debit card consumers, especially on exempt debit, where the losses are overstated by a factor of 3.
+
+Consumer sorting has a predictable impact of reducing redistribution across every segment.
+The losses to cash and debit card users are reduced, as are gains to all card consumers.
+Consumer sorting also explains most of the difference between our full model and the model that assumes merchant homogeneity.
+For example, for premium card consumers, the homogenous model overestimates gains by \$8.8 billion relative to the heterogeneous benchmark; consumer sorting accounts for \$8.1 billion of the difference.
+Intuitively, premium cardholders disproportionately shop at premium card-accepting merchants.
+The reverse is true for cash and debit consumers.
+
+The case of exempt debit consumers illustrates how consumer sorting and merchant fee heterogeneity can work in opposite directions.
+Under the homogeneous model, exempt debit consumers would lose approximately \$\absinput{combined_dollar_unregulated_debit_naive} billion from interchange fees.
+Our heterogeneous model reduces this estimate by a factor of three to \$\absinput{combined_dollar_unregulated_debit_final} billion.
+This attenuation reflects exempt debit users' shopping patterns: they tend to shop alongside consumers whose payment methods have lower interchange fees (e.g., cash, regulated debit) rather than alongside credit card users.
+
+However, consumer sorting and negotiated fees push in opposite directions for this group.
+Sorting alone would reduce exempt debit losses even further---nearly to break-even---because these consumers avoid the merchants frequented by premium credit users.
+However, large merchants negotiate substantial discounts on exempt debit interchange fees in particular.
+As a result, exempt debit users who shop at these merchants earn lower rewards than they would at non-negotiating merchants, offsetting much of the benefit from favorable sorting.
+In fact, negotiation undoes about one-third of the benefit from consumer sorting for exempt debit users.
+
+This case illustrates a broader point: variation in fees across merchants does not have a clean monotonic effect on redistribution.
+Both cash and regulated debit consumers benefit from negotiated fees, while exempt debit and premium credit consumers lose from them.
+The key is how negotiated discounts vary across payment methods.
+Large merchants secure especially deep discounts on exempt debit and premium credit interchange, reducing the rewards available to users of these cards.
+Cash and regulated debit users, whose interchange fees are already low, benefit from lower retail prices at negotiating merchants without a commensurate loss in rewards.
+Overall, the decomposition demonstrates that consumer sorting and negotiated fees each have first-order effects on redistribution, and these effects can reinforce or offset each other, depending on the consumer group.
+% Consumer sorting is critical to this result.
+% The beneficiaries of negotiated fees are consumers who, when shopping at such merchants, tend to shop around consumers who would otherwise have relatively higher interchange fees.
+% So for basic credit consumers, the benefit arises because the merchants who have negotiated fees also have a somewhat higher share of premium credit purchases.
+% The effect of redistribution arising from negotiation is significant at about 3.7 billion, albeit smaller than consumer sorting which results in about 8.5 billion in transfers.
+% Overall, this decomposition demonstrates that consumer sorting and negotiated fees have a first-order effect on the amount of redistribution across consumers from interchange fees.
+
+\subsubsection{Interchange Fees Result in Regressive Redistribution}
+
+Higher-income consumers use higher-fee payment methods, suggesting that the resulting redistribution is regressive.
+Accordingly, we measure the extent of regressiveness.
+We combine the results on redistribution across payment methods with payment use by income (Figure \ref{fig:payment_income}).
+At each income level, we calculate the net effect as a weighted average of the consumption impacts across payment types, using as weights the market shares of each payment method among households at that income level.
+We then map these effects to dollar transfers by assuming that consumers of all income levels have the same proportion of purchases to income, and by scaling up total purchases to $\$12$ trillion \citep{Nilson2023a}.
+
+We find that interchange fees generate a large regressive transfer from households with incomes below $\$150,000$ to those with incomes above that level.
+In dollar terms, this is a transfer of around \$\absinput{cap_high_income_per_hh} per year to households with incomes above $\$150,000$ per year, funded by households with incomes below that cutoff who lose around \$\absinput{cap_low_income_per_hh} per year.
+Cumulatively, high-income households gain around \$\absinput{cap_high_income_loss_dollars} billion from interchange fees, whereas low-income households lose around the same amount.
+Our findings help explain why high-income consumers may resist adopting new low-cost payment innovations, such as FedNow or central bank digital currencies: because they benefit from current reward structures, they have weak incentives to switch to low-cost alternatives.
+
+\subsubsection{Robustness}
+\label{subsubsec:robustness}
+
+Our benchmark sufficient statistic makes strong assumptions on the pass-through of interchange fees to retail prices and consumer rewards. We also assume that establishment-level prices depend only on the composition of payments at the merchant level. We relax these assumptions below.
+
+\paragraph{Comparison to calibrated structural model.}
+Our sufficient statistic assumes that interchange fees are fully passed through to retail prices and that the effects of a discrete change in interchange fees are well approximated by the local effects of small changes in fees.
+We systematically evaluate these two potential sources of error with our structural model and find that relaxing these assumptions does not change our finding of substantial redistribution.
+
+As a preliminary step, we first confirm that our calibration successfully replicates the key moments of the empirical data. The first row of Table \ref{tab:compare-ss-model} reproduces our baseline sufficient statistic based on the Fiserv data.
+The second row computes the sufficient statistic in the synthetic data generated from the calibrated structural model assuming perfect pass-through ($j^*=50$ large firms per market, approximating perfect competition).
+The close similarity between the sufficient statistics in the actual data (row 1) and synthetic data (row 2) confirms that the structural model is well calibrated to the moments used in the sufficient statistic.
+
+We next isolate the approximation error from using the sufficient statistic rather than solving the full equilibrium.
+Unlike the sufficient statistic, which assumes that the welfare effects of reallocating consumption across merchants are negligible, the structural model allows consumers to fully re-optimize their spending across merchants in response to price changes (row 3).
+The similarity in the results in rows 2 and 3 demonstrates that the second-order utility losses from consumer reallocation are negligible.
+This validates the envelope theorem intuition underlying our sufficient-statistics approach: since consumers are optimizing, the marginal benefit of reallocating consumption is zero, so the redistribution effect is well-approximated by the mechanical effect of price and reward changes evaluated at baseline consumption.
+
+Last, we find that assuming perfect pass-through actually understates the redistributive effects of interchange fees relative to a structural model of strategic interaction.
+Whereas merchants fully pass through their own costs into higher retail prices in the sufficient statistic, retail prices may reflect both idiosyncratic cost shocks and competitors' pricing behavior when firms have market power \citep{Amiti.etal2019}.
+To evaluate the effects of strategic complementarities in pricing, the fourth row of Table \ref{tab:compare-ss-model} shows the results when we calibrate a model with two large firms per sector, in addition to a fringe of monopolistically competitive firms.
+Appendix \ref{sec:appendix-calibrated} shows that, in this calibration, the large firms only pass through half of their idiosyncratic cost shocks.
+Our evidence from the Durbin Amendment (Appendix \ref{sec:appendix_durbin}) confirms that restaurants (which are typically quite small) appear to pass through interchange fees to prices, consistent with the monopolistically competitive fringe in our structural model.
+In light of the evidence from restaurants, the structural model can be seen as a principled way to extrapolate from the pass-through behavior of small merchants to that of larger merchants.
+
+Surprisingly, the structural model finds even greater redistribution from cash and debit card users to credit card users.
+Intuitively, strategic complementarity implies that even merchants that do not serve premium credit consumers may raise their prices in response to premium credit interchange fees, simply because competitors are raising prices.
+This mechanism ``socializes'' the cost of premium credit rewards across all consumers, including those shopping at stores where premium cards are rarely used.
+
+\paragraph{Imperfect rewards and price pass-through.}
+While the structural model captures strategic pricing behavior, it still implies full pass-through of sector-level interchange fees to retail prices.
+If consumers can substitute away from retail consumption entirely in response to higher retail prices, then firms may not fully pass-through sector level shocks to interchange into higher retail prices.
+
+We can incorporate imperfect pass-through of retail prices and rewards into our sufficient-statistics framework by scaling the price and reward channels by their respective pass-through rates.
+The welfare formula in Theorem \ref{thm:sufficient-stat} has two terms: a price channel (how much consumers pay in higher retail prices) and a reward channel (how much cardholders receive in rewards).
+To compute welfare under imperfect pass-through, we scale each term by its respective pass-through rate.
+For example, when price pass-through is 70\%, consumers bear only 70\% of the retail price increase implied by interchange fees; when rewards pass-through is 70\%, cardholders receive only 70\% of the rewards implied by full pass-through (see Appendix \ref{sec:appendix-theory} for details).
+
+When both price and rewards pass-through fall to 70\%, redistribution dampens proportionally: the total transfer to credit card users falls to around \$20 billion.
+When price pass-through is low (70\%) but rewards pass-through remains full, credit card users benefit \textit{more} than they would in the baseline: premium credit users gain \$30.4 billion because they receive full rewards while bearing only partial price increases. 
+However, cash and regulated debit card users are still negatively impacted.
+When rewards pass-through is low (70\%) but price pass-through remains full, the pattern reverses: premium credit users gain only \$0.5 billion because they face full price increases while receiving only partial rewards.
+Cash and regulated debit users thus face a more signficant detriment here than in the baseline.
+These scenarios illustrate that the balance between price and rewards pass-through fundamentally shapes distributional consequences.
+
+\paragraph{Establishment-level shares.}
+Our baseline analysis aggregates payment shares to the corporate level, which requires that establishment-level pricing reflects average interchange fees at the corporate level. 
+This may overstate redistribution if establishments within the same firm can set retail prices that depend only on the local composition of payments.
+The last row of Table \ref{tab:sensitivity-analysis} reports estimates of redistribution if we use the distribution of establishment-level payment shares in the computation of the sufficient statistics.
+The estimates are similar to our baseline, suggesting that corporate-level aggregation does not materially affect our conclusions.
+
+\subsection{Effects of the Durbin Amendment}
+
+Our framework also sheds light on the redistributive impact of the Durbin Amendment.
+This counterfactual is especially relevant in light of the recent 2025 North Dakota court ruling (\textit{Corner Post v. Fed}) that declared the implementation of the Durbin Amendment unlawful and was temporarily stayed pending an appeal.
+The Durbin Amendment was designed to limit interchange fees on debit card transactions.
+We compute this counterfactual by replacing all fee components for regulated debit---baseline fees, sector adjustments, and negotiated discounts---with those of exempt debit, then re-normalizing so that the dollar-weighted average sector adjustment remains zero.
+Table \ref{tab:durbin} presents an estimate of the effects of this regulation.
+Regulated debit card users were hurt by the regulation, with their surplus decreasing by \absinput{durbin_regulated_debit_final} basis points of consumption (\$\absinput{durbin_regulated_debit_dollar_final} billion).
+Intuitively, prior to Durbin, high debit interchange funded free checking accounts for such consumers, and these perks went away after the regulation \citep{Mukharlyamov.Sarin2025}.
+While debit card users were adversely affected, other users benefited from substantially lower retail prices, so the benefit accrued to cash, exempt debit, and credit consumers.
+Ultimately, credit consumers' surplus increased by around \$\absinput{durbin_credit_users_total} billion and cash users gained \$\absinput{durbin_cash_dollar_final} billion, while regulated debit consumers lost \$\absinput{durbin_regulated_debit_dollar_final} billion.
+
+The Durbin Amendment tends out redistribute consumer surplus from middle-income to high-income consumers (Figure \ref{fig:redistribution_durbin}).
+Because benefits accrue to consumers whose payments are more prevalent among low-income consumers (e.g., cash) as well as high-income consumers (e.g., premium credit), whether the Durbin Amendment is progressive or regressive is a priori unclear.
+However, when we apply the payment shares from Figure \ref{fig:payment_income}, we find that low-income consumers were relatively unaffected, middle-income consumers were hurt the most by the Durbin Amendment, and higher-income consumers benefited (Figure \ref{fig:redistribution_durbin}).
+This pattern arises because low-income consumers are likely to use both cash and debit cards.
+Whereas the low-income debit card users were negatively impacted, low-income cash users benefited from lower retail prices.
+At the other end of the spectrum, high-income households are most likely to use credit cards, and thus they benefit from lower retail prices while their rewards are unaffected.
+Ultimately, middle-income consumers who primarily use debit cards bore the brunt of the Durbin Amendment.
+Cumulatively, this transfer was around \$\absinput{cf_durbin_dollars} billion from middle-income to high-income consumers.
+
+\subsection{Who Pays for Premiumization?}
+
+Lastly, we examine the redistribution effects of the rise in premium credit cards.
+Premium credit cards have recently come into the spotlight due to a proposed settlement that would allow merchants to selectively decline high-fee cards \citep{Andriotis2025}.
+As documented in Section \ref{sec:costs} and Figure \ref{fig:premium_credit_ts}, the share of premium credit cards increased from 15\% in 2006 to over 60\% in 2022.
+Since the average interchange rate on premium cards is \absinput{fees_nobargain_premium_credit}\%, compared to \absinput{fees_nobargain_basic_credit}\% for basic cards, this shift has raised total credit card interchange fees by roughly 20\%.
+
+Table \ref{tab:premiumization} reports the redistributive effects of the rise in premium credit cards compared to a benchmark where the fees on premium credit cards equal those on basic credit cards.
+We compute this counterfactual by replacing all fee components for premium credit---baseline fees, sector adjustments, and negotiated discounts---with those of basic credit, then re-normalizing so that the dollar-weighted average sector adjustment remains zero.
+Figure \ref{fig:redistribution_premiumization} displays the corresponding redistributive impact of increased premiumization across household income levels.
+Unsurprisingly, premium cardholders benefit from the increase in premiumization: their surplus increases by \absinput{premiumization_premium_credit_final} basis points of consumption (about \$\absinput{premiumization_premium_credit_dollar_final} billion).
+By contrast, cash users, exempt debit users, regulated debit users, and basic cardholders are all hurt by the rise in premiumization.
+Interestingly, the largest costs in dollar terms accrue not to cash users, but to debit card users (both regulated and exempt) and basic credit card users.
+These groups shop more frequently at the same merchants as premium cardholders, and therefore bear a greater share of the burden from the higher interchange fees associated with premium cards.
+Moreover, because all consumers face the same prices regardless of payment method, consumers have incentives to adopt the most expensive card offering the most generous rewards.
+Consequently, costly payment methods, such as premium credit cards, tend to crowd out cheaper ones, such as basic cards, which helps to explain the rise of premiumization.
+
+\end{document}

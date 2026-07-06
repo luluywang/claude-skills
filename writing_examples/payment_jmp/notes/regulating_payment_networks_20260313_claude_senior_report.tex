@@ -1,0 +1,91 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}\onehalfspacing
+\usepackage{amsmath,amssymb,hyperref}
+\usepackage{enumitem}
+\setlength{\parindent}{0pt}\setlength{\parskip}{0.5em}
+
+\begin{document}
+\title{Referee Report (Contribution Focus)\\for ``Regulating Competing Payment Networks''}
+\author{}
+\date{}
+\maketitle
+
+\section{Summary of the Paper}
+
+This paper develops and estimates a structural model of competition between payment networks (Visa, Mastercard, American Express, debit) that compete as two-sided platforms. Consumers choose payment cards, merchants choose which cards to accept and set retail prices, and networks set merchant fees and consumer rewards. The paper documents three reduced-form facts---that interchange revenue drives consumer payment choices (via the Durbin Amendment), that card acceptance increases merchant sales (via grocery chain event studies), and that merchants multi-home while many consumers single-home---and uses these to estimate the model.
+
+The main counterfactual findings are: (1) capping credit card merchant fees at 120 basis points raises welfare by \$27 billion; (2) repealing the Durbin Amendment's debit fee cap raises welfare by \$7 billion; (3) merging all networks into a monopoly raises total welfare by \$15 billion; and (4) dual-routing mandates that increase consumer multi-homing raise welfare by \$8 billion. The paper argues that the competitive bottleneck channels network competition toward consumer rewards rather than lower merchant fees, making competition welfare-reducing under price coherence.
+
+\section{Contribution Assessment}
+
+The paper's contribution is to quantify the welfare effects of the competitive bottleneck in two-sided payment markets by estimating a structural model that combines consumer multi-homing, merchant heterogeneity, and merchant competition with endogenous network pricing.
+
+This is a significant contribution. The theoretical insight that competition in two-sided markets can be welfare-reducing under price coherence is well-established (Edelman and Wright 2015; Rochet and Tirole 2003, 2011). The paper's advance is to estimate a model rich enough to deliver quantitative predictions about fee caps, mergers, and routing mandates. This is a meaningful step beyond existing work because (a) prior structural work on payments (Huynh et al.\ 2022) does not endogenize network pricing, and (b) prior theoretical work cannot deliver magnitudes. The provocative finding that a monopoly merger raises total welfare is attention-grabbing and does genuinely illustrate how the competitive bottleneck distorts two-sided pricing.
+
+However, there are important limitations to the magnitude of the advance:
+
+First, the central policy insight---cap credit card fees, not debit fees---is qualitatively predictable from existing theory. Armstrong (2006), Edelman and Wright (2015), and Rochet and Tirole (2011) all predict that competition for single-homing consumers inflates fees on the multi-homing side. The paper confirms this with a structural model, but the surprise factor is limited. A reader of the theoretical literature would predict most of the qualitative signs.
+
+Second, the welfare numbers depend heavily on assumptions that are acknowledged but unresolved: price coherence, credit-debit segmentation at the point of sale, CES-imposed pass-through, and the interpretation of ``credit aversion'' as a genuine preference rather than a constraint or measurement artifact. The quantitative contribution is only as reliable as these assumptions.
+
+Third, the paper's relevance is somewhat concentrated in U.S.\ payment market policy. While the theoretical mechanism is general, the empirical content (Durbin Amendment, Homescan grocery data, specific network structure) is U.S.-specific. The broader relevance to platform economics is asserted but not deeply developed.
+
+\section{Literature Positioning}
+
+The paper demonstrates strong command of the two-sided markets literature and positions itself well relative to the key theoretical contributions (Rochet and Tirole 2003, 2011; Armstrong 2006; Edelman and Wright 2015). The distinction from Huynh et al.\ (2022)---adding network competition and merchant competition---is clearly stated and important.
+
+Several concerns:
+
+The paper engages only briefly with the growing empirical IO literature on platform competition beyond payments. Rosaia (2020) on ride-sharing is cited, but Lee (2013) on video games and Song (2021) receive only passing mention. A deeper engagement with how this paper's mechanisms differ from or inform these other platform settings would strengthen the general-interest appeal.
+
+The comparison to Sullivan (2025) on food delivery is useful but undersells an important point: the welfare gains here depend entirely on price coherence, and Sullivan's finding that commission caps reduce welfare when price coherence is absent directly challenges the generalizability of this paper's results. The paper should engage more seriously with when price coherence holds and when it does not, rather than treating its presence as a maintained assumption.
+
+The paper does not engage with the growing literature on ``platform envelopment'' and multi-product platform competition (e.g., Eisenmann, Parker, and Van Alstyne 2011; Cennamo and Santalo 2013). Payment networks increasingly compete on dimensions beyond fees and rewards---fraud protection, data analytics, buy-now-pay-later integration---that this model ignores.
+
+The claim that the paper is the first to combine consumer multi-homing, merchant heterogeneity, and merchant competition in a structural model of payment networks appears accurate but should be stated more carefully. Teh et al.\ (2022) combine multi-homing with merchant heterogeneity theoretically; what's new is the estimation, not the theoretical combination per se.
+
+\section{Deal Breakers}
+
+\textit{Issues that prevent publication in current form:}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{The welfare results rest on ``credit aversion'' being a welfare-relevant preference parameter, but the paper does not convincingly establish this}
+
+    The entire \$27 billion welfare gain from fee caps comes from consumers switching away from credit cards when rewards fall. The paper interprets this as eliminating a distortion: consumers were ``excessively'' using credit cards because rewards compensated for non-pecuniary costs (credit aversion). But this interpretation requires that credit aversion represents a real social cost that consumers experience when using credit cards---budget control difficulty, debt temptation, hassle.
+
+    The paper acknowledges an alternative interpretation---that some consumers cannot obtain credit---and estimates a credit-constrained specification in the online appendix. But there are other interpretations that are not addressed. If consumers who use debit do so because of behavioral biases (loss aversion, mental accounting) that make them over-value debit relative to credit, then ``credit aversion'' is itself a bias, and eliminating it (via rewards) could be welfare-improving rather than welfare-reducing. The paper's welfare analysis assumes that whatever prevents consumers from using credit cards is a genuine cost, but this is a strong normative assumption that is not adequately defended.
+
+    The paper briefly mentions that ``to the extent that one believes revealed preference does not apply in payment markets, the average gain in consumer surplus can be subtracted from each group.'' This is insufficient. The paper should take a clear position on whether credit aversion is a preference or a bias and defend that position, because the sign of the welfare effect depends on it.
+
+    \textbf{Why this affects publishability:} The paper's headline welfare results change sign under plausible alternative interpretations of the key parameter driving them. A top journal paper making strong policy recommendations (\$27 billion welfare gain from fee caps) must establish that the parameter driving these results has a clear welfare interpretation.
+
+    \item \textbf{The quantitative contribution is fragile to untested functional form assumptions}
+
+    The paper's welfare magnitudes depend on (a) the CES demand structure that governs merchant fee pass-through, (b) the logit specification for consumer wallet choice, and (c) the Gamma distribution for merchant types. None of these are tested against alternatives.
+
+    The CES structure imposes that merchant fee pass-through is complete and governed by a single parameter $\sigma$. The paper acknowledges it ``does not estimate pass-through directly'' and lacks ``merchant-level interchange data matched to retail prices.'' Given that pass-through is central to the welfare analysis (it determines how much of the fee reduction reaches consumers as lower retail prices), this is a significant gap. The zero-pass-through robustness check is useful but binary---the real question is what partial pass-through implies, and how sensitive the \$27 billion figure is to intermediate values.
+
+    The logit specification imposes IIA within segments, which likely overstates substitution from credit to debit/cash when rewards fall. Random coefficients help but do not eliminate this concern.
+
+    \textbf{Why this affects publishability:} When the headline result is a specific dollar magnitude (\$27 billion), readers expect the paper to demonstrate that this number is not an artifact of untested functional form choices. The paper provides some sensitivity analysis but does not systematically vary the functional forms that most matter for the welfare calculation.
+
+\end{enumerate}
+
+\section{Other Issues}
+
+\textit{Issues that would improve the paper but are not blocking:}
+
+\begin{itemize}[leftmargin=*]
+    \item The monopoly counterfactual is provocative but the paper immediately walks it back (``These results do not support mergers''). It is unclear what this counterfactual adds beyond illustrating a mechanism already present in the theory. If the purpose is to show that competition is welfare-reducing, the Durbin repeal counterfactual already makes this point without the awkwardness of a merger-to-monopoly simulation that the author disclaims.
+
+    \item The CBDC/public entry counterfactual is underdeveloped and feels like an afterthought. It receives one paragraph and depends critically on the debit-credit segmentation assumption. Given the current policy interest in CBDCs, this deserves either a serious treatment or omission.
+
+    \item The paper could better distinguish between ``competition is harmful'' and ``the direction of competition matters.'' The current framing sometimes conflates the two. The dual-routing result suggests that redirecting competition is beneficial, which is a more nuanced message than ``competition is bad.'' The abstract's ``competition inflates credit card use and reduces welfare by \$15 billion'' framing is unnecessarily provocative given that the paper's actual recommendation is fee caps and routing mandates, not monopoly.
+
+    \item The comparison of the \$27 billion welfare gain to the CARD Act's \$12 billion is misleading because the CARD Act estimate is a consumer welfare gain while the \$27 billion is a total welfare gain that includes network losses. An apples-to-apples comparison should use the consumer surplus figure (\$28 billion) or acknowledge the different welfare concepts.
+
+    \item The paper focuses entirely on static welfare. Dynamic considerations---entry/exit of networks, innovation incentives, long-run investment in fraud prevention and security---are not discussed. Fee caps that reduce network profits by \$1.5 billion could have dynamic consequences that static welfare analysis misses.
+\end{itemize}
+
+\end{document}

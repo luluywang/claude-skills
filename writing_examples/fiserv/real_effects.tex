@@ -1,0 +1,88 @@
+\documentclass[main.tex]{subfiles}
+
+\begin{document}
+
+\section{Real Effects of Payments\label{sec:real_effects}}
+
+In this section, we show that payment costs have real effects on retail sales and prices.
+The pass-through of fees into prices is essential to cross-subsidization among cash, credit, and debit users.
+
+% For instance, if merchants do not pass through interchange fees into retail prices, then cross-subsidization between cash and card users does not occur; instead, merchants effectively bear the burden of subsidizing card rewards themselves.
+Documenting the real effects of interchange fees motivates our subsequent analysis of cross-subsidization in \ref{sec:redistribution}.
+
+\subsection{The Heterogeneous Effects of the Durbin Amendment}
+
+% One challenge in studying the real effects of interchange fees is that it requires both granular data---at the merchant level---on interchange fees and merchant outcomes, as well as exogenous variation in interchange fees.
+% Using our detailed merchant-level data, we exploit heterogeneity in the impact of the Durbin Amendment across merchants to show that interchange fees affect the allocation of consumption and retail prices.
+
+The 2011 Durbin Amendment, passed as part of the Dodd-Frank Act, imposed a binding cap on debit card interchange fees for banks with over \$10 billion in assets that had highly heterogeneous effects across merchants.
+As illustrated in Figure \ref{fig:interchange_ts}, the Durbin Amendment had a substantial impact on debit interchange fees while having no effect on credit interchange.
+
+% The amendment created sharp, plausibly exogenous variation in interchange fee savings across merchants, driven by three forces.
+% First, only merchants with substantial sales via debit cards saw cost savings.
+% Second, because the cap includes a fixed 22-cent component, the percentage reduction in fees was larger for merchants with larger average transaction sizes.\footnote{
+%     An inspection of Visa's public interchange fee schedules before and after the policy suggest that most regulated debit fees bunched at the cap.
+%     In principle, the Durbin Amendment could have forced the networks to cut debit fees for the largest merchants even more to incentivize said merchants to stay on the Visa and Mastercard networks.
+%     However, Figure \ref{fig:price-disc-size} shows regulated debit fees are similar at both large and small firms, suggesting this additional negotiation channel was not a major force.
+% } 
+% Third, the amendment's impact varied by region: only merchants in areas with large, regulated banks experienced fee changes, while merchants in areas without such banks were unaffected, providing a natural control group. 
+% We use our detailed merchant-level data to measure these forces precisely.
+
+We study the effects of the Durbin Amendment on restaurants.\footnote{We focus on restaurants because they are one of the only sectors with large, heterogeneous effects of the Durbin Amendment.
+Heterogeneous effects require large changes in both the fixed and linear fee.
+According to Visa's public interchange fee schedules before and after the policy \citep{Visa2010}, the change in fixed fees was much smaller for retailers and gas stations (from 15 cents to 22 cents), whereas there was no change in the linear fee for grocers. } Figure \ref{fig:durbin-het-inputs} examines how the policy had heterogeneous effects across restaurants.
+Figure \ref{fig:durbin-het-ticket} binscatters average firm-level debit interchange rates, $\tau_j$, against the average pre-regulation transaction size of debit cards, $t_j$.
+We measure firm-level interchange fees as the dollar value of interchange fees divided by the total dollar volume of transactions, and we measure transaction size as the total dollar volume of debit transactions divided by the total number of debit transactions.
+By comparing the two curves, we see that the regulation increased interchange fees for restaurants with low ticket sizes and decreased them for restaurants with large ticket sizes.
+
+This change occurred because the Durbin Amendment changed the structure of debit interchange for restaurants from a large linear fee with a low fixed fee ($1.19\%$ of transaction value + $10$ cents) to a low linear fee with a high fixed fee ($0.05\%$ of transaction value + $22$ cents) \citep{Visa2010}.
+
+Figure \ref{fig:durbin-het-regulated} binscatters average debit interchange fees against the post-Durbin share of debit transactions on regulated cards at the ZIP code level, $r_{z(j)}$, both before and after the regulation.
+Using post-Durbin data, we calculate the share of debit card transactions at restaurants in each ZIP code conducted on regulated cards.\footnote{ We measure the regulated bank share at the ZIP-code level rather than merchant level to address endogeneity concerns: merchant-level bank shares measured after the regulation may reflect endogenous changes in merchant customer composition, while ZIP-code level variation provides plausibly exogenous geographic variation in treatment intensity. } After the Durbin Amendment, average interchange rates declined sharply in areas with a higher share of regulated banks.
+
+\subsection{Estimation}
+
+We implement an instrumented difference-in-differences design that compares restaurants varying in their expected gains from the Durbin Amendment based on pre-regulation characteristics across areas with differential exposure to regulated banks.
+We estimate:
+
+\begin{equation}
+\Delta y_{j}=\beta\Delta\tau_{j} + \gamma X_j + \delta_{z(j)} + \epsilon_{j}\label{eq:durbin}
+\end{equation}
+where $\Delta y_{j}$ is the change in log sales at merchant $j$ in the year following the Durbin Amendment (October 2011 to October 2012), $\Delta\tau_{j}$ measures the average change in credit and debit interchange fees (expressed as percentage points) at merchant $j$ following the Durbin Amendment, $X_j$ are firm-level controls, and $\delta_{z(j)}$ are ZIP-code fixed effects.
+The coefficient $\beta$ measures the percentage change in sales for each percentage-point change in fees; $\beta = 1$ corresponds to full pass-through of fees to prices.\footnote{ We model pass-through using a standard log-linear specification common in the tax literature.
+The standard log-log pass-through regression regresses $\log P\left(1+\tau\right)$ on $\log\left(1+\tau\right)$ \citep{Butters.etal2022}.
+Since interchange fees are small relative to prices, this is nearly identical to our specification on the right-hand side, except where we replace log price with log sales in some regressions. }
+
+The raw change in fees $\Delta \tau_j$ is mechanically related to changes in consumer composition at the firm level (e.g., if growing firms attract more debit users).
+Therefore, we construct an instrument for $\Delta \tau_j$ based on pre-Durbin merchant characteristics and post-Durbin geographic characteristics.
+Formally, we construct the instrument as:
+
+\begin{align}\widetilde{\Delta\tau_{j}} & = r_{z(j)}\times d_{j}\times\left(\tau^{\text{Reg Debit,Post}}(t_{j})-\tau^{\text{Exempt Debit,Post}}(t_{j})\right) \\
+    \tau^{\text{Reg Debit,Post}}(t_{j}) & = 0.0005 + \frac{0.22}{t_j} \\
+    \tau^{\text{Exempt Debit,Post}}(t_{j}) & = 0.0119 + \frac{0.10}{t_j}
+\end{align}
+Given this design, we include $\tau^{\text{Reg Debit,Post}}(t_{j}) - \tau^{\text{Exempt Debit,Post}}(t_{j})$ and $d_j$ as controls in $X_j$.
+
+We report results for the one-year change in sales in columns (1)-(2) of Table \ref{tab:durbin-iv}.
+Column (1) presents OLS estimates, while column (2) presents our IV estimates.
+The OLS results indicate that a one-percentage-point increase in average interchange fees leads to approximately a \absinput{durbin_iv_1Y_Sales_OLS}\% decrease in sales.
+However, as discussed previously, there are many reasons why increases in interchange rates are mechanically associated with lower sales.
+Column (2) then presents IV estimates that a one-percentage-point increase in average interchange fees causes a \absinput{durbin_iv_1Y_Sales_IV}\% decrease in sales.
+Columns (3) and (4) show the two-year effects.
+Assuming full pass-through of interchange fees to prices ($\beta = 1$), these estimates imply a demand elasticity of around \absinput{durbin_iv_avg_elast}.
+
+% This elasticity is comparable to the elasticity of around $5$ found in \citet{Sullivan2024}'s study of restaurants using detailed transaction data.
+
+This decline in sales could reflect either a price increase or a decline in product quality (e.g., a rise in the quality-adjusted price).
+Although we do not observe the prices set by the restaurants, we do observe average transaction sizes as a proxy for price.
+
+% Average transaction size is a potential proxy for price if consumers respond to higher restaurant prices by going to a restaurant less often while ordering the same quantities for any given trip.
+Column (5) shows that increases in interchange are strong negative predictors of average transaction size.
+This reflects the mechanical negative correlation between transaction size and percentage interchange rates that arises when interchange fees have fixed components.
+Column (6) shows that our IV estimate instead finds that a one percentage point increase in interchange causes a roughly one-for-one increase in prices, although with substantial standard errors.
+The pass-through of costs in this setting is consistent with findings in \citet{Amiti.etal2019} that small firms tend to pass through costs one-for-one to prices.
+
+% To rule out the possibility that merchants are merely steering customers toward card payments by imposing cash-discounts or surcharges, we re-estimate our Durbin-Amendment effects using only the ten states that prohibit any form of card surcharging (Table \ref{tab:durbin-surcharging}).\footnote{These states are California, Colorado, Connecticut, Florida, Kansas, Massachusetts, Maine, New York, Oklahoma, and Texas.} If payment-method steering were driving the sales responses, we would expect these effects to dissipate where surcharges are illegal. Instead, the one-year instrumented estimates in this no-surcharge subsample are similar to our full-sample results, though the two-year estimates are somewhat larger and less precise.
+% This persistence demonstrates that the increase in card sales following lower interchange fees cannot be attributed to merchants manipulating payment choices, but rather reflects genuine adjustments to posted prices that apply to all customers.
+
+\end{document}

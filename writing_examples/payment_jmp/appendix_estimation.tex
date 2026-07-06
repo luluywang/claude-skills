@@ -1,0 +1,66 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+
+\section{Estimation Details}
+\label{sec:appendix-estimation}
+
+I estimate the model by matching data and simulated moments. Inference is by bootstrap.
+Table \ref{tab:data-coverage} maps each data source to the parameters it identifies.
+
+\subsection{Bootstrap Inference}
+
+Standard errors come from 100 bootstrap samples.
+% CONSTANT: bootstrap sample count, design choice
+Each sample redraws data moments independently across datasets, preserving within-block correlation at fixed sample sizes.
+% CONSTANT: five bootstrap blocks, design choice
+For each draw, I re-estimate the full model and re-simulate all counterfactuals.
+Reported standard errors are the standard deviations of these bootstrap distributions.
+
+\subsection{Consumer Parameters}
+
+\paragraph{Random coefficients $\Sigma$.} Two sets of survey moments pin down $\Sigma$.
+In the 2024 second-choice survey, I compute the share of credit card users who would switch to cash if credit cards did not exist and the analogous share for debit users.
+I simulate these by dropping the relevant wallets from the choice set and computing joint first- and second-choice probabilities using the logit formula of \textcite{Berry.etal2004}, integrating over income and random coefficients.
+The second set of moments is the shares diverting to the same card type on a different network when their bank drops their primary card, also from the 2024 survey.
+I adjust for within-network bank moves (Online Appendix~\ref{subsec:oa-network-diversion-construction}).
+To match these, I perturb $\Xi^{w_1}$ for each primary card and measure the market-share-weighted diversion share.
+
+\paragraph{Mean reward sensitivity $\alpha_0$.} I target the last post-period coefficient from the Durbin event study using issuer-level Nilson data (2007--2014; Figure \ref{fig:volumes}).
+I simulate the equilibrium effect of a 25 bps cut to debit rewards to match it.
+% CONSTANT: modeling choice based on Hayashi (2012)
+
+\paragraph{Income gradients $\beta_y$ and $\alpha_y$.} For $\beta_y$: I compute mean log income by primary payment type in the DCPC (2017--2019; Table \ref{tab:dcpc-income-reg}).
+Since $\Pr(\text{wallet} = w \mid y)$ is given by $\tilde{\mu}^w_y$, Bayes' rule pins down expected income by payment type, and $\beta_y$ is set to match (Table \ref{tab:dcpc-income-reg}).
+
+For $\alpha_y$: I target the elasticity of switching probability with respect to income among credit card holders asked whether they would switch issuers if rewards halved (Table \ref{tab:income-sens}).
+In a conditional logit with small issuer shares ($s_{ij} \ll 1$), switching probability is proportional to $\alpha_i$, so this elasticity directly reveals $\alpha_y$.
+
+\paragraph{Multi-homing parameters $\chi^{lm}$, $\chi^{lm}_y$, $\omega$, $\pi$.} From Homescan (2017--2019), I compute the conditional probability $\hat{P}(l \mid k)$ that a household's secondary card is type $l$ given primary type $k$, for $(k, l) \in \{\text{(credit, debit), (debit, credit), (credit, credit)}\}$. I compute these separately for above- and below-median income households. The model counterparts are the analogous conditional probabilities, re-derived from the simulated adoption shares $\tilde{\mu}^w_y$ separately for each income group.
+The level of each conditional probability (averaged across income groups) identifies $\chi^{lm}$; the income gradient identifies $\chi^{lm}_y$.
+The weight $\omega$ is matched to the gap between Visa's share among primary and secondary credit cards.
+The spending share $\pi$ is matched to the average primary card spending share among multi-homing households (Table \ref{tab:top-two}).
+These eight moments exactly identify the eight multi-homing parameters: six conditional probabilities (three card-type pairs $\times$ two income groups), the Visa primary/secondary gap, and the spending share.
+
+\paragraph{Mean unobserved characteristics $\bar{\Xi}_j$.} I match dollar spending shares by network from the Nilson Report (2019).
+In the model, $d_j / \sum_{j'} d_{j'}$ gives the simulated counterpart, where $d_j$ is defined in Equation~\ref{eq:dollars}.
+
+\subsection{Network Parameters\label{subsec:appendix-estim-network}}
+
+Visa Debit, Visa Credit, and MC Debit fees come directly from network financial data (2019). MC Credit and AmEx fees are less precisely measured, so I estimate them.
+
+\paragraph{Adoption utilities $A_j$ and network marginal costs $c_j$.} I seek $A_j$ and $c_j$ satisfying two conditions: each network's first-order condition for $A_j$ holds at $c_j$, and inverting Equation~\ref{eq:adoption-pecuniary-gain} yields implied rewards matching observed per-dollar rates $r_j = f^j / s_j$, where $s_j$ is the spending share of a single-homer on network $j$.
+Cash and debit rewards are set to zero.
+
+\paragraph{Mean merchant benefit $\bar{\gamma}$ and unobserved merchant fees.} Visa Credit's first-order condition with respect to its merchant fee pins down $\bar{\gamma}$.
+The analogous first-order conditions for MC Credit and AmEx identify their merchant fees.
+
+\subsection{Merchant Parameters\label{subsec:appendix-estim-merch}}
+
+\paragraph{Benefit dispersion $\nu_\gamma$.} I target the share of spending at card-accepting merchants (Table~\ref{tab:dcpc-summary}).
+In the model, this share is spending at merchants above $\gamma^*$, the acceptance cutoff for the grand bundle of credit cards (Equation~\ref{eq:general-accept-threshold}), divided by total spending $\sum_{j'} d_{j'}$ (with $d_{j'}$ defined in Equation~\ref{eq:dollars}).
+Given $\bar{\gamma}$, the acceptance rate pins down $\nu_\gamma$.
+
+\paragraph{CES elasticity $\sigma$.} I target the average of the four post-period coefficients from the grocery event study (Section~\ref{subsec:merchant-card-gains}).
+The simulated counterpart is the same cutoff $\gamma^*$ (Equation~\ref{eq:general-accept-threshold}), which depends on $\sigma$ through merchants' quasi-profits (Equation~\ref{eq:merch-accept}).
+
+\end{document}

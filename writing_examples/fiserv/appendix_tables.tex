@@ -1,0 +1,57 @@
+\documentclass[main.tex]{subfiles}
+
+\begin{document}
+
+\section{Additional Tables}
+
+\begin{table}[H]
+  \centering
+  \caption{Interchange Rates from Visa's 2022 Interchange Publication}
+  \label{tab:visa-interchange-public}
+
+  \begin{subtable}[t]{0.95\textwidth}
+    \centering
+    \caption{By Sector and Card Type}
+    \label{tab:public-icg-sector}
+    \small
+    \renewcommand{\arraystretch}{1.1}
+    \begin{tabularx}{0.95\textwidth}{>{\raggedright\arraybackslash}p{1.7in}*
+        {4}{>{\centering\arraybackslash}X}}
+      \hline
+      Card Category & Gas Station & Supermarket & Merchandise & Restaurant \\
+      \hline
+      Regulated Debit Card & $0.05\%+0.22$ & $0.05\%+0.22$ & $0.05\%+0.22$ & $0.05\%+0.22$ \\
+      Exempt Debit Card    & $0.80\% + \$0.15$ (cap \$0.95) & \$0.30 & $0.80\%+0.15$ & $1.19\%+0.10$ \\
+      Basic Credit         & $1.15\% + \$0.25$ (cap \$1.10) & $1.50\%+0.07$ & $1.51\%+0.10$ & $2.10\%$ (floor \$0.04) \\
+      Premium Credit       & 1.15\% + \$0.25 (cap \$1.10) & $2.00\%+0.07$ & $2.10\%+0.10$ & $2.60\%$ (floor \$0.04) \\
+      \hline
+    \end{tabularx}
+  \end{subtable}
+
+  \vspace{0.8em}
+
+  \begin{subtable}[t]{0.7\textwidth}
+    \centering
+    \caption{By Firm Size}
+    \label{tab:public-icg-firm-size}
+    \small
+    \renewcommand{\arraystretch}{1.1}
+    \begin{tabular}{>{\raggedright\arraybackslash}p{2.6in}>
+        {\centering\arraybackslash}p{1.3in}}
+      \hline
+      Supermarket Size Category & Premium Credit Rate \\
+      \hline
+      \makecell[l]{Tier 0 $\left(\geq \$19.6\ \text{Bn}\right)$} & $1.40\% + \$0.05$ \\
+      \makecell[l]{Tier 1 $\left(\geq \$10.65\ \text{Bn}\right)$} & $1.55\% + \$0.05$ \\
+      \makecell[l]{Tier 2 $\left(\geq \$4.2\ \text{Bn}\right)$} & $1.65\% + \$0.05$ \\
+      \makecell[l]{Tier 3 $\left(\geq \$0.95\ \text{Bn}\right)$} & $1.75\% + \$0.05$ \\
+      All Other (Smallest) & $2.00\% + \$0.07$ \\
+      \hline
+    \end{tabular}
+  \end{subtable}
+
+  \captionsetup{font=small}
+  \captionnotes{\textit{Notes:} Data source: Visa's 2022 interchange schedule (publicly available). Fees are shown as variable (percent) plus fixed (\$) components. Example: ``0.05\% + \$0.22'' means 0.05\% of transaction value plus 22 cents. Premium credit = Visa Infinite Spend Qualified Cards. Basic credit = All Other Products category. Regulated debit = debit cards from banks with >\$10 billion assets (subject to Durbin Amendment).}
+\end{table}
+
+\end{document}

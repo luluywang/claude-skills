@@ -1,0 +1,2 @@
+- [Math writing preferences](user_math_writing_preferences.md) — standards for theorem-proof exposition in this paper; avoid miracles, enumerate channels, separate individual from aggregate
+- [Always compile subfiles standalone](project_subfile_compile.md) — when editing an appendix subfile, pdflatex the subfile directly; don't rebuild main.tex

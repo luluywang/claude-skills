@@ -1,0 +1,162 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+
+\section{Price Coherence}
+\label{sec:oa-price-coherence}
+
+This appendix explains why merchants almost never surcharge despite legal ability to do so.
+It covers surcharging law, empirical evidence on differential pricing, and a theoretical framework for price coherence.
+
+I extend the baseline model to allow merchants to set different prices for card and cash consumers.
+In this extension, I show that surcharges cannot steer consumers from card to cash.
+Card-preferring consumers will not switch to cash unless the surcharge exceeds the merchant fee.
+Second, since surcharges do not shift payment behavior, the envelope theorem makes the profit loss from uniform pricing second-order in fee dispersion.
+Third, returns to surcharging across card networks are even smaller, since fee differences across networks are an order of magnitude below the cash-card gap.
+
+Cash discounts have been legal since 1981 yet remain rare, providing a revealed-preference bound.
+Menu costs suffice to deter surcharging even at the cash-card margin.
+Since card-vs-card fee gaps are far smaller, those same menu costs overwhelm any incentive to price differently across networks.
+
+\subsection{Legal Background}
+\label{subsec:oa-surcharging-history}
+
+Cash discounts have long been legal in the U.S., but card surcharges became permitted only gradually.\footnote{Under full information, discounts and surcharges are the same. But if shrouded, cash discounts are giveaways while surcharges are add-on prices \parencite{Bourguignon.etal2019}.}
+The Cash Discount Act of 1981 guarantees merchants' right to offer cash discounts \parencite{Chakravorti.Shah2001, Levitin2005, Prager.etal2009}.
+The Durbin Amendment in 2010 granted merchants the right to offer debit discounts \parencite{Schuh.etal2011, Briglevics.Shy2014}.
+A 2013 settlement between Visa, MC, and the DOJ removed network-level no-surcharge rules, allowing surcharging in 40 states \parencite{Blakeley.Fagan2015}.\footnote{Visa allowed multi-state merchants to surcharge in states that permitted it \parencite{Visa2013}.
+AmEx and Discover relaxed their no-surcharge rules to match \parencite{Merchant2016}.}
+% CONSTANT: cited legal/historical fact from the 2013 settlement period
+As of 2023, only Massachusetts and Connecticut ban surcharging \parencite{CardX2023}, though disclosure rules in New York and Maine make it impractical.\footnote{In New York and Maine, retailers must disclose both the credit card price and cash price in dollar amounts.
+In New York, this rule ensures consumers ``should not have to do math to figure out whether they are paying the surcharge.'' \parencite{Westchester2019}.}
+
+\subsection{Empirical Evidence}
+\label{subsec:oa-surcharging-dcpc}
+
+Surcharging is rare regardless of legality, confirming that menu costs rather than legal bans explain price coherence.
+I restrict the sample to cash, check, debit, and credit transactions at retail merchants.
+In the full DCPC sample (all transaction types, before this restriction), about $5\%$ of transactions involve card surcharges or cash discounts, supporting the price coherence assumption.
+% HARDCODED[source: unknown, from DCPC surcharge/discount computation] current=5
+
+I flag violations of price coherence using DCPC variables on discounts, surcharges, and payment steering.
+The figure below plots three time series.
+``Discount'' is the share of cash/check transactions with a discount.
+``Surcharge'' is the share of credit card transactions with a fee.
+``Steered'' are cash transactions by credit-preferring consumers who switched due to a discount, as a share of credit transactions plus such switched transactions.
+States are grouped by surcharging legality: ``Legal'' (never banned), ``Illegal'' (still banned as of 2020), and ``Grey Area'' (repealed bans during 2013--2020).
+
+\includegraphics[width=0.8\linewidth]{../output/graphs/price_coherence_ts.pdf}
+
+Rates are low across all groups, and legality does not explain the rarity.
+Cash discounts, always legal, are still rare.
+Surcharge rates do not vary with state legal status, ruling out legal bans as the main driver of price coherence.
+This pattern shows that menu costs deter differential pricing even at the cash-card margin, where fee gaps are largest.
+
+\subsection{Private Incentives to Surcharge}
+\label{subsec:oa-surcharge-theory}
+
+\subsubsection{No Steering Between Cash and Card}
+
+I show merchants cannot steer consumers from card to cash in a natural extension of the baseline model that permits surcharging.
+The key assumption is that card convenience benefits are constant across purchases.
+A consumer who values cards at merchant type $\gamma$ gets the same proportional benefit regardless of the item, ruling out within-trip substitution on payment-specific prices.
+
+
+Consumers choose effective consumption $q\left(\omega\right)$ of each variety, a linear aggregate of card consumption $c\left(\omega\right)$ and cash consumption $a\left(\omega\right)$.
+Merchants charge card consumers a price $1+s\left(\omega\right)$ higher.
+Consumers solve
+\begin{align}
+U & =\max_{c,a}\left(\int_{0}^{1}q\left(\omega\right)^{\frac{\sigma-1}{\sigma}}\d\omega\right)^{\frac{\sigma}{\sigma-1}}\label{eq:ces-microfoundation-pay-choice}\\
+\text{s.t. }q\left(\omega\right) & =\left(1+\gamma\left(\omega\right)v_{M\left(\omega\right)}^{w}\right)^{\frac{1}{\sigma-1}}c\left(\omega\right)+a\left(\omega\right)\\
+y & \geq\int_{0}^{1}\left(c\left(\omega\right)\left(1+s\left(\omega\right)\right)+a\left(\omega\right)\right)p\left(\omega\right) \d\omega
+\end{align}
+Linear aggregation makes card goods higher quality and perfect substitutes for cash goods.
+The baseline model corresponds to corner solutions where consumers use only their preferred payment type.
+
+\begin{lem}
+At a merchant of type $\gamma$ that accepts cards, a card consumer will use cash only if $s>\left(1+\gamma\right)^{\frac{1}{\sigma-1}}-1$\label{lem:required-surcharge}
+
+\end{lem}
+\begin{proof}
+The first-order conditions for card spending $c$ and cash spending $a$ yield
+
+\begin{align*}
+\frac{\partial\mathcal{L}}{\partial c} & =I^{\frac{1}{\sigma-1}}\times q^{-\frac{1}{\sigma}}\times\left(1+\gamma\right)^{\frac{1}{\sigma-1}}-\lambda\left(1+s\right)p\\
+\frac{\partial\mathcal{L}}{\partial a} & =I^{\frac{1}{\sigma-1}}\times q^{-\frac{1}{\sigma}}-\lambda p
+\end{align*}
+Both payment methods are used if $\left(1+\gamma\right)^{\frac{1}{\sigma-1}}=1+s$.
+Since the aggregator is linear, consumers use cash exclusively if $s>\left(1+\gamma\right)^{\frac{1}{\sigma-1}}-1$.
+
+\end{proof}
+
+\begin{theorem}
+In a market with a monopoly credit card network that charges a merchant fee of $\tau$, no merchant that accepts the credit card in the baseline model can steer consumers by setting $s=\tau$.
+
+\end{theorem}
+\begin{proof}
+The lowest type accepting credit cards satisfies $\gamma^{*}=\frac{\sigma\tau}{1-\sigma\tau}$.
+For general $\gamma>0,\sigma>1$, the inequality $\left(1+\gamma\right)^{\frac{1}{\sigma-1}}\geq1+\frac{\gamma}{\gamma+1}\frac{1}{\sigma-1}$ holds.
+By Lemma \ref{lem:required-surcharge}, the required surcharge to induce switching exceeds $s^{*}\geq\tau\frac{\sigma}{\sigma-1}>\tau$, so setting $s=\tau$ does not induce steering.
+
+\end{proof}
+
+The analysis assumes consumers use only their primary card type: credit users do not switch to debit, and vice versa.
+This is consistent with empirical evidence \parencite{Conrath2014} and antitrust analysis \parencite{Jones2001}.
+
+\subsubsection{Second-Order Losses from Uniform Pricing}
+
+Since surcharges do not change the payment method, uniform pricing generates only second-order losses by the envelope theorem.
+I quantify these with a second-order Taylor approximation.
+
+Suppose merchants charge wallet-specific prices $p^{w}$ (stacked into a vector).
+After normalization, total profits are proportional to
+
+\begin{align*}
+\widehat{\Pi} & \propto\sum_{w\in\mathcal{W}}\mu^{w}\pi^{w}\\
+\pi^{w} & =\left(1+\gamma v_{M}^{w}\right)\left(p^{w}\right)^{-\sigma}\left(p^{w}\left(1-\tilde{\tau}^{w}\right)-1\right)
+\end{align*}
+where $\tilde{\tau}^{w}\equiv\frac{(1+\gamma)\tau_M^w}{1+\gamma v_M^w}$ is the wallet-specific effective fee derived from the merchant problem (Section~\ref{subsec:appendix-quasiprofits}). The notation distinguishes it from the raw average $\tau_M^w$.
+Let $p^{*}$ denote optimal payment-specific prices and $\hat{p}$ denote the optimal uniform price.
+
+\begin{theorem}
+The percentage loss from uniform pricing is:
+
+\[
+\log\widehat{\Pi}\left(p^{*}\right)-\log\widehat{\Pi}\left(\hat{p}\right)=\sum_{w}\frac{\mu^{w}\left(1+\gamma v_{M}^{w}\right)}{\sum_{l}\mu^{l}\left(1+\gamma v_{M}^{l}\right)}\times\frac{\sigma\left(\sigma-1\right)}{2}\left(\tilde{\tau}^{w}-\hat{\tilde{\tau}}\right)^{2}+O\left(\tau^{3}\right)
+\]
+\end{theorem}
+
+\begin{proof}
+The percentage loss is a weighted sum across wallets.
+By the envelope theorem, the first-order term vanishes.
+Computing the second derivative of log profit with respect to $\log p$ and evaluating at the optimal price $p^{w*}=\frac{\sigma}{\sigma-1}\left(1-\tilde{\tau}^{w}\right)^{-1}$ yields $\frac{\partial^{2}\log\pi^{w}}{\partial\left(\log p\right)^{2}}=-\sigma\left(\sigma-1\right)$.
+Since $\log p^{w*}-\log\hat{p}\approx\tilde{\tau}^{w}-\hat{\tilde{\tau}}+O(\tau^2)$, the second-order Taylor expansion yields the result.
+
+\end{proof}
+
+High fees alone do not make uniform pricing costly. Fee \emph{dispersion} among accepted payment methods does so.
+At the estimated $\sigma=$\scalarinput{param_est_merchant_ces_pass}, losses from uniform pricing are \scalarinput{surcharge_loss_multiprod} bp of profit.
+
+\subsubsection{Card-vs-Card Surcharging}
+\label{subsubsec:oa-surcharge-card-vs-card}
+
+Merchants also seek the right to surcharge cards differently, e.g., charge AmEx more than Visa \parencite{Conrath2014}.
+The results above bound the gains: in a type-symmetric equilibrium, fee dispersion across networks of the same type is near zero, so losses from uniform pricing are negligible.
+
+The rarity of cash discounts sharpens this point.
+Cash discounts have been legal since 1981, yet merchants almost never offer them.
+The cash-card fee gap is roughly 2--3\% (the full merchant discount fee, since cash carries no merchant fee).
+% CONSTANT: approximate interchange fee range, from industry data
+That merchants do not surcharge even at this margin shows that menu costs exceed the gains at a 2--3\% fee gap. These costs include maintaining payment-specific prices, communicating them, and absorbing the resulting customer friction \parencite{Caddy.etal2020}.
+
+Fee differences across card networks are an order of magnitude smaller.
+Even away from exact type-symmetry, AmEx-Visa fee gaps are tens of bp, well below the cash-card gap.
+Since merchants do not price differently at the larger margin, they will not do so at the smaller one.
+
+\subsubsection{Limitations}
+\label{subsubsec:surcharge-effective}
+
+The results above assume every card transaction generates incremental sales for the merchant.
+If some card categories do not boost sales, merchants would face stronger incentives to surcharge those payment methods.
+In the limit where no card transaction generates incremental sales, surcharging at the full merchant fee would be profitable, and declining the card entirely would yield equivalent profits.
+
+\end{document}

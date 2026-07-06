@@ -1,0 +1,91 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+
+In the U.S., Visa and Mastercard (MC) process 80\% of card transactions and earn operating margins above 60\% \parencite{Visa2020}.
+These facts have motivated two decades of litigation and legislation aimed at lowering the fees that merchants pay to accept cards, which totaled \$120 billion in 2019 \parencite{Nilson2020}. 
+Key policy interventions include the 2011 Durbin Amendment, which capped the interchange fees merchants pay to accept debit cards, the 2022 proposed Credit Card Competition Act \parencite{Andriotis2022}, and the 2024 DOJ lawsuit against Visa \parencite{Au-Yeung2024}.
+
+But because payment markets are two-sided, standard intuitions on the effects of competition and regulation can be reversed.
+Networks tax merchants to subsidize consumers with rewards. 
+In a two-sided market, capping merchant fees can reduce potentially desirable consumer rewards \parencite{Rochet.Tirole2003}. 
+Conversely, competition can incentivize networks to raise merchant fees to fund greater consumer rewards \parencite{Edelman.Wright2015}.
+But despite the rich set of theoretical possibilities, empirical evidence remains scarce.
+
+I develop and estimate a quantitative model of platform competition to identify the sources of welfare losses in U.S. payment markets.
+The central problem is not the level of competition but its direction.
+Many consumers carry cards from only one network, while almost all merchants accept all major cards to avoid losing sales.
+This creates a ``competitive bottleneck'' \parencite{Armstrong2006}in which networks compete by inflating rewards instead of cutting fees.
+The result is a high-fee, high-reward equilibrium.
+Fee caps at the cost of cash correct this distortion and raise welfare by \$30 billion a year.
+But more competition makes things worse. 
+Because consumers are more reward-sensitive than merchants are fee-sensitive, network competition inflates both sides and reduces welfare by \$20 billion.
+Reduced network competition would reduce rewards and the excessive adoption of high-fee payment methods.
+The direction of competition matters more than its intensity. 
+Dual routing requirements that increase consumer multi-homing force networks to compete for merchants, reducing merchant fees and rewards and increasing welfare by \$10 billion.
+
+Merchants in the U.S. typically charge consumers uniform prices for purchases made with different payment methods \parencite{Stavins2018}.\footnote{
+    This occurs even though cash discounts and card surcharges are largely legal. I explore surcharging both theoretically and empirically in Online Appendix \ref{sec:oa-price-coherence}.
+}
+This pricing rigidity makes the market two-sided. 
+When credit card networks tax merchants to subsidize consumers, their consumers benefit from the rewards but only internalize part of the cost of higher retail prices \parencite{Felt.etal2020}.
+
+
+I present three reduced-form facts that show a competitive bottleneck in payment markets.
+First, consumers are sensitive to rewards.
+I use a bank-level panel of payment volumes to show that a 25 basis point reduction in debit rewards in 2010 reduced debit card spending by around 30\%.
+Second, accepting cards significantly increases merchant sales.
+I present event-study evidence that accepting credit cards increases sales to card-carrying consumers by around $12\%$ for merchants on the margin of acceptance.
+Third, I show that while most merchants accept all networks, many consumers only carry credit cards from one network.
+Merchants risk lost sales when they decline consumers' preferred payment methods.
+
+In the structural model, payment networks compete as two-sided platforms and set both merchant fees and consumer rewards.
+Consumers adopt the best bundle of payment methods as a function of the rewards, payment acceptance, and exogenous non-price characteristics.
+Merchants accept the combination of cards and set retail prices to maximize their profits after paying merchant fees.
+Multiproduct networks maximize profits by balancing merchant acceptance and consumer adoption.
+
+I estimate consumer and merchant preferences by matching the reduced-form facts and several moments from payment surveys, second-choice surveys, and aggregate market-level data.
+I estimate that consumers are ten times more sensitive to rewards than merchants are sensitive to fees.
+A one-basis-point (1-bp) increase in Visa credit rewards increases Visa's market share among consumers by $4\%$.
+In contrast, a 1-bp increase in merchant fees for Visa credit cards causes only a $0.4\%$ decline in the share of merchants that accept Visa.
+This asymmetry drives high fees and rewards.
+
+Fee caps at the cost of cash—the ``tourist test'' motivating European regulations—raise total welfare by \$29 billion annually.
+Networks respond by cutting credit card rewards by 199 basis points.
+With price coherence, lower merchant fees pass through to lower retail prices, benefiting low-income consumers who primarily use cash and debit.
+The decline in rewards hurts high-income credit cardholders but also relieves a distortion.
+In the baseline, many consumers use credit cards for the rewards despite preferring debit for its non-price characteristics.
+Lower rewards allow these consumers to switch back to debit, which drives most of the welfare gain.
+This \$29 billion gain dwarfs the \$12 billion welfare gain from the CARD Act \parencite{Agarwal.etal2015}, suggesting that regulating networks is at least as important as regulating issuers.
+
+A market-based alternative is dual routing, which increases multi-homing from around 60\% to 80\% by requiring credit cards to offer merchants two processing options, as proposed in the Credit Card Competition Act. 
+This change reduces credit card fees by 15 basis points and rewards by 32 basis points, increasing total welfare by \$8 billion. 
+
+Yet without increased multi-homing, competition can worsen these problems.
+I compare the status quo to a merger of all three networks into a single monopolist.
+A merger to monopoly would increase total welfare by \$16 billion because the problem is not the level of competition but its direction.
+Because many consumers single-home, competition worsens price coherence problems by driving adoption of high-fee, high-reward payment methods.
+Revised regulation, not just more competition, is necessary to correct the market failure from price coherence.
+
+My model also casts doubt on two other proposed solutions: caps on \emph{debit} card merchant fees and public sector entry into payment markets.
+In the U.S., debit card merchant fees are capped whereas credit card fees are not.
+I show that this inconsistency is regressive and reduces total welfare by pushing consumers to use credit cards.
+This matches prior work on the Durbin Amendment \parencite{Mukharlyamov.Sarin2025}.
+I model a public option as a debit payment network that charges no markups on merchants and pays no rewards.
+The lack of rewards limits consumer adoption and thus welfare gains.
+
+\subsection{Related Literature}
+
+The closest related empirical work is \textcite*{Huynh.etal2022}, who estimate a structural two-sided model of consumer and merchant card adoption.
+I build on their work by modeling merchant and network competition.
+Merchant competition explains how credit card rewards inflate retail prices, redistribute consumption, and ultimately hurt consumers.
+Network competition endogenizes merchant fees and consumer rewards, enabling me to assess how price controls and competition affect prices and total welfare.
+
+My model combines three ingredients that prior work treats separately: consumer multi-homing, merchant heterogeneity, and merchant competition.
+Assuming single-homing overstates harm from competition \parencite{Edelman.Wright2015, Anderson.etal2018, Bakos.Halaburda2020, Teh.etal2022}; merchant homogeneity rules out any positive effects of competition on merchant fees \parencite{Rochet.Tirole2011, Guthrie.Wright2007}; and ignoring merchant competition understates merchants incentives to accept cards \parencite{Rochet.Tirole2003, Wright2012,Li.etal2020}.
+By combining all three features, my paper contributes to the empirical IO literature on two-sided markets \parencite{Rysman2004, Lee2013, Rosaia2020, Song2021}.
+
+My paper also contributes to the literature on platform pricing and off-platform outcomes \parencite{Bergemann.etal2024, Chen2024}.
+With price coherence, merchant fees strongly influence retail prices, explaining the welfare gains I find from fee caps.
+In contrast, \textcite{Sullivan2025} finds that commission caps reduce welfare in food delivery, where price coherence is absent.
+
+\end{document}

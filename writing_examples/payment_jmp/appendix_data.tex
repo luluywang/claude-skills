@@ -1,0 +1,106 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+
+\section{Data Details}\label{sec:appendix-data}
+
+\subsection{Issuer Payment Volumes}
+\label{subsec:appendix-data-issuers}
+
+I build an annual panel of issuer payment volumes from the Nilson Report, supplemented with FFIEC call reports (banks) and NCUA call reports (credit unions), to estimate consumers' reward sensitivities.
+For credit unions, I proxy interchange income with non-interest income.
+\textcite{CUToday2016} find that interchange accounts for roughly half of non-interest income even after the Durbin Amendment.
+% CONSTANT: from CUToday (2016), external finding
+The panel spans 2007--2014.
+
+I exclude issuers with assets below \$2 billion or above \$200 billion to remove systemically important banks subject to other regulations.
+% CONSTANT: sample restriction thresholds, design choice
+I also exclude issuers whose acquisitions exceeded 50\% of equity during 2006--2018, since their volume changes mainly reflect portfolio expansion rather than organic consumer choices. 
+% The excluded issuers are First Tech FCU, Firstmerit Bank, BMO Harris, Regions Bank, and Synovus/Columbus B\&T.
+% CONSTANT: merger exclusion threshold, design choice
+% The 50\% threshold removes only transformative mergers where acquired volumes dominate the issuer's pre-merger base.
+% Coverage varies by year (Online Appendix Figure \ref{fig:durbin-missing}) because the Nilson Report covers only the largest issuers and reporting categories shift over time.
+Table \ref{tab:nilson-summary} reports summary statistics of institutions in the panel.
+Signature debit has the highest coverage (the top 200 issuers were reported in 2007), so I use it as the main volume measure.
+The analysis sample requires at least one observation of both signature debit and credit card volumes on each side of the Durbin Amendment, restricting to issuers that offered both products throughout.
+% The Online Appendix compares event studies with and without merging issuers and finds similar results.
+
+\subsection{Aggregate Shares and Prices}
+
+The Nilson Report publishes annual consumer purchases by payment method, including network-specific volumes for Visa, MC, AmEx, and Discover (Figure \ref{fig:aggregate-shares}) and an estimate of cash spending.
+Its concept of consumer purchases covers most Personal Consumption Expenditures (PCE) but excludes items like imputed rent that do not trigger a payment between two parties.
+I restrict the model to Visa, MC, and AmEx but scale their volumes to match aggregate credit and debit card totals, using 2019 shares.
+
+The Nilson Report provides annual merchant fees from acquirer surveys, split by V/MC Credit, AmEx, and V/MC Debit.
+I take 2019 Visa Credit, Visa Debit, and MC Debit fees from network financial data and recover MC Credit and AmEx fees in the estimation, treating their Nilson values as measured with error (Online Appendix~\ref{subsec:appendix-estim-network}).
+
+I collect total rewards expense from the annual reports of AmEx, Chase, Citi, Bank of America, Capital One, and US Bank, which together cover about 80\% of US credit card volume in 2019.
+% HARDCODED[source: unknown, computed from bank annual reports] current=80
+Dividing by credit card spending gives volume-weighted average rewards of 1.74\% (non-AmEx) and 1.85\% (AmEx) for 2019.
+% HARDCODED[source: unknown, computed from bank annual reports] current=1.74, 1.85
+
+Total rewards expense overstates consumer benefits because it ignores annual fees.
+AmEx reports annual fees of about 38 bps of volume in 2019.
+% HARDCODED[source: unknown, from AmEx annual report] current=38
+For other banks, \textcite{Adams.Bord2020} find average annual fees of 20 bps over 2014--2019.
+% CONSTANT: from Adams & Bord (2020), external estimate
+Annual fees roughly doubled from 2015 to 2019 \parencite{CFPB2021}. Under a linear trend, the 20 bps mid-period average implies about 15 bps in 2015 and 30 bps in 2019.
+% CONSTANT: derived from Adams & Bord (2020) and CFPB (2021) trend
+I subtract 30 bps from non-AmEx rewards to get the net consumer benefit for 2019.
+% CONSTANT: derived from the above trend calculation
+
+\subsection{Homescan}
+
+The NielsenIQ Homescan panel tracks payment decisions of over 100,000 households at consumer packaged goods stores.
+% CONSTANT: NielsenIQ panel design
+I use the full 2013--2023 panel for payment event studies but draw multi-homing moments from 2017--2019 households.
+
+\subsubsection{Defining Payment Preferences}
+
+I first drop households with more than 1\% missing payment information, removing 28.9\% of the sample (concentrated in 2013--2014).
+% CONSTANT: 1\% threshold is design choice
+% HARDCODED[source: unknown, computed from Homescan data cleaning] current=28.9
+I classify a household as cash-only if its cash share exceeds a cutoff calibrated to match the DCPC share who prefer cash for non-bill payments (19.7\%).
+% HARDCODED[source: unknown, calibrated cash cutoff from DCPC] current=19.7
+Among non-cash consumers with more than 20 card trips, I define the primary card as the one with the most trips and the secondary card (if any) as the one with the second-most trips.
+% CONSTANT: 20-trip threshold is design choice
+This restriction removes 8\% of non-cash consumers.
+% HARDCODED[source: unknown, from Homescan sample restriction] current=8
+Table \ref{tab:spend-trip-correlation} shows that trip-based and spending-based rankings are highly correlated: the top-trip card is also the top-spending card for about 96\% of consumers (volume-weighted across card types).
+% HARDCODED[scalar: share_card_for_card_cons] current=96
+
+When counting trips, I focus on stores accepting all four main card brands to separate consumer preferences from merchant acceptance.
+I drop store-years with fewer than 500 trips (0.7\% of the remaining sample), then remove stores where any network's transaction share falls below 1.5\% (15.7\% of the remaining sample).
+% CONSTANT: 500-trip and 1.5\% thresholds are design choices
+% HARDCODED[source: unknown, from Homescan sample restriction] current=0.7, 15.7
+% The 1.5\% threshold is an upper bound on measurement error at confirmed non-acceptors: at grocery chains known not to accept Visa (identified from stores that switched acceptance during the sample), Visa's residual measured share was about 1.5\%, arising entirely from misrecorded transactions.
+% HARDCODED[source: unknown, measured from Homescan non-acceptor stores] current=1.5
+Store-years below this threshold are classified as non-acceptors and dropped to avoid confounding acceptance with non-acceptance in the multi-homing moments.
+Figure \ref{fig:homescan-merch-payment-distn} shows the resulting distribution of payment mix across merchant-years.
+
+Although Visa and MC operate separate debit networks, almost no consumers multi-home across them (Figure~\ref{fig:debit-primary}), so I aggregate Visa Debit and MC Debit into a single ``debit'' category when constructing the multi-homing moments. This aggregation does not affect estimates of credit card multi-homing. The structural model in Section~\ref{sec:model} retains distinct Visa Debit and MC Debit products on the fee side while using this aggregation for consumer adoption moments.
+
+\subsubsection{Payment acceptance event studies}
+
+I build event-study samples around acceptance changes at grocery stores, selecting households in zip codes where a grocer operates in year $Y-1$ whose preferred payment method I can define in that year.
+I use data from 24 months before and after each change, setting months with no observed transactions to zero within each household's observed span.
+% CONSTANT: 24-month event window, design choice
+
+\subsection{Diary of Consumer Payment Choice}
+
+The Diary of Consumer Payment Choice (DCPC) provides consumer demographics, stated payment preferences, and transaction-level records of method choice and merchant acceptance. I use the 2017--2019 waves, conducted by the Federal Reserve Bank of Atlanta and fielded through USC's Understanding America Study.
+For card transactions, acceptance is observed directly. For cash transactions, the diary asks whether the merchant would have accepted a card.
+% Check transactions (2.1\% of all transactions) lack this acceptance question.
+% HARDCODED[source: unknown, from DCPC data] current=2.1
+% To estimate non-acceptance among check transactions, I use the survey's ``why not preferred'' question: among card users, 21\% report writing a check because the merchant did not accept cards.
+% % HARDCODED[source: unknown, from DCPC survey] current=21
+% I count all confirmed non-acceptance cases plus 21\% of check transactions when estimating the share of transactions at non-accepting stores.
+% I resample this fraction of check transactions when bootstrapping standard errors.
+The DCPC also asks respondents to report their credit score, which I use to parameterize credit access in the credit-constrained robustness check (Online Appendix \ref{subsec:oa-credit-constrained}).
+
+\subsection{Second-Choice Survey}
+
+I ran an online second-choice survey of English-speaking US adults under 50 via Prolific in two waves (June and August 2024), approved under IRB STU00221445.
+The survey elicited: primary payment method for in-person transactions, household income, primary bank and consideration set, second choice if the primary method became unavailable, and rewards sensitivity. For credit users, rewards sensitivity was whether they would switch if rewards halved; for debit users, whether they would switch if credit rewards doubled.
+The final sample contains \scalarinput{survey_num_credit} primary credit and \scalarinput{survey_num_debit} primary debit users; Table \ref{tab:second-choice-summary} reports summary statistics. Online Appendix \ref{subsec:appendix-second-choice-details} provides additional design details.
+
+\end{document}

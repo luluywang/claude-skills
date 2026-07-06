@@ -1,0 +1,102 @@
+\documentclass[main.tex]{subfiles}
+
+\begin{document}
+
+\section{Endogenous Payment Choice}\label{sec:appendix-endogenous-choice}
+
+When consumers choose payment methods, consumers also lose in aggregate from high interchange fees.
+Intuitively, these losses reflect that too many consumers use high-fee methods to earn rewards.
+The intuition behind the proof comes from taking revealed preference seriously.
+Fix a consumer who is indifferent between debit cards and credit cards.
+Consider a small increase in credit card rewards.
+Such a consumer would then switch to credit cards to earn the additional rewards.
+Because the consumer was indifferent to start with, she does not experience any increase in her private utility.
+The greater rewards on the credit card exactly offset any non-pecuniary benefits (e.g. avoiding debt, lower adoption costs) of the debit card.
+However, consumers collectively lose because the rewards are merely transfers funded by higher retail prices.
+
+\subsection{Setup}\label{subsec:endo-setup}
+
+We extend the consumer side of Appendix~\ref{sec:appendix-theory} to let consumers choose payment methods.
+The game now has two stages.
+In the first stage, consumers choose payment methods and merchants set retail prices; in the second stage consumers solve a consumption problem across merchants.
+In contrast to the baseline model, there is now a continuum of consumers $i$ with measure one.
+We describe the setup starting from the consumption problem.
+
+\paragraph{Stage 2: Consumption.}
+Consumer $i$ has utility function $U_{ik}$ over baskets of goods $q_{ijk}$ from merchants $j$.
+Utility can depend on the payment method $k$, which captures the possibility that payment methods can have a causal effect on where consumers shop.
+In this stage, consumer $i$ solves
+\[
+q^*_{ijk} = \arg\max_{q_{ijk}\geq 0} U_{ik}\left(\{q_{ijk}\}_{j}\right) \text{ s.t. } \sum_j p_j q_{ijk} \leq 1 + f_k,
+\]
+where $f_k$ is the reward for using payment method $k$.
+The consumption problem induces an indirect utility function $\widetilde V_{ik}(p,f_k)$ and purchases $q^*_{ijk}(p,f_k)$.
+Write $s^*_{ijk}\equiv p_j q^*_{ijk}(p,f_k)/(1+f_k)$ for her expenditure share at merchant $j$.
+
+\paragraph{Stage 1: Consumer Payment Choice.}
+Consumers have idiosyncratic tastes $\eta_i \sim F$ over payment methods.
+We assume $F$ is atomless.
+When choosing a payment method, consumer $i$ solves:
+\[
+k^*_i=\argmax_k\bigl\{\widetilde V_{ik}(p,f_k)+\eta_{ik}\bigr\}.
+\]
+Let $\pi_{ik}=\Pr(k^*_i=k\mid i)$ be the choice probability. 
+To facilitate a comparison with the results with exogenous payment choice, we define the aggregate share of payment method $k$ to be $\mu_k=\int\pi_{ik}\,di$, and $\mu_{jk}=\frac{\int \pi_{ik}q^*_{ijk}\,di}{\sum_l \int \pi_{il}q^*_{ijl}\,di}$ to be method $k$'s share of merchant $j$'s revenue, so $\sum_k\mu_k=1$ and $\sum_k\mu_{jk}=1$.
+
+\paragraph{Stage 1: Merchant pricing.}
+Merchants price by~\eqref{eq:retail-price-pass} with $\rho^P=1$ and payment shares aggregated over all consumers; write $\hat\tau_j\equiv\sum_k\mu_{jk}\tau_{jk}$ for the payment-weighted average fee.\footnote{Because consumers and merchants are infinitesimal, the simultaneous move of prices and payment choices is without loss.}
+
+\subsection{Theorem}\label{subsec:endo-theorem}
+
+\begin{theorem}[Welfare effect under endogenous payment choice]\label{thm:endo-welfare}
+Under Assumptions~\ref{assump:dominant-diagonal}--\ref{assump:income-elasticity} and atomless idiosyncratic tastes, the aggregate consumer welfare effect of a fee shift $dx_l$ is
+\begin{equation}
+\int\frac{dV_i}{\lambda_i}\,di = -\E_R[\sum_k \tau_{jk} d\mu_{jk}] + O(\tau_{\max}^2),
+\label{eq:endo-total-welfare}
+\end{equation}
+each method's interchange fee times the change in its revenue share, averaged across merchants by revenue.
+\end{theorem}
+
+Within each merchant $\sum_k d\mu_{jk}=0$, so $\sum_k\tau_{jk}\,d\mu_{jk}=\sum_k(\tau_{jk}-c)\,d\mu_{jk}$ for any constant $c$: the loss is the covariance, across methods, between how expensive a method is and how much of the merchant's revenue it gains.
+A reward-driven shift toward high-fee methods makes this positive and lowers welfare.
+
+\subsection{Proof}\label{subsec:endo-proof}
+
+\paragraph{Step A: Envelope theorem.}
+By Roy's identity, conditional on choosing a payment method $k$ the consumer welfare effect is given by 
+\begin{equation}
+    \frac{dV_i}{\lambda_i}=-\sum_j s^*_{ijk^*_i}\,d\log p_j+df_{k^*_i}.
+    \label{eq:endo-roy-perconsumer}
+\end{equation}
+By the Williams--Daly--Zachary discrete choice envelope theorem, this is also the change in ex-ante consumer welfare before choosing the payment method.
+Integrating over consumers, the spending identity~\eqref{eq:spending-identity} gives $\int s^*_{ijk^*_i}\,di=\omega_j+O(\tau_{\max})$, and the reward term integrates to
+\[
+    \int df_{k^*_i}\,di = \sum_k \int df_k \, I\{k^*_i=k\}\,di=\sum_k\mu_k\,df_k.
+\]
+Together these give
+\begin{equation}
+\int\frac{dV_i}{\lambda_i}\,di=-\mathbb{E}_R[d\log p_j]+\sum_k\mu_k\,df_k+O(\tau_{\max}^2).
+\label{eq:endo-roy-aggregate}
+\end{equation}
+
+\paragraph{Step B: Decompose and cancel.}
+Applying the chain rule to the pricing formula~\eqref{eq:retail-price-pass} yields:
+\begin{equation}
+    d\log p_j = \sum_k \mu_{jk} d\tau_{jk} + \sum_k \tau_{jk} d\mu_{jk}
+\end{equation}
+By the full pass-through of interchange to rewards, we have that
+\[
+    df_k = \mu_k^{-1} \E_R[\mu_{jk} d\tau_{jk}] + O(\tau_{\max}^2)
+\]
+Substituting both expressions into \eqref{eq:endo-roy-aggregate} and dropping higher order terms yields:
+\begin{equation}
+    \int\frac{dV_i}{\lambda_i}\,di = -\E_R[\sum_k \tau_{jk} d\mu_{jk}] \qed
+\end{equation}
+
+\paragraph{Fees, not rewards.}
+The loss is weighted by the interchange fee $\tau_{jk}$, not the reward $f_k$.
+It is tempting to net the rewards back out---to argue that the interchange consumers pay returns to them as rewards---but it does not.
+The rewards a \emph{switcher} earns are burned on the non-pecuniary utility she sacrifices, and the rewards an \emph{existing} user earns from a higher rate are spent paying the higher price that rate creates; the extra interchange from the reshuffling itself comes back to no consumer.
+Of that interchange, the part funding rewards, $\E_R[\sum_k f_k\,d\mu_{jk}]$, is the non-pecuniary utility burned, and the remainder, $\E_R[\sum_k(\tau_{jk}-f_k)\,d\mu_{jk}]$, is the higher processing cost and issuer margin of the methods consumers move to. Consumers bear both.
+
+\end{document}

@@ -20,3 +20,19 @@ referee/
 
 # Stale local git backup directory
 .git-backup/
+
+# Python bytecode
+__pycache__/
+
+# LaTeX build artifacts (writing_examples holds source + final PDFs only)
+*.aux
+*.synctex.gz
+*.out
+*.fls
+*.fdb_latexmk
+*.bcf
+*.blg
+*.run.xml
+*.bbl-SAVE-ERROR
+*.dvi
+writing_examples/**/*.log

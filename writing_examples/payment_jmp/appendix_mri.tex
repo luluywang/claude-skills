@@ -1,0 +1,53 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+
+\section{Details on the MRI-Simmons Data}\label{sec:oa-data}
+
+The MRI-Simmons USA is a nationally representative panel combining MRI's Survey of the American Consumer and Simmons Research's National Consumer Study.
+The survey covers roughly 25,000 consumers per year from 2009--2020 and 50,000 from 2021 onward.
+I draw on 2009--2022 data for financial institutions, payment method ownership, income, and bank switching; the 2022 wave adds shopping behavior across 214 merchant chains.
+These data support robustness checks throughout the online appendices but do not enter the structural estimation.
+Table \ref{tab:mri-summary} reports summary statistics.
+
+\begin{table}[ht!]
+    \small
+    \caption{Payment preferences and bank choice in the MRI survey\label{tab:mri-summary}}
+
+    \begin{center}
+        \input{../output/tables/mri_summary_statistics.tex}
+    \end{center}
+    \tablenote{\textit{Has Debit Card} and \textit{Has Credit Card} indicate ownership of each card type.
+\textit{Debit User}: non-cash user who either holds only debit or whose debit expenditure share exceeds credit.
+\textit{Credit User}: non-cash user who either holds only credit or whose credit expenditure share exceeds debit.
+\textit{Cash User}: agrees completely with ``I prefer to pay cash for things I buy, whenever I can.''
+\textit{Multiple Networks}: owns credit cards from multiple networks.
+\textit{Multiple Credit Cards}: owns more than one credit card.
+\textit{Factor Rewards}: rated rewards as very important when choosing a bank.
+\textit{Rewards}: receives credit card rewards.
+\textit{Big Banks}: uses Chase, Citibank, Wells Fargo, Bank of America, or US Bank.
+\textit{Small Banks}: uses community banks or credit unions.
+\textit{Switch Banks}: changed banks in the last 12 months (not defined for 2009).
+\textit{Share of Debit Exp} and \textit{Share of Credit Exp}: debit and credit shares of card expenditure.
+\textit{Income}: household income in dollars, made continuous using the geometric mean of each category's bounds.}
+\end{table}
+
+\subsection{Payment method}
+
+The data report credit and debit spending by bank and network but not cash spending.
+The survey asks ``Which of the following best describes your attitude toward using cash?'' with responses including ``I prefer to use cash whenever possible.'' I classify respondents who choose this answer as cash users.
+Among the rest, I assign each consumer to credit or debit based on whichever card carries higher spending.
+
+\subsection{Bank type}\label{subsubsec:oa-mri-bank-type}
+
+The MRI data list each consumer's deposit institutions, which I use to sort consumers into small or large banks.
+Small bank customers hold deposit accounts only at community banks and credit unions---institutions largely exempt from the Durbin Amendment because their assets fell below the \$10 billion threshold.
+Large bank customers hold deposit accounts only at the four largest banks (Chase, Bank of America, Citibank, Wells Fargo) plus U.S. Bank.
+Online Appendix~\ref{subsec:oa-durbin-robustness} uses this split to test whether consumers switched banks or gained credit card rewards after Durbin.
+
+\subsection{Share of consumers across merchants}
+
+The 2022 wave records whether each respondent shopped at 214 merchant chains spanning grocery, department stores, restaurants, and other sectors.
+For each merchant, I compute the survey-weighted share of customers preferring each payment method.
+Table \ref{tab:mri-summary} shows that the average merchant's customer base is 48\% credit, 38\% debit, and 14\% cash, with standard deviations of 8--10 pp.\ across merchants.
+
+\end{document}

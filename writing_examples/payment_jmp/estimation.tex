@@ -1,0 +1,225 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+
+Estimation links the reduced-form facts to quantitative predictions about regulation and competition.
+The key primitives are consumers' preferences over payment options, merchants' gains from accepting cards, and networks' marginal costs.
+
+\subsection{Estimation Procedure}
+\label{subsec:estimation-procedure}
+
+I estimate all parameters jointly, but the identification argument has three components.
+Consumer demand is identified by quasi-experimental price variation, second-choice surveys \parencite{Berry.etal2004}, and demographic moments \parencite{Petrin2002}.
+Network costs come from first-order conditions on rewards.
+Merchant types are identified from event-study evidence on card acceptance effects and acceptance rates.
+The model approximates the market structure as of 2019.
+I estimate standard errors by bootstrapping the joint distribution of data moments.
+Appendix \ref{sec:appendix-estimation} contains the estimation details.
+
+\subsubsection{Consumer Demand}
+\label{subsubsec:estim-reward-sens}
+
+The key consumer demand parameters are price sensitivity ($\alpha_0$), substitution patterns ($\Sigma$), income gradients ($\alpha_y, \beta_y, \chi^{lm}_y$), and multi-homing complementarities ($\chi^{lm}$).
+
+The effect of the Durbin Amendment on debit card volumes identifies the price-sensitivity coefficient $\alpha_0$.
+I simulate a 25 bps decline in debit rewards, holding fixed merchant acceptance.
+I match the resulting percentage change in debit volumes to the difference-in-difference estimate.
+% CONSTANT: modeling choice based on Hayashi (2012)
+\textcite{Hayashi2012} estimates that pre-Durbin debit rewards were around 25 bps, which I confirm with archived bank websites.
+% CONSTANT: from Hayashi (2012), external estimate of pre-Durbin debit rewards
+The simulated moment holds merchant acceptance fixed because cardholders at regulated and exempt issuers face the same merchants.
+Any change in merchant behavior after Durbin is differenced out by the control group.
+
+Durbin-exposed banks cut rewards along with non-price steering.
+The baseline calibration nonetheless targets the full 25\% relative decline.
+Among the subsample of banks that paid debit rewards pre-Durbin, those that ended rewards saw debit volumes grow more slowly than those that kept rewards by a margin similar to the baseline specification.
+Online Appendix~\ref{par:oa-durbin-rewards-robustness} argues that if banks differ in their productivities across steering levers, rewards-paying banks did less non-price steering, so the within-subsample comparison reflects mainly the rewards change.
+Section~\ref{subsec:cf-discussion} discusses how the counterfactuals change under a more conservative target that attributes only half of the debit decline to the rewards channel.
+
+My second-choice survey reveals the covariance matrix $\Sigma$ of the random coefficients \parencite{Berry.etal2004}.
+The characteristic vector $X_j$ is an indicator for an inside good and an indicator for being a credit card.
+% Clarifies that X^1=inside-good fires for all cards (not just debit), so chi^{12} is not
+% "debit-credit complementarity" -- it also fires for (credit,credit) wallets.
+% chi^{11} = 0 imposed: the only wallet type where chi^{11} fires but chi^{12}/chi^{21}/chi^{22}
+% don't is (debit,debit). Since virtually no consumers carry two debit cards, chi^{11} is not
+% identified from the data, and is normalized to zero in estimation (SKIP_CARDCARD_INTERACTION=true
+% in settings.jl; see model_functions.jl line ~5323). The 3 estimated chi parameters are matched
+% to 3 multi-homing moments: P(credit primary has debit secondary), P(debit primary has credit
+% secondary), P(credit primary has credit secondary).
+The inside-good indicator equals 1 for all cards, whether credit or debit. 
+Online Appendix \ref{subsec:oa-estim-cons-sub} shows that consumers view credit and debit cards as two separate categories and that cash substitutes more effectively for debit cards than credit cards.
+The volatility of the random coefficients is correspondingly large.
+
+Wallet complementarity parameters are identified by multi-homing patterns in the Homescan data.
+Three parameters measure wallet interactions.
+$\chi^{12}$ is credit's value in the secondary position, $\chi^{21}$ is a secondary card's value for credit-primary consumers, and $\chi^{22}$ is the utility for managing two credit accounts.\footnote{The fourth interaction $\chi^{11}$ (any-primary, any-secondary) is normalized to zero: the only wallet where it would be separately identified is (debit,debit), which is negligible in the data.}
+
+Demographic data identify how preferences vary with income.
+Higher-income respondents in the second-choice survey are more willing to switch cards for better rewards, identifying $\alpha_y$.
+The empirical income distribution pins down $\nu_y$, and the DCPC data on how preferred payment methods vary with income identify the conditional preference gradient $\beta_y$.
+Homescan multi-homing patterns by income (Figure \ref{fig:consumer-multi-homing}) identify both $\chi^{lm}$ and its income gradient $\chi^{lm}_y$.
+The multi-homing rate is 4.3 pp.\ higher above median income than below (Online Appendix Table \ref{tab:multihome-by-income}), and the model matches this gradient exactly.
+% HARDCODED[scalar: data_multihome_gradient] current=4.3
+
+\subsubsection{Network Costs}
+
+I recover network costs by inverting first-order conditions with respect to rewards.
+High rewards are profitable only when networks earn positive margins from merchants, so marginal costs must be low relative to observed fees.
+
+\subsubsection{Merchant Types}
+\label{subsubsec:estim-merchant-types}
+
+I recover the distribution of merchant types $G$ by combining event-study evidence on grocery chains' card adoption from the Homescan panel, acceptance rates from the DCPC, and networks' optimal pricing conditions.
+U.S.\ payment markets are mature. In 2013, 98\% of Homescan trips occurred at stores already accepting credit cards, so recovering the merchant-type distribution is closer to a calibration than a conventional estimation.
+% CONSTANT: 98% of Homescan trips at credit-accepting stores, from Homescan data
+
+I model grocery chains that changed their acceptance policies as the lowest type willing to accept cards. This ultimately reveals $\sigma$.
+Denote $\gamma^*$ as the sales increase from accepting cards for the marginal merchant type.
+Under the baseline substitution assumption, these firms trade-off $\gamma^*$\% more sales from credit users against additional card fees of $\tau\%$ of sales.
+As $\sigma$ increases, merchant margins decrease, and thus a greater sales gain $\gamma^*$ is needed to justify accepting cards.
+I choose a value of $\sigma$ so that $\gamma^*$ matches the event study estimates.\footnote{
+    The standard errors in my estimate of $\sigma$ account for uncertainty in the event-study estimates but not for model error from extrapolating beyond the grocery sector.
+    Restaurants, e-commerce, and service providers face different customer mixes and transaction sizes, and the data contain no comparable natural experiments outside grocery.
+}
+
+I parameterize $G$ as a two-parameter Gamma distribution.
+The expenditure-weighted acceptance rate from DCPC respondents and networks' first-order conditions on fees near the marginal merchant type identify its shape.\footnote{The acceptance rate is the share of merchants above the marginal type, weighted by transaction volume. Online Appendix Table~\ref{tab:yelp-dcpc-comparison} compares DCPC acceptance rates to Yelp business attributes by sector; the two sources agree closely in aggregate.}
+Merchant price-sensitivity at the observed equilibrium follows from a standard insight in two-sided markets.
+Networks charge high fees to merchants and use the revenue to fund rewards for price-sensitive consumers, so merchants must be relatively insensitive to fees compared to consumers.
+Given estimates of consumer sensitivity, merchant sensitivity comes from networks' first-order conditions.
+
+\subsubsection{Calibrated Parameters}
+
+I calibrate two sets of parameters.
+Aggregate spending shares from the 2019 Nilson Report (Figure \ref{fig:aggregate-shares}) pin down the unobserved characteristics $\Xi$.
+I normalize $\tau_0 = 0$ for cash using the \scalarinput{param_est_cashcost_pass_baseline.tex} bps cost-of-cash estimate from \textcite{Felt.etal2020} for the U.S., then bootstrap from a distribution centered at that value with a standard deviation of \scalarinput{param_est_cashcost_pass_baseline_se.tex} bps to incorporate uncertainty in the cost of cash into other parameter estimates.
+
+\subsection{Merchant and Consumer Sensitivities and Credit Aversion}
+
+\begin{table}
+    \small
+    \caption{Estimated parameters\label{tab:param-est}}
+
+\begin{center}\setlength{\tabcolsep}{4pt} \begin{minipage}[t]{0.5\columnwidth}%
+\centering \textbf{Panel A: Consumer Preference Parameters} \par\medskip \input{../output/tables/param_tab_cons_baseline.tex}
+\end{minipage}%
+\begin{minipage}[t]{0.5\columnwidth}%
+\centering \textbf{Panel B: Consumer Heterogeneity Parameters} \par\medskip \input{../output/tables/param_tab_cons_het_baseline.tex}
+\end{minipage}
+
+\vspace{0.5em}
+
+\begin{minipage}[t]{0.5\columnwidth}%
+\centering \textbf{Panel C: Merchant Parameters} \par\medskip \input{../output/tables/param_tab_merch_baseline.tex}
+\end{minipage}%
+\begin{minipage}[t]{0.5\columnwidth}%
+\centering \textbf{Panel D: Network Cost Parameters (bps)} \par\medskip \input{../output/tables/param_tab_network_baseline.tex}
+\end{minipage}
+\end{center}
+\tablenote{S.D. refers to the standard deviation, and R.C. refers to the random coefficients for having a credit card and not being cash. % Tablenote clarifies "Card" in row label = inside-good indicator (fires for all cards),
+% not "debit card". Each chi^{lm} row lists which wallet types it fires for.
+% Also discloses chi^{11}=0 normalization (identified only from debit-debit wallets, which
+% are negligible in data).
+The $\Xi$ are the unobserved characteristics.
+The characteristic vector has two components: an inside-good indicator ($X^1 = 1$ for all inside goods, credit and debit alike) and a credit indicator ($X^2 = 1$ for credit cards only).
+The standard deviation of R.C. and T1EV shocks, $\chi$, $\Xi$ are all measured in pp.\ of pecuniary utility for the median consumer.
+In Panel B, volatility parameters are the standard deviations of the random coefficients, $\rho$ is the correlation between the card and credit random coefficients, $\nu_y$ is the standard deviation of the log-income distribution, and $\alpha_y$, $\beta_y$, $\chi_y$ are the income gradients of reward sensitivity, preferences, and complementarities, respectively.
+Merchant types $\gamma$ are distributed according to a Gamma distribution.}
+\end{table}
+
+\begin{table}
+    \small
+    \caption{Estimated consumer own-reward and cross-reward~semi-elasticities.}
+    \label{tab:cross-sub}
+    \vspace{-0.2in}
+    \begin{center}
+        \input{../output/tables/diversion_baseline.tex}
+    \end{center}
+    \tablenote{Each entry shows the effect of a $1$-bp change in the rewards of the column payment method on the market share of the row payment method.
+    The change is measured as a percentage of the row payment method's~market~share.}
+\end{table}
+
+The estimated parameters support the competitive bottleneck: consumers are far more sensitive to rewards than merchants are to fees, so networks compete for consumers rather than merchants.
+The estimates also reveal substantial credit aversion. Consumers who take credit cards for the rewards still incur a non-pecuniary cost, so cutting back on credit card use generates real welfare gains.
+Table \ref{tab:param-est} reports parameter estimates.
+
+The consumer substitution matrix in Table \ref{tab:cross-sub} shows that consumers view credit cards, debit cards, and cash as distinct segments.
+A 1-bp increase in Visa credit rewards raises Visa's share by $3.7\%$, drawn mostly from MC credit (down $3.5\%$), while MC debit falls only $0.3\%$ and cash $0.3\%$.
+% HARDCODED[table: diversion_baseline.tex, row: "Visa Credit", col: "Visa Credit"] current=3.7
+% HARDCODED[table: diversion_baseline.tex, row: "MC Credit", col: "Visa Credit"] current=-3.5
+% HARDCODED[table: diversion_baseline.tex, row: "MC Debit", col: "Visa Credit"] current=-0.3
+% HARDCODED[table: diversion_baseline.tex, row: "Cash", col: "Visa Credit"] current=-0.3
+Consumers freely substitute between networks' credit cards but not between credit and debit, or between cards and cash.
+
+This asymmetry is large. Consumers are roughly ten times as sensitive to rewards as merchants are to fees.
+A $1$-bp increase in Visa's merchant fees, holding fixed consumer adoption, reduces merchant acceptance by \absinput{divert_inst_merchant_price_visa_baseline}$\%$ (S.E. \absinput{divert_inst_merchant_price_visa_baseline_se}$\%$).
+This asymmetry underpins the competitive bottleneck.
+Merchants cannot credibly threaten to drop cards that consumers expect to use, so networks compete for consumers rather than for merchant acceptance.
+
+The parameters reveal substantial ``credit aversion'' --- a non-pecuniary cost that consumers incur when using credit.
+The median consumer would pay with debit if credit cards did not pay rewards.
+A consumer with median income is indifferent between a Visa debit card and a Visa credit card paying \scalarinput{param_est_credit_penalty_pass_baseline}\% in rewards.\footnote{This is the difference in non-pecuniary utility between single-homing on Visa debit versus Visa credit, scaled by the primary-card weight $\omega$.}
+This cost is large, consistent with survey evidence that consumers who avoid credit cards cite budget control, distaste for carrying debt, and the hassle of managing revolving accounts (Online Appendix \ref{subsec:oa-survey-consumer-pref}).
+This distortion is central to welfare analysis.
+Rewards competition induces consumers to use credit cards despite the cost.
+Reductions in credit card use raise welfare by eliminating this distortion.
+
+Reward sensitivity is increasing in income ($\alpha_y > 0$).
+While higher-income consumers tend to be less price-sensitive in retail markets \parencite{Sangani2024}, greater financial sophistication and attention to product terms make higher-income consumers more responsive to differences in fees and rewards \parencite{Hastings.etal2017}.
+Because high-income consumers are both more likely to use credit cards and more reward-sensitive, rewards competition among networks is particularly intense.
+
+% New paragraph: sign-specific interpretation now that we know chi^{12}>0, chi^{21}>0, chi^{22}<0.
+% HARDCODED[table: param_tab_cons_baseline.tex, row: "Card-Credit Complement", col: Est] current=4.65
+% HARDCODED[table: param_tab_cons_baseline.tex, row: "Credit-Card Complement", col: Est] current=3.97
+% HARDCODED[table: param_tab_cons_baseline.tex, row: "Credit-Credit Complement", col: Est] current=-4.82
+% Net complementarity: (debit,credit)=chi^{12}=4.65; (credit,debit)=chi^{21}=3.97;
+%   (credit,credit)=chi^{12}+chi^{21}+chi^{22}=4.65+3.97-4.82=3.80.
+% The estimated $\chi^{12} > 0$ and $\chi^{21} > 0$ indicate that consumers value holding a credit card alongside any other card.
+% The negative $\chi^{22}$ reflects the burden of managing two revolving-credit accounts.
+% Mixed credit-debit wallets therefore generate higher complementarity than two-credit-card wallets: $4.7$ (debit-primary, $\chi^{12}$) and $4.00$ (credit-primary, $\chi^{21}$), versus $\chi^{12} + \chi^{21} + \chi^{22} = 3.80$ for two-credit-card wallets.
+% HARDCODED[table: param_tab_cons_baseline.tex, row: "Card-Credit Complement", col: Est] current=4.65
+% HARDCODED[table: param_tab_cons_baseline.tex, row: "Credit-Card Complement", col: Est] current=3.97
+% HARDCODED[table: param_tab_cons_baseline.tex, derived: 4.65+3.97-4.82=3.80] current=3.80
+
+\subsection{Goodness of Fit}
+
+I assess fit by examining three sets of untargeted moments regarding consumers, merchants, and networks.
+
+\subsubsection{Consumer Demand}
+
+The baseline equilibrium matches untargeted adoption shares from the DCPC.
+Around 41\% of consumers have a primary debit card, around 33\% have a primary credit card, and the rest use cash for all transactions (Online Appendix Table~\ref{tab:cf-baseline}).
+% HARDCODED[table: baseline_equilibrium_baseline.tex, row: "Market Share", col: Visa Debit + MC Debit] current=41
+% HARDCODED[table: baseline_equilibrium_baseline.tex, row: "Market Share", col: Visa Credit + MC Credit + Amex] current=33
+This match is not automatic because I target spending shares, not adoption shares.
+Recovering correct adoption shares confirms the estimated correlation between payment preferences and income.
+Online Appendix Figure \ref{fig:market-share-fit} also shows that the model matches the joint distribution of primary and secondary cards in consumers' wallets.
+
+
+\subsubsection{Merchant Demand}
+\label{subsubsec:merchant-gof}
+
+I validate merchant parameter estimates against three types of evidence.
+AmEx's 2016--2019 OptBlue program cut merchant fees by \scalarinput{amex_visa_fee_diff} bps relative to Visa (Figure \ref{fig:fees-history}), and the share of Visa merchants not accepting AmEx shrank from around $9$--\absinput{amex_visa_accept_diff} pp. to almost zero (Figure \ref{fig:merchant-amex-visa}).
+% HARDCODED[source: unknown, approximate initial AmEx acceptance gap from Figure] current=9
+\footnote{
+    AmEx's 2019 annual report confirms its U.S. network went from covering 90\% to 99\% of card spending during this period.
+% CONSTANT: from AmEx 2019 annual report, external data
+    The count of merchants \textcite{Nilson2020d} shows a larger reduction in the acceptance gap.
+}
+Simulating this shock in the model, the gap shrinks by \absinput{divert_inst_optblue_price_amex_baseline} pp.
+This out-of-sample prediction is the most direct test of the model's ability to predict merchant responses to fee changes, which is central to the counterfactual analysis.\footnote{The semi-elasticity linearizes the acceptance cutoff at near-universal acceptance.
+The OptBlue fee reduction is large enough that the cutoff responds nonlinearly, so the per-basis-point acceptance change differs from the linearized estimate.}
+The estimated average sales effect of \scalarpctinput{param_est_e_gamma_pass_baseline}\% is consistent with experimental evidence: \textcite{Higgins2022} finds that debit card adoption at corner stores increases sales by $20$--$60\%$, and \textcite{Berg.etal2024} finds that accepting Buy Now, Pay Later raises sales by around $20\%$.
+% CONSTANT: from Higgins (2022) and Berg et al. (2024), external experimental estimates
+The estimated retail margin of \scalarinput{param_est_retail_margin_pass_baseline.tex}\% is similar to the aggregate margins of $13$--$17\%$ implied by macro studies of misallocation \parencite{Edmond.etal2022, Sraer.Thesmar2023a}.
+% CONSTANT: from Edmond et al. (2022) and Sraer & Thesmar (2023), external macro estimates
+
+\subsubsection{Network Parameters}
+\label{subsubsec:network-gof}
+
+Network cost parameters match accounting data.
+The estimated debit marginal cost for the combination of issuers, acquirers, and the network averages around \scalarinput{param_est_debit_costs_pass_baseline.tex} bps.
+Accounting estimates put issuer costs at $20$--$40$ bps, acquirer costs at $5$--$10$ bps, and network costs at around $5$ bps \parencite{Lowe2005, Mukharlyamov.Sarin2025, NACHA2017, Visa2020}.
+% CONSTANT: from Lowe (2005), Mukharlyamov & Sarin (2025), NACHA (2017), Visa (2020), external accounting estimates
+
+\end{document}

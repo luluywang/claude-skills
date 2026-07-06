@@ -1,0 +1,267 @@
+\documentclass[main.tex]{subfiles}
+
+\begin{document}
+
+\section{Methodology: Measuring Interchange Fee Redistribution}
+\label{sec:redistribution}
+
+In this section, we develop two related approaches to evaluate the redistributive consequences of interchange fees: a sufficient statistic approach and a structural model.
+We measure how redistribution estimates change when we account for consumer sorting and merchant fee heterogeneity.
+We also evaluate different regulatory counterfactuals: European style regulation as well as the consequences of the Durbin amendment.
+
+Each approach rests on different assumptions.
+The sufficient statistic approach applies broadly to different utility functions and market structures.
+It also clearly illustrates which forces are first-order determinants of redistribution from interchange fees.
+The main shortcoming of the sufficient statistic approach is that it assumes the full pass-through of interchange fees to prices.
+While we think this assumption is a reasonable approximation for industry-wide shocks such as interchange fees, we relax it in a structural model.
+To do so, we impose more parametric assumptions on consumer utility functions and the nature of competition between firms.
+Because the estimates from the methods are quantitatively similar, we present the more intuitive sufficient statistic approach first.
+
+%a simple quantitative framework that incorporates our facts about merchant heterogeneity in payment composition and costs .
+%Our approach seeks to recover estimates of the redistribution effects across a wide range of fully-specified models of consumer demand and retail pricing.
+%Our framework highlights how the combination of consumer sorting across merchants and merchant fee heterogeneity mitigate redistribution.
+
+% Our approach takes as inputs the variation in both the composition and cost of payments across merchants and computes the redistribution effects of changes in interchange fees when merchants can adjust retail prices in response to interchange fees and consumers can re-optimize consumption decisions in response to retail prices and rewards.
+% The framework captures the key insight that redistribution occurs only when consumers using different payment methods shop at the same set of merchants, and that the amount of redistribution depends on the heterogeneous fees charged to individual merchants.
+
+\subsection{Sufficient Statistic Economic Environment}
+
+We model the behavior of consumers, merchants, and payment networks.
+Consumers with fixed payment preferences choose how to allocate spending across merchants subject to a budget constraint.
+Merchants set retail prices in response to the composition of payments they receive and the fees on each payment method.
+Payment networks set interchange fees and pay consumers rewards.
+
+\subsubsection{Consumers}
+The sufficient statistics economic environment places few restrictions on consumer preferences.
+Consumers with fixed payment preferences allocate spending across merchants.
+Let $k=1,\ldots,K$ denote different payment methods, and let the share of consumers who use payment method $k$ equal $\mu_k$, with $\sum_k \mu_k=1$.
+Type-$k$ consumers have income $1 + f_k$, where $f_k$ is rewards.
+Consumers spend their income on goods from $j=1,\ldots,J$ merchants.
+Let $p_j$ denote the price set by merchant $j$ and $q_{jk}$ denote per-capita purchases from merchant $j$ by payment-method-$k$ consumers.
+We use stars to denote equilibrium values.
+
+Consumers solve the utility maximization problem
+
+\[q^{*}_{jk} = \arg\max_{q_{jk}\geq 0} U_k\left(\{q_{jk}\}_{j}\right) \text{ s.t. } \sum_j p_j q_{jk} \leq 1 + f_k,\]
+where $U_k$ is a strictly increasing, strictly concave, and twice-continuously differentiable utility function.\footnote{ These assumptions rule out perfect substitutes and ensure demand functions are continuously differentiable almost everywhere.
+We assume own-price elasticities dominate cross-price elasticities (Assumption \ref{assump:dominant-diagonal} in Appendix \ref{sec:appendix-theory}) and are not too large relative to the level of merchant fees. } Because utility functions depend on payment preferences, this allows our model to capture the fact that credit, debit, and cash consumers may shop at different stores.
+
+\subsubsection{Merchants}
+
+Merchants set prices based on their marginal costs to maximize profits.
+A merchant's marginal cost depends on expected interchange fees.\footnote{Individual merchants face weak incentives to surcharge by payment method despite different acceptance costs.
+Customer backlash creates first-order costs \citep{Stavins2018,Caddy.etal2020}, while a standard envelope theorem argument shows gains from price discrimination are second-order in merchant fees \citep{Wang2025}.}
+Let $\tau_{jk}$ denote the interchange fee charged to merchant $j$ for card $k$, expressed as a fraction of the transaction value.
+Let $s_j\in\{1,\ldots,S\}$ denote the sector of merchant $j$, and let $b_j$ denote whether merchant $j$ has negotiated rates.
+The interchange fee $\tau_{jk}$ charged to merchant $j$ for payment method $k$ is:
+\begin{equation}
+\tau_{jk}=\overline{\tau}_{k}+\tau_{s_{j}k}+b_{j}\delta_{k}\label{eq:interchange-fee-model}
+\end{equation}
+where $\overline{\tau}_{k}$ is the baseline fee, $\tau_{s_{j}k}$ is a sector adjustment, and $\delta_{k}<0$ is a negotiated discount.\footnote{This setup ignores the role of ticket size in shaping average transaction fees. We do this because we do not separately model regulatory shocks to the fixed versus linear components of interchange fees.}
+Without loss of generality, we normalize the baseline fee so that the average sector adjustment for each payment method, when weighted by the dollar spending on that payment method, equals zero.
+
+Prices are log-linear in weighted interchange fees:
+\begin{equation}
+\log p_{j}=\log\overline{p}_{j}+\sum_{k}\mu_{jk}\tau_{jk},\label{eq:retail-price-pass}
+\end{equation}
+where $\overline{p}_j$ is a baseline price in the absence of interchange fees, and $\mu_{jk}=\mu_k q_{jk}^{*}/Q_{j}^{*}$ is the share of sales on $k$ where $Q_{j}^{*}=\sum_{k}\mu_k q_{jk}^{*}$ equals total sales at merchant $j$.
+
+We can justify this pricing function in several ways.
+First, it is the first-order approximation under CES monopolistic competition.
+Second, full pass-through is consistent with models that predict near-complete pass-through for common shocks because all competitors face the same cost increase \citep{Amiti.etal2019}.
+Because virtually all major retailers accept cards, interchange fee changes represent sector-wide common cost shocks rather than idiosyncratic shocks.
+Critically, there are no major retailers unaffected by interchange fees that could constrain pass-through through competitive pressure.
+In the restaurant sector, we find causal evidence consistent with this prediction: the Durbin Amendment led to approximately one-for-one pass-through of interchange fees to prices among small firms (Appendix \ref{sec:appendix_durbin}).
+We show how to relax this assumption in Section \ref{subsubsec:robustness}.
+
+\subsubsection{Card Networks and Rewards}
+We assume that card networks pass-through merchant fees, net of costs, to lump-sum consumer rewards.\footnote{ Lump-sum rewards and merchant-specific or sector-specific rewards have identical first-order consumer welfare effects.
+By Roy's identity, the welfare impact of reallocating spending across merchants in response to category-based rewards is second-order; the first-order effect is the income change. } 
+We interpret rewards broadly to include any subsidy for card use (e.g., cash back, free checking).
+
+Formally, let $R_j=p_jQ_j$ denote total revenue at merchant $j$ and $\omega_j = R_j / \sum_{j'} R_{j'}$ denote merchant $j$'s share of total revenue, where $\sum_j \omega_j = 1$.
+We use $\mathbb{E}_R[\cdot]$ to denote expectations weighted by merchant revenue shares $\omega_j$.
+Rewards are given by
+
+\begin{align*}
+f_{k} & =\frac{\sum_{j}p_{j}q_{jk}^{*}\left(\tau_{jk}-c_{k}\right)}{\sum_{j'}p_{j'}q_{j'k}^{*}}.
+\end{align*}
+
+The assumption that issuers fully pass through interchange to rewards is supported by evidence that banks recouped lost debit interchange via checking fees \citep{Kay.etal2018,Mukharlyamov.Sarin2025} and that credit card issuers pay out a large share of interchange in the form of rewards expense \citep{Drechsler.etal2025,Adams.Bord2020}.\footnote{One concern may be that annual fees on premium cards offset rewards, as described by the influential theory of \citet{Bedre-Defolie.Calvano2013}.
+In practice, annual fees primarily screen for high-spending consumers rather than recoup rewards costs: Visa's public interchange schedule distinguishes ``spend-qualified'' rates (Table \ref{tab:visa-interchange-public}), confirming that spending volume directly affects issuer profitability.
+Chase lost \$300 million when releasing the Sapphire Reserve because of its generous rewards that more than offset the annual fee \citep{Son2018}.
+Further, when Australia cut interchange fees, issuers \textit{raised} annual fees on rewards cards even though there were less rewards to recoup \citep{RBA2006}.}
+Structural models of network competition also predict that networks pass through interchange caps more than one-for-one into reward cuts \citep{Wang2025}.
+The assumption can be an equilibrium outcome if issuers are perfectly competitive, or if they are monopolistically competitive and face logit demand for credit cards with full market coverage.
+In Section \ref{subsubsec:robustness} we show how results change when this assumption is relaxed.
+
+\subsection{Sufficient Statistics Approach}
+
+We develop sufficient statistics to conduct an equilibrium welfare evaluation of interchange fees across consumer groups when payment choices are fixed, but prices and consumption can re-adjust.
+The key insight is that consumer welfare effects do not depend on demand elasticities, and instead depend on the variation in the composition and cost of payments across merchants.
+
+\begin{theorem}[Sufficient Statistic for Consumer Welfare Redistribution]\label{thm:sufficient-stat}
+Let $x_l$ be any parameter that shifts $\tau_{jl}$.
+The first-order money-metric welfare effect for consumers of type $k$ is
+
+\begin{equation}
+\frac{1}{\lambda_k}\frac{dV_k}{dx_l}
+= \mu_k^{-1}\!\left(
+-\,\mathbb{E}_R\!\left[\mu_{jk}\mu_{jl}\tfrac{\partial\tau_{jl}}{\partial x_l}\right]
++ \mathbbm{1}\{k=l\}\,\mathbb{E}_R\!\left[\mu_{jk}\tfrac{\partial\tau_{jk}}{\partial x_k}\right]
+\right) + O(\tau_{\max}),\label{eq:sufficient-stat-formula}
+\end{equation}
+where $\lambda_k$ is the marginal utility of income and $\tau_{\max} = \max_{j,k} |\tau_{jk}|$ denotes the maximum interchange fee across all merchants and payment methods.
+Multiplying by $\mu_k$ yields the aggregate dollar welfare effect for group $k$.\footnote{Our model holds payment choices fixed, focusing on redistribution rather than efficiency effects.
+Redistribution can be studied in a largely model-free way by tracking transfers across consumer groups holding behavior fixed, while efficiency analysis requires taking a stand on behavioral responses and therefore demands structural assumptions about demand elasticities, utility functions, and market conduct \citep{Wang2025}.
+High interchange fees may induce excessive credit card adoption \citep{Wang2025}, or they may improve efficiency when card acceptance lowers merchant costs \citep{Li.etal2020}.
+While distortionary payment choice creates social costs, the additional rewards are pure transfers.
+Our approach enables transparent quantification of redistribution without requiring the stronger assumptions needed for efficiency analysis.}
+
+\end{theorem}
+
+\subsubsection{Intuition and proof sketch.}
+The theorem says that two channels determine how interchange fees redistribute welfare.
+The first term is the retail-price channel: when interchange fees on payment method $l$ increase, retail prices rise at merchants where method-$l$ users shop.
+The size of the mechanical price change, holding fixed the composition of payments, is precisely $\mu_{jl} \frac{\partial \tau_{jl}}{\partial x_l}$.
+Consumers using payment method $k$ benefit in proportion to their overlap with method-$l$ users, which then yields the product $\mu_{jk}\mu_{jl} \frac{\partial \tau_{jl}}{\partial x_l}$.
+The second term is the direct reward channel: method-$l$ users receive more in card rewards when their interchange fees rise, affecting only those users.
+The sufficient statistic can be thought of as aggregating the welfare effect of the mechanical retail price changes across merchants when the composition of payments at each merchant stays fixed while the fee schedule $\tau$ changes.
+However, even though this appears to be a mechanical calculation, it captures the full consumer welfare effects of interchange fees even as retail prices, rewards, and consumption decisions adjust.
+
+The non-trivial part of the theorem is showing that the equilibrium changes in retail prices across all merchants are well approximated by these mechanical effects.
+In our setting, merchants' prices depend on the composition of consumers at each merchant.
+As prices change, compositions change as well.
+While Roy's identity tells us that the effects of consumer reallocation can be ignored when studying the welfare change for a given consumer, it leaves open the possibility that consumer reallocation can change retail prices in a way that differs substantially from the mechanical effect of changing interchange fees on retail prices.
+In Appendix~\ref{sec:appendix-theory}, we prove that as long as elasticities satisfy a dominant diagonal condition and are not too large relative to the level of fees, then these feedback effects of prices on the composition of payments are of order $\tau$.
+Therefore, when evaluating the redistribution effects of changes in interchange fees $\tau$, the error is second order in $\tau$.
+
+\subsubsection{Relation to alternative approaches.}
+Our sufficient-statistic approach yields a simple formula that requires only the payment shares $\mu_k$ and the overlap moments $\mathbb{E}_R[\mu_{jk}\mu_{jl}]$.
+In contrast, a fully structural demand estimation requires specifying and estimating utility functions, demand elasticities, and merchant pricing behavior across all consumer types and merchants.
+The theorem shows that consumer substitution patterns do not affect first-order redistribution.
+To validate this sufficient statistic approach, we next calibrate a structural model that matches key data moments while allowing for imperfect pass-through.
+Consumer welfare estimates for the main payment groups change by less than 10\% when allowing imperfect pass-through (Table \ref{tab:compare-ss-model}), confirming that the sufficient statistic formula captures the first-order redistributive effects.
+
+\subsubsection{Sufficient statistic parameters.}
+We recover the fee parameters from regressing firm-level interchange fees by payment method on sector dummies and a dummy for having more than \$1 billion in sales in the grocery and retail sectors.
+The regression constant yields the baseline fee $\overline{\tau}_k$; the sector dummy coefficients yield the sector adjustments $\tau_{sk}$; and the bargaining dummy coefficient yields the negotiated discount $\delta_k$.
+For each payment method, we weight each merchant by the dollar volume on that payment method at the merchant (i.e., revenue weights multiplied by payment composition $\mu_{jk}$), which ensures that the dollar-weighted average sector adjustment is zero.
+This normalization implies that sector adjustments affect consumer welfare only through their differential impact on retail prices (second moments), not through rewards (first moments). We then recover the revenue-weighted first and second-moments with their empirical analogues.
+\[
+\widehat{\mu}_k = \sum_j \widehat \omega_j\,\mu_{jk}, \qquad
+\widehat{\mathbb{E}_R[\mu_{jk}\mu_{jl}]} = \sum_j \widehat \omega_j\,\mu_{jk}\mu_{jl}.
+\]
+
+\subsection{Structural Model}
+
+While the sufficient-statistics approach provides intuitive and transparent estimates of redistribution, it relies on two key assumptions: full pass-through of interchange fees to retail prices and complete pass-through of interchange revenues to consumer rewards.
+To assess the robustness of our results to these assumptions, we develop and calibrate a quantitative structural model of the payment system.
+
+The structural model serves two purposes.
+First, it allows us to assess whether the sufficient statistic's first-order approximation introduces meaningful error by omitting second-order utility losses from consumer reallocation.
+Second, it enables us to evaluate how imperfect pass-through, arising from strategic complementarities in merchant pricing, would affect our distributional conclusions.
+
+We calibrate two versions of the model, where $j^*$ denotes the number of firms per market that internalize their effect on the aggregate price index.
+The first version features perfect pass-through ($j^*=50$ firms per market, each with revenue share set near zero so that they behave as price-takers) and validates the accuracy of our first-order approximation.
+The second version introduces imperfect pass-through ($j^*=2$ large firms in each sector) and quantifies the sensitivity of our results to this margin.
+Both versions are calibrated to match key moments from the Fiserv data on payment composition across merchants and sectors.
+
+\subsubsection{Consumer Preferences}
+
+We model consumer demand using a nested CES structure that allows for rich heterogeneity in shopping patterns across payment methods.
+Consumers with different payment methods have different tastes for merchants, and this heterogeneity matches the observed variation in the composition of payments across merchants.
+
+In a representative market $m$, consumers who use payment method $k=1,\dots,K$ have Cobb-Douglas preferences over sectors $s=1,\dots,S$:
+\[
+\log U_{k}=\sum_{s=1}^{S}\alpha_{ks}\log U_{ks},\quad\sum_{s=1}^{S}\alpha_{ks}=1
+\]
+Utility in a sector is a CES aggregator over the $J$ firms serving that market:
+\[
+U_{ks}^{\frac{\sigma-1}{\sigma}}=\sum_{j=1}^{J}a_{jks}^{\frac{1}{\sigma}}q_{jks}^{\frac{\sigma-1}{\sigma}}
+\]
+where the $a_{jks}$ are taste shifters that allow us to match the distribution of payment shares and firm size. Consumers solve an optimal consumption problem, where their budget constraint reflects their rewards:
+\begin{equation}
+\max_{q_{k}}U_{k}\quad\text{s.t. }\sum_{s}\sum_{j}q_{jks}p_{js}\leq1+f_{k} \label{eq:consumption-problem}
+\end{equation}
+
+Intuitively, a sector with a high $\alpha_{ks}$ has a high utility for consumers $k$.
+For example, premium card consumers may have a higher utility for leisure travel than cash consumers.
+Similarly, within a particular sector, consumers' preferences over firms are correlated with their payment methods, which is reflected in $a_{jks}$.
+For example, premium card consumers may prefer to shop for groceries at Whole Foods relative to a discount grocer, while cash consumers prefer the opposite (given prices).
+This rich heterogeneity allows firms to have different market shares across consumers who use different payment methods.
+$\sigma$ captures consumers' willingness to substitute across goods (i.e., consumers' price elasticity) so a higher $\sigma$ implies more price elastic consumers. 
+
+The standard solution yields:
+\begin{align}
+q_{jks} & =\alpha_{ks}\times\left(1+f_{k}\right)\times\frac{a_{jks}p_{js}^{-\sigma}}{P_{ks}^{1-\sigma}} \label{eq:consumer-demand}
+P_{ks}^{1-\sigma} & =\sum_{j=1}^{J}a_{jks}p_{js}^{1-\sigma}
+\end{align}
+The expression is standard and intuitive.
+For a given price, goods and sectors with higher $\alpha$ have higher demand.
+Higher relative prices lower demand, and higher price elasticity ($\sigma$) results in larger declines in demand given a price increase.
+
+\subsubsection{Merchant Problem}
+
+Merchants set a uniform price for all consumers, regardless of payment method, consistent with the institutional reality that most U.S. merchants do not price discriminate by payment type \citep{Stavins2018}.
+A critical feature of our model is that it allows a discrete number of firms in each market, following \citet{Hottman.etal2016}, so that individual merchants internalize their pricing decisions on consumers' demand for goods in that sector.
+
+The departure from the standard monopolistic competition assumption serves two purposes.
+First, it allows large merchants to have market power and incomplete pass-through, which is empirically realistic for sectors like grocery and merchandise retail.
+Second, it generates strategic complementarities in pricing: when one merchant raises prices in response to higher interchange fees, this partially shifts demand to competitors, dampening their incentive to also raise prices.
+By varying the number of large firms per market, we can control the degree of pass-through and thereby assess the sensitivity of our redistribution results to this margin.
+
+Formally, merchants set a uniform price for all of their consumers to maximize profits.
+Let the measure of consumers who use payment method $k$ equal $\mu_k$.
+For convenience, we normalize all merchants' marginal costs to equal $1$, as CES models do not differentiate between low costs and high taste shifters $a$, and we do not observe cost data:
+\[
+p_{js}=\argmax_{p}\sum_{k}\mu_k q_{jks}\left(p\left(1-\tau_{jks}\right)-1\right)
+\]
+
+Because firms are discrete, they internalize the effect of their own price setting.
+Large firms thus exert market power, charge higher markups, and feature incomplete pass-through of interchange fees.
+Define $\rho_{jks}$ to be the revenue-share of firm $j$ among all firms in that sector:
+\[
+\rho_{jks} =\frac{q_{jks}p_{js}}{\sum_{i}q_{iks}p_{is}}
+\]
+
+Optimal prices are increasing in the revenue share of the firm, which captures the idea that large firms can exercise market power. 
+\begin{align}
+  \label{eq:optimal-price-structural}
+p_{js} & = \frac{\sum_{k}\mu_{jks}\varepsilon_{jks}}{\sum_{k}\mu_{jks}\left(\varepsilon_{jks}-1\right)\left(1-\tau_{jks}\right)} \\
+  \varepsilon_{jks} & = \sigma(1-\rho_{jks}) + \rho_{jks} \\
+\mu_{jks} & =\frac{\mu_k q_{jks}}{\sum_{m}\mu_m q_{jms}}
+\end{align}
+
+In this model, the pass-through of idiosyncratic cost shocks is decreasing in the revenue share of the firm. When consumers have CES preferences and firms are monopolistically competitive, all merchants fully pass through idiosyncratic cost shocks while ignoring the pricing decisions of their competitors. However, if firms are large, they internalize the effect of their pricing decisions on the aggregate price index, they only partially pass through idiosyncratic cost shocks. Their prices also depend on the prices that other merchants set, i.e., they exhibit strategic complementarity \citep{Amiti.etal2019}. Therefore, although the assumptions we have made on demand rule out perfect pass-through of idiosyncratic cost shocks, strategic complementarities mean that sector-level cost shocks are largely passed through.
+
+\subsubsection{Network Problem}
+
+The network problem in the structural model is the same as in the sufficient statistics framework. Merchant fees at each firm are based on card type, sector, and firm size, and networks rebate all fees net of costs to the consumer.
+
+% As in the sufficient statistic framework, card networks rebate interchange fees to consumers as rewards, net of processing costs.
+% Networks mechanically pass on merchant fees net of costs in the form of rewards:
+% \[
+% f_{k}=\frac{\sum_{s}\sum_{j}q_{jks}p_{js}\left(\tau_{jks}-c_{k}\right)}{\sum_{s}\sum_{j}q_{jks}p_{js}}
+% \]
+
+% Merchant fees at each firm are based on card type, sector, and firm size. The interchange fee schedule mirrors the empirical structure documented in \ref{sec:costs}: fees vary by card type (regulated debit, exempt debit, basic credit, premium credit), by merchant sector, and by merchant size (with discounts for large firms).
+% The firm size discount is implemented by an indicator $\delta_{j}$ for whether the firm has more than $1$ billion in sales and a card-specific discount $b_{k}<0$:
+% \[
+% \tau_{jks}=\tau_{k}+\tau_{ks}+\delta_{j}b_{k}
+% \]
+
+\subsubsection{Equilibrium}
+An equilibrium is defined by a vector of prices $p_{js}$ for each sector and a vector of consumption choices $q_{jks}$ for consumers of each payment method such that consumers maximize utility given prices as per equation \ref{eq:consumption-problem} and merchants maximize profits as per equation \ref{eq:optimal-price-structural}.
+
+\subsubsection{Calibration}
+We next calibrate our model to the data.
+We target moments describing the composition of payments across merchants and sectors.
+We calibrate most parameters sector-by-sector to allow for the substantial cross-sector heterogeneity documented in Section \ref{sec:costs}.
+We first calibrate the $\alpha_{ks}$ parameters to match the allocation of spending across sectors.
+We then parameterize the taste shifters $a_{jks}$ as lognormal, but potentially correlated across firms $j$, to match the revenue-weighted mean and covariance matrices of payment shares across merchants in each sector.
+For the grocery and merchandise sectors, we allow for the distributions of $a_{jks}$ to differ for small and large firms (who receive negotiated interchange).
+We use the same estimated fee parameters as in the sufficient statistics exercise.
+Appendix \ref{sec:appendix-calibrated} provides full calibration details and goodness-of-fit figures.
+
+\end{document}

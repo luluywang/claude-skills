@@ -1,0 +1,117 @@
+\documentclass[main.tex]{subfiles}
+
+\begin{document}
+
+\section{Technical Details for Structural Model and Parametric Bootstrap}\label{sec:appendix-calibrated}
+
+This appendix provides technical details for the structural model presented in Section \ref{sec:redistribution}.
+The main text presents the model specification, calibration strategy, and welfare comparison.
+This appendix contains the calibration goodness-of-fit diagnostics and detailed parameter values.
+
+\subsection{Detailed Parameterization}
+
+Our parameterization treats each market $m$ as featuring $j^{*}$ large firms and a fringe of monopolistically competitive firms that vary in the composition of their payments.
+We parameterize the taste shifters as
+\[
+\log a_{jksm}=\log\frac{\overline{a}_{s}}{j^{*}}\times I\left\{ j\leq j^{*}\right\} +\log\frac{1-\overline{a}_{s}}{J-j^{*}}\times I\left\{ j>j^{*}\right\} +\log z_{jksm}
+\]
+The special intercept $\overline{a}_{s}$ for the first $j^{*}$ firms allows us to model these firms as large.
+The $\log(J-j^{*})$ term is a normalization so that the sum of the small firms has a revenue share of approximately $1-\overline{a}_{s}$.
+
+We model variation in payment composition by allowing consumers with different payment preferences to vary in their preferences over merchants.
+We then set the payment-type taste adjustments to $\left(z_{j1sm},\dots,z_{jKsm}\right)\sim N\left(\overline{z}_{js},\Sigma_{js}\right)$.
+For small firms with $j>j^{*}$, we set $\overline{z}_{js}=\mathbf{0}$ and impose a common covariance $\Sigma_{s}$.
+For large firms with $j\leq j^{*}$, we impose a common mean and variance, $\overline{z}_{js}=\overline{z}_{s}^{*}$, $\Sigma_{js}=\Sigma_{s}^{*}$.
+
+\subsection{Welfare Formulas}
+
+To evaluate the welfare effects of interchange fees, we compute average compensating variation for each consumer type across the $M$ markets.
+Since networks mechanically pass through fees to rewards and do not earn economic profits in our model, the welfare analysis focuses on consumers and merchants.
+The key welfare metric for consumers is the change in the sectoral price indices they face, which captures both the direct effect of higher retail prices (from merchant fees) and the indirect effect of rewards.
+
+Formally, in this framework, network profits are constant.
+Average compensating variation for consumers of type $k$, expressed as a percentage of baseline expenditure, is
+\[
+\Delta\log W_{k}=\frac{1}{M}\sum_{m}\sum_{s}\alpha_{ks}\Delta\log P_{ksm}
+\]
+
+\subsection{Calibration Details}
+
+In practice, given a set of parameters, we simulate $M=200$ markets, with each sector in each market containing $100$ firms, and then compute the resulting equilibrium.
+We match the following moments:
+
+\begin{itemize}
+\item We set $\alpha_{ks}$ to match the share of spending of each payment
+method in each sector.
+This mechanically ensures that we match the average composition of payments in each sector.
+
+\item In the merchandise and grocery sectors, we set $\overline{a}$ to match the revenue share of firms with more than \$1 billion in revenue. In the other sectors, we set $\overline{a}=0.49$ to match the merchandise sector. It is important to match the share of revenue at firms with more than \$1 billion in sales in grocery and merchandise because that determines the fee discounts given by the networks.
+\item We set $j^*$ to equal the same value across all sectors. In the complete pass-through calibration we set $j^*=50$, whereas for incomplete pass-through, we set $j^*=2$. Intuitively, $j^*$ governs the number of firms with strategic complementarities in each market.
+\item We calibrate $\Sigma_{s}$ to match the revenue-weighted second-moment matrices.
+\item We set $\overline{z}_{s}^{*}$ to match the revenue-weighted average composition of payments, and $\Sigma_{s}^{*}$ to match the revenue-weighted second-moment matrix of payment shares, of firms with more than \$1 billion in revenue in those sectors.
+\item We set $\sigma=5$. This is between the median across-firm and within-firm elasticities reported by \citet{Hottman.etal2016}. In any case, the aggregate elasticity does not affect the validity of the sufficient statistic approach.
+\item We obtain the components of the fee $\tau_{jk}$ from regressions of firm-level fees on payment method $k$ as a share of sales on sector indicators and an indicator for being a large firm in the merchandise or grocery sectors.
+\end{itemize}
+
+\subsection{Goodness-of-Fit Diagnostics}
+
+Figure \ref{fig:calibration-fit} demonstrates the quality of the calibration fit.
+Panel \ref{fig:calibration-moments} shows that the model successfully replicates the revenue-weighted second moments of payment shares across sectors---the key statistics that govern the extent of cross-subsidization in our sufficient-statistics framework.
+The close alignment between model-generated moments (y-axis) and data moments (x-axis) confirms that the calibration captures the observed covariance structure of payment methods across merchants.
+Panel \ref{fig:markups-by-sector} shows that the model generates realistic markups by sector, which is important for ensuring that merchant pricing behavior is empirically grounded.
+Finally, Panel \ref{fig:calibration-passthrough} regresses the change in each firm's average log price against the change in that firm's average fees as a result of capping fees to zero in the counterfactual, with market fixed effects. The slopes represent pass-through rates of idiosyncratic costs implied by the model. Whereas small firms in the structural calibration fully pass through own costs, large firms only pass through around half.
+Together, these panels confirm that the calibrated model provides a credible quantitative laboratory for evaluating the welfare effects of interchange fee policies.
+
+\begin{figure}[H]
+  \centering
+  \caption{Goodness of Fit: Model Calibration Results}
+  \label{fig:calibration-fit}
+
+  \begin{subfigure}[t]{0.9\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../output/graphs/calibration_fit_by_sector.pdf}
+    \caption{Second Moments by Sector}
+    \label{fig:calibration-moments}
+  \end{subfigure}
+
+  \begin{subfigure}[t]{0.4\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../output/graphs/markups_by_sector.pdf}
+    \caption{Markups by Sector}
+    \label{fig:markups-by-sector}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.4\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../output/graphs/firm_fe_passthrough_by_sector_extreme.pdf}
+    \caption{Pass-through Regressions by Sector}
+    \label{fig:calibration-passthrough}
+  \end{subfigure}
+
+  \captionsetup{font=small}
+  \captionnotes{\textit{Notes:} Figure \ref{fig:calibration-fit} demonstrates that the model calibration successfully matches the targeted moments from the data. Panel \ref{fig:calibration-moments} shows the matching of revenue-weighted second moments for both large and small firms across sectors, a key component of the model's calibration strategy. Panel \ref{fig:markups-by-sector} displays markups by sector, showing the model's ability to match empirical markup patterns. Panel \ref{fig:calibration-passthrough} illustrates pass-through regressions by sector, providing further validation of the model's fit. Together, these figures provide visual evidence that the calibration is working as intended.}
+
+\end{figure}
+
+\subsection{Parametric Bootstrap Procedure}
+\label{subsec:appendix-bootstrap}
+
+We compute standard errors using a parametric bootstrap that combines two sources of uncertainty: uncertainty in revenue-weighted payment moments, and uncertainty in fee parameters.
+
+For the revenue-weighted moments, we must model both the distribution of payment shares across firms and the distribution of firm size.
+
+To match the firm size distribution by sector, within each sector, we draw firm revenues from log-normal distributions calibrated to the empirical size distribution.
+For the grocery and merchandise sectors, we take care to draw sufficiently many firms with more than \$1 billion in revenue by modeling the number of such firms as a Poisson random variable with mean equal to the observed number of such firms in that sector, and then modeling firm size above \$1 billion using a truncated log normal distribution.
+
+To match the distribution of payment shares within each sector, we draw firm-level payment shares from a multivariate distribution calibrated to match the observed mean shares and their full covariance structure.
+We do this by following the log-normal specification used in the structural calibration, which allows us to model the covariance matrix of shares while ensuring that the shares lie on the simplex.
+For the grocery and merchandise sectors, we again take care to separately model the distribution of payment shares for firms with more than \$1 billion in revenue, drawing these from a distinct multivariate distribution calibrated to match the observed mean shares and covariance matrix for such firms.
+
+For the fee parameters, we account for the fact that, although our firm-level regressions contain millions of observations, the effective sample size is much smaller due to the skewed firm size distribution.
+We then draw fee coefficients from their asymptotic multivariate normal distribution.
+
+Each bootstrap iteration combines a new draw of revenue-weighted moments with a new draw of fee parameters to compute the redistribution effects.
+Standard errors are the standard deviation across iterations.
+
+\clearpage
+
+\end{document}

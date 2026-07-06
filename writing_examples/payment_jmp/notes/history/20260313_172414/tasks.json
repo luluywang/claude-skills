@@ -1,0 +1,30 @@
+{
+  "created": "2026-03-06T18:25:00Z",
+  "paper_type": "B",
+  "llm_tagging": true,
+  "tasks": [
+    {"id": 1, "file": "main.tex", "task": "grammar,ai_detection,word_choice,sentence_analysis", "model": "haiku", "status": "pending"},
+    {"id": 2, "file": "intro.tex", "task": "grammar,ai_detection,word_choice,sentence_analysis", "model": "haiku", "status": "complete"},
+    {"id": 3, "file": "institutional_details.tex", "task": "grammar,ai_detection,word_choice,sentence_analysis", "model": "haiku", "status": "pending"},
+    {"id": 4, "file": "data.tex", "task": "grammar,ai_detection,word_choice,sentence_analysis", "model": "haiku", "status": "pending"},
+    {"id": 5, "file": "reducedform.tex", "task": "grammar,ai_detection,word_choice,sentence_analysis", "model": "haiku", "status": "pending"},
+    {"id": 6, "file": "model.tex", "task": "grammar,ai_detection,word_choice,sentence_analysis", "model": "haiku", "status": "pending"},
+    {"id": 7, "file": "estimation.tex", "task": "grammar,ai_detection,word_choice,sentence_analysis", "model": "haiku", "status": "pending"},
+    {"id": 8, "file": "counterfactuals.tex", "task": "grammar,ai_detection,word_choice,sentence_analysis", "model": "haiku", "status": "pending"},
+    {"id": 9, "file": "conclusion.tex", "task": "grammar,ai_detection,word_choice,sentence_analysis", "model": "haiku", "status": "pending"},
+    {"id": 10, "file": "appendix_data.tex", "task": "grammar,ai_detection,word_choice,sentence_analysis", "model": "haiku", "status": "pending"},
+    {"id": 11, "file": "appendix_model.tex", "task": "grammar,ai_detection,word_choice,sentence_analysis", "model": "haiku", "status": "pending"},
+    {"id": 12, "file": "appendix_estimation.tex", "task": "grammar,ai_detection,word_choice,sentence_analysis", "model": "haiku", "status": "pending"},
+    {"id": 13, "file": "appendix_model_oa.tex", "task": "grammar,ai_detection,word_choice,sentence_analysis", "model": "haiku", "status": "pending"},
+    {"id": 14, "file": "appendix_mri.tex", "task": "grammar,ai_detection,word_choice,sentence_analysis", "model": "haiku", "status": "pending"},
+    {"id": 15, "file": "appendix_reduced.tex", "task": "grammar,ai_detection,word_choice,sentence_analysis", "model": "haiku", "status": "pending"},
+    {"id": 16, "file": "appendix_surcharging.tex", "task": "grammar,ai_detection,word_choice,sentence_analysis", "model": "haiku", "status": "pending"},
+    {"id": 17, "file": "appendix_sorting.tex", "task": "grammar,ai_detection,word_choice,sentence_analysis", "model": "haiku", "status": "pending"},
+    {"id": 18, "file": "appendix_robustness.tex", "task": "grammar,ai_detection,word_choice,sentence_analysis", "model": "haiku", "status": "pending"}
+  ],
+  "paper_tasks": [
+    {"id": 100, "task": "structure", "model": "sonnet", "status": "pending"},
+    {"id": 101, "task": "flow_extraction", "model": "sonnet", "status": "pending"},
+    {"id": 102, "task": "writing_quality", "model": "sonnet", "status": "pending"}
+  ]
+}

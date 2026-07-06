@@ -1,0 +1,300 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{cms/global//global/global/global}
+    \entry{EuropeanCommission2015}{report}{}{}
+      \name{author}{1}{}{%
+        {{hash=4e1819faa3a2892b0bf676644d631c53}{%
+           family={European\bibnamedelima Commission},
+           familyi={E\bibinitperiod\bibinitdelim C\bibinitperiod},
+           given={DG\bibnamedelima Comp},
+           giveni={D\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Publications Office}%
+      }
+      \list{location}{1}{%
+        {LU}%
+      }
+      \strng{namehash}{4e1819faa3a2892b0bf676644d631c53}
+      \strng{fullhash}{4e1819faa3a2892b0bf676644d631c53}
+      \strng{fullhashraw}{4e1819faa3a2892b0bf676644d631c53}
+      \strng{bibnamehash}{4e1819faa3a2892b0bf676644d631c53}
+      \strng{authorbibnamehash}{4e1819faa3a2892b0bf676644d631c53}
+      \strng{authornamehash}{4e1819faa3a2892b0bf676644d631c53}
+      \strng{authorfullhash}{4e1819faa3a2892b0bf676644d631c53}
+      \strng{authorfullhashraw}{4e1819faa3a2892b0bf676644d631c53}
+      \field{sortinit}{E}
+      \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{langid}{english}
+      \field{month}{3}
+      \field{shorttitle}{Survey on Merchants' Costs of Processing Cash and Card Payments}
+      \field{title}{Survey on Merchants' Costs of Processing Cash and Card Payments: {{Final}} Results, {{March}} 2015.}
+      \field{year}{2015}
+      \field{dateera}{ce}
+    \endentry
+    \entry{Lowe2005}{inproceedings}{}{}
+      \name{author}{1}{}{%
+        {{hash=26f158f73c135b7918a4bbdc43cf2b3a}{%
+           family={Lowe},
+           familyi={L\bibinitperiod},
+           given={Philip},
+           giveni={P\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Santa Fe, New Mexico}%
+      }
+      \list{publisher}{1}{%
+        {Kansas City Federal Reserve}%
+      }
+      \strng{namehash}{26f158f73c135b7918a4bbdc43cf2b3a}
+      \strng{fullhash}{26f158f73c135b7918a4bbdc43cf2b3a}
+      \strng{fullhashraw}{26f158f73c135b7918a4bbdc43cf2b3a}
+      \strng{bibnamehash}{26f158f73c135b7918a4bbdc43cf2b3a}
+      \strng{authorbibnamehash}{26f158f73c135b7918a4bbdc43cf2b3a}
+      \strng{authornamehash}{26f158f73c135b7918a4bbdc43cf2b3a}
+      \strng{authorfullhash}{26f158f73c135b7918a4bbdc43cf2b3a}
+      \strng{authorfullhashraw}{26f158f73c135b7918a4bbdc43cf2b3a}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Payments {{System Research Conferences}}}
+      \field{month}{5}
+      \field{title}{Payments System Reform: {{The Australian}} Experience}
+      \field{year}{2005}
+      \field{dateera}{ce}
+    \endentry
+    \entry{Mukharlyamov.Sarin2025}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=80abf34e78859401085dde3a545f26b6}{%
+           family={Mukharlyamov},
+           familyi={M\bibinitperiod},
+           given={Vladimir},
+           giveni={V\bibinitperiod}}}%
+        {{hash=c540b33534b899ed6018a64e6ba7372e}{%
+           family={Sarin},
+           familyi={S\bibinitperiod},
+           given={Natasha},
+           giveni={N\bibinitperiod}}}%
+      }
+      \strng{namehash}{862a2852688f76ac7e9691d382b6b742}
+      \strng{fullhash}{862a2852688f76ac7e9691d382b6b742}
+      \strng{fullhashraw}{862a2852688f76ac7e9691d382b6b742}
+      \strng{bibnamehash}{862a2852688f76ac7e9691d382b6b742}
+      \strng{authorbibnamehash}{862a2852688f76ac7e9691d382b6b742}
+      \strng{authornamehash}{862a2852688f76ac7e9691d382b6b742}
+      \strng{authorfullhash}{862a2852688f76ac7e9691d382b6b742}
+      \strng{authorfullhashraw}{862a2852688f76ac7e9691d382b6b742}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{abstract}{This paper studies the impact of price regulation in two-sided markets, where intermediaries must get both sides of the market on board. Since platforms such as debit card networks can only succeed by simultaneously convincing consumers to use cards and merchants to accept them, they often subsidize one side of the market to generate supracompetitive profits from the other side (Rochet and Tirole 2003). Using a novel dataset on card processing fees, we show a regulation restricting banks' ability to charge high processing fees on debit-card transactions (the Durbin Amendment of the 2010 DoddFrank Act) led to higher checking account fees paid by consumers, the previously subsidized side of the market. In addition, the policy has likely accelerated the adoption of credit cards with higher interchange fees, thus diminishing—if not offsetting entirely—merchants' savings. Taken together, these effects impede the regulation's stated objective of enhancing consumers' welfare through lower retail prices. Our evidence adds empirical support to the concern that market failures in two-sided markets are hard to identify, and even harder to correct.}
+      \field{journaltitle}{Journal of Financial Economics}
+      \field{langid}{english}
+      \field{shorttitle}{Price {{Regulation}} in {{Two-Sided Markets}}}
+      \field{title}{Price {{Regulation}} in {{Two-Sided Markets}}: {{Empirical Evidence}} from {{Debit Cards}}}
+      \field{volume}{172}
+      \field{year}{2025}
+      \field{dateera}{ce}
+      \field{pages}{104094}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1016/j.jfineco.2025.104094
+      \endverb
+    \endentry
+    \entry{NACHA2017}{report}{}{}
+      \name{author}{1}{}{%
+        {{hash=2df150b605d33d7d0cfc25ec94f8a1e4}{%
+           family={{NACHA}},
+           familyi={N\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Optimized Payments Consulting}%
+      }
+      \strng{namehash}{2df150b605d33d7d0cfc25ec94f8a1e4}
+      \strng{fullhash}{2df150b605d33d7d0cfc25ec94f8a1e4}
+      \strng{fullhashraw}{2df150b605d33d7d0cfc25ec94f8a1e4}
+      \strng{bibnamehash}{2df150b605d33d7d0cfc25ec94f8a1e4}
+      \strng{authorbibnamehash}{2df150b605d33d7d0cfc25ec94f8a1e4}
+      \strng{authornamehash}{2df150b605d33d7d0cfc25ec94f8a1e4}
+      \strng{authorfullhash}{2df150b605d33d7d0cfc25ec94f8a1e4}
+      \strng{authorfullhashraw}{2df150b605d33d7d0cfc25ec94f8a1e4}
+      \field{sortinit}{N}
+      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{title}{Understanding the {{Cost}} of {{Processing Card Payments}}}
+      \field{year}{2017}
+      \field{dateera}{ce}
+      \field{pages}{8}
+      \range{pages}{1}
+    \endentry
+    \entry{Nilson2020a}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=16ff1774c04145dc94208696ada628d8}{%
+           family={Nilson},
+           familyi={N\bibinitperiod},
+           given={Report},
+           giveni={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{16ff1774c04145dc94208696ada628d8}
+      \strng{fullhash}{16ff1774c04145dc94208696ada628d8}
+      \strng{fullhashraw}{16ff1774c04145dc94208696ada628d8}
+      \strng{bibnamehash}{16ff1774c04145dc94208696ada628d8}
+      \strng{authorbibnamehash}{16ff1774c04145dc94208696ada628d8}
+      \strng{authornamehash}{16ff1774c04145dc94208696ada628d8}
+      \strng{authorfullhash}{16ff1774c04145dc94208696ada628d8}
+      \strng{authorfullhashraw}{16ff1774c04145dc94208696ada628d8}
+      \field{sortinit}{N}
+      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{journaltitle}{Nilson Report}
+      \field{month}{12}
+      \field{title}{U.{{S}}. {{Consumer Payment Systems}}}
+      \field{volume}{1188}
+      \field{year}{2020}
+      \field{dateera}{ce}
+    \endentry
+    \entry{Rochet.Tirole2006}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=c774e33c3153ef9db1c5d50a7f69799d}{%
+           family={Rochet},
+           familyi={R\bibinitperiod},
+           given={Jean-Charles},
+           giveni={J\bibinithyphendelim C\bibinitperiod}}}%
+        {{hash=00e537376470e49a45c05eab98111caa}{%
+           family={Tirole},
+           familyi={T\bibinitperiod},
+           given={Jean},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{c07e4308d805a2d585fcfabf9ba4ca1d}
+      \strng{fullhash}{c07e4308d805a2d585fcfabf9ba4ca1d}
+      \strng{fullhashraw}{c07e4308d805a2d585fcfabf9ba4ca1d}
+      \strng{bibnamehash}{c07e4308d805a2d585fcfabf9ba4ca1d}
+      \strng{authorbibnamehash}{c07e4308d805a2d585fcfabf9ba4ca1d}
+      \strng{authornamehash}{c07e4308d805a2d585fcfabf9ba4ca1d}
+      \strng{authorfullhash}{c07e4308d805a2d585fcfabf9ba4ca1d}
+      \strng{authorfullhashraw}{c07e4308d805a2d585fcfabf9ba4ca1d}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{issn}{07416261, 17562171}
+      \field{journaltitle}{The RAND Journal of Economics}
+      \field{langid}{english}
+      \field{month}{9}
+      \field{number}{3}
+      \field{shorttitle}{Two-Sided Markets}
+      \field{title}{Two-Sided Markets: {{A}} Progress Report}
+      \field{volume}{37}
+      \field{year}{2006}
+      \field{dateera}{ce}
+      \field{pages}{645\bibrangedash 667}
+      \range{pages}{23}
+      \verb{doi}
+      \verb 10.1111/j.1756-2171.2006.tb00036.x
+      \endverb
+    \endentry
+    \entry{Visa2020}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=89fc0d6fe12b0e0c1af5c7a0373435a6}{%
+           family={{Visa}},
+           familyi={V\bibinitperiod}}}%
+      }
+      \strng{namehash}{89fc0d6fe12b0e0c1af5c7a0373435a6}
+      \strng{fullhash}{89fc0d6fe12b0e0c1af5c7a0373435a6}
+      \strng{fullhashraw}{89fc0d6fe12b0e0c1af5c7a0373435a6}
+      \strng{bibnamehash}{89fc0d6fe12b0e0c1af5c7a0373435a6}
+      \strng{authorbibnamehash}{89fc0d6fe12b0e0c1af5c7a0373435a6}
+      \strng{authornamehash}{89fc0d6fe12b0e0c1af5c7a0373435a6}
+      \strng{authorfullhash}{89fc0d6fe12b0e0c1af5c7a0373435a6}
+      \strng{authorfullhashraw}{89fc0d6fe12b0e0c1af5c7a0373435a6}
+      \field{sortinit}{V}
+      \field{sortinithash}{afb52128e5b4dc4b843768c0113d673b}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{9}
+      \field{title}{Annual {{Report}} 2020}
+      \field{year}{2020}
+      \field{dateera}{ce}
+    \endentry
+    \entry{Zenger2011}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=17af3b2993f031ce3ecd4d686df440f0}{%
+           family={Zenger},
+           familyi={Z\bibinitperiod},
+           given={Hans},
+           giveni={H\bibinitperiod}}}%
+      }
+      \strng{namehash}{17af3b2993f031ce3ecd4d686df440f0}
+      \strng{fullhash}{17af3b2993f031ce3ecd4d686df440f0}
+      \strng{fullhashraw}{17af3b2993f031ce3ecd4d686df440f0}
+      \strng{bibnamehash}{17af3b2993f031ce3ecd4d686df440f0}
+      \strng{authorbibnamehash}{17af3b2993f031ce3ecd4d686df440f0}
+      \strng{authornamehash}{17af3b2993f031ce3ecd4d686df440f0}
+      \strng{authorfullhash}{17af3b2993f031ce3ecd4d686df440f0}
+      \strng{authorfullhashraw}{17af3b2993f031ce3ecd4d686df440f0}
+      \field{sortinit}{Z}
+      \field{sortinithash}{96892c0b0a36bb8557c40c49813d48b3}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{abstract}{Two widely discussed pricing benchmarks in the literature on payment card markets are the “tourist test” interchange fee (Rochet and Tirole, forthcoming), which internalizes usage externalities in payment card markets, and “perfect surcharging” by merchants (Rochet and Tirole, 2002). This paper shows that these benchmarks are allocatively equivalent. Implications for the regulatory treatment of interchange fees and no-surcharge rules are discussed.}
+      \field{issn}{03784266}
+      \field{journaltitle}{Journal of Banking \& Finance}
+      \field{langid}{english}
+      \field{month}{10}
+      \field{number}{10}
+      \field{title}{Perfect Surcharging and the Tourist Test Interchange Fee}
+      \field{volume}{35}
+      \field{year}{2011}
+      \field{dateera}{ce}
+      \field{pages}{2544\bibrangedash 2546}
+      \range{pages}{3}
+      \verb{doi}
+      \verb 10.1016/j.jbankfin.2011.02.016
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

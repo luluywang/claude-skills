@@ -1,0 +1,164 @@
+\documentclass[11pt,english]{article}
+
+\input{../preamble}
+\input{../writing_preamble}
+
+\begin{document}
+
+\renewcommand*{\thefootnote}{\fnsymbol{footnote}}
+
+\author{
+
+  \makebox[\textwidth][c]{%
+    \begin{minipage}{0.33\textwidth}\centering
+Mark Egan\thanks{Harvard University, Harvard Business School.
+Email: megan@hbs.edu.} \\ \vspace{-1em} Harvard University and NBER
+
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.33\textwidth}\centering
+Gregor Matvos\thanks{Northwestern University, Kellogg School of Management.
+Email: gregor.matvos@kellogg.northwestern.edu.} \\ \vspace{-1em} Northwestern University and NBER
+
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.33\textwidth}\centering
+Amit Seru\thanks{Stanford GSB.
+Email: aseru@stanford.edu.} \\ \vspace{-1em} Stanford University and NBER
+
+    \end{minipage}
+}
+
+  \vspace{2em}
+
+  % Second row of authors
+  \makebox[\textwidth][c]{%
+    \begin{minipage}{0.33\textwidth}\centering
+Lulu Wang\thanks{Northwestern University, Kellogg School of Management.
+Email: lulu.wang@kellogg.northwestern.edu.} \\ \vspace{-1em} Northwestern University
+
+    \end{minipage}
+
+    \begin{minipage}{0.33\textwidth}\centering
+Vincent Yao\thanks{Georgia State University, J.
+Mack Robinson College of Business.
+Email: wyao2@gsu.edu.} \\ \vspace{-1em} Georgia State University
+
+    \end{minipage}
+} }
+
+\title{Who Pays for Payments?}
+
+\date{\today\thanks{We thank our discussants Matteo Benetton, Itamar Drechsler, German Gutierrez, Chuqing Jin, Scott Nelson, Marc Rysman, Zhu Wang, Carlo Wix, and seminar participants at the Bank of Italy, the Hong Kong Institute for Monetary and Financial Research (HKIMFR), Berkeley, the Carey Finance Conference, Emory, the Federal Reserve Board, Harvard, Imperial, Northwestern, NBER Household Finance, NBER Corporate Finance, the Stanford Institute for Theoretical Economics, Toulouse, and UNC Chapel Hill for helpful comments. Mark Egan is an unpaid member of the Fiserv Small Business Index Advisory Council. Vincent Yao is an unpaid member of the Fiserv Small Business Index Advisory Council and a paid consultant. Fiserv had no role in the design of the study, the analysis, the interpretation of the results, the writing of the paper, the decision to publish, and did not review or approve the content of the paper. }}
+
+\maketitle
+
+% \begin{center}
+% \vspace*{-1cm}
+% \textcolor{red}{PRELIMINARY AND INCOMPLETE.
+% PLEASE DO NOT SHARE!}
+
+% \end{center}
+\pagenumbering{roman} \thispagestyle{empty} 
+% \vspace{0.5cm}
+
+\begin{abstract}
+\begin{singlespace}
+
+  % Longer version that clarifies the details behind these inputs
+  % We use novel merchant-level data covering both card and cash transactions to quantify consumer cross-subsidies in U.S. consumer payments.
+  We use novel data on the composition and cost of payments across U.S. merchants to quantify consumer redistribution in the payment system.
+  Cards charge interchange fees to merchants to fund consumer rewards.
+  When merchants raise prices for all consumers in response to these costs, users of low-cost payment methods (e.g., cash and debit) cross-subsidize high-reward credit card users who shop at the same merchant.
+  This standard mechanism implicitly assumes that consumers using different payment methods shop at the same merchants and that merchants face similar fees. 
+  We show instead that incidence depends on the joint distribution of payment choices across merchants.
+  We document two key forces that shape redistribution.
+  First, consumer sorting---where consumers who use different payment methods shop at different merchants---limits the exposure of cash and debit users to the effects of high interchange fees.
+  Second, interchange fees vary across merchants; where users of different payment methods overlap, such as at large grocery stores, fees are lower due to sector discounts and private negotiations.
+  We embed these forces in a sufficient-statistics framework that maps observed heterogeneity directly into redistribution.
+  We estimate that interchange fees transfer approximately \$\absinput{combined_dollar_headline} billion every year from cash and debit users to credit card users.
+  Consumer sorting and merchant fee heterogeneity reduce the magnitude of this regressive transfer by \absinput{pct_reduction}\%, but do not eliminate it.
+  Finally, we show that both the Durbin Amendment and the rise of premium credit cards have been regressive, highlighting how policy and innovation can reshape the incidence of platform fees.
+
+\end{singlespace}
+
+\thispagestyle{empty} \setcounter{page}{0}\begin{flushleft}
+
+Keywords: Interchange Fees, Redistribution, Durbin Amendment, Price Discrimination, Payment Systems
+
+JEL Classification: E42, D14, L11, L81.\end{flushleft}
+
+\end{abstract}
+\clearpage{}
+
+\pagenumbering{arabic} \renewcommand*{\thefootnote}{\arabic{footnote}}
+\setcounter{footnote}{0}
+
+% Include main sections
+\subfile{introduction}
+\subfile{institutional_setting}
+\subfile{payment_costs}
+\subfile{redistribution}
+\subfile{results}
+\subfile{conclusion}
+
+% Bibliography
+\clearpage{}
+\begin{singlespace}
+\begin{flushleft}
+{\small
+\bibliography{payment_methods,payments_fiserv_lulu}
+% \bibliography{../payment_methods,../payments_fiserv_lulu}
+}{\small\par}
+
+\par\end{flushleft}
+\end{singlespace}
+
+% Include figures
+\clearpage{}
+\subfile{figures}
+
+% Include tables
+\clearpage{}
+\subfile{tables}
+
+% Include appendices
+\appendix
+\renewcommand{\thesubsection}{\Alph{section}.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\Alph{section}.\arabic{subsection}.\arabic{subsubsection}}
+
+\pagenumbering{arabic}
+\renewcommand{\thepage}{A-\arabic{page}}
+\renewcommand{\thetable}{A.\arabic{table}}
+\renewcommand{\thefigure}{A.\arabic{figure}}
+\setcounter{table}{0}  % Reset table counter
+\setcounter{figure}{0}  % Reset figure counter
+
+\clearpage{}
+\subfile{appendix_theory}
+
+\clearpage{}
+\subfile{appendix_endogenous_choice}
+
+\clearpage{}
+\subfile{appendix_network_incidence}
+
+\clearpage{}
+\subfile{appendix_data}
+
+\clearpage{}
+\subfile{appendix_cash_model}
+
+\clearpage{}
+\subfile{appendix_structural}
+
+\clearpage{}
+\subfile{appendix_durbin}
+
+\clearpage{}
+\subfile{appendix_figures}
+
+\clearpage{}
+\subfile{appendix_tables}
+
+\end{document}

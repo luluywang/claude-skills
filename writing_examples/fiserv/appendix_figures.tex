@@ -1,0 +1,68 @@
+\documentclass[main.tex]{subfiles}
+
+\begin{document}
+
+\section{Additional Figures}
+
+\begin{figure}[H]
+  \centering
+  \caption{Data Coverage and Representativeness}
+  \label{fig:data-representative}
+
+  % Row 1
+  \begin{subfigure}[t]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../fiserv_output/graphs/dcpc_settlement_compare.pdf}
+    \caption{Sector Composition}
+    \label{fig:data-representative-sector}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../fiserv_output/graphs/state_scatter.pdf}
+    \caption{Geographic Composition}
+    \label{fig:data-representative-geo}
+  \end{subfigure}
+
+  % Row 2
+  \vspace{0.6em}
+  \begin{subfigure}[t]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../fiserv_output/graphs/firm_size_distn_irs_compare.pdf}
+    \caption{Firm Size}
+    \label{fig:data-representative-size}
+  \end{subfigure}
+
+  \captionsetup{font=small}
+  \captionnotes{\textit{Notes:} Panel (a) compares sector composition across datasets: DCPC (Atlanta Fed's Diary of Consumer Payment Choice) versus Fiserv settlement data (which covers both large and small merchants). Both show dollar value shares of card transactions by sector. Panel (b) validates geographic coverage by plotting each state's GDP share against its card transaction share in the Fiserv settlement data. Panel (c) compares firm-size distribution of card spending: IRS data (using Statistics on Income for gross receipts) versus Fiserv settlement data. All shares are measured by dollar value of transactions.
+
+}
+
+\end{figure}
+
+\clearpage
+
+\begin{figure}[H]
+  \centering
+  \caption{Geographic Variation in the Payment Mix}
+  \label{fig:pmt_map}
+
+  \begin{subfigure}[t]{0.9\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../fiserv_output/graphs/map_cash.png}
+    \caption{Cash Share}
+    \label{fig:cash_map}
+  \end{subfigure}
+
+  \begin{subfigure}[t]{0.9\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../fiserv_output/graphs/map_credit.png}
+    \caption{Credit Card Share of Card Payments}
+    \label{fig:credit_map}
+  \end{subfigure}
+
+  \captionsetup{font=small}
+  \captionnotes{\textit{Notes:} Panel (a) shows the county-level share of all transactions conducted in cash (equally weighted across Clover merchants in the county). Panel (b) shows the county-level share of card transactions made using credit cards (equally weighted across merchants in the county in the settlement data). Brighter colors indicate higher shares.}
+
+\end{figure}
+
+\end{document}

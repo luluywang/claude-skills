@@ -1,0 +1,141 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+
+In the U.S., Visa and Mastercard (MC) process 80\% of card transactions
+% CONSTANT: from Visa 2020 annual report, external data
+and earn profit margins above 60\% \parencite{Visa2020}.
+% CONSTANT: from Visa 2020 annual report, external data
+At the same time, merchants pay around \$120 billion in fees every year to accept cards \parencite{Nilson2020a}.
+% CONSTANT: from Nilson (2020a), aggregate merchant fee bill
+These facts have motivated two decades of litigation and legislation built on a view that high merchant fees reflect weak competition.
+Key policy interventions include the Durbin Amendment's cap on debit interchange fees, the proposed Credit Card Competition Act \parencite{Andriotis2022}, and the Department of Justice (DOJ) monopolization lawsuit against Visa \parencite{Au-Yeung2024}.
+
+I find that merchant fees are indeed too high, but weak competition is the wrong diagnosis.
+Networks set rewards for consumers and fees for merchants. 
+The division of costs matters because merchants typically charge the same price for all payment methods, a phenomenon known as ``price coherence'' \parencite{Frankel1998, Stavins2018}.\footnote{
+    This occurs even though cash discounts and card surcharges are largely legal.
+    I explore surcharging both theoretically and empirically in Online Appendix \ref{sec:oa-price-coherence}.
+}
+Under price coherence, card users capture rewards while the cost of higher merchant fees is spread across all consumers through higher retail prices.
+I estimate that consumers are ten times more sensitive to rewards than merchants are to fees.
+% HARDCODED[derived: diversion_baseline.tex "Visa Credit"/"Visa Credit" ÷ scalar divert_inst_merchant_price_visa_baseline] current=3.7/0.4=9.25
+This incentivizes networks to charge high merchant fees to fund generous consumer rewards.
+High-merchant-fee credit cards thus proliferate because of, not in spite of, intense network competition.
+% Network driving adoption of high-fee payment methods and inflating merchants' costs.
+
+Three forces explain why networks tax merchants to subsidize consumers.
+First, consumer payment choices respond strongly to subsidies.
+Networks charge interchange fees to merchants and channel the fees to card issuers, which incentivizes them to promote the networks' cards.
+A regulatory reduction in debit interchange fees --- the Durbin Amendment --- reduced debit card spending at regulated issuers by around 25\% relative to exempt issuers.
+% HARDCODED[table: durbin_table.tex, row: signature debit, exp(-0.287)-1, rounded] current=25
+Second, card acceptance raises merchant sales.
+Event-study evidence shows that merchants on the margin gain \scalarpctinput{kilts_model_sales_event}\% in sales when accepting credit.
+% HARDCODED[scalar: kilts_model_sales_event (pct)] current=12
+Third, while almost all merchants accept every network's cards, around \scalarinput{kilts_model_singlehome_cc}\% of consumers carry credit cards from only one network (i.e., they ``single-home'').
+Together, these facts produce a partial ``competitive bottleneck'' \parencite{Armstrong2006}. 
+Merchants risk losing substantial sales from single-homing consumers by dropping a network, so networks compete through rewards rather than fees.
+
+Existing theory cannot resolve whether network competition raises or lowers fees and welfare.
+The U.S.\ market sits between two theoretical extremes.
+When all consumers single-home, each network is a monopoly gateway to its cardholders, so competition raises per-transaction merchant fees \parencite{Armstrong2006, Edelman.Wright2015}. 
+When consumers multi-home (i.e. carry cards from multiple networks), merchants can drop expensive networks without losing sales, so competition lowers fees \parencite{Anderson.etal2018, Bakos.Halaburda2020, Teh.etal2022}.
+
+I thus build a structural model in which payment networks compete as two-sided platforms.
+A mix of single- and multi-homing consumers choose payment methods based on rewards, merchant acceptance, and exogenous non-price characteristics.
+Merchants choose which cards to accept and set retail prices to maximize profits net of merchant fees.
+Multiproduct networks maximize profits by setting fees and rewards, balancing merchant acceptance against consumer adoption.
+
+I estimate consumer and merchant preferences by matching the reduced-form facts, moments from payment surveys, and aggregate market-level data.
+The estimated parameters match untargeted moments, including the acceptance response to American Express (AmEx) fee cuts, merchant profit margins, and network costs from accounting data.
+A 1-bp increase in Visa credit rewards raises Visa's consumer market share by $3.7\%$, while a 1-bp increase in Visa credit merchant fees reduces merchant acceptance by only $0.4\%$.
+% HARDCODED[scalar: divert_inst_merchant_price_visa] current=-0.4
+% HARDCODED[table: diversion_baseline.tex, row: "Visa Credit", col: "Visa Credit"] current=3.7
+Networks thus face strong incentives to raise merchant fees to fund rewards.
+
+Credit card adoption is socially excessive because of price coherence.
+Because merchants do not surcharge, each consumer who adopts a credit card raises retail prices for all other consumers.
+Consumers individually face incentives to distort their payment choices to capture cross-subsidies, but collectively prefer lower credit card use.
+A revealed preference argument illustrates the inefficiency.
+Since credit cards pay rewards whereas cash and debit do not, the marginal user of credit cards must prefer the non-price characteristics of cash and debit.
+High rewards reduce consumers' aggregate non-price utility from payment choices, but the rewards themselves are merely transfers funded by higher retail prices.
+% Credit fee caps correct this prisoner's dilemma by reducing the rewards that drive excessive adoption.
+
+The structural model measures the welfare loss from this coordination failure.
+I simulate a counterfactual in which credit card merchant fees are capped at 120 basis points (bp), roughly half their current level.
+% CONSTANT: counterfactual design choice, approximately half current credit card fees
+% \footnote{Online Appendix~\ref{subsec:oa-cost-of-cash-cap} evaluates alternative fee caps.
+% The 120 bps cap achieves roughly 93\% of the welfare gains from a 30 bps cap modeled after the tourist test of \textcite{Rochet.Tirole2011} and roughly 77\% of a Ramsey planner's gains.
+% % HARDCODED[table: appendix_cap_welfare_table_baseline.tex, row: "Total", cols: Cap Credit=27, Tourist Test=29, Ramsey Planner=35] current=93% (27/29), 77% (27/35)
+% }
+Capping merchant fees cuts per-transaction revenue, so networks compete less aggressively for consumers through rewards.
+Networks cut rewards, and some consumers switch away from credit cards.
+By revealed preference, these marginal switchers prefer cash or debit absent rewards, so the total welfare gain is the eliminated cross-subsidy.
+This reduction in credit card use ultimately raises total welfare by \$27 billion annually.
+The gains from capping merchant fees exceed the \$12 billion consumer welfare gain from the CARD Act \parencite{Agarwal.etal2015},
+% CONSTANT: from Agarwal et al. (2015), external paper result
+suggesting that regulating networks is at least as important as regulating issuers.
+
+The gains from credit fee caps are also progressive. 
+Reduced merchant fees pass through to lower retail prices for all consumers, whereas the reduction in rewards falls mostly on high-income consumers who are more likely to use credit cards.
+Consumer surplus rises by 48 bp of consumption for low-income consumers, compared to only 15 bp for high-income consumers.
+% HARDCODED[table: welfare_table_baseline.tex, row: "Low Income", col: 1] current=48
+% HARDCODED[table: welfare_table_baseline.tex, row: "High Income", col: 1] current=15
+There is no trade-off between equity and efficiency in regulating payment fees.
+
+Two additional counterfactuals illustrate that the largest welfare losses in payment markets stem from the overuse of credit cards, not market power.
+First, repealing the Durbin Amendment's debit fee cap would raise total welfare by \$7 billion per year.
+% HARDCODED[table: welfare_table_baseline.tex, row: "Total", col: 3] current=7
+Under the usual market power story \parencite{Cuesta.Sepulveda2021}, removing the debit fee cap should reduce welfare.
+But higher debit merchant fees fund higher debit rewards, drawing consumers away from high-reward credit cards onto a lower-fee network.
+This shrinks the cross-subsidy and increases total welfare.
+This substitution effect matches prior work on the Durbin Amendment \parencite{Mukharlyamov.Sarin2025} and illustrates that the current U.S. regime of capping debit but not credit fees is worse than laissez-faire.
+
+Second, a merger to monopoly raises total welfare by \$15 billion per year.
+% HARDCODED[table: welfare_table_baseline.tex, row: "Total", col: 6] current=15
+Without competitive pressure to attract consumers, a monopoly network cuts rewards.
+Because consumers are highly sensitive to rewards, credit card use collapses.
+Per-transaction merchant fees rise, but credit card volume collapses, so the total merchant fee burden falls.
+Consumers lose \$11 billion as network markups increase sharply, but the reduction in credit card use raises total welfare.
+% HARDCODED[table: welfare_table_baseline.tex, row: "Consumers", col: 6] current=-11
+While a merger is not a realistic policy proposal, the counterfactual shows how network competition inflates the total merchant fee burden by funding rewards.
+% HARDCODED[table: welfare_table_baseline.tex, row: "Total", col: 6] current=15
+These predictions align with rising U.S.\ interchange fees despite increasing network competition \parencite{GAO2009} and the global expansion of high-fee Buy Now, Pay Later products \parencite{Berg.etal2024}.
+The problem is not market power stifling output but rewards competition generating excessive credit card adoption.
+
+In the absence of credit fee caps, policy can also redirect competition by increasing consumer multi-homing.
+Dual-routing requirements, such as those proposed in the Credit Card Competition Act, mandate that issuers put multiple networks on each card.
+Cardholders covered by such mandates multi-home by technological fiat, without having to sign up for a second card.
+I model these requirements as a change in preferences that generates a 20 percentage point increase in the share of multi-homing consumers.
+When consumers multi-home, merchants can decline expensive networks without losing sales, shifting competition toward merchant fees rather than consumer rewards.
+Networks respond by cutting credit card fees by 13 bp and rewards by 15 bp.
+% HARDCODED[table: cf_table_baseline.tex, row: "Credit Fees", col: 8] current=-13
+% HARDCODED[table: cf_table_baseline.tex, row: "Credit Rewards", col: 8] current=-15
+Total welfare rises.
+These routing requirements are effective even when the secondary network is a large player.
+Increasing multi-homing is also much more effective than introducing a public option, such as a Central Bank Digital Currency (CBDC), that competes as a debit card \parencite{Berg.etal2024a}.
+High rates of consumer multi-homing, not low market shares, force networks to compete for merchants rather than consumers.
+
+\paragraph{Related Literature}
+
+The closest empirical work is \textcite*{Huynh.etal2022}, which estimates a structural two-sided model of consumer and merchant card adoption.
+I build on their work by modeling merchant and network competition.
+Merchant competition explains how credit card rewards inflate retail prices and redistribute consumption.
+Network competition endogenizes merchant fees and consumer rewards, enabling me to assess how price controls and competition affect total welfare.
+
+The effects of network competition on fees and welfare are quantitative questions, but common modeling assumptions predetermine the answer.
+Homogeneous merchants guarantee that competition reduces fees \parencite{Guthrie.Wright2007}.
+Omitting merchant competition understates merchants' incentives to accept cards \parencite{Rochet.Tirole2002, Wright2012, Li.etal2020} and misses how fees pass through to retail prices.
+My model relaxes both assumptions and lets the data determine whether competition raises or lowers fees and welfare.
+
+My paper contributes to the empirical IO literature on two-sided markets \parencite{Rysman2004, Lee2013, Song2021}.
+My results on dual routing support the finding in \textcite{Rosaia2020} that consumer multi-homing intensifies platform competition.
+My paper also contributes to the literature on how platforms shape off-platform outcomes \parencite{Bergemann.etal2024, Chen2024, Bursztyn.etal2025}.
+Under price coherence, merchant fees strongly influence retail prices, explaining the welfare gains from credit fee caps.
+\textcite{Sullivan2025} finds that commission caps reduce welfare in food delivery, where price coherence is absent.
+
+My paper also relates to a literature on price regulation in credit card markets.
+Whereas \textcite{Nelson2020,Cuesta.Sepulveda2021} show how interest rate caps increase welfare by expanding quantities, my paper shows that credit card merchant fee caps can increase welfare by reducing the use of credit cards.
+\textcite{Knittel.Stango2003} document that non-binding state interest rate caps served as focal points for tacit coordination in credit card markets during the 1980s.
+The credit fee caps I study are binding constraints that push fees below their competitive levels, so they function as direct price regulation rather than as coordination devices.
+
+\end{document}

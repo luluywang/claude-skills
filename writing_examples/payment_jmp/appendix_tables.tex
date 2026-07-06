@@ -1,0 +1,132 @@
+\documentclass[main.tex]{subfiles}
+
+\begin{document}
+
+\section{Additional Tables}
+\label{sec:oa-descriptive-tables}
+
+\begin{table}[ht!]
+\small
+\caption{Summary statistics of the Homescan sample\label{tab:nielsen-summary}}
+
+\begin{center}
+\input{../output/tables/nielsen_summary.tex}
+\end{center}
+\tablenote{NielsenIQ Homescan panel, 2013--2023. Each observation is a household-year.}
+\end{table}
+
+\begin{table}[ht!]
+\small
+\caption{Comparing Homescan payment shares to aggregate shares\label{tab:nielsen-compare}}
+
+\begin{center}
+\input{../output/tables/nielsen_compare.tex}
+\end{center}
+\tablenote{Homescan payment shares are each method's dollar volume divided by total spending. Aggregate shares are from \textcite{Nilson2020a}.}
+\end{table}
+
+\begin{table}[ht!]
+    \small
+    \caption{Event study estimates for the effects of card acceptance on sales to credit-card consumers \label{tab:event-study-tab}}
+
+    \centering \input{../output/tables/main_reg_spend.tex}
+    \tablenote{Regression coefficients from the triple-difference Poisson specification described in Section~\ref{subsec:merchant-card-gains}. Dependent variables: number of shopping trips by household $h$ at retailer $j$ in period $t$ (column 1) and total spending in dollars (column 2). Periods are six months. Standard errors clustered at the household level.}
+\end{table}
+
+\begin{table}[ht!]
+    \small
+    \caption{Average share of card spending on consumers' top two cards, by primary card\label{tab:top-two}}
+
+    \centering
+    \input{../output/tables/top_two_spend_share.tex}
+    \tablenote{Homescan panel, 2017--2019. The primary card has the most trips; the secondary has the second-most. Each cell reports the average share of total card spending on the primary or secondary for households with the indicated primary type.}
+\end{table}
+
+\begin{table}[ht!]
+    \small
+    \caption{Credit card multi-homing rates: usage-based vs.\ ownership-based measurement\label{tab:multihome_comparison}}
+
+    \centering
+    \input{../output/tables/multihome_comparison.tex}
+    \tablenote{Share of primary credit card users who hold (DCPC) or use (Homescan) cards from two or more of \{Visa, MC, AmEx\}. DCPC counts are from the Diary of Consumer Payment Choice survey, which asks respondents directly which cards they own. Homescan rates are computed from observed primary and secondary card usage, with a consumer classified as multi-homing if both their primary and secondary card are credit cards. Both samples restrict to 2017--2019.}
+\end{table}
+
+\clearpage
+
+\begin{table}[ht!]
+    \caption{Multihoming rate by income: data vs.\ model}
+    \label{tab:multihome-by-income}
+    \centering
+    \input{../output/tables/multihome_model_fit.tex}
+    \tablenote{Homescan panel, 2017--2019.
+Multihoming rate is the share of households whose primary and secondary payment methods are both credit cards.
+Income split at the median.
+The reported gradient is computed from the unrounded values; displayed cells are rounded to one decimal, so subtracting them may give a slightly different number.}
+\end{table}
+
+\input{data_coverage_table.tex}
+
+\begin{table}[ht!]
+\small
+\caption{Summary statistics of Financial Institutions in the Nilson Panel in 2010\label{tab:nilson-summary}}
+
+\begin{center}
+\input{../output/tables/nilson_summary_bank_level.tex}
+\end{center}
+\tablenote{Treated indicates the institution had more than $\$10$ billion in assets in $2010$.
+Institution-year observations are averaged to the institution level.
+Assets are in millions.
+Credit, Debit, and Signature Debit are card volumes in millions.}
+\end{table}
+
+\begin{table}[ht!]
+    \small
+    \caption{Correlation between top card by trip count and top card by spending share\label{tab:spend-trip-correlation}}
+
+    \begin{center}
+    \input{../output/tables/kilts_spend_v_trip_crosstab.tex}
+    \end{center}
+    \tablenote{Homescan panel, 2017--2019. Rows classify households by the card with the most trips. Columns classify by the card with the highest spending share. Each cell reports the share of households in that row--column combination.}
+\end{table}
+
+\begin{table}[ht!]
+    \small
+    \caption{Second-choice survey summary statistics\label{tab:second-choice-summary}}
+
+    \begin{center}
+        \input{../output/tables/second_choice_summary_table.tex}
+    \end{center}
+
+\tablenote{Credit and debit card users from the second-choice survey (Online Appendix \ref{subsec:appendix-second-choice-details}).
+\textit{Primary Debit}/\textit{Primary Credit}: primary payment method is debit/credit card.
+\textit{Switch Rewards}: would switch from primary credit card if rewards were halved.
+\textit{Bank Removed Other Debit}/\textit{Credit}: respondent would switch to another bank if their own bank dropped that payment type (defined only for primary debit/credit users).
+\textit{Card Removed Debit}/\textit{Credit}/\textit{Cash}: respondent would switch to debit, credit, or cash if their primary payment type were no longer available.
+\textit{Female}: customer is female.
+\textit{Wave 1}/\textit{Wave 2}: survey wave.
+\textit{Additional Cards Used}: number of credit or debit cards beyond the primary card.
+\textit{Age}: customer's age.
+\textit{Income}: household annual income, made continuous using the geometric mean of each category's bounds.}
+
+\end{table}
+
+\begin{table}[ht!]
+    \small
+    \caption{Log income regression on primary payment method\label{tab:dcpc-income-reg}}
+    \centering
+    \input{../output/tables/dcpc_income_reg.tex}
+    \tablenote{Data from the 2017--2019 waves of the DCPC.
+The dependent variable is log household income.
+The omitted category is primary cash users.}
+\end{table}
+
+\begin{table}[ht!]
+    \caption{Baseline Equilibrium\label{tab:cf-baseline}}
+    \centering
+    \small{\input{../output/tables/baseline_equilibrium_baseline.tex}}
+
+    \tablenote{The market share of a card type is the share of consumers whose primary card is that type.
+    The reward rate is shown as the lump sum reward on a card divided by the dollars spent on that card for a consumer who single-homes on that card.}
+\end{table}
+
+\end{document}

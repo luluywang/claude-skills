@@ -1,0 +1,158 @@
+\documentclass[main.tex]{subfiles}
+
+\begin{document}
+
+\section{Introduction}
+
+Payment systems redistribute across consumers who choose different payment methods but shop at the same stores.
+Transfers arise because payment acceptance costs vary significantly by payment method, yet retail prices do not \citep{Stavins2018}.
+Since interchange fees---the major component of acceptance costs---flow back to consumers as rewards, a cross-subsidy emerges: all consumers pay higher retail prices, but the users of high-interchange-fee credit cards capture most of the rewards \citep{carlton1994antitrust}.
+
+In recent years, merchants and policymakers have fought against rising interchange fees through both litigation and legislation.
+In 2025, a pending settlement against Visa would allow merchants to selectively decline high-fee premium credit cards, such as the Chase Sapphire Reserve, while still accepting lower-fee cards \citep{Andriotis2025}.
+The 2022 Credit Card Competition Act sought to lower interchange fees, particularly for small businesses that cannot negotiate for lower fees from the networks \citep{Andriotis2022}.
+The U.S. regulatory environment strongly contrasts with the European Union's interchange fee regulation, which has capped interchange fees at less than one-sixth of the highest fees charged in the U.S., highlighting the wide variation in regulatory approaches across jurisdictions.
+Despite this policy attention, there is little consensus on who ultimately bears the cost of interchange fees. Existing debates often frame interchange as either a ``tax'' on merchants or a mechanism to fund consumer rewards. Both views overlook that interchange fees primarily redistribute consumption across consumers, and that the magnitude and direction of this redistribution depend on how consumers and merchants are matched in equilibrium.
+
+This lack of consensus reflects a fundamental measurement challenge. 
+Redistribution arises only when different consumers use payment methods with different interchange fees at the same merchant \citep{Gans2018}.
+Many existing studies rely on payment survey data that lack information on where consumers shop, implicitly assuming common shopping patterns across consumers who use different payments \citep{Felt.etal2023}.
+Merchants face substantial heterogeneity in interchange fees across sectors, sizes, and negotiated contracts.
+
+More broadly, the existing literature treats the incidence of interchange fees as a representative-agent problem, abstracting from consumer sorting and fee heterogeneity. This abstraction is consequential. If consumers using different payment methods sort into different merchants, or if merchants face heterogeneous fees, then average fee differences are no longer sufficient to determine redistribution. 
+Instead, incidence depends on the covariance between payment choices and merchant characteristics. 
+This is a dimension that has been largely unobserved in prior work, and one that is central to understanding who ultimately bears the cost of interchange fees.
+% Instead, incidence depends on the covariance between payment choices and merchant characteristics---a dimension that has been largely unobserved in prior work, and one that is central to determining the direction and magnitude of transfer, and therefore to understanding who ultimately bears the cost of interchange fees.
+
+In this paper, we use novel merchant-level data from Fiserv to quantify how the payment system redistributes among consumers with different payment preferences.
+Our central contribution is to show that the incidence of interchange fees is governed by the joint distribution of payment choices and merchant characteristics, rather than by average fee differences across payment methods.
+
+We proceed in three parts.
+First, we document striking heterogeneity in both payment mix and interchange fees across merchants.
+Second, we show that this heterogeneity reflects systematic consumer sorting across merchants and variation in merchant-level bargaining power and sectoral pricing. 
+Third, we develop a sufficient-statistics framework that maps these empirical moments into welfare and redistribution across consumer groups. 
+This approach allows us to quantify redistribution without estimating a full demand system, and to isolate the role of sorting and fee heterogeneity in shaping incidence, under empirically plausible pass-through assumptions that we examine in the data and in a structural model.
+
+Our results highlight the magnitude and limits of redistribution through the payment system.
+We estimate that interchange fees generate approximately \$\absinput{combined_dollar_headline} billion in annual transfers from cash and debit card users to credit card users.
+Because credit card use increases with income, this represents a \$\absinput{cap_high_income_loss_dollars} billion annual transfer from low- and middle-income households earning less than \$150,000 in annual income to higher-income households.
+These transfers are economically significant, comparable in size (but opposite in direction) to major government programs such as SNAP (\$120bn), the Earned Income Tax Credit (\$57bn), and unemployment insurance (\$40bn).
+The transfers here are also large relative to other transfers in consumer financial markets, such as the inter-regional transfer due to the GSE's lack of risk-based pricing (\$15 billion), consumer losses from shrouded credit card fees (\$10 billion), and consumer losses from high-fee index funds (\$20 billion) \citep{Hurst.etal2016, agarwal2015regulating, Brown.etal2024}.
+Overall, cash users pay the equivalent of \absinput{effective_tax}\% higher sales taxes than premium credit card users.
+
+To study the effects of interchange fees, we draw on two comprehensive datasets from Fiserv, a large U.S. merchant acquirer.
+The first consists of merchant-level settlement data from all Fiserv merchants from 2006 to 2022, covering merchant-level transaction volumes, counts, and fees by card type.
+We focus primarily on a 2022 cross-section of approximately 1 million merchants\footnote{The data allow us to study payment volumes at both the outlet level and the corporate level.
+We refer to the latter as a merchant.}, which covers around one-fifth of all U.S. card payments.
+The second dataset contains transaction data from Fiserv's Clover platform, covering approximately 800,000 merchants between 2019 and 2022.
+Clover is the largest U.S. cloud-based point-of-sale (POS) system and processed over \$133 billion in transactions as of 2020.\footnote{Source: \url{https://web.archive.org/web/20230717211716/https://investors.fiserv.com/static-files/820517ed-48a8-4925-aca7-181065168e25}} A unique feature of the Clover data is that it includes both cash and card payments, allowing us to observe the full composition of payments.
+Cash transactions are notoriously difficult to capture in large datasets.
+We validate the data against public sources, including IRS data on the firm size distribution, BEA data on state-level GDP, industry trade journals, and the Diary of Consumer Payment Choice \citep{Foster.etal2024}.
+
+In the first part of the paper, we document two basic facts about heterogeneity in the cost and composition of payments across merchants.
+Our first fact is that payment composition varies substantially across merchants.
+Although credit card transactions account for a little more than half of all card transactions, the standard deviation of the share of credit transactions across merchants is approximately 20 percentage points.
+The distribution is also bimodal: some stores have almost all credit card shoppers, while others have few.
+This reflects consumer sorting, as consumers with different payment preferences tend to shop at different merchants.
+Because redistribution arises only when consumers using different payment methods shop at the same merchants, this variation limits the extent to which credit card interchange fees redistribute consumption from cash and debit card consumers.
+
+The composition of payments across sectors and geographies is consistent with the fact that higher-income individuals are more likely to use credit cards, especially premium credit cards, and less likely to use debit cards.
+We first confirm this relationship between income and payment choice using consumer-level survey data from the Diary of Consumer Payment Choice (DCPC) and MRI-Simmons.
+Across sectors, travel and retail tend to feature more credit card expenditures, whereas grocery and gas stations tend to feature more debit card and cash transactions.
+% Within retail, luxury categories, such as jewelry stores, are more likely to receive credit card payments, whereas shoe stores are more likely to receive debit card payments.
+
+% Ultimately, the variation in the composition of payments, sector, and firm size explains around \absinput{icg_r2_full}\% of the variance in average interchange fees across merchants, which, as we discuss later, has important implications for redistribution.
+
+Our second fact is that card type, merchant sector, and merchant size play fundamental roles in determining merchant-level interchange fees.
+While past work has documented that credit card fees are higher than debit card fees, we show that different types of debit and credit cards incur significantly different fees.
+For example, debit cards issued by large banks regulated under the Durbin Amendment charge \absinput{fees_nobargain_regulated_debit}\%, whereas those issued by smaller, exempt banks charge around \absinput{fees_nobargain_unregulated_debit}\%.
+These high-fee exempt debit cards account for 40\% of debit transactions.
+Within credit cards, basic credit cards charge merchants around \absinput{fees_nobargain_basic_credit}\%, while high-fee, high-reward premium credit cards, often used by higher-income consumers, charge around \absinput{fees_nobargain_premium_credit}\%.
+Credit card premiumization has accelerated in recent years.
+While premium credit cards represented 15\% of credit card volume in 2006, they now account for 60\% as of 2022.
+The fee variation across cards plays an increasingly important role in determining merchant-level fees, as cash use---around 11\% of transaction value in the Clover data---has declined.\footnote{Payment methods in the U.S. have shifted gradually over time, with cash use declining and debit card use steadily increasing.
+Cash and check use fell from approximately 13\% of consumer payments in 2019 to around 11\% in 2022.
+Since 2006, debit cards have gained share relative to credit cards: while credit accounted for roughly 60\% of card payment volume in 2006, it accounted for only 50\% in 2022.}
+
+Even holding card types fixed, interchange fees also vary across merchants.
+Merchants in sectors with high credit card use, such as travel and retail, pay high interchange fees, whereas grocery stores and gas stations pay interchange fees around \absinput{grocery_discount} basis points (30\%) lower.
+Large merchants also tend to pay lower interchange rates.
+For example, large merchants in the grocery and retail sectors, with annual card sales exceeding $\$1$ billion, tend to pay \absinput{bargain_discount} bps (30\%) lower interchange rates on credit and debit cards compared to smaller grocery stores in the same sector.
+These lower rates are the consequence of both publicly posted volume discounts and private negotiations and reflect the bargaining power of larger merchants.
+
+We also provide causal evidence that interchange fees have real impacts on prices and consumption.
+Using the Durbin Amendment as a natural experiment, we show that lower interchange fees lead to increased sales and lower prices (Appendix \ref{sec:appendix_durbin}).
+
+Evaluating the welfare effects of interchange fees would typically require estimating a full demand system across consumers, merchants, and payment methods, along with modeling strategic pricing by firms. 
+This quickly becomes intractable in settings with rich heterogeneity. 
+We show that this complexity is unnecessary. 
+Under mild conditions on consumer demand and firms' pricing responses to cost shocks, the first-order welfare effects of interchange fees can be summarized by simple moments of the joint distribution of payment shares across merchants and the corresponding fee schedule. 
+These statistics remain valid even when consumers' payment and shopping preferences are arbitrarily correlated. 
+% Importantly, this approach avoids the need to estimate a full demand system or explicitly model strategic interactions among firms, allowing us to map observed heterogeneity directly into redistribution without imposing strong functional-form assumptions on demand.
+This approach bypasses estimating a full demand system or modeling strategic interactions among firms. It maps observed heterogeneity directly into redistribution without strong functional-form assumptions on demand.
+Under these assumptions, our sufficient statistic approach provides a first-order approximation that is accurate for small fee changes. 
+To assess its performance in richer environments, we calibrate a structural model to evaluate how well the sufficient-statistics approximation captures the welfare effects of interchange under alternative assumptions about demand and pricing.
+We find that our sufficient-statistics framework closely approximates the full structural model, indicating that the key forces driving redistribution are well captured by the empirical moments we use, and suggesting that our main results are robust.
+
+Having incorporated merchant heterogeneity, consumer sorting, and the structure of interchange fees, we find that the payment system generates large transfers from cash and debit card users to credit card users of around \$\absinput{combined_dollar_headline} billion per year.
+Our calculations suggest that cash users lose around \absinput{combined_cash_final} basis points of purchasing power and that regulated debit card users lose around \absinput{combined_regulated_debit_final} basis points.
+Although much emphasis has been placed on cash users subsidizing credit card rewards, we show that debit card users also subsidize a substantial share of those rewards.
+Relative to an average state and local sales tax rate of around 6\%, our calculations suggest that interchange fees are analogous to raising the sales tax rate for cash users by around \absinput{tax_rate_cash}\% and that for regulated debit card users by \absinput{tax_rate_regulated_debit}\%.
+In contrast, basic and premium credit card users consume around \absinput{avg_credit_welfare} basis points more as a result of high interchange fees, essentially reducing their effective sales taxes by \absinput{tax_rate_avg_credit}\%.
+
+At the same time, we find that consumer sorting matters for the magnitude of this transfer.
+Since cross-subsidization occurs at the merchant level, there is no redistribution if cash, debit card, and credit card users shop at different merchants.
+In fact, consumer sorting reduces the effective size of the transfer by approximately \$\absinput{cash_debit_sorting} billion per year.
+This effect is largely driven by the tendency of many high-income, premium credit card users to shop at merchants that primarily serve similar customers.
+If a merchant primarily receives payments from premium credit cards, there is little to no cross-subsidization.
+As a result, consumer sorting insulates cash and debit card users from the full effects of the rise in premium credit card usage.
+
+Variation in interchange fees across merchants, driven by a combination of sector discounts and the bargaining power of large merchants, also shapes the redistributive effects of interchange fees.
+Redistribution requires that consumers with different payment methods shop at the same merchants, and that the payment methods incur different interchange fees.
+Grocery stores, gas stations, and large retailers exhibit the greatest overlap between consumers using different payment methods, but they also face the lowest levels of interchange fees and the smallest fee differentials across payment methods, due to sectoral discounts and private negotiations. This substantially reduces the extent of redistribution.  
+Even though fee heterogeneity suggests that Visa and Mastercard exert market power over merchants, the networks do so in a way that moderates the amount of redistribution in the payment system.
+% These sector and negotiated discounts lead to a progressive redistribution of approximately \$\absinput{cash_regdebit_firm} billion per year to cash and regulated debit card users, thereby attenuating the overall transfer, highlighting how equilibrium pricing both reflects and mitigates cross-subsidization.
+These sector and negotiated discounts lead to a progressive redistribution of approximately \$\absinput{cash_regdebit_firm} billion per year to cash and regulated debit card users, thereby attenuating the overall transfer. The variation across merchants highlights how different dimensions of interchange fee schedules generate and mitigate cross-subsidization.
+
+We also use our framework to examine how two recent industry shifts, the Durbin Amendment and the rise in card premiumization, have affected redistribution.
+Although cash users benefited from the Durbin Amendment, our analysis shows that credit card users were the primary beneficiaries.
+Our results also indicate that the Durbin Amendment was a regressive policy, benefiting wealthier households on net at the expense of lower-income households.
+Similarly, we find that the increase in credit card premiumization has been regressive, since higher-income consumers are the most likely to use premium cards. These two examples illustrate how distinguishing between different types of debit and credit cards is essential to understanding the effects of interchange in modern payment systems, and more broadly how policy and innovation can reshape the incidence of platform fees.
+
+% Our analysis proceeds in three steps that build toward a comprehensive understanding of redistribution through the payment system.
+% The first step, developed in Sections \ref{sec:institutional-data} and \ref{sec:costs}, establishes the empirical foundation: \ref{sec:institutional-data} describes the institutional setting and introduces our novel merchant-level transaction data from Fiserv's settlement platform and the Clover point-of-sale system, while \ref{sec:costs} leverages this unique data to establish two foundational empirical facts: the vast heterogeneity in payment composition across merchants (some serve primarily cash users, others primarily premium credit card users), and the equally large variation in the interchange fees those merchants are charged (driven by card type, sector, merchant size, and bargaining power).
+% Next, \ref{sec:real_effects} demonstrates that these fees have real economic consequences by providing causal evidence---exploiting variation induced by the Durbin Amendment---that interchange fees are passed through to retail prices and affect merchant sales.
+% This passthrough is what creates the potential for redistribution: when merchants raise prices to cover interchange costs, all consumers shopping there pay higher prices, regardless of their payment method.
+% Finally, \ref{sec:redistribution} integrates these empirical findings into our sufficient-statistics framework to provide the first comprehensive quantification of redistribution that explicitly accounts for the merchant-level heterogeneity we document.
+% \ref{sec:conclusion} concludes.
+
+\subsection{Related Literature}
+
+Our paper contributes to the literature on two-sided markets by quantifying how payment platform fees redistribute consumption among consumers.
+Prior theoretical work has focused on whether high interchange fees encourage efficient payment choices \citep{Rochet.Tirole2011,Wright2012,Edelman.Wright2015}.
+These papers typically assume that consumers using different payment methods shop at the same merchants, and that all merchants pay the same interchange fees.
+In contrast, we document substantial heterogeneity in both payment composition and interchange fees across merchants and show that this has important implications for redistribution across consumers, implying that incidence cannot be characterized using representative consumers or average fees.
+
+Our framework builds on the literature using sufficient statistics to evaluate the welfare effects of market interventions \citep{Chetty2009, Kleven2021}.
+Whereas sufficient statistics are typically used in settings without market power to quantify the social efficiency of government policies, we show that a sufficient-statistics approach can also be applied to quantify redistribution in an industry model with imperfect competition, and in environments with rich heterogeneity across both consumers and firms.
+
+Our work also complements the literature on credit card borrowing. Unlike cash and debit cards, credit cards provide not only payment services but also access to borrowing. For both tractability and the purpose of our counterfactual exercises, we take consumers' payment choice as given, which allows us to abstract from these additional features of payment methods. While credit card lending is central to understanding payments markets more broadly, it lies outside the scope of our analysis and counterfactuals.
+% \footnote{In our main counterfactual, we set interchange fees to zero, rendering payment method choice irrelevant for the prices set by merchants.} 
+A large literature documents the profitability of credit card lending. Early evidence from \citet{ausubel1991failure} shows that credit card interest rates are persistently high. Building on this, \citet{Drechsler.etal2025} demonstrate that these high rates translate into substantial bank profits, which they attribute to bank market power, in line with \citet{drechsler2017deposits} and \citet{drechsler2021banking}. 
+Importantly for our setting, they also show that while interchange fees are sizable, approximately 86\% are passed back to consumers in the form of rewards. This suggests that interchange fees and rewards primarily affect the distribution of surplus, whereas credit card lending is the main driver of bank profitability.
+
+Our analysis also highlights the redistributive potential of payment system innovations.
+Existing work has documented the benefits of expanding payment options, such as the gains from debit card adoption in Mexico \citep{Higgins2024} or the consumer value of payment choice \citep{Alvarez.Argente2025}.
+Our premium credit card counterfactual provides a complementary perspective by showing that innovation can redistribute consumption when new payment methods charge high fees to merchants to fund consumer benefits.
+This is relevant for understanding the effects of new Buy Now, Pay Later products around the world, which charge merchants even higher fees to fund interest-free payments for consumers \citep{Berg.etal2024}.
+Our findings help explain why high-income consumers may resist adopting new low-cost payment innovations, such as FedNow or central bank digital currencies \citep{whited2022will}: because they benefit from existing reward structures, they have limited incentives to switch to lower-cost alternatives.
+
+Our findings on redistribution through the payment system contrast significantly with prior work in household finance that focuses on transfers between heterogeneous consumers who pool on the same financial products \citep{Gabaix.Laibson2006, Fisher.etal2024, Agarwal.etal2025}.
+In contrast, redistribution arises in our setting when naifs and sophisticates choose different financial products but pool at the same merchants.
+This leads to qualitatively different recommendations for reducing redistribution.
+Whereas in most traditional settings separating contracts (between consumer types) can reduce redistribution, in our setting, it is precisely this separation across financial instruments (i.e., payment methods) that drives redistribution. 
+Our work shifts attention from financial contract design to the interaction between consumer sorting and merchant pricing.
+
+Finally, our analysis of the Durbin Amendment's redistributive effects builds on \citet{Kay.etal2018} and \citet{Mukharlyamov.Sarin2025}, who document how banks recouped lost interchange revenue through deposit account fees. We use their finding that the decline in interchange affected debit card consumers to form our estimates of how the Durbin Amendment redistributed across consumer groups, linking changes in pricing on the bank side to changes in incidence across consumers.
+
+\end{document}

@@ -1,0 +1,287 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{cms/global//global/global/global}
+    \entry{Berry.etal2004}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=cb5bb70f75321fd27d7160c5224b258d}{%
+           family={Berry},
+           familyi={B\bibinitperiod},
+           given={Steven},
+           giveni={S\bibinitperiod}}}%
+        {{hash=482d9b8712705a27fa4e150cb662cfeb}{%
+           family={Levinsohn},
+           familyi={L\bibinitperiod},
+           given={James},
+           giveni={J\bibinitperiod}}}%
+        {{hash=e5ca2972929372ecfef828a3c1eba9d7}{%
+           family={Pakes},
+           familyi={P\bibinitperiod},
+           given={Ariel},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{581e8f69bc7c66a1f20e47717e02f7be}
+      \strng{fullhash}{2fae5796c89fce0684591a3d53c243a7}
+      \strng{fullhashraw}{2fae5796c89fce0684591a3d53c243a7}
+      \strng{bibnamehash}{2fae5796c89fce0684591a3d53c243a7}
+      \strng{authorbibnamehash}{2fae5796c89fce0684591a3d53c243a7}
+      \strng{authornamehash}{581e8f69bc7c66a1f20e47717e02f7be}
+      \strng{authorfullhash}{2fae5796c89fce0684591a3d53c243a7}
+      \strng{authorfullhashraw}{2fae5796c89fce0684591a3d53c243a7}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{issn}{0022-3808, 1537-534X}
+      \field{journaltitle}{Journal of Political Economy}
+      \field{langid}{english}
+      \field{month}{2}
+      \field{number}{1}
+      \field{shorttitle}{Differentiated {{Products Demand Systems}} from a {{Combination}} of {{Micro}} and {{Macro Data}}}
+      \field{title}{Differentiated {{Products Demand Systems}} from a {{Combination}} of {{Micro}} and {{Macro Data}}: {{The New Car Market}}}
+      \field{volume}{112}
+      \field{year}{2004}
+      \field{dateera}{ce}
+      \field{pages}{68\bibrangedash 105}
+      \range{pages}{38}
+      \verb{doi}
+      \verb 10.1086/379939
+      \endverb
+    \endentry
+    \entry{Felt.etal2020}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=904db1ddf1826f92b549e85476d89324}{%
+           family={Felt},
+           familyi={F\bibinitperiod},
+           given={Marie-Hélène},
+           giveni={M\bibinithyphendelim H\bibinitperiod}}}%
+        {{hash=1028fb35f981fcbb07024dc912fc7dca}{%
+           family={Hayashi},
+           familyi={H\bibinitperiod},
+           given={Fumiko},
+           giveni={F\bibinitperiod}}}%
+        {{hash=79c1709cf0d4e0492fb48d4b8f52e297}{%
+           family={Stavins},
+           familyi={S\bibinitperiod},
+           given={Joanna},
+           giveni={J\bibinitperiod}}}%
+        {{hash=89fc7d8cb69ee7b12aff9d2c515066c4}{%
+           family={Welte},
+           familyi={W\bibinitperiod},
+           given={Angelika},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{cf18ce63a0a23ca1df0ddff2ffe602ec}
+      \strng{fullhash}{cc9e2c3142d6708d60ce94879017550e}
+      \strng{fullhashraw}{cc9e2c3142d6708d60ce94879017550e}
+      \strng{bibnamehash}{cc9e2c3142d6708d60ce94879017550e}
+      \strng{authorbibnamehash}{cc9e2c3142d6708d60ce94879017550e}
+      \strng{authornamehash}{cf18ce63a0a23ca1df0ddff2ffe602ec}
+      \strng{authorfullhash}{cc9e2c3142d6708d60ce94879017550e}
+      \strng{authorfullhashraw}{cc9e2c3142d6708d60ce94879017550e}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{abstract}{Using data from the United States and Canada, we quantify consumers' net pecuniary cost of using cash, credit cards, and debit cards for purchases across income cohorts. The net cost includes fees paid to financial institutions, rewards received from credit or debit card issuers, and the merchant cost of accepting payments that is passed on to consumers as higher retail prices. Even though credit cards are more expensive for merchants to accept compared with other payment methods, merchants typically do not differentiate prices at checkout, but instead pass through their costs to all consumers. As a result, credit card transactions are crosssubsidized by cheaper debit and cash payments. Card rewards and consumer fees paid to financial institutions are additional sources of cross-subsidies. We find that consumers in the lowest-income cohort pay the highest net pecuniary cost as a percentage of transaction value, while consumers in the highest-income cohort pay the lowest. This result is robust under various scenarios and assumptions, suggesting payment card pricing and merchant cost pass-through have regressive distributional effects in the United States and Canada.}
+      \field{issn}{0378-4266}
+      \field{journaltitle}{Journal of Banking \& Finance}
+      \field{langid}{english}
+      \field{month}{9}
+      \field{title}{Regressive {{Effects}} of {{Payment Card Pricing}} and {{Merchant Cost Pass-through}} in the {{United States}} and {{Canada}}}
+      \field{volume}{154}
+      \field{year}{2023}
+      \field{dateera}{ce}
+      \field{pages}{106968}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1016/j.jbankfin.2023.106968
+      \endverb
+    \endentry
+    \entry{Greene.Stavins2021}{report}{}{}
+      \name{author}{2}{}{%
+        {{hash=d02371340c9930b6379235fc8bd086e6}{%
+           family={Greene},
+           familyi={G\bibinitperiod},
+           given={Claire},
+           giveni={C\bibinitperiod}}}%
+        {{hash=79c1709cf0d4e0492fb48d4b8f52e297}{%
+           family={Stavins},
+           familyi={S\bibinitperiod},
+           given={Joanna},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{d3acbd493d745455c3612d7cbf8a0e8f}
+      \strng{fullhash}{d3acbd493d745455c3612d7cbf8a0e8f}
+      \strng{fullhashraw}{d3acbd493d745455c3612d7cbf8a0e8f}
+      \strng{bibnamehash}{d3acbd493d745455c3612d7cbf8a0e8f}
+      \strng{authorbibnamehash}{d3acbd493d745455c3612d7cbf8a0e8f}
+      \strng{authornamehash}{d3acbd493d745455c3612d7cbf8a0e8f}
+      \strng{authorfullhash}{d3acbd493d745455c3612d7cbf8a0e8f}
+      \strng{authorfullhashraw}{d3acbd493d745455c3612d7cbf8a0e8f}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{5}
+      \field{number}{21--2}
+      \field{title}{2020 {{Diary}} of {{Consumer Payment Choice}}}
+      \field{year}{2021}
+      \field{dateera}{ce}
+      \verb{urlraw}
+      \verb https://www.atlantafed.org/banking-and-payments/consumer-payments/diary-of-consumer-payment-choice/2020-diary.aspx
+      \endverb
+      \verb{url}
+      \verb https://www.atlantafed.org/banking-and-payments/consumer-payments/diary-of-consumer-payment-choice/2020-diary.aspx
+      \endverb
+    \endentry
+    \entry{Hayashi2012}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=1028fb35f981fcbb07024dc912fc7dca}{%
+           family={Hayashi},
+           familyi={H\bibinitperiod},
+           given={Fumiko},
+           giveni={F\bibinitperiod}}}%
+      }
+      \strng{namehash}{1028fb35f981fcbb07024dc912fc7dca}
+      \strng{fullhash}{1028fb35f981fcbb07024dc912fc7dca}
+      \strng{fullhashraw}{1028fb35f981fcbb07024dc912fc7dca}
+      \strng{bibnamehash}{1028fb35f981fcbb07024dc912fc7dca}
+      \strng{authorbibnamehash}{1028fb35f981fcbb07024dc912fc7dca}
+      \strng{authornamehash}{1028fb35f981fcbb07024dc912fc7dca}
+      \strng{authorfullhash}{1028fb35f981fcbb07024dc912fc7dca}
+      \strng{authorfullhashraw}{1028fb35f981fcbb07024dc912fc7dca}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{journaltitle}{Federal Reserve Bank of Kansas City Economic Review}
+      \field{langid}{english}
+      \field{title}{The {{New Debit Card Regulations}}: {{Initial Effects}} on {{Networks}} and {{Banks}}}
+      \field{year}{2012}
+      \field{dateera}{ce}
+      \field{pages}{38}
+      \range{pages}{1}
+    \endentry
+    \entry{Nilson2020}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=16ff1774c04145dc94208696ada628d8}{%
+           family={Nilson},
+           familyi={N\bibinitperiod},
+           given={Report},
+           giveni={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{16ff1774c04145dc94208696ada628d8}
+      \strng{fullhash}{16ff1774c04145dc94208696ada628d8}
+      \strng{fullhashraw}{16ff1774c04145dc94208696ada628d8}
+      \strng{bibnamehash}{16ff1774c04145dc94208696ada628d8}
+      \strng{authorbibnamehash}{16ff1774c04145dc94208696ada628d8}
+      \strng{authornamehash}{16ff1774c04145dc94208696ada628d8}
+      \strng{authorfullhash}{16ff1774c04145dc94208696ada628d8}
+      \strng{authorfullhashraw}{16ff1774c04145dc94208696ada628d8}
+      \field{extraname}{1}
+      \field{sortinit}{N}
+      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
+      \field{extradate}{1}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{journaltitle}{Nilson Report}
+      \field{month}{5}
+      \field{title}{Merchant {{Processing Fees}} in the {{United States}}}
+      \field{volume}{1176}
+      \field{year}{2020}
+      \field{dateera}{ce}
+    \endentry
+    \entry{Nilson2020a}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=16ff1774c04145dc94208696ada628d8}{%
+           family={Nilson},
+           familyi={N\bibinitperiod},
+           given={Report},
+           giveni={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{16ff1774c04145dc94208696ada628d8}
+      \strng{fullhash}{16ff1774c04145dc94208696ada628d8}
+      \strng{fullhashraw}{16ff1774c04145dc94208696ada628d8}
+      \strng{bibnamehash}{16ff1774c04145dc94208696ada628d8}
+      \strng{authorbibnamehash}{16ff1774c04145dc94208696ada628d8}
+      \strng{authornamehash}{16ff1774c04145dc94208696ada628d8}
+      \strng{authorfullhash}{16ff1774c04145dc94208696ada628d8}
+      \strng{authorfullhashraw}{16ff1774c04145dc94208696ada628d8}
+      \field{extraname}{2}
+      \field{sortinit}{N}
+      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
+      \field{extradate}{2}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{journaltitle}{Nilson Report}
+      \field{month}{12}
+      \field{title}{U.{{S}}. {{Consumer Payment Systems}}}
+      \field{volume}{1188}
+      \field{year}{2020}
+      \field{dateera}{ce}
+    \endentry
+    \entry{Nilson2020b}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=16ff1774c04145dc94208696ada628d8}{%
+           family={Nilson},
+           familyi={N\bibinitperiod},
+           given={Report},
+           giveni={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{16ff1774c04145dc94208696ada628d8}
+      \strng{fullhash}{16ff1774c04145dc94208696ada628d8}
+      \strng{fullhashraw}{16ff1774c04145dc94208696ada628d8}
+      \strng{bibnamehash}{16ff1774c04145dc94208696ada628d8}
+      \strng{authorbibnamehash}{16ff1774c04145dc94208696ada628d8}
+      \strng{authornamehash}{16ff1774c04145dc94208696ada628d8}
+      \strng{authorfullhash}{16ff1774c04145dc94208696ada628d8}
+      \strng{authorfullhashraw}{16ff1774c04145dc94208696ada628d8}
+      \field{extraname}{3}
+      \field{sortinit}{N}
+      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
+      \field{extradate}{3}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{author}
+      \field{journaltitle}{Nilson Report}
+      \field{month}{2}
+      \field{title}{Visa and {{Mastercard}} – {{U}}.{{S}}. 2019}
+      \field{volume}{1169}
+      \field{year}{2020}
+      \field{dateera}{ce}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
