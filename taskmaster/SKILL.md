@@ -37,6 +37,10 @@ This gives external automation a deterministic completion marker to parse.
 
 - `TASKMASTER_MAX` (default `0`): max warning count before suppression in the
   stop hook. `0` means unlimited warnings.
+- `TASKMASTER_MAX_INJECTIONS` (default `2`): max number of continuation prompts
+  the Codex expect injector will feed back into a running session before it stops
+  forcing continuation, even if the done token is still missing. `0` means
+  unlimited injections (the previous behavior).
 - `TASKMASTER_MIN_TOOLS` (default `3`): minimum number of tool calls a session
   must contain before the stop hook activates. Sessions with fewer tool calls
   (e.g. single-question answers, skill-setup tasks) are skipped automatically

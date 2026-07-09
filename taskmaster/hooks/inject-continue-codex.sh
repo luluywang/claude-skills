@@ -27,6 +27,10 @@ Options:
   --follow          Follow live updates until session_end.
   --quiet           Suppress non-error output.
   -h, --help        Show help.
+
+Environment:
+  TASKMASTER_MAX_INJECTIONS  Max continuation prompts to inject before giving
+                             up (default 2; 0 means unlimited).
 USAGE
 }
 
@@ -36,6 +40,7 @@ FOLLOW=0
 QUIET=1
 DONE_PREFIX="TASKMASTER_DONE"
 POLL_INTERVAL="1"
+MAX_INJECTIONS="${TASKMASTER_MAX_INJECTIONS:-2}"
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -184,6 +189,8 @@ process_line() {
           if is_done_text "$msg_text"; then
             DONE_FOUND=1
             [[ "$QUIET" -eq 1 ]] || echo "[TASKMASTER] done token detected; no injection for turn ${turn_id:-<unknown>}." >&2
+          elif [[ "$MAX_INJECTIONS" -gt 0 && "$INJECTION_COUNT" -ge "$MAX_INJECTIONS" ]]; then
+            [[ "$QUIET" -eq 1 ]] || echo "[TASKMASTER] injection cap reached (${INJECTION_COUNT}/${MAX_INJECTIONS}); no further continuation for turn ${turn_id:-<unknown>}." >&2
           else
             inject_prompt "$turn_id" "$SESSION_ID"
           fi
