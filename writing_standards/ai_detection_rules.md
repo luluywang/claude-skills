@@ -22,6 +22,9 @@ Use this file when:
   - Formulaic Openers
   - Hedging
   - Compound Noun Stacking
+  - Participial Tack-Ons
+  - Copula Avoidance
+  - Vague Attribution
   - Over-Explanation
 - Part C: Rhetorical and Argument Tells
   - Results-First Openings
@@ -31,6 +34,7 @@ Use this file when:
   - Artificial Sequential Structure
   - Uniform Sentence Rhythm
   - Flowing Prose vs. Bullet Lists
+- Part D: When Not to Flag
 - Self-Check pointer
 
 ---
@@ -124,6 +128,34 @@ One hedge per claim maximum. Never stack hedges.
 - **Human pattern:** Unstacks the pile into a prepositional phrase or short clause, de-nominalizes the buried verb, or relabels — favoring a few more words over the stack. Genuine terms of art ("income semi-elasticities," "dominant diagonal") are left intact.
 - See `vocabulary_ban_list.md` § Compound Noun Stacking for the full before/after table and the terms-of-art exception.
 
+### Participial Tack-Ons
+
+A present-participle clause bolted onto the end of a finished sentence, adding commentary rather than content. This is the grammatical shape behind the banned words in `vocabulary_ban_list.md` — banning *highlighting* alone just moves the writer to *suggesting* or *pointing to*. Flag the shape, not the word.
+
+- **LLM pattern:** "Employment falls by 3 percent in treated counties, **underscoring the importance of** credit constraints." The tack-on asserts significance the sentence has not earned, and could be deleted with no loss.
+- **Human pattern:** Either cut the clause, or promote it to its own sentence that makes a real claim. "Employment falls by 3 percent in treated counties. The effect is concentrated among firms with above-median leverage, which is what a credit-constraint channel predicts."
+- **Watch for:** highlighting, underscoring, emphasizing, reflecting, suggesting, indicating, demonstrating, pointing to, contributing to, ensuring, thereby.
+
+**Not every trailing participle is a tell.** "Firms respond by cutting hours, **leaving** employment unchanged" states a result. The test is whether the clause adds a fact or only adds praise for the fact already stated.
+
+### Copula Avoidance
+
+LLM prose substitutes elaborate constructions for plain `is`/`are`/`has`.
+
+- **LLM pattern:** "Column 3 **serves as** our preferred specification." "The instrument **represents a** source of variation in exposure." "Table 2 **presents** four panels."
+- **Human pattern:** "Column 3 **is** our preferred specification." "The instrument **is** plausibly exogenous because..." "Table 2 **has** four panels."
+- **Watch for:** serves as, stands as, represents a, constitutes a, functions as, features, boasts, offers, provides (when "has" or "is" would do).
+
+**Exception:** "represents" in its technical sense (a parameter represents a marginal effect; a matrix represents a linear map) is not copula avoidance.
+
+### Vague Attribution
+
+Claims sourced to an unnamed authority. In economics this is sharper than a style tic: an uncited literature claim is a referee magnet.
+
+- **LLM pattern:** "**Experts argue** that pass-through is incomplete." "**Several studies suggest** a negative relationship." "**The literature shows** that minimum wages have small disemployment effects."
+- **Human pattern:** Cite, or drop the claim. "Pass-through is incomplete in most retail settings (Nakamura and Zerom 2010)." If the literature genuinely disagrees, say who disagrees with whom.
+- **Watch for:** experts argue, observers note, it is widely believed, some critics, a growing literature, several studies, prior work suggests — any of these standing where a citation belongs.
+
 ### Over-Explanation
 - Explaining Econ 101 to field experts (what fixed effects do, what IV means, definitions of common terms)
 - Explaining the obvious
@@ -165,10 +197,41 @@ These patterns reflect how LLM prose structures arguments differently from human
 
 ---
 
+## Part D: When Not to Flag
+
+Everything above describes prose that is *probably* machine-written. None of it proves anything on its own. A careful economist writing at 2am hits half these patterns without an LLM in the room, and a detector that flags every instance teaches the author to ignore it.
+
+**Tells are evidence in clusters, not in isolation.** One em-dash means nothing. One `however`. One colon. Em-dashes *plus* rule-of-three padding *plus* "underscoring the importance of" *plus* a results-first opening, in the same three paragraphs, is a confession. Weight a flag by what surrounds it: the same colon is Low in a paragraph that is otherwise clean and High in a paragraph already carrying two other tells. When a passage has exactly one tell and nothing else, prefer silence.
+
+**Do not flag these on their own:**
+
+- **Polish.** Clean grammar and consistent style mean the author has been edited, or is good. Neither is a tell.
+- **Formal vocabulary.** LLMs overuse *specific* fancy words (Part B, and `vocabulary_ban_list.md`), not all fancy words. Leave *ostensibly*, *constituent*, *a fortiori* where the author meant them.
+- **Isolated transitions.** A single *however* or *consequently* is ordinary English. The tell is the pile-up, and specifically the sentence-initial *Moreover/Furthermore/Notably* that could be deleted with no loss.
+- **Em-dashes alone.** Plenty of economists use them heavily. Evidence only alongside a formulaic rhythm.
+- **One short emphatic sentence.** Writers land points this way. Flag staccato only when several fragments run together to manufacture drama.
+- **Terms of art.** Covered under Compound Noun Stacking, and it generalizes: when unsure whether a phrase is a field convention or invented compression, flag it as uncertain — do not rewrite it.
+- **Secondhand text.** Never rewrite a watched phrase inside a quotation, a title, a referee's own words, or an example where the phrase is being *discussed* rather than *used*.
+- **Dry prose.** AI writing has specific tells. Dryness without them is just dry writing, and is not this file's problem.
+
+**Signs of a human author — lean toward leaving the passage alone:**
+
+- Specific, hard-to-fabricate detail: an odd institutional fact, a footnote about a data quirk, the exact reason three counties were dropped. LLMs round specifics off; humans hoard them.
+- Unresolved tension. "The IV is defensible but I am not fully comfortable with the exclusion restriction." Machines default to clean takes.
+- Genuine self-interruption — a parenthetical that argues with the sentence it sits inside.
+- Deliberate rhythm variation: a four-word sentence after a forty-word one.
+- A choice the author can defend. If there is a reason the word is *that* word, it stays.
+
+**Scope.** This section governs judgments about *the author's* text — what a detection task flags in a manuscript. It does **not** relax copyedit's surface fix rules (`R-EMDASH`, `R-COLON`, and the rest of `writing_quality_standards.md` § III), which bind agent-emitted text in the apply, proposal, and rationale contexts. Claude writing a colon into a rewrite is still a hard block. A human economist having written one is a data point.
+
+Where a detection task says to scan "exhaustively," read it as *scan* exhaustively and *report* by cluster weight. A flag the author dismisses costs more than a tell that slips through, because it trains dismissal of the next flag.
+
+---
+
 ## Self-Check
 
 For the unified self-check, see `economics_writing.md` § Quick Self-Check.
 
 ---
 
-*Sources: copyedit `prompts/tasks/ai_detection.prompt`; revisions `prompts/components/writing_quality.prompt` Rule 1.*
+*Sources: copyedit `prompts/tasks/ai_detection.prompt`; revisions `prompts/components/writing_quality.prompt` Rule 1. Participial Tack-Ons, Copula Avoidance, Vague Attribution, and Part D adapted for economics from [Wikipedia: Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing) (WikiProject AI Cleanup), via the [humanizer](https://github.com/blader/humanizer) skill.*

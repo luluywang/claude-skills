@@ -33,6 +33,8 @@ Each rule below has a stable ID (`R-*`), a `Priority` tag (`high` rules also app
 | R-BANNED | Match against project banned-phrases list — Critical | standard | block | apply, proposal |
 | R-NOVEL-COMPOUND | New `X-vs-Y`/`X-only`/`X-Y-Z` compounds need definition or replacement | standard | flag | apply, proposal |
 | R-NOUN-STACK | Unstack 3+ noun piles / buried nominalizations into prose; spare terms of art | standard | flag | apply, proposal |
+| R-PARTICIPLE | No trailing `-ing` clause that praises the sentence instead of adding a fact | standard | flag | apply, proposal |
+| R-COPULA | `serves as`/`represents a`/`boasts` where `is`/`are`/`has` would do | standard | auto-fix | apply, proposal |
 | R-METAPHOR-VERB | Metaphor verbs (`tilts`, `hinges`, `lands`, `speaks to`, `flows from`) without referent | standard | flag | apply, proposal |
 | R-VAGUE-QUALIFIER | `bounded/limited/nontrivial/meaningful [vague noun]` needs a number | standard | flag | apply, proposal |
 | R-INTENSITY | No added `collapses`/`dramatically`/`paradigm shift`/etc. | high (within Self-Critic) | block | proposal |
@@ -305,6 +307,22 @@ These 9 contrasts distinguish LLM prose habits from the author's natural voice. 
 **LLM pattern:** "(1) X, (2) Y, (3) Z" enumeration in prose. "Not only X but also Y." "It is worth noting." Rule-of-three padding. CLAUSE: LONGER CLAUSE colon constructions ("The implication is direct: fees fall.") used as rhetorical setup.
 **Human pattern:** Separate sentences for separate points. Direct statements. No artificial enumeration.
 
+### 10. Grammatical-Shape Tells
+
+Three tells that survive a word-level ban, because the writer can swap the banned word and keep the shape. Full definitions in `writing_standards/ai_detection_rules.md` § Part B.
+
+**Participial tack-ons** (`R-PARTICIPLE`). A present-participle clause bolted onto a finished sentence to assert significance it has not earned ("..., underscoring the importance of credit constraints"). Test: does the clause add a fact, or only praise the fact already stated? Trailing participles that state a result ("..., leaving employment unchanged") are fine.
+**Copula avoidance** (`R-COPULA`). *serves as, stands as, represents a, constitutes a, functions as, features, boasts* where *is*/*are*/*has* would do. Technical "represents" (a parameter represents a marginal effect) is exempt.
+**Vague attribution** (no rule ID — detection only). *experts argue, several studies suggest, a growing literature, prior work suggests* standing where a citation belongs. Claude inventing a citation is already blocked by `R-NEW-CLAIMS`; this tell describes the author's manuscript, so it is flagged by judgment under Part D, not by a surface rule.
+
+### 11. Flagging Discipline (False Positives)
+
+**Before flagging any tell in the author's text, read `writing_standards/ai_detection_rules.md` § Part D.**
+
+Tells are evidence in clusters, not in isolation. One em-dash, one *however*, one colon means nothing; the same colon is Low in an otherwise clean paragraph and High in one already carrying two other tells. Polish, formal vocabulary, isolated transitions, dry prose, and terms of art are **not** tells on their own. Never rewrite a watched phrase inside a quotation, title, or example where the phrase is discussed rather than used.
+
+This governs what the detection tasks *flag in the manuscript*. It does not relax § III surface fix rules, which bind agent-emitted text.
+
 ---
 
 ## III. Surface Fix Rules
@@ -444,6 +462,30 @@ A noun phrase that stacks 3+ nouns/modifiers ("reward response decomposition"), 
 | spending-share envelope formula | the envelope formula in spending shares |
 
 **Leave intact:** income semi-elasticities, dominant diagonal, assumption names. See surface_critic P2 and the canonical principle in `writing_standards/vocabulary_ban_list.md` § Compound Noun Stacking. Unstacking is exempt from the R-LENGTH-DELTA word-count cap (clause d).
+
+---
+
+### R-PARTICIPLE: Participial tack-on flag
+
+**Priority:** standard | **Enforcement:** flag | **Context:** apply, proposal
+
+A present-participle clause appended to a finite sentence that comments on the sentence rather than extending it → cut the clause, or promote it to a sentence that makes a real claim. Fires on `highlighting`, `underscoring`, `emphasizing`, `reflecting`, `suggesting`, `indicating`, `demonstrating`, `pointing to`, `contributing to`, `ensuring`, `thereby`.
+
+**Test:** does the clause add a fact, or only praise the fact already stated? "Employment falls by 3 percent, *underscoring the importance of* credit constraints" adds nothing and fires. "Firms cut hours, *leaving* employment unchanged" states a result and does not.
+
+**Distinct from R-NOUN-STACK.** That rule fires on noun piles; this one on trailing verb phrases. Both share the remedy of unpacking into prose, but this rule's remedy is usually deletion.
+
+**Exception:** participles inside a term of art (`identifying assumption`, `binding constraint`) and participles in the subject position (`Underscoring this point, Chetty et al. show...` — throat-clearing, owned by R-THROAT-CLEAR).
+
+---
+
+### R-COPULA: Copula avoidance auto-fix
+
+**Priority:** standard | **Enforcement:** auto-fix | **Context:** apply, proposal
+
+`serves as`, `stands as`, `represents a`, `constitutes a`, `functions as`, `features`, `boasts`, `offers` where `is`/`are`/`has` carries the same meaning → replace with the copula. "Column 3 serves as our preferred specification" → "Column 3 is our preferred specification."
+
+**Exception:** technical `represents` (a parameter represents a marginal effect; a matrix represents a linear map), and `offers`/`provides` with a genuine indirect object ("the appendix provides derivations *to the reader*"). When the elaborate verb carries meaning the copula loses, keep it.
 
 ---
 
