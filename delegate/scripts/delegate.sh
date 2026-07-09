@@ -82,10 +82,21 @@ cmd_start() {
   local plan_src=""
   if [ -n "$plan" ]; then
     local plan_file
-    if [ "$plan" = last ]; then
+    if [ "$plan" = last ] || [ "$plan" = any ]; then
+      # 'last' refuses a plan authored for a different repo; 'any' takes the newest.
+      local scope=(--repo "$repo" --require-scope)
+      [ "$plan" = any ] && scope=(--any-repo)
+      local meta
+      meta="$(python3 "$LASTPLAN" "${scope[@]}")" || {
+        [ $? -eq 2 ] && exit 2
+        die "no plan found; write one in plan mode first"
+      }
       plan_file="$(mktemp -t delegate-plan)"
-      python3 "$LASTPLAN" --repo "$repo" --out "$plan_file" >/dev/null || die "no plan found; write one in plan mode first"
-      plan_src="$(python3 "$LASTPLAN" --repo "$repo" | python3 -c 'import json,sys; d=json.load(sys.stdin); print(d["source"]+": "+(d["title"] or "?"))')"
+      python3 "$LASTPLAN" "${scope[@]}" --out "$plan_file" >/dev/null || die "could not extract plan"
+      plan_src="$(printf '%s' "$meta" | python3 -c 'import json, sys
+d = json.load(sys.stdin)
+print("%s (%s): %s  [cwd=%s]" % (d["source"], d["match"], d["title"] or "?", d["cwd"] or "unknown"))')"
+      [ -n "$plan_src" ] || die "could not summarize resolved plan"
     else
       [ -f "$plan" ] || die "no such plan file: $plan"
       plan_file="$plan"; plan_src="file: $plan"

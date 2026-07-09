@@ -109,11 +109,12 @@ mode and hand it to a cheaper agent to execute. A plan is already a spec — des
 decisions settled, files named — which makes it close to the ideal delegated task.
 
 ```bash
-"$S" plan                      # what would 'last' resolve to? (source, title, cwd)
-"$S" plan --list               # recent plans, newest first
+"$S" plan                      # what would 'last' resolve to? (source, title, cwd, match)
+"$S" plan --list               # recent plans, newest first; flags foreign cwds
 "$S" plan --repo /path/to/repo # prefer plans authored in that working directory
 
 "$S" start codex /path/to/repo --plan last "Acceptance check: run <cmd>, must print PASS."
+"$S" start codex /path/to/repo --plan any  "<extra>"   # newest plan, wherever from
 "$S" start codex /path/to/repo --plan ~/.claude/plans/some-plan.md "<extra>"
 ```
 
@@ -129,13 +130,21 @@ Resolution checks two sources and takes the newest:
    embed the full plan text.
 
 The second source matters: the plans directory is often absent or pruned, and the
-transcript copy survives the file's deletion. `--repo` prefers a plan authored in
-that repo over a newer plan from an unrelated project — pass `--any-repo` to take
-the newest regardless.
+transcript copy survives the file's deletion. A plan file recovered from disk has no
+`cwd` of its own, so it inherits one from its transcript twin (matched on filename).
 
-Before dispatching, show the user the resolved plan's title and `cwd` and confirm
-it's the one they meant. "Most recent" is a guess about intent, and a plan aimed at
-another repo will look plausible while doing the wrong work.
+**`--plan last` refuses to cross repo boundaries.** If the newest plan was authored
+in a different working directory, resolution exits non-zero rather than dispatch it —
+"most recent" is a guess about intent, and a plan aimed at another repo reads
+plausibly while doing entirely the wrong work. Plans with no recorded `cwd` are
+allowed through (they can't be attributed to anywhere). Override with `--plan any`,
+or name a plan file explicitly. Always show the user the `PLAN=` line — it reports
+source, match kind, title, and `cwd` — and confirm before a write-mode run.
+
+`--logs-dir` (or `$CLAUDE_LOGS_DIR`) adds an archived transcript tree such as
+`~/Dropbox/claude-logs`. It is **off by default on purpose**: that archive syncs
+across machines, so most of its plans name working directories that don't exist
+here. `plan --list` marks those `[cwd missing here]`.
 
 ## Writing the delegated prompt
 
