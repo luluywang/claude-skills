@@ -4,13 +4,17 @@
 # intervene early, and resume with corrections instead of restarting.
 #
 #   delegate.sh start  <codex|cursor> <repo> [--read-only] [--shell]
-#                      [--plan last|<file>] [<prompt>]
+#                      [--model M] [--effort E] [--plan last|<file>] [<prompt>]
 #   delegate.sh watch  <rundir> [--tail N] [--full]
-#   delegate.sh say    <rundir> <prompt>        # resume with a correction
+#   delegate.sh say    <rundir> [--wait [timeout_s]] [--model M] [--effort E] <prompt>
+#   delegate.sh reply  <rundir>                 # latest turn: full message + footer
 #   delegate.sh wait   <rundir> [timeout_s]
 #   delegate.sh stop   <rundir>
 #   delegate.sh sid    <rundir>
 #   delegate.sh plan   [--repo <path>] [--list] # resolve the last Claude Code plan
+#
+# Codex runs default to model gpt-5.6-sol at medium reasoning effort
+# (override with --model/--effort, or env DELEGATE_CODEX_MODEL/DELEGATE_CODEX_EFFORT).
 #
 # Run state lives in $DELEGATE_RUNS (default ~/.claude/delegate-runs/<agent>-<ts>).
 set -uo pipefail
@@ -62,15 +66,21 @@ lock_path() { printf '%s/.lock-%s' "$RUNS" "$(printf '%s' "$1" | shasum | cut -c
 
 cmd_start() {
   local agent="$1" repo="$2"; shift 2
-  local mode=write shell=0 plan=""
+  local mode=write shell=0 plan="" model="" effort=""
   while [ $# -gt 0 ]; do
     case "$1" in
       --read-only) mode=read; shift;;
       --shell) shell=1; shift;;
       --plan) plan="${2:-}"; [ -n "$plan" ] || die "--plan needs 'last' or a file path"; shift 2;;
+      --model) model="${2:-}"; [ -n "$model" ] || die "--model needs a model slug"; shift 2;;
+      --effort) effort="${2:-}"; [ -n "$effort" ] || die "--effort needs low|medium|high|xhigh"; shift 2;;
       *) break;;
     esac
   done
+  if [ "$agent" = codex ]; then
+    model="${model:-${DELEGATE_CODEX_MODEL:-gpt-5.6-sol}}"
+    effort="${effort:-${DELEGATE_CODEX_EFFORT:-medium}}"
+  fi
   local prompt="$*"
   [ -d "$repo" ] || die "no such repo: $repo"
   repo="$(cd "$repo" && pwd)"
@@ -125,12 +135,16 @@ print("%s (%s): %s  [cwd=%s]" % (d["source"], d["match"], d["title"] or "?", d["
       [ "$mode" = read ] && sandbox=read-only
       local extra=()
       git -C "$repo" rev-parse --git-dir >/dev/null 2>&1 || extra+=(--skip-git-repo-check)
+      # -c model= works on both `exec` and `exec resume` (unlike -m/-s), so model
+      # and effort ride through config overrides everywhere.
+      extra+=(-c model="$model" -c model_reasoning_effort="$effort")
       # ${a[@]+"${a[@]}"} -- bash 3.2 (macOS) calls an empty array unbound under `set -u`.
       ( cd "$repo" && exec codex exec --json -s "$sandbox" ${extra[@]+"${extra[@]}"} "$prompt" \
           < /dev/null > "$ev" 2> "$err" ) &
       ;;
     cursor)
       local flags=(-p --trust --output-format stream-json)
+      [ -n "$model" ] && flags+=("--model=$model")
       if [ "$mode" = read ]; then
         flags+=(--mode plan)
       elif [ "$shell" = 1 ]; then
@@ -144,7 +158,8 @@ print("%s (%s): %s  [cwd=%s]" % (d["source"], d["match"], d["title"] or "?", d["
   esac
   local pid=$!
 
-  { echo "AGENT=$agent"; echo "REPO=$repo"; echo "PID=$pid"; echo "MODE=$mode"; } > "$run/meta.env"
+  { echo "AGENT=$agent"; echo "REPO=$repo"; echo "PID=$pid"; echo "MODE=$mode"
+    echo "MODEL=$model"; echo "EFFORT=$effort"; } > "$run/meta.env"
   [ "$mode" = write ] && echo "$pid" > "$lock"
 
   # Wait briefly for the session id -- it lands on the very first event.
@@ -160,13 +175,24 @@ print("%s (%s): %s  [cwd=%s]" % (d["source"], d["match"], d["title"] or "?", d["
   fi
 
   echo "RUNDIR=$run"; echo "AGENT=$agent"; echo "PID=$pid"; echo "SESSION=${sid:-unknown}"
+  [ -n "$model" ] && echo "MODEL=$model effort=${effort:-default}"
 }
 
 load() {
   local run="$1"
   [ -d "$run" ] || die "no such rundir: $run"
+  MODEL="" EFFORT=""   # absent from meta.env of runs predating model selection
   # shellcheck disable=SC1091
   . "$run/meta.env"
+}
+
+set_meta() {  # set_meta <rundir> <KEY> <value> -- update or append a meta.env key
+  local run="$1" key="$2" val="$3"
+  if grep -q "^$key=" "$run/meta.env"; then
+    sed -i.bak "s|^$key=.*|$key=$val|" "$run/meta.env" && rm -f "$run/meta.env.bak"
+  else
+    echo "$key=$val" >> "$run/meta.env"
+  fi
 }
 
 cmd_watch() {
@@ -201,8 +227,23 @@ cmd_stop() {
 
 # Resume the existing session with more context. Survives a mid-turn kill: the
 # thread retains everything it did before dying. Events append to the same log.
+# With --wait, blocks until the turn's process exits and prints the reply --
+# one call = one full conversational turn.
 cmd_say() {
   local run="$1"; shift
+  local do_wait=0 timeout=900
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      --wait)
+        do_wait=1; shift
+        case "${1:-}" in (''|*[!0-9]*) ;; (*) timeout="$1"; shift;; esac;;
+      --model) [ -n "${2:-}" ] || die "--model needs a model slug"
+        set_meta "$run" MODEL "$2"; shift 2;;
+      --effort) [ -n "${2:-}" ] || die "--effort needs low|medium|high|xhigh"
+        set_meta "$run" EFFORT "$2"; shift 2;;
+      *) break;;
+    esac
+  done
   local prompt="$*"
   load "$run"
   [ -n "$prompt" ] || die "empty prompt"
@@ -215,37 +256,63 @@ cmd_say() {
     codex)
       local sandbox=workspace-write
       [ "$MODE" = read ] && sandbox=read-only
+      local mflags=()
+      [ -n "$MODEL" ] && mflags+=(-c model="$MODEL")
+      [ -n "$EFFORT" ] && mflags+=(-c model_reasoning_effort="$EFFORT")
       # `exec resume` takes no -s/--sandbox (unlike `exec`), so the mode goes through
       # -c sandbox_mode=. Flags must also precede the positional SESSION_ID.
-      ( cd "$REPO" && exec codex exec resume --json -c sandbox_mode="$sandbox" "$sid" "$prompt" \
+      ( cd "$REPO" && exec codex exec resume --json -c sandbox_mode="$sandbox" \
+          ${mflags[@]+"${mflags[@]}"} "$sid" "$prompt" \
           < /dev/null >> "$ev" 2>> "$err" ) &
       ;;
     cursor)
       # NOTE: --resume needs the '=' form, and text output prints nothing on a
       # resumed session -- stream-json is the only format that shows the reply.
       local rflags=(-p --trust "--resume=$sid" --output-format stream-json)
+      [ -n "$MODEL" ] && rflags+=("--model=$MODEL")
       [ "$MODE" = read ] && rflags+=(--mode plan)
       ( cd "$REPO" && exec cursor-agent "${rflags[@]}" "$prompt" \
           < /dev/null >> "$ev" 2>> "$err" ) &
       ;;
   esac
   local pid=$!
-  sed -i.bak "s/^PID=.*/PID=$pid/" "$run/meta.env" && rm -f "$run/meta.env.bak"
+  set_meta "$run" PID "$pid"
   [ "$MODE" = write ] && echo "$pid" > "$(lock_path "$REPO")"
   echo "RUNDIR=$run"; echo "PID=$pid"; echo "SESSION=$sid (resumed)"
+
+  if [ "$do_wait" = 1 ]; then
+    local waited=0
+    while kill -0 "$pid" 2>/dev/null; do
+      [ "$waited" -ge "$timeout" ] && { echo "still running after ${timeout}s; use 'watch' or 'reply' later"; return 2; }
+      sleep 2; waited=$((waited+2))
+    done
+    echo "turn finished after ~${waited}s"
+    cmd_reply "$run"
+  fi
+}
+
+# Latest turn only: the agent's full message(s) plus a files/commands/tokens footer.
+cmd_reply() {
+  local run="$1"
+  load "$run"
+  python3 "$DIGEST" "$run/events.jsonl" --root "$REPO" --reply
+  if [ -s "$run/err.log" ]; then
+    echo "--- stderr (last 3) ---"; tail -3 "$run/err.log"
+  fi
 }
 
 cmd_sid() { load "$1"; sid_of "$1/events.jsonl"; }
 
 cmd_plan() { python3 "$LASTPLAN" "$@"; }
 
-[ $# -ge 1 ] || die "usage: delegate.sh {start|watch|say|wait|stop|sid|plan} ..."
+[ $# -ge 1 ] || die "usage: delegate.sh {start|watch|say|reply|wait|stop|sid|plan} ..."
 sub="$1"; shift
 case "$sub" in
-  start) [ $# -ge 3 ] || die "start <codex|cursor> <repo> [--read-only] [--shell] [--plan last|<file>] [<prompt>]"; cmd_start "$@";;
+  start) [ $# -ge 3 ] || die "start <codex|cursor> <repo> [--read-only] [--shell] [--model M] [--effort E] [--plan last|<file>] [<prompt>]"; cmd_start "$@";;
   plan)  cmd_plan "$@";;
   watch) [ $# -ge 1 ] || die "watch <rundir>"; cmd_watch "$@";;
-  say)   [ $# -ge 2 ] || die "say <rundir> <prompt>"; cmd_say "$@";;
+  say)   [ $# -ge 2 ] || die "say <rundir> [--wait [timeout_s]] [--model M] [--effort E] <prompt>"; cmd_say "$@";;
+  reply) [ $# -ge 1 ] || die "reply <rundir>"; cmd_reply "$@";;
   wait)  [ $# -ge 1 ] || die "wait <rundir> [timeout_s]"; cmd_wait "$@";;
   stop)  [ $# -ge 1 ] || die "stop <rundir>"; cmd_stop "$@";;
   sid)   [ $# -ge 1 ] || die "sid <rundir>"; cmd_sid "$@";;

@@ -5,9 +5,10 @@ description: Delegate coding work to cheaper CLI agents (Codex via `codex exec`,
   tier (Claude=1.0, Codex=0.5, Cursor=0.1), runs them as watchable background jobs,
   and verifies the result before reporting back. Can pick up the most recent Claude
   Code plan ('/delegate last plan') and hand it to a cheaper agent to execute.
-  Activate when the user invokes '/delegate', says 'delegate this', 'delegate the
-  last plan', 'send this to codex/cursor', or asks to save Claude tokens on a
-  coding task.
+  Supports multi-turn driving of a Codex session ('/delegate codex convo' turns
+  the Claude session into a passthrough relay). Activate when the user invokes
+  '/delegate', says 'delegate this', 'delegate the last plan', 'send this to
+  codex/cursor', 'codex convo', or asks to save Claude tokens on a coding task.
 ---
 
 # Delegate
@@ -61,6 +62,15 @@ exception to pure cost-ordering: if Claude itself has been stuck on a bug for
 2+ attempts, hand it sideways to Codex anyway — a fresh perspective from a
 different model often beats a third Claude attempt, and it's cheaper too.
 
+## Model and effort
+
+Codex runs default to **`gpt-5.6-sol` at `medium` reasoning effort**. Override
+per run with `--model M` / `--effort E` on `start`, or per turn on `say` (the
+override persists for later turns of that session). Env defaults:
+`DELEGATE_CODEX_MODEL`, `DELEGATE_CODEX_EFFORT`. Tune effort to the turn: `low`
+for lookups and mechanical follow-ups, `high`/`xhigh` for the hard diagnosis
+turn — Sol is built to start low and turn up.
+
 ## The dispatch loop
 
 All dispatch goes through `scripts/delegate.sh`. It handles the CLI quirks
@@ -101,6 +111,65 @@ Poll `watch` rather than blocking on `wait` when a run is long or open-ended. If
 the digest shows the agent editing the wrong files, misreading the spec, or looping
 on a failing command, `stop` it immediately and `say` the correction. Catching a
 wrong turn at minute two is the main reason to watch at all.
+
+## Driving a conversation
+
+The same transport supports multi-turn work: a Codex "session" is a session id
+plus an append-only event log, with no live process between turns. Each
+exchange is one `say`, and the process exiting is the turn boundary.
+
+```bash
+"$S" start codex /path/to/repo --read-only "<open question or task framing>"
+"$S" wait <rundir> && "$S" reply <rundir>          # turn 1's answer
+"$S" say <rundir> --wait "<follow-up>"             # one call = one full turn
+"$S" say <rundir> --wait --effort high "<the hard turn>"
+"$S" reply <rundir>                                # re-read the latest turn anytime
+```
+
+`reply` prints the latest turn's full agent message plus a footer (files
+touched, command count, tokens) — read that, not the event stream. Run
+`say --wait` via a background Bash task so the orchestrator is re-invoked when
+the turn completes instead of blocking. For long turns, `watch --tail` mid-flight
+still works.
+
+### Convo mode: the session as a passthrough
+
+When the user says **"/delegate codex convo"** (optionally with an opening
+message), the rest of the Claude Code session becomes a relay to one Codex
+session:
+
+1. **Open**: `start codex <cwd> "<user's opening message>"` in the current
+   repo. If no opening message was given, ask for one. Default `workspace-write`;
+   use `--read-only` if the user frames it as investigation-only.
+2. **Every subsequent user message** is forwarded verbatim with
+   `say <rundir> --wait "<message>"` (run in a background Bash task), and
+   Codex's reply is relayed back **in full — no summarizing, no paraphrasing**.
+   Include the footer (files, commands, tokens) so the user sees cost and
+   activity per turn.
+3. **Claude stays out of the way.** Do not answer the user's questions
+   yourself, add commentary, or start doing the work — you are the pipe. The
+   exceptions, handled without forwarding: obvious orchestration asks
+   ("switch to high effort" → `--effort high` on the next say; "show me the
+   diff" → run `git diff`; "is it done? verify" → run the acceptance check),
+   and relaying a turn failure with the stderr tail.
+4. **Exit** when the user says so ("stop convo", "back to claude", "you take
+   over"). On exit, `stop` the rundir to clear the write-lock and resume
+   normal behavior — including full-strength Claude review of whatever the
+   conversation produced, which is the usual reason to take over.
+
+Session state (rundir, session id) survives Claude Code context compaction —
+it's on disk. If the rundir is lost from context, the newest dir in
+`~/.claude/delegate-runs/` is the live conversation.
+
+**Dispatch or converse?** One test: can you write the acceptance check right
+now? If yes, the spec is complete — dispatch it one-shot (the flow above under
+"The dispatch loop"). If your next instruction depends on what Codex finds —
+diagnosis, root-cause hunts, investigate-then-decide, iterative numerical
+work — start a conversation, usually `--read-only` first, and end it with a
+dispatch-style turn ("apply the fix; acceptance: <cmd> passes"). The modes
+converge anyway: a dispatch whose verification fails becomes a conversation via
+`say`, so the only real decision is whether the first turn carries a complete
+spec or an open question.
 
 ## Delegating the last plan
 

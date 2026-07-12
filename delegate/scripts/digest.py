@@ -28,6 +28,9 @@ def parse(path, root=None):
     usage = {}
     turns_done = 0
     lines = []
+    # Index into `lines` where each exec/resume process began appending. One
+    # process = one turn, so lines[markers[-1]:] is the latest turn's activity.
+    markers = [0]
 
     with open(path) as fh:
         for raw in fh:
@@ -43,6 +46,7 @@ def parse(path, root=None):
             # --- codex ---
             if t == "thread.started":
                 agent, session = "codex", e.get("thread_id")
+                markers.append(len(lines))
             elif t == "turn.completed":
                 turns_done += 1
                 for k, v in (e.get("usage") or {}).items():
@@ -65,6 +69,7 @@ def parse(path, root=None):
             # --- cursor ---
             elif t == "system" and e.get("subtype") == "init":
                 agent, session = "cursor", e.get("session_id")
+                markers.append(len(lines))
             elif t == "assistant":
                 for c in (e.get("message") or {}).get("content") or []:
                     if c.get("type") == "text" and c.get("text", "").strip():
@@ -93,7 +98,33 @@ def parse(path, root=None):
                 if e.get("is_error"):
                     lines.append(("fail", truncate(e.get("result", "error"), 200)))
 
-    return agent, session, usage, turns_done, lines
+    return agent, session, usage, turns_done, lines, markers
+
+
+def print_reply(agent, session, usage, turns, lines, markers):
+    """Print the latest turn: agent message(s) in full, then an activity footer."""
+    seg = lines[markers[-1]:]
+    msgs = [t for k, t in seg if k == "msg"]
+    fails = [t for k, t in seg if k == "fail"]
+    edits = [t for k, t in seg if k == "edit"]
+    cmds = [t for k, t in seg if k == "cmd"]
+
+    print(f"session={session or '?'} turn={max(turns, 1)}")
+    if fails:
+        for f in fails:
+            print(f"[FAILED] {f}")
+    if msgs:
+        for m in msgs:
+            print(m)
+    elif not fails:
+        print("(no agent message in this turn yet)")
+    print("---")
+    print(f"files: {', '.join(edits) if edits else 'none'}")
+    print(f"commands: {len(cmds)}")
+    if usage:
+        bits = ", ".join(f"{k}={v}" for k, v in sorted(usage.items()))
+        print(f"tokens: {bits}")
+    return 0
 
 
 def main():
@@ -102,13 +133,18 @@ def main():
     ap.add_argument("--tail", type=int, default=40, help="show last N action lines")
     ap.add_argument("--full", action="store_true", help="do not truncate agent messages")
     ap.add_argument("--root", default=None, help="strip this prefix from file paths")
+    ap.add_argument("--reply", action="store_true",
+                    help="print only the latest turn: full agent message + activity footer")
     a = ap.parse_args()
 
     try:
-        agent, session, usage, turns, lines = parse(a.events, a.root)
+        agent, session, usage, turns, lines, markers = parse(a.events, a.root)
     except FileNotFoundError:
         print(f"no event log at {a.events}", file=sys.stderr)
         return 1
+
+    if a.reply:
+        return print_reply(agent, session, usage, turns, lines, markers)
 
     print(f"agent={agent or '?'} session={session or '?'} turns_completed={turns} events={len(lines)}")
     shown = lines if a.tail <= 0 else lines[-a.tail :]
