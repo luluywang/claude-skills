@@ -23,6 +23,10 @@ HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DIGEST="$HERE/digest.py"
 LASTPLAN="$HERE/last_plan.py"
 RUNS="${DELEGATE_RUNS:-$HOME/.claude/delegate-runs}"
+# MUST be absolute: `start` opens the event log from inside a subshell that has
+# already `cd`'d to the repo, so a relative $DELEGATE_RUNS resolves under the repo,
+# fails to open, and kills the agent instantly leaving an empty rundir.
+mkdir -p "$RUNS" && RUNS="$(cd "$RUNS" && pwd)"
 
 die() { echo "delegate: $*" >&2; exit 1; }
 
