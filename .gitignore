@@ -36,3 +36,7 @@ __pycache__/
 *.bbl-SAVE-ERROR
 *.dvi
 writing_examples/**/*.log
+
+# API keys (synced via Dropbox, never committed)
+pangram/pangram.api
+*.api
