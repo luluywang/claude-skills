@@ -1,83 +1,20 @@
 #!/usr/bin/env python3
-"""Check text for AI-generated writing via the Pangram API.
+"""Check text for AI-generated writing via the Pangram API (single document).
 
 Reads text from a file argument, --text, or stdin. Submits to the async
 inference API, polls until terminal, and prints a readable report.
 
-API key resolution order:
-  1. --api-key
-  2. $PANGRAM_API_KEY
-  3. $PANGRAM_API_KEY_FILE
-  4. ~/Dropbox/Claude/pangram/pangram.api
+For many files or a whole manuscript, use pangram_bulk.py instead — it packs
+everything into one bulk job.
 """
 
 import argparse
 import json
-import os
 import sys
 import time
-import urllib.error
-import urllib.request
 from pathlib import Path
 
-BASE = "https://text.external-api.pangram.com"
-DEFAULT_KEY_FILE = Path.home() / "Dropbox" / "Claude" / "pangram" / "pangram.api"
-
-# Segments shorter than this are rejected by the API.
-MIN_WORDS = 50
-
-
-def resolve_key(cli_key):
-    if cli_key:
-        return cli_key.strip()
-    if os.environ.get("PANGRAM_API_KEY"):
-        return os.environ["PANGRAM_API_KEY"].strip()
-    for candidate in (os.environ.get("PANGRAM_API_KEY_FILE"), DEFAULT_KEY_FILE):
-        if candidate and Path(candidate).is_file():
-            return Path(candidate).read_text().strip()
-    sys.exit(
-        "No API key found. Set PANGRAM_API_KEY, or put the key in "
-        f"{DEFAULT_KEY_FILE}, or pass --api-key."
-    )
-
-
-def request(method, path, key, body=None):
-    data = json.dumps(body).encode() if body is not None else None
-    req = urllib.request.Request(BASE + path, data=data, method=method)
-    req.add_header("x-api-key", key)
-    if data:
-        req.add_header("Content-Type", "application/json")
-    try:
-        with urllib.request.urlopen(req, timeout=60) as resp:
-            return json.loads(resp.read())
-    except urllib.error.HTTPError as e:
-        detail = e.read().decode(errors="replace")[:500]
-        sys.exit(f"Pangram API error {e.code} on {method} {path}: {detail}")
-    except urllib.error.URLError as e:
-        sys.exit(f"Could not reach Pangram API: {e.reason}")
-
-
-def chunks(text, target_words):
-    """Split on blank lines, packing paragraphs into >= target_words chunks.
-
-    Packing to at-least rather than at-most keeps every chunk above the API's
-    minimum length. A short trailing chunk is merged back into the previous one.
-    """
-    paras = [p for p in text.split("\n\n") if p.strip()]
-    out, buf, count = [], [], 0
-    for p in paras:
-        buf.append(p)
-        count += len(p.split())
-        if count >= target_words:
-            out.append("\n\n".join(buf))
-            buf, count = [], 0
-    if buf:
-        tail = "\n\n".join(buf)
-        if out and count < MIN_WORDS:
-            out[-1] += "\n\n" + tail
-        else:
-            out.append(tail)
-    return out or [text]
+from pangram_api import MIN_WORDS, chunks, report, request, resolve_key
 
 
 def analyze(text, key, model, dashboard, poll, timeout):
@@ -99,51 +36,6 @@ def analyze(text, key, model, dashboard, poll, timeout):
         if time.time() > deadline:
             sys.exit(f"Timed out after {timeout}s waiting on task {task_id}")
         time.sleep(poll)
-
-
-def excerpt(s, n=160):
-    s = " ".join(s.split())
-    return s if len(s) <= n else s[: n - 1] + "…"
-
-
-def report(result, index=None, total=None, show_human=False):
-    label = f"Chunk {index}/{total}" if total and total > 1 else "Result"
-    print(f"\n=== {label} ===")
-    print(f"Verdict:      {result.get('headline')} ({result.get('prediction_short')})")
-    print(f"              {result.get('prediction')}")
-    print(
-        "Mix:          "
-        f"AI {result.get('fraction_ai', 0):.0%} | "
-        f"AI-assisted {result.get('fraction_ai_assisted', 0):.0%} | "
-        f"human {result.get('fraction_human', 0):.0%}"
-    )
-    print(
-        "Segments:     "
-        f"{result.get('num_ai_segments', 0)} AI, "
-        f"{result.get('num_ai_assisted_segments', 0)} AI-assisted, "
-        f"{result.get('num_human_segments', 0)} human"
-    )
-    if result.get("dashboard_link"):
-        print(f"Dashboard:    {result['dashboard_link']}")
-
-    # Labels seen from the API: "AI-Generated", "AI-Assisted", "Human Written".
-    flagged = [
-        w for w in result.get("windows", [])
-        if show_human or "ai" in str(w.get("label", "")).lower()
-    ]
-    if flagged:
-        print("\nFlagged passages:")
-        for w in flagged:
-            score = w.get("ai_assistance_score")
-            score_s = f"{score:.2f}" if isinstance(score, (int, float)) else "n/a"
-            print(
-                f"  [{w.get('label')}] score {score_s}, "
-                f"confidence {w.get('confidence')}, "
-                f"chars {w.get('start_index')}-{w.get('end_index')}"
-            )
-            print(f"    {excerpt(w.get('text', ''))}")
-    elif not show_human:
-        print("\nNo AI-flagged passages.")
 
 
 def main():
@@ -190,6 +82,12 @@ def main():
         )
 
     pieces = chunks(text, args.chunk_words) if args.chunk_words > 0 else [text]
+    if len(pieces) > 8:
+        print(
+            f"Note: {len(pieces)} chunks means {len(pieces)} separate API calls. "
+            "pangram_bulk.py packs these into one job.",
+            file=sys.stderr,
+        )
     results = []
     for i, piece in enumerate(pieces, 1):
         if len(piece.split()) < MIN_WORDS and len(pieces) > 1:

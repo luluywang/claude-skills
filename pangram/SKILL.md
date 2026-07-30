@@ -31,7 +31,33 @@ Options: `--model` (`default` or `pangram-4`), `--show-human` to also print
 human-labeled passages, `--chunk-words N` to split a long document and get a
 separate verdict per chunk, `--poll` / `--timeout` for the async poll loop.
 
-The script uses only the Python standard library — no `pip install` needed.
+`pangram_check.py` makes one API call per chunk, so it fits quick checks. For a
+whole manuscript or a directory of drafts, use the bulk script instead — it
+packs everything into a single job.
+
+```bash
+python3 scripts/pangram_bulk.py chapter*.md              # one row per file
+python3 scripts/pangram_bulk.py paper.tex --chunk-words 400   # one row per chunk
+python3 scripts/pangram_bulk.py drafts/*.md --csv out.csv     # spreadsheet
+python3 scripts/pangram_bulk.py paper.tex --chunk-words 400 --dry-run  # cost first
+python3 scripts/pangram_bulk.py --resume blk_123         # refetch a past job
+```
+
+Bulk prints a table (item, verdict, AI%, top score, confidence), then the most
+AI-like items with excerpts. Add `--detail` for the full per-item report,
+`--json` for raw output. Item IDs are `<file>#<chunk>`, so every row maps back
+to its source.
+
+Always `--dry-run` first on anything large: it prints the item count and
+billable units without spending them. A unit is one started word block per item
+— 1,000 words for `default`, 100 words for `pangram-4`, minimum one unit per
+item — capped at 1,000 units per job. The script splits oversized runs across
+multiple jobs automatically. Note the chunking interaction: 88 chunks of a
+40k-word paper cost 88 units under `default`, not 40, because each short item
+still bills a full unit. Coarser chunks cost less.
+
+Both scripts use only the Python standard library — no `pip install` needed.
+Shared helpers live in `scripts/pangram_api.py`.
 
 ## Auth
 
@@ -43,6 +69,11 @@ or paste it into a commit.
 ## Reading the output
 
 - **Verdict** — `headline` plus Pangram's sentence-long call on the document.
+  Headlines are not just AI/Human: observed values include `Human Written`,
+  `Mostly Human Written`, `Mostly Human, AI Assisted`, `Mostly Human, AI
+  Detected`, `AI Assisted`, `AI Detected`, and `AI Generated`. The middle
+  categories are the common outcome on real edited prose — read them as "some
+  passages scored above threshold," not as a finding that the author used AI.
 - **Mix** — share of the text labeled AI, AI-assisted, and human.
 - **Flagged passages** — each window's label, `ai_assistance_score` (0–1,
   higher = more AI-like), confidence, character range, and an excerpt.
