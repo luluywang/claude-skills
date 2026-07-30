@@ -47,6 +47,14 @@ or paste it into a commit.
 - **Flagged passages** — each window's label, `ai_assistance_score` (0–1,
   higher = more AI-like), confidence, character range, and an excerpt.
 
+The per-window labels are **not** a reliable map of which parts are AI. Tested
+locally on a document with a known seam: 2,279 chars of human prose (0.01 alone)
+followed by an AI paragraph. Pangram split at char 2,740 — not the real boundary
+— and labeled both windows AI-Generated at 0.99/High, reporting 0% human for a
+document that was ~79% human by length. Read `windows` as evidence about
+*whether* a document contains AI text, not *where*. To localize, chunk and
+submit the pieces separately.
+
 Scores near 0.99 with High confidence are strong calls; Medium confidence on a
 short passage is weak evidence. Pangram needs roughly 50+ words for a usable
 verdict, and the script refuses shorter input rather than reporting noise.
