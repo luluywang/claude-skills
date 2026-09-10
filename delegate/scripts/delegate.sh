@@ -79,7 +79,7 @@ cmd_start() {
       --shell) shell=1; shift;;
       --plan) plan="${2:-}"; [ -n "$plan" ] || die "--plan needs 'last' or a file path"; shift 2;;
       --model) model="${2:-}"; [ -n "$model" ] || die "--model needs a model slug"; shift 2;;
-      --effort) effort="${2:-}"; [ -n "$effort" ] || die "--effort needs low|medium|high|xhigh"; shift 2;;
+      --effort) effort="${2:-}"; [ -n "$effort" ] || die "--effort needs low|medium|high|xhigh|max|ultra"; shift 2;;
       *) break;;
     esac
   done
@@ -245,7 +245,7 @@ cmd_say() {
         case "${1:-}" in (''|*[!0-9]*) ;; (*) timeout="$1"; shift;; esac;;
       --model) [ -n "${2:-}" ] || die "--model needs a model slug"
         set_meta "$run" MODEL "$2"; shift 2;;
-      --effort) [ -n "${2:-}" ] || die "--effort needs low|medium|high|xhigh"
+      --effort) [ -n "${2:-}" ] || die "--effort needs low|medium|high|xhigh|max|ultra"
         set_meta "$run" EFFORT "$2"; shift 2;;
       *) break;;
     esac

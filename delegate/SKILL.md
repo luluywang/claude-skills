@@ -75,22 +75,30 @@ turn — Sol is built to start low and turn up.
 
 | Slug | Use it for |
 |---|---|
-| `gpt-6-astra` | The strongest option. Hard diagnosis, large refactors, the turn Sol failed twice on. |
+| `gpt-6-astra` | "Our most capable model for complex, demanding work." Hard diagnosis, large refactors, the turn Sol failed twice on. |
 | `gpt-5.6-sol` | Default. Everyday dispatch and conversation turns. |
 | `gpt-5.6-luna`, `gpt-5.3-codex-spark` | Fast and cheap. Lookups, mechanical edits. |
 
-`codex exec` accepts any slug the account is entitled to; run
-`python3 -c "import json;print([m['slug'] for m in json.load(open('$HOME/.codex/models_cache.json'))['models']])"`
-to see the current list. That cache is the picker list, not the entitlement
-list — `gpt-6-astra` works even though it is absent from it.
+For the current list, read the local cache:
+
+```bash
+python3 -c "import json;d=json.load(open('$HOME/.codex/models_cache.json'));print(d['client_version']);print([m['slug'] for m in d['models']])"
+```
+
+**Check the cache's `client_version` before trusting it.** A long-lived
+`codex app-server` daemon from an older release rewrites the cache with that
+release's model list, so a model your account can run goes missing. If
+`client_version` is behind `codex --version`, the list is stale — see the
+refresh recipe under "CLI quirks".
 
 **`gpt-6-astra` needs Codex CLI 0.154.0 or newer.** On an older CLI the API
 rejects the run with `The 'gpt-6-astra' model requires a newer version of
-Codex`. Fix it with `codex update`, then `rm ~/.codex/models_cache.json` to
-force a fresh model list. To make Astra the standing default, set
+Codex`. Fix it with `codex update`. To make Astra the standing default, set
 `DELEGATE_CODEX_MODEL=gpt-6-astra`.
 
-Astra supports the same effort ladder as Sol: `low`, `medium`, `high`, `xhigh`.
+Astra's effort ladder is longer than Sol's: `low`, `medium`, `high`, `xhigh`,
+`max`, `ultra` (`ultra` adds automatic task delegation). Sol stops at `xhigh`.
+Astra defaults to `medium`.
 
 ## The dispatch loop
 
@@ -290,6 +298,12 @@ Recorded because each one silently corrupts a hand-rolled invocation:
 - **`codex exec resume` takes no `-s/--sandbox`** (plain `codex exec` does). The
   sandbox mode goes through `-c sandbox_mode=…`, and flags must precede the
   positional session id.
+- **`~/.codex/models_cache.json` can be rewritten by a stale daemon.** An old
+  `codex app-server` process serves its own model list, so an upgrade does not
+  fix the cache on its own. Force a refresh through the new binary directly:
+  `rm ~/.codex/models_cache.json && "$(readlink -f "$(command -v codex)")" exec
+  --sandbox read-only "say OK" </dev/null >/dev/null`. Then confirm
+  `client_version` in the file matches `codex --version`.
 - **A model slug the CLI is too old for fails at the API, not the flag.** The
   error reads `requires a newer version of Codex`. Run `codex update`. A slug
   the account cannot use at all gives a different message (`not supported when
