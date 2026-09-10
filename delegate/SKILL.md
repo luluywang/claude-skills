@@ -71,6 +71,27 @@ override persists for later turns of that session). Env defaults:
 for lookups and mechanical follow-ups, `high`/`xhigh` for the hard diagnosis
 turn — Sol is built to start low and turn up.
 
+### Which model
+
+| Slug | Use it for |
+|---|---|
+| `gpt-6-astra` | The strongest option. Hard diagnosis, large refactors, the turn Sol failed twice on. |
+| `gpt-5.6-sol` | Default. Everyday dispatch and conversation turns. |
+| `gpt-5.6-luna`, `gpt-5.3-codex-spark` | Fast and cheap. Lookups, mechanical edits. |
+
+`codex exec` accepts any slug the account is entitled to; run
+`python3 -c "import json;print([m['slug'] for m in json.load(open('$HOME/.codex/models_cache.json'))['models']])"`
+to see the current list. That cache is the picker list, not the entitlement
+list — `gpt-6-astra` works even though it is absent from it.
+
+**`gpt-6-astra` needs Codex CLI 0.154.0 or newer.** On an older CLI the API
+rejects the run with `The 'gpt-6-astra' model requires a newer version of
+Codex`. Fix it with `codex update`, then `rm ~/.codex/models_cache.json` to
+force a fresh model list. To make Astra the standing default, set
+`DELEGATE_CODEX_MODEL=gpt-6-astra`.
+
+Astra supports the same effort ladder as Sol: `low`, `medium`, `high`, `xhigh`.
+
 ## The dispatch loop
 
 All dispatch goes through `scripts/delegate.sh`. It handles the CLI quirks
@@ -140,7 +161,7 @@ session:
 
 1. **Open**: `start codex <cwd> "<user's opening message>"` in the current
    repo. If no opening message was given, ask for one. Default `workspace-write`;
-   use `--read-only` if the user frames it as investigation-only.
+   use `--read-only` only when the user explicitly asks for a read-only session.
 2. **Every subsequent user message** is forwarded verbatim with
    `say <rundir> --wait "<message>"` (run in a background Bash task), and
    Codex's reply is relayed back **in full — no summarizing, no paraphrasing**.
@@ -165,8 +186,9 @@ it's on disk. If the rundir is lost from context, the newest dir in
 now? If yes, the spec is complete — dispatch it one-shot (the flow above under
 "The dispatch loop"). If your next instruction depends on what Codex finds —
 diagnosis, root-cause hunts, investigate-then-decide, iterative numerical
-work — start a conversation, usually `--read-only` first, and end it with a
-dispatch-style turn ("apply the fix; acceptance: <cmd> passes"). The modes
+work — start a conversation (`workspace-write` unless the user explicitly asks
+for read-only) and end it with a dispatch-style turn ("apply the fix;
+acceptance: <cmd> passes"). The modes
 converge anyway: a dispatch whose verification fails becomes a conversation via
 `say`, so the only real decision is whether the first turn carries a complete
 spec or an open question.
@@ -268,6 +290,10 @@ Recorded because each one silently corrupts a hand-rolled invocation:
 - **`codex exec resume` takes no `-s/--sandbox`** (plain `codex exec` does). The
   sandbox mode goes through `-c sandbox_mode=…`, and flags must precede the
   positional session id.
+- **A model slug the CLI is too old for fails at the API, not the flag.** The
+  error reads `requires a newer version of Codex`. Run `codex update`. A slug
+  the account cannot use at all gives a different message (`not supported when
+  using Codex with a ChatGPT account`), which is also how a typo shows up.
 - **Cursor's `--resume` needs the `=` form** (`--resume=<id>`), and headless runs
   need `--trust`.
 - **Cursor's `--output-format text` prints nothing on a resumed session.** Only

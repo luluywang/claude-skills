@@ -15,6 +15,8 @@
 #
 # Codex runs default to model gpt-5.6-sol at medium reasoning effort
 # (override with --model/--effort, or env DELEGATE_CODEX_MODEL/DELEGATE_CODEX_EFFORT).
+# Any slug the account is entitled to works, e.g. gpt-6-astra for the hardest
+# turns; gpt-6-astra needs Codex CLI 0.154.0 or newer.
 #
 # Run state lives in $DELEGATE_RUNS (default ~/.claude/delegate-runs/<agent>-<ts>).
 set -uo pipefail
