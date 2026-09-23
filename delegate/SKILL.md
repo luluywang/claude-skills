@@ -64,7 +64,7 @@ different model often beats a third Claude attempt, and it's cheaper too.
 
 ## Model and effort
 
-Codex runs default to **`gpt-5.6-sol` at `medium` reasoning effort**. Override
+Codex runs default to **`gpt-6-sol` at `medium` reasoning effort**. Override
 per run with `--model M` / `--effort E` on `start`, or per turn on `say` (the
 override persists for later turns of that session). Env defaults:
 `DELEGATE_CODEX_MODEL`, `DELEGATE_CODEX_EFFORT`. Tune effort to the turn: `low`
@@ -75,9 +75,10 @@ turn — Sol is built to start low and turn up.
 
 | Slug | Use it for |
 |---|---|
-| `gpt-6-astra` | "Our most capable model for complex, demanding work." Hard diagnosis, large refactors, the turn Sol failed twice on. |
-| `gpt-5.6-sol` | Default. Everyday dispatch and conversation turns. |
-| `gpt-5.6-luna`, `gpt-5.3-codex-spark` | Fast and cheap. Lookups, mechanical edits. |
+| `gpt-6-astra` | "Frontier intelligence for the most demanding work." Hard diagnosis, large refactors, the turn Sol failed twice on. |
+| `gpt-6-sol` | Default. "Workhorse model for coding and everyday work." Everyday dispatch and conversation turns. |
+| `gpt-6-luna` | "Fast and affordable model for easier tasks." Lookups, mechanical edits. |
+| `gpt-5.6-sol`, `gpt-5.6-luna` | Older generation. Use only to compare against a past run. |
 
 For the current list, read the local cache:
 
@@ -91,14 +92,15 @@ release's model list, so a model your account can run goes missing. If
 `client_version` is behind `codex --version`, the list is stale — see the
 refresh recipe under "CLI quirks".
 
-**`gpt-6-astra` needs Codex CLI 0.154.0 or newer.** On an older CLI the API
-rejects the run with `The 'gpt-6-astra' model requires a newer version of
-Codex`. Fix it with `codex update`. To make Astra the standing default, set
-`DELEGATE_CODEX_MODEL=gpt-6-astra`.
+**The default `gpt-6-sol` needs Codex CLI 0.156.0 or newer** (`gpt-6-astra`
+needs 0.154.0). On 0.154.0 the API rejected `gpt-6-sol` with `not supported
+when using Codex with a ChatGPT account`, the same message a typo gives. Fix it
+with `codex update`, then refresh the model cache (see "CLI quirks"). To make
+Astra the standing default, set `DELEGATE_CODEX_MODEL=gpt-6-astra`.
 
-Astra's effort ladder is longer than Sol's: `low`, `medium`, `high`, `xhigh`,
-`max`, `ultra` (`ultra` adds automatic task delegation). Sol stops at `xhigh`.
-Astra defaults to `medium`.
+Effort ladders: `gpt-6-sol` and `gpt-6-astra` accept `low`, `medium`, `high`,
+`xhigh`, `max`, `ultra` (`ultra` adds automatic task delegation).
+`gpt-6-luna` stops at `max`. All three default to `medium`.
 
 ## The dispatch loop
 
@@ -305,9 +307,10 @@ Recorded because each one silently corrupts a hand-rolled invocation:
   --sandbox read-only "say OK" </dev/null >/dev/null`. Then confirm
   `client_version` in the file matches `codex --version`.
 - **A model slug the CLI is too old for fails at the API, not the flag.** The
-  error reads `requires a newer version of Codex`. Run `codex update`. A slug
-  the account cannot use at all gives a different message (`not supported when
-  using Codex with a ChatGPT account`), which is also how a typo shows up.
+  error reads `requires a newer version of Codex` or, for some slugs, `not
+  supported when using Codex with a ChatGPT account` (seen for `gpt-6-sol` on
+  0.154.0). The second message also covers typos and slugs the account cannot
+  use. Run `codex update` and retry before concluding the slug is wrong.
 - **Cursor's `--resume` needs the `=` form** (`--resume=<id>`), and headless runs
   need `--trust`.
 - **Cursor's `--output-format text` prints nothing on a resumed session.** Only

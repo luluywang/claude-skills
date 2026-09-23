@@ -13,10 +13,10 @@
 #   delegate.sh sid    <rundir>
 #   delegate.sh plan   [--repo <path>] [--list] # resolve the last Claude Code plan
 #
-# Codex runs default to model gpt-5.6-sol at medium reasoning effort
+# Codex runs default to model gpt-6-sol at medium reasoning effort
 # (override with --model/--effort, or env DELEGATE_CODEX_MODEL/DELEGATE_CODEX_EFFORT).
 # Any slug the account is entitled to works, e.g. gpt-6-astra for the hardest
-# turns; gpt-6-astra needs Codex CLI 0.154.0 or newer.
+# turns. gpt-6-sol needs Codex CLI 0.156.0 or newer; gpt-6-astra needs 0.154.0.
 #
 # Run state lives in $DELEGATE_RUNS (default ~/.claude/delegate-runs/<agent>-<ts>).
 set -uo pipefail
@@ -84,7 +84,7 @@ cmd_start() {
     esac
   done
   if [ "$agent" = codex ]; then
-    model="${model:-${DELEGATE_CODEX_MODEL:-gpt-5.6-sol}}"
+    model="${model:-${DELEGATE_CODEX_MODEL:-gpt-6-sol}}"
     effort="${effort:-${DELEGATE_CODEX_EFFORT:-medium}}"
   fi
   local prompt="$*"
