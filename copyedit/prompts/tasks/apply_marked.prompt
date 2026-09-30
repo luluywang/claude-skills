@@ -2,9 +2,9 @@
 
 **Model:** Haiku (simple parsing and batch edits)
 
-**Purpose:** Batch-apply all user-approved changes marked with `[x]` in checklist files.
+**Purpose:** Batch-apply all user-approved changes marked with `[x]` in the review digest.
 
-**Input:** All `notes/*.md` files with checklist format (auto-scanned)
+**Input:** `notes/review_digest.md` (the single review surface)
 
 **Output:**
 - Modified .tex files with accepted changes applied
@@ -12,29 +12,24 @@
 
 ---
 
-## Checklist Files to Scan
+## File to Scan
 
-Automatically scan these files in `notes/`:
-- `ai_detection.md`
-- `simplifications.md`
-- `word_choice_review.md`
-- `sentence_analysis.md`
-- `structure_analysis.md`
-- `methodology_review.md`
-- `writing_quality.md`
+Scan **only** `notes/review_digest.md`. The author marks items there and nowhere else.
 
-**Skip:** `copy_edits.md` (grammar log format — already auto-applied)
+**Skip:** the `## Already Applied` section (grammar, already in the source) and everything under `notes/raw/` (provenance only; marks there are ignored).
+
+**Legacy fallback:** if no digest exists (a run from before the single-surface layout), scan the checklist files in `notes/` as before.
 
 ---
 
 ## Expected Checklist Format
 
-Each file contains sections by source file, with checklist items:
+The digest groups items by severity, then by target file, with 4th-level checklist items:
 
 ```markdown
-## filename.tex
+### High — filename.tex
 
-### - [x] Lines X-Y: [Brief description]
+#### - [x] Lines X-Y: [Brief description] `High`
 
 **Comment:** [Why this change was suggested]
 
@@ -56,7 +51,8 @@ Each file contains sections by source file, with checklist items:
 - `- [x] ... (applied)` = Already applied, skip
 - `- [ ]` = Not approved, skip
 - `- [-]` = Rejected, skip
-- `## filename.tex` = Target file for subsequent items
+- `### <Severity> — filename.tex` = Target file for subsequent items
+- Only items with a `**Proposed Revision:**` block can be applied; a marked Flag has nothing to apply — report it as skipped (flag-only)
 
 ---
 
@@ -64,14 +60,13 @@ Each file contains sections by source file, with checklist items:
 
 ### Step 1: Scan for Marked Items
 
-1. Glob `notes/*.md` (exclude `copy_edits.md`)
-2. For each file, extract items where:
+1. Read `notes/review_digest.md` (skip `## Already Applied`)
+2. Extract items where:
    - Checkbox is `[x]` (case-insensitive)
    - Line description does NOT contain `(applied)`
 3. For each marked item, extract:
-   - **Source file**: The notes/*.md file it came from
-   - **Full header line**: e.g., `### - [x] Lines 23-25: Hedging`
-   - **Target file**: From `## filename.tex` section header
+   - **Full header line**: e.g., `#### - [x] Lines 23-25: Hedging`
+   - **Target file**: From the `### <Severity> — filename.tex` group header
    - **Lines**: From `Lines X-Y` in item header
    - **Original**: Content of Original code block
    - **Proposed**: Content of Proposed Revision code block
@@ -134,10 +129,10 @@ Edit: old_string = "the affect on prices", new_string = "\begin{llm}the effect o
 **CRITICAL:** After successfully applying an edit, update the source markdown file to add `(applied)` suffix.
 
 For each successfully applied edit:
-1. Find the header line in the source notes/*.md file
+1. Find the item header line in `notes/review_digest.md`
 2. Append `(applied)` to the line description
-   - Before: `### - [x] Lines 23-25: Hedging`
-   - After: `### - [x] Lines 23-25: Hedging (applied)`
+   - Before: `#### - [x] Lines 23-25: Hedging`
+   - After: `#### - [x] Lines 23-25: Hedging (applied)`
 3. Use Edit tool on the markdown file
 
 **Why this matters:** Prevents re-application if user runs apply_marked again. Also enables interoperability with interactive_review.
@@ -176,10 +171,10 @@ For each successfully applied edit:
 ### Empty Result
 If no `[x]` items found:
 ```
-No marked changes found in notes/*.md files.
+No marked changes found in notes/review_digest.md.
 
 To mark changes for application:
-1. Open the checklist file (e.g., notes/simplifications.md)
+1. Open notes/review_digest.md
 2. Change `- [ ]` to `- [x]` for items you want applied
 3. Run this task again
 ```
@@ -199,7 +194,7 @@ If exact Original text not found, try:
 
 ## Quality Control
 
-- [ ] All `notes/*.md` files scanned (except copy_edits.md)
+- [ ] `notes/review_digest.md` scanned (except Already Applied)
 - [ ] Only `[x]` items WITHOUT `(applied)` processed
 - [ ] Items with `(applied)` or `[-]` skipped
 - [ ] Edits applied in reverse line order per file

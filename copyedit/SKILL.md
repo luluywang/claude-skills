@@ -24,7 +24,7 @@ Comprehensive copyediting system for academic writing, following McCloskey and C
 /copyedit review paper/             # All tex/md files in directory
 ```
 
-**Review proposes; it never edits in-line.** `review`/`full` write findings to `notes/*.md` and leave your source untouched. Applying is a separate, explicit step you run when ready: `/copyedit implement` (apply with judgment) or `/copyedit apply` (apply marked items). A request that asks to review **and** apply in-line at once (e.g. "full review … aggressively edit in-line") is **loudly refused** on the apply half — the skill runs the review-only pass and tells you to run `implement` next. This decoupling is intentional: you see the proposals before the manuscript changes.
+**Review proposes; it never edits in-line.** `review`/`full` write findings to **one file, `notes/review_digest.md`**, and leave your source untouched (grammar fixes excepted). Applying is a separate, explicit step you run when ready: `/copyedit implement` (apply with judgment) or `/copyedit apply` (apply marked items). A request that asks to review **and** apply in-line at once (e.g. "full review … aggressively edit in-line") is **loudly refused** on the apply half — the skill runs the review-only pass and tells you to run `implement` next. This decoupling is intentional: you see the proposals before the manuscript changes.
 
 ### Task Edit — Catch-All (No Subagents)
 
@@ -68,9 +68,9 @@ Rewrites a section directly in the orchestrator context. No subagents, no notes 
 /copyedit implement intro.tex "Model"     # Implement within a named section
 ```
 
-Second half of a decoupled workflow: run `review` (or `full`) to **find and propose** (writes `notes/*.md`), then `implement` to **apply with judgment**. Implement runs in the orchestrator (active session model — not a Haiku/Sonnet subagent) so the strongest available model reads the consolidated proposals plus the source and decides what and how to apply: it follows the project voice, honors load-bearing terms, resolves conflicts between overlapping suggestions, adapts proposed wording rather than pasting it, revisits flag-only items, and skips suggestions that do not improve the text. Every changed sentence passes the surface-critic gate before it is written. **Applies directly** — review the result with `git diff`, revert with `git restore <file>`.
+Second half of a decoupled workflow: run `review` (or `full`) to **find and propose** (writes `notes/review_digest.md`), then `implement` to **apply with judgment**. Implement runs in the orchestrator (active session model — not a Haiku/Sonnet subagent) so the strongest available model reads the consolidated proposals plus the source and decides what and how to apply: it follows the project voice, honors load-bearing terms, resolves conflicts between overlapping suggestions, adapts proposed wording rather than pasting it, revisits flag-only items, and skips suggestions that do not improve the text. Every changed sentence passes the surface-critic gate before it is written. **Applies directly** — review the result with `git diff`, revert with `git restore <file>`.
 
-Reads `notes/review_digest.md` (preferred) or the individual proposal files (fallback). If no review has been run, it stops and asks you to run `/copyedit review` first. Does **not** touch grammar from `copy_edits.md` (already auto-applied during review).
+Reads `notes/review_digest.md` (the raw per-task files in `notes/raw/` are a legacy fallback only). If no review has been run, it stops and asks you to run `/copyedit review` first. Does **not** touch grammar from `copy_edits.md` (already auto-applied during review).
 
 **Distinct from `apply`:** `/copyedit apply` (Haiku) mechanically applies only items you pre-marked `[x]`, verbatim. `implement` requires no pre-marking and uses editorial judgment.
 
@@ -109,7 +109,7 @@ Reads `notes/review_digest.md` (preferred) or the individual proposal files (fal
 ```
 /copyedit apply                     # Apply all marked [x] changes (mechanical, verbatim)
 /copyedit implement                 # Apply the review with judgment (active model — see above)
-/copyedit interactive notes/simplifications.md  # Walk through suggestions
+/copyedit interactive                 # Walk through the digest's suggestions
 /copyedit continue                  # Resume interrupted review
 /copyedit ban "phrase"              # Add phrase to project banned list
 ```
@@ -162,26 +162,26 @@ The bootstrap auto-detects hyphenated multi-word phrases appearing 3+ times in s
 
 | Task | Output | Description |
 |------|--------|-------------|
-| `grammar` | notes/copy_edits.md | Auto-fix spelling, punctuation, syntax errors |
-| `ai_detection` | notes/ai_detection.md, notes/simplifications.md | Flag AI-generated patterns; severity-sorted |
-| `word_choice` | notes/word_choice_review.md | Anglo-Saxon over Latin, weak verbs, wordiness |
-| `sentence` | notes/sentence_analysis.md | Length variation, rhythm, S-V-O clarity |
-| `orality` | notes/orality.md | Read-aloud pass: stumbles, ambiguous parallelism, misreadings, noun pile-ups |
+| `grammar` | notes/raw/copy_edits.md | Auto-fix spelling, punctuation, syntax errors |
+| `ai_detection` | notes/raw/ai_detection.md, notes/raw/simplifications.md | Flag AI-generated patterns; severity-sorted |
+| `word_choice` | notes/raw/word_choice_review.md | Anglo-Saxon over Latin, weak verbs, wordiness |
+| `sentence` | notes/raw/sentence_analysis.md | Length variation, rhythm, S-V-O clarity |
+| `orality` | notes/raw/orality.md | Read-aloud pass: stumbles, ambiguous parallelism, misreadings, noun pile-ups |
 
 ### Paper-Level Tasks (Sequential, Sonnet)
 
 | Task | Output | Description |
 |------|--------|-------------|
-| `structure` | notes/structure_analysis.md | High-level paper organization |
-| `relevance` | notes/relevance_audit.md, notes/relevance_rewrites.json | Fractal opener audit — every section, subsection, subsubsection, and paragraph judged against its parent goal. Supports `--aggressive` for auto-apply of `fail`-verdict rewrites. |
-| `quality` | notes/writing_quality.md | Paragraph-level writing quality (focus, mechanism, precision) |
-| `methodology` | notes/methodology_review.md | Identification strategy clarity |
+| `structure` | notes/raw/structure_analysis.md | High-level paper organization |
+| `relevance` | notes/raw/relevance_audit.md | Fractal opener audit — every section, subsection, subsubsection, and paragraph judged against its parent goal. Supports `--aggressive` for auto-apply of `fail`-verdict rewrites. |
+| `quality` | notes/raw/writing_quality.md | Paragraph-level writing quality (focus, mechanism, precision) |
+| `methodology` | notes/raw/methodology_review.md | Identification strategy clarity |
 
 ### Opt-In Paper-Level Tasks (NOT in review/full; explicit invocation only)
 
 | Task | Output | Description |
 |------|--------|-------------|
-| `flow` | notes/flow_extraction.md | Paragraph skeleton and flow analysis. Kept available for debugging; `relevance` is the actionable version. |
+| `flow` | notes/raw/flow_extraction.md | Paragraph skeleton and flow analysis. Kept available for debugging; `relevance` is the actionable version. |
 
 ### Number Management (Opt-In, Sonnet)
 
@@ -206,7 +206,7 @@ Every flagged entry in `ai_detection.md` carries one of four severity labels. Ou
 
 | Tier | Label | Examples |
 |------|-------|---------|
-| 1 | **Critical** | Smarmy reframing ("It's not X, it's Y"), stacked hedges (2+ per sentence), missing causal mechanism |
+| 1 | **Critical** | Smarmy reframing ("It's not X, it's Y"), teaser theses (R-TEASER), stacked hedges (2+ per sentence), missing causal mechanism |
 | 2 | **High** | AI vocabulary used 2+ times; results-first openings with no tension; inventory-style numbers |
 | 3 | **Medium** | Transition overuse (Moreover, Furthermore); template structures; meta-commentary; padding phrases |
 | 4 | **Low** | Single-instance AI vocabulary; minor parentheticals; minor hedging; low-confidence Part C flags |
@@ -277,7 +277,7 @@ Read the orchestration instructions from `@prompts/master.prompt` and follow its
 2. **Interpret request** - Map user request to task list
 3. **Diagnostic questions** - Determine paper type (A/B/C/D) and file scope
 4. **Task enumeration** - Generate (file, task) pairs
-5. **Output setup** - Initialize `notes/` directory with headers
+5. **Output setup** - Initialize `notes/raw/` with headers
 6. **Execute** - Spawn Haiku subagents in parallel for file-level tasks
 7. **Wrapup** - Run deduplication and summarize findings
 8. **Deliver** - Present results with output file locations
@@ -286,37 +286,34 @@ Read the orchestration instructions from `@prompts/master.prompt` and follow its
 
 ## Output Location
 
-All output goes to a `notes/` directory alongside input files:
+**There is one file to review: `notes/review_digest.md`.** Every task writes its raw output to `notes/raw/`; the wrapup consolidates, deduplicates, and self-screens those into the digest, which also carries the paper-level overview (writing-quality themes, structure verdict, relevance dashboard) and the log of grammar fixes already applied. `implement`, `apply`, and `interactive` all read the digest. Nothing under `notes/raw/` needs to be opened; it is provenance.
 
 ```
 paper/
 ├── intro.tex
 ├── methods.tex
 └── notes/                          # Created by copyedit
-    ├── .copyedit_status            # Phase + voice detection result (voice: I/we/mixed)
-    ├── tasks.json
+    ├── review_digest.md            # ← THE review file: overview, flags, rewrites, applied grammar
+    ├── relevance_rap_seed.md       # RAP seed you confirm mid-run (relevance only; user-editable)
     ├── copyedit_load_bearing_terms.md  # Auto-detected load-bearing jargon (user-editable)
     ├── copyedit_banned_phrases.md  # Project-local banned phrases (user-editable)
-    ├── copy_edits.md               # Grammar log (auto-applied)
-    ├── ai_detection.md             # AI pattern flags (full, severity-sorted)
-    ├── simplifications.md          # Style suggestions
-    ├── word_choice_review.md
-    ├── sentence_analysis.md
-    ├── orality.md                  # Read-aloud pass flags
-    ├── structure_analysis.md
-    ├── flow_extraction.md          # opt-in; only when `/copyedit flow` is invoked explicitly
-    ├── relevance_audit.md          # Fractal opener audit (purpose tree + violations + dashboard)
-    ├── relevance_rewrites.json     # Machine-parseable rewrites for --aggressive apply
-    ├── writing_quality.md
-    ├── review_digest.md            # Flags first, then proposed rewrites; self-screened (wrapup)
-    └── number_fix_report.md        # Number annotation/update log (opt-in)
+    ├── number_fix_report.md        # number_fix only (opt-in, separate workflow)
+    ├── .copyedit_status            # Phase + voice detection result (voice: I/we/mixed)
+    ├── tasks.json
+    ├── history/                    # Archived prior runs
+    └── raw/                        # Per-task outputs; read-only provenance, never edited after writing
+        ├── copy_edits.md           # Grammar log (auto-applied)
+        ├── ai_detection.md, simplifications.md, word_choice_review.md,
+        ├── sentence_analysis.md, orality.md
+        ├── structure_analysis.md, relevance_audit.md, writing_quality.md
+        └── flow_extraction.md      # opt-in
 ```
 
 ---
 
 ## Output Format
 
-All output files use one of two checklist entry shapes (except copy_edits.md):
+Raw task files and the digest use one of two checklist entry shapes (except copy_edits.md):
 
 **Standard entry** (Self-Critic Pass passed):
 
@@ -361,30 +358,40 @@ The flag-only shape surfaces the problem to the author without offering a rewrit
 
 ## Review Digest Layout (P10)
 
-`notes/review_digest.md` is the consolidated view of all actionable items. It has two top-level sections:
+`notes/review_digest.md` is the single review surface. It has these top-level sections:
 
 ```
+## Overview
+[counts; writing-quality themes; structure verdict; relevance dashboard; quality warnings]
+
 ## Flags (no rewrite proposed) — N items
 [severity-sorted, file-grouped; items with no Proposed Revision]
 
 ## Proposed Rewrites — M items
 [severity-sorted, file-grouped; items with a Proposed Revision]
+
+## Already Applied — grammar (G fixes)
+[verbatim grammar log, for audit]
+
+## Self-Screen Log
 ```
+
+Deduplication happens only inside the digest; the raw files are never rewritten.
 
 After the wrapup self-screen pass (Step 3.5), any proposed revision that fails the Self-Critic Pass is stripped and its item moves to the Flags section. The summary table reports: Flags (no rewrite), Proposed rewrites, and Rewrites withheld by self-screen.
 
 ## Rationale Fields Gate (P8)
 
-The surface critic also runs on rationale fields — `**Comment:**`, `**Why better:**`, `**Why no rewrite:**` — in every notes/*.md entry. These fields must satisfy the same surface rules as proposed revision text: R-EMDASH, R-COLON, R-TRANSITION, R-40WORD, plus the smarmy-reframing language tells. The wrapup gate coverage checklist verifies this for each prose-emitting task.
+The surface critic also runs on rationale fields — `**Comment:**`, `**Why better:**`, `**Why no rewrite:**` — in every raw task entry and in the digest. These fields must satisfy the same surface rules as proposed revision text: R-EMDASH, R-COLON, R-TRANSITION, R-40WORD, plus the smarmy-reframing and R-TEASER language tells. The wrapup gate coverage checklist verifies this for each prose-emitting task.
 
 ---
 
 ## Interactive Review
 
-After running a review, use interactive mode to walk through suggestions:
+After running a review, use interactive mode to walk through the digest:
 
 ```
-/copyedit interactive notes/simplifications.md
+/copyedit interactive
 ```
 
 For each item:
@@ -411,7 +418,7 @@ Follows McCloskey and Cochrane writing principles:
 - Active voice, strong verbs
 - Sentence variety for rhythm
 - Clear S-V-O structure
-- Avoid AI-typical patterns (R-EMDASH, R-TRANSITION, smarmy reframing)
+- Avoid AI-typical patterns (R-EMDASH, R-TRANSITION, smarmy reframing, R-TEASER)
 
 The full enforceable rule set with stable IDs lives in `references/writing_quality_standards.md`. Reference for the underlying writing standards: `prompts/economics_writing_prompt.md` (comprehensive guide).
 
@@ -426,7 +433,7 @@ notes/history/20250211_183000/   ← timestamped snapshot of prior run
 notes/history/20250212_091500/   ← another prior run
 ```
 
-The archival script (`scripts/new_session.sh`) moves `.md` files, `tasks.json`, and `.copyedit_status` into `notes/history/{timestamp}/`. It is idempotent — safe to run when no prior output exists.
+The archival script (`scripts/new_session.sh`) moves copyedit's own outputs (`review_digest.md`, `raw/`, `tasks.json`, `.copyedit_status`, the RAP seed, and legacy top-level task files) into `notes/history/{timestamp}/`. User-editable inputs (banned phrases, load-bearing terms) and any other files in `notes/` stay put. It is idempotent — safe to run when no prior output exists.
 
 To manually reset instead: `rm -rf notes/`
 

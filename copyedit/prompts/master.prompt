@@ -217,12 +217,13 @@ If `--aggressive` is set on a pipeline route (`review`/`full`/`comprehensive`/`q
 do **not** silently ignore it — the request is **rejected**, not run; see the Hard Guard
 below. For any other non-`rewrite`/`task_edit` route the flag is ignored. **Note:**
 `--aggressive` is NOT supported for `relevance` — the user reviews and applies relevance
-rewrites by hand, from `notes/relevance_audit.md`.
+rewrites by hand, from `notes/review_digest.md`.
 
 ### Hard Guard: Review Proposes, Implement Applies — Reject the Combination
 
 `review`/`full` (and `comprehensive`/`quick`) are **propose-only by design**: their
-subagents write findings to `notes/*.md` and **never edit the source**. Applying changes
+subagents write findings to `notes/raw/`, the wrapup consolidates them into
+`notes/review_digest.md`, and nothing **ever edits the source** (except auto-applied grammar). Applying changes
 to `.tex` is a **separate, explicit step** the user runs when ready — `/copyedit implement`
 (judgment-based apply) or `/copyedit apply` (marked items). This decoupling is intentional:
 the author reviews the proposals before anything touches the manuscript.
@@ -348,7 +349,7 @@ subagents to do the editing** — that discards the judgment this path exists fo
 
 1. Read `prompts/tasks/implement.prompt` for full instructions
 2. Strip flags: `--dry-run`, `--min-severity=<tier>`. Parse optional scope (file / range / section)
-3. Locate proposals: `notes/review_digest.md` (preferred) → individual `notes/*.md` proposal files (fallback). If none exist, stop and tell the user to run `/copyedit review` first
+3. Locate proposals: `notes/review_digest.md` (preferred) → individual `notes/raw/*.md` proposal files (legacy fallback). If none exist, stop and tell the user to run `/copyedit review` first
 4. Load author context: voice (`.copyedit_status`), load-bearing terms, banned phrases, `llm_tagging`
 5. Group proposals by source file; implement one file at a time with judgment (apply / adapt / skip / defer / stale), running the surface-critic gate on every changed sentence before writing
 6. Apply directly via Edit (descending line order). Under `--dry-run`, print the plan and write nothing
@@ -512,7 +513,7 @@ Return: {status: complete, files_processed: N, errors: [...]}
 
 ### Phase 0b: Verification (Parallel, One Per File)
 
-After Phase 0a completes, initialize `notes/reflow_verify.md` with header `# Reflow Verification`, then spawn one Haiku subagent **per file** using `reflow_verify.prompt`:
+After Phase 0a completes, initialize `notes/raw/reflow_verify.md` with header `# Reflow Verification`, then spawn one Haiku subagent **per file** using `reflow_verify.prompt`:
 
 ```
 Task: [copyedit:reflow_verify] {file}
@@ -529,7 +530,7 @@ Return: {status: complete|flagged, issues_found: N}
 - Use `run_in_background: true` on each
 - Wait for all task-notifications
 - If any subagent returns `issues_found > 0`:
-  - Read `notes/reflow_verify.md` and display flagged items to user
+  - Read `notes/raw/reflow_verify.md` and display flagged items to user
   - Use AskUserQuestion: "Reflow introduced some suspicious sentence breaks (see above). How would you like to proceed?"
     - Options: "Continue with review anyway" / "I'll fix issues first (pause)" / "Cancel"
   - Handle accordingly
@@ -545,27 +546,27 @@ Generate all (file, task) pairs based on request and file scope.
 
 | Task | Model | Output File |
 |------|-------|-------------|
-| grammar | haiku | notes/copy_edits.md |
-| ai_detection | haiku | notes/ai_detection.md, notes/simplifications.md |
+| grammar | haiku | notes/raw/copy_edits.md |
+| ai_detection | haiku | notes/raw/ai_detection.md, notes/raw/simplifications.md |
 | (wrapup) | haiku | notes/review_digest.md |
-| word_choice | haiku | notes/word_choice_review.md |
-| sentence_analysis | haiku | notes/sentence_analysis.md |
-| orality | haiku | notes/orality.md |
+| word_choice | haiku | notes/raw/word_choice_review.md |
+| sentence_analysis | haiku | notes/raw/sentence_analysis.md |
+| orality | haiku | notes/raw/orality.md |
 | strip_llm | haiku | (no output file - modifies .tex directly) |
 
 ### Paper-Level Tasks
 
 | Task | Model | Output File |
 |------|-------|-------------|
-| structure | sonnet | notes/structure_analysis.md |
-| relevance | sonnet | notes/relevance_audit.md |
-| writing_quality | sonnet | notes/writing_quality.md |
+| structure | sonnet | notes/raw/structure_analysis.md |
+| relevance | sonnet | notes/raw/relevance_audit.md |
+| writing_quality | sonnet | notes/raw/writing_quality.md |
 
 ### Opt-In Paper-Level Tasks (NOT in review/full; explicit invocation only)
 
 | Task | Model | Output File |
 |------|-------|-------------|
-| flow_extraction | sonnet | notes/flow_extraction.md |
+| flow_extraction | sonnet | notes/raw/flow_extraction.md |
 
 ### Opt-In Tasks (NOT included in review/full; explicit invocation only)
 
@@ -682,25 +683,25 @@ After displaying the table, use AskUserQuestion:
 **Before spawning subagents, initialize output files.**
 The `new_session.sh` script already ran in Step 1, so `notes/` is guaranteed clean — all file creates are fresh (no read-then-overwrite needed).
 
-1. Create `notes/` directory if needed
-2. Create output files with headers:
+1. Create `notes/raw/` and `notes/raw/_parts/` if needed
+2. Create output files with headers (all task outputs live under `notes/raw/`; the only file the user reviews is `notes/review_digest.md`, written by the wrapup):
 
 | Output File | Header | When Created |
 |-------------|--------|--------------|
-| `notes/copy_edits.md` | `# Grammar & Mechanics Corrections` | Step 5 |
-| `notes/ai_detection.md` | `# AI Detection Review` | Step 5 |
-| `notes/simplifications.md` | `# Suggested Simplifications` | Step 5 |
-| `notes/word_choice_review.md` | `# Word Choice Review` | Step 5 |
-| `notes/sentence_analysis.md` | `# Sentence Structure Analysis` | Step 5 |
-| `notes/orality.md` | `# Orality Check` | Step 5 |
-| `notes/relevance_audit.md` | `# Relevance Audit` | Step 5 (only if relevance task requested) |
-| `notes/relevance_rap_seed.md` | `# RAP Seed (confirmed by user)` | Step 6.4 (written after user interview) |
-| `notes/writing_quality.md` | `# Writing Quality Assessment` | Step 5 |
-| `notes/reflow_verify.md` | `# Reflow Verification` | Phase 0b (only if reflow requested) |
+| `notes/raw/copy_edits.md` | `# Grammar & Mechanics Corrections` | Step 5 |
+| `notes/raw/ai_detection.md` | `# AI Detection Review` | Step 5 |
+| `notes/raw/simplifications.md` | `# Suggested Simplifications` | Step 5 |
+| `notes/raw/word_choice_review.md` | `# Word Choice Review` | Step 5 |
+| `notes/raw/sentence_analysis.md` | `# Sentence Structure Analysis` | Step 5 |
+| `notes/raw/orality.md` | `# Orality Check` | Step 5 |
+| `notes/raw/relevance_audit.md` | `# Relevance Audit` | Step 5 (only if relevance task requested) |
+| `notes/relevance_rap_seed.md` | `# RAP Seed (DRAFT — pending author confirmation)` | Step 6.4 (written **before** the confirmation question; user-editable input, so it sits in `notes/`, not `raw/`) |
+| `notes/raw/writing_quality.md` | `# Writing Quality Assessment` | Step 5 |
+| `notes/raw/reflow_verify.md` | `# Reflow Verification` | Phase 0b (only if reflow requested) |
 | `notes/number_fix_report.md` | `# Number Fix Report` | number_fix path (only if number_fix requested) |
 
 3. Write `notes/tasks.json` with enumerated tasks
-4. Write `execution` to `notes/.copyedit_status`
+4. Set the first line of `notes/.copyedit_status` to `phase: execution` (keep the `voice:` line)
 
 ---
 
@@ -711,7 +712,7 @@ The `new_session.sh` script already ran in Step 1, so `notes/` is guaranteed cle
 **DO NOT read task prompt files** (prompts/tasks/*.prompt) in the orchestrator. Each subagent
 reads its own prompt. Reading them here wastes ~50KB of orchestrator context for no purpose.
 
-**DO NOT read old output files** (notes/*.md) unless you need their content for a decision.
+**DO NOT read old output files** (notes/raw/*.md) unless you need their content for a decision.
 The `new_session.sh` script archives prior output. If you must write headers to output files,
 use Write directly — do not Read first if the file was just created or cleaned.
 
@@ -731,8 +732,10 @@ LLM tagging: {llm_tagging}
 (relevance task only) level_filter: {level_filter or "all"}
 
 Output rules:
-- APPEND to notes/{output_file}.md
-- Start section with: ## [{filename}]
+- WRITE to notes/raw/_parts/{file_stem}__{output_file}.md (one part file per file × output;
+  this overrides any "append to notes/raw/{output_file}.md" line in the task prompt).
+  Parallel agents must never write to a shared file.
+- Start the part file with: ## [{filename}]
 - Follow output format from task prompt
 - If LLM tagging is true and file is .tex, wrap changes in \begin{llm}...\end{llm}
 
@@ -747,7 +750,7 @@ into the orchestrator's context. Follow these rules strictly:
 1. **Always use `run_in_background: true`** for every Task call
 2. **NEVER call TaskOutput** — it returns full agent transcripts (100-300KB each) which will
    blow out context when running 10+ agents
-3. **Subagents write results to files** (notes/*.md) — that is the output mechanism
+3. **Subagents write results to files** (notes/raw/_parts/*.md) — that is the output mechanism
 4. **Track completion via task-notifications** — these arrive automatically when agents finish
    and contain only a short summary (~1KB), not the full transcript
 5. **Group subagents by file** — spawn ONE agent per file that runs all requested tasks for
@@ -767,7 +770,11 @@ PHASE 1: File-Level Tasks (Parallel)
         Each subagent reads its own .prompt file
         DO NOT call TaskOutput — wait for task-notifications instead
         On task-notification arrival: mark status = "complete" or "flagged"
-        After all task-notifications received: proceed to Phase 2
+        After all task-notifications received:
+            Concatenate parts into notes/raw/{output_file}.md in paper order
+            (append each notes/raw/_parts/{stem}__{output_file}.md under the header
+            written in Step 5), then delete notes/raw/_parts/
+            Proceed to Phase 2
 
 PHASE 2: Paper-Level Tasks (After Phase 1)
 
@@ -830,52 +837,12 @@ subagent to read in its Step 1.
      "competitive bottleneck," "credit aversion," "price coherence").
    - **Promised deliverables by section** — what the intro says each section will show.
 
-3. **Print the draft to the user** as a regular message in this format:
+3. **Write the draft to `notes/relevance_rap_seed.md` first**, before asking anything.
+   The author must be able to open and edit the exact text they are signing off on; a
+   draft that exists only in chat is not reviewable. Use this format:
 
    ```markdown
-   ## Drafted RAP
-
-   **Research question:** "..."
-
-   **Main answer / finding:** "..."
-
-   **Positioning:** "..."
-
-   **Thematic phrases:** "phrase 1" · "phrase 2" · "phrase 3" · ...
-
-   **Promised deliverables:**
-   - §2: ...
-   - §3: ...
-   - ...
-   ```
-
-4. **Ask for confirmation** via AskUserQuestion:
-
-   ```json
-   {
-     "header": "Confirm RAP",
-     "question": "Relevance judgment is only as good as this seed. Is the draft above correct?",
-     "multiSelect": false,
-     "options": [
-       {"label": "Correct — proceed", "description": "The draft matches my intent."},
-       {"label": "Edit — I'll correct in my next message", "description": "Mostly right; I'll give targeted corrections."},
-       {"label": "Replace — I'll write it myself", "description": "Discard the draft; I'll provide the full RAP."}
-     ]
-   }
-   ```
-
-5. **Handle the response:**
-   - **Correct:** proceed to step 6 with the drafted RAP as-is.
-   - **Edit:** wait for the user's next message. Apply their corrections to the draft,
-     then re-print the updated draft and loop back to step 4 (omit the "Edit" option on
-     the second pass). Loop until confirmed.
-   - **Replace:** wait for the user's next message. Parse it as the new RAP. Re-print
-     and loop back to step 4 for final confirmation.
-
-6. **Write `notes/relevance_rap_seed.md`** with the confirmed RAP:
-
-   ```markdown
-   # RAP Seed (confirmed by user)
+   # RAP Seed (DRAFT — pending author confirmation)
 
    **Research question:**
    > [quote]
@@ -889,13 +856,40 @@ subagent to read in its Step 1.
    **Thematic phrases:**
    - "phrase 1"
    - "phrase 2"
-   - ...
 
    **Promised deliverables by section:**
    - §2: ...
    - §3: ...
-   - ...
    ```
+
+4. **Tell the user where it is and show it.** Print the file path on its own line
+   (`notes/relevance_rap_seed.md`), then the draft contents, then one sentence saying what
+   the seed is for: the relevance audit grades every section, subsection, and paragraph
+   opener against it.
+
+5. **Ask for confirmation** via AskUserQuestion:
+
+   ```json
+   {
+     "header": "Confirm RAP",
+     "question": "Open notes/relevance_rap_seed.md (shown above). Relevance judgment is only as good as this seed. Is it correct?",
+     "multiSelect": false,
+     "options": [
+       {"label": "Correct — proceed", "description": "The file matches my intent."},
+       {"label": "I'll edit the file", "description": "I'll fix notes/relevance_rap_seed.md directly and tell you when done."},
+       {"label": "I'll give corrections in chat", "description": "You apply my corrections to the file."}
+     ]
+   }
+   ```
+
+6. **Handle the response:**
+   - **Correct:** go to step 7.
+   - **I'll edit the file:** wait for the user's next message, then re-read the file (it is
+     now the source of truth; never overwrite the user's edits). Go to step 7.
+   - **Corrections in chat:** apply them to the file, re-print it, and loop back to step 5.
+
+   On confirmation, change the file's first line to `# RAP Seed (confirmed by user)` and
+   remove nothing else.
 
 7. **Return to Phase 2.** Spawn the relevance subagent as normal. It will find the
    seed file in its Step 1 and use it verbatim (no re-extraction).
@@ -923,7 +917,8 @@ Read prompts/copyedit_wrapup.md for full instructions.
 
 Context:
 - tasks.json: notes/tasks.json
-- Output files: notes/*.md
+- Raw task outputs: notes/raw/*.md (read-only)
+- Review surface to write: notes/review_digest.md
 
 Return: {status, summary, flagged_items}
 ```
@@ -935,8 +930,10 @@ Return: {status, summary, flagged_items}
 Present wrapup summary to user:
 1. Tasks performed and files analyzed
 2. Key findings and recommendations
-3. Output files created
-4. Suggested next steps
+3. **One file to review: `notes/review_digest.md`.** Do not list the raw task files or send
+   the user to them; they are provenance under `notes/raw/`. If the user asks what a raw
+   file is, answer that its contents are already in the digest.
+4. Suggested next steps (`/copyedit implement`)
 
 ---
 

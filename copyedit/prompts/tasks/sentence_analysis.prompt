@@ -13,7 +13,7 @@ Other tasks should NOT flag these issues.
 
 **Purpose:** Quantitative metrics + qualitative assessment based on McCloskey/Cochrane principles.
 
-**Output:** `notes/sentence_analysis.md` with statistics, principle assessment, and specific passage critiques for ALL issues found.
+**Output:** `notes/raw/sentence_analysis.md` with statistics, principle assessment, and specific passage critiques for ALL issues found.
 
 **Output Mode:** APPEND — do not overwrite existing content
 
@@ -123,6 +123,13 @@ Use checklist format:
 
 ## McCloskey/Cochrane Assessment
 [Active/Passive count, Nominalization, S-V-O clarity, Tense, Parallelism]
+
+**Do not cite a self-narration frame as evidence of good active voice.** `I want to be clear`,
+`Let me be clear`, `I want to stress that`, `I would note that` are grammatically active and
+first-person, and are an AI tell regardless (R-CREDIT-FILLER). If one appears while tallying active
+voice, note it as a violation, never as an example of appropriate first-person use. Cite real
+active-voice wins instead — a first-person clause that carries a fact (`I could not replicate
+column 3 from the posted code`).
 
 ## Specific Passage Critiques
 [ALL issues in checklist format]

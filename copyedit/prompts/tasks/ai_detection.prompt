@@ -8,8 +8,8 @@
 **Model:** Haiku (pattern recognition for both punctuation and language patterns)
 
 **Output:**
-- `notes/ai_detection.md` — Pattern identification (what was found), severity-sorted
-- `notes/simplifications.md` — Suggested fixes (stylistic, NOT auto-applied)
+- `notes/raw/ai_detection.md` — Pattern identification (what was found), severity-sorted
+- `notes/raw/simplifications.md` — Suggested fixes (stylistic, NOT auto-applied)
 
 **Output Mode:** APPEND — do not overwrite existing content
 
@@ -106,7 +106,7 @@ When analyzing a file, append to BOTH `ai_detection.md` and `simplifications.md`
 - [ ] Section header `## [filename.tex]` in both files
 - [ ] Part A (punctuation/structure) comprehensive
 - [ ] **R-COLON exhaustively flagged** — every body-prose colon construction listed (single occurrence = High; 2+ in same passage = Critical). Do not skip "low-impact" instances.
-- [ ] Part B (language) comprehensive — especially smarmy reframing and stacked hedges (R-HEDGE)
+- [ ] Part B (language) comprehensive — especially smarmy reframing, teaser theses (R-TEASER), and stacked hedges (R-HEDGE)
 - [ ] Part C (rhetorical/argument) comprehensive — especially missing mechanisms and results-first openings
 - [ ] Each flagged entry has a severity tier label (`Critical`, `High`, `Medium`, or `Low`)
 - [ ] Entries sorted by severity (Critical → High → Medium → Low) within each file section
@@ -127,6 +127,8 @@ Before finalizing flags for any LLM-tagged or suspected-LLM section, verify thes
 - [ ] Every number answers "so what?" (Principle 7)
 - [ ] R-HEDGE — no paragraph carries more than two hedges
 - [ ] R-TRANSITION — no sentence-initial Moreover/Furthermore/etc. that could be deleted
+- [ ] **R-GEOMETRY** — no argument dressed in spatial framing (inside/outside, before/after, layers, foundations, upstream/downstream) where the relation is just a list. `Two things go wrong before any algebra, and a third goes wrong inside it` → `There are three problems.` Sharpest when geometry pairs with a count or with two balanced clauses. Terms of art (inside/outside option, upstream market, corner solution), real pipeline position, and real time order are not flags.
+- [ ] **R-CREDIT-FILLER (self-narration)** — no first-person clause announcing the writer's intent, emphasis, or certainty before the claim arrives: `I want to be clear` / `Let me be clear` / `To be clear,` / `I want to stress` / `It is worth noting` / `I would note that` / `It bears mentioning` / `I hasten to add`. Grep the whole document for the family; a single instance is High. First person is not the problem — the announcement is, so a first-person clause that carries evidence (`I could not replicate column 3`) is not a flag.
 - [ ] Mechanism Over Description (Principle 2) — causal chain explicit, not just outcomes
 - [ ] Footnote strategy — minor caveats in footnotes, not inline (Contrast II.8)
 - [ ] **R-COLON** — every body-prose `CLAUSE: CLAUSE` and `CLAUSE: A, B, C` flagged exhaustively. Single occurrence = High; 2+ in same passage = Critical.

@@ -2,7 +2,7 @@
 
 **Model:** Active session model — runs in the **orchestrator context, NOT a subagent.** The entire point of this path is to use the most capable model available to apply the review with editorial judgment: follow the author's voice, resolve conflicts between overlapping suggestions, adapt rewrites instead of pasting them, and skip suggestions that do not actually improve the text.
 
-**Purpose:** Read the proposals a prior `review`/`full` run generated and implement them directly in the source files. This is the second half of a decoupled workflow: `review` finds and proposes (writing `notes/*.md`), `implement` applies with judgment.
+**Purpose:** Read the proposals a prior `review`/`full` run generated and implement them directly in the source files. This is the second half of a decoupled workflow: `review` finds and proposes (writing `notes/review_digest.md`), `implement` applies with judgment.
 
 **Applies directly.** No per-edit approval. The user reviews the result with `git diff` and reverts with `git restore <file>` (or `git checkout -- <file>`) if needed. Tell them this in the summary.
 
@@ -25,7 +25,7 @@ Do not delegate the editing to a Haiku/Sonnet subagent. If subagents do the writ
 A prior review must have produced proposals. Check, in order:
 
 1. `notes/review_digest.md` — preferred. Consolidated, deduplicated, self-screened. Use this as the primary input.
-2. If the digest is absent, fall back to the individual proposal files: `ai_detection.md`, `simplifications.md`, `word_choice_review.md`, `sentence_analysis.md`, `orality.md`, `writing_quality.md`, `structure_analysis.md`, `relevance_audit.md`, `methodology_review.md`.
+2. If the digest is absent (legacy run), fall back to the individual proposal files in `notes/raw/` (or `notes/` for runs from before the raw/ layout): `ai_detection.md`, `simplifications.md`, `word_choice_review.md`, `sentence_analysis.md`, `orality.md`, `writing_quality.md`, `structure_analysis.md`, `relevance_audit.md`, `methodology_review.md`.
 3. If none of these exist: **stop.** Tell the user: "No review proposals found. Run `/copyedit review <files>` (or `/copyedit full`) first, then `/copyedit implement`."
 
 **Do not** consume `copy_edits.md` — grammar fixes were already auto-applied to the source during `review`. Re-applying them is redundant and may collide.
@@ -88,7 +88,7 @@ This is the judgment the path exists for. For the file's items:
 ### 2c. Surface-critic gate (mandatory — the skill invariant)
 
 Before writing **any** new or changed sentence to disk, run the surface critic in **apply context**: read `prompts/shared/components/surface_critic.prompt` and follow its procedure. No text reaches disk without passing. In particular:
-- R-BANNED (no banned phrase), R-COLON (no `CLAUSE: CLAUSE` / `CLAUSE: A, B, C`), R-EMDASH (no `---`/`--`), R-40WORD (≤40 words/sentence, auto-split), R-THROAT-CLEAR (no meta-openers).
+- R-BANNED (no banned phrase), R-COLON (no `CLAUSE: CLAUSE` / `CLAUSE: A, B, C`), R-EMDASH (no `---`/`--`), R-40WORD (≤40 words/sentence, auto-split), R-THROAT-CLEAR (paragraph openers are claims, not topics or moves), R-TEASER (no pseudo-aphoristic cleft naming a difficulty without the fact), R-SELF-CRED (no claims of one's own verification or effort).
 - Preserve load-bearing terms and `project_voice`.
 - Fix violations in place before the Edit call; log the fix.
 
@@ -102,7 +102,7 @@ Under `--dry-run`, do not call Edit. Instead print the planned `old → new` for
 
 ### 2e. Mark decisions back into the digest
 
-So re-running `implement` is idempotent and the user can audit decisions, update each item's checkbox in `notes/review_digest.md` (or the source proposal file if no digest):
+So re-running `implement` is idempotent and the user can audit decisions, update each item's checkbox in `notes/review_digest.md` (the single review surface; only in the legacy no-digest case, the source proposal file):
 - Applied verbatim → `[x] ... (applied)`
 - Applied with adaptation → `[x] ... (applied, adapted)`
 - Skipped → `[-] ... (skipped: <reason>)`

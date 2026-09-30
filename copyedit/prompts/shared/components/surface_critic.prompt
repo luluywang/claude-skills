@@ -18,19 +18,21 @@ The procedure below names rules by ID. To look up the body of any rule, search `
 
 ### Priority-rule reminders (read before scanning)
 
-These five rules account for the bulk of past violations. Keep them in working memory while scanning; the full bodies are in `writing_quality_standards.md`.
+These rules account for the bulk of past violations. Keep them in working memory while scanning; the full bodies are in `writing_quality_standards.md`.
 
 - **R-COLON** — no body-prose `CLAUSE: CLAUSE` or `CLAUSE: A,B,C`; rewrite as direct sentences.
 - **R-EMDASH** — no `---` or `--` punctuation; restructure with a period, comma, or subordinate clause.
 - **R-40WORD** — no new/rewritten sentence above ~40 words; auto-split.
-- **R-THROAT-CLEAR** — no paragraph-first sentence that announces what the paragraph will do.
+- **R-THROAT-CLEAR** — every paragraph-first sentence is a claim, not a topic, a move, or an instruction to the reader.
+- **R-TEASER** — no pseudo-aphoristic cleft that names a difficulty/insight without stating the fact (`The central difficulty is what the record omits`).
+- **R-SELF-CRED** — no sentence reporting the writer's own verification, care, or effort.
 - **R-WEAK-FOR-WEAK** — no `speak to`→`illuminate`-style swaps; preserve `I find that`/`I estimate that`/`I show that`.
 
 ### What to scan
 
 **Apply context** (task_edit, rewrite, apply_marked): every sentence in the new or changed text being written to the file. Do NOT scan unchanged surrounding text.
 
-**Proposal context** (ai_detection, word_choice, writing_quality, orality, sentence_analysis, rewrite, task_edit): every sentence in the Proposed Revision before writing it to the notes file. The proposed revision cannot introduce the same class of errors it claims to fix. Also scan rationale fields (**Comment:**, **Why better:**, **Why no rewrite:**) — apply the same surface rules (R-COLON, R-EMDASH, R-TRANSITION, R-40WORD, plus smarmy-reframing language tells). (P8)
+**Proposal context** (ai_detection, word_choice, writing_quality, orality, sentence_analysis, rewrite, task_edit): every sentence in the Proposed Revision before writing it to the notes file. The proposed revision cannot introduce the same class of errors it claims to fix. Also scan rationale fields (**Comment:**, **Why better:**, **Why no rewrite:**) — apply the same surface rules (R-COLON, R-EMDASH, R-TRANSITION, R-40WORD, plus smarmy-reframing and R-TEASER language tells). (P8)
 
 ### P3: Enforce R-BANNED (check first)
 
@@ -60,11 +62,41 @@ Convert `Why does X matter? Because Y.` → `X matters because Y.`
 
 ### P6: Enforce R-THROAT-CLEAR
 
-If the FIRST sentence of any new/changed paragraph starts with a meta-opener AND announces what the paragraph will do rather than doing it → block and rewrite.
+Test the FIRST sentence of every new/changed paragraph: **could it be true or false?** If it only names a topic, announces a move, or instructs the reader, it fails → block and rewrite.
 
 **Meta-openers to flag:** `This section`, `This paragraph`, `To understand`, `To see how`, `By requiring`, `In order to`, `Thank you for`, `I appreciate`, `I deeply`, `I would like to`.
 
+**Vapid openers to flag** (same fault, subtler form — the dominant version in argumentative prose): `Start from`, `Start with`, `Begin by`, `Before [the algebra / turning to X]`, `Now compare`, `Now consider`, `Now write down`, `There are two/three [routes/reasons/problems]`, `It is worth [noting/computing/seeing]`, `My first/second/third concern is about [topic]`, `The first is [label].`
+
+**Fixes:** delete the opener and promote the next sentence, or convert the topic into the claim — `My concern is about the fit between A and B` → `A measures something different from B`.
+
+**Not a violation:** a signpost that also carries content. `The sample restriction is the most serious` ranks and asserts → keep. `I take these in order of severity` only ranks → cut.
+
 **Exception:** In a referee-reply letter context, one canned thanks-opener is allowed at the very top of the letter only. Any further thanks-opener in the same letter → block.
+
+### P6a: Enforce R-TEASER
+
+Block any sentence that names a difficulty, insight, or tension without stating the underlying fact. Shape: `The [gravity noun] is what [vague relative clause]` / `What makes this hard is...` / `The key insight is that...` / `The tension is between X and Y` when X and Y arrive only next. Gravity nouns: *difficulty, challenge, tension, insight, point, problem, key, heart, central X*.
+
+**Example:** `The central difficulty is what the record omits.` → `The survey records only the most recent opening for each product.`
+
+**Test:** Could a referee disagree with this sentence on its own? If it only asserts that something is hard, important, or missing, cut it and lead with the concrete fact. If the paragraph still feels wrong after the cut, restructure — do not invent a different teaser.
+
+**Distinct from R-THROAT-CLEAR** (announces a move/topic) and **R-PUNCHLINE** (aphoristic closer after an argument).
+
+### P6b: Enforce R-SELF-CRED and R-CREDIT-FILLER
+
+Block any sentence in which the writer reports on their own diligence rather than on the subject: `I have verified this against [source]`, `each verified against the manuscript`, `after careful analysis`, `I have checked every [number/citation]`, `to be sure I had this right`, `we took care to`. Delete it; if the check produced something citable, cite that instead. A replicable data procedure ("We hand-checked all 412 filings against EDGAR") is not self-credit and belongs in the data section.
+
+### P6c: Enforce R-GEOMETRY
+
+Flag any sentence that maps an argument onto a geometry — inside/outside, before/after, above/below, layers, foundations, upstream/downstream — where the underlying relation is a plain list. `Two things go wrong with that corner before any algebra, and a third goes wrong inside it.` → `There are three problems with the corner.` The tell is sharpest when geometry is paired with a count (`two ... and a third ...`) or with rhetorical balance across two clauses.
+
+**Test by deletion:** strip the geometry and state the count. If nothing is lost, the geometry was decoration. **Do not flag** terms of art (inside/outside option, upstream/downstream market, nested models, corner solution), a real position in a pipeline (`the selection happens upstream of the instrument, in how the sample was drawn`), or real time order (`before the reform`). The rule is not "avoid spatial words."
+
+### P6d: Enforce R-CREDIT-FILLER (credit-awarding beats)
+
+Flag credit-awarding beats inserted for balance — `That candor is to the paper's credit`, `which is the right instinct`, `the authors deserve credit for acknowledging this` — and narration of the writer's reasoning. The last is a *shape*, not a word list — any first-person clause announcing the writer's intent, emphasis, or certainty before the claim arrives: `Let me be clear` / `I want to be clear` / `To be clear,` / `Just to be clear`, `I want to stress that` / `I want to emphasize that` / `I cannot stress enough`, `It is worth noting that` / `I would note that` / `I should note that` / `It bears mentioning` / `I hasten to add`, `This is not an abstract objection, because`. Delete the frame and keep the claim. Test by deletion — if the sentence loses no information, the clause was the tell. Do not flag first-person clauses that carry evidence (`I could not replicate column 3 from the posted code`).
 
 ### P7: Enforce R-COLON
 
@@ -104,9 +136,9 @@ If the FIRST sentence of any new/changed paragraph starts with a meta-opener AND
 
 Reporting (apply context): if a colon was removed, log `Surface fix: colon construction in sentence [N].`
 
-### P2: Enforce R-NOVEL-COMPOUND, R-NOUN-STACK, R-METAPHOR-VERB, R-VAGUE-QUALIFIER
+### P2: Enforce R-COINAGE, R-NOVEL-COMPOUND, R-NOUN-STACK, R-METAPHOR-VERB, R-VAGUE-QUALIFIER
 
-Apply the four rules listed by ID. Bodies are in `writing_quality_standards.md`. Fix in-place when the rule's enforcement is auto-fix; flag for human review otherwise. R-NOUN-STACK is **flag only** — flag a rewrite that introduces or keeps a stacked compound, but do not auto-rewrite it here (a term of art that R-LOADBEARING missed must not be clobbered).
+Apply the five rules listed by ID. Bodies are in `writing_quality_standards.md`. Fix in-place when the rule's enforcement is auto-fix; flag for human review otherwise. R-COINAGE and R-NOUN-STACK are **flag only** — flag a rewrite that invents a compound-noun label or keeps a stacked compound, but do not auto-rewrite it here (a term of art that R-LOADBEARING missed must not be clobbered).
 
 ### When a violation is found
 

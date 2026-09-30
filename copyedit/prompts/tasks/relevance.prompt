@@ -12,7 +12,7 @@ audit report. The user reviews and applies rewrites by hand — there is no auto
 path, because every rewrite must survive human review before it touches source files.
 
 **Output:**
-- `notes/relevance_audit.md` — the only output. Contains the RAP seed, purpose tree, violations with inline proposed rewrites, and summary dashboard. There is intentionally no machine-parseable sidecar — every rewrite is reviewed by a human before it touches source files.
+- `notes/raw/relevance_audit.md` — the only output. Contains the RAP seed, purpose tree, violations with inline proposed rewrites, and summary dashboard. There is intentionally no machine-parseable sidecar — every rewrite is reviewed by a human before it touches source files.
 
 **Model:** Sonnet. This task requires paragraph-level judgment and cannot be done by Haiku.
 
@@ -221,7 +221,7 @@ Record each rewrite with a severity tag:
 
 ## Step 5.4: Writing-Principles Gate (blocking)
 
-Before writing any proposed rewrite to `notes/relevance_audit.md`, run the surface critic on it: read @prompts/shared/components/surface_critic.prompt and follow its procedure (proposal context). Fix all violations in-place. The proposed rewrite cannot introduce R-THROAT-CLEAR, R-RHETQ, R-EMDASH, R-COLON, R-BANNED, or any other surface violation.
+Before writing any proposed rewrite to `notes/raw/relevance_audit.md`, run the surface critic on it: read @prompts/shared/components/surface_critic.prompt and follow its procedure (proposal context). Fix all violations in-place. The proposed rewrite cannot introduce R-THROAT-CLEAR, R-RHETQ, R-EMDASH, R-COLON, R-BANNED, or any other surface violation.
 
 ---
 
@@ -254,7 +254,7 @@ the pass bar in mind and demote the marginal ones.
 
 ---
 
-## Step 6: Write `notes/relevance_audit.md`
+## Step 6: Write `notes/raw/relevance_audit.md`
 
 Structure:
 
@@ -433,7 +433,7 @@ Step 1 reads verbatim.
 
 ## Output Rules
 
-- Write `notes/relevance_audit.md`. It is the only output of this task.
+- Write `notes/raw/relevance_audit.md`. It is the only output of this task.
 - The purpose tree must cover every audited node. Every weak-or-failing node must include
   its proposed rewrite inline in the Violations section.
 - Do NOT edit source files. This task produces diagnosis + proposed rewrites only; the

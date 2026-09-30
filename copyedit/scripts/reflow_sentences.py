@@ -95,12 +95,19 @@ INLINE_COMMANDS = {
     'footnote', 'url', 'href', 'LaTeX', 'TeX', 'scalebox', 'phantom', 'ldots'
 }
 
+def is_comment_only_line(line: str) -> bool:
+    """True for lines whose only content is a LaTeX comment (no live text)."""
+    ls = line.lstrip()
+    return bool(ls) and ls.startswith('%')
+
 def is_command_line(line: str) -> bool:
     ls = line.lstrip()
     if not ls:
         return False
+    # Comment-only lines are handled separately: mid-paragraph annotations
+    # must NOT flush (that inserts a blank = LaTeX paragraph break).
     if ls.startswith('%'):
-        return True
+        return False
     if not ls.startswith('\\'):
         return False
     m = re.match(r"\\([A-Za-z*]+)", ls)
@@ -116,6 +123,18 @@ def is_command_line(line: str) -> bool:
     # Heuristic: commands followed by '{' and then ONLY '}' on the same line are likely block? Keep as command line
     return True
 
+def buffer_ends_sentence(buf: list[str]) -> bool:
+    """True if the buffer's last live text looks like a finished sentence.
+    Used to decide whether flushing before display math should insert a
+    blank line (paragraph break) or keep the lead-in attached."""
+    for bl in reversed(buf):
+        pl, _ = protect_line_comments(bl, 0)
+        live = pl.strip()
+        if not live:
+            continue
+        return bool(re.search(r'[.!?]\s*$', live.rstrip('}')))
+    return True
+
 def main(path: str):
     p = Path(path)
     src = p.read_text(encoding='utf-8')
@@ -127,7 +146,7 @@ def main(path: str):
     begin_env_re = re.compile(r"^\\begin\{([^}]+)\}")
     end_env_re = re.compile(r"^\\end\{([^}]+)\}")
 
-    def flush_buffer():
+    def flush_buffer(paragraph_break: bool = True):
         nonlocal buffer
         if not buffer:
             return
@@ -149,7 +168,8 @@ def main(path: str):
                 sub = sub.strip()
                 if sub:
                     out_lines.append(sub)
-        out_lines.append("")  # keep paragraph break
+        if paragraph_break:
+            out_lines.append("")  # keep paragraph break
         buffer = []
 
     lines = src.splitlines()
@@ -161,7 +181,8 @@ def main(path: str):
                 in_math = None
             continue
         elif line.strip().startswith(r'\['):
-            flush_buffer()
+            # Lead-ins like "utility is" should not become their own paragraph.
+            flush_buffer(paragraph_break=buffer_ends_sentence(buffer))
             out_lines.append(line)
             if not r'\]' in line:
                 in_math = 'bracket'
@@ -172,17 +193,23 @@ def main(path: str):
         m_end = end_env_re.match(line.strip())
 
         if m_begin:
-            # Flush any pending paragraph before starting a new environment
-            flush_buffer()
             env = m_begin.group(1)
+            # Same lead-in rule for display math environments; other envs
+            # (fact, figure, ...) keep a paragraph break when the buffer
+            # already ends a sentence.
+            if env in SKIP_ENVS:
+                flush_buffer(paragraph_break=buffer_ends_sentence(buffer))
+            else:
+                flush_buffer(paragraph_break=True)
             if in_skip_env is None and env in SKIP_ENVS:
                 in_skip_env = env
             out_lines.append(line)
             continue
 
         if m_end:
-            # Flush any pending paragraph before closing environments
-            flush_buffer()
+            # Flush fact/equation body without a trailing blank so we do not
+            # insert a paragraph break before \end{...}.
+            flush_buffer(paragraph_break=False)
             env = m_end.group(1)
             out_lines.append(line)
             if in_skip_env == env:
@@ -195,12 +222,22 @@ def main(path: str):
 
         # Paragraph/command handling outside skipped envs
         if not line.strip():
-            flush_buffer()
+            flush_buffer(paragraph_break=True)
             out_lines.append("")
             continue
 
+        # Standalone % lines: mid-paragraph annotations (HARDCODED, etc.)
+        # stay in the buffer so we do not insert a blank paragraph break.
+        # Structural/decorative comments with an empty buffer pass through.
+        if is_comment_only_line(line):
+            if buffer:
+                buffer.append(line.strip())
+            else:
+                out_lines.append(line)
+            continue
+
         if is_command_line(line):
-            flush_buffer()
+            flush_buffer(paragraph_break=True)
             out_lines.append(line)
             continue
 
@@ -208,7 +245,7 @@ def main(path: str):
         buffer.append(line.strip())
 
     # Flush any remaining paragraph
-    flush_buffer()
+    flush_buffer(paragraph_break=True)
 
     # Remove trailing extra blank lines collapse
     result = "\n".join(out_lines)

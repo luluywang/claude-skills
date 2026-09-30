@@ -28,10 +28,13 @@ Each rule below has a stable ID (`R-*`), a `Priority` tag (`high` rules also app
 | R-200WORD | New/rewritten paragraphs ≤200 words / 10 sentences | standard | auto-fix | apply, proposal |
 | R-SURGICAL | Surgical tasks touch only what the user requested | standard | block | apply |
 | R-RHETQ | No body-prose rhetorical questions | standard | block | apply, proposal |
-| R-THROAT-CLEAR | First sentence of any paragraph cannot announce what it will do | high | block | apply, proposal |
-| R-COINAGE | Novel hyphenated coinages need definition or replacement | standard | flag | apply, proposal |
+| R-THROAT-CLEAR | Paragraph openers must be claims, not topics, moves, or instructions | high | block | apply, proposal |
+| R-TEASER | No pseudo-aphoristic clefts that name a difficulty/insight without the fact | high | block | apply, proposal |
+| R-SELF-CRED | No claims of one's own verification, care, or effort | high | block | apply, proposal |
+| R-CREDIT-FILLER | No credit-awarding beats or narration of the writer's reasoning | standard | flag | apply, proposal |
+| R-COINAGE | No invented compound-noun labels; plain phrase unless canonical term of art | standard | flag | apply, proposal |
 | R-BANNED | Match against project banned-phrases list — Critical | standard | block | apply, proposal |
-| R-NOVEL-COMPOUND | New `X-vs-Y`/`X-only`/`X-Y-Z` compounds need definition or replacement | standard | flag | apply, proposal |
+| R-NOVEL-COMPOUND | New `X-vs-Y`/`X-only`/`X-Y-Z` compounds → replace unless term of art | standard | flag | apply, proposal |
 | R-NOUN-STACK | Unstack 3+ noun piles / buried nominalizations into prose; spare terms of art | standard | flag | apply, proposal |
 | R-PARTICIPLE | No trailing `-ing` clause that praises the sentence instead of adding a fact | standard | flag | apply, proposal |
 | R-COPULA | `serves as`/`represents a`/`boasts` where `is`/`are`/`has` would do | standard | auto-fix | apply, proposal |
@@ -47,6 +50,9 @@ Each rule below has a stable ID (`R-*`), a `Priority` tag (`high` rules also app
 | R-RAP | Introduction and section openers use RAP tension (Principle 5) | info | flag | proposal |
 | R-TRIANGULAR | Body paragraphs state result first, then mechanism (Principle 5b) | info | flag | proposal |
 | R-PARALLEL | Same statistic stated twice must use the same framing direction (not complement) | standard | flag | all |
+| R-GEOMETRY | No spatial framing (layers/inside/upstream) dressing up a plain list | standard | flag | apply, proposal |
+| R-PUNCHLINE | No aphoristic verdict closers or antithesis-balance rhythm after an argument | standard | flag | apply, proposal |
+| R-PERSONIFY | No personified argument objects ("the fact cannot carry it") | standard | flag | apply, proposal |
 
 **Priority rules** (the five most-violated rules — also surfaced as one-line reminders in `surface_critic.prompt` "What to scan"): `R-COLON`, `R-EMDASH`, `R-40WORD`, `R-THROAT-CLEAR`, `R-WEAK-FOR-WEAK`.
 
@@ -420,23 +426,82 @@ Any sentence in body prose ending in `?` → rewrite as an assertion. Economics 
 
 **Priority:** high | **Enforcement:** block | **Context:** apply, proposal
 
-The first sentence of any paragraph that announces what the paragraph will do rather than doing it → rewrite. Meta-openers to flag: `This section`, `This paragraph`, `To understand`, `To see how`, `By requiring`, `In order to`. See Principle 8. Exception: one thanks-opener is allowed at the very top of a referee-reply letter only.
+The first sentence of any paragraph that announces what the paragraph will do rather than doing it → rewrite. **The test:** could the opener be true or false? If it only names a topic, announces a move, or instructs the reader, it fails.
+
+Meta-openers to flag: `This section`, `This paragraph`, `To understand`, `To see how`, `By requiring`, `In order to`.
+
+Vapid openers to flag — the same fault in subtler form, and the more common one in argumentative prose: `Start from`, `Start with`, `Begin by`, `Before [the algebra / turning to X]`, `Now compare`, `Now consider`, `Now write down`, `There are two/three [routes/reasons/problems]`, `It is worth [noting/computing/seeing]`, `My first/second/third concern is about [topic]`, `The first is [one-word label].` Each has a mechanical fix: delete the opener and promote the next sentence, or convert the topic into the claim (`My concern is about the fit between A and B` → `A measures something different from B`).
+
+A signpost survives if it also carries content: *"The sample restriction is the most serious"* both ranks and asserts. *"I take these in order of severity"* only ranks → cut.
+
+See Principle 8. Exception: one thanks-opener is allowed at the very top of a referee-reply letter only.
 
 ---
 
-### R-COINAGE: Coinage discipline
+### R-TEASER: Pseudo-aphoristic cleft / teaser thesis block
 
-**Priority:** standard | **Enforcement:** flag | **Context:** apply, proposal
+**Priority:** high | **Enforcement:** block | **Context:** apply, proposal
 
-If an edit introduces a compound term (hyphenated or otherwise) not already in the source file, require either (a) an in-sentence definition immediately following first use or (b) a plain-language replacement. Novel compounds are candidate jargon until proven otherwise.
+A sentence that names a difficulty, insight, or tension without stating the underlying fact → rewrite. Full definition in `writing_standards/ai_detection_rules.md` § Pseudo-Aphoristic Clefts / Teaser Theses.
+
+**Shape:** `The [gravity noun] is what [vague relative clause]` / `What makes this hard is...` / `The key insight is that...` / `The tension is between X and Y` when X and Y arrive only in the next sentence. Gravity nouns: *difficulty, challenge, tension, insight, point, problem, key, heart, central X*.
+
+**Test:** Could a referee disagree with this sentence on its own? If it only asserts that something is hard, important, or missing, cut it and lead with the concrete fact. If the paragraph still feels wrong after the cut, restructure — do not invent a different teaser.
+
+**Distinct from:** R-THROAT-CLEAR (announces a *move* or *topic*), R-PUNCHLINE (aphoristic *closer* after an argument), smarmy reframing (`It's not X, it's Y`).
+
+**Example:** `The central difficulty is what the record omits.` → `The survey records only the most recent opening for each product.`
 
 ---
 
-### R-NOVEL-COMPOUND: Novel compound flag
+### R-SELF-CRED: No claims of one's own verification or effort
+
+**Priority:** high | **Enforcement:** block | **Context:** apply, proposal
+
+Delete any sentence in which the author reports on their own diligence rather than on the subject. The reader assumes the author checked their work; asserting it invites the opposite inference, and the page cite or the arithmetic *is* the verification. Patterns: `I have verified this against [source]`, `each verified against the manuscript`, `after careful analysis`, `after a thorough review of the literature`, `I have checked every [number/citation]`, `to be sure I had this right`, `we took care to`.
+
+**Remedy:** delete the sentence and, if the underlying check produced something citable, cite it instead (page number, table, recomputed figure).
+
+**Exclusion:** genuine methods description of a *replicable procedure* ("We hand-checked all 412 filings against the SEC EDGAR record") is not self-credit — it tells the reader what was done to the data, and it belongs in the data section.
+
+---
+
+### R-CREDIT-FILLER: No credit-awarding or self-narrating filler
 
 **Priority:** standard | **Enforcement:** flag | **Context:** apply, proposal
 
-Any multi-word hyphenated coinage matching the pattern `X-vs-Y`, `X-only`, or `X-Y-Z` that does NOT appear elsewhere in the source file → flag as candidate jargon. Require either (a) an in-sentence definition immediately following first use or (b) a plain-language replacement. See surface_critic P2.
+Two related patterns, both of which insert a beat that carries no information.
+
+**Credit-awarding filler** — concessive sentences added for balance rather than because the point needed making: `That candor is to the paper's credit`, `which is the right instinct`, `the authors deserve credit for acknowledging this`, `this is a reasonable choice and I do not fault it, but`. **Remedy:** if the work is good, say so once with a specific reason where strengths belong; inside a critical passage, state the fact and move to the objection.
+
+**Narration of the writer's reasoning** — a first-person clause announcing the writer's intent, emphasis, or certainty before the claim arrives. Match the *shape*, not a fixed word list: banning `Let me be clear` only relocates the writer to `I want to be clear` or `To be clear`.
+
+- Clarity: `Let me be clear`, `I want to be clear`, `To be clear,`, `I should be clear that`, `Just to be clear`
+- Emphasis: `I want to stress that`, `I want to emphasize that`, `Let me emphasize`, `I cannot stress enough`
+- Noting: `It is worth noting that`, `I would note that`, `I should note that`, `It bears mentioning`, `I hasten to add`, `It is important to note`
+- Stance/plan: `This is not an abstract objection, because`, `I say this not to be difficult, but`, `My third point is narrower and, I hope, more constructive`
+
+**Remedy:** delete the frame, keep the claim. **Test:** delete the clause — if the sentence loses no information, the clause was the tell. **Do not flag** first-person clauses that carry evidence (`I could not replicate column 3 from the posted code`); there the narration is the finding.
+
+Related: R-THROAT-CLEAR (vapid openers), R-PARTICIPLE (trailing clauses that praise the sentence).
+
+---
+
+### R-COINAGE: No invented compound-noun labels
+
+**Priority:** standard | **Enforcement:** flag | **Context:** apply, proposal
+
+Do not introduce multi-word compound nouns as private labels ("floor bank," "low-slack banks," "near-constraint sample," "tax-price shock"), hyphenated or not. **Remedy:** replace with a plain descriptive phrase. An in-sentence definition is **not** sufficient — if the reader needs a gloss, write the gloss.
+
+**Exception:** canonical terms of art in the published literature ("fixed effects," "capital requirement," "shadow value," "tax shield," assumption names). **Test:** would a referee recognize the phrase without this paper's glossary? If not, replace. When unsure, flag — do not rewrite. See `writing_standards/vocabulary_ban_list.md` § Compound Nouns.
+
+---
+
+### R-NOVEL-COMPOUND: Novel hyphenated compound flag
+
+**Priority:** standard | **Enforcement:** flag | **Context:** apply, proposal
+
+Any multi-word hyphenated coinage matching the pattern `X-vs-Y`, `X-only`, or `X-Y-Z` that is not a canonical term of art → replace with a plain phrase. Defining once does not redeem it. See surface_critic P2 and R-COINAGE.
 
 ---
 
@@ -446,7 +511,7 @@ Any multi-word hyphenated coinage matching the pattern `X-vs-Y`, `X-only`, or `X
 
 A noun phrase that stacks 3+ nouns/modifiers ("reward response decomposition"), or a nominalized phrase that buries an action in a noun ("feedback from the movement of cohort *k*'s spending shares"), should be unstacked into prose: turn the pile into a prepositional phrase or short clause, de-nominalize the buried verb, or relabel. **Favor a few more words over the stack.**
 
-**Distinct from R-NOVEL-COMPOUND.** That rule fires only on hyphenated `X-vs-Y`/`X-only`/`X-Y-Z` patterns and its remedy is define-or-replace (which can produce a *shorter* phrase). R-NOUN-STACK fires on bare noun-piles and nominalizations (no hyphen needed), fires even when the compound recurs or is defined, and its remedy is the opposite — add words to unstack. See also R-COINAGE.
+**Distinct from R-COINAGE / R-NOVEL-COMPOUND.** Those rules catch invented 2-word labels (hyphenated or not) and require a plain-language replacement. R-NOUN-STACK fires on longer bare noun-piles and nominalizations, fires even when the compound recurs or is defined, and its remedy is to add words to unstack.
 
 **Exception:** leave intact (a) load-bearing terms per R-LOADBEARING, and (b) established field terms of art — "income semi-elasticities," "dominant diagonal," assumption names, "fixed effects," etc. When unsure whether a term is art or jargon, **flag — do not rewrite** (the second layer of protection for terms of art that R-LOADBEARING may miss).
 
@@ -461,7 +526,7 @@ A noun phrase that stacks 3+ nouns/modifiers ("reward response decomposition"), 
 | a cohort spending-weighted sum is a revenue-weighted moment | summing over merchants with cohort spending weights is the same as a revenue-weighted average |
 | spending-share envelope formula | the envelope formula in spending shares |
 
-**Leave intact:** income semi-elasticities, dominant diagonal, assumption names. See surface_critic P2 and the canonical principle in `writing_standards/vocabulary_ban_list.md` § Compound Noun Stacking. Unstacking is exempt from the R-LENGTH-DELTA word-count cap (clause d).
+**Leave intact:** income semi-elasticities, dominant diagonal, assumption names. See surface_critic P2 and the canonical principle in `writing_standards/vocabulary_ban_list.md` § Compound Nouns. Unstacking is exempt from the R-LENGTH-DELTA word-count cap (clause d).
 
 ---
 
@@ -494,6 +559,72 @@ A present-participle clause appended to a finite sentence that comments on the s
 **Priority:** standard | **Enforcement:** flag | **Context:** apply, proposal
 
 The verbs `tilts`, `hinges`, `lands`, `speaks to`, `flows from` in a technical passage where there is no concrete referent → replace with a literal verb. See surface_critic P2.
+
+---
+
+### R-GEOMETRY: Spatial framing of sequential content
+
+**Priority:** standard | **Enforcement:** flag | **Context:** apply, proposal
+
+An argument mapped onto a geometry — inside/outside, before/after, above/below, layers, foundations, upstream/downstream — where the underlying relation is a plain list. The geometry implies containment or ordering the argument never uses.
+
+**LLM:** `Two things go wrong with that corner before any algebra, and a third goes wrong inside it.`
+**Human:** `There are three problems with the corner.` (then the three)
+
+**Watch for:** `before any algebra`, `inside it`, `beneath this`, `underneath the result`, `one layer down`, `at a deeper level`, `sits on top of`, `the foundation of`, `upstream of the estimate`, `at the heart of`, `where this really bites`, `on the surface ... but underneath`. Sharpest when geometry is paired with a count (`two ... and a third ...`) or with rhetorical balance across two clauses.
+
+**Test:** delete the geometry and state the count. If nothing is lost, it was decoration. If the sentence becomes false or vague, the relation is real — keep it.
+
+**Do not flag** genuine spatial/temporal relations: terms of art (inside/outside option, upstream/downstream market, higher-order beliefs, nested models, corner vs. interior solution), a real position in a pipeline (`the selection happens upstream of the instrument, in how the sample was drawn`), or real time order (`before the reform`). The rule is not "avoid spatial words" — it is "do not use spatial words to dress up an enumeration."
+
+**Interaction with R-THROAT-CLEAR.** The repair is not always "state the count." R-THROAT-CLEAR bans `There are three problems` as a *paragraph opener*, so stripping geometry into a bare count can trade one violation for another. In a summary or framing paragraph the count is the content and is correct. Mid-argument, open on the first problem instead and let the enumeration emerge.
+
+Related: R-METAPHOR-VERB (metaphor with no concrete referent), R-THROAT-CLEAR (openers that defer content).
+
+---
+
+### R-PUNCHLINE: Punchline cadence and antithesis balance
+
+**Priority:** standard | **Enforcement:** flag | **Context:** apply, proposal
+
+Two shapes of the same tell — rhetorical compression placed after an argument to make the
+conclusion *land* rather than merely be stated.
+
+**Aphoristic closers.** A short, rhythmic verdict sentence restating what the passage just showed:
+`The entire policy headline is therefore one unsourced number.` / `There is no kink to hide
+behind.` / `Everything downstream rests on the object this deviation destroys.` / `The deviation is
+not a knife-edge one.` **Test:** would the sentence work as the closing line of a talk — does it
+have *snap*? If yes, rewrite as the flat technical statement with the objects named (`Hence
+$R_1 = W$ is not a best response to $R_2 = W$.`). At most one deliberately punchy sentence per
+document; one per section is a tell.
+
+**Antithesis balance.** `not X but Y` with matched noun phrases, and paired-NP rhythm generally:
+`The implication is not a change in magnitude but a change in what the paper has found.` / `built
+on one unsourced derivative and one imprecise scaled effect.` Say the one thing that is true and
+drop the foil. Ordinary corrections of fact (`the coefficient is not 0.4 but 0.04`) are not this
+tell.
+
+Related: the smarmy-reframing patterns in Part B (`It's not X, it's Y`) are the conversational
+register of the same shape; R-INTENSITY covers single inflated words rather than sentence shapes.
+
+---
+
+### R-PERSONIFY: Personified argument objects
+
+**Priority:** standard | **Enforcement:** flag | **Context:** apply, proposal
+
+Argumentative machinery given agency, desire, or physical position: `Fact 3 cannot carry it` / `four
+things stand between it and the quantification` / `the underprovision channel has somewhere to
+live` / `gives the policy claim an institution to attach to` / `the model is silent on it`. Facts do
+not carry, stand, live, or speak. **Remedy:** name who concluded what — `Fact 3 does not establish
+this` — or state the relation literally.
+
+**Exceptions:** established idiom where the referent is a person's writing (`the authors are silent
+on`), and standard technical usages (`the constraint binds`, `the instrument fails the exclusion
+restriction`, `the data reject the null`). Statistical-inference verbs applied to tests and data are
+terms of art, not personification. When unsure, flag — do not rewrite.
+
+Related: R-METAPHOR-VERB (single metaphor verbs), R-PUNCHLINE (the cadence these often serve).
 
 ---
 
@@ -538,7 +669,7 @@ When the same statistic or binary fact appears more than once in a section, all 
 
 | Tier | Label | When to Use |
 |------|-------|-------------|
-| 1 | **Critical** | Smarmy reframing ("It's not X, it's Y"), stacked hedges (2+ hedges per sentence), missing causal mechanism in results passage, claims overshooting evidence |
+| 1 | **Critical** | Smarmy reframing ("It's not X, it's Y"), teaser theses ("The central difficulty is what the record omits"), stacked hedges (2+ hedges per sentence), missing causal mechanism in results passage, claims overshooting evidence |
 | 2 | **High** | AI vocabulary (leverage, robust, nuanced, pivotal, etc.) used 2+ times; results-first openings with no tension; inventory-style numbers |
 | 3 | **Medium** | Transition overuse (Moreover, Furthermore, Critically however); template structures; meta-commentary; padding phrases |
 | 4 | **Low** | Single-instance AI vocabulary; minor parentheticals; minor hedging; quick-flag Part C patterns with low confidence |
@@ -596,7 +727,19 @@ Sort order: Critical first, then High, Medium, Low. Within each tier, preserve d
 - "The real issue isn't... it's..."
 - "What matters isn't... but rather..."
 
-These sound rhetorically clever but are overused by AI. Replace with direct statements.
+These sound rhetorically clever but are overused by AI. Replace with direct statements. The formal-register versions — antithesis balance (`not a change in magnitude but a change in what the paper has found`) and aphoristic closers — are covered by R-PUNCHLINE; personified machinery (`Fact 3 cannot carry it`) by R-PERSONIFY.
+
+**🚨 Pseudo-Aphoristic Clefts / Teaser Theses (HIGH PRIORITY — see R-TEASER):**
+- "The central difficulty is what the record omits."
+- "The key insight is that..."
+- "What makes this hard is..."
+- "The tension is between X and Y." (when X and Y are then explained next)
+
+Names a difficulty/insight without stating the fact. Looks like a claim; is a trailer. Cut and lead with the concrete fact; if the paragraph still feels wrong, restructure rather than inventing a different teaser. Full definition in `writing_standards/ai_detection_rules.md`.
+
+**Narrated ordering (meta-commentary subtype):**
+- "I take them in that order." / "I take these in order of severity." / "So much for X; now Y."
+- Announcing the order of one's own points instead of letting structure carry it. Cut; use a real list or subsections.
 
 **Formulaic Openers:**
 - "This occurs because..." / "This is because..." as standalone opener (integrate the reason into the prior sentence instead)
@@ -635,6 +778,7 @@ These sound rhetorically clever but are overused by AI. Replace with direct stat
 - load-bearing (as a metaphor for "essential" or "does the work" — strongly AI-typical; flag on any occurrence unless literally describing structural engineering)
 - bracket (technical economics term: to bound a quantity between formal limits; flag when used without a bounding argument)
 - polar (overused as intensifier or modifier; flag unless referring to actual polarity, coordinates, or regions)
+- genuine / genuinely (AI-typical intensifier standing in for "real" or for nothing at all — "a genuine contribution," "genuinely novel," "genuinely uncertain"; flag on any occurrence and cut unless the sentence contrasts with something counterfeit or merely apparent)
 
 **Padding Phrases:**
 - "highlighting," "underscoring" (as sentence fillers)

@@ -14,7 +14,7 @@ skimming.
 
 **Model:** Haiku
 
-**Output:** `notes/orality.md`
+**Output:** `notes/raw/orality.md`
 
 **Output Mode:** APPEND — do not overwrite existing content
 
@@ -200,6 +200,6 @@ label is still attached to each entry, but the user walks the file top to bottom
 2. **Pass 2 — Fixes.** For each inventoried item, draft the Proposed Revision. Check the
    revision against the same 11 patterns before writing it — a fix that introduces a new
    stumble is not a fix.
-3. **Writing-Principles Gate (blocking).** Before writing any Proposed Revision to `notes/orality.md`, run the full surface critic on it: read @prompts/shared/components/surface_critic.prompt and follow (1) the surface rules (proposal context) and (2) the Self-Critic Pass (Tests 1–6). Fix surface violations in-place. If a structural test fails, emit the flag-only shape. The proposed revision cannot introduce the same class of errors it claims to fix.
-4. **Write to `notes/orality.md`** in document order with the checklist format above.
+3. **Writing-Principles Gate (blocking).** Before writing any Proposed Revision to `notes/raw/orality.md`, run the full surface critic on it: read @prompts/shared/components/surface_critic.prompt and follow (1) the surface rules (proposal context) and (2) the Self-Critic Pass (Tests 1–6). Fix surface violations in-place. If a structural test fails, emit the flag-only shape. The proposed revision cannot introduce the same class of errors it claims to fix.
+4. **Write to `notes/raw/orality.md`** in document order with the checklist format above.
 5. **Return** `{status: complete|flagged, items_found: N}`.

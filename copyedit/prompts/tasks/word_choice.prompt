@@ -4,7 +4,7 @@
 - Anglo-Saxon over Latin (utilize→use)
 - Wordiness and redundant phrases
 - Nominalization
-- Compound noun stacking (unstack noun piles into prose — R-NOUN-STACK)
+- Compound nouns: no invented labels unless canonical term of art (R-COINAGE); unstack 3+ noun piles into prose (R-NOUN-STACK)
 - Weak verbs
 - Voice issues (passive→active at word level)
 
@@ -14,7 +14,7 @@ Other tasks should NOT flag these issues.
 
 **Purpose:** Line-by-line word choice review for clarity, concreteness, precision.
 
-**Output:** `notes/word_choice_review.md`
+**Output:** `notes/raw/word_choice_review.md`
 
 **Output Mode:** APPEND — do not overwrite existing content
 
@@ -74,9 +74,17 @@ Other tasks should NOT flag these issues.
 
 ---
 
-## 5. Unstack Compound Nouns (R-NOUN-STACK)
+## 5. Compound Nouns (R-COINAGE, R-NOUN-STACK)
 
-A noun phrase that stacks 3+ nouns/modifiers, or a nominalized phrase that buries an action in a noun, reads as compressed jargon. Unstack it into prose: turn the pile into a prepositional phrase or short clause, de-nominalize the buried verb, or relabel. **Favor a few more words over the stack** — this is the one place where the rewrite may be longer (R-NOUN-STACK is exempt from the R-LENGTH-DELTA cap).
+**Do not invent compound-noun labels** ("floor bank," "low-slack banks," "near-constraint sample"). Unless the phrase is a canonical term of art in the published literature, replace it with a plain descriptive phrase. Defining a novel compound in-sentence is **not** a license to keep it (R-COINAGE).
+
+| Invented compound | Plain phrase |
+|---|---|
+| floor bank | bank at the regulatory minimum |
+| low-slack banks | banks near the requirement |
+| near-constraint sample | banks whose requirement binds |
+
+**Also unstack 3+ noun piles** and buried nominalizations into prose: turn the pile into a prepositional phrase or short clause, de-nominalize the buried verb, or relabel. **Favor a few more words over the stack** — this is the one place where the rewrite may be longer (R-NOUN-STACK is exempt from the R-LENGTH-DELTA cap).
 
 | Stacked compound | Unstacked |
 |---|---|
@@ -89,9 +97,9 @@ A noun phrase that stacks 3+ nouns/modifiers, or a nominalized phrase that burie
 | a cohort spending-weighted sum is a revenue-weighted moment | summing over merchants with cohort spending weights is the same as a revenue-weighted average |
 | spending-share envelope formula | the envelope formula in spending shares |
 
-**Test:** Could a reader parse this on first pass, or do they have to unpack a noun pile? Is it a real term of art (recurs, has a fixed technical meaning) or invented compression?
+**Test:** Would a referee recognize the phrase without this paper's glossary? If not, replace it. Could a reader parse a longer stack on first pass, or do they have to unpack a noun pile?
 
-**Leave intact:** established field terms of art — "income semi-elasticities," "dominant diagonal," assumption names, "fixed effects." When unsure whether a phrase is a term of art or invented compression, **flag it, do not rewrite**.
+**Leave intact:** established field terms of art — "fixed effects," "capital requirement," "shadow value," "income semi-elasticities," "dominant diagonal," assumption names. When unsure, **flag it, do not rewrite**.
 
 ---
 

@@ -2,7 +2,7 @@
 
 **Purpose:** Walk through a checklist of suggested edits interactively, letting the user accept or reject each one.
 
-**Input:** Path to a markdown file with checklist format (e.g., `notes/simplifications.md`)
+**Input:** `notes/review_digest.md` by default (the single review surface). A path to another checklist file is accepted but not needed.
 
 **Output:**
 - Modified .tex files with accepted edits applied

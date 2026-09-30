@@ -2,7 +2,7 @@
 
 **Purpose:** Extract and display the paper's argumentative skeleton so the writer can see if the flow works. Then analyze for gaps.
 
-**Output:** `notes/flow_extraction.md`
+**Output:** `notes/raw/flow_extraction.md`
 
 ---
 

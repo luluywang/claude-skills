@@ -6,7 +6,7 @@
 
 **Output:**
 - Corrected .tex files
-- `notes/copy_edits.md` documenting all changes across passes
+- `notes/raw/copy_edits.md` documenting all changes across passes
 
 **Output Mode:** APPEND — do not overwrite existing content
 
@@ -82,7 +82,7 @@ This task AUTO-FIXES errors directly in .tex files. Only fix errors that are **o
 2. Identify and fix ALL errors you can find
 3. Check `notes/tasks.json` for the `llm_tagging` setting
 4. Apply corrections with Edit tool (see LLM Tagging section below)
-5. Document in `notes/copy_edits.md` with header `## Pass 1`
+5. Document in `notes/raw/copy_edits.md` with header `## Pass 1`
 
 ### LLM Tagging (when enabled)
 
@@ -116,7 +116,7 @@ The previous reviewer was good but not perfect. There are almost certainly:
 - Hyphenation errors
 
 Read the document with fresh eyes. Be skeptical. Check every sentence.
-Previous corrections are logged in notes/copy_edits.md - don't re-flag those.
+Previous corrections are logged in notes/raw/copy_edits.md - don't re-flag those.
 
 Report ONLY newly found errors. If you find none after careful review, report "No additional errors found."
 ```
@@ -136,7 +136,7 @@ Report ONLY newly found errors. If you find none after careful review, report "N
 
 ## Output Format
 
-`notes/copy_edits.md` structure:
+`notes/raw/copy_edits.md` structure:
 
 ```markdown
 # Grammar & Mechanics Corrections

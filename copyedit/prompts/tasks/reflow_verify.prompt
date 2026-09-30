@@ -5,7 +5,7 @@
 **Purpose:** Inspect a reflowed .tex file for suspicious sentence breaks that the script may have missed or introduced incorrectly.
 
 **Output:**
-- Appends issues to `notes/reflow_verify.md` (only if issues found)
+- Appends issues to `notes/raw/reflow_verify.md` (only if issues found)
 
 ---
 
@@ -45,7 +45,7 @@ A line that is just a LaTeX command argument fragment, e.g.:
 
 ## Output Format
 
-If issues are found, append to `notes/reflow_verify.md`:
+If issues are found, append to `notes/raw/reflow_verify.md`:
 
 ```markdown
 ## [filename.tex]
@@ -55,7 +55,7 @@ If issues are found, append to `notes/reflow_verify.md`:
 - [ ] Line 103: Possible missed abbreviation — previous line ends with `i.e.`
 ```
 
-If no issues found for this file, do **not** write anything to `notes/reflow_verify.md`.
+If no issues found for this file, do **not** write anything to `notes/raw/reflow_verify.md`.
 
 ---
 

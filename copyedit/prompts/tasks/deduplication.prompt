@@ -2,10 +2,10 @@
 
 **Model:** Haiku (fast pattern matching)
 
-**Purpose:** Final pass to catch and remove duplicate suggestions across output files.
+**Purpose:** Identify duplicate suggestions across raw task outputs so the review digest lists each issue once.
 
-**Input:** All checklist files in `notes/` directory
-**Output:** Cleaned files with duplicates removed (overwrites originals)
+**Input:** All checklist files in `notes/raw/` (read-only)
+**Output:** A deduplicated item list consumed by the wrapup when it writes `notes/review_digest.md`. **Never overwrite files in `notes/raw/`.** The digest is the only review surface.
 
 ---
 
@@ -14,16 +14,16 @@
 ### Step 1: Read All Checklist Files
 
 Scan these files if they exist:
-- `notes/ai_detection.md`
-- `notes/simplifications.md`
-- `notes/word_choice_review.md`
-- `notes/sentence_analysis.md`
-- `notes/orality.md`
+- `notes/raw/ai_detection.md`
+- `notes/raw/simplifications.md`
+- `notes/raw/word_choice_review.md`
+- `notes/raw/sentence_analysis.md`
+- `notes/raw/orality.md`
 
 ### Step 2: Extract Items
 
 For each checklist item, extract:
-- Source file (which notes/*.md)
+- Source file (which notes/raw/*.md)
 - Target file path (the .tex file being reviewed)
 - Line numbers (X-Y range)
 - Issue category/description
@@ -47,7 +47,7 @@ When duplicates found:
 1. Keep the most specific/actionable version
 2. Prefer versions with concrete replacement text
 3. Add note: `[Also flagged in: other_file.md]`
-4. Remove the duplicate from the other file
+4. Drop the duplicate from the digest (leave the raw file untouched)
 
 **Priority order for keeping:**
 1. `word_choice_review.md` (most specific word-level suggestions)
@@ -56,33 +56,18 @@ When duplicates found:
 4. `simplifications.md` (general suggestions)
 5. `ai_detection.md` (pattern identification)
 
-### Step 5: Write Cleaned Files
+### Step 5: Hand Off to the Digest
 
-Overwrite each notes/*.md file with deduplicated content.
-Preserve all non-duplicate items unchanged.
-
----
-
-## Output Format
-
-After deduplication, add summary at end of each cleaned file:
-
-```markdown
----
-## Deduplication Summary
-- Items reviewed: X
-- Duplicates removed: Y
-- Merged from: [list of source files]
-```
+Pass the deduplicated list to the digest step. Record the count of merged duplicates in the digest Overview table. Do not write to `notes/raw/`.
 
 ---
 
 ## Quality Control
 
-- [ ] All notes/*.md files processed
+- [ ] All notes/raw/*.md files read (none modified)
 - [ ] Duplicates identified by line number + issue similarity
 - [ ] Kept version is most actionable
 - [ ] Cross-references added where merged
 - [ ] No suggestions lost (only merged)
 - [ ] Line numbers preserved correctly
-- [ ] Summary appended to each file
+- [ ] Duplicate count reported in the digest Overview
