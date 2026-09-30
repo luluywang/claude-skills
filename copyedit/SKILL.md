@@ -286,7 +286,7 @@ Read the orchestration instructions from `@prompts/master.prompt` and follow its
 
 ## Output Location
 
-**There is one file to review: `notes/review_digest.md`.** Every task writes its raw output to `notes/raw/`; the wrapup consolidates, deduplicates, and self-screens those into the digest, which also carries the paper-level overview (writing-quality themes, structure verdict, relevance dashboard) and the log of grammar fixes already applied. `implement`, `apply`, and `interactive` all read the digest. Nothing under `notes/raw/` needs to be opened; it is provenance.
+**There is one file to review: `notes/review_digest.md`.** Every task writes its raw output to `notes/raw/`; the wrapup consolidates, deduplicates, and self-screens those into the digest, which opens with a ranked **Top 20** and also carries the paper-level overview (writing-quality themes, structure verdict, relevance dashboard) and the log of grammar fixes already applied. `implement`, `apply`, and `interactive` all read the digest. Nothing under `notes/raw/` needs to be opened; it is provenance.
 
 ```
 paper/
@@ -363,6 +363,9 @@ The flag-only shape surfaces the problem to the author without offering a rewrit
 ```
 ## Overview
 [counts; writing-quality themes; structure verdict; relevance dashboard; quality warnings]
+
+## Top 20: start here
+[the 20 issues that matter most, ranked: evidence overreach > correctness > project rules > structure > style clusters; each with location, fix, and a pointer to its full entry]
 
 ## Flags (no rewrite proposed) — N items
 [severity-sorted, file-grouped; items with no Proposed Revision]

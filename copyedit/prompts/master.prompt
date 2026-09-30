@@ -929,7 +929,7 @@ Return: {status, summary, flagged_items}
 
 Present wrapup summary to user:
 1. Tasks performed and files analyzed
-2. Key findings and recommendations
+2. Key findings: the Top 20 headlines from the digest, one line each, grouped as in the digest
 3. **One file to review: `notes/review_digest.md`.** Do not list the raw task files or send
    the user to them; they are provenance under `notes/raw/`. If the user asks what a raw
    file is, answer that its contents are already in the digest.

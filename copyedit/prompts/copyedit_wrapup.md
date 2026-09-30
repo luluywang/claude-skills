@@ -81,10 +81,11 @@ When duplicates are found, keep one item in the digest:
 Create `notes/review_digest.md`. It is the **only** file the author reviews, and the only file `implement`, `apply`, and `interactive` read. It has, in order:
 
 1. **Overview** — a short synthesis the author reads first (see format). This replaces any need to open the raw paper-level reports: carry over the headline themes from `writing_quality.md`, the structural verdict from `structure_analysis.md`, and the dashboard from `relevance_audit.md`, each in 2–6 lines.
-2. **Flags** — items with no Proposed Revision.
-3. **Proposed Rewrites** — items with a Proposed Revision.
-4. **Already Applied** — the grammar log from `copy_edits.md`, verbatim, so the author can audit auto-applied fixes without opening another file.
-5. **Self-Screen Log** (Step 3.5).
+2. **Top 20: start here** — the 20 issues that matter most, ranked (see Step 3.6). A full digest runs to hundreds of items; this list is what the author reads first, and it may be all they read.
+3. **Flags** — items with no Proposed Revision.
+4. **Proposed Rewrites** — items with a Proposed Revision.
+5. **Already Applied** — the grammar log from `copy_edits.md`, verbatim, so the author can audit auto-applied fixes without opening another file.
+6. **Self-Screen Log** (Step 3.5).
 
 ### Process
 
@@ -127,6 +128,11 @@ Create `notes/review_digest.md`. It is the **only** file the author reviews, and
 **Relevance dashboard:** [the pass/weak/fail counts by level from relevance_audit.md, plus the nodes that failed]
 
 **Quality warnings:** [gate-coverage warnings from the checklist below, or "none"]
+
+---
+
+## Top 20: start here
+[written in Step 3.6, after the self-screen]
 
 ---
 
@@ -227,6 +233,40 @@ The Step 5 summary table gains a `Rewrites withheld by self-screen` row (see Ste
 
 ---
 
+## Step 3.6: Write the Top 20
+
+After the self-screen, fill `## Top 20: start here`. Rank by **how much the issue could hurt the paper with a referee**, not by the severity label alone and not by count.
+
+### Ranking order
+
+1. **Claims that outrun the evidence.** Headline numbers stated without the body's own caveats, validation verbs ("replicates", "matches", "confirms") stronger than the reported fit, welfare or causal language the paper disclaims elsewhere, the same number used for two different quantities. Weight abstract and intro occurrences highest.
+2. **Correctness and precision.** Math or likelihood statements that are wrong in some case, objects described as something they are not (a correlation read as a probability, a restricted model called independence), identification described as a residual, inferences that do not follow from the reported statistic.
+3. **Project-rule violations** from the project's CLAUDE.md (section boundaries, notation rules, number annotation).
+4. **Structure.** Length, duplicated passages across sections, misplaced content.
+5. **Systemic style.** Only as clusters (for example "about 25 body-prose colons, concentrated in intro and reducedform"), never one item per sentence.
+
+Pure polish (single word choices, one-off long sentences, rhythm) does not enter the Top 20.
+
+### Consolidate
+
+One Top 20 entry may cover several digest items that share a root cause (for example the same overstated claim in abstract, intro and conclusion). List every `.tex` location it covers.
+
+### Verify before ranking
+
+For every candidate in ranks 1–2, check the quoted claim against the current `.tex` (the number, the verb, the commented-out table, the equation). Drop or reword any candidate the source does not support. Do not promote an unverified claim to the top of the digest.
+
+### Entry format
+
+Group under `### Claims that outrun the evidence`, `### Correctness and precision`, `### Project-rule violations`, `### Structure and style` (omit empty groups). Number entries 1–20 continuously across groups. Open with one sentence stating the ranking rule and how many items remain below.
+
+```markdown
+N. **[Problem as a short claim.]** [One or two sentences: what the text says at `file.tex:line`, and why it is a problem.] *Fix:* [the action, or the choice the author must make]. [Say "Rewrite proposed." if one exists.] Full entry: "[exact item title as it appears in a #### heading below]".
+```
+
+Every "Full entry" title must match a `####` heading in the digest verbatim; grep each one before finishing. If fewer than 20 issues clear the polish bar, list fewer and say so.
+
+---
+
 ## Step 4: Mark Complete
 
 Set the first line of `notes/.copyedit_status` to `phase: complete`. **Keep every other line** (`voice:`, `ai_detection_*`). Do not overwrite the file with a bare `complete`.
@@ -242,6 +282,9 @@ Create a summary for the orchestrator to present:
 
 **Files analyzed:** [list from tasks.json]
 **Tasks performed:** [list task names]
+
+### Top 20
+[the 20 bold one-line problem statements from the digest's Top 20, numbered, each with its main `file:line`]
 
 ### Findings Summary
 
@@ -259,7 +302,7 @@ Create a summary for the orchestrator to present:
 - Duplicates merged: N
 
 ### Review
-- **`notes/review_digest.md` — the only file to review.** Overview first, then flags, then proposed rewrites, then the already-applied grammar log.
+- **`notes/review_digest.md` — the only file to review.** Overview and Top 20 first, then flags, proposed rewrites, and the already-applied grammar log.
 - `notes/raw/` holds each task's raw output for provenance. The author does not need to open it.
 
 ### Recommended Next Steps
