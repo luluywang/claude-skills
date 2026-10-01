@@ -18,6 +18,7 @@ You are orchestrating the complete processing of an economics paper PDF. This pr
   - [3d. Clean Section Text](#3d-clean-section-text)
 - [Phase 4: Validate Tables](#phase-4-validate-tables)
 - [Phase 5: Assembly](#phase-5-assembly)
+- [Phase 5.5: Coverage Gate (HARD, BLOCKING)](#phase-55-coverage-gate-hard-blocking)
 - [Phase 6: Quality Assurance](#phase-6-quality-assurance)
 - [Phase 7: Findings Summary](#phase-7-findings-summary)
 - [Phase 8: Copy Output to Calling Directory](#phase-8-copy-output-to-calling-directory)
@@ -43,21 +44,44 @@ Your working directory contains:
 
 If `work/[PAPER_NAME]/structure.json` does NOT exist yet:
 
-1. Read the segmentation task:
+1. Confirm the header inventory exists — it is the ground truth for structure:
+   ```bash
+   wc -l work/[PAPER_NAME]/headers.tsv
+   ```
+   If it is missing, build it before doing anything else:
+   ```bash
+   ./scripts/extract_headers.sh work/[PAPER_NAME]
+   ```
+
+2. Read the segmentation task:
    ```
    work/[PAPER_NAME]/segment_task.md
    ```
 
-2. Use the segment.md prompt with this text input
+3. Use the segment.md prompt with this input
 
-3. Generate `structure.json` containing:
-   - title, authors
+4. Generate `structure.json` containing:
+   - title, authors, total_pages
    - abstract (text + page range)
-   - sections (with page ranges and hierarchy)
+   - sections — **one entry per body row of `headers.tsv`**, with page ranges and
+     hierarchy, no entry spanning more than 6 pages
    - references_start_page
    - appendix_start_page (if exists)
 
-4. Save as: `work/[PAPER_NAME]/structure.json`
+5. Save as: `work/[PAPER_NAME]/structure.json`
+
+6. **Verify the structure before spending any tokens on Phase 3.** Compare the
+   body-row count in `headers.tsv` against the section count in `structure.json`:
+
+   ```bash
+   echo "inventory: $(awk -F'\t' 'NR>1 && $2!="toc"' work/[PAPER_NAME]/headers.tsv | wc -l)"
+   echo "structure: $(grep -c '"id"' work/[PAPER_NAME]/structure.json)"
+   ```
+
+   If structure has fewer entries than the inventory has body rows, re-run
+   segmentation — do not proceed. Every missing entry is a section that will be
+   absent from the final document. Finding this now costs one cheap re-run;
+   finding it in Phase 6 costs the whole pipeline.
 
 ## Phase 2: Identify Processing Needs
 
@@ -173,22 +197,54 @@ For each section with mathematical equations:
    ```
 
 ### 3d. Clean Section Text
-For each section from structure.json:
 
-1. Extract pages for that section:
-   ```
-   cat work/[PAPER_NAME]/text/page_{START}..{END}.txt
+**This is the step where content gets lost. Follow it exactly.**
+
+Three rules, all load-bearing:
+
+- **One cleaning unit per `structure.json` section entry.** Do not merge entries.
+  Do not invent your own chunking scheme.
+- **No unit may exceed 6 pages.** If an entry somehow spans more, split it and
+  process each part separately.
+- **Name each output file after the section `id`** so the mapping back to
+  `structure.json` stays mechanical: `05.5_quantification.md`, not
+  `05b_model_discussion_conclusion.md`.
+
+> **Why these rules.** On MS AER-2026-1101 the orchestrator ignored
+> `structure.json`'s entries and improvised its own chunks. It merged §5.4, §5.5
+> and the Conclusion into one file called `05b_model_discussion_conclusion.md`,
+> and merged Appendices B through H into one file called
+> `13_appendix_proofs.md` covering nine dense pages. Section 5.5 disappeared from
+> the first; Appendices G and H disappeared from the second. Ad-hoc merging is
+> what converts a structure error into lost content, and it defeats every
+> downstream check that works by comparing sections in to sections out.
+
+For each section entry in `structure.json`:
+
+1. Extract that entry's pages:
+   ```bash
+   for p in $(seq START END); do cat work/[PAPER_NAME]/text/page_$p.txt; done
    ```
 
 2. Use `prompts/clean_text.md` with:
-   - Section title
+   - Section title (verbatim from `structure.json`)
    - Page range
    - Raw text
 
 3. Save cleaned markdown to:
    ```
-   work/[PAPER_NAME]/cleaned/SECTION_NAME.md
+   work/[PAPER_NAME]/cleaned/[ID]_[slug].md
    ```
+
+4. **Check the output is proportionate to the input.** Compare word counts:
+   ```bash
+   echo "in:  $(for p in $(seq START END); do cat work/[PAPER_NAME]/text/page_$p.txt; done | wc -w)"
+   echo "out: $(wc -w < work/[PAPER_NAME]/cleaned/[ID]_[slug].md)"
+   ```
+   Cleaning removes page numbers and running heads, so expect output at roughly
+   80–100% of input. **Below 70% means the cleaner summarised — re-run that unit,
+   splitting it further if needed.** This single check would have caught both
+   failures above: the appendix unit came back at well under half its input.
 
 ## Phase 4: Validate Tables
 
@@ -281,6 +337,50 @@ EOF
 
 **Section Separator Format**: Use the prominent `####` banner blocks between major sections (Introduction, Literature Review, Model, Data, Results, Conclusion, etc.) to make document navigation easy. Use `---` horizontal rules for subsection breaks.
 
+## Phase 5.5: Coverage Gate (HARD, BLOCKING)
+
+**Run this before Phase 6 and before showing the user anything. It is not
+advisory and it is not optional.**
+
+```bash
+./scripts/verify_coverage.sh work/[PAPER_NAME] output/[PAPER_NAME].md
+```
+
+The gate makes two deterministic checks:
+
+1. **Header coverage** — every body header in `headers.tsv` appears as a heading
+   in the assembled markdown.
+2. **Page coverage** — the section ranges in `structure.json` tile every page.
+
+**If it exits non-zero, the parse is incomplete. Do not proceed to Phase 6, do
+not copy anything to the calling directory, and do not tell the user the parse
+succeeded.** Instead:
+
+1. Read the list of missing headers. Each line gives a page number.
+2. Re-run `clean_text.md` (Phase 3d) on those pages, in units of **at most 6
+   pages**, saving to correctly-named files.
+3. Re-assemble (Phase 5).
+4. Re-run the gate. Repeat until it exits 0.
+
+If a header is genuinely spurious — the extractor picked up a table caption — you
+may record it in `output/[PAPER_NAME]_qa.json` under `accepted_gate_exceptions`
+with a one-line justification, and proceed. **Verify it against the page first:**
+
+```bash
+grep -n "TITLE" work/[PAPER_NAME]/layout/page_N.txt
+```
+
+Confirming a real section is missing and then waving it through as an exception is
+the one thing this gate exists to prevent. When in doubt, re-clean the pages.
+
+> **Why this gate exists.** Every stage of the MS AER-2026-1101 parse reported
+> success while the output was missing §5.5 (Quantification — the source of the
+> paper's headline result), Appendix G, and Appendix H. The page text had been
+> extracted correctly and was sitting unused in `layout/`. Nothing in the pipeline
+> compared what went in against what came out, so a reader discovered the loss
+> only by going looking for a result the paper's abstract advertised. The gate is
+> that comparison, made mechanical.
+
 ## Phase 6: Quality Assurance
 
 1. Collect statistics:
@@ -328,6 +428,18 @@ The findings summary contains:
 
 ## Phase 8: Copy Output to Calling Directory
 
+**Precondition: Phase 5.5's coverage gate exited 0.** If it did not, go back and
+fix the parse. Copying an incomplete document into the user's working directory is
+how a silent extraction failure becomes a downstream analysis error — a referee
+report was written against a copy of this output that was missing the paper's
+headline result.
+
+Re-run the gate now if you are not certain it passed:
+
+```bash
+./scripts/verify_coverage.sh work/[PAPER_NAME] output/[PAPER_NAME].md || echo "DO NOT COPY"
+```
+
 Copy the final output files back to `CALLING_DIR` (captured at setup) so the user has them in the directory where they invoked the skill:
 
 ```bash
@@ -369,7 +481,8 @@ output/
 └── [PAPER_NAME]_findings.md    ← Table inventory and key quantitative findings
 
 work/[PAPER_NAME]/
-├── structure.json            ← Document structure
+├── headers.tsv               ← Deterministic header inventory (structure ground truth)
+├── structure.json            ← Document structure (must cover every headers.tsv row)
 ├── tables/                   ← Extracted tables (JSON)
 ├── figures/                  ← Figure descriptions (JSON)
 ├── equations/                ← Equations in LaTeX (JSON)
@@ -390,9 +503,12 @@ work/[PAPER_NAME]/
 4. **Parallel Processing**: Steps 3a-3d can run in any order or in parallel
 
 5. **Error Handling**: If any step fails:
-   - Don't stop, continue with other components
-   - Note the failure in comments
-   - The QA step will flag issues
+   - For tables, figures and equations: don't stop, continue with other
+     components, note the failure, and let QA flag it
+   - **For text cleaning and the Phase 5.5 coverage gate: stop and fix.** These
+     govern whether the document is complete. "Continue and let QA flag it" is how
+     three sections were lost on MS AER-2026-1101 — QA passed anyway, because it
+     had no mechanical coverage check at the time
 
 6. **Context Length**:
    - If paper > 50 pages, process in sections (e.g., intro, methods, results)
@@ -402,7 +518,8 @@ work/[PAPER_NAME]/
 
 | Phase | Prompt | Input | Output |
 |-------|--------|-------|--------|
-| 1 | segment.md | segment_task.md | structure.json |
+| 0 | `scripts/extract_headers.sh` | layout/page_*.txt | headers.tsv |
+| 1 | segment.md | segment_task.md + headers.tsv | structure.json |
 | 3a | extract_tables.md | layout/page_N.txt | tables/page_N_extracted.json |
 | 3a-v | visual_interpret_table.md | pages/[PAPER]/page_N.pdf | tables/page_N_visual.json |
 | 3b | describe_figures.md | text/page_N.txt | figures/page_N_text.json |
@@ -410,6 +527,7 @@ work/[PAPER_NAME]/
 | 3c | convert_equations.md | text/page_N.txt | equations/section_N.json |
 | 3d | clean_text.md | text/page_*.txt | cleaned/SECTION.md |
 | 4 | validate_tables.md | tables + context | validation/table_N.json |
+| 5.5 | `scripts/verify_coverage.sh` (blocking) | headers.tsv + assembled md | exit 0/1 |
 | 6 | qa_check.md | assembled markdown | output/*_qa.json |
 | 7 | findings_summary.md | output/[PAPER].md | output/*_findings.md |
 

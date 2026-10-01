@@ -38,12 +38,36 @@ Estimated cost: ~$2/PDF with Haiku vs ~$10/PDF with Sonnet.
 
 1. **Capture calling directory** → Record `$PWD` so output can be returned there
 2. **Extract PDF content** → Run shell script to split pages and extract text
-3. **Segment document** → Identify structure (sections, page ranges)
-4. **Process components** → Extract tables, figures, equations as needed
-5. **Assemble output** → Combine into final markdown
-6. **Quality check** → Validate output completeness
-7. **Findings summary** → Generate table-by-table summaries and key quantitative findings (opt-out with `--no-summary`)
-8. **Copy output** → Copy final `.md` files back to the calling directory
+3. **Build header inventory** → `extract_headers.sh` scans every page for section
+   headers; this is the structural ground truth
+4. **Segment document** → Identify structure (sections, page ranges), covering
+   every header in the inventory, with no section longer than 6 pages
+5. **Process components** → Extract tables, figures, equations as needed
+6. **Assemble output** → Combine into final markdown
+7. **Coverage gate (blocking)** → `verify_coverage.sh` must exit 0 before the
+   output may be shown or copied anywhere
+8. **Quality check** → Validate output completeness
+9. **Findings summary** → Generate table-by-table summaries and key quantitative findings (opt-out with `--no-summary`)
+10. **Copy output** → Copy final `.md` files back to the calling directory
+
+### Completeness invariant
+
+Steps 3 and 7 are a matched pair, and they are the backbone of the workflow:
+**every section header found in the PDF must appear in the delivered markdown.**
+The inventory establishes what exists; the gate proves it survived.
+
+This is not a general robustness nicety. A parse of MS AER-2026-1101 silently
+dropped section 5.5 (Quantification — the source of the paper's headline result),
+Appendix G, and Appendix H, while every stage reported success. The page text had
+been extracted correctly and sat unused in `layout/`; the loss happened when a
+27-page "section" was handed to the text cleaner in one piece and the cleaner
+returned a summary of the head of its input. A referee report was then written
+against the truncated output. Nothing in the pipeline compared input sections
+against output sections, so nothing caught it.
+
+**A silently incomplete parse is the worst failure this skill can produce**, because
+the output still reads as a complete paper. Never report success on a parse whose
+gate did not pass.
 
 ---
 
@@ -81,6 +105,46 @@ Creates:
 - `cache/[PAPER]/layout/page_*.txt` - Layout-preserved text (for tables)
 - `cache/[PAPER]/tables/page_*.json` - pdfplumber table extraction
 - `cache/[PAPER]/segment_task.md` - Ready for segmentation
+
+### extract_headers.sh
+
+Deterministic section-header inventory — the ground truth for document structure.
+Called automatically by `process_paper.sh`; run standalone to re-derive it.
+
+```bash
+./scripts/extract_headers.sh cache/[PAPER]            # writes headers.tsv
+./scripts/extract_headers.sh cache/[PAPER] --stdout   # and print it
+```
+
+Scans the layout text of **every** page (no truncation, no model) for numbered
+sections (`5.5 Quantification`), Roman-numeral sections (`IV. Regression
+Results`), appendices (`G Numerical Simulation`, `Appendix B. Proof`), appendix
+subsections (`A2 Sampling`), and standard unnumbered headings. Detects
+table-of-contents pages and files their entries as `kind=toc` cross-check rows
+rather than body sections. Output is TSV: `page`, `kind`, `label`, `title`.
+
+If it returns very few headers the paper uses an unrecognised heading style —
+inspect `headers.tsv` and segment from `layout/page_*.txt` directly.
+
+### verify_coverage.sh
+
+**Blocking completeness gate.** Run after assembly, before anything is shown to
+the user or copied to the calling directory.
+
+```bash
+./scripts/verify_coverage.sh cache/[PAPER] output/[PAPER].md
+```
+
+Two deterministic checks:
+1. **Header coverage** — every body header in `headers.tsv` appears as a heading
+   in the assembled markdown (matched on a stemmed two-word signature, so
+   reflowed and lightly reworded headings still match).
+2. **Page coverage** — the section ranges in `structure.json` tile every page.
+
+Exit codes: `0` complete and safe to deliver · `1` content missing, do not
+deliver · `2` usage or prerequisite error. On exit 1 it names the missing headers
+and their page numbers; re-clean those pages in units of at most 6 pages and
+re-assemble.
 
 ### batch_process.sh
 
@@ -134,7 +198,8 @@ Prints `PASS` or `FAIL` for each dependency (pdfinfo, pdftotext, pdfseparate, py
 
 | Task | Prompt | Input | Output |
 |------|--------|-------|--------|
-| Structure | `assets/tasks/segment.md` | segment_task.md | structure.json |
+| Header inventory | `scripts/extract_headers.sh` | layout/page_*.txt | headers.tsv |
+| Structure | `assets/tasks/segment.md` | segment_task.md + headers.tsv | structure.json |
 | Tables | `assets/tasks/extract_tables.md` | layout/page_N.txt | tables/page_N_extracted.json |
 | Table Visual Verify | `assets/tasks/visual_interpret_table.md` | pages/[PAPER]/page_N.pdf | tables/page_N_visual.json |
 | Figures | `assets/tasks/describe_figures.md` | text/page_N.txt | figures/page_N_text.json |
@@ -142,6 +207,7 @@ Prints `PASS` or `FAIL` for each dependency (pdfinfo, pdftotext, pdfseparate, py
 | Equations | `assets/tasks/convert_equations.md` | text/page_N.txt | equations/section.json |
 | Text | `assets/tasks/clean_text.md` | text/page_*.txt | cleaned/SECTION.md |
 | Validate | `assets/tasks/validate_tables.md` | tables + context | validation/table_N.json |
+| Coverage gate | `scripts/verify_coverage.sh` | headers.tsv + assembled md | exit 0/1 (blocking) |
 | QA | `assets/tasks/qa_check.md` | assembled markdown | *_qa.json |
 | Findings Summary | `assets/tasks/findings_summary.md` | output/[PAPER].md | output/[PAPER]_findings.md |
 | Full run | `assets/tasks/orchestrate.md` | segment_task.md | output/*.md |
@@ -179,7 +245,10 @@ User: "Process paper.pdf and extract everything"
 
 4. Follow orchestration phases to completion
 
-5. Output: output/paper.md + output/paper_qa.json + output/paper_findings.md
+5. Verify completeness (BLOCKING — do not skip):
+   ./scripts/verify_coverage.sh cache/paper output/paper.md
+
+6. Output: output/paper.md + output/paper_qa.json + output/paper_findings.md
 ```
 
 ---
@@ -193,4 +262,7 @@ User: "Process paper.pdf and extract everything"
 | pdfplumber not found | Will auto-install; if fails, run `pip install pdfplumber` |
 | Structure unclear | Use segment.md with more context pages |
 | Tables garbled | Use layout text instead of plain text |
-| Missing content | Check QA report, re-extract specific pages |
+| Missing content | Run `./scripts/verify_coverage.sh cache/[PAPER] output/[PAPER].md`; it names the missing headers and pages. Re-run clean_text on those pages in units of ≤6 pages, re-assemble, re-run the gate |
+| Coverage gate fails | Do not deliver. Fix the parse. If a flagged header is genuinely spurious, verify against `layout/page_N.txt` first, then record it in `accepted_gate_exceptions` |
+| Few or no headers found | Paper uses an unusual heading style. Inspect `headers.tsv`, then segment from `layout/page_*.txt` directly |
+| Section came back much shorter than its pages | The cleaner summarised. Re-run that unit split into smaller page ranges |
