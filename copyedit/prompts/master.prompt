@@ -318,10 +318,12 @@ IF request matches "number_fix" pattern:
 3. Parse file scope: explicit file(s) or current directory `.tex` files
 4. Run auto-discovery (Step 0 in prompt)
 5. For each file in scope: spawn ONE Sonnet subagent with `run_in_background: true`
-   - Instruction: read `prompts/tasks/number_fix.prompt`, process file in detected mode
+   - Instruction: read `prompts/tasks/number_fix.prompt`, process file in detected mode (A or B)
    - Pass: file path, mode, scalar dir (if found), tables dir (if found)
 6. Wait for task-notifications
 7. Summarize results from `notes/number_fix_report.md`
+
+**Agent-only:** Do not run shell scripts for number_fix. Mode B (including `part: se` tags) is applied in the subagent with table lookup and editorial judgment.
 
 **Request patterns that trigger Number Fix Path:**
 

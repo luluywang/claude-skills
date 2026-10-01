@@ -83,6 +83,28 @@ For each line, look for numeric values embedded in prose. A number qualifies if:
 - Direction words immediately before/after a number (`above`, `below`, `more than`, `less than`, `approximately`) are prose context — keep them, they do not affect the number
 - `\num{N}` or `\numprint{N}` — the number is `N`; annotate the whole `\num{N}` token
 
+### A2b. Standard errors (bootstrap and table parentheses)
+
+Treat **standard errors as first-class numbers** in Mode A, not optional extras on the point estimate.
+
+**When to annotate an SE:**
+- Prose uses `(SE $X$)`, `(SE $X\%$)`, or a parenthetical immediately after an estimate that is clearly the SE (e.g. ``$16$ basis points (SE $5.1$)'' or shorthand ``$16$ basis points ($5.1$)'' when the table cell is `16.4 (5.1)`).
+- The point estimate on the same sentence is already (or will be) tagged with `part: estimate`.
+
+**Do not** bundle estimate and SE in a single `current=` (e.g. avoid `current=8.3 (3.2)`). Use **two annotations** on the same line:
+
+```latex
+$8.3$ basis points at Chase (SE $3.2$) % HARDCODED[table: counterfactual_interchange_em, row: "Full Model Δ Rate (bp)", bank: Chase, part: estimate] current=8.3 % HARDCODED[table: counterfactual_interchange_em, row: "Full Model Δ Rate (bp)", bank: Chase, part: se] current=3.2
+```
+
+**SE annotation rules:**
+- Always include `part: se` in the bracket tag (and `part: estimate` on the companion point estimate when an SE appears in the same sentence).
+- `current=` for `part: se` stores the **raw SE from the source cell** (the parenthetical in the table), unrounded.
+- For table cells formatted as `estimate (se)`, parse both numbers; match prose rounding separately for each.
+- If prose quotes an SE but the point estimate is rounded away (e.g. prose ``$8$'' for `8.3`), still tag both; Mode B rounds each from source independently.
+- Robust/cluster SEs in reduced-form tables follow the same rule when quoted in prose.
+- Skip SEs that appear **only** in table notes or inside `\input{../output/...}` table files, unless the main text quotes them.
+
 ### A3. Match to source data
 
 For each identified hard-coded number, attempt to match it to a scalar or table:
@@ -106,6 +128,8 @@ Add the annotation as a `%` comment on the SAME line as the number, immediately 
 
 ```latex
 % HARDCODED[table: filename.tex, row: "row label", col: N] current=VALUE
+% HARDCODED[table: filename.tex, row: "row label", col: N, part: estimate] current=VALUE
+% HARDCODED[table: filename.tex, row: "row label", col: N, part: se] current=VALUE
 % HARDCODED[scalar: scalar_name] current=VALUE
 % HARDCODED[source: unknown] current=VALUE
 % CONSTANT: reason why this never changes
@@ -113,6 +137,7 @@ Add the annotation as a `%` comment on the SAME line as the number, immediately 
 
 **Rules:**
 - `current=VALUE` stores the value as it appears in the source (unrounded), so Mode B can round correctly
+- When both point estimate and SE appear in prose, use separate tags with `part: estimate` and `part: se` (see A2b)
 - `col: N` is the 1-based column index (after splitting by `&`, excluding the label column)
 - `row: "row label"` is the text content of the row's label cell (first `&`-delimited cell, stripped of LaTeX formatting)
 - Do NOT annotate the same number twice if it already has a `HARDCODED` comment
@@ -145,7 +170,7 @@ Append to `notes/number_fix_report.md`:
 ### B1. Collect annotations
 
 Scan the target `.tex` file for all `% HARDCODED[...]` comments. For each:
-- Parse the annotation to extract: source type (table/scalar/unknown), source file, row label, col index, current value
+- Parse the annotation to extract: source type (table/scalar/unknown), source file, row label, col index, `part` (`estimate`, `se`, or absent), current value
 
 ### B2. Read current values
 
@@ -157,6 +182,7 @@ Scan the target `.tex` file for all `% HARDCODED[...]` comments. For each:
 - Read the table `.tex` file
 - Parse the row matching `row: "label"` (see LaTeX Table Parsing below)
 - Extract cell at `col: N`
+- If the cell is `estimate (se)` and the annotation has `part: se`, use the parenthetical value only; if `part: estimate` (or no part), use the leading estimate only
 
 **For unknown-source annotations:**
 - Skip (cannot auto-update; leave a note in the report)
@@ -179,6 +205,7 @@ If the rounded current value differs from the prose number:
 - Replace the prose number with the new rounded value
 - Update `current=VALUE` in the annotation to the new raw source value
 - Preserve surrounding LaTeX formatting (e.g., if prose has `47\%`, keep the `\%`)
+- For `part: se`, update only the number inside `(SE $...$)` or the SE parenthetical tied to that tag; do not change the point estimate on the same line unless its own `part: estimate` tag triggers an update
 
 If the value is unchanged: leave the line as-is.
 
@@ -259,3 +286,5 @@ Look for `\multicolumn` commands or header rows above the first data row. Record
 ```
 
 This task does NOT run automatically as part of `review` or `full` — it is opt-in only, since it requires the user's data pipeline output to be current.
+
+Both Mode A and Mode B run in a Sonnet subagent (no helper scripts). In Mode B, process **`part: se`** annotations separately from **`part: estimate`** on the same line.

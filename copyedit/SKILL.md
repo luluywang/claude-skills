@@ -187,7 +187,7 @@ The bootstrap auto-detects hyphenated multi-word phrases appearing 3+ times in s
 
 | Task | Output | Description |
 |------|--------|-------------|
-| `number_fix` | notes/number_fix_report.md | Annotate or refresh hard-coded numbers from scalars/tables |
+| `number_fix` | notes/number_fix_report.md | Annotate or refresh hard-coded numbers from scalars/tables (Sonnet; Mode A and B) |
 
 **Does not run in `review` or `full` — must be invoked explicitly.** Requires data pipeline output to be current.
 
