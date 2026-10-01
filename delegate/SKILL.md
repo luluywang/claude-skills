@@ -64,12 +64,43 @@ different model often beats a third Claude attempt, and it's cheaper too.
 
 ## Model and effort
 
-Codex runs default to **`gpt-5.6-sol` at `medium` reasoning effort**. Override
+Codex runs default to **`gpt-6-sol` at `medium` reasoning effort**. Override
 per run with `--model M` / `--effort E` on `start`, or per turn on `say` (the
 override persists for later turns of that session). Env defaults:
 `DELEGATE_CODEX_MODEL`, `DELEGATE_CODEX_EFFORT`. Tune effort to the turn: `low`
 for lookups and mechanical follow-ups, `high`/`xhigh` for the hard diagnosis
 turn — Sol is built to start low and turn up.
+
+### Which model
+
+| Slug | Use it for |
+|---|---|
+| `gpt-6-astra` | "Frontier intelligence for the most demanding work." Hard diagnosis, large refactors, the turn Sol failed twice on. |
+| `gpt-6-sol` | Default. "Workhorse model for coding and everyday work." Everyday dispatch and conversation turns. |
+| `gpt-6-luna` | "Fast and affordable model for easier tasks." Lookups, mechanical edits. |
+| `gpt-5.6-sol`, `gpt-5.6-luna` | Older generation. Use only to compare against a past run. |
+
+For the current list, read the local cache:
+
+```bash
+python3 -c "import json;d=json.load(open('$HOME/.codex/models_cache.json'));print(d['client_version']);print([m['slug'] for m in d['models']])"
+```
+
+**Check the cache's `client_version` before trusting it.** A long-lived
+`codex app-server` daemon from an older release rewrites the cache with that
+release's model list, so a model your account can run goes missing. If
+`client_version` is behind `codex --version`, the list is stale — see the
+refresh recipe under "CLI quirks".
+
+**The default `gpt-6-sol` needs Codex CLI 0.156.0 or newer** (`gpt-6-astra`
+needs 0.154.0). On 0.154.0 the API rejected `gpt-6-sol` with `not supported
+when using Codex with a ChatGPT account`, the same message a typo gives. Fix it
+with `codex update`, then refresh the model cache (see "CLI quirks"). To make
+Astra the standing default, set `DELEGATE_CODEX_MODEL=gpt-6-astra`.
+
+Effort ladders: `gpt-6-sol` and `gpt-6-astra` accept `low`, `medium`, `high`,
+`xhigh`, `max`, `ultra` (`ultra` adds automatic task delegation).
+`gpt-6-luna` stops at `max`. All three default to `medium`.
 
 ## The dispatch loop
 
@@ -140,7 +171,7 @@ session:
 
 1. **Open**: `start codex <cwd> "<user's opening message>"` in the current
    repo. If no opening message was given, ask for one. Default `workspace-write`;
-   use `--read-only` if the user frames it as investigation-only.
+   use `--read-only` only when the user explicitly asks for a read-only session.
 2. **Every subsequent user message** is forwarded verbatim with
    `say <rundir> --wait "<message>"` (run in a background Bash task), and
    Codex's reply is relayed back **in full — no summarizing, no paraphrasing**.
@@ -165,8 +196,9 @@ it's on disk. If the rundir is lost from context, the newest dir in
 now? If yes, the spec is complete — dispatch it one-shot (the flow above under
 "The dispatch loop"). If your next instruction depends on what Codex finds —
 diagnosis, root-cause hunts, investigate-then-decide, iterative numerical
-work — start a conversation, usually `--read-only` first, and end it with a
-dispatch-style turn ("apply the fix; acceptance: <cmd> passes"). The modes
+work — start a conversation (`workspace-write` unless the user explicitly asks
+for read-only) and end it with a dispatch-style turn ("apply the fix;
+acceptance: <cmd> passes"). The modes
 converge anyway: a dispatch whose verification fails becomes a conversation via
 `say`, so the only real decision is whether the first turn carries a complete
 spec or an open question.
@@ -268,6 +300,17 @@ Recorded because each one silently corrupts a hand-rolled invocation:
 - **`codex exec resume` takes no `-s/--sandbox`** (plain `codex exec` does). The
   sandbox mode goes through `-c sandbox_mode=…`, and flags must precede the
   positional session id.
+- **`~/.codex/models_cache.json` can be rewritten by a stale daemon.** An old
+  `codex app-server` process serves its own model list, so an upgrade does not
+  fix the cache on its own. Force a refresh through the new binary directly:
+  `rm ~/.codex/models_cache.json && "$(readlink -f "$(command -v codex)")" exec
+  --sandbox read-only "say OK" </dev/null >/dev/null`. Then confirm
+  `client_version` in the file matches `codex --version`.
+- **A model slug the CLI is too old for fails at the API, not the flag.** The
+  error reads `requires a newer version of Codex` or, for some slugs, `not
+  supported when using Codex with a ChatGPT account` (seen for `gpt-6-sol` on
+  0.154.0). The second message also covers typos and slugs the account cannot
+  use. Run `codex update` and retry before concluding the slug is wrong.
 - **Cursor's `--resume` needs the `=` form** (`--resume=<id>`), and headless runs
   need `--trust`.
 - **Cursor's `--output-format text` prints nothing on a resumed session.** Only

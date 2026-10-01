@@ -13,8 +13,10 @@
 #   delegate.sh sid    <rundir>
 #   delegate.sh plan   [--repo <path>] [--list] # resolve the last Claude Code plan
 #
-# Codex runs default to model gpt-5.6-sol at medium reasoning effort
+# Codex runs default to model gpt-6-sol at medium reasoning effort
 # (override with --model/--effort, or env DELEGATE_CODEX_MODEL/DELEGATE_CODEX_EFFORT).
+# Any slug the account is entitled to works, e.g. gpt-6-astra for the hardest
+# turns. gpt-6-sol needs Codex CLI 0.156.0 or newer; gpt-6-astra needs 0.154.0.
 #
 # Run state lives in $DELEGATE_RUNS (default ~/.claude/delegate-runs/<agent>-<ts>).
 set -uo pipefail
@@ -23,6 +25,10 @@ HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DIGEST="$HERE/digest.py"
 LASTPLAN="$HERE/last_plan.py"
 RUNS="${DELEGATE_RUNS:-$HOME/.claude/delegate-runs}"
+# MUST be absolute: `start` opens the event log from inside a subshell that has
+# already `cd`'d to the repo, so a relative $DELEGATE_RUNS resolves under the repo,
+# fails to open, and kills the agent instantly leaving an empty rundir.
+mkdir -p "$RUNS" && RUNS="$(cd "$RUNS" && pwd)"
 
 die() { echo "delegate: $*" >&2; exit 1; }
 
@@ -73,12 +79,12 @@ cmd_start() {
       --shell) shell=1; shift;;
       --plan) plan="${2:-}"; [ -n "$plan" ] || die "--plan needs 'last' or a file path"; shift 2;;
       --model) model="${2:-}"; [ -n "$model" ] || die "--model needs a model slug"; shift 2;;
-      --effort) effort="${2:-}"; [ -n "$effort" ] || die "--effort needs low|medium|high|xhigh"; shift 2;;
+      --effort) effort="${2:-}"; [ -n "$effort" ] || die "--effort needs low|medium|high|xhigh|max|ultra"; shift 2;;
       *) break;;
     esac
   done
   if [ "$agent" = codex ]; then
-    model="${model:-${DELEGATE_CODEX_MODEL:-gpt-5.6-sol}}"
+    model="${model:-${DELEGATE_CODEX_MODEL:-gpt-6-sol}}"
     effort="${effort:-${DELEGATE_CODEX_EFFORT:-medium}}"
   fi
   local prompt="$*"
@@ -239,7 +245,7 @@ cmd_say() {
         case "${1:-}" in (''|*[!0-9]*) ;; (*) timeout="$1"; shift;; esac;;
       --model) [ -n "${2:-}" ] || die "--model needs a model slug"
         set_meta "$run" MODEL "$2"; shift 2;;
-      --effort) [ -n "${2:-}" ] || die "--effort needs low|medium|high|xhigh"
+      --effort) [ -n "${2:-}" ] || die "--effort needs low|medium|high|xhigh|max|ultra"
         set_meta "$run" EFFORT "$2"; shift 2;;
       *) break;;
     esac
