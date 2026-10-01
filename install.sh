@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Install skills to ~/.claude/skills/
+# Install skills to ~/.claude/skills/ (and global/CLAUDE.md to ~/.claude/CLAUDE.md on a full run)
 # Usage: ./install.sh           (all skills)
 #        ./install.sh econ_ra   (single skill)
 
@@ -36,5 +36,13 @@ for skill in "${SKILLS[@]}"; do
         "$SRC_DIR/$skill/" "$DEST_DIR/$skill/"
     echo "OK    $skill"
 done
+
+# Global CLAUDE.md (user-level instructions) lives in global/ and is installed
+# only on a full run, so single-skill installs stay narrow.
+if [[ $# -eq 0 && -f "$SRC_DIR/global/CLAUDE.md" ]]; then
+    mkdir -p "$HOME/.claude"
+    cp "$SRC_DIR/global/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
+    echo "OK    global/CLAUDE.md -> ~/.claude/CLAUDE.md"
+fi
 
 echo "Installed ${#SKILLS[@]} skill(s) to $DEST_DIR"
