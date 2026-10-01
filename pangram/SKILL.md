@@ -21,40 +21,50 @@ which passages read as machine-written.
 python3 scripts/pangram_check.py draft.md              # check a file
 pbpaste | python3 scripts/pangram_check.py             # check the clipboard
 python3 scripts/pangram_check.py --text "..."          # check inline text
-python3 scripts/pangram_check.py draft.md --chunk-words 300   # per-section verdicts
 python3 scripts/pangram_check.py draft.md --dashboard  # get a shareable link
 python3 scripts/pangram_check.py draft.md --json       # raw API response
 python3 scripts/pangram_check.py --models              # list available models
 ```
 
-Options: `--model` (`default` or `pangram-4`), `--show-human` to also print
-human-labeled passages, `--chunk-words N` to split a long document and get a
-separate verdict per chunk, `--poll` / `--timeout` for the async poll loop.
+Options: `--model` (`pangram-4` or `default`), `--show-human` to also print
+human-labeled passages, `--poll` / `--timeout` for the async poll loop.
 
-`pangram_check.py` makes one API call per chunk, so it fits quick checks. For a
-whole manuscript or a directory of drafts, use the bulk script instead — it
-packs everything into a single job.
+Documents are always submitted whole. There is no chunking option: `pangram-4`
+scores per token and returns labelled windows, so localization comes from the
+model. Do not hand-split input to try to improve it.
+
+**Use `pangram-4`.** It is the default in both scripts. The older `default`
+model is roughly ten times cheaper per word and much less sensitive — on a
+2,000-word document that was half machine-written with one clean seam, it
+returned "Human Written" and missed the AI half entirely, while `pangram-4`
+found the seam within 19 characters. Only reach for `default` when cost
+genuinely dominates and you just want a coarse screen.
+
+`pangram_check.py` makes one API call, so it fits single-document checks. For a
+directory of drafts, use the bulk script instead — it packs every file into as
+few jobs as the unit limit allows.
 
 ```bash
 python3 scripts/pangram_bulk.py chapter*.md              # one row per file
-python3 scripts/pangram_bulk.py paper.tex --chunk-words 400   # one row per chunk
 python3 scripts/pangram_bulk.py drafts/*.md --csv out.csv     # spreadsheet
-python3 scripts/pangram_bulk.py paper.tex --chunk-words 400 --dry-run  # cost first
+python3 scripts/pangram_bulk.py drafts/*.md --dry-run     # cost first
 python3 scripts/pangram_bulk.py --resume blk_123         # refetch a past job
 ```
 
 Bulk prints a table (item, verdict, AI%, top score, confidence), then the most
 AI-like items with excerpts. Add `--detail` for the full per-item report,
-`--json` for raw output. Item IDs are `<file>#<chunk>`, so every row maps back
-to its source.
+`--json` for raw output. Item IDs are file labels, so every row maps back to its
+source.
 
 Always `--dry-run` first on anything large: it prints the item count and
 billable units without spending them. A unit is one started word block per item
-— 1,000 words for `default`, 100 words for `pangram-4`, minimum one unit per
+— 100 words for `pangram-4`, 1,000 words for `default`, minimum one unit per
 item — capped at 1,000 units per job. The script splits oversized runs across
-multiple jobs automatically. Note the chunking interaction: 88 chunks of a
-40k-word paper cost 88 units under `default`, not 40, because each short item
-still bills a full unit. Coarser chunks cost less.
+multiple jobs automatically.
+
+`pangram-4` costs about ten times what `default` does for the same text: a
+40k-word paper is 400 units rather than 40. That is the price of the
+localization, and it is usually worth paying.
 
 Both scripts use only the Python standard library — no `pip install` needed.
 Shared helpers live in `scripts/pangram_api.py`.
@@ -78,13 +88,32 @@ or paste it into a commit.
 - **Flagged passages** — each window's label, `ai_assistance_score` (0–1,
   higher = more AI-like), confidence, character range, and an excerpt.
 
-The per-window labels are **not** a reliable map of which parts are AI. Tested
-locally on a document with a known seam: 2,279 chars of human prose (0.01 alone)
-followed by an AI paragraph. Pangram split at char 2,740 — not the real boundary
-— and labeled both windows AI-Generated at 0.99/High, reporting 0% human for a
-document that was ~79% human by length. Read `windows` as evidence about
-*whether* a document contains AI text, not *where*. To localize, chunk and
-submit the pieces separately.
+Under `pangram-4` the per-window labels **do** localize, and localize well.
+The model scores every token and aggregates over overlapping 512-token windows,
+so a single submission can come back split into correctly-labeled spans. Tested
+locally on a document with a known seam at char 8,724 — 1,300 words of human
+prose followed by 670 words of AI: `pangram-4` split at 8,705, labeled the human
+side 0.02 and the AI side 0.98 both at High confidence, and reported 32% AI
+against a true 34% by word count. This is the main reason to prefer it.
+
+Under the older `default` model the windows are *not* a reliable map, which is
+why earlier versions of this skill said so. On that same seam document `default`
+called the whole thing Human Written across six windows and located nothing.
+
+The failure mode that survives in `pangram-4` runs the *opposite* direction from
+the one you would expect: short AI passages embedded in longer human prose get
+smoothed into a human window. Tested on ten alternating paragraphs, the last
+five localized essentially perfectly — window boundaries within a character or
+two of every real paragraph break — but three earlier AI paragraphs of 74 to 150
+words were absorbed into one 0.09 "Human Written" window. Submitted on their own
+those three came back AI-Generated at 0.75/High. Reported AI share was 22%
+against a true 45%.
+
+So the bias is toward false negatives on short embedded spans, not false
+positives on surrounding human text. Read a clean "Human Written" verdict on a
+long, mixed-provenance document as weak evidence rather than a clearance. The
+flagged windows are reliable when they fire; silence about a short passage is
+not evidence that passage is human.
 
 Scores near 0.99 with High confidence are strong calls; Medium confidence on a
 short passage is weak evidence. Pangram needs roughly 50+ words for a usable
@@ -94,12 +123,10 @@ verdict, and the script refuses shorter input rather than reporting noise.
 
 When the user is trying to make a draft read as less AI-generated:
 
-1. Run the check with `--chunk-words 300` to localize the problem rather than
-   getting one verdict for the whole document. This matters more than it looks:
-   the model reads the whole submission at once, so a few AI paragraphs can drag
-   the surrounding human prose into an AI label. Verified locally — human
-   paragraphs that scored 0.01 on their own came back at 0.99 once AI text was
-   appended to the same document. Chunk before concluding a section is AI.
+1. Submit the whole document. One `pangram-4` call gives both the verdict and
+   the locations, and the contamination this skill used to warn about — human
+   prose dragged into an AI label by neighbouring AI text — does not reproduce
+   under it.
 2. Report the flagged passages verbatim — the character ranges map back into the
    source file.
 3. Rewrite only the flagged spans. The `writing_standards` skill

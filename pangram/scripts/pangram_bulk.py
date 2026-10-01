@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
-"""Bulk AI-detection over many files, or one long document split into chunks.
+"""Bulk AI-detection over many files.
 
-Packs every piece into as few bulk jobs as the billable-unit limit allows,
-polls to terminal, pages through the results, and prints one row per piece.
+Packs every file into as few bulk jobs as the billable-unit limit allows,
+polls to terminal, pages through the results, and prints one row per file.
 
   pangram_bulk.py chapter*.md
-  pangram_bulk.py paper.tex --chunk-words 300
-  pangram_bulk.py drafts/*.md --chunk-words 400 --csv out.csv
+  pangram_bulk.py drafts/*.md --csv out.csv
   pangram_bulk.py --resume blk_123
 
-Item IDs are "<path>#<n>", so every row maps back to a file and chunk.
+Each file is submitted whole. pangram-4 scores per token and returns labelled
+windows, so localization comes from the model rather than from splitting the
+input. Item IDs are file labels, so every row maps back to its source.
 """
 
 import argparse
@@ -24,7 +25,6 @@ from pangram_api import (
     MIN_WORDS,
     billable_units,
     block_words,
-    chunks,
     excerpt,
     report,
     request,
@@ -34,8 +34,8 @@ from pangram_api import (
 TERMINAL = {"succeeded", "failed", "partial"}
 
 
-def build_items(paths, chunk_words, model):
-    """Turn files into {id, text, words} items, skipping pieces that are too short."""
+def build_items(paths, model):
+    """Turn files into {id, text, words} items, skipping ones that are too short."""
     items, skipped = [], []
     # Label rows by basename when that is unambiguous; fall back to full paths
     # so IDs stay unique (the API requires it) without being unreadable.
@@ -50,18 +50,15 @@ def build_items(paths, chunk_words, model):
         if not text:
             skipped.append((label, "empty"))
             continue
-        pieces = chunks(text, chunk_words) if chunk_words > 0 else [text]
-        for i, piece in enumerate(pieces, 1):
-            words = len(piece.split())
-            item_id = f"{label}#{i}" if len(pieces) > 1 else label
-            if words < MIN_WORDS:
-                skipped.append((item_id, f"{words} words, under {MIN_WORDS}"))
-                continue
-            units = billable_units(words, model)
-            if units > BULK_UNIT_LIMIT:
-                skipped.append((item_id, f"{units} units exceeds per-job limit"))
-                continue
-            items.append({"id": item_id, "text": piece, "words": words})
+        words = len(text.split())
+        if words < MIN_WORDS:
+            skipped.append((label, f"{words} words, under {MIN_WORDS}"))
+            continue
+        units = billable_units(words, model)
+        if units > BULK_UNIT_LIMIT:
+            skipped.append((label, f"{units} units exceeds per-job limit"))
+            continue
+        items.append({"id": label, "text": text, "words": words})
     return items, skipped
 
 
@@ -199,9 +196,9 @@ def main():
     ap = argparse.ArgumentParser(
         description="Bulk AI-detection over many files or one long document.")
     ap.add_argument("files", nargs="*", help="text files to check")
-    ap.add_argument("--chunk-words", type=int, default=0,
-                    help="split each file into ~N-word chunks (one item per chunk)")
-    ap.add_argument("--model", default="default", help="model name (default: 'default')")
+    ap.add_argument("--model", default="pangram-4",
+                    help="model name (default: 'pangram-4'; 'default' is the older, "
+                         "cheaper, much less sensitive model)")
     ap.add_argument("--resume", metavar="BULK_ID",
                     help="fetch results of an existing job instead of submitting")
     ap.add_argument("--csv", metavar="PATH", help="also write results to a CSV")
@@ -224,7 +221,7 @@ def main():
     else:
         if not args.files:
             ap.error("give at least one file, or --resume BULK_ID")
-        items, skipped = build_items(args.files, args.chunk_words, args.model)
+        items, skipped = build_items(args.files, args.model)
         for ident, why in skipped:
             print(f"skipping {ident}: {why}", file=sys.stderr)
         if not items:

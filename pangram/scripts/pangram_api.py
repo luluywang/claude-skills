@@ -1,4 +1,4 @@
-"""Shared helpers for the Pangram skill: auth, HTTP, chunking, reporting."""
+"""Shared helpers for the Pangram skill: auth, HTTP, billing, reporting."""
 
 import json
 import math
@@ -71,37 +71,13 @@ def billable_units(word_count, model):
     return max(1, math.ceil(word_count / block_words(model)))
 
 
-def chunks(text, target_words):
-    """Split on blank lines, packing paragraphs into >= target_words chunks.
-
-    Packing to at-least rather than at-most keeps every chunk above the API's
-    minimum length. A short trailing chunk is merged back into the previous one.
-    """
-    paras = [p for p in text.split("\n\n") if p.strip()]
-    out, buf, count = [], [], 0
-    for p in paras:
-        buf.append(p)
-        count += len(p.split())
-        if count >= target_words:
-            out.append("\n\n".join(buf))
-            buf, count = [], 0
-    if buf:
-        tail = "\n\n".join(buf)
-        if out and count < MIN_WORDS:
-            out[-1] += "\n\n" + tail
-        else:
-            out.append(tail)
-    return out or [text]
-
-
 def excerpt(s, n=160):
     s = " ".join(s.split())
     return s if len(s) <= n else s[: n - 1] + "…"
 
 
-def report(result, index=None, total=None, show_human=False):
-    label = f"Chunk {index}/{total}" if total and total > 1 else "Result"
-    print(f"\n=== {label} ===")
+def report(result, show_human=False):
+    print("\n=== Result ===")
     print(f"Verdict:      {result.get('headline')} ({result.get('prediction_short')})")
     print(f"              {result.get('prediction')}")
     print(

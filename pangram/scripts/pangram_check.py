@@ -14,7 +14,7 @@ import sys
 import time
 from pathlib import Path
 
-from pangram_api import MIN_WORDS, chunks, report, request, resolve_key
+from pangram_api import MIN_WORDS, report, request, resolve_key
 
 
 def analyze(text, key, model, dashboard, poll, timeout):
@@ -42,14 +42,14 @@ def main():
     ap = argparse.ArgumentParser(description="Check text for AI writing via Pangram.")
     ap.add_argument("file", nargs="?", help="path to a text file ('-' or omit for stdin)")
     ap.add_argument("--text", help="inline text to check instead of a file")
-    ap.add_argument("--model", default="default", help="model name (default: 'default')")
+    ap.add_argument("--model", default="pangram-4",
+                    help="model name (default: 'pangram-4'; 'default' is the older, "
+                         "cheaper, much less sensitive model)")
     ap.add_argument("--dashboard", action="store_true",
                     help="request a public dashboard link")
     ap.add_argument("--json", action="store_true", help="print raw JSON only")
     ap.add_argument("--show-human", action="store_true",
                     help="include human-labeled passages in the report")
-    ap.add_argument("--chunk-words", type=int, default=0,
-                    help="split input into ~N-word chunks and check each separately")
     ap.add_argument("--models", action="store_true", help="list available models and exit")
     ap.add_argument("--api-key", help="API key (overrides env and key file)")
     ap.add_argument("--poll", type=float, default=1.5, help="poll interval seconds")
@@ -81,26 +81,11 @@ def main():
             "for a reliable verdict."
         )
 
-    pieces = chunks(text, args.chunk_words) if args.chunk_words > 0 else [text]
-    if len(pieces) > 8:
-        print(
-            f"Note: {len(pieces)} chunks means {len(pieces)} separate API calls. "
-            "pangram_bulk.py packs these into one job.",
-            file=sys.stderr,
-        )
-    results = []
-    for i, piece in enumerate(pieces, 1):
-        if len(piece.split()) < MIN_WORDS and len(pieces) > 1:
-            print(f"\n=== Chunk {i}/{len(pieces)} === skipped (under {MIN_WORDS} words)",
-                  file=sys.stderr)
-            continue
-        res = analyze(piece, key, args.model, args.dashboard, args.poll, args.timeout)
-        results.append(res)
-        if not args.json:
-            report(res, i, len(pieces), args.show_human)
-
+    result = analyze(text, key, args.model, args.dashboard, args.poll, args.timeout)
     if args.json:
-        print(json.dumps(results if len(results) > 1 else results[0], indent=2))
+        print(json.dumps(result, indent=2))
+    else:
+        report(result, show_human=args.show_human)
 
 
 if __name__ == "__main__":
