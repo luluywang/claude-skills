@@ -215,6 +215,7 @@ These 8 dimensions govern paragraph-level writing quality. Assess each paragraph
 - Prefer specific to general: "Chicago" not "large cities" not "urban areas"; "bread" not "food" not "consumption goods"; "workers" not "labor" not "factor inputs."
 - Singular words are more vivid than plural: "A worker" vs. "workers."
 - Eliminate abstract nouns: "concept," "structure," "process" are usually empty.
+- Do not invent compound nouns as labels ("floor bank," "low-slack sample") unless the phrase is a canonical term of art in the literature. Prefer a plain descriptive phrase. Defining a novel compound in-sentence is not a license to keep it.
 
 ### Voice Matching (for revision work)
 

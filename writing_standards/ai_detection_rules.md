@@ -17,7 +17,10 @@ Use this file when:
   - Template Structures
 - Part B: Language Tells
   - Smarmy Reframing (HIGHEST PRIORITY)
-  - Meta-Commentary (HIGH PRIORITY)
+  - Pseudo-Aphoristic Clefts / Teaser Theses (HIGH PRIORITY)
+  - Meta-Commentary (HIGH PRIORITY), incl. Vapid Paragraph Openers
+  - Self-Reference and Credit-Awarding Filler (HIGH PRIORITY)
+  - Spatial Framing of Sequential Content (HIGH PRIORITY)
   - Transitions That Scream LLM
   - Formulaic Openers
   - Hedging
@@ -73,6 +76,38 @@ These constructions sound rhetorically clever but are an AI fingerprint. Replace
 - "The real issue isn't... it's..."
 - "What matters isn't... but rather..."
 
+### Pseudo-Aphoristic Clefts / Teaser Theses (HIGH PRIORITY)
+
+A sentence that names a difficulty, insight, or tension without stating the underlying fact.
+It reads as deep and is empty. Common when the model should have restructured the paragraph and
+instead invents a clever opener (or mid-paragraph trailer) that delays the substance one sentence.
+
+**Shape:** *The [gravity noun] is what [vague relative clause].* Gravity nouns include
+*difficulty, challenge, tension, insight, point, problem, key, heart, central X*. The relative
+clause teases (*what the record omits*, *what makes this hard*) instead of asserting something a
+referee could disagree with.
+
+- "The central difficulty is what the record omits."
+- "The key insight is that tenure is censored."
+- "What makes this hard is the absence of intermediate switches."
+- "The tension is between X and Y." (when X and Y are then explained next)
+
+| Teaser | Direct |
+|--------|--------|
+| The central difficulty is what the record omits. | The survey records only the most recent opening for each product. |
+| The key insight is that tenure is censored. | Tenure is right-censored at the survey date. |
+| What makes identification hard is the missing intermediate switches. | Intermediate switches are not observed. |
+
+**Test:** Could a referee disagree with this sentence on its own? If it only asserts that something
+is hard, important, or missing — without naming the concrete fact — cut it and lead with that fact.
+If the paragraph still feels wrong after the cut, restructure the paragraph; do not replace the
+teaser with a different teaser.
+
+**Related but distinct:** Smarmy reframing (*It's not X, it's Y*) is antithesis theater. Vapid
+openers announce a *move* ("Now compare X to Y"). Teaser theses look like *claims* but only
+announce that a claim is coming. Aphoristic *closers* after an argument are covered separately
+(copyedit `R-PUNCHLINE`).
+
 ### Meta-Commentary (HIGH PRIORITY — #1 AI tell overall)
 
 Never announce what you're about to say. Just say it.
@@ -86,6 +121,96 @@ Never announce what you're about to say. Just say it.
 - "This section discusses..." / "We begin by..." / "We conclude by..."
 - "The paper proceeds in three parts..."
 - "[Analysis] yields two main conclusions..."
+
+**Vapid paragraph openers.** The first sentence of a paragraph is the position a reader attends to
+most. Spending it on a move rather than a claim is the same tell in a subtler form. Every paragraph
+opener should be something that could be true or false.
+
+| Vapid opener | What it does | Fix |
+|--------------|--------------|-----|
+| "Start from what the model needs." | Announces a move | State what the model needs |
+| "Before the algebra, two observations." | Pure scaffolding | Lead with the first observation |
+| "There are two routes here." | Defers content one sentence | Give the first route |
+| "Now compare X to Y." | Instructs the reader | State what the comparison shows |
+| "My first concern is about the fit between A and B." | Names a topic | "A measures something different from B." |
+| "It is worth computing one." / "It is worth seeing these together." | Says the work matters instead of doing it | Delete; do the work |
+| "The first is timing." / "The second part is the counterfactual." | A label is not a claim | "The model has lenders moving simultaneously, but cards are acquired over time." |
+
+A signpost survives only if it also carries content. "The sample restriction is the most serious"
+ranks *and* asserts, and is fine. "I take these in order of severity" only ranks, and should be cut.
+
+### Self-Reference and Credit-Awarding Filler (HIGH PRIORITY)
+
+A document is the argument, not a report on how the argument was produced. Writing about one's own
+diligence, or inserting concessive beats for balance, is among the most reliable machine
+fingerprints — human authors almost never do either.
+
+**Claims of one's own verification or effort.** Never write these. The reader assumes the author
+checked their claims; saying it aloud invites the opposite inference. The page cite and the
+arithmetic *are* the verification.
+
+- "I have verified this against the manuscript."
+- "each verified against the source"
+- "After careful analysis / a thorough review of the literature..."
+- "I have checked every number in this table."
+- "To be sure I had this right, I re-derived..."
+
+**Credit-awarding filler.** Concessive sentences inserted for balance rather than because anyone
+asked. If something is done well, say so once, with a specific reason, where strengths belong.
+
+- "That candor is to the paper's credit."
+- "which is the right instinct"
+- "The authors deserve credit for acknowledging this."
+- "This is a reasonable choice, and I do not fault it, but..."
+
+**Narration of the writer's own reasoning.** Delete the frame, keep the claim.
+
+The whole family is a tell, not just the exact wordings below. Banning "Let me be clear" only moves
+the writer to "I want to be clear" or "To be clear." The shape is a first-person clause announcing
+the writer's intent, emphasis, or state of certainty before the claim arrives. If the sentence still
+says what it said with the frame deleted, the frame was the tell.
+
+- Clarity announcements: "Let me be clear...", "I want to be clear...", "To be clear,...", "I should be clear that...", "Just to be clear,..."
+- Emphasis announcements: "I want to stress that...", "I want to emphasize that...", "Let me emphasize...", "I would underscore...", "I cannot stress enough..."
+- Noting announcements: "It is worth noting that...", "I would note that...", "I should note that...", "It bears mentioning...", "I hasten to add...", "It is important to note..."
+- Stance announcements: "This is not an abstract objection, because...", "I say this not to be difficult, but...", "I raise this not because X but because Y."
+- Plan announcements: "My third point is narrower and, I hope, more constructive."
+
+**Not the same thing:** a first-person clause that carries a fact the sentence would otherwise lack.
+"I could not replicate column 3 from the posted code" narrates the writer, but the narration *is* the
+evidence. The test is whether deleting the clause loses information or only loses throat-clearing.
+
+### Spatial Framing of Sequential Content (HIGH PRIORITY)
+
+LLM prose maps an argument onto a geometry — inside/outside, before/after, above/below, layers,
+foundations, upstream/downstream — when the underlying relation is just *a list*. The geometry
+implies a containment or ordering the argument does not have, and the reader has to decode it to
+recover "there are three problems."
+
+- **LLM pattern:** "Two things go wrong with that corner before any algebra, and a third goes wrong
+  inside it." The sentence promises that the third problem is nested within the corner in some way
+  that matters. Nothing downstream uses the nesting.
+- **Human pattern:** "There are three problems with the corner." Then the three problems.
+
+**Watch for:** *before any algebra*, *inside it*, *beneath this*, *underneath the result*, *one layer
+down*, *at a deeper level*, *the foundation of*, *sits on top of*, *upstream of the estimate*,
+*where this really bites*, *at the heart of*, *the core issue underlying*, *on the surface... but
+underneath*. The tell is sharpest when the geometry is paired with a count ("two... and a third...")
+or with rhetorical balance across two clauses.
+
+**Test:** delete the geometry and state the count. If nothing is lost, the geometry was decoration.
+If the sentence becomes false or vague, the relation was real — keep it.
+
+**Do not flag genuine spatial or temporal relations,** which are ordinary in economics:
+
+- **Terms of art:** inside/outside option, upstream/downstream market, higher-order beliefs, nested
+  models, the envelope, corner vs. interior solution.
+- **Real sequence in a pipeline:** "The selection happens upstream of the instrument, in how the
+  sample was drawn" names *where* in the data construction the problem enters, and a reader who
+  skipped it would look in the wrong place.
+- **Real time order:** "before the reform," "after 2008."
+
+The rule is not "avoid spatial words." It is: do not use spatial words to dress up an enumeration.
 
 ### Transitions That Scream LLM
 
@@ -122,11 +247,12 @@ One hedge per claim maximum. Never stack hedges.
 - Non-load-bearing hedges: "roughly" when not a true approximation, "appears" when not genuinely uncertain
 - Reflexive softening: "unlikely to be sufficient," "may not fully capture"
 
-### Compound Noun Stacking
+### Invented Compound Nouns
 
-- **LLM pattern:** Piles 3+ nouns/modifiers into one phrase ("reward response decomposition," "spending-share envelope formula") or buries an action in a noun ("feedback from the movement of cohort *k*'s spending shares"). Reads as compressed jargon the reader must unpack.
-- **Human pattern:** Unstacks the pile into a prepositional phrase or short clause, de-nominalizes the buried verb, or relabels — favoring a few more words over the stack. Genuine terms of art ("income semi-elasticities," "dominant diagonal") are left intact.
-- See `vocabulary_ban_list.md` § Compound Noun Stacking for the full before/after table and the terms-of-art exception.
+- **LLM pattern:** Coins multi-word labels that compress a description into a name ("floor bank," "low-slack banks," "near-constraint sample," "tax-price shock"), or piles 3+ nouns/modifiers into one phrase ("reward response decomposition," "spending-share envelope formula"), or buries an action in a noun. Defining the coinage once does not redeem it — the reader still has to learn a private vocabulary.
+- **Human pattern:** Uses ordinary descriptive phrases ("bank at the regulatory minimum," "banks near the requirement") and unstacks longer piles into prepositional phrases or short clauses, favoring a few more words over the stack. Leaves intact only **canonical terms of art** with a stable meaning in the published literature ("fixed effects," "capital requirement," "shadow value," "income semi-elasticities").
+- **Test:** Would a referee recognize the phrase without this paper's glossary? If not, replace it.
+- See `vocabulary_ban_list.md` § Compound Nouns for before/after tables and the terms-of-art exception.
 
 ### Participial Tack-Ons
 

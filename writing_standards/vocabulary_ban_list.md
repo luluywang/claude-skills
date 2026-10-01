@@ -102,9 +102,20 @@ Find the action hiding in the noun. Make it the verb.
 
 ---
 
-## Compound Noun Stacking (Unstack into Prose)
+## Compound Nouns (Prefer Plain Phrases)
 
-A noun phrase that stacks 3+ nouns/modifiers ("reward response decomposition"), or a nominalized phrase that buries an action in a noun ("feedback from the movement of cohort *k*'s spending shares"), reads as compressed jargon and forces the reader to unpack it. Unstack it into prose: turn the pile into a prepositional phrase or short clause, de-nominalize the buried verb, or relabel. **Favor a few more words over the stack** — this is the one place where adding words is the fix.
+**Default: do not invent compound nouns.** A compound noun is a multi-word label that compresses a description into a name ("floor bank," "low-slack banks," "near-constraint sample," "tax-price shock"). Unless the phrase is a **canonical term of art in the published literature** — a name with a stable, field-standard meaning — write the description in ordinary words instead. Defining a novel compound in-sentence is **not** a license to keep it; if the reader needs a gloss, the gloss is what should have been written.
+
+| Invented compound | Plain phrase |
+|---|---|
+| floor bank | bank at the regulatory minimum |
+| low-slack banks | banks near the requirement |
+| near-constraint sample | banks whose requirement binds |
+| discretionary-securities margin | banks holding spare securities |
+| deposit-schedule relief | cheaper funding as the deposit base shrinks |
+| tax-price shock | change in the tax price of equity |
+
+**Also unstack 3+ noun piles and buried nominalizations.** Longer stacks ("reward response decomposition," "spending-share envelope formula") and phrases that bury an action in a noun ("feedback from the movement of cohort *k*'s spending shares") force the reader to unpack compressed jargon. Turn the pile into a prepositional phrase or short clause, de-nominalize the buried verb, or relabel. **Favor a few more words over the stack.**
 
 | Stacked compound | Unstacked |
 |---|---|
@@ -117,7 +128,7 @@ A noun phrase that stacks 3+ nouns/modifiers ("reward response decomposition"), 
 | a cohort spending-weighted sum is a revenue-weighted moment | summing over merchants with cohort spending weights is the same as a revenue-weighted average |
 | spending-share envelope formula | the envelope formula in spending shares |
 
-**Exception — leave terms of art intact.** Established field terms with a fixed technical meaning are not stacks to unpack: "income semi-elasticities," "dominant diagonal," assumption names, "fixed effects," and the like. Load-bearing terms that recur with a specific meaning in the document also stay. When unsure whether a phrase is a term of art or invented compression, flag it — do not rewrite.
+**Exception — leave canonical terms of art intact.** Established field terms with a fixed technical meaning stay: "fixed effects," "capital requirement," "shadow value," "tax shield," "income semi-elasticities," "dominant diagonal," assumption names, and the like. Load-bearing terms that already recur with a specific meaning in the document also stay. **Test:** would a referee recognize the phrase without your paper's glossary? If not, it is invented compression — replace it. When unsure, flag — do not rewrite.
 
 ---
 
