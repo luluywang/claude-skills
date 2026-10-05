@@ -30,6 +30,7 @@ Each rule below has a stable ID (`R-*`), a `Priority` tag (`high` rules also app
 | R-RHETQ | No body-prose rhetorical questions | standard | block | apply, proposal |
 | R-THROAT-CLEAR | Paragraph openers must be claims, not topics, moves, or instructions | high | block | apply, proposal |
 | R-TEASER | No pseudo-aphoristic clefts that name a difficulty/insight without the fact | high | block | apply, proposal |
+| R-AGAINST | No "X is the Y against which [clause]" backdrop/benchmark framing | high | block | apply, proposal |
 | R-SELF-CRED | No claims of one's own verification, care, or effort | high | block | apply, proposal |
 | R-CREDIT-FILLER | No credit-awarding beats or narration of the writer's reasoning | standard | flag | apply, proposal |
 | R-COINAGE | No invented compound-noun labels; plain phrase unless canonical term of art | standard | flag | apply, proposal |
@@ -435,6 +436,20 @@ Vapid openers to flag — the same fault in subtler form, and the more common on
 A signpost survives if it also carries content: *"The sample restriction is the most serious"* both ranks and asserts. *"I take these in order of severity"* only ranks → cut.
 
 See Principle 8. Exception: one thanks-opener is allowed at the very top of a referee-reply letter only.
+
+---
+
+### R-AGAINST: "Against which" framing block
+
+**Priority:** high | **Enforcement:** block | **Context:** apply, proposal
+
+A noun cast as a backdrop or benchmark with a clause happening *against* it → rewrite. Full definition in `writing_standards/ai_detection_rules.md` § "Against Which" Framing.
+
+**Shape:** `X is the [Y] against which [clause]` / `the search costs against which it prices` / `the backdrop|baseline|benchmark|environment against which...` / `Against this backdrop,`.
+
+**Fix:** state the real relation (*given*, *relative to*, *conditional on*, *in response to*) or split into two plain clauses; cut if it only sets a scene. Literal uses (*discriminate against*, *test against the data*, *regress X against Z*, *hedge against risk*) are not flags.
+
+**Example:** `The firm's advertising shapes the search costs against which it prices.` → `The firm's advertising shapes consumers' search costs, and the firm sets prices given those costs.`
 
 ---
 

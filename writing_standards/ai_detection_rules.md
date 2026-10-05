@@ -18,6 +18,7 @@ Use this file when:
 - Part B: Language Tells
   - Smarmy Reframing (HIGHEST PRIORITY)
   - Pseudo-Aphoristic Clefts / Teaser Theses (HIGH PRIORITY)
+  - "Against Which" Framing (HIGH PRIORITY)
   - Meta-Commentary (HIGH PRIORITY), incl. Vapid Paragraph Openers
   - Self-Reference and Credit-Awarding Filler (HIGH PRIORITY)
   - Spatial Framing of Sequential Content (HIGH PRIORITY)
@@ -107,6 +108,22 @@ teaser with a different teaser.
 openers announce a *move* ("Now compare X to Y"). Teaser theses look like *claims* but only
 announce that a claim is coming. Aphoristic *closers* after an argument are covered separately
 (copyedit `R-PUNCHLINE`).
+
+### "Against Which" Framing (HIGH PRIORITY)
+
+A noun is cast as a backdrop, benchmark, or stage, and a clause is then said to happen *against* it. The preposition is doing metaphorical work (a screen, a horizon, a yardstick) that the plain relation does not need.
+
+**Shape:** *X is the [Y] against which [clause].* Also *the backdrop against which*, *the baseline against which*, *the benchmark against which*, *the environment against which*, *the costs against which the firm prices*, and the reduced forms *against this backdrop* and *set against X*.
+
+| Against-framing | Direct |
+|-----------------|--------|
+| The firm's advertising shapes the search costs against which it prices. | The firm's advertising shapes consumers' search costs, and the firm sets prices given those costs. |
+| Rival entry is the benchmark against which we measure the price response. | We measure the price response relative to rival entry. |
+| Against this backdrop, prices fall. | Prices fall. |
+
+**Fix:** state the actual relation (*given*, *relative to*, *conditional on*, *taking as given*, *in response to*, *compared with*), or split into two plain clauses. If the sentence only sets a scene, cut it.
+
+**Not a flag:** literal opposition or contact (*discriminate against*, *test against the data*, *regress X against Z*, *hedge against risk*, *leaning against the wall*, *the null is tested against the alternative*).
 
 ### Meta-Commentary (HIGH PRIORITY — #1 AI tell overall)
 

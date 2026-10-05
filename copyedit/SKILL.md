@@ -206,7 +206,7 @@ Every flagged entry in `ai_detection.md` carries one of four severity labels. Ou
 
 | Tier | Label | Examples |
 |------|-------|---------|
-| 1 | **Critical** | Smarmy reframing ("It's not X, it's Y"), teaser theses (R-TEASER), stacked hedges (2+ per sentence), missing causal mechanism |
+| 1 | **Critical** | Smarmy reframing ("It's not X, it's Y"), teaser theses (R-TEASER), "against which" framing (R-AGAINST), stacked hedges (2+ per sentence), missing causal mechanism |
 | 2 | **High** | AI vocabulary used 2+ times; results-first openings with no tension; inventory-style numbers |
 | 3 | **Medium** | Transition overuse (Moreover, Furthermore); template structures; meta-commentary; padding phrases |
 | 4 | **Low** | Single-instance AI vocabulary; minor parentheticals; minor hedging; low-confidence Part C flags |
@@ -385,7 +385,7 @@ After the wrapup self-screen pass (Step 3.5), any proposed revision that fails t
 
 ## Rationale Fields Gate (P8)
 
-The surface critic also runs on rationale fields — `**Comment:**`, `**Why better:**`, `**Why no rewrite:**` — in every raw task entry and in the digest. These fields must satisfy the same surface rules as proposed revision text: R-EMDASH, R-COLON, R-TRANSITION, R-40WORD, plus the smarmy-reframing and R-TEASER language tells. The wrapup gate coverage checklist verifies this for each prose-emitting task.
+The surface critic also runs on rationale fields — `**Comment:**`, `**Why better:**`, `**Why no rewrite:**` — in every raw task entry and in the digest. These fields must satisfy the same surface rules as proposed revision text: R-EMDASH, R-COLON, R-TRANSITION, R-40WORD, plus the smarmy-reframing, R-TEASER, and R-AGAINST language tells. The wrapup gate coverage checklist verifies this for each prose-emitting task.
 
 ---
 
@@ -421,7 +421,7 @@ Follows McCloskey and Cochrane writing principles:
 - Active voice, strong verbs
 - Sentence variety for rhythm
 - Clear S-V-O structure
-- Avoid AI-typical patterns (R-EMDASH, R-TRANSITION, smarmy reframing, R-TEASER)
+- Avoid AI-typical patterns (R-EMDASH, R-TRANSITION, smarmy reframing, R-TEASER, R-AGAINST)
 
 The full enforceable rule set with stable IDs lives in `references/writing_quality_standards.md`. Reference for the underlying writing standards: `prompts/economics_writing_prompt.md` (comprehensive guide).
 

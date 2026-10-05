@@ -25,6 +25,7 @@ These rules account for the bulk of past violations. Keep them in working memory
 - **R-40WORD** — no new/rewritten sentence above ~40 words; auto-split.
 - **R-THROAT-CLEAR** — every paragraph-first sentence is a claim, not a topic, a move, or an instruction to the reader.
 - **R-TEASER** — no pseudo-aphoristic cleft that names a difficulty/insight without stating the fact (`The central difficulty is what the record omits`).
+- **R-AGAINST** — no `X is the Y against which [clause]` backdrop/benchmark framing (`the search costs against which it prices`); state the relation directly.
 - **R-SELF-CRED** — no sentence reporting the writer's own verification, care, or effort.
 - **R-WEAK-FOR-WEAK** — no `speak to`→`illuminate`-style swaps; preserve `I find that`/`I estimate that`/`I show that`.
 
