@@ -8,7 +8,7 @@
 
 1. **Bootstrap** → Detect state (fresh or resume)
 2. **Interpret request** → Determine which tasks are needed
-3. **Diagnostic questions** → Determine paper type and file scope
+3. **Diagnostic questions** → Determine file scope, reflow, and LLM tagging
 4. **Task enumeration** → Generate (file, task) pairs
 4.5. **Task preview** → Show full task table, get user confirmation
 5. **Output setup** → Initialize `notes/` directory
@@ -483,7 +483,11 @@ IF ai_detection_pending is non-empty AND user did NOT explicitly request a new a
 
 ## Step 3: Diagnostic Questions
 
-@IMPORT: shared/components/diagnostic_workflow.prompt
+Ask only what the request leaves open. Use one AskUserQuestion call with up to three questions:
+
+1. **Scope** (header "Scope"): "Which files should I analyze?" Options: "All .tex files in current directory", "Main paper only (exclude appendices)", "Specific files only". If "Specific files only", ask which files.
+2. **Reflow** (header "Reflow", .tex only): "Reflow your .tex files to one sentence per line first?" Options: "No, keep current formatting", "Yes, one sentence per line". A yes triggers Phase 0.
+3. **LLM tagging** (header "LLM tagging", .tex only): "Wrap LLM changes in \\begin{llm}...\\end{llm} for review tracking?" Options: "Yes (Recommended)", "No". Store the answer as `llm_tagging` for Step 6. The `strip_llm` task removes the tags later.
 
 ---
 
