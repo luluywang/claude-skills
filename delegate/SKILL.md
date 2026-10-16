@@ -263,11 +263,14 @@ here. `plan --list` marks those `[cwd missing here]`.
 
 ### Writing tasks for agy
 
-The user's writing preferences are the spec, and agy does not know them. So the
-prompt must carry them: paste the rules that apply (from the `writing_standards`
-skill, the paper's own conventions, the target register) into the prompt text.
-Do not just name the file. Give agy the exact file and the span to rewrite, and
-say what must stay fixed (numbers, citations, LaTeX macros, claims).
+The user's writing preferences are the spec. `delegate.sh` passes them along
+automatically: every agy run adds the `writing_standards` skill directory
+(`~/.claude/skills/writing_standards`, override with `DELEGATE_STANDARDS`) to
+agy's workspace. It also starts the prompt with an order to read all its files
+first. Do not paste the standards into the prompt yourself. Add only what the
+standards do not cover: the exact file and span to rewrite, the target register,
+and what must stay fixed (numbers, citations, LaTeX macros, claims). Asking agy
+to list the rules it applied makes review faster.
 
 Verification for prose: read the full diff yourself against those same rules.
 For anything that will leave the user's hands, consider a `/pangram` or
@@ -306,9 +309,9 @@ not an estimate.
 
 ## Guardrails
 
-- Never delegate work on this skills repo or memory files. Where the user's
-  preferences are the spec (most writing), delegate only if the prompt carries
-  those preferences in full — cheaper agents don't know them otherwise.
+- Never delegate work on this skills repo or memory files. Writing goes only to
+  agy, which gets `writing_standards` automatically. Do not send other work
+  whose spec is the user's preferences to a cheaper agent; it doesn't know them.
 - Never pass `--yolo` or sandbox-bypass flags. Codex runs under `workspace-write`
   (or `read-only`); Cursor's `--shell` uses `--force --sandbox enabled` so commands
   run sandboxed rather than unsandboxed. Don't reach past the script for more.

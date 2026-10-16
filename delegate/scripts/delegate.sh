@@ -27,6 +27,9 @@ HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DIGEST="$HERE/digest.py"
 LASTPLAN="$HERE/last_plan.py"
 RUNS="${DELEGATE_RUNS:-$HOME/.claude/delegate-runs}"
+# agy is the writing route: every agy session gets the writing_standards skill in its
+# workspace and is told to read it before writing.
+STANDARDS="${DELEGATE_STANDARDS:-$HOME/.claude/skills/writing_standards}"
 # MUST be absolute: `start` opens the event log from inside a subshell that has
 # already `cd`'d to the repo, so a relative $DELEGATE_RUNS resolves under the repo,
 # fails to open, and kills the agent instantly leaving an empty rundir.
@@ -51,6 +54,16 @@ Additional instructions from the orchestrator:
 $extra}
 When finished, report the files you changed and the result of any checks you ran.
 EOF
+}
+
+standards_prompt() {
+  cat <<EOF
+Before writing anything, read every .md file in $STANDARDS
+(start with SKILL.md). They are the author's writing standards. Follow them in
+all prose you write or edit in this session.
+
+EOF
+  printf '%s' "$1"
 }
 
 # --- session id: codex emits thread.started, cursor system/init, agy init --------
@@ -92,6 +105,7 @@ cmd_start() {
     effort="${effort:-${DELEGATE_CODEX_EFFORT:-medium}}"
   elif [ "$agent" = agy ]; then
     model="${model:-${DELEGATE_AGY_MODEL:-gemini-4-argon-medium}}"
+    [ -d "$STANDARDS" ] || die "writing standards not found: $STANDARDS"
   fi
   local prompt="$*"
   [ -d "$repo" ] || die "no such repo: $repo"
@@ -127,6 +141,7 @@ print("%s (%s): %s  [cwd=%s]" % (d["source"], d["match"], d["title"] or "?", d["
     echo "PLAN=$plan_src" >&2
   fi
   [ -n "$prompt" ] || die "empty prompt (pass a prompt, or --plan last)"
+  [ "$agent" = agy ] && prompt="$(standards_prompt "$prompt")"
   local lock; lock="$(lock_path "$repo")"
   if [ "$mode" = write ]; then
     if [ -f "$lock" ] && kill -0 "$(cat "$lock" 2>/dev/null)" 2>/dev/null; then
@@ -171,7 +186,7 @@ print("%s (%s): %s  [cwd=%s]" % (d["source"], d["match"], d["title"] or "?", d["
       # makes "--model" the prompt. Write mode auto-approves edits only (commands
       # still need review); read mode is plan mode, which writes its plan under
       # ~/.gemini/antigravity-cli/brain/, never into the repo.
-      local aflags=(--output-format stream-json --model "$model")
+      local aflags=(--output-format stream-json --model "$model" --add-dir "$STANDARDS")
       [ -n "$effort" ] && aflags+=(--effort "$effort")
       if [ "$mode" = read ]; then aflags+=(--mode plan); else aflags+=(--mode accept-edits); fi
       ( cd "$repo" && exec agy "${aflags[@]}" -p "$prompt" \
@@ -298,7 +313,7 @@ cmd_say() {
           < /dev/null >> "$ev" 2>> "$err" ) &
       ;;
     agy)
-      local aflags=(--output-format stream-json --conversation "$sid")
+      local aflags=(--output-format stream-json --conversation "$sid" --add-dir "$STANDARDS")
       [ -n "$MODEL" ] && aflags+=(--model "$MODEL")
       [ -n "$EFFORT" ] && aflags+=(--effort "$EFFORT")
       if [ "$MODE" = read ]; then aflags+=(--mode plan); else aflags+=(--mode accept-edits); fi
