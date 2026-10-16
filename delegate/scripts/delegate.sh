@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# Dispatch a delegated coding agent (codex | cursor) as a background process that
+# Dispatch a delegated agent (codex | cursor | agy) as a background process that
 # streams JSONL events to a run directory, so the orchestrator can watch progress,
 # intervene early, and resume with corrections instead of restarting.
 #
-#   delegate.sh start  <codex|cursor> <repo> [--read-only] [--shell]
+#   delegate.sh start  <codex|cursor|agy> <repo> [--read-only] [--shell]
 #                      [--model M] [--effort E] [--plan last|<file>] [<prompt>]
 #   delegate.sh watch  <rundir> [--tail N] [--full]
 #   delegate.sh say    <rundir> [--wait [timeout_s]] [--model M] [--effort E] <prompt>
@@ -17,6 +17,8 @@
 # (override with --model/--effort, or env DELEGATE_CODEX_MODEL/DELEGATE_CODEX_EFFORT).
 # Any slug the account is entitled to works, e.g. gpt-6-astra for the hardest
 # turns. gpt-6-sol needs Codex CLI 0.156.0 or newer; gpt-6-astra needs 0.154.0.
+# agy (Antigravity CLI) runs default to gemini-4-argon-medium (env DELEGATE_AGY_MODEL);
+# the effort level is part of the slug (-low/-medium/-high), so pick it via --model.
 #
 # Run state lives in $DELEGATE_RUNS (default ~/.claude/delegate-runs/<agent>-<ts>).
 set -uo pipefail
@@ -51,7 +53,7 @@ When finished, report the files you changed and the result of any checks you ran
 EOF
 }
 
-# --- session id: codex emits thread.started, cursor emits system/init -----------
+# --- session id: codex emits thread.started, cursor system/init, agy init --------
 sid_of() {
   local ev="$1"
   [ -s "$ev" ] || return 1
@@ -64,6 +66,8 @@ for line in open(sys.argv[1]):
         print(e["thread_id"]); break
     if e.get("type")=="system" and e.get("session_id"):
         print(e["session_id"]); break
+    if e.get("event")=="init" and e.get("conversation_id"):
+        print(e["conversation_id"]); break
 PY
 }
 
@@ -86,6 +90,8 @@ cmd_start() {
   if [ "$agent" = codex ]; then
     model="${model:-${DELEGATE_CODEX_MODEL:-gpt-6-sol}}"
     effort="${effort:-${DELEGATE_CODEX_EFFORT:-medium}}"
+  elif [ "$agent" = agy ]; then
+    model="${model:-${DELEGATE_AGY_MODEL:-gemini-4-argon-medium}}"
   fi
   local prompt="$*"
   [ -d "$repo" ] || die "no such repo: $repo"
@@ -160,7 +166,18 @@ print("%s (%s): %s  [cwd=%s]" % (d["source"], d["match"], d["title"] or "?", d["
       ( cd "$repo" && exec cursor-agent "${flags[@]}" "$prompt" \
           < /dev/null > "$ev" 2> "$err" ) &
       ;;
-    *) die "unknown agent: $agent (want codex|cursor)";;
+    agy)
+      # -p takes the prompt as ITS value, so it must come last: `agy -p --model X "..."`
+      # makes "--model" the prompt. Write mode auto-approves edits only (commands
+      # still need review); read mode is plan mode, which writes its plan under
+      # ~/.gemini/antigravity-cli/brain/, never into the repo.
+      local aflags=(--output-format stream-json --model "$model")
+      [ -n "$effort" ] && aflags+=(--effort "$effort")
+      if [ "$mode" = read ]; then aflags+=(--mode plan); else aflags+=(--mode accept-edits); fi
+      ( cd "$repo" && exec agy "${aflags[@]}" -p "$prompt" \
+          < /dev/null > "$ev" 2> "$err" ) &
+      ;;
+    *) die "unknown agent: $agent (want codex|cursor|agy)";;
   esac
   local pid=$!
 
@@ -280,6 +297,14 @@ cmd_say() {
       ( cd "$REPO" && exec cursor-agent "${rflags[@]}" "$prompt" \
           < /dev/null >> "$ev" 2>> "$err" ) &
       ;;
+    agy)
+      local aflags=(--output-format stream-json --conversation "$sid")
+      [ -n "$MODEL" ] && aflags+=(--model "$MODEL")
+      [ -n "$EFFORT" ] && aflags+=(--effort "$EFFORT")
+      if [ "$MODE" = read ]; then aflags+=(--mode plan); else aflags+=(--mode accept-edits); fi
+      ( cd "$REPO" && exec agy "${aflags[@]}" -p "$prompt" \
+          < /dev/null >> "$ev" 2>> "$err" ) &
+      ;;
   esac
   local pid=$!
   set_meta "$run" PID "$pid"
@@ -314,7 +339,7 @@ cmd_plan() { python3 "$LASTPLAN" "$@"; }
 [ $# -ge 1 ] || die "usage: delegate.sh {start|watch|say|reply|wait|stop|sid|plan} ..."
 sub="$1"; shift
 case "$sub" in
-  start) [ $# -ge 3 ] || die "start <codex|cursor> <repo> [--read-only] [--shell] [--model M] [--effort E] [--plan last|<file>] [<prompt>]"; cmd_start "$@";;
+  start) [ $# -ge 3 ] || die "start <codex|cursor|agy> <repo> [--read-only] [--shell] [--model M] [--effort E] [--plan last|<file>] [<prompt>]"; cmd_start "$@";;
   plan)  cmd_plan "$@";;
   watch) [ $# -ge 1 ] || die "watch <rundir>"; cmd_watch "$@";;
   say)   [ $# -ge 2 ] || die "say <rundir> [--wait [timeout_s]] [--model M] [--effort E] <prompt>"; cmd_say "$@";;

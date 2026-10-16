@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""Collapse a Codex/Cursor JSONL event stream into a compact progress digest.
+"""Collapse a Codex/Cursor/agy JSONL event stream into a compact progress digest.
 
-Reads events.jsonl (mixed codex `item.completed` / cursor `tool_call` shapes) and
+Reads events.jsonl (codex `item.completed` / cursor `tool_call` / agy `step_update`
+shapes) and
 prints one line per meaningful action. Thinking deltas are dropped -- they are the
 bulk of the stream and none of the signal.
 """
@@ -97,6 +98,35 @@ def parse(path, root=None):
                         usage[k] = usage.get(k, 0) + v
                 if e.get("is_error"):
                     lines.append(("fail", truncate(e.get("result", "error"), 200)))
+
+            # --- agy (Antigravity CLI): keyed on "event", not "type" ---
+            elif e.get("event") == "init":
+                agent, session = "agy", e.get("conversation_id")
+                markers.append(len(lines))
+            elif e.get("event") == "step_update":
+                st = e.get("step_update") or {}
+                if st.get("step_type") != "tool" or st.get("state") != "DONE":
+                    continue
+                name = st.get("tool_name", "?")
+                params = (st.get("tool_info") or {}).get("parameters") or {}
+                if "CommandLine" in params:
+                    lines.append(("cmd", truncate(params["CommandLine"], 100)))
+                elif "TargetFile" in params:
+                    lines.append(("edit", f"{name} {rel(params['TargetFile'])}"))
+                else:
+                    lines.append(("tool", truncate(name, 60)))
+            elif e.get("event") == "result":
+                r = e.get("result") or {}
+                turns_done += 1
+                for k, v in (r.get("usage") or {}).items():
+                    if isinstance(v, int):
+                        usage[k] = usage.get(k, 0) + v
+                # The response carries the turn's full text; per-step text arrives
+                # only as deltas, so this is the one place to read the message.
+                if r.get("response", "").strip():
+                    lines.append(("msg", r["response"]))
+                if r.get("status") != "SUCCESS":
+                    lines.append(("fail", truncate(r.get("status", "error"), 200)))
 
     return agent, session, usage, turns_done, lines, markers
 

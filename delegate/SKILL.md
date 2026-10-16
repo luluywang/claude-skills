@@ -1,14 +1,15 @@
 ---
 name: delegate
 description: Delegate coding work to cheaper CLI agents (Codex via `codex exec`,
-  Cursor via cursor-agent) to stretch the Claude subscription. Routes tasks by cost
+  Cursor via cursor-agent) to stretch the Claude subscription, and prose writing
+  tasks to Gemini 4 Argon via the Antigravity CLI (`agy`). Routes tasks by cost
   tier (Claude=1.0, Codex=0.5, Cursor=0.1), runs them as watchable background jobs,
   and verifies the result before reporting back. Can pick up the most recent Claude
   Code plan ('/delegate last plan') and hand it to a cheaper agent to execute.
   Supports multi-turn driving of a Codex session ('/delegate codex convo' turns
   the Claude session into a passthrough relay). Activate when the user invokes
   '/delegate', says 'delegate this', 'delegate the last plan', 'send this to
-  codex/cursor', 'codex convo', or asks to save Claude tokens on a coding task.
+  codex/cursor/gemini/agy/antigravity', 'codex convo', or asks to save Claude tokens on a coding task.
 ---
 
 # Delegate
@@ -30,6 +31,11 @@ resuming the agent's session instead of making it start over.
 | Cursor | 0.1          | `delegate.sh start cursor` |
 | Codex  | 0.5          | `delegate.sh start codex` |
 | Claude | 1.0          | do it yourself / Agent subagent |
+| agy (Gemini 4 Argon) | separate Google quota | `delegate.sh start agy` |
+
+agy sits outside the cost ladder: it is the **writing route**, not a cheaper
+coder. It bills against the Google/Antigravity plan, so it spends neither the
+Claude nor the OpenAI budget.
 
 **Default down, escalate up.** Start with the cheapest tier that plausibly handles
 the task. If the result fails verification once, correct it in-session with `say`;
@@ -47,6 +53,10 @@ a task moves up a tier and why.
   backend logic, intricate algorithm work, persistent bugs that resisted 2+ fix
   attempts, race conditions and concurrency issues, unclear root causes, deep
   multi-file features from a clear spec, second-opinion diagnosis or code review.
+- **agy / Gemini 4 Argon** — prose writing tasks: drafting a section from an
+  outline, rewriting or tightening paragraphs, first drafts of response letters,
+  READMEs, docs. Not code. Claude still owns the spec (what to say, which rules
+  apply) and the review.
 - **Claude (1.0)** — reserve for what the cheaper tiers can't do: ambiguous
   scoping, work requiring conversation context or user preferences, economics/
   domain judgment, anything touching skills in this repo, and the verification
@@ -70,6 +80,10 @@ override persists for later turns of that session). Env defaults:
 `DELEGATE_CODEX_MODEL`, `DELEGATE_CODEX_EFFORT`. Tune effort to the turn: `low`
 for lookups and mechanical follow-ups, `high`/`xhigh` for the hard diagnosis
 turn — Sol is built to start low and turn up.
+
+agy runs default to **`gemini-4-argon-medium`** (env `DELEGATE_AGY_MODEL`).
+The effort level is part of the slug, so switch it with `--model
+gemini-4-argon-high` (or `-low`), not `--effort`. List slugs with `agy models`.
 
 ### Which model
 
@@ -247,6 +261,18 @@ source, match kind, title, and `cwd` — and confirm before a write-mode run.
 across machines, so most of its plans name working directories that don't exist
 here. `plan --list` marks those `[cwd missing here]`.
 
+### Writing tasks for agy
+
+The user's writing preferences are the spec, and agy does not know them. So the
+prompt must carry them: paste the rules that apply (from the `writing_standards`
+skill, the paper's own conventions, the target register) into the prompt text.
+Do not just name the file. Give agy the exact file and the span to rewrite, and
+say what must stay fixed (numbers, citations, LaTeX macros, claims).
+
+Verification for prose: read the full diff yourself against those same rules.
+For anything that will leave the user's hands, consider a `/pangram` or
+`/copyedit` pass. Correct with `say` as for code.
+
 ## Writing the delegated prompt
 
 The delegate has none of this conversation's context. The prompt must be
@@ -280,8 +306,9 @@ not an estimate.
 
 ## Guardrails
 
-- Never delegate work on this skills repo, memory files, or anything where the
-  user's preferences are the spec — cheaper agents don't know them.
+- Never delegate work on this skills repo or memory files. Where the user's
+  preferences are the spec (most writing), delegate only if the prompt carries
+  those preferences in full — cheaper agents don't know them otherwise.
 - Never pass `--yolo` or sandbox-bypass flags. Codex runs under `workspace-write`
   (or `read-only`); Cursor's `--shell` uses `--force --sandbox enabled` so commands
   run sandboxed rather than unsandboxed. Don't reach past the script for more.
@@ -315,5 +342,15 @@ Recorded because each one silently corrupts a hand-rolled invocation:
   need `--trust`.
 - **Cursor's `--output-format text` prints nothing on a resumed session.** Only
   `stream-json` shows the reply — which is why every run uses stream-json.
+- **agy's `-p` takes the prompt as its own value.** `agy -p --model X "..."`
+  makes `--model` the prompt and fails. All flags go before `-p "<prompt>"`.
+- **agy write mode is `--mode accept-edits`**: file edits auto-approve, shell
+  commands do not. Read mode is `--mode plan`, which writes its plan under
+  `~/.gemini/antigravity-cli/brain/`, never into the repo. Never pass
+  `--dangerously-skip-permissions`.
+- **agy events key on `event`, not `type`.** The full reply text arrives only in
+  the final `result.response`; mid-turn text is token deltas. So `watch` shows
+  agy's tool steps live but its message only once the turn ends.
 - Session id lands on the first event: `thread.started.thread_id` (Codex),
-  `system/init.session_id` (Cursor). The script captures it into `meta.env`.
+  `system/init.session_id` (Cursor), `init.conversation_id` (agy, resumed with
+  `--conversation <id>`). The script captures it into `meta.env`.
