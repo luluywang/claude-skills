@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 #
 # Log sync installer for Claude Code.
-# Copies skill files to ~/.claude/skills/log_sync/ and wires the jq-free
-# session logger to BOTH the Stop hook (fires every turn -> continuous, so
-# killed sessions are still captured) and the SessionEnd hook.
+# Copies skill files to ~/.claude/skills/log_sync/ and wires one hook script to
+# Stop (every turn, so killed sessions are still captured), SessionEnd, and
+# SessionStart (background collect + pull + archive). Per-machine settings live
+# in ~/.claude/hooks/log_sync.conf (see references/setup.md).
 #
 set -euo pipefail
+command -v python3 >/dev/null || { echo "python3 is required" >&2; exit 1; }
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
@@ -18,8 +20,10 @@ HOOK_LINK="$HOOKS_DIR/log-sync-session-log.sh"
 HOOK_COMMAND="~/.claude/hooks/log-sync-session-log.sh"
 
 # Old hook links/commands to retire on upgrade.
-OLD_HOOK_LINKS=("$HOOKS_DIR/export-session.sh" "$HOOKS_DIR/log-sync-session-end.sh")
-OLD_HOOK_COMMANDS=("~/.claude/hooks/export-session.sh" "~/.claude/hooks/log-sync-session-end.sh")
+OLD_HOOK_LINKS=("$HOOKS_DIR/export-session.sh" "$HOOKS_DIR/log-sync-session-end.sh"
+                "$HOOKS_DIR/log-sync-hpc-pull.sh")
+OLD_HOOK_COMMANDS=("~/.claude/hooks/export-session.sh" "~/.claude/hooks/log-sync-session-end.sh"
+                   "~/.claude/hooks/log-sync-hpc-pull.sh")
 
 safe_copy() {
   local src="$1"
@@ -37,16 +41,23 @@ echo "Installing log_sync..."
 mkdir -p "$SKILL_DIR/hooks"
 mkdir -p "$SKILL_DIR/scripts"
 
-safe_copy "$SCRIPT_DIR/SKILL.md"                   "$SKILL_DIR/SKILL.md"
-safe_copy "$SCRIPT_DIR/install.sh"                 "$SKILL_DIR/install.sh"
-safe_copy "$SCRIPT_DIR/hooks/session_log.sh"       "$SKILL_DIR/hooks/session_log.sh"
-safe_copy "$SCRIPT_DIR/hooks/session_end.sh"       "$SKILL_DIR/hooks/session_end.sh"  # deprecated shim
-safe_copy "$SCRIPT_DIR/scripts/detect_machine.sh"  "$SKILL_DIR/scripts/detect_machine.sh"
-safe_copy "$SCRIPT_DIR/scripts/sync.sh"            "$SKILL_DIR/scripts/sync.sh"
-
-chmod +x "$SKILL_DIR/install.sh" "$SKILL_DIR/hooks/session_log.sh" \
-         "$SKILL_DIR/hooks/session_end.sh" "$SKILL_DIR/scripts/detect_machine.sh" \
-         "$SKILL_DIR/scripts/sync.sh"
+safe_copy "$SCRIPT_DIR/SKILL.md"   "$SKILL_DIR/SKILL.md"
+safe_copy "$SCRIPT_DIR/install.sh" "$SKILL_DIR/install.sh"
+for file in "$SCRIPT_DIR"/hooks/*.sh; do
+  safe_copy "$file" "$SKILL_DIR/hooks/$(basename "$file")"
+done
+for file in "$SCRIPT_DIR"/scripts/*.py "$SCRIPT_DIR"/scripts/*.sh; do
+  safe_copy "$file" "$SKILL_DIR/scripts/$(basename "$file")"
+done
+mkdir -p "$SKILL_DIR/references"
+for file in "$SCRIPT_DIR"/references/*; do
+  safe_copy "$file" "$SKILL_DIR/references/$(basename "$file")"
+done
+# Retired by logsync.py.
+rm -f "$SKILL_DIR/scripts/sync_transcripts.py" "$SKILL_DIR/scripts/pull_hpc.sh" \
+      "$SKILL_DIR/hooks/hpc_pull.sh"
+chmod +x "$SKILL_DIR"/install.sh "$SKILL_DIR"/hooks/*.sh "$SKILL_DIR"/scripts/*.sh \
+         "$SKILL_DIR"/scripts/*.py
 
 echo "  Installed skill files to $SKILL_DIR"
 
@@ -66,7 +77,7 @@ for old in "${OLD_HOOK_LINKS[@]}"; do
   fi
 done
 
-# ── Ensure Stop + SessionEnd hooks in settings.json ──────────────────────────
+# ── Ensure Stop + SessionEnd + SessionStart hooks in settings.json ──────────────────────────
 
 ensure_hooks() {
   local settings_path="$1"
@@ -75,13 +86,13 @@ ensure_hooks() {
   local old_commands=("$@")
 
   if ! command -v python3 >/dev/null 2>&1; then
-    echo "  python3 not found; add Stop + SessionEnd hooks manually -> $hook_command" >&2
+    echo "  python3 not found; add Stop, SessionEnd and SessionStart hooks manually -> $hook_command" >&2
     return 0
   fi
 
   OLD_COMMANDS_CSV="$(IFS=,; echo "${old_commands[*]}")" \
   python3 - "$settings_path" "$hook_command" <<'PY'
-import json, os, sys
+import json, os, sys, shutil, tempfile
 
 settings_path = sys.argv[1]
 hook_command = sys.argv[2]
@@ -93,17 +104,19 @@ if os.path.exists(settings_path):
             data = json.load(f)
     except json.JSONDecodeError:
         print(f"  settings is not valid JSON ({settings_path}); add hooks manually.", file=sys.stderr)
-        sys.exit(0)
+        sys.exit(1)
 else:
     data = {}
 
 if not isinstance(data, dict):
     print(f"  settings root is not an object ({settings_path}); add hooks manually.", file=sys.stderr)
-    sys.exit(0)
+    sys.exit(1)
 
-container = data["hooks"] if isinstance(data.get("hooks"), dict) else data
+container = data.setdefault("hooks", {})
+if not isinstance(container, dict):
+    raise ValueError("settings.hooks must be an object")
 
-for event in ("Stop", "SessionEnd"):
+for event in ("Stop", "SessionEnd", "SessionStart"):
     entries = container.get(event)
     if not isinstance(entries, list):
         entries = []
@@ -133,9 +146,13 @@ for event in ("Stop", "SessionEnd"):
         print(f"  {event} hook already configured")
 
 os.makedirs(os.path.dirname(settings_path), exist_ok=True)
-with open(settings_path, "w", encoding="utf-8") as f:
+if os.path.exists(settings_path):
+    shutil.copy2(settings_path, settings_path + ".log-sync-backup")
+fd, temp = tempfile.mkstemp(dir=os.path.dirname(settings_path))
+with os.fdopen(fd, "w", encoding="utf-8") as f:
     json.dump(data, f, indent=2)
     f.write("\n")
+os.replace(temp, settings_path)
 PY
 }
 
@@ -144,6 +161,6 @@ ensure_hooks "$SETTINGS_PATH" "$HOOK_COMMAND" "${OLD_HOOK_COMMANDS[@]}"
 echo ""
 echo "Done."
 echo ""
-echo "Transcripts are logged continuously (Stop hook) and on exit (SessionEnd),"
-echo "so sessions that are killed rather than ended cleanly are still captured."
-echo "Use /log_sync for manual bulk sync of raw logs."
+echo "Each turn (Stop) and exit (SessionEnd) backs up the current session; each"
+echo "SessionStart runs collect + pull + archive in the background (at most every"
+echo "RUN_INTERVAL_HOURS). /log_sync runs the same pipeline in the foreground."

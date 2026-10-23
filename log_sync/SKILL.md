@@ -1,141 +1,60 @@
 ---
 name: log_sync
-description: |
-  Session transcript export and cross-machine log sync. A jq-free logger runs
-  on both the Stop hook (every turn) and SessionEnd, copying each transcript to
-  ~/claude-logs/<project>/ continuously — so sessions that are killed rather
-  than exited cleanly are still captured.
-  The /log_sync command bulk-syncs raw Claude logs via rsync.
-  scripts/archive_logs.py compacts the log corpus (zstd archive plus a
-  readable .condensed.md digest per session).
-  Only activate when user explicitly invokes '/log_sync' or '/log_sync --dry-run'.
+description: Back up Claude Code session transcripts to Dropbox, including historical sessions, subagent logs, and HPC sessions, and archive them losslessly. Activate when explicitly asked to run /log_sync or repair transcript backups.
 ---
 
 # Log Sync
 
-## 1. Automatic session export (continuous)
+Run `bash ~/.claude/skills/log_sync/scripts/sync.sh` for `/log_sync`.
+For `/log_sync --dry-run`, add `--dry-run`; it writes nothing.
+Report the actual counts and destination, and surface any errors.
 
-`hooks/session_log.sh` is wired to **two** hooks in `settings.json`:
+Everything is `scripts/logsync.py`: three steps composed by `run`.
 
-- **`Stop`** — fires at the end of every assistant turn, so logging is
-  continuous. If a session is later *killed* (e.g. a `/remote-control` bridge
-  whose login-node connection drops), its transcript is already captured up to
-  the last completed turn instead of being lost.
-- **`SessionEnd`** — fires on graceful exit as a final snapshot.
+| Step | What it does |
+|---|---|
+| `collect` | Copies changed files from `~/.claude` (projects incl. subagents and tool results, delegate-runs, logs, debug, other JSONL history; not skills, plugins, settings or credentials) into this host's entries. Unchanged files are skipped by size+mtime (copies carry the source mtime, archives too), changed ones are hash-verified and atomically published. |
+| `pull` | `rsync` of `PULL_FROM`'s store into this one. No-op where unset. |
+| `archive` | Compresses this host's transcripts idle for 3+ days to `.jsonl.zst` (hash-verified before the original goes) and writes a `.condensed.md` digest. Resolves a `.jsonl` beside its `.zst`: deletes it if the archive already contains it, re-archives if it extends the archive (a resumed session), reports a CONFLICT and keeps both if the contents diverge. |
 
-Each run:
+Hooks (one script, `hooks/session_log.sh`, registered by `install.sh`):
+Stop and SessionEnd collect the current session; SessionStart starts `run` in
+the background at most every `RUN_INTERVAL_HOURS` (default 6). Hooks rather than
+launchd/cron: macOS blocks background jobs from writing to `~/Library/CloudStorage`.
+Background runs log to `~/.claude/log_sync_state/run.log`.
 
-1. Reads `transcript_path`, `session_id`, and `cwd` from the hook input using
-   **pure bash — no `jq`**. (On the HPC `jq` is module-only and absent from the
-   default PATH; the old jq-based hook silently logged nothing whenever it
-   wasn't loaded.)
-2. Derives the project name (git root basename → cwd basename → encoded-dir tail).
-3. Copies the transcript to `<dest>/<project>/<host>_<session>.jsonl`.
+## Store layout
 
-The filename is **keyed on the session id** (no copy-time in the name), so the
-repeated Stop writes overwrite the same file in place rather than piling up one
-duplicate per turn.
-
-### Configuration
-
-Destination root resolution: `CLAUDE_LOG_DIR` (if set) → `~/Library/CloudStorage/Dropbox/claude-logs`
-(if Dropbox exists) → `~/claude-logs`. Config is read from
-`~/.claude/hooks/log_sync.conf` (falls back to `export-session.conf`):
+The same on every machine (Dropbox `claude-logs` on the Macs, `~/claude-logs`
+on Quest):
 
 ```
-CLAUDE_LOG_DIR=/path/to/logs   # override destination root
+<project>/<host>_<session>.jsonl         live transcript
+<project>/<host>_<session>.jsonl.zst     same, once idle
+<project>/<host>_<session>.condensed.md  readable digest (truncated; not the full record)
+<project>/<host>_<session>/...           subagents, tool results
+_machine/<host>/...                      everything else from ~/.claude, paths preserved
 ```
 
-`hooks/session_end.sh` remains as a deprecated shim that delegates to
-`session_log.sh`, so any lingering reference keeps working. The old hook's
-laptop-side background HPC pull (`HPC_HOST`/`HPC_LOG_DIR`/`HPC_SSH_TIMEOUT`)
-was dropped with it — use `/log_sync` for cross-machine sync.
+`<project>` is the basename of the cwd the session started in. Each host owns
+the entries carrying its name: only the owner collects and compresses them,
+other stores mirror them through `pull`. Quest's login nodes share one home, so
+they use one name, `quest` (`LOG_HOST`).
 
-## 2. Manual bulk sync (`/log_sync`)
+Machines: the Macs pull Quest (`PULL_FROM`); Quest compresses its own entries,
+so the Macs download them already archived. Setup: [setup](references/setup.md).
 
-Syncs raw Claude Code session logs from the current machine to Dropbox.
-
-### Invocation
-
-```
-/log_sync              # Sync logs to Dropbox
-/log_sync --dry-run    # Preview what would be synced (no changes made)
-```
-
-### How it works
-
-1. **Detect machine** — `scripts/detect_machine.sh` checks hostname for HPC
-   patterns (`cluster`, `hpc`, `slurm`, known HPC domains). Sets `LOG_SOURCE_DIR`.
-2. **Rsync** — `scripts/sync.sh` rsyncs `LOG_SOURCE_DIR` to
-   `~/Dropbox/claude-logs/claude/` with `--archive --compress --update` flags.
-3. **Log** — Appends a timestamped entry to `~/Dropbox/claude-logs/sync.log`
-   with machine name, source path, and count of files transferred.
-
-### Output
+## Manual use
 
 ```
-[log_sync] Machine: MacBook-Pro (local)
-[log_sync] Source:  ~/Library/Application Support/Claude/logs/
-[log_sync] Dest:    ~/Dropbox/claude-logs/claude/
-[log_sync] Synced:  12 files
-[log_sync] Log:     ~/Dropbox/claude-logs/sync.log
+python3 scripts/logsync.py run|collect|pull|archive [--dry-run]
+python3 scripts/logsync.py archive --min-age-days 0 --all-hosts   # force everything
+python3 scripts/condense_log.py <file.jsonl[.zst]>                # digest one file
+zstd -dc --long=31 file.jsonl.zst | less                          # read an archive
 ```
 
-In dry-run mode, files are listed but nothing is transferred or logged.
-
-## 3. Two-tier log archival (`scripts/archive_logs.py`)
-
-Keeps the log corpus small while preserving both the full record and a
-readable digest. For every `<name>.jsonl` (or legacy `.jsonl.gz`) under
-`~/Dropbox/claude-logs/`:
-
-- **Condensed tier** — `<name>.condensed.md`, plain markdown readable without
-  decompression. Keeps user messages, assistant text and thinking, tool calls,
-  and truncated tool results; drops file snapshots, base64 images, signatures,
-  and UI bookkeeping rows. Typically ~1–5% of the raw size.
-- **Archive tier** — `<name>.jsonl.zst` via `zstd -19 --long=27` (about 2×
-  smaller than gzip on transcripts). The round-trip is hash-verified before
-  the original is deleted. Legacy `.gz` files are transcoded to `.zst`.
-
-Idempotent (filesystem state is the manifest) and safe to re-run any time:
-
-```
-python3 scripts/archive_logs.py                # archive everything
-python3 scripts/archive_logs.py --dry-run      # list what would change
-python3 scripts/archive_logs.py --limit 50     # batch test
-python3 scripts/condense_log.py <file.jsonl[.gz|.zst]>   # condense one file
-```
-
-It also migrates key names in `self-improve-cache/manifest.json` so the
-self-improve scan cache survives the rename. To read an archive:
-`zstd -dc --long=31 file.jsonl.zst | less`. The self-improve scripts read
-`.jsonl.zst` natively; its old `compress_logs.py` is a shim that delegates here.
-
-## Machine detection logic
-
-| Hostname pattern | Machine type | Log source |
-|-----------------|--------------|------------|
-| Contains `cluster`, `hpc`, `slurm`, or known HPC domain suffix | HPC cluster | `~/.claude/logs/` |
-| Otherwise | Local Mac | `~/Library/Application Support/Claude/logs/` |
-
-To override detection, set `LOG_SOURCE_DIR` in the environment before calling `sync.sh`.
-
-For first-time setup on a new machine, see [`references/setup.md`](references/setup.md).
-
-## Files
-
-```
-log_sync/
-├── SKILL.md                    # This document
-├── install.sh                  # Installer (copies + symlinks + wires Stop & SessionEnd)
-├── references/
-│   └── setup.md                # Cross-machine setup guide (Mac, HPC, manual)
-├── hooks/
-│   ├── session_log.sh          # Active jq-free logger (wired to Stop + SessionEnd)
-│   └── session_end.sh          # Deprecated shim -> delegates to session_log.sh
-└── scripts/
-    ├── detect_machine.sh       # Sets LOG_SOURCE_DIR; prints install command when run directly
-    ├── sync.sh                 # Rsyncs raw logs, writes sync.log entry
-    ├── condense_log.py         # One transcript -> readable .condensed.md
-    └── archive_logs.py         # Walk log tree: condense + zstd-archive + verify
-```
+`archive` keeps `self-improve-cache/manifest.json` keyed by current paths.
+`scripts/archive_logs.py` is a shim for self-improve's `compress_logs.py`.
+`logsync.py migrate --host-map old=new,...` folded the pre-2026-10 layouts
+(`raw/`, `hpc/`, timestamped names, per-turn-cwd duplicates) into this one;
+it is idempotent and keeps the longest copy of each file.
