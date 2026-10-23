@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Install skills to ~/.claude/skills/ (and global/CLAUDE.md to ~/.claude/CLAUDE.md on a full run)
+# Install skills to ~/.claude/skills/ (and global/CLAUDE.md to ~/.claude/CLAUDE.md on a full run),
+# then wire the hooks of skills that have them. Safe to re-run: this is the one update button.
 # Usage: ./install.sh           (all skills)
 #        ./install.sh econ_ra   (single skill)
 
@@ -7,6 +8,11 @@ set -euo pipefail
 
 SRC_DIR="$(cd "$(dirname "$0")" && pwd)"
 DEST_DIR="$HOME/.claude/skills"
+
+# Skills whose own install.sh registers hooks in settings.json; each is re-run from its
+# installed copy (file copies are then no-ops) and is idempotent. taskmaster is left out on
+# purpose: its Stop hook forces sessions to continue and stays opt-in.
+HOOK_SKILLS=(log_sync)
 
 # Skills = directories containing SKILL.md
 if [[ $# -gt 0 ]]; then
@@ -44,5 +50,12 @@ if [[ $# -eq 0 && -f "$SRC_DIR/global/CLAUDE.md" ]]; then
     cp "$SRC_DIR/global/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
     echo "OK    global/CLAUDE.md -> ~/.claude/CLAUDE.md"
 fi
+
+for skill in "${HOOK_SKILLS[@]}"; do
+    if [[ " ${SKILLS[*]} " == *" $skill "* && -f "$DEST_DIR/$skill/install.sh" ]]; then
+        echo "HOOKS $skill"
+        bash "$DEST_DIR/$skill/install.sh" | sed 's/^/      /'
+    fi
+done
 
 echo "Installed ${#SKILLS[@]} skill(s) to $DEST_DIR"

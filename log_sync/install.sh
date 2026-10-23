@@ -94,7 +94,9 @@ ensure_hooks() {
   python3 - "$settings_path" "$hook_command" <<'PY'
 import json, os, sys, shutil, tempfile
 
-settings_path = sys.argv[1]
+# Resolve symlinks so the write goes to the real file: ~/.claude/settings.json may
+# link into a synced config folder, and os.replace on the link would sever it.
+settings_path = os.path.realpath(sys.argv[1])
 hook_command = sys.argv[2]
 old_commands = [c for c in os.environ.get("OLD_COMMANDS_CSV", "").split(",") if c]
 
