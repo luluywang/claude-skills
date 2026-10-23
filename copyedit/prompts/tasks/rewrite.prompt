@@ -54,6 +54,8 @@ Scan the section against all applicable principles (see Principle Reference belo
 - What the fix is
 - Whether any claim overshoots the evidence (Principle #15). For each result statement, check: does the verb match the identification strategy? Does the scope match the data?
 
+If the target reports results, estimates, or model findings, read the cited tables, the number macros' values, and the neighboring paragraphs, then apply @prompts/shared/results_rigor.md.
+
 ### 4. Rewrite
 
 Produce a rewritten version of the entire target section. The rewrite must:

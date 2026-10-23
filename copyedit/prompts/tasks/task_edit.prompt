@@ -92,6 +92,8 @@ Do exactly what the user asked. This is the primary goal. Examples:
 - **Delete content**: Remove the specified passage, smoothing the transition
 - **Rephrase**: Rewrite the specified passage to achieve the stated goal (clearer, shorter, etc.)
 
+If the task drafts or revises text that reports results, estimates, or model findings, read the cited tables, the number macros' values, and the neighboring paragraphs, then apply @prompts/shared/results_rigor.md.
+
 **Preserve during execution:**
 - All LaTeX commands, labels, references, equations not involved in the task
 - The argument's logical structure and claims
