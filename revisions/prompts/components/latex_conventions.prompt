@@ -71,27 +71,6 @@ Responses always begin with `\textbf{Reply:}` (with a space after the colon), im
 
 - `\scalarinput{variable_name}` — pulls a computed value from a separate file (common in reproducible economics papers)
 
-## LLM Edit Tagging
-
-All content written or modified by LLM agents MUST be wrapped in `\begin{llm}...\end{llm}` tags for user review tracking:
-
-```latex
-\begin{llm}
-The results are weaker once we use the full sample, with the F-statistic
-declining from 23 to 4 in the services subsample.
-\end{llm}
-```
-
-**Rules for LLM tags:**
-- Wrap the **minimum necessary** text — the sentence or paragraph actually added/changed
-- Do NOT wrap surrounding unchanged text
-- For multi-paragraph additions, one `\begin{llm}...\end{llm}` block is fine
-- Tags are stripped by the user before final submission — they are review markers only
-- If the `llm` environment is not defined in the manuscript preamble, add:
-  ```latex
-  \newenvironment{llm}{}{}  % LLM-written content marker (strip before submission)
-  ```
-
 ## Common Manuscript Structure
 
 Economics papers typically follow:

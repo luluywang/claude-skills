@@ -347,7 +347,7 @@ The gate covers both **Proposed Revision** text and **rationale fields** (Commen
 | relevance | notes/raw/relevance_audit.md | yes — proposal context | check each proposed rewrite |
 | review_digest.md | (digest) | yes — Self-Screen Pass (Step 3.5) | check Self-Screen Log at end of digest |
 
-Tasks exempt from the gate (no prose emitted): grammar, structure, methodology, flow_extraction, deduplication, number_fix, interactive_review, strip_llm, reflow, reflow_verify.
+Tasks exempt from the gate (no prose emitted): grammar, structure, methodology, flow_extraction, deduplication, number_fix, interactive_review, reflow, reflow_verify.
 
 If any in-scope task is missing gate evidence, log it in the summary as a quality warning.
 

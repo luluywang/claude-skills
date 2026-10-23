@@ -42,8 +42,7 @@ For each passage, in order of importance:
 1. **Read the surrounding context** (3-5 sentences before and after)
 2. **Draft the edit** following the target structure
 3. **Check consistency** with already-edited passages
-4. **Tag edits** with `\begin{llm}...\end{llm}` markers
-5. **Verify** no broken cross-references, labels, or citations
+4. **Verify** no broken cross-references, labels, or citations
 
 ### Editing Priorities
 

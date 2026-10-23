@@ -335,7 +335,7 @@ Context:
 - Iteration: {N}
 ```
 
-The fixer.prompt file owns the procedural steps (read issues, consult souls, verify notation, edit, tag with `\begin{llm}…\end{llm}`, write iteration JSON, append changelog, commit). Do not duplicate them here.
+The fixer.prompt file owns the procedural steps (read issues, consult souls, verify notation, edit, write iteration JSON, append changelog, commit). Do not duplicate them here.
 
 ### Step 4: Spawn Critic Subagent (Opus)
 

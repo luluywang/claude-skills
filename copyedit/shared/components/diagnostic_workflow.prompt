@@ -40,21 +40,3 @@ Options:
 ```
 
 **Note:** Reflow runs before other tasks. It preserves abbreviations and skips math environments.
-
----
-
-## Question Set 3: LLM Tagging (.tex Files Only)
-
-```
-Question: "Wrap LLM changes in \\begin{llm}...\\end{llm} for review tracking?"
-Header: "LLM tagging"
-MultiSelect: false
-Options:
-  - Label: "Yes (Recommended)"
-    Description: "Easier to identify and batch-review changes"
-
-  - Label: "No"
-    Description: "Apply changes directly without tagging"
-```
-
-**Note:** Only show this question for .tex files. When enabled, all LLM-made changes are wrapped in `\begin{llm}...\end{llm}` blocks, making them easy to identify during review. Tags can be stripped later with the `strip_llm` task.

@@ -119,7 +119,7 @@ When analyzing a file, append to BOTH `ai_detection.md` and `simplifications.md`
 
 ### LLM Section Checklist (verify by rule ID)
 
-Before finalizing flags for any LLM-tagged or suspected-LLM section, verify these rules and patterns are enforced. Bodies are in `writing_quality_standards.md`.
+Before finalizing flags for any suspected-LLM section, verify these rules and patterns are enforced. Bodies are in `writing_quality_standards.md`.
 
 - [ ] R-RAP — does the opening create tension, or just announce the topic? (Introduction context)
 - [ ] R-TRIANGULAR — body paragraphs state result before mechanism

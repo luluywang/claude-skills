@@ -8,7 +8,7 @@
 
 1. **Bootstrap** → Detect state (fresh or resume)
 2. **Interpret request** → Determine which tasks are needed
-3. **Diagnostic questions** → Determine file scope, reflow, and LLM tagging
+3. **Diagnostic questions** → Determine file scope and reflow
 4. **Task enumeration** → Generate (file, task) pairs
 4.5. **Task preview** → Show full task table, get user confirmation
 5. **Output setup** → Initialize `notes/` directory
@@ -46,7 +46,6 @@ These fields are written/updated by ai_detection subagents as they finish each f
 ```json
 {
   "created": "ISO timestamp",
-  "llm_tagging": true,
   "tasks": [
     {"id": 1, "file": "intro.tex", "task": "grammar", "model": "haiku", "status": "pending"},
     {"id": 2, "file": "intro.tex", "task": "ai_detection", "model": "haiku", "status": "pending"},
@@ -60,8 +59,6 @@ These fields are written/updated by ai_detection subagents as they finish each f
   ]
 }
 ```
-
-**New field:** `llm_tagging` (boolean) - When true, subagents wrap all changes in `\begin{llm}...\end{llm}` blocks for review tracking. Only applies to .tex files.
 
 **Key:** Each (file, task) pair is a separate entry. Subagents read their own prompt files.
 
@@ -352,7 +349,7 @@ subagents to do the editing** — that discards the judgment this path exists fo
 1. Read `prompts/tasks/implement.prompt` for full instructions
 2. Strip flags: `--dry-run`, `--min-severity=<tier>`. Parse optional scope (file / range / section)
 3. Locate proposals: `notes/review_digest.md` (preferred) → individual `notes/raw/*.md` proposal files (legacy fallback). If none exist, stop and tell the user to run `/copyedit review` first
-4. Load author context: voice (`.copyedit_status`), load-bearing terms, banned phrases, `llm_tagging`
+4. Load author context: voice (`.copyedit_status`), load-bearing terms, banned phrases
 5. Group proposals by source file; implement one file at a time with judgment (apply / adapt / skip / defer / stale), running the surface-critic gate on every changed sentence before writing
 6. Apply directly via Edit (descending line order). Under `--dry-run`, print the plan and write nothing
 7. Mark each digest item applied/adapted/skipped/deferred/stale; print the summary table and point the user to `git diff`
@@ -384,7 +381,7 @@ IF request does NOT match:
     - "number_fix" keyword → already handled above
     - Known task names: grammar, ai_detection, word_choice, sentence_analysis,
       orality, structure, flow_extraction, relevance, writing_quality, methodology,
-      strip_llm, reflow, apply, implement, interactive, continue
+      reflow, apply, implement, interactive, continue
     - "review" / "full" / "comprehensive" / "quick" → pipeline routes
 THEN:
     GOTO Task Edit Path (no subagents, no pipeline)
@@ -445,7 +442,7 @@ IF ai_detection_pending is non-empty AND user did NOT explicitly request a new a
 
 **Rule registry:** Skim the Rule Index at the top of `references/writing_quality_standards.md` before any prose-emitting task runs. Rules are referenced by stable ID (`R-*`) throughout this skill — surface_critic, task prompts, SKILL.md, and the wrapup gate all cite rules by ID, with bodies only in the standards file.
 
-**Surface-critic gate invariant:** Every prose-emitting task runs the surface-critic gate on new/changed sentences before writing to disk. No exceptions. Applies in both apply context (text written to .tex files) and proposal context (proposed revisions written to notes files). In proposal context, the gate includes the full Self-Critic Pass (Tests 1–6 in surface_critic.prompt). A pass emits the standard entry (Original / Comment / Proposed Revision / Why better). A structural fail emits the flag-only shape (Original / Comment / Why no rewrite / Self-screen note) with no Proposed Revision block. Tasks that emit only analysis reports with no new prose (structure, methodology, flow_extraction, deduplication, number_fix, strip_llm, reflow, reflow_verify, interactive_review) are exempt.
+**Surface-critic gate invariant:** Every prose-emitting task runs the surface-critic gate on new/changed sentences before writing to disk. No exceptions. Applies in both apply context (text written to .tex files) and proposal context (proposed revisions written to notes files). In proposal context, the gate includes the full Self-Critic Pass (Tests 1–6 in surface_critic.prompt). A pass emits the standard entry (Original / Comment / Proposed Revision / Why better). A structural fail emits the flag-only shape (Original / Comment / Why no rewrite / Self-screen note) with no Proposed Revision block. Tasks that emit only analysis reports with no new prose (structure, methodology, flow_extraction, deduplication, number_fix, reflow, reflow_verify, interactive_review) are exempt.
 
 | Request Pattern | Tasks |
 |----------------|-------|
@@ -457,7 +454,6 @@ IF ai_detection_pending is non-empty AND user did NOT explicitly request a new a
 | "Word choice" / "Make it punchier" | word_choice |
 | "Sentence rhythm" / "Check variation" | sentence_analysis |
 | "Read aloud" / "Sounds stumbly" / "Orality" / "Prep for talk" | orality |
-| "Strip llm tags" / "Remove llm wrappers" / "Finalize" | strip_llm |
 | "Grade writing quality" / "Improve writing" | writing_quality |
 | "Rewrite section" / "Rewrite lines" / "rewrite" | rewrite (Fast-Path — no subagents) |
 | "implement the review" / "apply the suggestions with judgment" / "implement" | implement (Fast-Path — orchestrator/active model, no subagents) |
@@ -483,11 +479,10 @@ IF ai_detection_pending is non-empty AND user did NOT explicitly request a new a
 
 ## Step 3: Diagnostic Questions
 
-Ask only what the request leaves open. Use one AskUserQuestion call with up to three questions:
+Ask only what the request leaves open. Use one AskUserQuestion call with up to two questions:
 
 1. **Scope** (header "Scope"): "Which files should I analyze?" Options: "All .tex files in current directory", "Main paper only (exclude appendices)", "Specific files only". If "Specific files only", ask which files.
 2. **Reflow** (header "Reflow", .tex only): "Reflow your .tex files to one sentence per line first?" Options: "No, keep current formatting", "Yes, one sentence per line". A yes triggers Phase 0.
-3. **LLM tagging** (header "LLM tagging", .tex only): "Wrap LLM changes in \\begin{llm}...\\end{llm} for review tracking?" Options: "Yes (Recommended)", "No". Store the answer as `llm_tagging` for Step 6. The `strip_llm` task removes the tags later.
 
 ---
 
@@ -558,7 +553,6 @@ Generate all (file, task) pairs based on request and file scope.
 | word_choice | haiku | notes/raw/word_choice_review.md |
 | sentence_analysis | haiku | notes/raw/sentence_analysis.md |
 | orality | haiku | notes/raw/orality.md |
-| strip_llm | haiku | (no output file - modifies .tex directly) |
 
 ### Paper-Level Tasks
 
@@ -734,7 +728,6 @@ Instructions:
 Read the task prompt: prompts/tasks/{task}.prompt
 
 File to analyze: {absolute_file_path}
-LLM tagging: {llm_tagging}
 (relevance task only) level_filter: {level_filter or "all"}
 
 Output rules:
@@ -743,7 +736,6 @@ Output rules:
   Parallel agents must never write to a shared file.
 - Start the part file with: ## [{filename}]
 - Follow output format from task prompt
-- If LLM tagging is true and file is .tex, wrap changes in \begin{llm}...\end{llm}
 
 Return: {status: complete|flagged, items_found: N}
 ```

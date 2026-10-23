@@ -50,7 +50,6 @@ These constrain **every** edit. Load before touching any file.
 1. **Voice** — read `notes/.copyedit_status` for a `voice:` line (`I` / `we` / `mixed`). Store as `project_voice`. Every applied edit must preserve it (R-VOICE-LOCK). If absent, infer from the source and stay consistent within a file.
 2. **Load-bearing terms** — read `notes/copyedit_load_bearing_terms.md` (bullets under `## Terms`). **Never** strip or paraphrase one of these in an applied edit (R-LOADBEARING). A proposal that does so is skipped, not applied.
 3. **Banned phrases** — read `notes/copyedit_banned_phrases.md` (primary) or `notes/banned_phrases.md` (fallback), bullets under `## Banned`. Never introduce one (R-BANNED). If a proposed revision contains one, fix it before applying or skip the item.
-4. **LLM tagging** — read `llm_tagging` from `notes/tasks.json`. If `true` AND the target is a `.tex` file, wrap every changed span in `\begin{llm}...\end{llm}` (only the changed portion, not surrounding text).
 
 ---
 
@@ -91,8 +90,6 @@ Before writing **any** new or changed sentence to disk, run the surface critic i
 - R-BANNED (no banned phrase), R-COLON (no `CLAUSE: CLAUSE` / `CLAUSE: A, B, C`), R-EMDASH (no `---`/`--`), R-40WORD (≤40 words/sentence, auto-split), R-THROAT-CLEAR (paragraph openers are claims, not topics or moves), R-TEASER (no pseudo-aphoristic cleft naming a difficulty without the fact), R-AGAINST (no `the Y against which [clause]` framing), R-SELF-CRED (no claims of one's own verification or effort).
 - Preserve load-bearing terms and `project_voice`.
 - Fix violations in place before the Edit call; log the fix.
-
-If `llm_tagging` is true and the file is `.tex`, the `new_string` for each edit is `\begin{llm}` + (gated revision) + `\end{llm}`.
 
 ### 2d. Apply
 
@@ -156,7 +153,7 @@ Under `--dry-run`, replace the summary with the planned edits and decisions; sta
 ## Quality Control
 
 - [ ] Inputs located (digest preferred; individual files fallback; clear stop message if none)
-- [ ] Voice, load-bearing terms, banned phrases, and llm_tagging loaded before any edit
+- [ ] Voice, load-bearing terms, and banned phrases loaded before any edit
 - [ ] Conflicts on overlapping lines merged into single coherent edits, not stacked
 - [ ] Surface-critic gate ran on every new/changed sentence before its Edit call
 - [ ] No load-bearing term stripped; no banned phrase or new claim introduced; voice preserved

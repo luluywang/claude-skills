@@ -465,7 +465,6 @@ Individual task prompts are located at:
 - `prompts/tasks/number_fix.prompt`
 - `prompts/tasks/reflow.prompt` — Phase 0 pre-processing: runs `scripts/reflow_sentences.py` to place one sentence per line
 - `prompts/tasks/reflow_verify.prompt` — Phase 0b: inspects reflowed .tex for suspicious sentence breaks
-- `prompts/tasks/strip_llm.prompt` — finalization: removes `\begin{llm}...\end{llm}` wrappers after review
 
 ---
 
