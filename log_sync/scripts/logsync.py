@@ -296,7 +296,8 @@ class Collector:
         return sorted(files)
 
     def session_files(self, transcript):
-        files = [transcript]
+        # A session quit before its first message never writes a transcript.
+        files = [transcript] if transcript.is_file() else []
         side = transcript.parent / transcript.stem
         if side.is_dir():
             files += sorted(p for p in side.rglob("*") if p.is_file() and not p.is_symlink())
@@ -317,9 +318,8 @@ class Collector:
             return True
         dst.parent.mkdir(parents=True, exist_ok=True)
         STATE_DIR.mkdir(parents=True, exist_ok=True)
-        lock_name = hashlib.sha1(str(dst).encode()).hexdigest()[:16] + ".lock"
-        # Lock per destination so simultaneous Stop/SessionEnd cannot publish stale copies.
-        with open(STATE_DIR / lock_name, "a") as lock:
+        # One lock for all copies so simultaneous Stop/SessionEnd cannot publish stale copies.
+        with open(STATE_DIR / "copy.lock", "a") as lock:
             fcntl.flock(lock, fcntl.LOCK_EX)
             for _ in range(3):
                 st = src.stat()
@@ -379,8 +379,8 @@ def cmd_pull(conf, dry=False):
         return 0
     store = Path(conf["CLAUDE_LOG_DIR"])
     cmd = ["rsync", "-az", "--partial", "--itemize-changes",
-           "--exclude=.*", "--exclude=*.tmp", "--exclude=/self-improve-cache/",
-           "-e", "ssh -o BatchMode=yes -o ConnectTimeout=20",
+           "--exclude=.*", "--exclude=*.tmp", "--exclude=/self-improve-cache/", "--timeout=300",
+           "-e", "ssh -o BatchMode=yes -o ConnectTimeout=20 -o ServerAliveInterval=30",
            src.rstrip("/") + "/", str(store) + "/"]
     if dry:
         cmd.insert(1, "--dry-run")
