@@ -306,8 +306,7 @@ Create a summary for the orchestrator to present:
 - `notes/raw/` holds each task's raw output for provenance. The author does not need to open it.
 
 ### Recommended Next Steps
-1. Read `notes/review_digest.md`
-2. Run `/copyedit implement` to apply with judgment (or mark `[x]` in the digest and run `/copyedit apply`)
+The orchestrator now runs triage (master Step 7.5). It writes `notes/review_decide.md`, the A/B list of high-severity, high-risk items, and queues low-risk items for `/copyedit auto`.
 ```
 
 ---

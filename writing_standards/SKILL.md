@@ -31,6 +31,7 @@ rule IDs.
 | `economics_writing.md` | 14 prose principles + 9 LLM-vs-Human contrasts | copyedit (quality task), revisions (fixer, critic) |
 | `ai_detection_rules.md` | Concrete anti-patterns: meta-commentary, transitions, hedging, template structures | copyedit (ai_detection task), revisions (fixer) |
 | `vocabulary_ban_list.md` | Banned AI vocabulary + verbose economics phrases + forbidden constructions | copyedit (ai_detection, word_choice tasks), revisions (fixer, critic) |
+| `list_readability.md` | 5 rules for scannable parallel items (bullets, slide bullets, table cells, titles in a series, summary cards). Not for running prose. | academic-slides, any skill that writes lists or dashboards |
 | `voice_spec.md` | Author voice & diagnostic stance: 18 rules + use/avoid vocabulary + annotated examples | copyedit (quality task), revisions (fixer, critic), write-loop (actor, critic) |
 
 ## How to Reference These Files

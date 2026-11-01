@@ -37,6 +37,7 @@ Apply these preferences alongside the presentation skill's authoring and verific
 ## Write compact academic prose
 
 - Use direct sentences and economical bullets. Allow substantive bullets and equations when they advance the argument.
+- Write every bullet list and every series of slide titles to `writing_standards/list_readability.md`: start with the subject or verb, put the distinguishing words first, keep one structure and one name per concept, and vary an item only when the difference is real.
 - Avoid fluffy introductions, rhetorical filler, repeated summaries and long prose beneath a self-explanatory figure.
 - Use text slides for the research question, model, data and conceptual synthesis. Do not force every slide into a chart.
 - Prefer plain white backgrounds, prominent dark titles, readable body text and restrained color. Let the user's current deck determine exact typography and layout.

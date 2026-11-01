@@ -14,7 +14,8 @@
 5. **Output setup** → Initialize `notes/` directory
 6. **Execute** → Spawn Haiku subagents in parallel
 7. **Wrapup** → Deduplicate, summarize
-8. **Deliver** → Present results to user
+7.5. **Triage** → Sort items by risk × severity (orchestrator)
+8. **Deliver** → Present the decide list to the user
 
 ---
 
@@ -329,6 +330,15 @@ IF request matches "number_fix" pattern:
 | "number_fix" + file | `/copyedit number_fix intro.tex` |
 | "number_fix" + mode + file | `/copyedit number_fix mode=A results.tex` |
 | "number_fix" + mode + glob | `/copyedit number_fix mode=B *.tex` |
+
+---
+
+### Fast-Path: triage / auto / decide
+
+Check this before the other fast paths. Triggers: `/copyedit triage`, `/copyedit auto`
+(also "apply the safe ones", "do the low-risk edits"), `/copyedit decide ...`, or a reply
+made of decision letters (`D1B D2A`) after a triage. Read `prompts/tasks/triage.prompt` and
+run the matching section in the orchestrator. No subagents, no tasks.json.
 
 ---
 
@@ -923,15 +933,22 @@ Return: {status, summary, flagged_items}
 
 ---
 
+## Step 7.5: Triage (Orchestrator)
+
+After the wrapup returns, run the **Triage** section of `prompts/tasks/triage.prompt` in the
+orchestrator. It sorts every open digest item by risk × severity
+(`references/risk_triage.md`) and writes `notes/review_decide.md`. Do not edit `.tex` files.
+
+---
+
 ## Step 8: Deliver Results
 
-Present wrapup summary to user:
+Present to the user:
 1. Tasks performed and files analyzed
-2. Key findings: the Top 20 headlines from the digest, one line each, grouped as in the digest
-3. **One file to review: `notes/review_digest.md`.** Do not list the raw task files or send
-   the user to them; they are provenance under `notes/raw/`. If the user asks what a raw
-   file is, answer that its contents are already in the digest.
-4. Suggested next steps (`/copyedit implement`)
+2. Queue counts: `decide` (high severity, high risk), `auto` (low risk), `drop` (low severity, high risk)
+3. **One file to read: `notes/review_decide.md`**, the A/B list. Show its first 5 items in chat.
+   `notes/review_digest.md` remains the full record. Do not send the user to `notes/raw/`.
+4. Next steps: reply `D1B D2A ...` (runs Decide), and `/copyedit auto` to apply the low-risk queue
 
 ---
 

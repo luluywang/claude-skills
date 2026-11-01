@@ -58,6 +58,24 @@ Task-first editing in the orchestrator context. No subagents, no notes files, no
 
 Rewrites a section directly in the orchestrator context. No subagents, no notes files, no pipeline. Applies the 15 writing principles plus surface fixes (colons, em-dashes, transitions, hedging). Shows annotated diff, applies on approval.
 
+### Triage, Auto, Decide — You Review Only High-Risk, High-Severity Items
+
+```
+/copyedit triage                  # Sort open review items by risk × severity; write notes/review_decide.md
+/copyedit auto                    # Apply every low-risk item, with checks, then compile
+/copyedit auto --dry-run          # List what auto would change; write nothing
+/copyedit decide D1B D2A D4B      # Apply your letters; record every choice (A, B, or C = own wording)
+```
+
+Every open item gets a severity band (Critical/High = high, Medium/Low = low) and a risk label. Risk asks whether the edit could change what the paper claims, or undo a choice you already made (`references/risk_triage.md`).
+
+| | Low risk | High risk |
+|---|---|---|
+| High severity | `auto` | `decide`: you pick A or B |
+| Low severity | `auto` | `drop`: listed only |
+
+`review` and `full` run triage automatically after the wrapup. You read one file, `notes/review_decide.md`, which lists each item with A (current text) and B (rewrite). `scripts/triage.py` does the mechanical work. It detects stale and already-applied items, blocks any edit that changes numbers, math, refs, or citations, and checks R-40WORD, R-EMDASH, and R-COLON. It also backs up files and protects `%` comment lines. Your choices go to `notes/copyedit_decisions.jsonl`, so a later review never re-proposes a sentence you already decided. "Fine" without a letter means keep A.
+
 ### Implement Review — Apply With Judgment (No Subagents)
 
 ```
@@ -156,6 +174,7 @@ The bootstrap auto-detects hyphenated multi-word phrases appearing 3+ times in s
 |------|--------|-------------|
 | `task_edit` | Direct file edits | Execute any free-form task, then apply principle guardrails to new/changed text. Catch-all route. |
 | `rewrite` | Direct file edits | Apply 15 writing principles + surface fixes to a specific section. No notes files. |
+| `triage` / `auto` / `decide` | notes/review_decide.md, notes/triage.json, direct edits | Risk × severity sorting; machine applies low-risk items, author decides high-risk, high-severity items. Orchestrator + `scripts/triage.py`. |
 | `implement` | Direct file edits + digest markings | Read a prior review's proposals and apply them with editorial judgment (apply/adapt/skip/defer). Active model, not a subagent. Applies directly; review via `git diff`. |
 
 ### File-Level Tasks (Parallel, Haiku)
@@ -206,7 +225,7 @@ Every flagged entry in `ai_detection.md` carries one of four severity labels. Ou
 
 | Tier | Label | Examples |
 |------|-------|---------|
-| 1 | **Critical** | Smarmy reframing ("It's not X, it's Y"), teaser theses (R-TEASER), "against which" framing (R-AGAINST), stacked hedges (2+ per sentence), missing causal mechanism |
+| 1 | **Critical** | Smarmy reframing ("It's not X, it's Y"), teaser theses (R-TEASER), scope disclaimers (R-DISCLAIM), "against which" framing (R-AGAINST), stacked hedges (2+ per sentence), missing causal mechanism |
 | 2 | **High** | AI vocabulary used 2+ times; results-first openings with no tension; inventory-style numbers |
 | 3 | **Medium** | Transition overuse (Moreover, Furthermore); template structures; meta-commentary; padding phrases |
 | 4 | **Low** | Single-instance AI vocabulary; minor parentheticals; minor hedging; low-confidence Part C flags |
@@ -241,6 +260,7 @@ To force a full re-run from scratch, start a new session: `/copyedit review` wil
 | any free-form task + file (not a known keyword) | task_edit (catch-all fast-path, no subagents) |
 | "rewrite this section", "rewrite lines" | rewrite (fast-path, no subagents) |
 | "implement the review", "apply the suggestions with judgment", "implement" | implement (fast-path, active model, no subagents) |
+| "triage", "what needs my input", "apply the safe/low-risk ones", "auto", letter replies like "D1B D2A" | triage / auto / decide (fast-path, orchestrator) |
 | "fix grammar", "check for errors" | grammar |
 | "check for AI tells", "sound less AI" | ai_detection |
 | "improve word choice", "make it punchier" | word_choice |
@@ -449,6 +469,7 @@ Individual task prompts are located at:
 - `prompts/tasks/task_edit.prompt` **(catch-all fast-path, no subagents)**
 - `prompts/tasks/rewrite.prompt` **(fast-path, no subagents)**
 - `prompts/tasks/implement.prompt` **(fast-path, active model, no subagents)** — judgment-based apply of a prior review's proposals
+- `prompts/tasks/triage.prompt` **(fast-path, orchestrator)** — risk × severity triage, `auto` apply of low-risk items, `decide` on A/B letters (rubric: `references/risk_triage.md`, script: `scripts/triage.py`)
 - `prompts/tasks/grammar.prompt`
 - `prompts/tasks/ai_detection.prompt`
 - `prompts/tasks/word_choice.prompt`

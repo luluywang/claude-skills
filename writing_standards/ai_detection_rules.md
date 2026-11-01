@@ -19,6 +19,7 @@ Use this file when:
   - Smarmy Reframing (HIGHEST PRIORITY)
   - Pseudo-Aphoristic Clefts / Teaser Theses (HIGH PRIORITY)
   - "Against Which" Framing (HIGH PRIORITY)
+  - Scope Disclaimers (HIGH PRIORITY)
   - Meta-Commentary (HIGH PRIORITY), incl. Vapid Paragraph Openers
   - Self-Reference and Credit-Awarding Filler (HIGH PRIORITY)
   - Spatial Framing of Sequential Content (HIGH PRIORITY)
@@ -108,6 +109,21 @@ teaser with a different teaser.
 openers announce a *move* ("Now compare X to Y"). Teaser theses look like *claims* but only
 announce that a claim is coming. Aphoristic *closers* after an argument are covered separately
 (copyedit `R-PUNCHLINE`).
+
+### Scope Disclaimers (HIGH PRIORITY)
+
+A sentence that denies the document is something it never claimed to be. The reader had no reason to assume the denied thing, so the sentence only spends their attention. Common after a sentence that already states what the document is.
+
+**Shape:** *These notes are not a [full analysis / research design / complete treatment].* Also *This is not meant to be exhaustive*, *We do not claim to be comprehensive*, *This paper does not attempt to...*, *Nothing here should be read as...*
+
+| Disclaimer | Direct |
+|------------|--------|
+| These notes are a first pass on what Deluxe says about its marketing data. They are not a research design. | These notes are a first pass on what Deluxe says about its marketing data. |
+| This section is not an exhaustive survey. | (cut) |
+
+**Test:** Would the reader have assumed the denied thing without the sentence? If not, cut it. Keep a denial only when the reader would plausibly assume the opposite and the mistake would cost them something (for example, "The estimates are not causal" when the table headers say "effect of").
+
+**Related but distinct:** Smarmy reframing denies X to assert Y. A scope disclaimer denies X and asserts nothing.
 
 ### "Against Which" Framing (HIGH PRIORITY)
 

@@ -26,6 +26,7 @@ These rules account for the bulk of past violations. Keep them in working memory
 - **R-THROAT-CLEAR** — every paragraph-first sentence is a claim, not a topic, a move, or an instruction to the reader.
 - **R-TEASER** — no pseudo-aphoristic cleft that names a difficulty/insight without stating the fact (`The central difficulty is what the record omits`).
 - **R-AGAINST** — no `X is the Y against which [clause]` backdrop/benchmark framing (`the search costs against which it prices`); state the relation directly.
+- **R-DISCLAIM** — no sentence that denies the document is something it never claimed to be (`They are not a research design`, `This is not exhaustive`); cut unless the reader would plausibly assume the opposite.
 - **R-SELF-CRED** — no sentence reporting the writer's own verification, care, or effort.
 - **R-WEAK-FOR-WEAK** — no `speak to`→`illuminate`-style swaps; preserve `I find that`/`I estimate that`/`I show that`.
 
@@ -84,6 +85,16 @@ Block any sentence that names a difficulty, insight, or tension without stating 
 **Test:** Could a referee disagree with this sentence on its own? If it only asserts that something is hard, important, or missing, cut it and lead with the concrete fact. If the paragraph still feels wrong after the cut, restructure — do not invent a different teaser.
 
 **Distinct from R-THROAT-CLEAR** (announces a move/topic) and **R-PUNCHLINE** (aphoristic closer after an argument).
+
+### P6a2: Enforce R-DISCLAIM
+
+Block any sentence that denies the document is something it never claimed to be. Shape: `These notes are not a [full analysis / research design]` / `This is not meant to be exhaustive` / `We do not claim to be comprehensive` / `Nothing here should be read as...`.
+
+**Example:** `These notes are a first pass on what Deluxe says about its marketing data. They are not a research design.` → keep only the first sentence.
+
+**Test:** Would the reader have assumed the denied thing without the sentence? If not, cut it. Keep the denial only when the opposite assumption is plausible and a wrong assumption would cost the reader something.
+
+**Distinct from smarmy reframing** (`It's not X, it's Y` asserts a Y) and **R-TEASER** (announces a claim without stating it).
 
 ### P6b: Enforce R-SELF-CRED and R-CREDIT-FILLER
 

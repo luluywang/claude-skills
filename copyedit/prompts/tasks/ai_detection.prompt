@@ -106,7 +106,7 @@ When analyzing a file, append to BOTH `ai_detection.md` and `simplifications.md`
 - [ ] Section header `## [filename.tex]` in both files
 - [ ] Part A (punctuation/structure) comprehensive
 - [ ] **R-COLON exhaustively flagged** — every body-prose colon construction listed (single occurrence = High; 2+ in same passage = Critical). Do not skip "low-impact" instances.
-- [ ] Part B (language) comprehensive — especially smarmy reframing, teaser theses (R-TEASER), and stacked hedges (R-HEDGE)
+- [ ] Part B (language) comprehensive — especially smarmy reframing, teaser theses (R-TEASER), scope disclaimers (R-DISCLAIM), and stacked hedges (R-HEDGE)
 - [ ] Part C (rhetorical/argument) comprehensive — especially missing mechanisms and results-first openings
 - [ ] Each flagged entry has a severity tier label (`Critical`, `High`, `Medium`, or `Low`)
 - [ ] Entries sorted by severity (Critical → High → Medium → Low) within each file section

@@ -1,0 +1,106 @@
+# Task: Triage, Auto, Decide (Risk × Severity Workflow)
+
+**Model:** Active session model, run in the **orchestrator**. Do not delegate the risk judgments to a smaller model. A wrong `auto` label changes the paper without the author seeing it.
+
+**Rubric:** `references/risk_triage.md`. Read it before Step T2.
+**Script:** `scripts/triage.py` in this skill. Run it from the paper directory (the one that holds `notes/`) with the project's Python.
+
+There are three commands:
+
+| Command | What it does |
+|---|---|
+| `/copyedit triage` | Sorts every open digest item into `decide` / `auto` / `drop` (high-risk low-severity items and no-improvement items both go to `drop`) and writes `notes/review_decide.md` |
+| `/copyedit auto` | Applies the `auto` queue, with checks, and compiles |
+| `/copyedit decide D1B D2A ...` | Applies the author's letters and records every choice |
+
+`triage` runs automatically after a `review`/`full` wrapup (master Step 7.5). It can also run on an older digest.
+
+---
+
+## Triage
+
+### T1. Extract
+
+```bash
+python <skill>/scripts/triage.py extract --list
+```
+
+This parses `notes/review_digest.md` into `notes/triage.json`. Each item gets one of these statuses: `open`, `applied` (the proposal is already in the source), or `stale` (the original no longer matches the source). The script also checks prior decisions in `notes/copyedit_decisions.jsonl`. `--list` prints every open item that has no BLOCK signal, with its REVIEW signals, as A/B pairs.
+
+### T2. Judge
+
+For each listed item, apply the rubric and write one entry to `notes/triage_judgments.json`:
+
+```json
+{
+  "3fa9c2e1": {"risk": "low", "reason": "grammar: 'is because' to 'is that'"},
+  "77b01d4a": {"risk": "low", "override": true, "reason": "drops 'not' by rephrasing 'not accepting' as 'acceptance'; same meaning"},
+  "5b6c7d8e": {"risk": "low", "gain": false, "reason": "'demonstrates' to 'shows'; both read fine"},
+  "c2d4e6f8": {"risk": "low", "adapted": "<fixed proposal text>", "reason": "proposal said 'market share'; antecedent is 'footprint'"},
+  "9e8d7c6b": {"risk": "high", "reason": "softens 'collapses' to 'falls'", "rank": 4, "question": "optional one-line question for the author"}
+}
+```
+
+- **Judge against the source, not the review.** For any item you might mark low risk that touches a definition, a referent, or a number, read the surrounding lines of the `.tex` file first.
+- `override: true` lifts the item's REVIEW signals. Use it only when the reason states why the meaning is unchanged.
+- `adapted` replaces the proposal with your fixed text. The script re-runs every check on that text. Use it for the defects in rubric item 7.
+- `"gain": false` sends a low-risk item to `drop` because it does not improve the text. Omit `gain` when the edit is an improvement, even a small one.
+- `rank` orders high-severity, high-risk items with the Top 20 rules (1 = most important).
+- For items with a BLOCK signal, you only need an entry if it is high severity. Give it a `rank` and, when useful, a `question`. Severity is fixed, and the item goes to `decide` either way.
+- Process items in batches of about 60 to keep context bounded. Merge all batches into one file.
+
+### T3. Merge and render
+
+```bash
+python <skill>/scripts/triage.py merge
+python <skill>/scripts/triage.py render
+```
+
+`merge` assigns the queues. It refuses to run while any listed item has no judgment entry, because an unjudged low-severity item would otherwise be dropped unseen.
+
+### T4. Report
+
+Tell the author, in this order:
+
+1. The counts: `decide` N, `auto` M, `drop` K, already applied, stale.
+2. That `notes/review_decide.md` is the only file to read, and that the reply format is `D1B D2A ...`.
+3. The first 5 `decide` items in A/B form, so the author can start answering in chat.
+4. That `/copyedit auto` applies the M low-risk items. Give 3 short examples of what `auto` will change.
+
+Do not edit any `.tex` file during triage.
+
+---
+
+## Auto
+
+1. Precondition: `notes/triage.json` exists and contains items in the `auto` queue. If it does not, run Triage first.
+2. Compile command: use the project's compile command from its `CLAUDE.md` (for example `cd <dir> && latexmk -pdf -interaction=nonstopmode main.tex`). If none is documented, skip compilation and say so.
+3. Run:
+   ```bash
+   python <skill>/scripts/triage.py apply --queue auto --compile "<command>"
+   ```
+   The script backs up every touched file to `notes/history/pre_apply_<time>/`. It applies each item only when its original text matches the source exactly once. It re-checks the protected tokens and the surface gate (R-40WORD, R-EMDASH, R-COLON). It aborts a file if any `%` comment line would change.
+4. Check the compile log for errors and undefined references. A compile failure is a result, so report it with the error.
+5. Report: the number applied, every item not applied with its reason, the compile verdict, the backup path, and `git diff` to review.
+
+`--dry-run` lists what would change and writes nothing.
+
+---
+
+## Decide
+
+The author replies with letters, such as `D1B D2A D5B`, possibly mixed with prose.
+
+1. Parse the reply with the rules in `references/risk_triage.md` § Reading the author's reply. "Fine" without a letter means A. Unmentioned items stay open.
+2. **B choices:** run `python <skill>/scripts/triage.py apply --ids D1 D5 --compile "<command>"`.
+3. **Author's own wording** ("D2: A but drop the cite"): make that edit with the Edit tool, after running the surface-critic gate on the new sentence. Record it as `D2C`.
+4. **Record every choice**, including A: `python <skill>/scripts/triage.py record D1B D2C D5B D7A`. A later triage blocks re-proposing these sentences.
+5. Report what changed, what stayed, the compile verdict, and how many `decide` items are still open.
+
+---
+
+## Rules
+
+- Never apply an item without a letter in `decide`. Never apply a `drop` item unless the author asks for it by ID.
+- The source is ground truth. A stale item is never guessed into place.
+- Do not commit. The author reviews with `git diff`.

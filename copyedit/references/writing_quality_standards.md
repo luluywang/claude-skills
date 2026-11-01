@@ -31,6 +31,7 @@ Each rule below has a stable ID (`R-*`), a `Priority` tag (`high` rules also app
 | R-THROAT-CLEAR | Paragraph openers must be claims, not topics, moves, or instructions | high | block | apply, proposal |
 | R-TEASER | No pseudo-aphoristic clefts that name a difficulty/insight without the fact | high | block | apply, proposal |
 | R-AGAINST | No "X is the Y against which [clause]" backdrop/benchmark framing | high | block | apply, proposal |
+| R-DISCLAIM | No sentence denying the document is something it never claimed to be | high | block | apply, proposal |
 | R-SELF-CRED | No claims of one's own verification, care, or effort | high | block | apply, proposal |
 | R-CREDIT-FILLER | No credit-awarding beats or narration of the writer's reasoning | standard | flag | apply, proposal |
 | R-COINAGE | No invented compound-noun labels; plain phrase unless canonical term of art | standard | flag | apply, proposal |
@@ -365,6 +366,8 @@ Three patterns:
 
 Prefer periods. LLMs reach for semicolons to sound erudite; humans mostly use periods. Any paragraph with 2+ semicolons → convert to periods unless the parallelism is genuinely essential.
 
+**Exception:** Keep semicolons that separate a series of closely related parallel clauses ("A; B; and C"), for example a one-sentence summary of three findings. Do not flag or split such a series. Flag only a semicolon that joins two loose sentences.
+
 ---
 
 ### R-TRANSITION: Transition opener removal
@@ -466,6 +469,22 @@ A sentence that names a difficulty, insight, or tension without stating the unde
 **Distinct from:** R-THROAT-CLEAR (announces a *move* or *topic*), R-PUNCHLINE (aphoristic *closer* after an argument), smarmy reframing (`It's not X, it's Y`).
 
 **Example:** `The central difficulty is what the record omits.` → `The survey records only the most recent opening for each product.`
+
+---
+
+### R-DISCLAIM: Scope disclaimer block
+
+**Priority:** high | **Enforcement:** block | **Context:** apply, proposal
+
+A sentence that denies the document is something it never claimed to be → cut. Full definition in `writing_standards/ai_detection_rules.md` § Scope Disclaimers.
+
+**Shape:** `These notes are not a [full analysis / research design]` / `This is not meant to be exhaustive` / `We do not claim to be comprehensive` / `Nothing here should be read as...`.
+
+**Test:** Would the reader have assumed the denied thing without the sentence? If not, cut it. Keep a denial only when the opposite assumption is plausible and a wrong assumption would cost the reader something.
+
+**Distinct from:** smarmy reframing (`It's not X, it's Y` asserts a Y), R-TEASER (announces a claim without stating it).
+
+**Example:** `These notes are a first pass on what Deluxe says about its marketing data. They are not a research design.` → keep only the first sentence.
 
 ---
 
