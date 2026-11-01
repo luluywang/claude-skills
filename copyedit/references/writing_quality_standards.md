@@ -21,7 +21,7 @@ Each rule below has a stable ID (`R-*`), a `Priority` tag (`high` rules also app
 | R-EMDASH | No `---` or `--` punctuation; restructure the sentence | high | auto-fix | apply, proposal |
 | R-COLON | No body-prose `CLAUSE: CLAUSE` or `CLAUSE: A,B,C` | high | block | apply, proposal, rationale |
 | R-SEMICOLON | Prefer periods; flag any paragraph with 2+ semicolons | standard | flag | all |
-| R-TRANSITION | Delete sentence-initial Moreover/Furthermore/Additionally/etc. | standard | auto-fix | all |
+| R-TRANSITION | Delete sentence-initial Moreover/Furthermore/Additionally/etc. and tour-guide fragments (`Back to finance.`) | standard | auto-fix | all |
 | R-HEDGE | At most one hedge per claim; cut hedges not doing real work | standard | flag | all |
 | R-DEMONSTRATIVE | Bare this/these/that/those need a noun referent | standard | flag | all |
 | R-40WORD | New/rewritten sentences must be ≤40 words | high | auto-fix | apply, proposal |
@@ -32,6 +32,7 @@ Each rule below has a stable ID (`R-*`), a `Priority` tag (`high` rules also app
 | R-TEASER | No pseudo-aphoristic clefts that name a difficulty/insight without the fact | high | block | apply, proposal |
 | R-AGAINST | No "X is the Y against which [clause]" backdrop/benchmark framing | high | block | apply, proposal |
 | R-DISCLAIM | No sentence denying the document is something it never claimed to be | high | block | apply, proposal |
+| R-STAGING | No staged exposition: misconception-then-reveal, rebuttal of an unraised objection, self-posed questions, compression promises, flashy count announcements | standard | block | apply, proposal |
 | R-SELF-CRED | No claims of one's own verification, care, or effort | high | block | apply, proposal |
 | R-CREDIT-FILLER | No credit-awarding beats or narration of the writer's reasoning | standard | flag | apply, proposal |
 | R-COINAGE | No invented compound-noun labels; plain phrase unless canonical term of art | standard | flag | apply, proposal |
@@ -40,7 +41,7 @@ Each rule below has a stable ID (`R-*`), a `Priority` tag (`high` rules also app
 | R-NOUN-STACK | Unstack 3+ noun piles / buried nominalizations into prose; spare terms of art | standard | flag | apply, proposal |
 | R-PARTICIPLE | No trailing `-ing` clause that praises the sentence instead of adding a fact | standard | flag | apply, proposal |
 | R-COPULA | `serves as`/`represents a`/`boasts` where `is`/`are`/`has` would do | standard | auto-fix | apply, proposal |
-| R-METAPHOR-VERB | Metaphor verbs (`tilts`, `hinges`, `lands`, `speaks to`, `flows from`) without referent | standard | flag | apply, proposal |
+| R-METAPHOR-VERB | Metaphor verbs (`tilts`, `hinges`, `lands`, `speaks to`, `flows from`; `buys`/`prices`/`purchases` with a math object as subject) without referent | standard | flag | apply, proposal |
 | R-VAGUE-QUALIFIER | `bounded/limited/nontrivial/meaningful [vague noun]` needs a number | standard | flag | apply, proposal |
 | R-INTENSITY | No added `collapses`/`dramatically`/`paradigm shift`/etc. | high (within Self-Critic) | block | proposal |
 | R-WEAK-FOR-WEAK | No `speak to`→`illuminate`-style swaps; preserve `I find that` | high | block | proposal |
@@ -53,8 +54,9 @@ Each rule below has a stable ID (`R-*`), a `Priority` tag (`high` rules also app
 | R-TRIANGULAR | Body paragraphs state result first, then mechanism (Principle 5b) | info | flag | proposal |
 | R-PARALLEL | Same statistic stated twice must use the same framing direction (not complement) | standard | flag | all |
 | R-GEOMETRY | No spatial framing (layers/inside/upstream) dressing up a plain list | standard | flag | apply, proposal |
-| R-PUNCHLINE | No aphoristic verdict closers or antithesis-balance rhythm after an argument | standard | flag | apply, proposal |
-| R-PERSONIFY | No personified argument objects ("the fact cannot carry it") | standard | flag | apply, proposal |
+| R-PUNCHLINE | No aphoristic verdict closers, antithesis-balance rhythm, mirror sentences, or morals after an argument | standard | flag | apply, proposal |
+| R-PERSONIFY | No personified argument objects ("the fact cannot carry it") or estimators ("ridge decides") | standard | flag | apply, proposal |
+| R-HEADING | Titles name the topic; no slogans, counted symmetry, tutorial or consultancy headings | standard | flag | apply, proposal |
 
 **Priority rules** (the five most-violated rules — also surfaced as one-line reminders in `surface_critic.prompt` "What to scan"): `R-COLON`, `R-EMDASH`, `R-40WORD`, `R-THROAT-CLEAR`, `R-WEAK-FOR-WEAK`.
 
@@ -300,7 +302,7 @@ These 9 contrasts distinguish LLM prose habits from the author's natural voice. 
 **LLM pattern:** Inventory-style reporting — "X changed by A, Y changed by B, Z changed by C."
 **Human pattern:** Each number mid-sentence as evidence for a specific claim. Numbers advance the argument.
 
-### 7. Honest Limitations
+### 7. Plain Limitations
 
 **LLM pattern:** Omits limitations or buries them in softening language. "May not fully capture..."
 **Human pattern:** Names the limitation plainly, then states what the analysis achieves despite it.
@@ -376,6 +378,8 @@ Prefer periods. LLMs reach for semicolons to sound erudite; humans mostly use pe
 
 Delete sentence-initial "Moreover," "Furthermore," "Additionally," "In contrast," "Notably," "Importantly".
 
+Also delete tour-guide fragments: stand-alone sentences that only announce the next topic (`Back to finance.` / `Now to the data.`). Let the first content sentence name the topic.
+
 ---
 
 ### R-HEDGE: Hedging discipline
@@ -422,7 +426,7 @@ When the user requests only specific changes (data updates, number fixes, notati
 
 **Priority:** standard | **Enforcement:** block | **Context:** apply, proposal
 
-Any sentence in body prose ending in `?` → rewrite as an assertion. Economics papers state claims; they do not ask them. Convert `Why does X matter? Because Y.` → `X matters because Y.` Exclusions: section headings, quoted referee comments, footnotes discussing literature.
+Any sentence in body prose ending in `?` → rewrite as an assertion. Economics papers state claims; they do not ask them. Convert `Why does X matter? Because Y.` → `X matters because Y.` Exclusions: section headings, quoted referee comments, footnotes discussing literature. Questions staged without a `?` (`This raises an additional question: which geometry should the data select`) are R-STAGING.
 
 ---
 
@@ -436,7 +440,7 @@ Meta-openers to flag: `This section`, `This paragraph`, `To understand`, `To see
 
 Vapid openers to flag — the same fault in subtler form, and the more common one in argumentative prose: `Start from`, `Start with`, `Begin by`, `Before [the algebra / turning to X]`, `Now compare`, `Now consider`, `Now write down`, `There are two/three [routes/reasons/problems]`, `It is worth [noting/computing/seeing]`, `My first/second/third concern is about [topic]`, `The first is [one-word label].` Each has a mechanical fix: delete the opener and promote the next sentence, or convert the topic into the claim (`My concern is about the fit between A and B` → `A measures something different from B`).
 
-A signpost survives if it also carries content: *"The sample restriction is the most serious"* both ranks and asserts. *"I take these in order of severity"* only ranks → cut.
+A signpost survives if it also carries content: *"The sample restriction is the most serious"* both ranks and asserts. *"I take these in order of severity"* only ranks → cut. A plain count followed at once by the items is direct and passes: `There are four facts.` then the four facts. Flag the count only when the items do not follow at once, or when the count is dressed up (`Four facts stand out`, see R-STAGING).
 
 See Principle 8. Exception: one thanks-opener is allowed at the very top of a referee-reply letter only.
 
@@ -485,6 +489,25 @@ A sentence that denies the document is something it never claimed to be → cut.
 **Distinct from:** smarmy reframing (`It's not X, it's Y` asserts a Y), R-TEASER (announces a claim without stating it).
 
 **Example:** `These notes are a first pass on what Deluxe says about its marketing data. They are not a research design.` → keep only the first sentence.
+
+---
+
+### R-STAGING: Staged exposition block
+
+**Priority:** standard | **Enforcement:** block | **Context:** apply, proposal
+
+Prose that stages its own explanation as drama → rewrite to state the content directly. Full definition in `writing_standards/ai_detection_rules.md` § Staged Exposition.
+
+**Shapes:**
+- Misconception, then reveal: `Ridge regression is often introduced as a numerical repair for collinearity. That description is incomplete.`
+- Rebuttal of an objection nobody raised: `That is not an omission.` / `The difference is not a contradiction.`
+- Self-posed questions without a `?`: `This raises an additional question: which geometry should the data select.` / `Here the question changes.`
+- Compression promise: `The argument in one sentence.` / `The book's argument fits in one sentence.`
+- Flashy count announcement: `Four facts stand out.` / `Two lessons emerge.` → `There are four facts.` and then the facts.
+
+**Test:** Delete the staging sentence. If nothing true is lost, cut it. Keep a correction only when readers in the field actually hold the misconception, and cite who holds it. Keep a rebuttal only when a referee would plausibly raise the objection.
+
+**Distinct from:** smarmy reframing (correction inside one sentence), R-DISCLAIM (denies something about the document), R-RHETQ (literal `?` questions), R-TEASER (announces a claim without stating it).
 
 ---
 
@@ -594,6 +617,8 @@ A present-participle clause appended to a finite sentence that comments on the s
 
 The verbs `tilts`, `hinges`, `lands`, `speaks to`, `flows from` in a technical passage where there is no concrete referent → replace with a literal verb. See surface_critic P2.
 
+**Market metaphors for mathematics.** `buys`, `purchases`, `pays for`, `prices` with a mathematical object as subject: `what the linear component buys`, `the information purchased by smoothness`, `the zero atom prices hidden signal`. Name the quantity and what happens to it (`Smoothness lowers the variance term`). Literal economics is exempt: firms buy inputs, and a regulation costs money.
+
 ---
 
 ### R-GEOMETRY: Spatial framing of sequential content
@@ -611,7 +636,7 @@ An argument mapped onto a geometry — inside/outside, before/after, above/below
 
 **Do not flag** genuine spatial/temporal relations: terms of art (inside/outside option, upstream/downstream market, higher-order beliefs, nested models, corner vs. interior solution), a real position in a pipeline (`the selection happens upstream of the instrument, in how the sample was drawn`), or real time order (`before the reform`). The rule is not "avoid spatial words" — it is "do not use spatial words to dress up an enumeration."
 
-**Interaction with R-THROAT-CLEAR.** The repair is not always "state the count." R-THROAT-CLEAR bans `There are three problems` as a *paragraph opener*, so stripping geometry into a bare count can trade one violation for another. In a summary or framing paragraph the count is the content and is correct. Mid-argument, open on the first problem instead and let the enumeration emerge.
+**Interaction with R-THROAT-CLEAR.** A plain count followed at once by the items passes R-THROAT-CLEAR (`There are three problems with the corner.` then the three). If the items do not follow at once, open on the first problem instead.
 
 Related: R-METAPHOR-VERB (metaphor with no concrete referent), R-THROAT-CLEAR (openers that defer content).
 
@@ -621,7 +646,7 @@ Related: R-METAPHOR-VERB (metaphor with no concrete referent), R-THROAT-CLEAR (o
 
 **Priority:** standard | **Enforcement:** flag | **Context:** apply, proposal
 
-Two shapes of the same tell — rhetorical compression placed after an argument to make the
+Four shapes of the same tell — rhetorical compression placed after an argument to make the
 conclusion *land* rather than merely be stated.
 
 **Aphoristic closers.** A short, rhythmic verdict sentence restating what the passage just showed:
@@ -637,6 +662,14 @@ document; one per section is a tell.
 on one unsourced derivative and one imprecise scaled effect.` Say the one thing that is true and
 drop the foil. Ordinary corrections of fact (`the coefficient is not 0.4 but 0.04`) are not this
 tell.
+
+**Mirror sentences.** Two clauses with matched structure that make a claim cleaner than its
+qualifications allow: `Attention retrieves from the context, and the MLP retrieves from the training
+corpus.` Keep the parallel only if both halves are true as stated.
+
+**Results turned into morals.** A general admonition after a specific calculation: `Fourth, more
+computation is not always better.` / `The short-window examples add another discipline.` State what
+the calculation showed and under which conditions.
 
 Related: the smarmy-reframing patterns in Part B (`It's not X, it's Y`) are the conversational
 register of the same shape; R-INTENSITY covers single inflated words rather than sentence shapes.
@@ -658,7 +691,23 @@ on`), and standard technical usages (`the constraint binds`, `the instrument fai
 restriction`, `the data reject the null`). Statistical-inference verbs applied to tests and data are
 terms of art, not personification. When unsure, flag — do not rewrite.
 
+**Estimators and mathematical objects** get the same treatment: ridge `decides`, an eigendirection `prefers infinite shrinkage`, the estimator `wants` to fit noise. Describe the behavior (`The optimal shrinkage on that direction is infinite`).
+
 Related: R-METAPHOR-VERB (single metaphor verbs), R-PUNCHLINE (the cadence these often serve).
+
+---
+
+### R-HEADING: Slogan and tutorial headings
+
+**Priority:** standard | **Enforcement:** flag | **Context:** apply, proposal
+
+Section, subsection, paragraph, and box titles that read like presentation slides → flag, and propose a noun phrase that names the topic. Full definition in `writing_standards/ai_detection_rules.md` § Slogan and Tutorial Headings.
+
+**Shapes:** slogans (`Structure beats tuning`, `The penalty matters`), counted symmetry (`One spectral filter, two notations`, `Two ICs Answer Two Questions`), tutorial headings (`What the bound says`, `Why it holds`), consultancy branding (`An Operational Playbook`, `Spectrum-First Benign-Overfitting Audit`), and the "buys" family (`How much GLS buys`).
+
+**Fix:** `Spectral filters`, `The risk bound`, `Proof of Proposition 2`, `Gains from GLS`.
+
+**Test:** Would the title fit in the table of contents of a field-journal article? Do not flag a consistent house style of sentence titles. Flag the slogan, count, brand, or tutorial shape. In apply context, never change an existing title unless the user's task covers it (R-SURGICAL).
 
 ---
 

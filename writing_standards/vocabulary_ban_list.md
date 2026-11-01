@@ -205,6 +205,8 @@ These phrases are not outright banned but are discouraged because they signal AI
 | "abstract platitudes" | Vague | Use concrete examples and numbers |
 | "a fortiori," "mutatis mutandis," "ipso facto" | Legalistic | Use plain English |
 | "ceteris paribus" | Avoid unless established usage requires it | "holding X fixed," "all else equal" |
+| "honest" before a technical noun ("honest constants," "honest validation") | Adds approval and names no property | Name the property: "explicit constants," "out-of-sample validation." Keep established terms of art: honest confidence intervals (Armstrong and Kolesár), honest trees and forests (Wager and Athey). |
+| "playbook," "toolkit," "audit" or "operational" as a label for a method | Managerial branding of a plain procedure | Name the procedure: "estimation procedure," "diagnostic." Audit studies (field experiments) are a term of art. |
 
 ---
 

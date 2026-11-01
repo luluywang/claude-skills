@@ -23,6 +23,9 @@ Use this file when:
   - Meta-Commentary (HIGH PRIORITY), incl. Vapid Paragraph Openers
   - Self-Reference and Credit-Awarding Filler (HIGH PRIORITY)
   - Spatial Framing of Sequential Content (HIGH PRIORITY)
+  - Staged Exposition (HIGH PRIORITY)
+  - Slogan and Tutorial Headings
+  - Economic Metaphors and Agency Verbs
   - Transitions That Scream LLM
   - Formulaic Openers
   - Hedging
@@ -37,6 +40,7 @@ Use this file when:
   - Inventory-Style Numbers
   - Buried or Omitted Limitations
   - Artificial Sequential Structure
+  - Mirror Sentences and Morals
   - Uniform Sentence Rhythm
   - Flowing Prose vs. Bullet Lists
 - Part D: When Not to Flag
@@ -55,6 +59,7 @@ Use this file when:
 - "One is... A second is... A third is..." — artificial enumeration of parallel items.
 - Artificial balance: exactly 3 items when 2 or 4 is more natural (rule-of-three padding).
 - "(1) X, (2) Y, (3) Z" enumeration in prose — use separate sentences instead.
+- Flashy count announcements: "Four facts stand out," "Two lessons emerge," "A transformer adds three things to a head." The verb dresses up a count. Write the plain count ("There are four facts.") and give the items at once. The count is fine. The flourish is the tell. Counted packages that recur across sections ("adds two lessons," then "three takeaways") are a stronger tell than one.
 
 ### Template Structures
 - "Despite these challenges..."
@@ -63,6 +68,8 @@ Use this file when:
 - "From X to Y" flourishes
 - Paragraph-ending restatements: restating what was just established instead of ending on evidence
 - "Challenges and future prospects" section endings
+- Recap boxes: a box, remark, or summary environment that repeats the paragraph just before it. Keep the box only if it adds a formula, a number, or a procedure that the text lacks.
+- Repeated caveats: the same limitation stated twice within a few paragraphs ("It does not bound the error of estimating the coefficients," then "It does not bound coefficient-estimation error"). Keep the clearer one.
 
 ---
 
@@ -154,6 +161,8 @@ Never announce what you're about to say. Just say it.
 - "This section discusses..." / "We begin by..." / "We conclude by..."
 - "The paper proceeds in three parts..."
 - "[Analysis] yields two main conclusions..."
+- "This distinction matters even when..." — announces importance before the calculation shows it. Let the calculation show it.
+- "The argument in one sentence" / "The book's argument fits in one sentence" — a compression promise. State the sentence (see Staged Exposition).
 
 **Vapid paragraph openers.** The first sentence of a paragraph is the position a reader attends to
 most. Spending it on a move rather than a claim is the same tell in a subtler form. Every paragraph
@@ -171,6 +180,8 @@ opener should be something that could be true or false.
 
 A signpost survives only if it also carries content. "The sample restriction is the most serious"
 ranks *and* asserts, and is fine. "I take these in order of severity" only ranks, and should be cut.
+A plain count followed at once by the items is also fine: "There are four facts." and then the four
+facts. Flag a count whose items do not follow at once, or a count dressed up ("Four facts stand out").
 
 ### Self-Reference and Credit-Awarding Filler (HIGH PRIORITY)
 
@@ -245,6 +256,44 @@ If the sentence becomes false or vague, the relation was real — keep it.
 
 The rule is not "avoid spatial words." It is: do not use spatial words to dress up an enumeration.
 
+### Staged Exposition (HIGH PRIORITY)
+
+The prose stages its own explanation as drama. It invents a view so it can correct it, rebuts an objection nobody raised, asks itself questions, or promises a compressed reveal. Each move delays the content by one sentence and makes an ordinary explanation sound like a twist. Copyedit enforces this as `R-STAGING`.
+
+| Shape | Example | Direct |
+|-------|---------|--------|
+| Misconception, then reveal | "Ridge regression is often introduced as a numerical repair for collinearity. That description is incomplete." | State what the method does, without the foil: "Ridge regression shrinks each principal direction by a factor that depends on its eigenvalue." |
+| Rebuttal of an objection nobody raised | "That is not an omission." / "The difference is not a contradiction." | Give the reason directly: "The model excludes X because ..." |
+| Self-posed questions | "A nonlinear model raises an additional question: which geometry should the data select?" / "Here the question changes." | "In a nonlinear model the data must also select a geometry." |
+| Compression promise | "The argument in one sentence." / "The book's argument fits in one sentence." | State the sentence. |
+| Flashy count announcement | "Four facts stand out." / "Two lessons emerge." | "There are four facts." Then the facts. |
+
+**Test:** Delete the staging sentence. If the next sentence still reads and nothing true is lost, the staging was decoration. Keep a correction only when readers in the field actually hold the misconception, and cite who holds it. Keep a rebuttal only when a referee would plausibly raise the objection.
+
+**Related but distinct:** Smarmy reframing (*It's not X, it's Y*) corrects inside one sentence. Staged exposition spreads the setup and the reveal over two. A scope disclaimer denies something about the document. A rebuttal here denies something about the result. Literal questions ending in "?" are copyedit `R-RHETQ`.
+
+### Slogan and Tutorial Headings
+
+Section, subsection, paragraph, and box titles are prose too. LLMs write them like presentation slides. Copyedit enforces this as `R-HEADING`.
+
+- **Slogans:** a full sentence with a verdict. "Structure beats tuning." "The penalty matters." "The criteria disagree."
+- **Counted symmetry:** "One spectral filter, two notations." "Two ICs Answer Two Questions."
+- **Tutorial headings that explain the explanation:** "What the bound says." "Why it holds." "What the three conditions say."
+- **Consultancy branding:** "An Operational Playbook." "Spectrum-First Benign-Overfitting Audit." "Freeze the geometry."
+- **The "buys" family:** "What the linear component buys." "How much GLS buys."
+
+**Human pattern:** a noun phrase that names the topic. "Spectral filters." "Information coefficients." "The risk bound." "Proof of Proposition 2." "Gains from GLS."
+
+**Test:** Would the title fit in the table of contents of a field-journal article? A noun phrase that names the topic passes. A title built on a verdict, a joke, a count, or a brand fails. Do not flag a consistent house style of sentence titles. Flag the slogan, count, brand, or tutorial shape.
+
+### Economic Metaphors and Agency Verbs
+
+- **Market metaphors for mathematics:** "the information purchased by smoothness," "the zero atom prices hidden signal," "what label-dependent weights can buy." A rate, a bias term, or a risk component is not a price. Name the quantity and what happens to it: "Smoothness lowers the variance term."
+- **Estimators with personalities:** ridge "decides"; an eigendirection "prefers infinite shrinkage"; the estimator "wants" to fit noise. Describe the behavior: "The optimal shrinkage on that direction is infinite."
+- **Not a flag:** literal economics. Firms buy inputs, consumers pay prices, and a regulation costs money. Flag only when the thing that "buys," "pays for," or "prices" is a mathematical object. Standard inference verbs (the data reject the null, the constraint binds) are terms of art.
+
+Copyedit enforces these as `R-METAPHOR-VERB` and `R-PERSONIFY`.
+
 ### Transitions That Scream LLM
 
 Never start sentences with these words:
@@ -260,6 +309,7 @@ Never start sentences with these words:
 - "Taken together,"
 - "In contrast," (as sentence opener — use as subordinate clause instead)
 - "Despite these challenges..."
+- Tour-guide fragments as stand-alone sentences: "Back to finance." "Now to the data." "Forecast weights become portfolio weights." (when it only announces the next topic)
 
 **Human alternative:** Use the subject of the sentence as the transition. Repeat key terms from the prior sentence (McCloskey's Rule of Coherence).
 
@@ -346,6 +396,12 @@ These patterns reflect how LLM prose structures arguments differently from human
 - **LLM pattern:** "First, we pin down X. Second, we pin down Y. Third, we pin down Z." when the estimation is joint.
 - **Human pattern:** "All parameters are estimated jointly by simulated method of moments."
 
+### Mirror Sentences and Morals
+- **Mirror sentences:** two clauses with matched structure that make a claim cleaner than its qualifications allow. "Attention retrieves from the context, and the MLP retrieves from the training corpus." Keep the parallel only if both halves are true as stated. Otherwise state each claim with its qualification.
+- **Results turned into morals:** a general admonition after a specific calculation. "Fourth, more computation is not always better." "The short-window examples add another discipline." State what the calculation showed and under which conditions.
+
+Copyedit enforces these as `R-PUNCHLINE`.
+
 ### Uniform Sentence Rhythm
 - **LLM pattern:** Every sentence roughly 20–25 words. Monotonous cadence.
 - **Human pattern:** Short punchy sentences mixed with longer analytical ones. Rhythm varies deliberately.
@@ -393,4 +449,4 @@ For the unified self-check, see `economics_writing.md` § Quick Self-Check.
 
 ---
 
-*Sources: copyedit `prompts/tasks/ai_detection.prompt`; revisions `prompts/components/writing_quality.prompt` Rule 1. Participial Tack-Ons, Copula Avoidance, Vague Attribution, and Part D adapted for economics from [Wikipedia: Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing) (WikiProject AI Cleanup), via the [humanizer](https://github.com/blader/humanizer) skill.*
+*Sources: copyedit `prompts/tasks/ai_detection.prompt`; revisions `prompts/components/writing_quality.prompt` Rule 1. Participial Tack-Ons, Copula Avoidance, Vague Attribution, and Part D adapted for economics from [Wikipedia: Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing) (WikiProject AI Cleanup), via the [humanizer](https://github.com/blader/humanizer) skill. Staged Exposition, Slogan and Tutorial Headings, Economic Metaphors and Agency Verbs, Mirror Sentences and Morals, and the count-announcement, recap-box, and repeated-caveat items adapted from the AI-trope list in the `scholarly-paper-revision` skill (2026-11).*

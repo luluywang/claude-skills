@@ -226,8 +226,8 @@ Every flagged entry in `ai_detection.md` carries one of four severity labels. Ou
 | Tier | Label | Examples |
 |------|-------|---------|
 | 1 | **Critical** | Smarmy reframing ("It's not X, it's Y"), teaser theses (R-TEASER), scope disclaimers (R-DISCLAIM), "against which" framing (R-AGAINST), stacked hedges (2+ per sentence), missing causal mechanism |
-| 2 | **High** | AI vocabulary used 2+ times; results-first openings with no tension; inventory-style numbers |
-| 3 | **Medium** | Transition overuse (Moreover, Furthermore); template structures; meta-commentary; padding phrases |
+| 2 | **High** | AI vocabulary used 2+ times; results-first openings with no tension; inventory-style numbers; staged exposition (R-STAGING) |
+| 3 | **Medium** | Transition overuse (Moreover, Furthermore); template structures; meta-commentary; padding phrases; slogan or tutorial headings (R-HEADING) |
 | 4 | **Low** | Single-instance AI vocabulary; minor parentheticals; minor hedging; low-confidence Part C flags |
 
 ### --only-issues Flag

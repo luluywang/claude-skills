@@ -27,6 +27,7 @@ These rules account for the bulk of past violations. Keep them in working memory
 - **R-TEASER** — no pseudo-aphoristic cleft that names a difficulty/insight without stating the fact (`The central difficulty is what the record omits`).
 - **R-AGAINST** — no `X is the Y against which [clause]` backdrop/benchmark framing (`the search costs against which it prices`); state the relation directly.
 - **R-DISCLAIM** — no sentence that denies the document is something it never claimed to be (`They are not a research design`, `This is not exhaustive`); cut unless the reader would plausibly assume the opposite.
+- **R-STAGING** — no misconception-then-reveal, rebuttal of an unraised objection, self-posed question, compression promise (`The argument in one sentence`), or flashy count (`Four facts stand out` → `There are four facts.`).
 - **R-SELF-CRED** — no sentence reporting the writer's own verification, care, or effort.
 - **R-WEAK-FOR-WEAK** — no `speak to`→`illuminate`-style swaps; preserve `I find that`/`I estimate that`/`I show that`.
 
@@ -72,7 +73,7 @@ Test the FIRST sentence of every new/changed paragraph: **could it be true or fa
 
 **Fixes:** delete the opener and promote the next sentence, or convert the topic into the claim — `My concern is about the fit between A and B` → `A measures something different from B`.
 
-**Not a violation:** a signpost that also carries content. `The sample restriction is the most serious` ranks and asserts → keep. `I take these in order of severity` only ranks → cut.
+**Not a violation:** a signpost that also carries content. `The sample restriction is the most serious` ranks and asserts → keep. `I take these in order of severity` only ranks → cut. A plain count followed at once by the items is direct and passes: `There are four facts.` then the four facts. Flag the count only when the items do not follow at once, or when the count is dressed up (`Four facts stand out`, see R-STAGING).
 
 **Exception:** In a referee-reply letter context, one canned thanks-opener is allowed at the very top of the letter only. Any further thanks-opener in the same letter → block.
 
@@ -95,6 +96,14 @@ Block any sentence that denies the document is something it never claimed to be.
 **Test:** Would the reader have assumed the denied thing without the sentence? If not, cut it. Keep the denial only when the opposite assumption is plausible and a wrong assumption would cost the reader something.
 
 **Distinct from smarmy reframing** (`It's not X, it's Y` asserts a Y) and **R-TEASER** (announces a claim without stating it).
+
+### P6a3: Enforce R-STAGING
+
+Block any sentence that stages the explanation instead of giving it. Shapes: misconception-then-reveal (`X is often introduced as Y. That description is incomplete.`), rebuttal of an objection nobody raised (`That is not an omission.`), a self-posed question without a `?` (`This raises an additional question: ...`), a compression promise (`The argument in one sentence.`), and a flashy count (`Four facts stand out.`).
+
+**Fix:** state the content directly. For a count, write the plain count and give the items at once: `There are four facts.`
+
+**Test:** delete the staging sentence. If nothing true is lost, cut it. Keep a correction only when the field actually holds the misconception and a source is cited.
 
 ### P6b: Enforce R-SELF-CRED and R-CREDIT-FILLER
 
@@ -148,9 +157,9 @@ Flag credit-awarding beats inserted for balance — `That candor is to the paper
 
 Reporting (apply context): if a colon was removed, log `Surface fix: colon construction in sentence [N].`
 
-### P2: Enforce R-COINAGE, R-NOVEL-COMPOUND, R-NOUN-STACK, R-METAPHOR-VERB, R-VAGUE-QUALIFIER
+### P2: Enforce R-COINAGE, R-NOVEL-COMPOUND, R-NOUN-STACK, R-METAPHOR-VERB, R-VAGUE-QUALIFIER, R-HEADING
 
-Apply the five rules listed by ID. Bodies are in `writing_quality_standards.md`. Fix in-place when the rule's enforcement is auto-fix; flag for human review otherwise. R-COINAGE and R-NOUN-STACK are **flag only** — flag a rewrite that invents a compound-noun label or keeps a stacked compound, but do not auto-rewrite it here (a term of art that R-LOADBEARING missed must not be clobbered).
+Apply the six rules listed by ID. Bodies are in `writing_quality_standards.md`. Fix in-place when the rule's enforcement is auto-fix; flag for human review otherwise. R-COINAGE and R-NOUN-STACK are **flag only** — flag a rewrite that invents a compound-noun label or keeps a stacked compound, but do not auto-rewrite it here (a term of art that R-LOADBEARING missed must not be clobbered). R-HEADING is **flag only**: a title Claude writes must name the topic, and an existing title changes only when the user's task covers it.
 
 ### When a violation is found
 

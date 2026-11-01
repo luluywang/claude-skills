@@ -106,7 +106,7 @@ When analyzing a file, append to BOTH `ai_detection.md` and `simplifications.md`
 - [ ] Section header `## [filename.tex]` in both files
 - [ ] Part A (punctuation/structure) comprehensive
 - [ ] **R-COLON exhaustively flagged** — every body-prose colon construction listed (single occurrence = High; 2+ in same passage = Critical). Do not skip "low-impact" instances.
-- [ ] Part B (language) comprehensive — especially smarmy reframing, teaser theses (R-TEASER), scope disclaimers (R-DISCLAIM), and stacked hedges (R-HEDGE)
+- [ ] Part B (language) comprehensive — especially smarmy reframing, teaser theses (R-TEASER), scope disclaimers (R-DISCLAIM), staged exposition (R-STAGING), and stacked hedges (R-HEDGE)
 - [ ] Part C (rhetorical/argument) comprehensive — especially missing mechanisms and results-first openings
 - [ ] Each flagged entry has a severity tier label (`Critical`, `High`, `Medium`, or `Low`)
 - [ ] Entries sorted by severity (Critical → High → Medium → Low) within each file section
@@ -127,7 +127,11 @@ Before finalizing flags for any suspected-LLM section, verify these rules and pa
 - [ ] Every number answers "so what?" (Principle 7)
 - [ ] R-HEDGE — no paragraph carries more than two hedges
 - [ ] **R-AGAINST** — no `X is the Y against which [clause]` / `the backdrop|baseline|benchmark against which` / `Against this backdrop`. Grep the whole document for `against which`, `against this`, `against the backdrop`; a single instance is High. Fix with the real relation (given, relative to, conditional on) or two plain clauses. Literal uses (`discriminate against`, `test against the data`, `regress X against Z`) are not flags.
-- [ ] R-TRANSITION — no sentence-initial Moreover/Furthermore/etc. that could be deleted
+- [ ] R-TRANSITION — no sentence-initial Moreover/Furthermore/etc. that could be deleted, and no tour-guide fragments (`Back to finance.`)
+- [ ] **R-STAGING** — no misconception-then-reveal (`X is often introduced as Y. That description is incomplete.`), rebuttal of an unraised objection (`That is not an omission.`), self-posed question, compression promise (`The argument in one sentence`), or flashy count (`Four facts stand out`). The plain count `There are four facts.` followed by the facts is fine.
+- [ ] **R-HEADING** — scan every `\section`, `\subsection`, `\paragraph`, and box title. Flag slogans (`Structure beats tuning`), counted symmetry (`Two ICs Answer Two Questions`), tutorial headings (`Why it holds`), consultancy branding (`Playbook`, `Audit`), and the "buys" family. Propose a noun phrase that names the topic.
+- [ ] R-METAPHOR-VERB / R-PERSONIFY — no market metaphors for mathematical objects (`what GLS buys`, `prices hidden signal`) and no estimators with agency (`ridge decides`). Literal economics is not a flag.
+- [ ] R-PUNCHLINE — no mirror sentences that overstate a claim, and no general moral after a specific calculation (`more computation is not always better`)
 - [ ] **R-GEOMETRY** — no argument dressed in spatial framing (inside/outside, before/after, layers, foundations, upstream/downstream) where the relation is just a list. `Two things go wrong before any algebra, and a third goes wrong inside it` → `There are three problems.` Sharpest when geometry pairs with a count or with two balanced clauses. Terms of art (inside/outside option, upstream market, corner solution), real pipeline position, and real time order are not flags.
 - [ ] **R-CREDIT-FILLER (self-narration)** — no first-person clause announcing the writer's intent, emphasis, or certainty before the claim arrives: `I want to be clear` / `Let me be clear` / `To be clear,` / `I want to stress` / `It is worth noting` / `I would note that` / `It bears mentioning` / `I hasten to add`. Grep the whole document for the family; a single instance is High. First person is not the problem — the announcement is, so a first-person clause that carries evidence (`I could not replicate column 3`) is not a flag.
 - [ ] Mechanism Over Description (Principle 2) — causal chain explicit, not just outcomes
