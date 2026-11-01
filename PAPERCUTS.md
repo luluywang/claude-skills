@@ -15,3 +15,5 @@
 - 2026-11-01: To read a public Google Drive folder without the Drive connector, `curl https://drive.google.com/embeddedfolderview?id=<folder_id>` lists the entries, and `uc?export=download&id=<file_id>` fetches text files. A `.py` file returned Drive's "can't scan for viruses" HTML page instead of the file; it needs `drive.usercontent.google.com/download?id=<id>&export=download&confirm=t`.
 
 - 2026-11-01: While installing the no-compaction mod, `claude` was not found in the agent's Bash shell; the binary is at `~/.local/bin/claude`, which is not on that shell's PATH. Also, `install.sh` only accepted folders with `SKILL.md`, so mods (`.claude-plugin/plugin.json`) needed a script change.
+
+- 2026-11-01: A Bash call began with a stray `cat > file` that had no heredoc, so it waited on stdin until the 120 s timeout and blocked the rest of the command. Check that every `cat >` in a compound command has its own input.

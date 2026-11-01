@@ -19,6 +19,7 @@ Use this file when:
   - Smarmy Reframing (HIGHEST PRIORITY)
   - Pseudo-Aphoristic Clefts / Teaser Theses (HIGH PRIORITY)
   - "Against Which" Framing (HIGH PRIORITY)
+  - Hidden Claims in "Is ... That" Frames (HIGH PRIORITY)
   - Scope Disclaimers (HIGH PRIORITY)
   - Meta-Commentary (HIGH PRIORITY), incl. Vapid Paragraph Openers
   - Self-Reference and Credit-Awarding Filler (HIGH PRIORITY)
@@ -116,6 +117,25 @@ teaser with a different teaser.
 openers announce a *move* ("Now compare X to Y"). Teaser theses look like *claims* but only
 announce that a claim is coming. Aphoristic *closers* after an argument are covered separately
 (copyedit `R-PUNCHLINE`).
+
+### Hidden Claims in "Is ... That" Frames (HIGH PRIORITY)
+
+The main verb is *is*, and the claim sits in a *that* clause behind it. The reader parses a frame, then a stand-in noun, and reaches the claim last, often as a metaphor. Copyedit enforces this as `R-IS-THAT`.
+
+**Label frame.** *The [ordinal] [result / finding / implication / lesson / point] is that X.* The frame carries only a count. Unlike a teaser thesis, X is a real claim, so keep X and drop the frame: *Third, X.* Write just *X* if the count does no work.
+
+**Stand-in noun.** *X is a [noun] that [clause].* The noun is a label for X (*mixture, wedge, lever, residue, bundle, story, mirror*), and the real verb sits in the relative clause. The noun adds no fact that the clause does not already carry. Make the clause's verb the main verb and name the objects.
+
+| Frame | Direct |
+|-------|--------|
+| The third result is that the fresh pool is a mixture that one price cannot undo. | Third, the fresh pool contains both high- and low-risk borrowers, and a single price cannot separate them. |
+| The main finding is that entry is a margin that fees barely move. | Fees have little effect on entry. |
+
+The two shapes often stack in one sentence, together with a metaphor verb (*undo*) and a short, monosyllabic ending that gives the sentence snap. Each layer delays the claim. Together they turn a plain result into a riddle the reader must decode.
+
+**Test:** Delete *is a [noun] that*. Can the clause's verb become the main verb without losing a fact? If yes, rewrite. If the rewrite needs facts the text does not give (who is mixed in the pool), flag it and ask the author. Do not invent the facts.
+
+**Not a flag:** a classification a referee could check, where the noun is a defined technical category (*the estimator is a martingale that converges almost surely*; *the equilibrium is a pooling equilibrium in which both types borrow*). A plain count followed at once by the items (*There are three results.*) is also fine.
 
 ### Scope Disclaimers (HIGH PRIORITY)
 
@@ -290,7 +310,8 @@ Section, subsection, paragraph, and box titles are prose too. LLMs write them li
 
 - **Market metaphors for mathematics:** "the information purchased by smoothness," "the zero atom prices hidden signal," "what label-dependent weights can buy." A rate, a bias term, or a risk component is not a price. Name the quantity and what happens to it: "Smoothness lowers the variance term."
 - **Estimators with personalities:** ridge "decides"; an eigendirection "prefers infinite shrinkage"; the estimator "wants" to fit noise. Describe the behavior: "The optimal shrinkage on that direction is infinite."
-- **Not a flag:** literal economics. Firms buy inputs, consumers pay prices, and a regulation costs money. Flag only when the thing that "buys," "pays for," or "prices" is a mathematical object. Standard inference verbs (the data reject the null, the constraint binds) are terms of art.
+- **Physical verbs on economic objects:** a price that *undoes* a mixture, a tax that *untangles* types, a subsidy that *dissolves* a friction. The subject is economic, but the verb is a metaphor. Use the term of art: a price *separates*, *screens*, or *sorts* types; a tax *offsets* a distortion.
+- **Not a flag:** literal economics. Firms buy inputs, consumers pay prices, and a regulation costs money. Flag only when the thing that "buys," "pays for," or "prices" is a mathematical object. The exemption covers literal actions (a firm buys, a price rises), not any verb whose subject is economic. Standard inference verbs (the data reject the null, the constraint binds) are terms of art.
 
 Copyedit enforces these as `R-METAPHOR-VERB` and `R-PERSONIFY`.
 

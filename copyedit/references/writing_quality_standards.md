@@ -30,6 +30,7 @@ Each rule below has a stable ID (`R-*`), a `Priority` tag (`high` rules also app
 | R-RHETQ | No body-prose rhetorical questions | standard | block | apply, proposal |
 | R-THROAT-CLEAR | Paragraph openers must be claims, not topics, moves, or instructions | high | block | apply, proposal |
 | R-TEASER | No pseudo-aphoristic clefts that name a difficulty/insight without the fact | high | block | apply, proposal |
+| R-IS-THAT | No claim hidden behind "is ... that": label frames (`The third result is that`) or stand-in nouns (`X is a mixture that one price cannot undo`) | standard | flag | apply, proposal |
 | R-AGAINST | No "X is the Y against which [clause]" backdrop/benchmark framing | high | block | apply, proposal |
 | R-DISCLAIM | No sentence denying the document is something it never claimed to be | high | block | apply, proposal |
 | R-STAGING | No staged exposition: misconception-then-reveal, rebuttal of an unraised objection, self-posed questions, compression promises, flashy count announcements | standard | block | apply, proposal |
@@ -41,7 +42,7 @@ Each rule below has a stable ID (`R-*`), a `Priority` tag (`high` rules also app
 | R-NOUN-STACK | Unstack 3+ noun piles / buried nominalizations into prose; spare terms of art | standard | flag | apply, proposal |
 | R-PARTICIPLE | No trailing `-ing` clause that praises the sentence instead of adding a fact | standard | flag | apply, proposal |
 | R-COPULA | `serves as`/`represents a`/`boasts` where `is`/`are`/`has` would do | standard | auto-fix | apply, proposal |
-| R-METAPHOR-VERB | Metaphor verbs (`tilts`, `hinges`, `lands`, `speaks to`, `flows from`; `buys`/`prices`/`purchases` with a math object as subject) without referent | standard | flag | apply, proposal |
+| R-METAPHOR-VERB | Metaphor verbs (`tilts`, `hinges`, `lands`, `speaks to`, `flows from`; `buys`/`prices`/`purchases` with a math object as subject; physical verbs on economic objects, `a price cannot undo`) without referent | standard | flag | apply, proposal |
 | R-VAGUE-QUALIFIER | `bounded/limited/nontrivial/meaningful [vague noun]` needs a number | standard | flag | apply, proposal |
 | R-INTENSITY | No added `collapses`/`dramatically`/`paradigm shift`/etc. | high (within Self-Critic) | block | proposal |
 | R-WEAK-FOR-WEAK | No `speak to`→`illuminate`-style swaps; preserve `I find that` | high | block | proposal |
@@ -476,6 +477,24 @@ A sentence that names a difficulty, insight, or tension without stating the unde
 
 ---
 
+### R-IS-THAT: Claim hidden behind "is ... that"
+
+**Priority:** standard | **Enforcement:** flag | **Context:** apply, proposal
+
+The main verb is *is*, and the claim sits in a *that* clause behind it. Full definition in `writing_standards/ai_detection_rules.md` § Hidden Claims in "Is ... That" Frames.
+
+**Shapes.** Label frame: `The [ordinal] [result|finding|implication|lesson|point] is that X` → `Third, X` (or just `X`). Stand-in noun: `X is a [noun] that [clause]`, where the noun (`mixture`, `wedge`, `lever`, `residue`, `bundle`, `story`) only labels X and the real verb sits in the relative clause → make that verb the main verb and name the objects.
+
+**Test:** delete `is a [noun] that`. If the clause's verb can become the main verb without losing a fact, rewrite. If the rewrite needs facts the text does not give, flag and ask one specific question (R-NEW-CLAIMS).
+
+**Not a flag:** a checkable classification with a defined technical noun (`the estimator is a martingale that converges almost surely`, `a pooling equilibrium in which both types borrow`).
+
+**Distinct from:** R-TEASER (the `that` clause holds no fact), R-COPULA (an elaborate verb where `is` would do; here `is` itself hides the verb), R-PUNCHLINE (closer after an argument; this shape also appears mid-paragraph as the result statement).
+
+**Example:** `The third result is that the fresh pool is a mixture that one price cannot undo.` → `Third, the fresh pool contains both high- and low-risk borrowers, and a single price cannot separate them.` The example stacks both shapes plus a metaphor verb (`undo`, R-METAPHOR-VERB).
+
+---
+
 ### R-DISCLAIM: Scope disclaimer block
 
 **Priority:** high | **Enforcement:** block | **Context:** apply, proposal
@@ -615,9 +634,11 @@ A present-participle clause appended to a finite sentence that comments on the s
 
 **Priority:** standard | **Enforcement:** flag | **Context:** apply, proposal
 
-The verbs `tilts`, `hinges`, `lands`, `speaks to`, `flows from` in a technical passage where there is no concrete referent → replace with a literal verb. See surface_critic P2.
+The verbs `tilts`, `hinges`, `lands`, `speaks to`, `flows from` in a technical passage where there is no concrete referent → replace with a literal verb. The list gives examples; it is not the boundary. Flag any verb the subject cannot literally perform. See surface_critic P2.
 
 **Market metaphors for mathematics.** `buys`, `purchases`, `pays for`, `prices` with a mathematical object as subject: `what the linear component buys`, `the information purchased by smoothness`, `the zero atom prices hidden signal`. Name the quantity and what happens to it (`Smoothness lowers the variance term`). Literal economics is exempt: firms buy inputs, and a regulation costs money.
+
+**Physical verbs on economic objects.** The exemption covers literal actions, not any verb whose subject is economic. A price that `undoes` a mixture, a tax that `untangles` types, or a subsidy that `dissolves` a friction is a metaphor. Use the term of art: a price `separates`, `screens`, or `sorts` types; a tax `offsets` a distortion.
 
 ---
 
