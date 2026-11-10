@@ -148,13 +148,19 @@ PAPERCUTS.md, TODO.md, env files, and folders of notes, writing, literature, sli
    to `current/layout_backup/`, and writes `current/layout_undo.sh`. Then fix each
    MANUAL line by hand, along with the globs from step 2, README commands, and docs.
    Ignore MANUAL lines where the name is a dict key or enum value, not a path.
+   The rewriter edits code only. Also update data files that store paths (manifests,
+   worklists: columns like `pdf`, `path`, `file`), and check that every stored path
+   exists. A manifest may point at a `name (1).ext` copy that went to trash; point that
+   row at the identical original. Update spec or prompt files that name project paths.
 5. **Template gaps.** Offer each gap as its own step, and apply it only after the user agrees:
    `git init` plus a `.gitignore` with `data/`, `current/`, `*-env/`, `__pycache__/`,
    `.DS_Store`; one settings file in `code/` that replaces absolute paths with paths
    relative to the project root; and `/plumber makefile`.
 6. **Verify.** Run `python -m py_compile` (or the language's parse check) on every edited
    script. Rebuild the DAG and compare its missing-input count with the count before
-   the move; a new missing input means a broken path. Grep the code for the old top-level
+   the move; a new missing input means a broken path. Where it is cheap, rerun a build step
+   whose inputs did not change, and compare its outputs byte for byte with copies saved
+   before the move. Grep the code for the old top-level
    names again. Report the before and after tree to the user.
 
 ---
