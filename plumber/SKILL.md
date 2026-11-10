@@ -33,7 +33,7 @@ export SKILL_DIR=~/.claude/skills/plumber
 /plumber status [dir]    — Quick staleness check (no subagent, just mtime comparison)
 /plumber makefile [dir]  — Generate/update Makefile from discovered DAG
 /plumber dry [dirs...]   — Find duplicate data builds across directories
-/plumber restructure [dir] — Plan, review, and apply moves to the RA-guide layout
+/plumber restructure [dir] — Move files to the RA-guide layout, slim code/ and output/, set up git and CLAUDE.md/AGENTS.md
 /plumber reset           — Clear cached DAG
 ```
 
@@ -152,11 +152,33 @@ PAPERCUTS.md, TODO.md, env files, and folders of notes, writing, literature, sli
    worklists: columns like `pdf`, `path`, `file`), and check that every stored path
    exists. A manifest may point at a `name (1).ext` copy that went to trash; point that
    row at the identical original. Update spec or prompt files that name project paths.
-5. **Template gaps.** Offer each gap as its own step, and apply it only after the user agrees:
-   `git init` plus a `.gitignore` with `data/`, `current/`, `*-env/`, `__pycache__/`,
-   `.DS_Store`; one settings file in `code/` that replaces absolute paths with paths
-   relative to the project root; and `/plumber makefile`.
-6. **Verify.** Run `python -m py_compile` (or the language's parse check) on every edited
+5. **Lightweight check.** Git tracks `code/` and `output/`, so both must stay small.
+   ```bash
+   python3 $SKILL_DIR/scripts/lightweight_audit.py <project_root>        # writes current/lightweight_plan.csv
+   python3 $SKILL_DIR/scripts/layout_apply.py <project_root> --plan current/lightweight_plan.csv [--apply]
+   ```
+   The audit flags files over 2 MB, every `.jsonl` journal, and the shallowest folder that holds
+   only `.json/.jsonl/.txt` files (10 or more), which means per-item machine output. Flagged
+   `output/` items move to the mirrored path under `data/intermediate_data/`. Review the
+   rows: keep sets of related files together (e.g. all panel CSVs in
+   `data/intermediate_data/panel/`, even the ones under the cap). Then fix code that builds the
+   path from a variable (`OUT / "x.csv"`, `f"{OUT}raw/"`) by adding a separate path variable
+   for the data location. Each plan gets its own `current/<plan>_undo.sh`.
+6. **Git repo and agent docs.** Only after the lightweight check is clean:
+   ```bash
+   python3 $SKILL_DIR/scripts/repo_setup.py <project_root> [--track spec] [--apply]
+   ```
+   It refuses while `code/` or `output/` has heavy items. It writes a whitelist `.gitignore`
+   that tracks `code/`, `output/`, root docs and env files, plus any `--track` folders (use it
+   for agent specs or prompts that act as code). It runs `git init`, installs a pre-commit
+   hook that rejects files over 2 MB and `.jsonl` files, and makes the first commit when the
+   repo has none. It also writes the layout rules (`templates/agent_layout.md`) into
+   CLAUDE.md and AGENTS.md between `plumber:layout` markers, so agents keep files in the
+   right folders. Re-running it replaces that block in place. The hook lives in `.git/hooks`
+   and is not versioned, so re-run `repo_setup.py` on each new clone.
+   Offer one settings file in `code/` for absolute paths, and `/plumber makefile`, as
+   separate steps.
+7. **Verify.** Run `python -m py_compile` (or the language's parse check) on every edited
    script. Rebuild the DAG and compare its missing-input count with the count before
    the move; a new missing input means a broken path. Where it is cheap, rerun a build step
    whose inputs did not change, and compare its outputs byte for byte with copies saved

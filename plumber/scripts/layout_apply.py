@@ -5,8 +5,8 @@ layout_apply.py — Execute a reviewed layout plan (from layout_plan.py).
 Usage: python3 layout_apply.py <project_root> [--plan current/layout_plan.csv] [--apply]
 
 Without --apply: dry run. Prints every move, trash, and code-line rewrite, and changes nothing.
-With --apply:    performs them and writes current/layout_undo.sh, which reverses the moves
-                 and the rewrites.
+With --apply:    performs them and writes current/<plan>_undo.sh (backups in current/<plan>_backup/),
+                 which reverses the moves and the rewrites. Each plan keeps its own undo.
 
 Rules:
 - Refuses to run if any row still has action=review, or a move row has an empty dst.
@@ -15,7 +15,8 @@ Rules:
 - Uses `git mv` for git-tracked files so history follows the file.
 - Rewrites string literals in code that name a moved path:
     "<src>/..."                       -> always
-    "<src>" (bare)                    -> only beside a path join (/ "x", file.path(, joinpath(, os.path.join()
+    "<src>" (bare)                    -> if src contains "/", always; a one-part name only
+                                         beside a path join (/ "x", file.path(, joinpath(, os.path.join()
   Every other mention of a moved name is listed under MANUAL for the reviewer.
 """
 
@@ -63,7 +64,7 @@ def rewrite_line(line: str, mapping: list[tuple[str, str]]) -> str:
             q = m.group(1)
             end = m.end()
             bare = line[end:end + 1] == q
-            if bare:
+            if bare and "/" not in src:  # a multi-part path in quotes is always a path
                 before, after = line[:m.start()], line[end + 1:]
                 if not (JOIN_CTX.search(before) or re.match(r"\s*/", after)):
                     return m.group(0)
@@ -114,7 +115,7 @@ def main():
     manual, nrew = [], 0
     for f in root.rglob("*"):
         if (not f.is_file() or f.suffix.lower() not in CODE_EXT
-                or any(x in f.parts for x in (".git", "__pycache__", "layout_trash"))):
+                or any(x in f.parts for x in (".git", "__pycache__", "layout_trash", "current"))):
             continue
         rel = str(f.relative_to(root))
         if rel.split("/")[0] in ("data", "current") or "-env/" in rel:
@@ -141,7 +142,7 @@ def main():
                     and len(Path(final_rel).parts) != len(Path(orig_rel).parts)):
                 manual.append(f"{rel}:{i+1}: script-relative root; check depth after move: {line.strip()[:100]}")
         if changed and a.apply:
-            backup = root / "current" / "layout_backup" / rel
+            backup = root / "current" / f"{plan.stem}_backup" / rel
             backup.parent.mkdir(parents=True, exist_ok=True)
             backup.write_text(text)
             f.write_text("".join(lines))
@@ -153,7 +154,7 @@ def main():
         for m in manual:
             print("  " + m)
     if a.apply:
-        u = root / "current" / "layout_undo.sh"
+        u = root / "current" / f"{plan.stem}_undo.sh"
         u.write_text("\n".join(undo + unmove[::-1]) + "\n")
         u.chmod(0o755)
         print(f"\nUndo script: {u}")
