@@ -17,3 +17,5 @@
 - 2026-11-01: While installing the no-compaction mod, `claude` was not found in the agent's Bash shell; the binary is at `~/.local/bin/claude`, which is not on that shell's PATH. Also, `install.sh` only accepted folders with `SKILL.md`, so mods (`.claude-plugin/plugin.json`) needed a script change.
 
 - 2026-11-01: A Bash call began with a stray `cat > file` that had no heredoc, so it waited on stdin until the 120 s timeout and blocked the rest of the command. Check that every `cat >` in a compound command has its own input.
+
+- 2026-11-10: Surveying a project with a zsh `for` loop, `echo "== $d"` failed with "(eval): == not found" even inside double quotes at line start of a word list; had to rerun under `bash -c`. The global CLAUDE.md warns about `=foo`, but this case was quoted and still failed.
