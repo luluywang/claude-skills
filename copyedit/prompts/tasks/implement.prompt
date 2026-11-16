@@ -87,7 +87,7 @@ This is the judgment the path exists for. For the file's items:
 ### 2c. Surface-critic gate (mandatory — the skill invariant)
 
 Before writing **any** new or changed sentence to disk, run the surface critic in **apply context**: read `prompts/shared/components/surface_critic.prompt` and follow its procedure. No text reaches disk without passing. In particular:
-- R-BANNED (no banned phrase), R-COLON (no `CLAUSE: CLAUSE` / `CLAUSE: A, B, C`), R-EMDASH (no `---`/`--`), R-40WORD (≤40 words/sentence, auto-split), R-THROAT-CLEAR (paragraph openers are claims, not topics or moves), R-TEASER (no pseudo-aphoristic cleft naming a difficulty without the fact), R-AGAINST (no `the Y against which [clause]` framing), R-SELF-CRED (no claims of one's own verification or effort).
+- R-BANNED (no banned phrase), R-COLON (no `CLAUSE: CLAUSE` / `CLAUSE: A, B, C`), R-EMDASH (no `---`/`--`), R-40WORD (≤40 words/sentence, auto-split), R-THROAT-CLEAR (paragraph openers state what we do or a fact about a literature, model, or setting; no topics, moves, or truisms), R-TEASER (no pseudo-aphoristic cleft naming a difficulty without the fact), R-AGAINST (no `the Y against which [clause]` framing), R-SELF-CRED (no claims of one's own verification or effort).
 - Preserve load-bearing terms and `project_voice`.
 - Fix violations in place before the Edit call; log the fix.
 

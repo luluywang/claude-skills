@@ -28,7 +28,7 @@ Each rule below has a stable ID (`R-*`), a `Priority` tag (`high` rules also app
 | R-200WORD | New/rewritten paragraphs ≤200 words / 10 sentences | standard | auto-fix | apply, proposal |
 | R-SURGICAL | Surgical tasks touch only what the user requested | standard | block | apply |
 | R-RHETQ | No body-prose rhetorical questions | standard | block | apply, proposal |
-| R-THROAT-CLEAR | Paragraph openers must be claims, not topics, moves, or instructions | high | block | apply, proposal |
+| R-THROAT-CLEAR | Paragraph openers state what we do, a fact about a literature, or a fact about the model or setting; no topics, moves, instructions, or truisms | high | block | apply, proposal |
 | R-TEASER | No pseudo-aphoristic clefts that name a difficulty/insight without the fact | high | block | apply, proposal |
 | R-IS-THAT | No claim hidden behind "is ... that": label frames (`The third result is that`) or stand-in nouns (`X is a mixture that one price cannot undo`) | standard | flag | apply, proposal |
 | R-AGAINST | No "X is the Y against which [clause]" backdrop/benchmark framing | high | block | apply, proposal |
@@ -435,7 +435,15 @@ Any sentence in body prose ending in `?` → rewrite as an assertion. Economics 
 
 **Priority:** high | **Enforcement:** block | **Context:** apply, proposal
 
-The first sentence of any paragraph that announces what the paragraph will do rather than doing it → rewrite. **The test:** could the opener be true or false? If it only names a topic, announces a move, or instructs the reader, it fails.
+**The standard.** The first sentence of a paragraph is a topic sentence of one of three kinds:
+
+1. **What we do**, naming the object, data, or method: `We measure pass-through in a panel of online retailers.` / `We use two identification strategies, based on bunching and on a comparison of closely related goods above and below the \rupee2,000 cutoff.`
+2. **A fact about a literature**: `\citet{Holmes1989} shows that a firm in oligopoly should charge less where rivals are strong.`
+3. **A fact about the model or the setting**: `Fees on UPI can also affect retail prices and thus the distribution of welfare across consumers.`
+
+**The test:** does the opener name this paper's object (its setting, data, method, model, or a cited paper)? If it only names a topic, announces a move, instructs the reader, or states a general truism, it fails. "Could it be true or false?" is not enough: a truism is true and still fails.
+
+**Truism openers.** An adage or general maxim that would fit unchanged in a paper on a different topic is not a topic sentence. `The welfare cost of a fee depends on who bears it.` → `Fees on UPI can also affect retail prices and thus the distribution of welfare across consumers.` Other examples: `Identification requires exogenous variation.`, `Prices matter for welfare.`, `Measurement is hard.` Fix: name the setting and say what we do with it, or state the specific fact the truism gestures at.
 
 Meta-openers to flag: `This section`, `This paragraph`, `To understand`, `To see how`, `By requiring`, `In order to`.
 

@@ -23,7 +23,7 @@ These rules account for the bulk of past violations. Keep them in working memory
 - **R-COLON** — no body-prose `CLAUSE: CLAUSE` or `CLAUSE: A,B,C`; rewrite as direct sentences.
 - **R-EMDASH** — no `---` or `--` punctuation; restructure with a period, comma, or subordinate clause.
 - **R-40WORD** — no new/rewritten sentence above ~40 words; auto-split.
-- **R-THROAT-CLEAR** — every paragraph-first sentence is a claim, not a topic, a move, or an instruction to the reader.
+- **R-THROAT-CLEAR** — every paragraph-first sentence is a topic sentence on what we do, a fact about a literature, or a fact about the model or setting. Not a topic, a move, an instruction, or a truism (`The welfare cost of a fee depends on who bears it.`).
 - **R-TEASER** — no pseudo-aphoristic cleft that names a difficulty/insight without stating the fact (`The central difficulty is what the record omits`).
 - **R-AGAINST** — no `X is the Y against which [clause]` backdrop/benchmark framing (`the search costs against which it prices`); state the relation directly.
 - **R-DISCLAIM** — no sentence that denies the document is something it never claimed to be (`They are not a research design`, `This is not exhaustive`); cut unless the reader would plausibly assume the opposite.
@@ -65,7 +65,11 @@ Convert `Why does X matter? Because Y.` → `X matters because Y.`
 
 ### P6: Enforce R-THROAT-CLEAR
 
-Test the FIRST sentence of every new/changed paragraph: **could it be true or false?** If it only names a topic, announces a move, or instructs the reader, it fails → block and rewrite.
+Test the FIRST sentence of every new/changed paragraph: **is it a topic sentence on what we do, a fact about a literature, or a fact about the model or setting, naming this paper's object?** If it only names a topic, announces a move, instructs the reader, or states a truism, it fails → block and rewrite. A true sentence can still fail: an adage that would fit unchanged in a paper on another topic is a truism.
+
+**Good openers:** `We measure pass-through in a panel of online retailers.` / `Fees on UPI can also affect retail prices and thus the distribution of welfare across consumers.` / `We use two identification strategies, based on bunching and on a comparison of closely related goods above and below the \rupee2,000 cutoff.`
+
+**Truism openers to block:** `The welfare cost of a fee depends on who bears it.`, `Identification requires exogenous variation.`, `Prices matter for welfare.` Fix: name the setting and what we do with it.
 
 **Meta-openers to flag:** `This section`, `This paragraph`, `To understand`, `To see how`, `By requiring`, `In order to`, `Thank you for`, `I appreciate`, `I deeply`, `I would like to`.
 

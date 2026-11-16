@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Install skills and mods to ~/.claude/skills/ (and global/CLAUDE.md to ~/.claude/CLAUDE.md on a full run),
-# then wire the hooks of skills that have them. Safe to re-run: this is the one update button.
+# Install skills and mods to ~/.claude/skills/, then wire the hooks of skills that have them.
+# Safe to re-run: this is the one update button. ~/.claude/CLAUDE.md is per machine and not managed here.
 # Usage: ./install.sh           (all skills)
 #        ./install.sh econ_ra   (single skill)
 
@@ -44,14 +44,6 @@ for skill in "${SKILLS[@]}"; do
         "$SRC_DIR/$skill/" "$DEST_DIR/$skill/"
     echo "OK    $skill"
 done
-
-# Global CLAUDE.md (user-level instructions) lives in global/ and is installed
-# only on a full run, so single-skill installs stay narrow.
-if [[ $# -eq 0 && -f "$SRC_DIR/global/CLAUDE.md" ]]; then
-    mkdir -p "$HOME/.claude"
-    cp "$SRC_DIR/global/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
-    echo "OK    global/CLAUDE.md -> ~/.claude/CLAUDE.md"
-fi
 
 for skill in "${HOOK_SKILLS[@]}"; do
     if [[ " ${SKILLS[*]} " == *" $skill "* && -f "$DEST_DIR/$skill/install.sh" ]]; then
