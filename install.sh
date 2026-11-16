@@ -12,7 +12,7 @@ DEST_DIR="$HOME/.claude/skills"
 # Skills whose own install.sh registers hooks in settings.json; each is re-run from its
 # installed copy (file copies are then no-ops) and is idempotent. taskmaster is left out on
 # purpose: its Stop hook forces sessions to continue and stays opt-in.
-HOOK_SKILLS=(log_sync)
+HOOK_SKILLS=(log_sync overnight)
 
 # Installable = a skill (has SKILL.md) or a mod/plugin (has .claude-plugin/plugin.json).
 is_installable() { [[ -f "$1/SKILL.md" || -f "$1/.claude-plugin/plugin.json" ]]; }
