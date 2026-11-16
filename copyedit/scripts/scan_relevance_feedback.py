@@ -2,11 +2,11 @@
 """More precise scan: find user *corrections/requests* in copyedit sessions
 that specifically concern section openers, motivation, or subsection relevance.
 """
-import json, re, sys
+import json, os, re, sys
 from pathlib import Path
 from collections import defaultdict, Counter
 
-LOGS = Path("/Users/luluywang/Library/CloudStorage/Dropbox/claude-logs")
+LOGS = Path(os.environ.get("CLAUDE_LOG_DIR", Path.home() / "Dropbox" / "claude-logs"))
 
 # Word-boundary regexes. All case-insensitive.
 PATTERNS = {

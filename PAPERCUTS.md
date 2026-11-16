@@ -19,3 +19,5 @@
 - 2026-11-01: A Bash call began with a stray `cat > file` that had no heredoc, so it waited on stdin until the 120 s timeout and blocked the rest of the command. Check that every `cat >` in a compound command has its own input.
 
 - 2026-11-10: Surveying a project with a zsh `for` loop, `echo "== $d"` failed with "(eval): == not found" even inside double quotes at line start of a word list; had to rerun under `bash -c`. The global CLAUDE.md warns about `=foo`, but this case was quoted and still failed.
+
+- 2026-11-16: While mining old sessions for the /overnight skill, `claude-logs/` in this repo was a dead link. It points to `/Users/luluywang/Dropbox/claude-logs`, the other Mac's username; on this Mac the archive is `~/Dropbox/claude-logs`. A relative link (`../claude-logs`) would work on both Macs. Also, the archive is `.jsonl.zst`, so a plain grep finds nothing; decompress with `zstd -dc`.
