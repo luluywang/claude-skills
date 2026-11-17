@@ -80,7 +80,7 @@ def main():
     ap.add_argument("--apply", action="store_true")
     a = ap.parse_args()
     root = Path(a.root).resolve()
-    plan = Path(a.plan) if a.plan else root / "current" / "layout_plan.csv"
+    plan = root / (a.plan or "current/layout_plan.csv")  # relative plans resolve against the root
     rows = list(csv.DictReader(open(plan)))
 
     bad = [r for r in rows if r["action"] == "review" or (r["action"] == "move" and not r["dst"])]

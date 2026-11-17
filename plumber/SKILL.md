@@ -106,13 +106,21 @@ Target layout, from `~/Dropbox/Documents/Economics/Projects/RAGuide/ra_guide_lul
 code/                      all scripts and notebooks; one settings file holds the paths
 data/raw_data/             inputs no project code produced (downloads, PDFs, vendor files)
 data/intermediate_data/    anything project code or project agents wrote that a later step reads
-output/graphs/  output/tables/  output/tables/scalars/   final figures and .tex tables
+output/graphs/  output/tables/  output/tables/scalars/   final figures and .tex tables, nothing else
 logs/                      logs from runs
 .gitignore                 git covers code/ and output/, never data/
 ```
 Also from the guide: lowercase file names with letters, digits, underscores; no
 absolute paths outside one settings file; a Makefile. Root may keep README, CLAUDE.md,
 PAPERCUTS.md, TODO.md, env files, and folders of notes, writing, literature, slides, spec.
+
+Folder content rules (`scripts/layout_rules.py`, one implementation used by the plan, the
+audit, and the pre-commit hook): `output/` holds only `graphs/` (figures: .pdf .png .eps .svg
+.jpg) and `tables/` (.tex only, scalars in `tables/scalars/`). Any other file or folder in
+`output/` (a .csv table, `output/analysis/`, a memo) moves to the mirrored path under
+`data/intermediate_data/` (`output/tables/x.csv` → `data/intermediate_data/tables/x.csv`).
+`writing/` holds prose only; a data file there (.csv, .parquet, .dta, .json, ...) moves to
+`data/intermediate_data/writing/...`.
 
 1. **Plan (facts).** Run
    ```bash
@@ -132,8 +140,10 @@ PAPERCUTS.md, TODO.md, env files, and folders of notes, writing, literature, sli
      files: their names are provenance.
    - Search the code for globs or walks over the root (`ROOT.glob("**/...")`, `list.files(recursive=TRUE)`,
      `os.walk(ROOT)`). The rewriter cannot fix them; note them for step 4.
-   - A data file under `output/` that later code reads belongs in `data/intermediate_data/`.
-     Leave `output/` alone when unsure, and ask.
+   - The plan flags every file in `output/` and `writing/` that breaks the folder content
+     rules, with a low-confidence move to `data/intermediate_data/`. Keep those moves; review
+     only the destination subfolder. Then point the code that writes or reads each file at
+     the new path.
 3. **Show the plan and ask.** Give the user a short table of the planned moves, grouped
    by destination, with counts for big groups. List the trash rows and the template gaps.
    Do not apply until the user approves.
@@ -157,9 +167,10 @@ PAPERCUTS.md, TODO.md, env files, and folders of notes, writing, literature, sli
    python3 $SKILL_DIR/scripts/lightweight_audit.py <project_root>        # writes current/lightweight_plan.csv
    python3 $SKILL_DIR/scripts/layout_apply.py <project_root> --plan current/lightweight_plan.csv [--apply]
    ```
-   The audit flags files over 2 MB, every `.jsonl` journal, and the shallowest folder that holds
+   The audit flags every file in `output/` or `writing/` that breaks the folder content rules,
+   files over 2 MB, every `.jsonl` journal, and the shallowest folder in `code/` that holds
    only `.json/.jsonl/.txt` files (10 or more), which means per-item machine output. Flagged
-   `output/` items move to the mirrored path under `data/intermediate_data/`. Review the
+   `output/` and `writing/` items move to the mirrored path under `data/intermediate_data/`. Review the
    rows: keep sets of related files together (e.g. all panel CSVs in
    `data/intermediate_data/panel/`, even the ones under the cap). Then fix code that builds the
    path from a variable (`OUT / "x.csv"`, `f"{OUT}raw/"`) by adding a separate path variable
@@ -168,10 +179,11 @@ PAPERCUTS.md, TODO.md, env files, and folders of notes, writing, literature, sli
    ```bash
    python3 $SKILL_DIR/scripts/repo_setup.py <project_root> [--track spec] [--apply]
    ```
-   It refuses while `code/` or `output/` has heavy items. It writes a whitelist `.gitignore`
+   It refuses while `code/` or `output/` has heavy items or any folder content rule is broken. It writes a whitelist `.gitignore`
    that tracks `code/`, `output/`, root docs and env files, plus any `--track` folders (use it
    for agent specs or prompts that act as code). It runs `git init`, installs a pre-commit
-   hook that rejects files over 2 MB and `.jsonl` files, and makes the first commit when the
+   hook that rejects files over 2 MB, `.jsonl` files, and files that break the folder content
+   rules (so a `.csv` cannot enter `output/` or `writing/` through the `!/output/` whitelist), and makes the first commit when the
    repo has none. It also writes the layout rules (`templates/agent_layout.md`) into
    CLAUDE.md and AGENTS.md between `plumber:layout` markers, so agents keep files in the
    right folders. Re-running it replaces that block in place. The hook lives in `.git/hooks`

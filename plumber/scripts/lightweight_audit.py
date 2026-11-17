@@ -4,10 +4,13 @@ lightweight_audit.py — Keep code/ and output/ small enough for git.
 
 Usage: python3 lightweight_audit.py <project_root> [--max-mb 2] [--bulk 10] [--out PATH]
 
-code/ and output/ are the git-tracked folders. They hold what a person reads or edits:
-scripts, figures, .tex tables, summary CSVs, memos. Machine data belongs in
-data/intermediate_data/. This script flags, under code/ and output/:
-  - any file larger than --max-mb
+code/ and output/ are the git-tracked folders. code/ holds scripts. output/ holds only
+figures (output/graphs/) and .tex tables (output/tables/, output/tables/scalars/).
+writing/ holds prose only. Every dataset, CSV, regression summary, and panel belongs in
+data/intermediate_data/. This script flags:
+  - in output/ and writing/: every file the folder rules in layout_rules.py forbid
+    (a .csv anywhere in output/, a folder like output/analysis/, a .csv in writing/)
+  - under code/ and output/: any file larger than --max-mb
   - any .jsonl file (agent journals, logs of model calls)
   - the shallowest folder holding only .json/.jsonl/.txt files, --bulk (10) or more (per-item machine output)
 Each flagged output/ item gets a move row to the mirrored path under data/intermediate_data/.
@@ -20,6 +23,8 @@ import csv
 import json
 from pathlib import Path
 
+from layout_rules import content_rows
+
 TRACKED = ("code", "output")
 MACHINE_EXT = {".json", ".jsonl", ".txt"}
 SKIP = {".DS_Store", "__pycache__", ".ipynb_checkpoints"}
@@ -30,8 +35,9 @@ def files_under(d: Path):
 
 
 def audit(root: Path, max_mb: float = 2, bulk: int = 10) -> list[dict]:
-    """Return plan rows for heavy items under the tracked folders."""
-    rows, covered = [], set()
+    """Return plan rows for misplaced files (output/, writing/) and heavy items (code/, output/)."""
+    rows = content_rows(root)
+    covered = {root / r["src"] for r in rows}
 
     def add(p: Path, reason: str):
         rel = p.relative_to(root)
@@ -47,9 +53,10 @@ def audit(root: Path, max_mb: float = 2, bulk: int = 10) -> list[dict]:
         base = root / top
         if not base.is_dir():
             continue
-        # Bulk folders: the shallowest folder whose files are all machine output (.json/.jsonl/.txt),
-        # at least --bulk of them. A folder that also holds tables or memos is never swallowed whole.
-        for d in sorted((p for p in base.rglob("*") if p.is_dir() and not (SKIP & set(p.parts))),
+        # Bulk folders in code/: the shallowest folder whose files are all machine output
+        # (.json/.jsonl/.txt), at least --bulk of them. In output/ the folder rules already flag them.
+        dirs = base.rglob("*") if top == "code" else []
+        for d in sorted((p for p in dirs if p.is_dir() and not (SKIP & set(p.parts))),
                         key=lambda p: len(p.parts)):
             if any(d == c or str(d).startswith(str(c) + "/") for c in covered):
                 continue
@@ -59,7 +66,7 @@ def audit(root: Path, max_mb: float = 2, bulk: int = 10) -> list[dict]:
                 add(d, f"bulk machine output: {len(fs)} files, {size:.1f} MB")
                 covered.add(d)
         for f in files_under(base):
-            if any(str(f).startswith(str(c) + "/") for c in covered):
+            if f in covered or any(str(f).startswith(str(c) + "/") for c in covered):
                 continue
             mb = f.stat().st_size / 2**20
             if mb > max_mb:

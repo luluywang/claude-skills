@@ -7,8 +7,9 @@ Usage: python3 layout_plan.py <project_root> [--out current/layout_plan.csv]
 Target layout (Lulu Wang, RA Guide, section 2.4):
     code/
     data/raw_data/  data/intermediate_data/
-    output/graphs/  output/tables/  output/tables/scalars/
+    output/graphs/  output/tables/  output/tables/scalars/   (figures and .tex only)
     logs/
+    writing/        (optional; prose only, no data files)
     .gitignore      (git covers code/ and output/, not data/)
 
 Writes a CSV plan with columns: action, src, dst, confidence, reason, evidence
@@ -29,17 +30,12 @@ import subprocess
 from collections import defaultdict
 from pathlib import Path
 
+from layout_rules import CODE_EXT, DATA_EXT, GRAPH_EXT, LOG_EXT, TABLE_EXT, content_rows
+
 TEMPLATE_DIRS = [
     "code", "data", "data/raw_data", "data/intermediate_data",
     "output", "output/graphs", "output/tables", "output/tables/scalars", "logs",
 ]
-CODE_EXT = {".py", ".r", ".jl", ".do", ".ipynb", ".js", ".ts", ".sh", ".m", ".sql", ".lua"}
-DATA_EXT = {".csv", ".tsv", ".parquet", ".feather", ".arrow", ".dta", ".rds", ".rdata",
-            ".xlsx", ".xls", ".json", ".jsonl", ".txt", ".pdf", ".zip", ".gz", ".xbrl",
-            ".jld2", ".h5", ".hdf5", ".pkl", ".pickle", ".sas7bdat", ".xml", ".html", ".docx"}
-GRAPH_EXT = {".png", ".svg", ".eps", ".jpg", ".jpeg"}
-TABLE_EXT = {".tex"}
-LOG_EXT = {".log", ".out", ".err"}
 # Root entries the guide allows besides the template dirs.
 ROOT_KEEP = {
     ".git", ".gitignore", ".claude", "current", "Makefile", "makefile", "README.md", "README",
@@ -117,6 +113,7 @@ def main():
 
     cfiles = code_files(root)
     rows = []
+    misplaced = content_rows(root)  # data and non-presentation files inside output/ and writing/
 
     def row(action, src, dst="", conf="high", reason="", evidence=""):
         rows.append(dict(action=action, src=src, dst=dst, confidence=conf,
@@ -148,9 +145,13 @@ def main():
             continue
         if name in ROOT_KEEP or name in TEMPLATE_DIRS[:1] + ["data", "output", "logs"]:
             row("keep", rel, rel, "high", "allowed at root by the guide")
+            if name == "output":
+                rows.extend(r for r in misplaced if r["src"].startswith("output/"))
             continue
         if entry.is_dir() and (name.lower() in DOC_DIRS or name.endswith("-env")):
             row("keep", rel, rel, "high", "documents or environment folder; outside the pipeline")
+            if name == "writing":
+                rows.extend(r for r in misplaced if r["src"].startswith("writing/"))
             continue
         prof = ext_profile(entry)
         total = sum(prof.values()) or 1

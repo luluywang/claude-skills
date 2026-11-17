@@ -9,7 +9,9 @@ Steps (dry run prints them; --apply does them):
 2. Write the plumber block of .gitignore: a whitelist of code/, output/, root docs and
    env files, plus any --track folders. Text outside the block is kept.
 3. `git init` if the project has no repo.
-4. Install .git/hooks/pre-commit: rejects staged files over --max-mb and staged .jsonl files.
+4. Install .git/hooks/pre-commit: rejects staged files over --max-mb, staged .jsonl files,
+   and staged files that break the output/ and writing/ rules in layout_rules.py
+   (e.g. a .csv in output/tables/, anything in output/analysis/, a .csv in writing/).
 5. Write the layout block (templates/agent_layout.md) into CLAUDE.md and AGENTS.md,
    creating either file if missing. Re-runs replace the block in place.
 6. If the repo has no commits, stage everything the whitelist allows and make the first commit.
@@ -22,6 +24,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
+from layout_rules import hook_case_lines  # noqa: E402
 from lightweight_audit import audit, sizes  # noqa: E402
 
 SKILL = Path(__file__).resolve().parents[1]
@@ -32,10 +35,16 @@ GI_START, GI_END = "# >>> plumber layout", "# <<< plumber layout"
 MD_START, MD_END = "<!-- plumber:layout start -->", "<!-- plumber:layout end -->"
 
 HOOK = """#!/usr/bin/env bash
-# Installed by plumber repo_setup.py: keep code/ and output/ lightweight.
+# Installed by plumber repo_setup.py: keep code/ and output/ lightweight, and keep data out of
+# output/ and writing/ (data goes to data/intermediate_data/).
 max=$(( {max_mb} * 1048576 ))
 fail=0
+shopt -s nocasematch
+bad() { echo "pre-commit: $1: $2. Move it to data/intermediate_data/." >&2; fail=1; }
 while IFS= read -r -d '' f; do
+  case "$f" in
+{case_lines}
+  esac
   s=$(git cat-file -s ":$f")
   if [ "$s" -gt "$max" ]; then
     echo "pre-commit: $f is $(( s / 1048576 )) MB (cap {max_mb} MB). Move it to data/intermediate_data/." >&2
@@ -45,7 +54,7 @@ while IFS= read -r -d '' f; do
     echo "pre-commit: $f is a .jsonl journal. Keep it in data/intermediate_data/." >&2
     fail=1;;
   esac
-done < <(git diff --cached --name-only -z --diff-filter=AM)
+done < <(git diff --cached --name-only -z --diff-filter=AMR)
 exit $fail
 """
 
@@ -75,7 +84,8 @@ def main():
     heavy = audit(root, a.max_mb)
     print(f"[{tag}] tracked folder sizes (MB): {sizes(root)}")
     if heavy:
-        print(f"ERROR: {len(heavy)} heavy items in code/ or output/. Run lightweight_audit.py "
+        print(f"ERROR: {len(heavy)} heavy or misplaced items in code/, output/, or writing/. "
+              "Run lightweight_audit.py "
               "and layout_apply.py first:")
         for r in heavy:
             print(f"  {r['src']}  ({r['reason']})")
@@ -112,7 +122,7 @@ def main():
     if not is_repo:
         git(root, "init", "-q")
     hook = root / ".git" / "hooks" / "pre-commit"
-    hook.write_text(HOOK.replace("{max_mb}", str(a.max_mb)))
+    hook.write_text(HOOK.replace("{max_mb}", str(a.max_mb)).replace("{case_lines}", hook_case_lines()))
     hook.chmod(0o755)
 
     if git(root, "rev-parse", "--verify", "HEAD", check=False).returncode != 0:
