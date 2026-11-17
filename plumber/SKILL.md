@@ -115,8 +115,9 @@ absolute paths outside one settings file; a Makefile. Root may keep README, CLAU
 PAPERCUTS.md, TODO.md, env files, and folders of notes, writing, literature, slides, spec.
 
 Folder content rules (`scripts/layout_rules.py`, one implementation used by the plan, the
-audit, and the pre-commit hook): `output/` holds only `graphs/` (figures: .pdf .png .eps .svg
-.jpg) and `tables/` (.tex only, scalars in `tables/scalars/`). Any other file or folder in
+audit, and the pre-commit hook): an output is either a table or a graph. `output/` holds only
+`graphs/` (figures: .pdf .png .eps .svg .jpg) and `tables/` (.tex only, scalars in
+`tables/scalars/`). Subfolders inside them are allowed if every file matches the parent's type. Any other file or folder in
 `output/` (a .csv table, `output/analysis/`, a memo) moves to the mirrored path under
 `data/intermediate_data/` (`output/tables/x.csv` → `data/intermediate_data/tables/x.csv`).
 `writing/` holds prose only; a data file there (.csv, .parquet, .dta, .json, ...) moves to

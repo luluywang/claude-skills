@@ -12,9 +12,11 @@
 
 Rules:
 - Put each new file in the folder its kind belongs to. Do not create new top-level folders.
-- `output/` holds only `output/graphs/` and `output/tables/` (with `output/tables/scalars/`).
-  No `.csv`, `.parquet`, `.dta`, `.rds`, `.json`, or other data file goes anywhere in `output/`,
-  and no other folder (such as `output/analysis/`) goes in it.
+- An output is either a table or a graph. `output/` holds only `output/graphs/` and
+  `output/tables/` (with `output/tables/scalars/`); no other folder (such as `output/analysis/`)
+  goes in it. Subfolders inside them are fine (e.g. `output/graphs/appendix/`) if their files
+  match the parent: figures under `graphs/`, `.tex` under `tables/`. No `.csv`, `.parquet`,
+  `.dta`, `.rds`, `.json`, or other data file goes anywhere in `output/`.
 - Every machine-written dataset goes in `data/intermediate_data/`: analysis CSVs, regression
   summaries, the numbers behind a table or figure, panels. A table's CSV goes next to the
   other data, e.g. `data/intermediate_data/tables/`; only its `.tex` goes in `output/tables/`.

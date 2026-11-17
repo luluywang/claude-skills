@@ -6,7 +6,9 @@ One implementation, used by layout_plan.py (restructure plan), lightweight_audit
 (pre-git check), and repo_setup.py (pre-commit hook).
 
 Rules (RA Guide §2.4–2.5, §4):
-  output/                 holds only output/graphs/ and output/tables/; no loose files.
+  output/                 an output is a table or a graph: only output/graphs/ and output/tables/,
+                          no other folder and no loose files. Subfolders inside graphs/ and
+                          tables/ are allowed; their files must match the parent's type.
   output/graphs/          figures only: GRAPH_FILE_EXT.
   output/tables/          .tex only (output/tables/scalars/ holds one-number .tex files).
   writing/                prose and its build files; no data files (WRITING_BANNED_EXT).
